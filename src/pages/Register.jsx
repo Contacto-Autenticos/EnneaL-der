@@ -60,6 +60,10 @@ const Register = ({ onRegister }) => {
                             return;
                         }
 
+                    } else if (error.message.includes('rate limit')) {
+                        // Handle rate limit error specifically
+                        alert("Has intentado registrarte demasiadas veces en poco tiempo. \n\nSi ya tienes cuenta, por favor intenta Iniciar Sesión con tu contraseña anterior.\n\nSi no, espera unos minutos antes de intentar de nuevo.");
+                        return;
                     } else {
                         throw error;
                     }
