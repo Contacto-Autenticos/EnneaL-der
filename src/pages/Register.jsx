@@ -4,7 +4,6 @@ import { supabase } from '../supabaseClient';
 
 const Register = ({ onRegister }) => {
     const [name, setName] = useState('');
-
     const [birthDate, setBirthDate] = useState('');
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
@@ -12,12 +11,16 @@ const Register = ({ onRegister }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (name && birthDate && email && password) {
+        if (name && birthDate && email) {
             setLoading(true);
             try {
+                // Use email as default password for "simple access"
+                // This is not secure but fulfills the request for simplicity + functional auth
+                const defaultPassword = email;
+
                 const { data, error } = await supabase.auth.signUp({
                     email,
-                    password,
+                    password: defaultPassword,
                 });
 
                 if (error) throw error;
@@ -122,24 +125,6 @@ const Register = ({ onRegister }) => {
                                     fontSize: '1rem'
                                 }}
                                 placeholder="tu@email.com"
-                            />
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <label>Contraseña</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                style={{
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #ddd',
-                                    fontFamily: 'var(--font-family)',
-                                    fontSize: '1rem'
-                                }}
-                                placeholder="******"
                             />
                         </div>
 
