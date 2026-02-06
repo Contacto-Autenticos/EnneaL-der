@@ -23,7 +23,47 @@ const Register = ({ onRegister }) => {
                     password: defaultPassword,
                 });
 
-                if (error) throw error;
+                if (error) {
+                    // Check if user already exists
+                    if (error.message.includes('already registered') || error.message.includes('User already exists')) {
+                        // Attempt to sign in instead
+                        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+                            email,
+                            password: defaultPassword,
+                        });
+
+                        if (signInError) {
+                            // If sign in fails (wrong password or other issue), show error
+                            // This might happen if they registered previously with a different password
+                            if (signInError.message.includes("Invalid login credentials")) {
+                                alert("Este correo ya está registrado con una contraseña diferente. Por favor, ve a Login.");
+                                navigate('/login');
+                                return;
+                            }
+                            throw signInError;
+                        };
+
+                        if (signInData?.user) {
+                            // Check if profile exists, if not create it (rare edge case)
+                            const { data: profile } = await supabase.from('profiles').select('id').eq('id', signInData.user.id).single();
+
+                            if (!profile) {
+                                await supabase.from('profiles').insert([{
+                                    id: signInData.user.id,
+                                    name,
+                                    birth_date: birthDate,
+                                }]);
+                            }
+
+                            onRegister({ name, birthDate, email, id: signInData.user.id });
+                            navigate('/test');
+                            return;
+                        }
+
+                    } else {
+                        throw error;
+                    }
+                }
 
                 if (data?.user) {
                     const { error: profileError } = await supabase
