@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-family: 'Poppins', sans-serif;
+
+  --color-bg: #fdfdfd;
+  --color-text: #333333;
+  --color-primary: #ddbe3d;
+  /* Gold Pantone */
+  --color-secondary: #002d44;
+  /* Deep Blue Pantone */
+  --color-accent: #E74C3C;
+
+  --color-card-bg: #ffffff;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+.option-card {
+  text-align: left;
+  padding: 15px 20px;
+  background-color: white;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  color: var(--color-secondary);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.option-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
