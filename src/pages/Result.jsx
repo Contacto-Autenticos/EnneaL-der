@@ -1,7 +1,7 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { getEnneagramInfo } from '../utils/calculator';
 import { ExternalLink, RefreshCw, Share2 } from 'lucide-react';
-import { supabase } from '../supabaseClient';
+
 
 const enneagramImages = {
     "1": "/Eneatipo 1 el reformador.png",
@@ -27,42 +27,12 @@ const enneagramDescriptions = {
     "9": "Tu liderazgo nace de la calma, la escucha y la integración.\nFacilitas acuerdos y generas ambientes de armonía.\nAportas estabilidad y una visión amplia del conjunto.\nCuando afirmas tu voz, tu influencia se fortalece."
 };
 
-const Result = ({ result: initialResult, user, onReset }) => {
-    const [result, setResult] = useState(initialResult);
-    const [loading, setLoading] = useState(!initialResult);
+const Result = ({ result, user, onReset }) => {
 
-    useEffect(() => {
-        if (!initialResult && user) {
-            const fetchResult = async () => {
-                setLoading(true);
-                const { data, error } = await supabase
-                    .from('results')
-                    .select('*')
-                    .eq('user_id', user.id)
-                    .order('created_at', { ascending: false })
-                    .limit(1)
-                    .single();
-
-                if (data) {
-                    setResult({
-                        enneatype: data.enneatype,
-                        scores: data.scores,
-                        isAmbiguous: data.status === 'flexible' || data.status === 'ambiguous'
-                    });
-                }
-                setLoading(false);
-            };
-            fetchResult();
-        } else if (initialResult) {
-            setLoading(false);
-            setResult(initialResult);
-        }
-    }, [user, initialResult]);
-
-    if (loading) return <div style={{ padding: '2rem', textAlign: 'center' }}>Cargando resultados...</div>;
+    // If no result, redirect (though App routes handle this too)
     if (!result) return <div style={{ padding: '2rem', textAlign: 'center' }}>No hay resultados disponibles. <button onClick={() => window.location.href = '/test'}>Realizar Test</button></div>;
 
-    const { enneatype, isAmbiguous } = result;
+    const { enneatype } = result;
     const info = getEnneagramInfo(enneatype);
 
     const handleShare = async () => {

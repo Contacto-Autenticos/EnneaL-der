@@ -1,68 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
-import Login from './pages/Login';
 import Register from './pages/Register';
 import Test from './pages/Test';
 import Result from './pages/Result';
 import Admin from './pages/Admin';
 import { calculateResults } from './utils/calculator';
-import { supabase } from './supabaseClient';
-import { useEffect } from 'react';
 
 function App() {
   const [user, setUser] = useState(null);
   const [testResult, setTestResult] = useState(null);
-
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        // Fetch profile to get name
-        supabase.from('profiles').select('*').eq('id', session.user.id).single()
-          .then(({ data }) => {
-            if (data) setUser(data);
-          });
-      }
-    });
+    // Load state from localStorage on mount
+    const storedUser = localStorage.getItem('enneagramUser');
+    const storedResult = localStorage.getItem('enneagramResult');
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        supabase.from('profiles').select('*').eq('id', session.user.id).single()
-          .then(({ data }) => {
-            if (data) setUser(data);
-          });
-      } else {
-        setUser(null);
-      }
-    });
-
-    return () => subscription.unsubscribe();
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    if (storedResult) {
+      setTestResult(JSON.parse(storedResult));
+    }
+    setLoading(false);
   }, []);
 
   const handleRegister = (userData) => {
-    setUser(userData);
+    // Save user to state and localStorage
+    // Add a random ID if not present, just for consistency
+    const userWithId = { ...userData, id: userData.id || Date.now().toString() };
+    setUser(userWithId);
+    localStorage.setItem('enneagramUser', JSON.stringify(userWithId));
   };
 
   const handleTestComplete = (answers) => {
     const result = calculateResults(answers);
     setTestResult(result);
+    localStorage.setItem('enneagramResult', JSON.stringify(result));
   };
 
-  const handleReset = async () => {
-    await supabase.auth.signOut();
+  const handleReset = () => {
+    // Clear state and localStorage
     setUser(null);
     setTestResult(null);
+    localStorage.removeItem('enneagramUser');
+    localStorage.removeItem('enneagramResult');
     window.location.href = "/";
   };
+
+  if (loading) return <div>Cargando...</div>;
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
 
         <Route
           path="/register"
@@ -91,6 +83,8 @@ function App() {
           }
         />
         <Route path="/admin" element={<Admin />} />
+        {/* Redirect any other route to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
