@@ -379,10 +379,9 @@ h3 {
   }
 
   /* Register */
-  .register-banner-container {
-    max-height: 120px;
-    /* Reduce banner height */
-  }
+  /* .register-banner-container {
+    max-height: 120px; 
+  } - Removed to match desktop zoom/height */
 
   /* Result */
   .result-type-img {
