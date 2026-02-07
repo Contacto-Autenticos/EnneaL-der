@@ -31,11 +31,11 @@ const Home = () => {
                 Comenzar Test <ArrowRight size={19} />
             </button>
 
-            <div style={{ marginTop: 'auto', paddingBottom: '2vh' }}>
+            <div className="home-footer">
                 <img
                     src="/logo-autenticos-azul.png"
                     alt="Auténticos Logo Azul"
-                    style={{ maxWidth: '120px', height: 'auto', maxHeight: '10vh', objectFit: 'contain' }}
+                    className="home-footer-logo"
                 />
             </div>
         </div>

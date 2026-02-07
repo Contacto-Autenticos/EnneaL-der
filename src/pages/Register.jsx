@@ -115,11 +115,11 @@ const Register = ({ onRegister }) => {
                         </button>
                     </form>
                 </div>
-                <div style={{ marginTop: 'auto', marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+                <div className="register-footer">
                     <img
                         src="/logo-autenticos-azul.png"
                         alt="Logo Auténticos"
-                        style={{ maxHeight: '35px', opacity: 0.8 }}
+                        className="register-footer-logo"
                     />
                 </div>
             </div>
