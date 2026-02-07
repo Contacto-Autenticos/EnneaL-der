@@ -37,7 +37,9 @@ const Result = ({ result, user, onReset }) => {
 
     const handleShare = async () => {
         const shareUrl = window.location.origin; // Redirects to Home
-        const shareData = {
+        const imageUrl = enneagramImages[enneatype];
+
+        let shareData = {
             title: 'Eneagrama & Liderazgo',
             text: `He descubierto que mi estilo de liderazgo es: ${info.name}. ¡Descubre el tuyo!`,
             url: shareUrl,
@@ -45,6 +47,20 @@ const Result = ({ result, user, onReset }) => {
 
         if (navigator.share) {
             try {
+                if (imageUrl) {
+                    try {
+                        const response = await fetch(imageUrl);
+                        const blob = await response.blob();
+                        const file = new File([blob], 'resultado-eneagrama.png', { type: blob.type });
+
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            shareData.files = [file];
+                        }
+                    } catch (e) {
+                        console.warn("Could not load image for sharing", e);
+                    }
+                }
+
                 await navigator.share(shareData);
             } catch (error) {
                 console.log('Error sharing:', error);

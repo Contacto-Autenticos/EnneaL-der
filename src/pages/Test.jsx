@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { questions, options } from '../data/questions';
 
 import { calculateResults } from '../utils/calculator';
@@ -8,6 +8,7 @@ import { calculateResults } from '../utils/calculator';
 const Test = ({ onComplete }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
+    const [direction, setDirection] = useState('next');
     const navigate = useNavigate();
 
     const currentQuestion = questions[currentQuestionIndex];
@@ -16,14 +17,40 @@ const Test = ({ onComplete }) => {
     const handleAnswer = (value) => {
         const newAnswers = { ...answers, [currentQuestion.id]: value };
         setAnswers(newAnswers);
+        setDirection('next');
 
+        // Auto-advance after a short delay if it's not the last question
         if (currentQuestionIndex < questions.length - 1) {
             setTimeout(() => setCurrentQuestionIndex(currentQuestionIndex + 1), 300);
         } else {
-            // Calculate result locally and save
-            // const result = calculateResults(newAnswers); // Done in App.jsx via onComplete
-            onComplete(newAnswers); // Updates local app state
+            // If it's the last question, we just save the answer. 
+            // The user can click "Next" (which we might turn into "Finish" logic or keep auto-advance?)
+            // Let's keep auto-advance for flow, but manual navigation is for corrections.
+            // Actually, if we add next/prev, auto-advance can be annoying if you are trying to change an answer.
+            // But for the first pass, auto-advance is expected in these tests.
+            // We'll keep auto-finish for the last question.
+            onComplete(newAnswers);
             navigate('/result');
+        }
+    };
+
+    const handlePrev = () => {
+        if (currentQuestionIndex > 0) {
+            setDirection('prev');
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+        }
+    };
+
+    const handleNext = () => {
+        // Only allow next if current question is answered
+        if (answers[currentQuestion.id]) {
+            if (currentQuestionIndex < questions.length - 1) {
+                setDirection('next');
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+            } else {
+                onComplete(answers);
+                navigate('/result');
+            }
         }
     };
 
@@ -87,31 +114,57 @@ const Test = ({ onComplete }) => {
                     />
                 </div>
 
-                <div className="test-question-header">
-                    <span className="test-question-count">
-                        Pregunta {currentQuestionIndex + 1} de {questions.length}
-                    </span>
-                    <h3 className="test-question-text">
-                        {currentQuestion.text}
-                    </h3>
-                </div>
+                <div
+                    key={currentQuestionIndex}
+                    className={`test-content-wrapper question-anim-${direction}`}
+                >
+                    <div className="test-question-header">
+                        <span className="test-question-count">
+                            Pregunta {currentQuestionIndex + 1} de {questions.length}
+                        </span>
+                        <h3 className="test-question-text">
+                            {currentQuestion.text}
+                        </h3>
+                    </div>
 
-                <div className="test-interaction-wrapper">
-                    <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>
-                        Me describe:
-                    </p>
+                    <div className="test-interaction-wrapper">
+                        <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>
+                            Me describe:
+                        </p>
 
-                    <div className="test-options-container">
-                        {options.map((option) => (
+                        <div className="test-options-container">
+                            {options.map((option) => (
+                                <button
+                                    key={option.value}
+                                    onClick={() => handleAnswer(option.value)}
+                                    className={`option-card test-btn-option ${answers[currentQuestion.id] === option.value ? 'selected' : ''}`}
+                                >
+                                    <span>{option.label}</span>
+                                    {renderStars(option.label)}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Navigation Buttons */}
+                        <div className="test-navigation">
                             <button
-                                key={option.value}
-                                onClick={() => handleAnswer(option.value)}
-                                className="option-card test-btn-option"
+                                onClick={handlePrev}
+                                disabled={currentQuestionIndex === 0}
+                                className={`btn-nav ${currentQuestionIndex === 0 ? 'disabled' : ''}`}
+                                aria-label="Anterior"
                             >
-                                <span>{option.label}</span>
-                                {renderStars(option.label)}
+                                <ChevronLeft size={24} />
                             </button>
-                        ))}
+
+                            <button
+                                onClick={handleNext}
+                                disabled={!answers[currentQuestion.id]}
+                                className={`btn-nav ${!answers[currentQuestion.id] ? 'disabled' : ''}`}
+                                aria-label="Siguiente"
+                            >
+                                <ChevronRight size={24} />
+                            </button>
+                        </div>
                     </div>
                 </div>
                 {/* Footer Logo */}

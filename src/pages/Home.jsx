@@ -22,7 +22,7 @@ const Home = () => {
                     Eneagrama & Liderazgo
                 </h1>
                 <p className="home-description">
-                    Descubre quien eres y cual es tu estilo de liderazgo dominante a través de un test breve, visual y emocional.
+                    Descubre quién eres y cuál es tu estilo de liderazgo dominante a través de un test breve, visual y emocional.
                 </p>
 
                 <button
