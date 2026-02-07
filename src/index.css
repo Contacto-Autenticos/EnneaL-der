@@ -14,6 +14,23 @@
   --color-card-bg: #ffffff;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
 * {
@@ -145,7 +162,7 @@ h3 {
   width: 100%;
   max-height: 180px;
   overflow: hidden;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .register-banner-img {
@@ -211,6 +228,7 @@ h3 {
   box-shadow: var(--shadow-md);
   border: none;
 }
+
 .btn-share {
   background-color: var(--color-primary);
 }
@@ -218,38 +236,56 @@ h3 {
 
 /* --- Mobile Media Queries --- */
 @media (max-width: 600px) {
+
   /* Home */
   .home-title {
     font-size: 1.6rem;
   }
+
   .home-description {
     font-size: 0.95rem;
     padding: 0 10px;
   }
+
   .home-logo {
-    max-height: 40vh; /* Smaller logo on mobile to prevent overflow */
+    max-height: 40vh;
+    /* Smaller logo on mobile to prevent overflow */
   }
 
   /* Register */
   .register-banner-container {
-    max-height: 120px; /* Reduce banner height */
+    max-height: 120px;
+    /* Reduce banner height */
   }
 
   /* Result */
   .result-type-img {
-    max-width: 250px; /* Smaller result image */
+    max-width: 250px;
+    /* Smaller result image */
   }
+
   .result-actions {
-    flex-direction: column; /* Stack buttons */
+    flex-direction: column;
+    /* Stack buttons */
     width: 100%;
   }
+
   .btn-action {
-    width: 100%; /* Full width buttons */
+    width: 100%;
+    /* Full width buttons */
     justify-content: center;
   }
-  
-  h1 { font-size: 1.5rem !important; }
-  h2 { font-size: 1.3rem !important; }
-  h3 { font-size: 1.1rem !important; }
+
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.3rem !important;
+  }
+
+  h3 {
+    font-size: 1.1rem !important;
+  }
 
 }

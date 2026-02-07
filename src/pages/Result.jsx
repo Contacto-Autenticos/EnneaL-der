@@ -72,7 +72,7 @@ const Result = ({ result, user, onReset }) => {
                     <img
                         src={enneagramImages[enneatype] || ""}
                         alt={`Eneatipo ${enneatype}`}
-                        className="result-type-img"
+                        className="result-type-img animate-fade-in"
                     />
                 </div>
 

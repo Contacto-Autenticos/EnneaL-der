@@ -38,7 +38,7 @@ const Register = ({ onRegister }) => {
                 <img
                     src="/Eneagrama banner registro.png"
                     alt="Eneagrama Banner Registro"
-                    className="register-banner-img"
+                    className="register-banner-img animate-fade-in"
                 />
             </div>
 

@@ -13,7 +13,7 @@ const Home = () => {
                 <img
                     src="/gold-logo.png"
                     alt="Logo Eneagrama Dorado"
-                    className="home-logo"
+                    className="home-logo animate-fade-in"
                 />
             </div>
 
