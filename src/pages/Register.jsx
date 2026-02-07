@@ -33,83 +33,56 @@ const Register = ({ onRegister }) => {
 
     return (
         <div className="register-page">
-            {/* Header Banner - Full Width */}
-            <div className="register-banner-container">
-                <img
-                    src="/Eneagrama banner registro.png"
-                    alt="Eneagrama Banner Registro"
-                    className="register-banner-img animate-fade-in"
-                />
-            </div>
-
             <div className="container register-form-container">
-                <div style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
-                    <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Antes de comenzar...</h2>
+                <div className="register-content-wrapper">
+                    <div className="register-logo-container">
+                        <img
+                            src="/Moneda-autenticos.png"
+                            alt="Logo Auténticos"
+                            className="register-logo-img animate-fade-in"
+                        />
+                    </div>
+                    <h2 className="register-title">Antes de comenzar...</h2>
 
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <form onSubmit={handleSubmit} className="register-form">
+                        <div className="form-group">
                             <label>Nombre</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
-                                style={{
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #ddd',
-                                    fontFamily: 'var(--font-family)',
-                                    fontSize: '1rem'
-                                }}
+                                className="form-input"
                                 placeholder="Tu nombre"
                             />
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div className="form-group">
                             <label>Fecha de nacimiento</label>
                             <input
                                 type="date"
                                 value={birthDate}
                                 onChange={(e) => setBirthDate(e.target.value)}
                                 required
-                                style={{
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #ddd',
-                                    fontFamily: 'var(--font-family)',
-                                    fontSize: '1rem'
-                                }}
+                                className="form-input"
                             />
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div className="form-group">
                             <label>Email</label>
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                style={{
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #ddd',
-                                    fontFamily: 'var(--font-family)',
-                                    fontSize: '1rem'
-                                }}
+                                className="form-input"
                                 placeholder="tu@email.com"
                             />
                         </div>
 
                         <button
                             type="submit"
-                            style={{
-                                backgroundColor: 'var(--color-secondary)',
-                                color: 'white',
-                                padding: '15px',
-                                fontSize: '1.1rem',
-                                marginTop: '10px',
-                                borderRadius: '8px'
-                            }}
+                            className="btn-submit"
                         >
                             {loading ? 'Cargando...' : 'Continuar'}
                         </button>
@@ -117,7 +90,7 @@ const Register = ({ onRegister }) => {
                 </div>
                 <div className="register-footer">
                     <img
-                        src="/logo-autenticos-azul.png"
+                        src="/Auténticos - Logo Azul-OP2.png"
                         alt="Logo Auténticos"
                         className="register-footer-logo"
                     />

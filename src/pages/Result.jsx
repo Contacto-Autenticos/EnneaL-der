@@ -36,25 +36,28 @@ const Result = ({ result, user, onReset }) => {
     const info = getEnneagramInfo(enneatype);
 
     const handleShare = async () => {
+        const shareUrl = window.location.origin; // Redirects to Home
+        const shareData = {
+            title: 'Eneagrama & Liderazgo',
+            text: `He descubierto que mi estilo de liderazgo es: ${info.name}. ¡Descubre el tuyo!`,
+            url: shareUrl,
+        };
+
         if (navigator.share) {
             try {
-                await navigator.share({
-                    title: 'Eneagrama & Liderazgo',
-                    text: `He descubierto que mi estilo de liderazgo es: ${info.name}. ¡Descubre el tuyo!`,
-                    url: window.location.href,
-                });
+                await navigator.share(shareData);
             } catch (error) {
                 console.log('Error sharing:', error);
             }
         } else {
             // Fallback for desktop/unsupported browsers
-            navigator.clipboard.writeText(window.location.href);
-            alert('¡Enlace copiado al portapapeles!');
+            navigator.clipboard.writeText(shareUrl);
+            alert('¡Enlace al test copiado al portapapeles!');
         }
     };
 
     return (
-        <div style={{ position: 'relative', minHeight: '100vh', width: '100%', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', minHeight: '100vh', width: '100%', overflow: 'hidden', backgroundColor: 'var(--color-bg)' }}>
             {/* Background Image */}
             <div className="result-bg" />
 

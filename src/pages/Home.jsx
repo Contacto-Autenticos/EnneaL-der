@@ -9,31 +9,33 @@ const Home = () => {
 
 
         <div className="container home-container">
-            <div className="home-logo-container">
-                <img
-                    src="/gold-logo.png"
-                    alt="Logo Eneagrama Dorado"
-                    className="home-logo animate-fade-in"
-                />
+            <div className="home-content-wrapper">
+                <div className="home-logo-container">
+                    <img
+                        src="/Circulo Eneagrama - Autenticos.png"
+                        alt="Logo Eneagrama - Autenticos"
+                        className="home-logo animate-fade-in"
+                    />
+                </div>
+
+                <h1 className="home-title">
+                    Eneagrama & Liderazgo
+                </h1>
+                <p className="home-description">
+                    Descubre quien eres y cual es tu estilo de liderazgo dominante a través de un test breve, visual y emocional.
+                </p>
+
+                <button
+                    onClick={() => navigate('/register')}
+                    className="btn-start"
+                >
+                    Comenzar Test <ArrowRight size={19} />
+                </button>
             </div>
-
-            <h1 className="home-title">
-                Eneagrama & Liderazgo
-            </h1>
-            <p className="home-description">
-                Descubre quien eres y cual es tu estilo de liderazgo dominante a través de un test breve, visual y emocional.
-            </p>
-
-            <button
-                onClick={() => navigate('/register')}
-                className="btn-start"
-            >
-                Comenzar Test <ArrowRight size={19} />
-            </button>
 
             <div className="home-footer">
                 <img
-                    src="/logo-autenticos-azul.png"
+                    src="/Auténticos - Logo Azul-OP2.png"
                     alt="Auténticos Logo Azul"
                     className="home-footer-logo"
                 />

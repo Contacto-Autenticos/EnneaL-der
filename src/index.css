@@ -41,7 +41,10 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg);
+  background-image: url("/Montañas 02.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -99,13 +102,22 @@ h3 {
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   height: 100vh;
   max-height: 100vh;
   padding: 1vh 20px;
   overflow: hidden;
+}
+
+.home-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .home-logo-container {
@@ -153,53 +165,117 @@ h3 {
 .home-footer {
   margin-top: auto;
   padding-bottom: 2vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .home-footer-logo {
-  max-width: 120px;
+  max-width: 180px;
   height: auto;
-  max-height: 10vh;
+  max-height: 15vh;
   object-fit: contain;
 }
 
 /* Register Page */
 .register-page {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  /* Fixed height to prevent scroll */
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg);
-}
-
-.register-banner-container {
-  width: 100%;
-  max-height: 180px;
+  /* Background comes from body */
   overflow: hidden;
-  flex-shrink: 0;
-}
-
-.register-banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  /* Hide scrollbar */
 }
 
 .register-form-container {
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
   flex: 1;
-  padding: 20px;
+  padding: 1vh 20px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.register-content-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.register-logo-container {
+  margin-bottom: 2vh;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.register-logo-img {
+  max-height: 25vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.register-title {
+  text-align: center;
+  margin-bottom: 2vh;
+  font-size: 1.5rem;
+  color: var(--color-secondary);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+  width: 100%;
+}
+
+.form-input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-submit {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 12px;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
 }
 
 .register-footer {
   margin-top: auto;
-  margin-bottom: 10px;
+  margin-bottom: 1vh;
   display: flex;
   justify-content: center;
+  padding-top: 1vh;
+  flex: 0 0 auto;
 }
 
 .register-footer-logo {
-  max-height: 35px;
+  max-height: 53px;
   opacity: 0.8;
 }
 
@@ -210,10 +286,11 @@ h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/Gray-logo 02.png");
-  background-size: cover;
+  background-image: url("/Circulo Eneagrama - Autenticos - gold-logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
-  z-index: -1;
+  z-index: 0;
   opacity: 0.5;
 }
 
@@ -300,8 +377,9 @@ h3 {
   height: 6px;
   background-color: #eee;
   border-radius: 3px;
-  margin-bottom: 15px;
+  margin-bottom: 2vh;
   overflow: hidden;
+  flex: 0 0 auto;
 }
 
 .test-progress-bar-fill {
@@ -311,9 +389,10 @@ h3 {
 }
 
 .test-question-header {
-  margin-bottom: 10px;
-  min-height: 80px;
+  margin-bottom: 2vh;
+  min-height: auto;
   width: 100%;
+  flex: 0 0 auto;
 }
 
 .test-question-count {
@@ -330,6 +409,16 @@ h3 {
   line-height: 1.2;
 }
 
+.test-interaction-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2vh;
+}
+
 .test-options-container {
   display: flex;
   flex-direction: column;
@@ -339,12 +428,14 @@ h3 {
 }
 
 .test-btn-option {
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 12px 20px;
+  font-size: 1.05rem;
   width: 100%;
-  max-width: 250px;
-  justify-content: center;
-  text-align: center;
+  max-width: 300px;
+  justify-content: space-between;
+  text-align: left;
+  display: flex;
+  align-items: center;
 }
 
 .test-footer {
@@ -353,10 +444,11 @@ h3 {
   display: flex;
   justify-content: center;
   width: 100%;
+  flex: 0 0 auto;
 }
 
 .test-footer-logo {
-  max-height: 35px;
+  max-height: 53px;
   opacity: 0.8;
 }
 
@@ -378,13 +470,20 @@ h3 {
     /* Smaller logo on mobile to prevent overflow */
   }
 
-  /* Register */
-  .register-banner-container {
+  /* Register & Test */
+  .register-banner-container,
+  .test-banner {
     height: auto;
     max-height: none;
     /* Allow full proportional scaling */
     aspect-ratio: 16/4;
     /* Approximate aspect ratio to prevent layout shift */
+  }
+
+  .register-banner-img,
+  .test-banner-img {
+    height: auto;
+    object-fit: contain;
   }
 
   .register-banner-img {
