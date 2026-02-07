@@ -31,11 +31,14 @@ const Test = ({ onComplete }) => {
         <div className="test-page">
             {/* Header Banner - Full Width */}
             <div className="test-banner">
-                <img
-                    src="/Eneagrama banner 02.png"
-                    alt="Eneagrama Banner"
-                    className="test-banner-img animate-fade-in"
-                />
+                <picture>
+                    <source media="(max-width: 600px)" srcSet="/Eneagrama banner.png" />
+                    <img
+                        src="/Eneagrama banner 02.png"
+                        alt="Eneagrama Banner"
+                        className="test-banner-img animate-fade-in"
+                    />
+                </picture>
             </div>
 
             <div className="test-container">
