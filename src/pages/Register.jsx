@@ -32,22 +32,17 @@ const Register = ({ onRegister }) => {
     };
 
     return (
-        <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-bg)' }}>
+        <div className="register-page">
             {/* Header Banner - Full Width */}
-            <div style={{ width: '100%', maxHeight: '180px', overflow: 'hidden' }}>
+            <div className="register-banner-container">
                 <img
                     src="/Eneagrama banner registro.png"
                     alt="Eneagrama Banner Registro"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center'
-                    }}
+                    className="register-banner-img"
                 />
             </div>
 
-            <div className="container" style={{ justifyContent: 'center', flex: 1, padding: '20px' }}>
+            <div className="container register-form-container">
                 <div style={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}>
                     <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Antes de comenzar...</h2>
 

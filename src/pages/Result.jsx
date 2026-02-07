@@ -56,20 +56,9 @@ const Result = ({ result, user, onReset }) => {
     return (
         <div style={{ position: 'relative', minHeight: '100vh', width: '100%', overflow: 'hidden' }}>
             {/* Background Image */}
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundImage: 'url("/Gray-logo 02.png")',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                zIndex: -1,
-                opacity: 0.5 // Optional: adjustments for readability if needed, though user asked for "gran imagen"
-            }} />
+            <div className="result-bg" />
 
-            <div className="container" style={{ alignItems: 'center', textAlign: 'center', padding: '20px 20px', position: 'relative', zIndex: 1 }}>
+            <div className="container result-container">
                 <div style={{ marginBottom: '10px' }}>
                     <span style={{ fontSize: '1rem', color: '#666' }}>Hola, {user?.name || 'Viajero'}</span>
                     <h2 style={{ fontSize: '1.5rem', marginTop: '5px' }}>Tu estilo de liderazgo sugiere:</h2>
@@ -83,13 +72,7 @@ const Result = ({ result, user, onReset }) => {
                     <img
                         src={enneagramImages[enneatype] || ""}
                         alt={`Eneatipo ${enneatype}`}
-                        style={{
-                            maxWidth: '360px',
-                            width: '100%',
-                            height: 'auto',
-                            borderRadius: '50%',
-                            boxShadow: 'var(--shadow-md)'
-                        }}
+                        className="result-type-img"
                     />
                 </div>
 
@@ -110,45 +93,19 @@ const Result = ({ result, user, onReset }) => {
                     </p>
                 </div>
 
-
-
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', alignItems: 'center' }}>
+                <div className="result-actions">
                     <a
                         href="https://www.autenticos.co/9-tipos-de-liderazgo"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-primary"
-                        style={{
-                            backgroundColor: 'var(--color-secondary)',
-                            color: 'white',
-                            padding: '10px 25px',
-                            borderRadius: '30px',
-                            textDecoration: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            fontSize: '1rem',
-                            boxShadow: 'var(--shadow-md)'
-                        }}
+                        className="btn-action"
                     >
                         Profundizar más <ExternalLink size={18} />
                     </a>
 
                     <button
                         onClick={handleShare}
-                        style={{
-                            backgroundColor: 'var(--color-primary)',
-                            color: 'white',
-                            padding: '10px 25px',
-                            borderRadius: '30px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            fontSize: '1rem',
-                            boxShadow: 'var(--shadow-md)',
-                            border: 'none',
-                            cursor: 'pointer'
-                        }}
+                        className="btn-action btn-share"
                     >
                         Compartir <Share2 size={18} />
                     </button>
