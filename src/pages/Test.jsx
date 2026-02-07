@@ -28,63 +28,30 @@ const Test = ({ onComplete }) => {
 
     return (
 
-        <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-bg)' }}>
+        <div className="test-page">
             {/* Header Banner - Full Width */}
-            <div style={{ width: '100%', maxHeight: '180px', overflow: 'hidden' }}>
+            <div className="test-banner">
                 <img
                     src="/Eneagrama banner 02.png"
                     alt="Eneagrama Banner"
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center'
-                    }}
+                    className="test-banner-img animate-fade-in"
                 />
             </div>
 
-            <div className="container" style={{
-                justifyContent: 'flex-start',
-                maxWidth: '700px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                minHeight: 'auto',
-                flex: 1,
-                padding: '10px 20px'
-            }}>
+            <div className="test-container">
                 {/* Progress Bar */}
-                <div style={{
-                    width: '100%',
-                    height: '6px',
-                    backgroundColor: '#eee',
-                    borderRadius: '3px',
-                    marginBottom: '15px',
-                    overflow: 'hidden'
-                }}>
-                    <div style={{
-                        width: `${progress}%`,
-                        height: '100%',
-                        backgroundColor: 'var(--color-primary)',
-                        transition: 'width 0.3s ease'
-                    }} />
+                <div className="test-progress-bar-bg">
+                    <div
+                        className="test-progress-bar-fill"
+                        style={{ width: `${progress}%` }}
+                    />
                 </div>
 
-                <div style={{ marginBottom: '10px', minHeight: '80px' }}>
-                    <span style={{
-                        color: '#999',
-                        fontSize: '0.8rem',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        fontWeight: 500
-                    }}>
+                <div className="test-question-header">
+                    <span className="test-question-count">
                         Pregunta {currentQuestionIndex + 1} de {questions.length}
                     </span>
-                    <h3 style={{
-                        fontSize: '1.1rem',
-                        marginTop: '5px',
-                        lineHeight: '1.2'
-                    }}>
+                    <h3 className="test-question-text">
                         {currentQuestion.text}
                     </h3>
 
@@ -93,31 +60,23 @@ const Test = ({ onComplete }) => {
                     </p>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', alignItems: 'center' }}>
+                <div className="test-options-container">
                     {options.map((option) => (
                         <button
                             key={option.value}
                             onClick={() => handleAnswer(option.value)}
-                            className="option-card"
-                            style={{
-                                padding: '10px 20px',
-                                fontSize: '1rem',
-                                width: '100%',
-                                maxWidth: '250px',
-                                justifyContent: 'center',
-                                textAlign: 'center'
-                            }}
+                            className="option-card test-btn-option"
                         >
                             {option.label}
                         </button>
                     ))}
                 </div>
                 {/* Footer Logo */}
-                <div style={{ marginTop: 'auto', marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+                <div className="test-footer">
                     <img
                         src="/logo-autenticos-azul.png"
                         alt="Logo Auténticos"
-                        style={{ maxHeight: '35px', opacity: 0.8 }}
+                        className="test-footer-logo"
                     />
                 </div>
             </div>
