@@ -2,97 +2,97 @@ export const questions = [
   // Tipo A
   {
     id: 1,
-    text: "Cuando tengo un objetivo claro, prefiero actuar de inmediato y hacer que las cosas sucedan.",
+    text: "Cuando tengo un objetivo claro, me cuesta esperar y prefiero actuar de inmediato.",
     type: "A",
   },
   {
     id: 2,
-    text: "Me resulta natural tomar la iniciativa y avanzar, incluso cuando otros dudan o esperan.",
+    text: "Me resulta incómodo quedarme sin avanzar mientras otros dudan o postergan.",
     type: "A",
   },
   {
     id: 3,
-    text: "Disfruto involucrarme intensamente en lo que hago y sentir que estoy generando impacto real.",
+    text: "Me siento más tranquilo cuando estoy haciendo que algo suceda.",
     type: "A",
   },
   // Tipo B
   {
     id: 4,
-    text: "Me siento cómodo(a) pasando tiempo a solas y no necesito estar en constante actividad para sentirme bien.",
+    text: "Necesito tiempo a solas para recuperar energía cuando hay demasiada actividad.",
     type: "B",
   },
   {
     id: 5,
-    text: "Suelo observar más de lo que hablo y prefiero no ser el centro de atención.",
+    text: "Prefiero observar en silencio antes que exponerme o llamar la atención.",
     type: "B",
   },
   {
     id: 6,
-    text: "Valoro tener espacios tranquilos para imaginar, reflexionar o simplemente estar.",
+    text: "Los espacios tranquilos me ayudan a ordenar lo que siento o pienso.",
     type: "B",
   },
   // Tipo C
   {
     id: 7,
-    text: "Cumplir con lo que me comprometo es muy importante para mí, incluso cuando implica esfuerzo personal.",
+    text: "Me cuesta estar tranquilo si siento que no cumplí con lo que debía.",
     type: "C",
   },
   {
     id: 8,
-    text: "A menudo priorizo lo que otros necesitan o esperan de mí antes que mis propios deseos.",
+    text: "Suelo exigirme responder a lo que otros esperan de mí, incluso si me cansa.",
     type: "C",
   },
   {
     id: 9,
-    text: "Me siento bien cuando sé que he respondido con responsabilidad y he hecho lo correcto.",
+    text: "Me juzgo internamente cuando siento que no hice lo correcto.",
     type: "C",
   },
   // Tipo X
   {
     id: 10,
-    text: "Suelo ver el lado positivo de las situaciones y confiar en que las cosas se acomodarán.",
+    text: "Cuando algo es difícil, prefiero enfocarme en lo positivo antes que quedarme en el malestar.",
     type: "X",
   },
   {
     id: 11,
-    text: "Me entusiasma compartir con otras personas y contagiar buen ánimo cuando estoy bien.",
+    text: "Me cuesta permanecer mucho tiempo en emociones negativas.",
     type: "X",
   },
   {
     id: 12,
-    text: "A veces prefiero seguir adelante con buena actitud antes que quedarme demasiado tiempo en lo que me preocupa.",
+    text: "Suelo moverme hacia algo que me haga sentir mejor cuando algo me preocupa.",
     type: "X",
   },
   // Tipo Y
   {
     id: 13,
-    text: "Vivo mis emociones con intensidad y normalmente se nota cuando algo me afecta.",
+    text: "Vivo mis emociones con intensidad y suele notarse cuando algo me afecta.",
     type: "Y",
   },
   {
     id: 14,
-    text: "Necesito tener claro dónde estoy parado(a) con los demás y qué puedo esperar de ellos.",
+    text: "Necesito claridad en las relaciones para sentirme tranquilo.",
     type: "Y",
   },
   {
     id: 15,
-    text: "Cuando algo me molesta, me cuesta quedármelo para mí y suelo reaccionar con fuerza.",
+    text: "Cuando algo me molesta, me cuesta no reaccionar.",
     type: "Y",
   },
   // Tipo Z
   {
     id: 16,
-    text: "Prefiero manejar las situaciones con lógica y control, más que desde la emoción.",
+    text: "Me siento más seguro cuando puedo mantener el control emocional y pensar con lógica.",
     type: "Z",
   },
   {
     id: 17,
-    text: "Me resulta más cómodo trabajar de forma independiente y sin demasiada carga emocional.",
+    text: "Prefiero manejar las cosas por mi cuenta antes que depender emocionalmente de otros.",
     type: "Z",
   },
   {
     id: 18,
-    text: "Cuando hay tensiones o conflictos, intento no involucrarme emocionalmente.",
+    text: "Cuando hay conflicto, tiendo a tomar distancia emocional para no involucrarme demasiado.",
     type: "Z",
   },
 ];
