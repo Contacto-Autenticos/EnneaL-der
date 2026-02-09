@@ -29,7 +29,7 @@ const Home = () => {
                     onClick={() => navigate('/register')}
                     className="btn-start"
                 >
-                    Comenzar Test <ArrowRight size={19} />
+                    Iniciar ahora <ArrowRight size={19} />
                 </button>
             </div>
 
