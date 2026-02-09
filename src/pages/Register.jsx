@@ -56,8 +56,7 @@ const Register = ({ onRegister }) => {
                             className="register-logo-img animate-fade-in"
                         />
                     </div>
-                    <h2 className="register-title">Antes de comenzar...</h2>
-                    <p style={{ textAlign: 'center', marginBottom: '20px', color: '#666' }}>
+                    <p style={{ textAlign: 'center', marginBottom: '25px', color: '#111', fontWeight: '600', fontSize: '1.1rem', lineHeight: '1.4' }}>
                         Quieres conocer más de tu eneatipo, déjanos tus datos y te compartimos la información de forma gratuita
                     </p>
 
