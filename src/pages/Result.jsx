@@ -4,15 +4,15 @@ import { ExternalLink, RefreshCw, Share2 } from 'lucide-react';
 
 
 const enneagramImages = {
-    "1": "/Eneatipo 1 el reformador.png",
-    "2": "/Eneatipo 2 el servicial.png",
-    "3": "/Eneatipo 3 el competitito.png",
-    "4": "/Eneatipo 4 el creativo.png",
-    "5": "/Eneatipo 5 el analitico.png",
-    "6": "/Eneatipo 6 el leal.png",
-    "7": "/Eneatipo 7 el entusiasta.png",
-    "8": "/eneatipo 8 el lider.png",
-    "9": "/eneatipo 9 el conciliador.png"
+    "1": "/Eneatipo 1 el reformador.jpg",
+    "2": "/Eneatipo 2 el servicial.jpg",
+    "3": "/Eneatipo 3 el competitito.jpg",
+    "4": "/Eneatipo 4 el creativo.jpg",
+    "5": "/Eneatipo 5 el analitico.jpg",
+    "6": "/Eneatipo 6 el leal.jpg",
+    "7": "/Eneatipo 7 el entusiasta.jpg",
+    "8": "/eneatipo 8 el lider.jpg",
+    "9": "/eneatipo 9 el conciliador.jpg"
 };
 
 const enneagramDescriptions = {
@@ -51,7 +51,7 @@ const Result = ({ result, user, onReset }) => {
                     try {
                         const response = await fetch(imageUrl);
                         const blob = await response.blob();
-                        const file = new File([blob], 'resultado-eneagrama.png', { type: blob.type });
+                        const file = new File([blob], 'resultado-eneagrama.jpg', { type: blob.type });
 
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
                             shareData.files = [file];
