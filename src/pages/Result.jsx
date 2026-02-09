@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { getEnneagramInfo } from '../utils/calculator';
 import { ExternalLink, RefreshCw, Share2 } from 'lucide-react';
+import { supabase } from '../utils/supabaseClient';
 
 
 const enneagramImages = {
@@ -34,6 +35,42 @@ const Result = ({ result, user, onReset }) => {
 
     const { enneatype } = result;
     const info = getEnneagramInfo(enneatype);
+
+    // Save result to Supabase if user has an ID (checking if it looks like a UUID or just exists)
+    // Note: Our current ID is from Date.now() unless we got a UUID from Supabase.
+    // If the ID is a UUID (length 36), we update the record.
+    // If it's a timestamp, we might not have a record to update (unless we force created one with that ID, which we didn't).
+    // The Register page replaces the local 'user' with the one from DB (which has UUID).
+    // So 'user.id' should be the UUID from Supabase.
+
+    React.useEffect(() => {
+        const saveResult = async () => {
+            if (user?.id && enneatype) {
+                // Check if ID is likely a UUID (Supabase ID)
+                // Timestamps are shorter. UUIDs are 36 chars.
+                if (user.id.length > 20) {
+                    try {
+                        const { error } = await supabase
+                            .from('users')
+                            .update({ enneatype: enneatype.toString() })
+                            .eq('id', user.id);
+
+                        if (error) {
+                            console.error("Error updating result in Supabase:", error);
+                        } else {
+                            console.log("Result saved to Supabase");
+                        }
+                    } catch (err) {
+                        console.error("Error saving result:", err);
+                    }
+                } else {
+                    console.log("User ID is local-only, not saving to DB");
+                }
+            }
+        };
+
+        saveResult();
+    }, [user, enneatype]);
 
     const handleShare = async () => {
         const shareUrl = window.location.origin; // Redirects to Home

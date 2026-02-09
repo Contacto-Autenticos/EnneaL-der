@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../utils/supabaseClient';
 
 
 const Register = ({ onRegister }) => {
@@ -21,32 +22,49 @@ const Register = ({ onRegister }) => {
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (name && day && month && email && year) {
             setLoading(true);
 
-            // Construct date string (YYYY-MM-DD)
-            // Note: Month is 0-indexed in Date, but here we just store the string or index.
-            // Let's store readable format or ISO. The backend/test usually just needs a value.
-            // Let's us store "DD/MM/YYYY" or similar for display, or ISO for logic.
-            // Using a simple string format for now as requested by user flow (just data collection).
-            // Mapping month name to index for potential future logic if needed, 
-            // but distinct fields are often sent as is.
-            // Let's combine for the user object.
-            const birthDate = `${day} de ${month} de ${year}`;
+            // Construct date for storage (ISO format for DB is best, but we text for now based on strings)
+            // Let's try to format as YYYY-MM-DD for the date column
+            const monthIndex = months.indexOf(month) + 1;
+            const formattedDate = `${year}-${monthIndex.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-            // Create user object
-            const newUser = {
-                name,
-                birth_date: birthDate,
-                email,
-                id: Date.now().toString()
-            };
+            try {
+                // Insert into Supabase
+                const { data, error } = await supabase
+                    .from('users')
+                    .insert([
+                        {
+                            name,
+                            email,
+                            birth_date: formattedDate,
+                            // whatsapp: '', // Add if field exists in form later
+                        }
+                    ])
+                    .select(); // Return the inserted row to get the ID
 
-            onRegister(newUser);
-            setLoading(false);
-            navigate('/test');
+                if (error) {
+                    console.error('Error registering user:', error);
+                    alert('Hubo un error al registrar. Por favor intenta nuevamente.');
+                    setLoading(false);
+                    return;
+                }
+
+                if (data && data.length > 0) {
+                    const newUser = data[0];
+                    // Pass to parent/app which saves to localStorage
+                    onRegister(newUser);
+                    setLoading(false);
+                    navigate('/test');
+                }
+            } catch (err) {
+                console.error('Unexpected error:', err);
+                setLoading(false);
+                alert('Ocurrió un error inesperado.');
+            }
         }
     };
 
