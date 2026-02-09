@@ -58,7 +58,7 @@ function App() {
 
         <Route
           path="/register"
-          element={<Register onRegister={handleRegister} />}
+          element={<Register onRegister={handleRegister} result={testResult} />}
         />
 
         <Route

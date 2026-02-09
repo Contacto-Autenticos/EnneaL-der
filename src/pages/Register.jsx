@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 
-const Register = ({ onRegister }) => {
+const Register = ({ onRegister, result }) => {
     const [name, setName] = useState('');
     // Split date state
     const [day, setDay] = useState('');
@@ -40,8 +40,13 @@ const Register = ({ onRegister }) => {
             // Pass to parent/app which saves to localStorage
             onRegister(newUser);
             setLoading(false);
-            // Redirect to external URL for "Deepen more"
-            window.location.href = 'https://www.autenticos.co/9-tipos-de-liderazgo';
+            // Redirect based on Enneatype result
+            if (result && result.enneatype) {
+                window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${result.enneatype}`;
+            } else {
+                // Fallback if no result is present (e.g. direct access to register)
+                window.location.href = 'https://www.autenticos.co/9-tipos-de-liderazgo';
+            }
         }
     };
 
