@@ -47,9 +47,19 @@ const Register = ({ onRegister }) => {
                     .select(); // Return the inserted row to get the ID
 
                 if (error) {
-                    console.error('Error registering user:', error);
-                    alert('Hubo un error al registrar. Por favor intenta nuevamente.');
+                    console.error('Error registering user in Supabase:', error);
+                    // Fallback: Create a local user object so they can continue
+                    // We use a timestamp ID which won't sync to DB result effectively later, 
+                    // but at least unblocks the user.
+                    const fallbackUser = {
+                        name,
+                        email,
+                        birth_date: formattedDate,
+                        id: Date.now().toString()
+                    };
+                    onRegister(fallbackUser);
                     setLoading(false);
+                    navigate('/test');
                     return;
                 }
 
@@ -62,8 +72,16 @@ const Register = ({ onRegister }) => {
                 }
             } catch (err) {
                 console.error('Unexpected error:', err);
+                // Same fallback for unexpected errors
+                const fallbackUser = {
+                    name,
+                    email,
+                    birth_date: formattedDate,
+                    id: Date.now().toString()
+                };
+                onRegister(fallbackUser);
                 setLoading(false);
-                alert('Ocurrió un error inesperado.');
+                navigate('/test');
             }
         }
     };
