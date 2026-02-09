@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../utils/supabaseClient';
+
 
 
 const Register = ({ onRegister }) => {
@@ -11,7 +10,7 @@ const Register = ({ onRegister }) => {
     const [year, setYear] = useState('');
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+
 
     // Date helpers
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -22,67 +21,27 @@ const Register = ({ onRegister }) => {
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (name && day && month && email && year) {
             setLoading(true);
 
-            // Construct date for storage (ISO format for DB is best, but we text for now based on strings)
-            // Let's try to format as YYYY-MM-DD for the date column
             const monthIndex = months.indexOf(month) + 1;
             const formattedDate = `${year}-${monthIndex.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-            try {
-                // Insert into Supabase
-                const { data, error } = await supabase
-                    .from('users')
-                    .insert([
-                        {
-                            name,
-                            email,
-                            birth_date: formattedDate,
-                            // whatsapp: '', // Add if field exists in form later
-                        }
-                    ])
-                    .select(); // Return the inserted row to get the ID
+            // Create user object strictly for local use
+            const newUser = {
+                name,
+                email,
+                birth_date: formattedDate,
+                id: Date.now().toString()
+            };
 
-                if (error) {
-                    console.error('Error registering user in Supabase:', error);
-                    // Fallback: Create a local user object so they can continue
-                    // We use a timestamp ID which won't sync to DB result effectively later, 
-                    // but at least unblocks the user.
-                    const fallbackUser = {
-                        name,
-                        email,
-                        birth_date: formattedDate,
-                        id: Date.now().toString()
-                    };
-                    onRegister(fallbackUser);
-                    setLoading(false);
-                    navigate('/test');
-                    return;
-                }
-
-                if (data && data.length > 0) {
-                    const newUser = data[0];
-                    // Pass to parent/app which saves to localStorage
-                    onRegister(newUser);
-                    setLoading(false);
-                    navigate('/test');
-                }
-            } catch (err) {
-                console.error('Unexpected error:', err);
-                // Same fallback for unexpected errors
-                const fallbackUser = {
-                    name,
-                    email,
-                    birth_date: formattedDate,
-                    id: Date.now().toString()
-                };
-                onRegister(fallbackUser);
-                setLoading(false);
-                navigate('/test');
-            }
+            // Pass to parent/app which saves to localStorage
+            onRegister(newUser);
+            setLoading(false);
+            // Redirect to external URL for "Deepen more"
+            window.location.href = 'https://www.autenticos.co/9-tipos-de-liderazgo';
         }
     };
 

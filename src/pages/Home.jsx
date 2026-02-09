@@ -26,7 +26,7 @@ const Home = () => {
                 </p>
 
                 <button
-                    onClick={() => navigate('/register')}
+                    onClick={() => navigate('/test')}
                     className="btn-start"
                 >
                     Iniciar ahora <ArrowRight size={19} />

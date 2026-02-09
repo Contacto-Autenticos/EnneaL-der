@@ -63,13 +63,7 @@ function App() {
 
         <Route
           path="/test"
-          element={
-            user ? (
-              <Test onComplete={handleTestComplete} />
-            ) : (
-              <Navigate to="/register" replace />
-            )
-          }
+          element={<Test onComplete={handleTestComplete} />}
         />
 
         <Route
