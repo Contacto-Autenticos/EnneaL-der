@@ -6,21 +6,30 @@ import { questions, options } from '../data/questions';
 import { calculateResults } from '../utils/calculator';
 
 const Test = ({ onComplete }) => {
+    // Shuffle questions once on component mount
+    const [shuffledQuestions] = useState(() => {
+        const shuffled = [...questions];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    });
+
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
     const [direction, setDirection] = useState('next');
     const navigate = useNavigate();
 
-    const currentQuestion = questions[currentQuestionIndex];
-    const progress = ((currentQuestionIndex) / questions.length) * 100;
+    const currentQuestion = shuffledQuestions[currentQuestionIndex];
+    const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
 
     const handleAnswer = (value) => {
         const newAnswers = { ...answers, [currentQuestion.id]: value };
         setAnswers(newAnswers);
         setDirection('next');
 
-        // Auto-advance after a short delay if it's not the last question
-        if (currentQuestionIndex < questions.length - 1) {
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
             setTimeout(() => setCurrentQuestionIndex(currentQuestionIndex + 1), 300);
         } else {
             // If it's the last question, we just save the answer. 
@@ -44,7 +53,7 @@ const Test = ({ onComplete }) => {
     const handleNext = () => {
         // Only allow next if current question is answered
         if (answers[currentQuestion.id]) {
-            if (currentQuestionIndex < questions.length - 1) {
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
@@ -120,7 +129,7 @@ const Test = ({ onComplete }) => {
                 >
                     <div className="test-question-header">
                         <span className="test-question-count">
-                            Pregunta {currentQuestionIndex + 1} de {questions.length}
+                            Pregunta {currentQuestionIndex + 1} de {shuffledQuestions.length}
                         </span>
                         <h3 className="test-question-text">
                             {currentQuestion.text}
