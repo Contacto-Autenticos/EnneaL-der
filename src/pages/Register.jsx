@@ -57,17 +57,20 @@ const Register = ({ onRegister }) => {
                         />
                     </div>
                     <h2 className="register-title">Antes de comenzar...</h2>
+                    <p style={{ textAlign: 'center', marginBottom: '20px', color: '#666' }}>
+                        Quieres conocer más de tu eneatipo, déjanos tus datos y te compartimos la información de forma gratuita
+                    </p>
 
                     <form onSubmit={handleSubmit} className="register-form">
                         <div className="form-group">
-                            <label>Nombre</label>
+                            <label>Nombre y apellido</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
                                 className="form-input"
-                                placeholder="Tu nombre"
+                                placeholder="Tu nombre y apellido"
                             />
                         </div>
 
@@ -126,7 +129,7 @@ const Register = ({ onRegister }) => {
                             type="submit"
                             className="btn-submit"
                         >
-                            {loading ? 'Cargando...' : 'Continuar'}
+                            {loading ? 'Cargando...' : 'Enviar'}
                         </button>
                     </form>
                 </div>
