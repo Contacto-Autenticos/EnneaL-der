@@ -95,11 +95,13 @@ const Result = ({ result, user, onReset }) => {
                     display: 'flex',
                     justifyContent: 'center'
                 }}>
-                    <img
-                        src={enneagramImages[enneatype] || ""}
-                        alt={`Eneatipo ${enneatype}`}
-                        className="result-type-img animate-fade-in"
-                    />
+                    <div className="result-img-container animate-zoom-in">
+                        <img
+                            src={enneagramImages[enneatype] || ""}
+                            alt={`Eneatipo ${enneatype}`}
+                            className="result-type-img"
+                        />
+                    </div>
                 </div>
 
                 {/* Helper function to determine color based on Enneatype */}
