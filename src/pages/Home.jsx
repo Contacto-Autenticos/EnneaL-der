@@ -14,7 +14,7 @@ const Home = () => {
                     <img
                         src="/Circulo_Eneagrama_Autenticos_02.png"
                         alt="Logo Eneagrama - Autenticos"
-                        className="home-logo animate-fade-in"
+                        className="home-logo animate-zoom-in-slow"
                     />
                 </div>
 
