@@ -102,13 +102,31 @@ const Result = ({ result, user, onReset }) => {
                     />
                 </div>
 
-                <h1 style={{ fontSize: '1.8rem', lineHeight: 1.2, marginBottom: '5px' }}>
-                    <span style={{ color: '#002d44' }}>Eneatipo {enneatype} - </span>
-                    <span style={{ color: '#ddbe3d' }}>{info.name}</span>
-                </h1>
-                <h3 style={{ fontSize: '1.2rem', color: '#888', fontWeight: 400, marginBottom: '15px' }}>
-                    {info.role}
-                </h3>
+                {/* Helper function to determine color based on Enneatype */}
+                {(() => {
+                    const getNumberStyle = (type) => {
+                        const t = String(type);
+                        if (['8', '9', '1'].includes(t)) return { color: '#C0392B' }; // Metallic Red (Deep Red)
+                        if (['2', '3', '4'].includes(t)) return { color: '#27AE60' }; // Metallic Green
+                        if (['5', '6', '7'].includes(t)) return { color: '#2980B9' }; // Metallic Blue
+                        return { color: '#002d44' };
+                    };
+
+                    const numberStyle = getNumberStyle(enneatype);
+
+                    return (
+                        <>
+                            <h1 style={{ fontSize: '1.8rem', lineHeight: 1.2, marginBottom: '5px' }}>
+                                <span style={{ color: '#002d44' }}>Eneatipo </span>
+                                <span style={{ ...numberStyle, fontWeight: 'bold' }}>{enneatype}</span>
+                                <span style={{ color: '#002d44' }}> - {info.name}</span>
+                            </h1>
+                            <h3 style={{ fontSize: '1.2rem', color: '#ddbe3d', fontWeight: 600, marginBottom: '15px' }}>
+                                {info.role}
+                            </h3>
+                        </>
+                    );
+                })()}
 
                 <div style={{ maxWidth: '600px', fontSize: '0.95rem', color: '#555', marginBottom: '20px' }}>
                     <p style={{ marginBottom: '15px', whiteSpace: 'pre-line' }}>
