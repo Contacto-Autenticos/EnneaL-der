@@ -91,7 +91,7 @@ const Result = ({ result, user, onReset }) => {
                 </div>
 
                 <div style={{
-                    margin: '10px 0',
+                    margin: '30px 0',
                     display: 'flex',
                     justifyContent: 'center'
                 }}>
