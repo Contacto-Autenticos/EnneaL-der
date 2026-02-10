@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
 
 
 
@@ -37,16 +38,50 @@ const Register = ({ onRegister, result }) => {
                 id: Date.now().toString()
             };
 
-            // Pass to parent/app which saves to localStorage
-            onRegister(newUser);
-            setLoading(false);
-            // Redirect based on Enneatype result
-            if (result && result.enneatype) {
-                window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${result.enneatype}`;
-            } else {
-                // Fallback if no result is present (e.g. direct access to register)
-                window.location.href = 'https://www.autenticos.co/9-tipos-de-liderazgo';
-            }
+            // Save to Supabase
+            const saveToSupabase = async () => {
+                try {
+                    console.log("Attempting to save to Supabase...");
+                    const { data, error } = await supabase
+                        .from('user_leads')
+                        .insert([
+                            {
+                                full_name: name,
+                                email: email,
+                                birth_date: formattedDate,
+                                enneatype: result?.enneatype || null
+                            }
+                        ])
+                        .select();
+
+                    if (error) {
+                        console.error('Supabase Error:', error);
+                        alert(`Error guardando datos: ${error.message}`);
+                        return false;
+                    }
+                    console.log("Save successful:", data);
+                    return true;
+                } catch (err) {
+                    console.error('Unexpected error:', err);
+                    alert(`Error inesperado: ${err.message}`);
+                    return false;
+                }
+            };
+
+            // Execute save
+            saveToSupabase().then((success) => {
+                // Pass to parent/app which saves to localStorage
+                onRegister(newUser);
+                setLoading(false);
+
+                // Redirect based on Enneatype result
+                if (result && result.enneatype) {
+                    window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${result.enneatype}`;
+                } else {
+                    // Fallback if no result is present
+                    window.location.href = 'https://www.autenticos.co/9-tipos-de-liderazgo';
+                }
+            });
         }
     };
 
