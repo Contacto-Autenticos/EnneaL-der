@@ -41,8 +41,7 @@ const Register = ({ onRegister, result }) => {
             // Save to Supabase
             const saveToSupabase = async () => {
                 try {
-                    console.log("Attempting to save to Supabase...");
-                    const { data, error } = await supabase
+                    const { error } = await supabase
                         .from('user_leads')
                         .insert([
                             {
@@ -51,20 +50,13 @@ const Register = ({ onRegister, result }) => {
                                 birth_date: formattedDate,
                                 enneatype: result?.enneatype || null
                             }
-                        ])
-                        .select();
+                        ]);
 
                     if (error) {
-                        console.error('Supabase Error:', error);
-                        alert(`Error guardando datos: ${error.message}`);
-                        return false;
+                        console.error('Error storing lead:', error);
                     }
-                    console.log("Save successful:", data);
-                    return true;
                 } catch (err) {
-                    console.error('Unexpected error:', err);
-                    alert(`Error inesperado: ${err.message}`);
-                    return false;
+                    console.error('Unexpected error storing lead:', err);
                 }
             };
 
