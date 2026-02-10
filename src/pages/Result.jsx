@@ -84,8 +84,10 @@ const Result = ({ result, user, onReset }) => {
 
             <div className="container result-container">
                 <div style={{ marginBottom: '10px' }}>
-                    <span style={{ fontSize: '1rem', color: '#666' }}>Hola, {user?.name || 'Viajero'}</span>
-                    <h2 style={{ fontSize: '1.5rem', marginTop: '5px' }}>Tu estilo de liderazgo sugiere:</h2>
+                    <h2 style={{ fontSize: '1.5rem', marginTop: '5px', lineHeight: '1.4' }}>
+                        <span style={{ color: '#002d44', display: 'block' }}>Según tus respuestas,</span>
+                        <span style={{ color: '#ddbe3d', display: 'block' }}>este es tu estilo de liderazgo:</span>
+                    </h2>
                 </div>
 
                 <div style={{
