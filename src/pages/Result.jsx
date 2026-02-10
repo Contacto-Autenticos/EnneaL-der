@@ -86,7 +86,7 @@ const Result = ({ result, user, onReset }) => {
                 <div style={{ marginBottom: '10px' }}>
                     <h2 style={{ fontSize: '1.5rem', marginTop: '5px', lineHeight: '1.4' }}>
                         <span style={{ color: '#002d44', display: 'block' }}>Según tus respuestas,</span>
-                        <span style={{ color: '#ddbe3d', display: 'block' }}>este es tu estilo de liderazgo:</span>
+                        <span style={{ color: '#ddbe3d', display: 'block' }}>tu estilo de liderazgo es:</span>
                     </h2>
                 </div>
 
