@@ -11,13 +11,11 @@ const Home = () => {
         <div className="container home-container">
             <div className="home-content-wrapper">
                 <div className="home-logo-container">
-                    <div className="home-img-container animate-zoom-in-slow">
-                        <img
-                            src="/Circulo_Eneagrama_Autenticos_02.png"
-                            alt="Logo Eneagrama - Autenticos"
-                            className="home-logo"
-                        />
-                    </div>
+                    <img
+                        src="/Circulo_Eneagrama_Autenticos_02.png"
+                        alt="Logo Eneagrama - Autenticos"
+                        className="home-logo animate-zoom-in-slow"
+                    />
                 </div>
 
                 <h1 className="home-title">
