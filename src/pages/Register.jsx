@@ -62,7 +62,8 @@ const Register = ({ onRegister, result }) => {
                         />
                     </div>
                     <p style={{ textAlign: 'center', marginBottom: '25px', color: '#111', fontWeight: '600', fontSize: '1.1rem', lineHeight: '1.4' }}>
-                        Quieres conocer más de tu eneatipo, déjanos tus datos y te compartimos la información de forma gratuita
+                        ¿Quieres profundizar en tu eneatipo?<br />
+                        Déjanos tus datos y recibe esta valiosa información totalmente gratis.
                     </p>
 
                     <form onSubmit={handleSubmit} className="register-form">
