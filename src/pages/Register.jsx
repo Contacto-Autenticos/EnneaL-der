@@ -90,6 +90,10 @@ const Register = ({ onRegister, result }) => {
                             className="register-logo-img animate-fade-in"
                         />
                     </div>
+                    <p style={{ textAlign: 'center', marginBottom: '25px', color: '#111', fontWeight: '600', fontSize: '1.1rem', lineHeight: '1.4' }}>
+                        ¿Quieres conocer más de tu eneatipo?<br />
+                        Déjanos tus datos y accede gratis de inmediato
+                    </p>
                     <form onSubmit={handleSubmit} className="register-form">
                         <div className="form-group">
                             <label>Nombre y apellido</label>
