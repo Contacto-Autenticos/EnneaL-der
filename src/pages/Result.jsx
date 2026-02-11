@@ -156,18 +156,17 @@ const Result = ({ result, user, onReset }) => {
 
                 <div className="result-actions">
                     <button
-                        onClick={() => window.open('/register', '_blank')}
-                        className="btn-action"
-                    >
-                        Profundizar más <ExternalLink size={18} />
-                    </button>
-
-
-                    <button
                         onClick={handleShare}
                         className="btn-action btn-share"
                     >
                         Compartir <Share2 size={18} />
+                    </button>
+
+                    <button
+                        onClick={() => window.open('/register', '_blank')}
+                        className="btn-action"
+                    >
+                        Profundizar más <ExternalLink size={18} />
                     </button>
                 </div>
 
