@@ -90,17 +90,6 @@ const Register = ({ onRegister, result }) => {
                             className="register-logo-img animate-fade-in"
                         />
                     </div>
-                    <button
-                        onClick={() => navigate('/result')}
-                        className="btn-back-register"
-                    >
-                        <ArrowLeft size={18} /> Regresar
-                    </button>
-                    <p style={{ textAlign: 'center', marginBottom: '25px', color: '#111', fontWeight: '600', fontSize: '1.1rem', lineHeight: '1.4' }}>
-                        ¿Quieres profundizar en tu eneatipo?<br />
-                        Déjanos tus datos y accede gratis de inmediato
-                    </p>
-
                     <form onSubmit={handleSubmit} className="register-form">
                         <div className="form-group">
                             <label>Nombre y apellido</label>
@@ -172,6 +161,13 @@ const Register = ({ onRegister, result }) => {
                             {loading ? 'Cargando...' : 'Ver'}
                         </button>
                     </form>
+
+                    <button
+                        onClick={() => navigate('/result')}
+                        className="btn-back-register"
+                    >
+                        <ArrowLeft size={18} /> Regresar
+                    </button>
                 </div>
                 <div className="register-footer">
                     <img

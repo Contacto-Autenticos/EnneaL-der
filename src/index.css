@@ -311,8 +311,7 @@ h3 {
   align-items: center;
   gap: 8px;
   box-shadow: var(--shadow-md);
-  align-self: flex-start;
-  margin-bottom: 20px;
+  margin-top: 20px;
   text-decoration: none;
   border: none;
 }
