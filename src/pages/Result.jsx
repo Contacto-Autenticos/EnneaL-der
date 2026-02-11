@@ -51,7 +51,7 @@ const Result = ({ result, user, onReset }) => {
                 // Generate image from the ref
                 if (shareRef.current) {
                     const canvas = await html2canvas(shareRef.current, {
-                        backgroundColor: null, // Transparent/Use CSS background
+                        backgroundColor: '#ffffff', // Ensure white background
                         scale: 2, // High resolution
                         useCORS: true, // Allow loading remote images (if any)
                         logging: false,
@@ -109,24 +109,8 @@ const Result = ({ result, user, onReset }) => {
                     </h2>
                 </div>
 
-                <div ref={shareRef} style={{ position: 'relative', backgroundColor: '#fff', overflow: 'hidden', borderRadius: '10px' }}>
-                    <img
-                        src="/Circulo Eneagrama - Autenticos - gold-logo.png"
-                        alt=""
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: '90%', // Slightly smaller than full width to avoid edge clipping issues
-                            height: '90%',
-                            objectFit: 'contain',
-                            opacity: 0.2, // Watermark effect
-                            zIndex: 0,
-                            pointerEvents: 'none'
-                        }}
-                    />
-                    <div style={{ position: 'relative', zIndex: 1, padding: '10px' }}>
+                <div ref={shareRef} style={{ position: 'relative', backgroundColor: '#fff', overflow: 'hidden', borderRadius: '10px', padding: '20px' }}>
+                    <div style={{ position: 'relative', zIndex: 1 }}>
                         <div style={{
                             margin: '10px 0',
                             display: 'flex',
