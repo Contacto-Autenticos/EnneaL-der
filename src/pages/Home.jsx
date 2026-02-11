@@ -22,7 +22,8 @@ const Home = () => {
                     Eneagrama & Liderazgo
                 </h1>
                 <p className="home-description">
-                    Descubre quién eres y cuál es tu estilo de liderazgo dominante.
+                    Descubre quién eres y <br />
+                    cuál es tu estilo de liderazgo.
                 </p>
 
                 <button
