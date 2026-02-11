@@ -50,17 +50,17 @@ export const questions = [
   // Tipo X
   {
     id: 10,
-    text: "Cuando algo es difícil, prefiero enfocarme en lo positivo antes que quedarme en el malestar.",
+    text: "Cuando algo me hace sentir mal, busco rápidamente distraerme o pensar en algo más agradable.",
     type: "X",
   },
   {
     id: 11,
-    text: "Me cuesta permanecer mucho tiempo en emociones negativas.",
+    text: "Evito quedarme mucho tiempo en emociones dolorosas o limitantes.",
     type: "X",
   },
   {
     id: 12,
-    text: "Suelo moverme hacia algo que me haga sentir mejor cuando algo me preocupa.",
+    text: "Prefiero enfocarme en nuevas posibilidades antes que permanecer en lo que no salió bien.",
     type: "X",
   },
   // Tipo Y
