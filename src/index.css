@@ -416,10 +416,17 @@ h3 {
   display: block;
 }
 
+/* Share Mode Overrides */
+.result-img-container.share-mode {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 .share-mode .result-type-img {
   transform: none !important;
   object-fit: contain !important;
-  /* Optional padding to ensure it's not touching edges if contained */
+  opacity: 1 !important;
 }
 
 .result-actions {
