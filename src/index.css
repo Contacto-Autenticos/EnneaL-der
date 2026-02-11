@@ -394,8 +394,7 @@ h3 {
   /* Ensure positioning context for overlay */
 }
 
-.result-img-container::after {
-  content: '';
+.result-img-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -406,14 +405,6 @@ h3 {
   /* Inner shadow */
   pointer-events: none;
   z-index: 2;
-}
-
-.result-img-container.clean-capture {
-  box-shadow: none !important;
-}
-
-.result-img-container.clean-capture::after {
-  display: none !important;
 }
 
 .result-type-img {

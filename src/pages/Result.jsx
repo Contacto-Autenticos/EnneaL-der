@@ -54,13 +54,7 @@ const Result = ({ result, user, onReset }) => {
                         backgroundColor: '#ffffff', // Ensure white background
                         scale: 2, // High resolution
                         useCORS: true, // Allow loading remote images (if any)
-                        logging: false,
-                        onclone: (clonedDoc) => {
-                            const imgContainer = clonedDoc.querySelector('.result-img-container');
-                            if (imgContainer) {
-                                imgContainer.classList.add('clean-capture');
-                            }
-                        }
+                        logging: false
                     });
 
                     canvas.toBlob(async (blob) => {
@@ -121,6 +115,7 @@ const Result = ({ result, user, onReset }) => {
                                 alt={`Eneatipo ${enneatype}`}
                                 className="result-type-img"
                             />
+                            <div className="result-img-overlay" data-html2canvas-ignore="true"></div>
                         </div>
                     </div>
 
