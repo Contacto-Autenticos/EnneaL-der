@@ -169,7 +169,7 @@ const Result = ({ result, user, onReset }) => {
                     </button>
 
                     <button
-                        onClick={() => window.open('/register', '_blank')}
+                        onClick={() => navigate('/register')}
                         className="btn-action"
                     >
                         Profundizar más <ExternalLink size={18} />
