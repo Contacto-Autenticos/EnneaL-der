@@ -130,7 +130,7 @@ const Result = ({ result, user, onReset }) => {
 
                     <div style={{ position: 'relative', zIndex: 1, padding: '20px' }}>
                         <div style={{
-                            margin: '10px 0',
+                            margin: '10px 0 40px 0',
                             display: 'flex',
                             justifyContent: 'center'
                         }}>
