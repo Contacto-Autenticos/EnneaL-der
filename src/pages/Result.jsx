@@ -109,63 +109,73 @@ const Result = ({ result, user, onReset }) => {
                     </h2>
                 </div>
 
-                <div ref={shareRef} style={{
-                    backgroundColor: '#fff',
-                    backgroundImage: 'url("/Circulo Eneagrama - Autenticos - gold-logo.png")',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    padding: '20px',
-                    borderRadius: '10px'
-                }}>
-                    <div style={{
-                        margin: '30px 0',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}>
-                        <div className="result-img-container animate-zoom-in">
-                            <img
-                                src={enneagramImages[enneatype] || ""}
-                                alt={`Eneatipo ${enneatype}`}
-                                className="result-type-img"
-                            />
-                            <div className="result-img-overlay" data-html2canvas-ignore="true"></div>
+                <div ref={shareRef} style={{ position: 'relative', backgroundColor: '#fff', overflow: 'hidden', borderRadius: '10px' }}>
+                    <img
+                        src="/Circulo Eneagrama - Autenticos - gold-logo.png"
+                        alt=""
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '90%', // Slightly smaller than full width to avoid edge clipping issues
+                            height: '90%',
+                            objectFit: 'contain',
+                            opacity: 0.2, // Watermark effect
+                            zIndex: 0,
+                            pointerEvents: 'none'
+                        }}
+                    />
+                    <div style={{ position: 'relative', zIndex: 1, padding: '10px' }}>
+                        <div style={{
+                            margin: '10px 0',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}>
+                            <div className="result-img-container animate-zoom-in">
+                                <img
+                                    src={enneagramImages[enneatype] || ""}
+                                    alt={`Eneatipo ${enneatype}`}
+                                    className="result-type-img"
+                                />
+                                <div className="result-img-overlay" data-html2canvas-ignore="true"></div>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Helper function to determine color based on Enneatype */}
-                    {(() => {
-                        const getNumberStyle = (type) => {
-                            const t = String(type);
-                            if (['8', '9', '1'].includes(t)) return { color: '#C0392B' }; // Metallic Red (Deep Red)
-                            if (['2', '3', '4'].includes(t)) return { color: '#27AE60' }; // Metallic Green
-                            if (['5', '6', '7'].includes(t)) return { color: '#2980B9' }; // Metallic Blue
-                            return { color: '#002d44' };
-                        };
+                        {/* Helper function to determine color based on Enneatype */}
+                        {(() => {
+                            const getNumberStyle = (type) => {
+                                const t = String(type);
+                                if (['8', '9', '1'].includes(t)) return { color: '#C0392B' }; // Metallic Red (Deep Red)
+                                if (['2', '3', '4'].includes(t)) return { color: '#27AE60' }; // Metallic Green
+                                if (['5', '6', '7'].includes(t)) return { color: '#2980B9' }; // Metallic Blue
+                                return { color: '#002d44' };
+                            };
 
-                        const numberStyle = getNumberStyle(enneatype);
+                            const numberStyle = getNumberStyle(enneatype);
 
-                        return (
-                            <>
-                                <h1 style={{ fontSize: '1.8rem', lineHeight: 1.2, marginBottom: '5px' }}>
-                                    <span style={{ color: '#002d44' }}>Eneatipo </span>
-                                    <span style={{ ...numberStyle, fontWeight: 'bold' }}>{enneatype}</span>
-                                    <span style={{ color: '#002d44' }}> - {info.name}</span>
-                                </h1>
-                                <h3 style={{ fontSize: '1.2rem', color: '#ddbe3d', fontWeight: 600, marginBottom: '15px' }}>
-                                    {info.role}
-                                </h3>
-                            </>
-                        );
-                    })()}
+                            return (
+                                <>
+                                    <h1 style={{ fontSize: '1.8rem', lineHeight: 1.2, marginBottom: '5px' }}>
+                                        <span style={{ color: '#002d44' }}>Eneatipo </span>
+                                        <span style={{ ...numberStyle, fontWeight: 'bold' }}>{enneatype}</span>
+                                        <span style={{ color: '#002d44' }}> - {info.name}</span>
+                                    </h1>
+                                    <h3 style={{ fontSize: '1.2rem', color: '#ddbe3d', fontWeight: 600, marginBottom: '15px' }}>
+                                        {info.role}
+                                    </h3>
+                                </>
+                            );
+                        })()}
 
-                    <div style={{ maxWidth: '600px', fontSize: '0.95rem', color: '#555', marginBottom: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
-                        <p style={{ marginBottom: '15px', whiteSpace: 'pre-line' }}>
-                            {enneagramDescriptions[enneatype]}
-                        </p>
-                        <p>
-                            Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión.  El autoconocimiento es un proceso, no una etiqueta.
-                        </p>
+                        <div style={{ maxWidth: '600px', fontSize: '0.95rem', color: '#555', marginBottom: '10px', marginLeft: 'auto', marginRight: 'auto' }}>
+                            <p style={{ marginBottom: '15px', whiteSpace: 'pre-line' }}>
+                                {enneagramDescriptions[enneatype]}
+                            </p>
+                            <p>
+                                Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión.  El autoconocimiento es un proceso, no una etiqueta.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
