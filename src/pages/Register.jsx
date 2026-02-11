@@ -71,14 +71,14 @@ const Register = ({ onRegister, result }) => {
                                 3. Public Key: Found in your Account -> General
                             */
                             await emailjs.send(
-                                'YOUR_SERVICE_ID',
-                                'YOUR_TEMPLATE_ID',
+                                'service_29pk8s1',
+                                'template_6emj63o',
                                 {
                                     to_name: name,
                                     to_email: email,
                                     result_link: resultLink
                                 },
-                                'YOUR_PUBLIC_KEY'
+                                'jvBHZwalOIEABW7qV'
                             );
                             console.log('Email sent successfully');
                         } catch (emailError) {
