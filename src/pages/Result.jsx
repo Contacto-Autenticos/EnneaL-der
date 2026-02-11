@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
+import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 import { getEnneagramInfo } from '../utils/calculator';
 import { ExternalLink, RefreshCw, Share2 } from 'lucide-react';
@@ -40,33 +41,45 @@ const Result = ({ result, user, onReset }) => {
 
 
 
-    const handleShare = async () => {
-        const shareUrl = window.location.origin; // Redirects to Home
-        const imageUrl = enneagramImages[enneatype];
+    const shareRef = useRef(null);
 
-        let shareData = {
-            title: 'Eneagrama & Liderazgo',
-            text: `He descubierto que mi estilo de liderazgo es: ${info.name}. ¡Descubre el tuyo!`,
-            url: shareUrl,
-        };
+    const handleShare = async () => {
+        const shareUrl = window.location.origin;
 
         if (navigator.share) {
             try {
-                if (imageUrl) {
-                    try {
-                        const response = await fetch(imageUrl);
-                        const blob = await response.blob();
-                        const file = new File([blob], 'resultado-eneagrama.jpg', { type: blob.type });
+                // Generate image from the ref
+                if (shareRef.current) {
+                    const canvas = await html2canvas(shareRef.current, {
+                        backgroundColor: '#ffffff', // Ensure white background
+                        scale: 2, // High resolution
+                        useCORS: true, // Allow loading remote images (if any)
+                        logging: false
+                    });
 
-                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            shareData.files = [file];
+                    canvas.toBlob(async (blob) => {
+                        if (blob) {
+                            const file = new File([blob], 'mi-eneatipo.png', { type: 'image/png' });
+
+                            const shareData = {
+                                title: 'Eneagrama & Liderazgo',
+                                text: `He descubierto que mi estilo de liderazgo es: ${info.name}. ¡Descubre el tuyo en ${shareUrl}!`,
+                                files: [file]
+                            };
+
+                            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                                await navigator.share(shareData);
+                            } else {
+                                // Fallback if files sharing not supported
+                                await navigator.share({
+                                    title: 'Eneagrama & Liderazgo',
+                                    text: `He descubierto que mi estilo de liderazgo es: ${info.name}. ¡Descubre el tuyo!`,
+                                    url: shareUrl
+                                });
+                            }
                         }
-                    } catch (e) {
-                        console.warn("Could not load image for sharing", e);
-                    }
+                    }, 'image/png');
                 }
-
-                await navigator.share(shareData);
             } catch (error) {
                 console.log('Error sharing:', error);
             }
@@ -90,53 +103,55 @@ const Result = ({ result, user, onReset }) => {
                     </h2>
                 </div>
 
-                <div style={{
-                    margin: '30px 0',
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}>
-                    <div className="result-img-container animate-zoom-in">
-                        <img
-                            src={enneagramImages[enneatype] || ""}
-                            alt={`Eneatipo ${enneatype}`}
-                            className="result-type-img"
-                        />
+                <div ref={shareRef} style={{ background: 'transparent', padding: '10px', borderRadius: '10px' }}>
+                    <div style={{
+                        margin: '30px 0',
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        <div className="result-img-container animate-zoom-in">
+                            <img
+                                src={enneagramImages[enneatype] || ""}
+                                alt={`Eneatipo ${enneatype}`}
+                                className="result-type-img"
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {/* Helper function to determine color based on Enneatype */}
-                {(() => {
-                    const getNumberStyle = (type) => {
-                        const t = String(type);
-                        if (['8', '9', '1'].includes(t)) return { color: '#C0392B' }; // Metallic Red (Deep Red)
-                        if (['2', '3', '4'].includes(t)) return { color: '#27AE60' }; // Metallic Green
-                        if (['5', '6', '7'].includes(t)) return { color: '#2980B9' }; // Metallic Blue
-                        return { color: '#002d44' };
-                    };
+                    {/* Helper function to determine color based on Enneatype */}
+                    {(() => {
+                        const getNumberStyle = (type) => {
+                            const t = String(type);
+                            if (['8', '9', '1'].includes(t)) return { color: '#C0392B' }; // Metallic Red (Deep Red)
+                            if (['2', '3', '4'].includes(t)) return { color: '#27AE60' }; // Metallic Green
+                            if (['5', '6', '7'].includes(t)) return { color: '#2980B9' }; // Metallic Blue
+                            return { color: '#002d44' };
+                        };
 
-                    const numberStyle = getNumberStyle(enneatype);
+                        const numberStyle = getNumberStyle(enneatype);
 
-                    return (
-                        <>
-                            <h1 style={{ fontSize: '1.8rem', lineHeight: 1.2, marginBottom: '5px' }}>
-                                <span style={{ color: '#002d44' }}>Eneatipo </span>
-                                <span style={{ ...numberStyle, fontWeight: 'bold' }}>{enneatype}</span>
-                                <span style={{ color: '#002d44' }}> - {info.name}</span>
-                            </h1>
-                            <h3 style={{ fontSize: '1.2rem', color: '#ddbe3d', fontWeight: 600, marginBottom: '15px' }}>
-                                {info.role}
-                            </h3>
-                        </>
-                    );
-                })()}
+                        return (
+                            <>
+                                <h1 style={{ fontSize: '1.8rem', lineHeight: 1.2, marginBottom: '5px' }}>
+                                    <span style={{ color: '#002d44' }}>Eneatipo </span>
+                                    <span style={{ ...numberStyle, fontWeight: 'bold' }}>{enneatype}</span>
+                                    <span style={{ color: '#002d44' }}> - {info.name}</span>
+                                </h1>
+                                <h3 style={{ fontSize: '1.2rem', color: '#ddbe3d', fontWeight: 600, marginBottom: '15px' }}>
+                                    {info.role}
+                                </h3>
+                            </>
+                        );
+                    })()}
 
-                <div style={{ maxWidth: '600px', fontSize: '0.95rem', color: '#555', marginBottom: '20px' }}>
-                    <p style={{ marginBottom: '15px', whiteSpace: 'pre-line' }}>
-                        {enneagramDescriptions[enneatype]}
-                    </p>
-                    <p>
-                        Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión.  El autoconocimiento es un proceso, no una etiqueta.
-                    </p>
+                    <div style={{ maxWidth: '600px', fontSize: '0.95rem', color: '#555', marginBottom: '20px', marginLeft: 'auto', marginRight: 'auto' }}>
+                        <p style={{ marginBottom: '15px', whiteSpace: 'pre-line' }}>
+                            {enneagramDescriptions[enneatype]}
+                        </p>
+                        <p>
+                            Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión.  El autoconocimiento es un proceso, no una etiqueta.
+                        </p>
+                    </div>
                 </div>
 
                 <div className="result-actions">
