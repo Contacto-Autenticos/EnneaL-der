@@ -54,7 +54,13 @@ const Result = ({ result, user, onReset }) => {
                         backgroundColor: '#ffffff', // Ensure white background
                         scale: 2, // High resolution
                         useCORS: true, // Allow loading remote images (if any)
-                        logging: false
+                        logging: false,
+                        onclone: (clonedDoc) => {
+                            const imgContainer = clonedDoc.querySelector('.result-img-container');
+                            if (imgContainer) {
+                                imgContainer.classList.add('clean-capture');
+                            }
+                        }
                     });
 
                     canvas.toBlob(async (blob) => {
