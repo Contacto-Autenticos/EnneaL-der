@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 
 
@@ -56,6 +57,34 @@ const Register = ({ onRegister, result }) => {
 
                     if (error) {
                         console.error('Error storing lead:', error);
+                    } else {
+                        // Send Email on successful DB insert
+                        const resultLink = result && result.enneatype
+                            ? `https://www.autenticos.co/eneagrama-eneatipo-${result.enneatype}`
+                            : 'https://www.autenticos.co/9-tipos-de-liderazgo';
+
+                        try {
+                            /* 
+                                REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL EMAILJS CREDENTIALS:
+                                1. Service ID: Create a service in EmailJS (select Gmail)
+                                2. Template ID: Create an email template
+                                3. Public Key: Found in your Account -> General
+                            */
+                            await emailjs.send(
+                                'YOUR_SERVICE_ID',
+                                'YOUR_TEMPLATE_ID',
+                                {
+                                    to_name: name,
+                                    to_email: email,
+                                    result_link: resultLink
+                                },
+                                'YOUR_PUBLIC_KEY'
+                            );
+                            console.log('Email sent successfully');
+                        } catch (emailError) {
+                            console.error('Failed to send email:', emailError);
+                            // We don't block the user flow if email fails, just log it
+                        }
                     }
                 } catch (err) {
                     console.error('Unexpected error storing lead:', err);
