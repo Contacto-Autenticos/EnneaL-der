@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 
 
 const Register = ({ onRegister, result }) => {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     // Split date state
     const [day, setDay] = useState('');
@@ -88,9 +90,15 @@ const Register = ({ onRegister, result }) => {
                             className="register-logo-img animate-fade-in"
                         />
                     </div>
+                    <button
+                        onClick={() => navigate('/result')}
+                        className="btn-back-register"
+                    >
+                        <ArrowLeft size={18} /> Regresar
+                    </button>
                     <p style={{ textAlign: 'center', marginBottom: '25px', color: '#111', fontWeight: '600', fontSize: '1.1rem', lineHeight: '1.4' }}>
                         ¿Quieres profundizar en tu eneatipo?<br />
-                        Déjanos tus datos y recibe esta valiosa información totalmente gratis.
+                        Déjanos tus datos y accede gratis de inmediato
                     </p>
 
                     <form onSubmit={handleSubmit} className="register-form">
@@ -161,7 +169,7 @@ const Register = ({ onRegister, result }) => {
                             type="submit"
                             className="btn-submit"
                         >
-                            {loading ? 'Cargando...' : 'Enviar'}
+                            {loading ? 'Cargando...' : 'Ver'}
                         </button>
                     </form>
                 </div>
