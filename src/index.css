@@ -419,7 +419,6 @@ h3 {
 .share-mode .result-type-img {
   transform: none !important;
   object-fit: contain !important;
-  padding: 10px;
   /* Optional padding to ensure it's not touching edges if contained */
 }
 

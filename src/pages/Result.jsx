@@ -51,7 +51,7 @@ const Result = ({ result, user, onReset }) => {
                 // Generate image from the ref
                 if (shareRef.current) {
                     const canvas = await html2canvas(shareRef.current, {
-                        backgroundColor: '#ffffff', // Ensure white background
+                        backgroundColor: null, // Transparent/Use CSS background
                         scale: 2, // High resolution
                         useCORS: true, // Allow loading remote images (if any)
                         logging: false,
@@ -109,7 +109,15 @@ const Result = ({ result, user, onReset }) => {
                     </h2>
                 </div>
 
-                <div ref={shareRef} style={{ background: 'transparent', padding: '10px', borderRadius: '10px' }}>
+                <div ref={shareRef} style={{
+                    backgroundColor: '#fff',
+                    backgroundImage: 'url("/Circulo Eneagrama - Autenticos - gold-logo.png")',
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    padding: '20px',
+                    borderRadius: '10px'
+                }}>
                     <div style={{
                         margin: '30px 0',
                         display: 'flex',
