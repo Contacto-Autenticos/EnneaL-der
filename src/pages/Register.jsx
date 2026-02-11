@@ -65,26 +65,23 @@ const Register = ({ onRegister, result }) => {
                             : 'https://www.autenticos.co/9-tipos-de-liderazgo';
 
                         try {
-                            /* 
-                                REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL EMAILJS CREDENTIALS:
-                                1. Service ID: Create a service in EmailJS (select Gmail)
-                                2. Template ID: Create an email template
-                                3. Public Key: Found in your Account -> General
-                            */
-                            await emailjs.send(
+                            // Explicitly initialize with public key
+                            emailjs.init('jvBHZwalOIEABW7qV');
+
+                            const response = await emailjs.send(
                                 'service_29pk8s1',
                                 'template_6emj63o',
                                 {
                                     to_name: name,
                                     to_email: email,
                                     result_link: resultLink
-                                },
-                                'jvBHZwalOIEABW7qV'
+                                }
                             );
-                            console.log('Email sent successfully');
+                            console.log('Email sent successfully!', response.status, response.text);
                         } catch (emailError) {
-                            console.error('Failed to send email:', emailError);
-                            // We don't block the user flow if email fails, just log it
+                            console.error('Failed to send email. Error details:', emailError);
+                            // Log specific EmailJS error if available
+                            if (emailError.text) console.error('EmailJS Error Text:', emailError.text);
                         }
                     }
                 } catch (err) {
@@ -93,7 +90,7 @@ const Register = ({ onRegister, result }) => {
             };
 
             // Execute save
-            saveToSupabase().then((success) => {
+            saveToSupabase().then(() => {
                 // Pass to parent/app which saves to localStorage
                 onRegister(newUser);
                 setLoading(false);
