@@ -123,10 +123,12 @@ const Test = ({ onComplete }) => {
                             const val = Math.min(4, Math.max(1, Math.round(percent * 3 + 1)));
                             handleAnswer(val);
                         }}>
-                            <div
-                                className="test-slider-track-fill"
-                                style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
-                            />
+                            <div className="test-slider-rail">
+                                <div
+                                    className="test-slider-track-fill"
+                                    style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
+                                />
+                            </div>
                             {[1, 2, 3, 4].map((val) => (
                                 <div
                                     key={val}
