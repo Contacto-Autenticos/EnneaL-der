@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 import { getEnneagramInfo } from '../utils/calculator';
-import { ExternalLink, RefreshCw, Share2 } from 'lucide-react';
+import { Search, RefreshCw, Share2 } from 'lucide-react';
 
 
 
@@ -36,7 +36,7 @@ const Result = ({ result, user, onReset }) => {
     // If no result, redirect (though App routes handle this too)
     if (!result) return <div style={{ padding: '2rem', textAlign: 'center' }}>No hay resultados disponibles. <button onClick={() => window.location.href = '/test'}>Realizar Test</button></div>;
 
-    const { enneatype } = result;
+    const { dominant, second, clarity, clarityText, isVersatile, enneatype } = result;
     const info = getEnneagramInfo(enneatype);
 
 
@@ -157,6 +157,10 @@ const Result = ({ result, user, onReset }) => {
                             <p style={{ marginBottom: '15px', whiteSpace: 'pre-line' }}>
                                 {enneagramDescriptions[enneatype]}
                             </p>
+
+
+
+
                             <p>
                                 Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión.  El autoconocimiento es un proceso, no una etiqueta.
                             </p>
@@ -174,10 +178,10 @@ const Result = ({ result, user, onReset }) => {
                     </button>
 
                     <button
-                        onClick={() => navigate('/register')}
+                        onClick={() => navigate('/detailed-result')}
                         className="btn-action"
                     >
-                        Profundizar más <ExternalLink size={18} />
+                        Resultado detallado <Search size={18} />
                     </button>
                 </div>
 
@@ -194,6 +198,14 @@ const Result = ({ result, user, onReset }) => {
                 >
                     <RefreshCw size={14} /> Realizar test nuevamente
                 </button>
+
+                <div className="result-footer">
+                    <img
+                        src="/Auténticos - Logo Azul-OP2.png"
+                        alt="Logo Auténticos"
+                        className="result-footer-logo"
+                    />
+                </div>
             </div>
         </div>
     );

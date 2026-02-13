@@ -98,7 +98,7 @@ export const questions = [
 ];
 
 export const options = [
-  { value: 1, label: "Poco", points: 0 },
+  { value: 1, label: "Muy poco", points: 0 },
   { value: 2, label: "Algo", points: 1 },
   { value: 3, label: "Mucho", points: 2 },
   { value: 4, label: "Totalmente", points: 3 },

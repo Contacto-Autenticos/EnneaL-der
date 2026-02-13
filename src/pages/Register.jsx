@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
 
@@ -117,7 +117,7 @@ const Register = ({ onRegister, result }) => {
                             className="register-logo-img animate-fade-in"
                         />
                     </div>
-                    <p style={{ textAlign: 'center', marginBottom: '25px', color: '#111', fontWeight: '600', fontSize: '1.1rem', lineHeight: '1.4' }}>
+                    <p style={{ textAlign: 'center', marginBottom: '30px', color: '#111', fontWeight: '600', fontSize: '1rem', lineHeight: '1.3' }}>
                         ¿Quieres conocer más de tu eneatipo?<br />
                         Déjanos tus datos y accede gratis de inmediato.
                     </p>
@@ -185,20 +185,22 @@ const Register = ({ onRegister, result }) => {
                             />
                         </div>
 
-                        <button
-                            type="submit"
-                            className="btn-submit"
-                        >
-                            {loading ? 'Cargando...' : 'Ver'}
-                        </button>
+                        <div className="register-buttons-row">
+                            <button
+                                type="button"
+                                onClick={() => navigate('/result')}
+                                className="btn-back-register"
+                            >
+                                <ArrowLeft size={18} /> Regresar
+                            </button>
+                            <button
+                                type="submit"
+                                className="btn-submit"
+                            >
+                                {loading ? 'Cargando...' : 'Ver'} <Eye size={18} />
+                            </button>
+                        </div>
                     </form>
-
-                    <button
-                        onClick={() => navigate('/result')}
-                        className="btn-back-register"
-                    >
-                        <ArrowLeft size={18} /> Regresar
-                    </button>
                 </div>
                 <div className="register-footer">
                     <img

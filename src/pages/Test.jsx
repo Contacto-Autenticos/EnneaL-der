@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { questions, options } from '../data/questions';
-
 import { calculateResults } from '../utils/calculator';
 
 const Test = ({ onComplete }) => {
-    // Shuffle questions once on component mount
     const [shuffledQuestions] = useState(() => {
         const shuffled = [...questions];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -22,25 +20,27 @@ const Test = ({ onComplete }) => {
     const navigate = useNavigate();
 
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
-    const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+    const totalQuestions = shuffledQuestions.length;
 
     const handleAnswer = (value) => {
         const newAnswers = { ...answers, [currentQuestion.id]: value };
         setAnswers(newAnswers);
-        setDirection('next');
 
-        if (currentQuestionIndex < shuffledQuestions.length - 1) {
-            setTimeout(() => setCurrentQuestionIndex(currentQuestionIndex + 1), 300);
-        } else {
-            // If it's the last question, we just save the answer. 
-            // The user can click "Next" (which we might turn into "Finish" logic or keep auto-advance?)
-            // Let's keep auto-advance for flow, but manual navigation is for corrections.
-            // Actually, if we add next/prev, auto-advance can be annoying if you are trying to change an answer.
-            // But for the first pass, auto-advance is expected in these tests.
-            // We'll keep auto-finish for the last question.
-            onComplete(newAnswers);
-            navigate('/result');
-        }
+        // Auto-advance after a short delay
+        setTimeout(() => {
+            if (currentQuestionIndex < totalQuestions - 1) {
+                setDirection('next');
+                setCurrentQuestionIndex(prev => prev + 1);
+            } else {
+                onComplete(newAnswers);
+                navigate('/result');
+            }
+        }, 150);
+    };
+
+    const handleSliderChange = (e) => {
+        const value = parseInt(e.target.value);
+        setAnswers({ ...answers, [currentQuestion.id]: value });
     };
 
     const handlePrev = () => {
@@ -51,9 +51,8 @@ const Test = ({ onComplete }) => {
     };
 
     const handleNext = () => {
-        // Only allow next if current question is answered
         if (answers[currentQuestion.id]) {
-            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+            if (currentQuestionIndex < totalQuestions - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
@@ -63,49 +62,12 @@ const Test = ({ onComplete }) => {
         }
     };
 
-    const renderStars = (label) => {
-        const starSize = 18;
-        const gold = "#ddbe3d"; // var(--color-primary)
-        const gray = "#e0e0e0";
-
-        if (label === "Poco") {
-            return (
-                <div style={{ display: 'flex', gap: '2px' }}>
-                    <Star size={starSize} fill={gray} stroke={gold} strokeWidth={2} />
-                </div>
-            );
-        }
-        if (label === "Algo") {
-            return (
-                <div style={{ display: 'flex', gap: '2px' }}>
-                    <Star size={starSize} fill={gold} stroke={gold} strokeWidth={0} />
-                </div>
-            );
-        }
-        if (label === "Mucho") {
-            return (
-                <div style={{ display: 'flex', gap: '2px' }}>
-                    <Star size={starSize} fill={gold} stroke={gold} strokeWidth={0} />
-                    <Star size={starSize} fill={gold} stroke={gold} strokeWidth={0} />
-                </div>
-            );
-        }
-        if (label === "Totalmente") {
-            return (
-                <div style={{ display: 'flex', gap: '2px' }}>
-                    <Star size={starSize} fill={gold} stroke={gold} strokeWidth={0} />
-                    <Star size={starSize} fill={gold} stroke={gold} strokeWidth={0} />
-                    <Star size={starSize} fill={gold} stroke={gold} strokeWidth={0} />
-                </div>
-            );
-        }
-        return null;
-    };
+    const sliderLabels = ["Muy poco", "Algo", "Mucho", "Totalmente"];
+    const currentValue = answers[currentQuestion.id] || 0;
 
     return (
-
         <div className="test-page">
-            {/* Header Banner - Full Width */}
+            {/* Header Banner */}
             <div className="test-banner">
                 <img
                     src="/Eneagrama banner 03.png"
@@ -115,11 +77,11 @@ const Test = ({ onComplete }) => {
             </div>
 
             <div className="test-container">
-                {/* Progress Bar */}
+                {/* Top Progress Bar */}
                 <div className="test-progress-bar-bg">
                     <div
                         className="test-progress-bar-fill"
-                        style={{ width: `${progress}%` }}
+                        style={{ width: `${((currentQuestionIndex) / totalQuestions) * 100}%` }}
                     />
                 </div>
 
@@ -127,55 +89,91 @@ const Test = ({ onComplete }) => {
                     key={currentQuestionIndex}
                     className={`test-content-wrapper question-anim-${direction}`}
                 >
+                    {/* Question Header */}
                     <div className="test-question-header">
-                        <span className="test-question-count">
-                            Pregunta {currentQuestionIndex + 1} de {shuffledQuestions.length}
-                        </span>
+                        <p className="test-instruction-text">
+                            Responde con honestidad espontánea
+                        </p>
                         <h3 className="test-question-text">
                             {currentQuestion.text}
                         </h3>
                     </div>
 
-                    <div className="test-interaction-wrapper">
-                        <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>
+                    {/* Slider Answer */}
+                    <div className="test-slider-wrapper">
+                        <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
                             Me describe:
                         </p>
-
-                        <div className="test-options-container">
-                            {options.map((option) => (
-                                <button
-                                    key={option.value}
-                                    onClick={() => handleAnswer(option.value)}
-                                    className={`option-card test-btn-option ${answers[currentQuestion.id] === option.value ? 'selected' : ''}`}
+                        <div className="test-slider-labels">
+                            {sliderLabels.map((label, idx) => (
+                                <span
+                                    key={label}
+                                    className={`test-slider-label ${currentValue === idx + 1 ? 'active' : ''}`}
+                                    style={{ left: `${(idx / 3) * 100}%` }}
+                                    onClick={() => handleAnswer(idx + 1)}
                                 >
-                                    <span>{option.label}</span>
-                                    {renderStars(option.label)}
-                                </button>
+                                    {label}
+                                </span>
                             ))}
                         </div>
-
-                        {/* Navigation Buttons */}
-                        <div className="test-navigation">
-                            <button
-                                onClick={handlePrev}
-                                disabled={currentQuestionIndex === 0}
-                                className={`btn-nav ${currentQuestionIndex === 0 ? 'disabled' : ''}`}
-                                aria-label="Anterior"
-                            >
-                                <ChevronLeft size={24} />
-                            </button>
-
-                            <button
-                                onClick={handleNext}
-                                disabled={!answers[currentQuestion.id]}
-                                className={`btn-nav ${!answers[currentQuestion.id] ? 'disabled' : ''}`}
-                                aria-label="Siguiente"
-                            >
-                                <ChevronRight size={24} />
-                            </button>
+                        <div className="test-slider-track" onClick={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const percent = x / rect.width;
+                            const val = Math.min(4, Math.max(1, Math.round(percent * 3 + 1)));
+                            handleAnswer(val);
+                        }}>
+                            <div
+                                className="test-slider-track-fill"
+                                style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
+                            />
+                            {[1, 2, 3, 4].map((val) => (
+                                <div
+                                    key={val}
+                                    className={`test-slider-dot ${currentValue >= val ? 'filled' : ''} ${currentValue === val ? 'active' : ''}`}
+                                    style={{ left: `${((val - 1) / 3) * 100}%` }}
+                                    onClick={(e) => { e.stopPropagation(); handleAnswer(val); }}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
+
+                {/* Bottom Navigation: Arrows + Dots */}
+                <div className="test-bottom-nav">
+                    <button
+                        onClick={handlePrev}
+                        disabled={currentQuestionIndex === 0}
+                        className={`btn-nav ${currentQuestionIndex === 0 ? 'disabled' : ''}`}
+                        aria-label="Anterior"
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+
+                    <div className="test-dots-wrapper">
+                        <div className="test-dots">
+                            {shuffledQuestions.map((_, idx) => (
+                                <span
+                                    key={idx}
+                                    className={`test-dot ${idx <= currentQuestionIndex ? 'test-dot-active' : ''}`}
+                                />
+                            ))}
+                        </div>
+                        <span className="test-dots-counter">
+                            {currentQuestionIndex + 1}/{totalQuestions}
+                        </span>
+                    </div>
+
+                    <button
+                        onClick={handleNext}
+                        disabled={!answers[currentQuestion.id]}
+                        className={`btn-nav ${!answers[currentQuestion.id] ? 'disabled' : ''}`}
+                        aria-label="Siguiente"
+                    >
+                        <ChevronRight size={24} />
+                    </button>
+                </div>
+
                 {/* Footer Logo */}
                 <div className="test-footer">
                     <img

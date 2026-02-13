@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Test from './pages/Test';
 import Result from './pages/Result';
+import DetailedResult from './pages/DetailedResult';
 import Admin from './pages/Admin';
 import { calculateResults } from './utils/calculator';
 
@@ -76,6 +77,18 @@ function App() {
             )
           }
         />
+
+        <Route
+          path="/detailed-result"
+          element={
+            testResult ? (
+              <DetailedResult result={testResult} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+
         <Route path="/admin" element={<Admin />} />
         {/* Redirect any other route to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
