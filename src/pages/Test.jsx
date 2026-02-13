@@ -92,7 +92,7 @@ const Test = ({ onComplete }) => {
                     {/* Question Header */}
                     <div className="test-question-header">
                         <p className="test-instruction-text">
-                            Responde con honestidad espontánea
+                            Responde con honestidad espontánea.
                         </p>
                         <h3 className="test-question-text">
                             {currentQuestion.text}
