@@ -585,7 +585,7 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 15px 70px;
+  padding: 0 45px 70px;
 }
 
 .test-slider-labels {
@@ -606,6 +606,12 @@ h3 {
   cursor: pointer;
   transition: all 0.2s;
   user-select: none;
+}
+
+@media (max-width: 380px) {
+  .test-slider-label {
+    font-size: 0.75rem;
+  }
 }
 
 .test-slider-label.active {
