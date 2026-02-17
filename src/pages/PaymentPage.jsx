@@ -13,8 +13,10 @@ const PaymentPage = ({ user, result }) => {
     const [localPrice, setLocalPrice] = useState(null);
 
     const BASE_PRICE_COP = 37000;
+    const FE_VERSION = "fe-v3-diag";
 
     useEffect(() => {
+        console.log(`🚀 Iniciando PaymentPage [${FE_VERSION}]`);
         const init = async () => {
             const data = await getVisitorData();
             setVisitorData(data);
