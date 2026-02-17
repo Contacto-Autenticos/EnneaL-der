@@ -72,16 +72,20 @@ const PaymentPage = ({ user, result }) => {
                     throw new Error(`Error en firma: ${error.message || JSON.stringify(error)}`);
                 }
 
+                console.log('Respuesta cruda de Supabase:', data);
+
                 if (data?.signature) {
                     signature = data.signature;
-                    console.log('✅ Firma recibida correctamente.');
+                    console.log(`✅ Firma recibida (${data._fv || 'v-old'}):`, signature);
                     if (data._debug) {
                         setDiagInfo(data._debug);
                         const d = data._debug;
-                        console.log(`🔍 Diagnóstico Firma: Prefijo=${d.prefix}, Largo=${d.length}, Test=${d.isTest}, Prod=${d.isProd}`);
+                        console.log(`🔍 Diagnóstico: Prefijo=${d.prefix}, Largo=${d.length}, Test=${d.isTest}, Prod=${d.isProd}`);
+                    } else {
+                        console.warn('⚠️ La respuesta no contiene el objeto _debug.');
                     }
                 } else {
-                    console.warn('⚠️ No se recibió firma en la respuesta.');
+                    console.warn('⚠️ La respuesta no contiene una firma.');
                 }
             } catch (sigErr) {
                 console.error('FALLO EN FIRMA:', sigErr);
