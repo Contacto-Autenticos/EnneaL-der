@@ -12,7 +12,7 @@ import AdvancedTest from './pages/AdvancedTest';
 import AdvancedAnalysisResult from './pages/AdvancedAnalysisResult';
 import PaymentPage from './pages/PaymentPage';
 import emailjs from '@emailjs/browser';
-import { calculateResults, calculateAdvancedResults } from './utils/calculator';
+import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
 import { advancedEnneagramInfo } from './data/advancedInfo';
 
 function App() {
@@ -82,6 +82,7 @@ function App() {
             to_name: user.name,
             to_email: user.email,
             result_link: resultLink,
+            result_image: getEnneagramEmailImage(type),
             enneatype_name: result.winner.name,
             enneatype_number: type,
             miedo_basico: details.motivations.fear,

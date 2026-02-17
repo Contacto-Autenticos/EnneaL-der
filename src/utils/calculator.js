@@ -65,6 +65,25 @@ export const getEnneagramInfo = (type) => {
 };
 
 /**
+ * Enneagram Email Image Map (Google Drive Direct Links)
+ */
+export const getEnneagramEmailImage = (type) => {
+    const links = {
+        "1": "https://lh3.googleusercontent.com/d/13HqdsIB_zooWe-fR3O3-FU5aF_czYQAb",
+        "2": "https://lh3.googleusercontent.com/d/15bLGn4HaUKjTqmhjQ1QYfQrTNATsIbr3",
+        "3": "https://lh3.googleusercontent.com/d/1zw8nhJqZ5XJAQlClpQJufV5g54i7UpUc",
+        "4": "https://lh3.googleusercontent.com/d/1v4tb36sEpXjZ77TCsBGB1loRzwxXy9xe",
+        "5": "https://lh3.googleusercontent.com/d/1lA2m6N6w2MzAM77FN9KHs66j3jimNaZn",
+        "6": "https://lh3.googleusercontent.com/d/1_94KbfSfKr_B-dNnhzzRD6PwNmUsjkqY",
+        "7": "https://lh3.googleusercontent.com/d/1HhmckigiHCT5TPkNjZ5EF4rL1XQQfgKK",
+        "8": "https://lh3.googleusercontent.com/d/1IgdoEgwQN8yVAWUI4BqMcHvvrdvLoLZs",
+        "9": "https://lh3.googleusercontent.com/d/1JlII1sRooMxr-Qr7IzW_wuLbQmf14ad2"
+    };
+    // Default to a generic coin if type not found, or use T1
+    return links[String(type)] || links["1"];
+};
+
+/**
  * Main calculation function — Direct Sum System
  */
 export const calculateResults = (answers) => {
