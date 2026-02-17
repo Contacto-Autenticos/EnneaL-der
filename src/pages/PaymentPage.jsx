@@ -66,8 +66,7 @@ const PaymentPage = ({ user, result }) => {
             }
 
             // Wompi Production Public Key
-            // IMPORTANT: Replace with pub_prod_... when ready
-            const WOMPI_PUBLIC_KEY = 'pub_test_krxpyuZrgZjZAitMsHHfLbogQie4ddW8';
+            const WOMPI_PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
 
             const checkout = new window.WidgetCheckout({
                 currency: 'COP',
