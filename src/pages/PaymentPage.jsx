@@ -31,6 +31,8 @@ const PaymentPage = ({ user, result }) => {
         init();
     }, []);
 
+    const [diagInfo, setDiagInfo] = useState(null);
+
     const handleBack = () => {
         navigate('/advanced-intro');
     };
@@ -74,6 +76,7 @@ const PaymentPage = ({ user, result }) => {
                     signature = data.signature;
                     console.log('✅ Firma recibida correctamente.');
                     if (data._debug) {
+                        setDiagInfo(data._debug);
                         const d = data._debug;
                         console.log(`🔍 Diagnóstico Firma: Prefijo=${d.prefix}, Largo=${d.length}, Test=${d.isTest}, Prod=${d.isProd}`);
                     }
@@ -114,7 +117,11 @@ const PaymentPage = ({ user, result }) => {
 
             // Si el error menciona la firma, intentamos dar más contexto
             if (errorStr.includes("inválida") || errorStr.includes("signature")) {
-                technicalInfo = "\n\n💡 Pista: Verifica que el Secreto de Integridad en Supabase sea el de PRUEBAS (inicia con 'test_') ya que el sitio está en modo Sandbox.";
+                const diagMsg = diagInfo
+                    ? `\n\n🔍 Datos detectados:\n- Prefijo: ${diagInfo.prefix}\n- Largo: ${diagInfo.length}\n- ¿Es de prueba?: ${diagInfo.isTest ? 'Sí' : 'No'}`
+                    : "\n\n⚠️ No se detectaron datos de diagnóstico.";
+
+                technicalInfo = `\n\n💡 Pista: Verifica que el Secreto de Integridad en Supabase coincida con el modo Sandbox.${diagMsg}`;
             }
 
             alert(`Error al iniciar el pago: ${err.message || errorStr}${technicalInfo}\n\nPor favor, verifica tu conexión o intenta nuevamente.`);
