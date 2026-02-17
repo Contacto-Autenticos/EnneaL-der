@@ -47,11 +47,12 @@ const PaymentPage = ({ user, result }) => {
 
         setLoading(true);
         try {
-            const reference = `ennea_${Date.now()}`;
-            const amountInCents = BASE_PRICE_COP * 100;
+            // Use a simpler reference (only numbers) just in case
+            const reference = `T${Date.now()}`;
+            const amountInCents = Math.floor(BASE_PRICE_COP * 100);
             let signature = null;
 
-            console.log('[Payment Debug] Initiating signature build for:', { reference, amountInCents, currency: 'COP' });
+            console.log('[Payment Debug] Initiating signature build:', { reference, amountInCents, currency: 'COP' });
 
             // 1. Get Integrity Signature from Backend
             try {
