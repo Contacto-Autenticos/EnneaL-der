@@ -73,16 +73,15 @@ const PaymentPage = ({ user, result }) => {
                 if (data?.signature) {
                     signature = data.signature;
                     console.log('✅ Firma recibida correctamente.');
-                    if (data._debugSecret) {
-                        console.log(`🔍 Depuración Secreto (inicio): ${data._debugSecret}`);
+                    if (data._debug) {
+                        const d = data._debug;
+                        console.log(`🔍 Diagnóstico Firma: Prefijo=${d.prefix}, Largo=${d.length}, Test=${d.isTest}, Prod=${d.isProd}`);
                     }
                 } else {
                     console.warn('⚠️ No se recibió firma en la respuesta.');
                 }
             } catch (sigErr) {
                 console.error('FALLO EN FIRMA:', sigErr);
-                // Si la firma es obligatoria, esto detendrá el proceso
-                // alert(`No se pudo obtener la firma de seguridad: ${sigErr.message}`);
             }
 
             // Wompi Public Key - MODO PRUEBA (Sandbox)
@@ -110,9 +109,15 @@ const PaymentPage = ({ user, result }) => {
 
         } catch (err) {
             console.error('Error crítico en handlePay:', err);
-            // If it's a Supabase error (has specific fields) or a network error
-            const errorMsg = err.message || (typeof err === 'string' ? err : JSON.stringify(err));
-            alert(`Error al iniciar el pago: ${errorMsg}.\nPor favor, verifica tu conexión o intenta nuevamente.`);
+            const errorStr = String(err);
+            let technicalInfo = "";
+
+            // Si el error menciona la firma, intentamos dar más contexto
+            if (errorStr.includes("inválida") || errorStr.includes("signature")) {
+                technicalInfo = "\n\n💡 Pista: Verifica que el Secreto de Integridad en Supabase sea el de PRUEBAS (inicia con 'test_') ya que el sitio está en modo Sandbox.";
+            }
+
+            alert(`Error al iniciar el pago: ${err.message || errorStr}${technicalInfo}\n\nPor favor, verifica tu conexión o intenta nuevamente.`);
         } finally {
             console.log('Carga finalizada.');
             setLoading(false);
@@ -201,7 +206,8 @@ const PaymentPage = ({ user, result }) => {
                                 minHeight: '30px'
                             }}
                             onError={(e) => {
-                                e.target.src = "https://static.wompi.co/assets/img/logos-medios-pago.png";
+                                // Fallback a una imagen genérica si falla la de Wompi
+                                e.target.style.display = 'none';
                             }}
                         />
                     </div>

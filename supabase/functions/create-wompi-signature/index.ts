@@ -19,10 +19,12 @@ serve(async (req) => {
     }
 
     try {
-        if (!WOMPI_INTEGRITY_SECRET) {
-            console.error("CRITICAL: WOMPI_INTEGRITY_SECRET is missing in environment variables.");
+        const secret = WOMPI_INTEGRITY_SECRET?.trim();
+
+        if (!secret) {
+            console.error("CRITICAL: WOMPI_INTEGRITY_SECRET is missing or empty.");
             return new Response(
-                JSON.stringify({ error: "Missing WOMPI_INTEGRITY_SECRET" }),
+                JSON.stringify({ error: "Missing WOMPI_INTEGRITY_SECRET in Supabase Secrets" }),
                 { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
             )
         }
@@ -30,18 +32,25 @@ serve(async (req) => {
         const { amountInCents, currency, reference } = await req.json()
 
         // Structure: reference + amountInCents + currency + integritySecret
-        const chain = `${reference}${amountInCents}${currency}${WOMPI_INTEGRITY_SECRET}`
+        const chain = `${reference}${amountInCents}${currency}${secret}`
+
+        console.log(`Hashing chain (masked): ${reference}${amountInCents}${currency}${secret.substring(0, 4)}***`);
 
         const msgUint8 = new TextEncoder().encode(chain)
         const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8)
         const hashArray = Array.from(new Uint8Array(hashBuffer))
         const signature = hashArray.map(b => b.toString(16).padStart(2, "0")).join("")
 
-        // Masked secret for debugging (e.g. "test_..." vs "prod_...")
-        const maskedSecret = `${WOMPI_INTEGRITY_SECRET.substring(0, 4)}***`
+        // Diagnostic info
+        const debugInfo = {
+            prefix: secret.substring(0, 5),
+            length: secret.length,
+            isTest: secret.startsWith('test'),
+            isProd: secret.startsWith('prod')
+        };
 
         return new Response(
-            JSON.stringify({ signature, _debugSecret: maskedSecret }),
+            JSON.stringify({ signature, _debug: debugInfo }),
             { headers: { ...corsHeaders, "Content-Type": "application/json" } }
         )
     } catch (error: any) {
