@@ -19,6 +19,14 @@ serve(async (req) => {
     }
 
     try {
+        if (!WOMPI_INTEGRITY_SECRET) {
+            console.error("CRITICAL: WOMPI_INTEGRITY_SECRET is missing in environment variables.");
+            return new Response(
+                JSON.stringify({ error: "Missing WOMPI_INTEGRITY_SECRET" }),
+                { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            )
+        }
+
         const { amountInCents, currency, reference } = await req.json()
 
         // Structure: reference + amountInCents + currency + integritySecret
@@ -29,8 +37,11 @@ serve(async (req) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer))
         const signature = hashArray.map(b => b.toString(16).padStart(2, "0")).join("")
 
+        // Masked secret for debugging (e.g. "test_..." vs "prod_...")
+        const maskedSecret = `${WOMPI_INTEGRITY_SECRET.substring(0, 4)}***`
+
         return new Response(
-            JSON.stringify({ signature }),
+            JSON.stringify({ signature, _debugSecret: maskedSecret }),
             { headers: { ...corsHeaders, "Content-Type": "application/json" } }
         )
     } catch (error: any) {

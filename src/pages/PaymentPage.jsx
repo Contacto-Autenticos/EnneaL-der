@@ -73,6 +73,9 @@ const PaymentPage = ({ user, result }) => {
                 if (data?.signature) {
                     signature = data.signature;
                     console.log('✅ Firma recibida correctamente.');
+                    if (data._debugSecret) {
+                        console.log(`🔍 Depuración Secreto (inicio): ${data._debugSecret}`);
+                    }
                 } else {
                     console.warn('⚠️ No se recibió firma en la respuesta.');
                 }
