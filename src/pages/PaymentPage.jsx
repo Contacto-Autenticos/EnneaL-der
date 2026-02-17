@@ -121,13 +121,16 @@ const PaymentPage = ({ user, result }) => {
             const errorStr = String(err);
             let technicalInfo = "";
 
-            // Si el error menciona la firma, intentamos dar más contexto
-            if (errorStr.includes("inválida") || errorStr.includes("signature")) {
-                const diagMsg = diagInfo
-                    ? `\n\n🔍 Datos detectados:\n- Prefijo: ${diagInfo.prefix}\n- Largo: ${diagInfo.length}\n- ¿Es de prueba?: ${diagInfo.isTest ? 'Sí' : 'No'}`
-                    : "\n\n⚠️ No se detectaron datos de diagnóstico.";
+            // Wompi Public Key for verification
+            const PK = 'pub_test_krxpyuZrgZjZAitMsHHfLbogQie4ddW8';
 
-                technicalInfo = `\n\n💡 Pista: Verifica que el Secreto de Integridad en Supabase coincida con el modo Sandbox.${diagMsg}`;
+            if (errorStr.includes("inválida") || errorStr.includes("signature") || diagInfo) {
+                const d = diagInfo;
+                technicalInfo = d
+                    ? `\n\n🔍 Datos de la Firma:\n- Referencia: ${d.ref}\n- Monto: ${d.amount}\n- Moneda: ${d.curr}\n- Llave Pública: ${PK}\n- Prefijo Secreto: ${d.prefix}\n- Largo Secreto: ${d.length}\n- ¿Es de prueba?: ${d.isTest ? 'Sí' : 'No'}`
+                    : `\n\n⚠️ No se detectaron datos de diagnóstico de la función.`;
+
+                technicalInfo += `\n\n💡 Sugerencia: Compara estos datos con tu panel de Wompi.`;
             }
 
             alert(`Error al iniciar el pago: ${err.message || errorStr}${technicalInfo}\n\nPor favor, verifica tu conexión o intenta nuevamente.`);
