@@ -80,6 +80,14 @@ const PaymentPage = ({ user, result }) => {
 
             console.log('[Payment Debug] Opening Wompi Widget with Public Key:', WOMPI_PUBLIC_KEY);
 
+            if (!signature) {
+                console.warn('[Payment Debug] Proceeding without signature (this may fail in production)');
+            }
+
+            if (typeof window.WidgetCheckout !== 'function') {
+                throw new Error('Wompi WidgetCheckout no es una función. ¿Se cargó el script?');
+            }
+
             const checkout = new window.WidgetCheckout({
                 currency: 'COP',
                 amountInCents: amountInCents,
@@ -100,7 +108,9 @@ const PaymentPage = ({ user, result }) => {
 
         } catch (err) {
             console.error('[Payment Debug] Top-level payment error:', err);
-            alert(`No pudimos iniciar el proceso de pago: ${err.message || 'Error desconocido'}`);
+            // Better error reporting for the user
+            const errorMsg = err instanceof Error ? err.message : JSON.stringify(err);
+            alert(`No pudimos iniciar el proceso de pago. Detalle técnico: ${errorMsg || 'Error vacío'}`);
         } finally {
             setLoading(false);
         }
