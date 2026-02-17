@@ -36,7 +36,7 @@ const Home = () => {
 
             <div className="home-footer">
                 <img
-                    src="/Auténticos - Logo Azul-OP2.png"
+                    src="/logo-azul.png"
                     alt="Auténticos Logo Azul"
                     className="home-footer-logo"
                 />

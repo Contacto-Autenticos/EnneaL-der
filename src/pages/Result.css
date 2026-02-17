@@ -1,0 +1,314 @@
+.result-page {
+    animation: fadeIn 0.5s ease-in;
+    background-image: url("/Montañas 02.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.result-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.result-header {
+    margin-bottom: 15px;
+}
+
+.result-title {
+    color: #002d44;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.result-chart-wrapper {
+    margin-bottom: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.result-summary-text {
+    color: #444;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.top-results-cards {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result-card {
+    background-color: #f5f7f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.advanced-analysis-note {
+    color: #666;
+    margin-bottom: 30px;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.action-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    max-width: 500px;
+    margin: 10px auto 0;
+}
+
+.action-buttons-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-result {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-repeat {
+    flex: 1;
+    font-weight: 600;
+    background-color: transparent;
+    color: #002d44;
+    border: 2px solid #002d44;
+}
+
+.btn-repeat:hover {
+    background-color: #f5f5f5;
+}
+
+.btn-register {
+    width: auto;
+    min-width: 160px;
+    font-weight: 600;
+    background-color: transparent;
+    color: #444;
+    border: 2px solid #e0e0e0;
+}
+
+.btn-register:hover {
+    background-color: #f9f9f9;
+    border-color: #ccc;
+}
+
+.btn-advanced {
+    flex: 1.5;
+    font-weight: 700;
+    background-color: #ddbe3d;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(221, 190, 61, 0.4);
+}
+
+.btn-advanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(221, 190, 61, 0.5);
+}
+
+
+/* Enneatype Modal Styles */
+.ennea-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+    padding: 20px;
+}
+
+.ennea-modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh;
+    padding: 35px 30px;
+    border-radius: 28px;
+    position: relative;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    animation: slideUp 0.3s ease-out;
+}
+
+.ennea-modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.ennea-modal-title {
+    color: #002d44;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.ennea-modal-role {
+    color: #ddbe3d;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.ennea-modal-coin {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.ennea-modal-coin-wrapper {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 5px 10px 25px rgba(0, 0, 0, 0.7);
+    /* Directional defined shadow matching reference */
+    background: transparent;
+    /* Ensure no white background */
+}
+
+.ennea-modal-coin img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.17);
+    /* Scale slightly closer as in single page */
+    display: block;
+}
+
+.ennea-modal-description {
+    text-align: center;
+    color: #333;
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.ennea-modal-disclaimer {
+    margin-top: 25px;
+    font-style: italic;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.ennea-modal-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.modal-btn-back,
+.modal-btn-share {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-btn-back {
+    background: transparent;
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.modal-btn-back:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.modal-btn-share {
+    background: #ddbe3d;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(221, 190, 61, 0.4);
+}
+
+.modal-btn-share:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(221, 190, 61, 0.5);
+}
+
+@media (max-width: 600px) {
+    .action-buttons-row {
+        flex-direction: column-reverse;
+        gap: 15px;
+    }
+
+    .btn-repeat,
+    .btn-register,
+    .btn-advanced {
+        width: 100%;
+        flex: none;
+    }
+
+    .ennea-modal-content {
+        padding: 40px 20px 30px;
+    }
+
+    .ennea-modal-title {
+        font-size: 1.4rem;
+    }
+
+    .ennea-modal-coin img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .ennea-modal-footer {
+        flex-direction: column-reverse;
+    }
+}

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Eye } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
+import { getEnneagramInfo } from '../utils/calculator';
+import './Register.css';
 
 
 
@@ -61,12 +63,18 @@ const Register = ({ onRegister, result }) => {
                     } else {
                         // Send Email on successful DB insert
                         const resultLink = result && result.enneatype
-                            ? `https://www.autenticos.co/eneagrama-eneatipo-${result.enneatype}`
-                            : 'https://www.autenticos.co/9-tipos-de-liderazgo';
+                            ? `${window.location.origin}/result/${result.enneatype}`
+                            : `${window.location.origin}/result`;
 
                         try {
                             // Explicitly initialize with public key
                             emailjs.init('jvBHZwalOIEABW7qV');
+
+                            // Get enneatype info for the image URL
+                            const enneaInfo = result?.enneatype ? getEnneagramInfo(result.enneatype) : null;
+                            const productionUrl = 'https://enesencia.autenticos.co';
+                            const imagePath = enneaInfo?.image || '/moneda-autenticos.png';
+                            const resultImage = `${productionUrl}${imagePath}`;
 
                             const response = await emailjs.send(
                                 'service_29pk8s1',
@@ -74,10 +82,11 @@ const Register = ({ onRegister, result }) => {
                                 {
                                     to_name: name,
                                     to_email: email,
-                                    result_link: resultLink
+                                    result_link: resultLink,
+                                    result_image: resultImage
                                 }
                             );
-                            console.log('Email sent successfully!', response.status, response.text);
+                            console.log('Email sent successfully!', response.status, response.text, 'Image sent:', resultImage);
                         } catch (emailError) {
                             console.error('Failed to send email. Error details:', emailError);
                             // Log specific EmailJS error if available
@@ -112,7 +121,7 @@ const Register = ({ onRegister, result }) => {
                 <div className="register-content-wrapper">
                     <div className="register-logo-container">
                         <img
-                            src="/Moneda-autenticos.png"
+                            src="/moneda-autenticos.png"
                             alt="Logo Auténticos"
                             className="register-logo-img animate-fade-in"
                         />
@@ -204,7 +213,7 @@ const Register = ({ onRegister, result }) => {
                 </div>
                 <div className="register-footer">
                     <img
-                        src="/Auténticos - Logo Azul-OP2.png"
+                        src="/logo-azul.png"
                         alt="Logo Auténticos"
                         className="register-footer-logo"
                     />

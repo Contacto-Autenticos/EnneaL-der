@@ -1,26 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { questions, options } from '../data/questions';
-import { calculateResults } from '../utils/calculator';
+import { advancedQuestions, advancedOptions } from '../data/advancedQuestions';
 
-const Test = ({ onComplete }) => {
-    const [shuffledQuestions] = useState(() => {
-        const shuffled = [...questions];
+const AdvancedTest = ({ topTypes, onComplete }) => {
+    // Filter and shuffle questions for the top 3 types
+    const filteredQuestions = useMemo(() => {
+        if (!topTypes || topTypes.length === 0) return [];
+
+        // Filter questions belonging to the top types
+        const relevant = advancedQuestions.filter(q => topTypes.includes(q.enneatype));
+
+        // Shuffle them
+        const shuffled = [...relevant];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
-    });
+    }, [topTypes]);
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
     const [direction, setDirection] = useState('next');
     const navigate = useNavigate();
 
-    const currentQuestion = shuffledQuestions[currentQuestionIndex];
-    const totalQuestions = shuffledQuestions.length;
+    const currentQuestion = filteredQuestions[currentQuestionIndex];
+    const totalQuestions = filteredQuestions.length;
+
+    if (totalQuestions === 0) {
+        return <div className="test-container">Cargando análisis avanzado...</div>;
+    }
 
     const handleAnswer = (value) => {
         const newAnswers = { ...answers, [currentQuestion.id]: value };
@@ -33,14 +43,9 @@ const Test = ({ onComplete }) => {
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
                 onComplete(newAnswers);
-                navigate('/result');
+                navigate('/advanced-analysis-result');
             }
         }, 150);
-    };
-
-    const handleSliderChange = (e) => {
-        const value = parseInt(e.target.value);
-        setAnswers({ ...answers, [currentQuestion.id]: value });
     };
 
     const handlePrev = () => {
@@ -51,13 +56,13 @@ const Test = ({ onComplete }) => {
     };
 
     const handleNext = () => {
-        if (answers[currentQuestion.id]) {
+        if (answers[currentQuestion.id] !== undefined) {
             if (currentQuestionIndex < totalQuestions - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
                 onComplete(answers);
-                navigate('/result');
+                navigate('/advanced-analysis-result');
             }
         }
     };
@@ -67,7 +72,6 @@ const Test = ({ onComplete }) => {
 
     return (
         <div className="test-page">
-            {/* Header Banner */}
             <div className="test-banner">
                 <img
                     src="/Eneagrama banner 03.png"
@@ -77,7 +81,6 @@ const Test = ({ onComplete }) => {
             </div>
 
             <div className="test-container">
-                {/* Top Progress Bar */}
                 <div className="test-progress-bar-bg">
                     <div
                         className="test-progress-bar-fill"
@@ -89,17 +92,15 @@ const Test = ({ onComplete }) => {
                     key={currentQuestionIndex}
                     className={`test-content-wrapper question-anim-${direction}`}
                 >
-                    {/* Question Header */}
                     <div className="test-question-header">
                         <p className="test-instruction-text">
-                            Responde con honestidad espontánea.
+                            Análisis Avanzado: Responde con honestidad.
                         </p>
                         <h3 className="test-question-text">
                             {currentQuestion.text}
                         </h3>
                     </div>
 
-                    {/* Slider Answer */}
                     <div className="test-slider-wrapper">
                         <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
                             Me describe:
@@ -108,9 +109,9 @@ const Test = ({ onComplete }) => {
                             {sliderLabels.map((label, idx) => (
                                 <span
                                     key={label}
-                                    className={`test-slider-label ${currentValue === idx + 1 ? 'active' : ''}`}
+                                    className={`test-slider-label ${answers[currentQuestion.id] === idx ? 'active' : ''}`}
                                     style={{ left: `${(idx / 3) * 100}%` }}
-                                    onClick={() => handleAnswer(idx + 1)}
+                                    onClick={() => handleAnswer(idx)}
                                 >
                                     {label}
                                 </span>
@@ -120,20 +121,20 @@ const Test = ({ onComplete }) => {
                             const rect = e.currentTarget.getBoundingClientRect();
                             const x = e.clientX - rect.left;
                             const percent = x / rect.width;
-                            const val = Math.min(4, Math.max(1, Math.round(percent * 3 + 1)));
+                            const val = Math.min(3, Math.max(0, Math.round(percent * 3)));
                             handleAnswer(val);
                         }}>
                             <div className="test-slider-rail">
                                 <div
                                     className="test-slider-track-fill"
-                                    style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
+                                    style={{ width: answers[currentQuestion.id] !== undefined ? `${(answers[currentQuestion.id] / 3) * 100}%` : '0%' }}
                                 />
                             </div>
-                            {[1, 2, 3, 4].map((val) => (
+                            {[0, 1, 2, 3].map((val) => (
                                 <div
                                     key={val}
-                                    className={`test-slider-dot ${currentValue >= val ? 'filled' : ''} ${currentValue === val ? 'active' : ''}`}
-                                    style={{ left: `${((val - 1) / 3) * 100}%` }}
+                                    className={`test-slider-dot ${answers[currentQuestion.id] >= val ? 'filled' : ''} ${answers[currentQuestion.id] === val ? 'active' : ''}`}
+                                    style={{ left: `${(val / 3) * 100}%` }}
                                     onClick={(e) => { e.stopPropagation(); handleAnswer(val); }}
                                 />
                             ))}
@@ -141,7 +142,6 @@ const Test = ({ onComplete }) => {
                     </div>
                 </div>
 
-                {/* Bottom Navigation: Arrows + Dots */}
                 <div className="test-bottom-nav">
                     <button
                         onClick={handlePrev}
@@ -154,7 +154,7 @@ const Test = ({ onComplete }) => {
 
                     <div className="test-dots-wrapper">
                         <div className="test-dots">
-                            {shuffledQuestions.map((_, idx) => (
+                            {filteredQuestions.map((_, idx) => (
                                 <span
                                     key={idx}
                                     className={`test-dot ${idx <= currentQuestionIndex ? 'test-dot-active' : ''}`}
@@ -168,15 +168,14 @@ const Test = ({ onComplete }) => {
 
                     <button
                         onClick={handleNext}
-                        disabled={!answers[currentQuestion.id]}
-                        className={`btn-nav ${!answers[currentQuestion.id] ? 'disabled' : ''}`}
+                        disabled={answers[currentQuestion.id] === undefined}
+                        className={`btn-nav ${answers[currentQuestion.id] === undefined ? 'disabled' : ''}`}
                         aria-label="Siguiente"
                     >
                         <ChevronRight size={24} />
                     </button>
                 </div>
 
-                {/* Footer Logo */}
                 <div className="test-footer">
                     <img
                         src="/logo-azul.png"
@@ -189,4 +188,4 @@ const Test = ({ onComplete }) => {
     );
 };
 
-export default Test;
+export default AdvancedTest;

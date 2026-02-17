@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
+import './DetailedResult.css';
 
 const clarityMessages = {
     clear: "Según tus respuestas, este resultado refleja con gran probabilidad tu tipo de personalidad.",
@@ -92,27 +93,28 @@ const DetailedResult = ({ result }) => {
                     Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión. El autoconocimiento es un proceso, no una etiqueta.
                 </p>
 
+
                 {/* Actions */}
                 <div className="result-actions">
                     <button
                         onClick={() => navigate('/result')}
-                        className="btn-action btn-share"
+                        className="btn-action btn-secondary-transparent"
                     >
                         <ArrowLeft size={18} /> Regresar
                     </button>
 
                     <button
                         onClick={() => navigate('/register')}
-                        className="btn-action"
+                        className="btn-action btn-primary-gold"
                     >
-                        Profundizar más <ExternalLink size={18} />
+                        Profundizar <ExternalLink size={18} />
                     </button>
                 </div>
 
                 {/* Brand footer */}
                 <div className="detailed-brand-footer">
                     <img
-                        src="/Auténticos - Logo Azul-OP2.png"
+                        src="/logo-azul.png"
                         alt="Logo Auténticos"
                         className="register-footer-logo"
                     />

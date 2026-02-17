@@ -1,0 +1,130 @@
+.advanced-intro {
+    padding: 40px 20px 80px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    display: block !important;
+    /* Change from flex to allow natural flow */
+}
+
+.advanced-intro .home-content-wrapper {
+    display: block;
+    /* Allow content to grow naturally */
+    height: auto;
+    min-height: 0;
+}
+
+.advanced-intro .home-footer {
+    margin-top: 50px;
+    padding-bottom: 20px;
+}
+
+.advanced-intro .home-logo {
+    max-width: 325px;
+    margin: 0 auto;
+    display: block;
+}
+
+.advanced-intro .home-logo-container {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.advanced-form-section {
+    width: 100%;
+    max-width: 450px;
+    margin: 40px auto 0;
+    text-align: left;
+}
+
+.advanced-form-instruction {
+    font-size: 1.05rem;
+    color: #333;
+    font-weight: 400;
+    /* Lighter look */
+    line-height: 1.4;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.advanced-reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group-adv {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group-adv label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.adv-input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.adv-input:focus {
+    border-color: #ddbe3d;
+    box-shadow: 0 0 0 3px rgba(221, 190, 61, 0.1);
+}
+
+.date-grid-adv {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.privacy-note {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 10px 0 20px;
+    line-height: 1.4;
+}
+
+.btn-start-adv {
+    background: #ddbe3d;
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.3);
+    width: 100%;
+}
+
+.btn-start-adv:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.4);
+}
+
+.btn-start-adv:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+@media (max-width: 600px) {
+    .advanced-form-section {
+        padding: 0 10px;
+    }
+}

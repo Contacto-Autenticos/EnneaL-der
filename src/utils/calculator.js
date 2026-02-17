@@ -1,30 +1,76 @@
-import { questions, options } from "../data/questions.js";
+﻿import { questions, options } from "../data/questions.js";
+import { advancedQuestions, advancedOptions } from "../data/advancedQuestions.js";
 
 /**
  * Enneagram Info Map
  */
 export const getEnneagramInfo = (type) => {
     const info = {
-        "1": { name: "El Reformador", role: "Idealista, ético, perfeccionista" },
-        "2": { name: "El Servicial", role: "Cálido, generoso, complaciente" },
-        "3": { name: "El Competitivo", role: "Eficiente, realizador, orientado al éxito" },
-        "4": { name: "El Creativo", role: "Sensible, profundo, diferente" },
-        "5": { name: "El Analitico", role: "Investigador, reservado, observador" },
-        "6": { name: "El Leal", role: "Comprometido, precavido, confiable" },
-        "7": { name: "El Entusiasta", role: "Optimista, espontáneo, inquieto" },
-        "8": { name: "El Lider", role: "Intenso, firme, protector" },
-        "9": { name: "El Conciliador", role: "Tranquilo, pacificador, adaptable" },
+        "1": {
+            name: "El Reformador",
+            role: "Idealista, ético, perfeccionista",
+            description: "Lideras desde principios claros y un fuerte sentido de lo correcto.\nTienes una capacidad natural para ordenar, mejorar y elevar estándares.\nBuscas coherencia entre lo que piensas, sientes y haces.\nCuando confías en tu criterio, inspiras respeto y credibilidad.",
+            image: "/eneatipo-1.jpg"
+        },
+        "2": {
+            name: "El Servicial",
+            role: "Cálido, generoso, complaciente",
+            description: "Tu liderazgo nace del cuidado genuino por las personas.\nDetectas necesidades con facilidad y sabes crear vínculos de confianza.\nAportas calidez, apoyo y sentido humano a cualquier equipo.\nCuando lideras desde la conciencia, generas compromiso real.",
+            image: "/eneatipo-2.jpg"
+        },
+        "3": {
+            name: "El Competitivo",
+            role: "Eficiente, realizador, orientado al éxito",
+            description: "Te mueves con enfoque, energía y orientación a resultados.\nSabes adaptarte y mostrar lo mejor de ti en cada contexto.\nTu liderazgo impulsa el logro y motiva al alto desempeño.\nCuando actúas desde la autenticidad, tu impacto se multiplica.",
+            image: "/eneatipo-3.jpg"
+        },
+        "4": {
+            name: "El Creativo",
+            role: "Sensible, profundo, diferente",
+            description: "Lideras desde la sensibilidad, la intuición y la profundidad emocional.\nAportas visión, significado y una mirada auténtica al entorno.\nTienes facilidad para conectar con lo que otros sienten.\nCuando expresas tu singularidad, inspiras desde lo genuino.",
+            image: "/eneatipo-4.jpg"
+        },
+        "5": {
+            name: "El Analítico",
+            role: "Investigador, reservado, observador",
+            description: "Tu liderazgo se apoya en la observación, la claridad y el conocimiento.\nProcesas la información con profundidad y objetividad.\nAportas perspectiva, estrategia y pensamiento independiente.\nCuando compartes lo que sabes, fortaleces decisiones colectivas.",
+            image: "/eneatipo-5.jpg"
+        },
+        "6": {
+            name: "El Leal",
+            role: "Comprometido, precavido, confiable",
+            description: "Lideras desde el compromiso, la responsabilidad y la previsión.\nAnticipas riesgos y cuidas la estabilidad del grupo.\nGeneras confianza cuando actúas con coherencia y presencia.\nTu fortaleza crece al confiar en tu criterio interno.",
+            image: "/eneatipo-6.jpg"
+        },
+        "7": {
+            name: "El Entusiasta",
+            role: "Optimista, espontáneo, inquieto",
+            description: "Tu liderazgo se expresa con energía, optimismo y visión de futuro.\nTe mueves hacia nuevas posibilidades con creatividad y entusiasmo.\nAportas dinamismo y motivación al entorno.\nCuando enfocas tu energía, tu impacto se vuelve transformador.",
+            image: "/eneatipo-7.jpg"
+        },
+        "8": {
+            name: "El Líder",
+            role: "Intenso, firme, protector",
+            description: "Lideras con presencia, determinación y fuerza interior.\nTe resulta natural tomar decisiones y asumir el control.\nProteges lo que consideras importante y actúas con firmeza.\nCuando lideras desde la conciencia, empoderas a otros. ",
+            image: "/eneatipo-8.jpg"
+        },
+        "9": {
+            name: "El Conciliador",
+            role: "Tranquilo, pacificador, adaptable",
+            description: "Tu liderazgo nace de la calma, la escucha y la integración.\nFacilitas acuerdos y generas ambientes de armonía.\nAportas estabilidad y una visión amplia del conjunto. \nCuando afirmas tu voz, tu influencia se fortalece. ",
+            image: "/eneatipo-9.jpg"
+        },
     };
-    return info[type] || { name: "Indeterminado", role: "Explorador" };
+    return info[type] || { name: "Indeterminado", role: "Explorador", description: "" };
 };
 
 /**
  * Main calculation function — Direct Sum System
  */
 export const calculateResults = (answers) => {
-    // ──────────────────────────────────────────
+    // -----------------------------------------
     // 1. Calculate block totals (A, B, C, X, Y, Z)
-    // ──────────────────────────────────────────
+    // -----------------------------------------
     const scores = { A: 0, B: 0, C: 0, X: 0, Y: 0, Z: 0 };
 
     Object.entries(answers).forEach(([questionId, answerValue]) => {
@@ -36,9 +82,9 @@ export const calculateResults = (answers) => {
         }
     });
 
-    // ──────────────────────────────────────────
+    // -----------------------------------------
     // 2. Calculate all 9 enneatypes by direct sum
-    // ──────────────────────────────────────────
+    // -----------------------------------------
     const enneatypeScores = {
         "7": scores.A + scores.X,
         "8": scores.A + scores.Y,
@@ -51,9 +97,9 @@ export const calculateResults = (answers) => {
         "1": scores.C + scores.Z,
     };
 
-    // ──────────────────────────────────────────
+    // -----------------------------------------
     // 3. Sort all 9 from highest to lowest
-    // ──────────────────────────────────────────
+    // -----------------------------------------
     const enneatypes = Object.entries(enneatypeScores)
         .map(([type, score]) => ({
             type,
@@ -62,20 +108,20 @@ export const calculateResults = (answers) => {
         }))
         .sort((a, b) => b.score - a.score);
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // 4. Identify first and second place
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let dominant = enneatypes[0];
     let second = enneatypes[1];
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // 5. Calculate difference
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let difference = dominant.score - second.score;
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // 6. Classify clarity
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let clarity;
     if (difference >= 4) {
         clarity = "clear";
@@ -87,9 +133,9 @@ export const calculateResults = (answers) => {
         clarity = "tie";
     }
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // 7. Tiebreaker rules (when D = 0)
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if (clarity === "tie") {
         // Which blocks compose each tied enneatype?
         const blockMap = {
@@ -142,9 +188,9 @@ export const calculateResults = (answers) => {
         difference = dominant.score - second.score;
     }
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // 8. Generate clarity text
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     let clarityText;
     switch (clarity) {
         case "clear":
@@ -163,18 +209,19 @@ export const calculateResults = (answers) => {
             clarityText = "";
     }
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // 9. Versatile profile detection
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const allScores = enneatypes.map(e => e.score);
     const range = Math.max(...allScores) - Math.min(...allScores);
     const isVersatile = range <= 6;
 
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // RETURN
-    // ──────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     return {
         scores,
+        enneatypeScores, // Return the object map { "1": score }
         enneatypes,
         dominant,
         second,
@@ -186,3 +233,37 @@ export const calculateResults = (answers) => {
         enneatype: dominant.type,
     };
 };
+
+/**
+ * Calculate Advanced Results
+ * Focuses only on the types being tested in the advanced phase
+ */
+export const calculateAdvancedResults = (answers) => {
+    const scores = {};
+
+    Object.entries(answers).forEach(([questionId, answerValue]) => {
+        const question = advancedQuestions.find((q) => q.id === parseInt(questionId));
+        if (question) {
+            const type = question.enneatype;
+            if (!scores[type]) scores[type] = 0;
+            scores[type] += answerValue; // Value is 1-4
+        }
+    });
+
+    // Sort to find the winner among the tested types
+    const results = Object.entries(scores)
+        .map(([type, score]) => ({
+            type,
+            score,
+            ...getEnneagramInfo(type)
+        }))
+        .sort((a, b) => b.score - a.score);
+
+    return {
+        scores,
+        results,
+        confirmedType: results[0] ? results[0].type : null,
+        winner: results[0]
+    };
+};
+
