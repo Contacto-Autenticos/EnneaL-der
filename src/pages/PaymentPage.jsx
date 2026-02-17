@@ -84,7 +84,7 @@ const PaymentPage = ({ user, result }) => {
                 amountInCents: amountInCents,
                 reference: reference,
                 publicKey: WOMPI_PUBLIC_KEY,
-                // signature: signature, // Desactivado para modo prueba
+                signature: signature,
                 customerEmail: user?.email,
                 redirectUrl: `${window.location.origin}/advanced-intro`,
             });
