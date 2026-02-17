@@ -43,36 +43,43 @@ const PaymentPage = ({ user, result }) => {
             return;
         }
 
+        if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+            console.error('API Keys de Supabase no configuradas');
+            alert('Error de configuración: Faltan llaves de Supabase.');
+            return;
+        }
+
         setLoading(true);
         try {
             const reference = `ennea_${Date.now()}`;
             const amountInCents = BASE_PRICE_COP * 100;
             let signature = null;
 
-            console.log('Referencia:', reference, 'Monto:', amountInCents);
+            console.log('Generando pago para:', reference, 'Monto (centavos):', amountInCents);
 
-            // 1. Try to get Integrity Signature with a local "timeout"
+            // 1. Try to get Integrity Signature
             try {
-                console.log('Solicitando firma de integridad a Supabase...');
-                // Usamos un Promise.race para no quedarnos colgados si la función no responde
-                const signaturePromise = supabase.functions.invoke('create-wompi-signature', {
+                console.log('Llamando a Edge Function create-wompi-signature...');
+                const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
                     body: { reference, amountInCents, currency: 'COP' }
                 });
 
-                const timeoutPromise = new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('Timeout solicitando firma')), 5000)
-                );
+                if (error) {
+                    console.error('Error de Supabase Functions:', error);
+                    // No cortamos el flujo aquí si estamos en Sandbox, pero lo registramos
+                    throw new Error(`Error en firma: ${error.message || JSON.stringify(error)}`);
+                }
 
-                const { data, error } = await Promise.race([signaturePromise, timeoutPromise]);
-
-                if (!error && data?.signature) {
+                if (data?.signature) {
                     signature = data.signature;
-                    console.log('Firma obtenida con éxito.');
+                    console.log('✅ Firma recibida correctamente.');
                 } else {
-                    console.warn('La función respondió pero sin firma:', error || 'Sin datos');
+                    console.warn('⚠️ No se recibió firma en la respuesta.');
                 }
             } catch (sigErr) {
-                console.warn('Error u omisión de firma (continuando en modo prueba):', sigErr.message);
+                console.error('FALLO EN FIRMA:', sigErr);
+                // Si la firma es obligatoria, esto detendrá el proceso
+                // alert(`No se pudo obtener la firma de seguridad: ${sigErr.message}`);
             }
 
             // Wompi Public Key - MODO PRUEBA (Sandbox)
@@ -100,7 +107,9 @@ const PaymentPage = ({ user, result }) => {
 
         } catch (err) {
             console.error('Error crítico en handlePay:', err);
-            alert(`Error al iniciar el pago: ${err.message || 'Error de conexión'}.`);
+            // If it's a Supabase error (has specific fields) or a network error
+            const errorMsg = err.message || (typeof err === 'string' ? err : JSON.stringify(err));
+            alert(`Error al iniciar el pago: ${errorMsg}.\nPor favor, verifica tu conexión o intenta nuevamente.`);
         } finally {
             console.log('Carga finalizada.');
             setLoading(false);
