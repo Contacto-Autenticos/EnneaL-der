@@ -51,22 +51,34 @@ const PaymentPage = ({ user, result }) => {
             const amountInCents = BASE_PRICE_COP * 100;
             let signature = null;
 
+            console.log('[Payment Debug] Initiating signature build for:', { reference, amountInCents, currency: 'COP' });
+
             // 1. Get Integrity Signature from Backend
             try {
                 const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
                     body: { reference, amountInCents, currency: 'COP' }
                 });
 
-                if (error) throw error;
+                if (error) {
+                    console.error('[Payment Debug] Supabase Function Error:', error);
+                    throw error;
+                }
+
                 if (data?.signature) {
                     signature = data.signature;
+                    console.log('[Payment Debug] Signature received successfully');
+                } else {
+                    console.error('[Payment Debug] No signature in response:', data);
                 }
             } catch (sigErr) {
-                console.error('Error al generar firma:', sigErr);
+                console.error('[Payment Debug] Error generating signature:', sigErr);
+                alert(`Error técnico (Firma): ${sigErr.message || 'Error desconocido'}`);
             }
 
             // Wompi Production Public Key
             const WOMPI_PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
+
+            console.log('[Payment Debug] Opening Wompi Widget with Public Key:', WOMPI_PUBLIC_KEY);
 
             const checkout = new window.WidgetCheckout({
                 currency: 'COP',
@@ -79,6 +91,7 @@ const PaymentPage = ({ user, result }) => {
             });
 
             checkout.open((result) => {
+                console.log('[Payment Debug] Widget Result:', result);
                 const transaction = result.transaction;
                 if (transaction.status === 'APPROVED') {
                     navigate('/advanced-intro');
@@ -86,8 +99,8 @@ const PaymentPage = ({ user, result }) => {
             });
 
         } catch (err) {
-            console.error('Error en proceso de pago:', err);
-            alert('No pudimos iniciar el proceso de pago. Por favor, verifica tu conexión o intenta nuevamente.');
+            console.error('[Payment Debug] Top-level payment error:', err);
+            alert(`No pudimos iniciar el proceso de pago: ${err.message || 'Error desconocido'}`);
         } finally {
             setLoading(false);
         }
