@@ -116,11 +116,13 @@ const Result = ({ result, user, onReset }) => {
 
     // Calculate Top 3
     const top3 = useMemo(() => {
+        if (!enneatypeScores) return [];
+
         // Filter out any potential invalid types (like 0 if it existed) and ensure only 1-9
         const validTypes = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
         // Use enneatypeScores object for reliable iteration
-        return Object.entries(enneatypeScores || {})
+        return Object.entries(enneatypeScores)
             .filter(([type]) => validTypes.includes(type))
             .sort(([, a], [, b]) => b - a)
             .slice(0, 3)
@@ -132,11 +134,11 @@ const Result = ({ result, user, onReset }) => {
                 else if (index === 2) affinity = "Media";
 
                 // Get info for title
-                const info = getEnneagramInfo(type);
+                const info = getEnneagramInfo(type) || { name: "Indeterminado" };
 
                 return { type, score, affinity, title: info.name };
             });
-    }, [enneatypes]);
+    }, [enneatypeScores, enneatypes]);
 
     const handleChartClick = () => {
         navigate('/detailed-result');

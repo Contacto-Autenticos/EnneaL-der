@@ -151,7 +151,7 @@ const EnneagramChart = ({ scores }) => {
                 <polygon
                     points={types.map((type, i) => {
                         const maxScore = 18;
-                        const score = scores[type] || 0;
+                        const score = scores[type] || scores[type.toString()] || 0;
                         const r = (score / maxScore) * radius;
                         const { x, y } = getCoordinates(r, i);
                         return `${x},${y}`;
@@ -165,7 +165,7 @@ const EnneagramChart = ({ scores }) => {
                 {/* Data Points - Only Top 3 */}
                 {(() => {
                     // Identify Top 3 types
-                    const top3Types = Object.entries(scores)
+                    const top3Types = Object.entries(scores || {})
                         .sort(([, a], [, b]) => b - a)
                         .slice(0, 3)
                         .map(([type]) => parseInt(type));
@@ -175,7 +175,7 @@ const EnneagramChart = ({ scores }) => {
                         if (!top3Types.includes(type)) return null;
 
                         const maxScore = 18;
-                        const score = scores[type] || 0;
+                        const score = scores[type] || scores[type.toString()] || 0;
                         const r = (score / maxScore) * radius;
                         const { x, y } = getCoordinates(r, idx);
                         return (

@@ -108,20 +108,20 @@ export const calculateResults = (answers) => {
         }))
         .sort((a, b) => b.score - a.score);
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // 4. Identify first and second place
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    let dominant = enneatypes[0];
-    let second = enneatypes[1];
+    // -----------------------------------------
+    let dominant = enneatypes[0] || { type: "9", score: 0, ...getEnneagramInfo("9") };
+    let second = enneatypes[1] || { type: "1", score: 0, ...getEnneagramInfo("1") };
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // 5. Calculate difference
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    let difference = dominant.score - second.score;
+    // -----------------------------------------
+    let difference = (dominant.score || 0) - (second.score || 0);
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // 6. Classify clarity
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     let clarity;
     if (difference >= 4) {
         clarity = "clear";
@@ -133,9 +133,9 @@ export const calculateResults = (answers) => {
         clarity = "tie";
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // 7. Tiebreaker rules (when D = 0)
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     if (clarity === "tie") {
         // Which blocks compose each tied enneatype?
         const blockMap = {
@@ -144,53 +144,50 @@ export const calculateResults = (answers) => {
             "2": ["C", "X"], "6": ["C", "Y"], "1": ["C", "Z"],
         };
 
-        const [b1a, b1b] = blockMap[dominant.type];
-        const [b2a, b2b] = blockMap[second.type];
+        try {
+            const [b1a, b1b] = blockMap[dominant.type] || ["A", "X"];
+            const [b2a, b2b] = blockMap[second.type] || ["B", "Y"];
 
-        // Step 1: Compare internal block clarity
-        // For each tied enneatype, find its blocks and see how "clear" they are
-        // by comparing against the third option in the same group
-        const getBlockClarity = (blockLetter) => {
-            const group1 = ["A", "B", "C"];
-            const group2 = ["X", "Y", "Z"];
-            const group = group1.includes(blockLetter) ? group1 : group2;
-            const others = group.filter(g => g !== blockLetter);
-            // Clarity = how much this block stands out from the others
-            const diff1 = scores[blockLetter] - scores[others[0]];
-            const diff2 = scores[blockLetter] - scores[others[1]];
-            return diff1 + diff2;
-        };
+            // Step 1: Compare internal block clarity
+            const getBlockClarity = (blockLetter) => {
+                const group1 = ["A", "B", "C"];
+                const group2 = ["X", "Y", "Z"];
+                const group = group1.includes(blockLetter) ? group1 : group2;
+                const others = group.filter(g => g !== blockLetter);
+                const diff1 = (scores[blockLetter] || 0) - (scores[others[0]] || 0);
+                const diff2 = (scores[blockLetter] || 0) - (scores[others[1]] || 0);
+                return diff1 + diff2;
+            };
 
-        const clarity1 = getBlockClarity(b1a) + getBlockClarity(b1b);
-        const clarity2 = getBlockClarity(b2a) + getBlockClarity(b2b);
+            const clarity1 = getBlockClarity(b1a) + getBlockClarity(b1b);
+            const clarity2 = getBlockClarity(b2a) + getBlockClarity(b2b);
 
-        if (clarity1 !== clarity2) {
-            // The enneatype with clearer blocks wins
-            if (clarity2 > clarity1) {
-                // Swap dominant and second
-                [dominant, second] = [second, dominant];
-            }
-            // clarity stays "tie" but we have a preferred order
-        } else {
-            // Step 2: Compare absolute block scores
-            const abs1 = scores[b1a] + scores[b1b];
-            const abs2 = scores[b2a] + scores[b2b];
-
-            if (abs1 !== abs2) {
-                if (abs2 > abs1) {
+            if (clarity1 !== clarity2) {
+                if (clarity2 > clarity1) {
                     [dominant, second] = [second, dominant];
                 }
+            } else {
+                // Step 2: Compare absolute block scores
+                const abs1 = (scores[b1a] || 0) + (scores[b1b] || 0);
+                const abs2 = (scores[b2a] || 0) + (scores[b2b] || 0);
+
+                if (abs1 !== abs2) {
+                    if (abs2 > abs1) {
+                        [dominant, second] = [second, dominant];
+                    }
+                }
             }
-            // Step 3: If still tied, show both (clarity remains "tie")
+        } catch (e) {
+            console.warn("Tiebreaker error:", e);
         }
 
         // Recalculate difference after possible swap
-        difference = dominant.score - second.score;
+        difference = (dominant.score || 0) - (second.score || 0);
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // 8. Generate clarity text
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     let clarityText;
     switch (clarity) {
         case "clear":
@@ -209,19 +206,19 @@ export const calculateResults = (answers) => {
             clarityText = "";
     }
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // 9. Versatile profile detection
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    const allScores = enneatypes.map(e => e.score);
-    const range = Math.max(...allScores) - Math.min(...allScores);
+    // -----------------------------------------
+    const allScores = enneatypes.map(e => e.score || 0);
+    const range = allScores.length > 0 ? (Math.max(...allScores) - Math.min(...allScores)) : 0;
     const isVersatile = range <= 6;
 
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     // RETURN
-    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // -----------------------------------------
     return {
         scores,
-        enneatypeScores, // Return the object map { "1": score }
+        enneatypeScores,
         enneatypes,
         dominant,
         second,
@@ -229,7 +226,6 @@ export const calculateResults = (answers) => {
         clarity,
         clarityText,
         isVersatile,
-        // Backward compatibility
         enneatype: dominant.type,
     };
 };
