@@ -40,9 +40,11 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
         const monthIndex = months.indexOf(month) + 1;
         const formattedDate = `${year}-${monthIndex.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
+        const normalizedEmail = email.trim().toLowerCase();
+
         const userData = {
             name,
-            email,
+            email: normalizedEmail,
             birth_date: formattedDate,
             id: existingUser?.id || Date.now().toString()
         };
@@ -54,7 +56,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                 .insert([
                     {
                         full_name: name,
-                        email: email,
+                        email: normalizedEmail,
                         birth_date: formattedDate,
                         source: 'advanced_analysis',
                         organization: showOrganization ? organization : null

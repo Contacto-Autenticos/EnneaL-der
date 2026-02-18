@@ -66,17 +66,31 @@ function App() {
         emailjs.init('jvBHZwalOIEABW7qV');
 
         const type = result.confirmedType;
+        console.log('Attempting to update Supabase:', { email: user.email, enneatype: type });
+
+        if (!type) {
+          console.error('CRITICAL: Enneatype is null or undefined!');
+          return;
+        }
 
         // Update Supabase with the confirmed enneatype
-        const { error: supabaseError } = await supabase
+        const { data, error: supabaseError } = await supabase
           .from('user_leads')
           .update({ enneatype: type })
-          .eq('email', user.email);
+          .eq('email', user.email)
+          .select(); // Select to verify if row was actually found and updated
 
         if (supabaseError) {
           console.error('Error updating Supabase:', supabaseError);
+          // Fallback: try creating a new record if update passes but row missing? 
+          // Unlikely for update error, but maybe RLS.
         } else {
-          console.log('Enneatype updated in Supabase');
+          console.log('Supabase response data:', data);
+          if (data && data.length === 0) {
+            console.warn('WARNING: No row was updated! Email might not match or row is missing.');
+          } else {
+            console.log('Enneatype updated in Supabase successfully');
+          }
         }
 
         const details = advancedEnneagramInfo[type];
@@ -112,8 +126,10 @@ function App() {
         );
         console.log('Advanced results email sent with enriched data!');
       } catch (error) {
-        console.error('Failed to send advanced results email:', error);
+        console.error('Failed to send advanced results email or update DB:', error);
       }
+    } else {
+      console.warn('User or email missing, cannot update Supabase or send email', user);
     }
   };
 
