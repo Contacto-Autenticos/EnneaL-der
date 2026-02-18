@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
-import Register from './pages/Register';
+
 import Test from './pages/Test';
 import Result from './pages/Result';
 import DetailedResult from './pages/DetailedResult';
@@ -119,10 +119,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route
-          path="/register"
-          element={<Register onRegister={handleRegister} result={testResult} />}
-        />
+
 
         <Route
           path="/test"

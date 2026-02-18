@@ -307,13 +307,6 @@ const Result = ({ result, user, onReset }) => {
                             </button>
                         </div>
 
-                        <button
-                            onClick={() => navigate('/register')}
-                            className="btn-result btn-register"
-                        >
-                            <User size={18} />
-                            <span>Registro</span>
-                        </button>
                     </div>
 
                     <EnneatypeModal
