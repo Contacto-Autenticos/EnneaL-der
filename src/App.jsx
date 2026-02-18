@@ -10,6 +10,7 @@ import Admin from './pages/Admin';
 import AdvancedIntro from './pages/AdvancedIntro';
 import AdvancedTest from './pages/AdvancedTest';
 import AdvancedAnalysisResult from './pages/AdvancedAnalysisResult';
+import PaymentPage from './pages/PaymentPage';
 import emailjs from '@emailjs/browser';
 import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
 import { advancedEnneagramInfo } from './data/advancedInfo';
@@ -138,6 +139,11 @@ function App() {
           }
         />
 
+
+        <Route
+          path="/payment"
+          element={<PaymentPage />}
+        />
 
         <Route
           path="/detailed-result"

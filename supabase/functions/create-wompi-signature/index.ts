@@ -1,62 +1,45 @@
-// Setup for Supabase Edge Function to generate Wompi Integrity Signature
-// This should be deployed to Supabase Functions
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts"
-
-const WOMPI_PRIVATE_KEY = Deno.env.get("WOMPI_PRIVATE_KEY")
-const WOMPI_INTEGRITY_SECRET = Deno.env.get("WOMPI_INTEGRITY_SECRET")
+import { crypto } from "https://deno.land/std@0.177.0/crypto/mod.ts";
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+function toHex(buffer: ArrayBuffer) {
+    return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+}
+
 serve(async (req) => {
-    // Handle CORS preflight
     if (req.method === 'OPTIONS') {
         return new Response('ok', { headers: corsHeaders })
     }
 
     try {
-        const secret = WOMPI_INTEGRITY_SECRET?.trim();
+        const { reference, amount, currency } = await req.json()
+        // Retrieve secret from environment variables
+        const secret = Deno.env.get('WOMPI_INTEGRITY_SECRET')
 
         if (!secret) {
-            console.error("CRITICAL: WOMPI_INTEGRITY_SECRET is missing or empty.");
-            return new Response(
-                JSON.stringify({ error: "Missing WOMPI_INTEGRITY_SECRET in Supabase Secrets" }),
-                { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-            )
+            throw new Error('WOMPI_INTEGRITY_SECRET is not set')
         }
 
-        const { amountInCents, currency, reference } = await req.json()
+        // Concatenate values for the signature: reference + amount + currency + secret
+        const stringToSign = `${reference}${amount}${currency}${secret}`
 
-        // Structure: reference + amountInCents + currency + integritySecret
-        const chain = `${reference}${amountInCents}${currency}${secret}`
-
-        console.log(`Hashing chain (masked): ${reference}${amountInCents}${currency}${secret.substring(0, 4)}***`);
-
-        const msgUint8 = new TextEncoder().encode(chain)
-        const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8)
-        const hashArray = Array.from(new Uint8Array(hashBuffer))
-        const signature = hashArray.map(b => b.toString(16).padStart(2, "0")).join("")
-
-        // Diagnostic info
-        const debugInfo = {
-            prefix: secret.substring(0, 5),
-            length: secret.length,
-            isTest: secret.startsWith('test'),
-            isProd: secret.startsWith('prod')
-        };
+        const encoder = new TextEncoder()
+        const data = encoder.encode(stringToSign)
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+        const signature = toHex(hashBuffer)
 
         return new Response(
-            JSON.stringify({ signature, _debug: debugInfo }),
-            { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            JSON.stringify({ signature, reference, amount, currency }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
-    } catch (error: any) {
+    } catch (error) {
         return new Response(
             JSON.stringify({ error: error.message }),
-            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
     }
 })

@@ -1,0 +1,89 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
+import './PaymentPage.css';
+
+const PUBLIC_KEY = 'pub_prod_yw6oGksFzV4MECyLVMG61500w4ZqQo3m'; // Replace with your actual public key
+const WOMPI_CURRENCY = 'COP';
+const WOMPI_AMOUNT_IN_CENTS = 4500000; // $45.000 COP
+
+const PaymentPage = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [signatureData, setSignatureData] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchSignature = async () => {
+            try {
+                const reference = `ref-${Date.now()}`; // Unique reference
+
+                const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
+                    body: { reference, amount: WOMPI_AMOUNT_IN_CENTS, currency: WOMPI_CURRENCY }
+                });
+
+                if (error) throw error;
+                if (data.error) throw new Error(data.error);
+
+                setSignatureData(data);
+            } catch (err) {
+                console.error('Error fetching signature:', err);
+                setError('No pudimos iniciar el proceso de pago. Intenta de nuevo.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSignature();
+    }, []);
+
+    useEffect(() => {
+        if (signatureData) {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.wompi.co/widget.js';
+            script.setAttribute('data-render', 'button');
+            script.setAttribute('data-public-key', PUBLIC_KEY);
+            script.setAttribute('data-currency', WOMPI_CURRENCY);
+            script.setAttribute('data-amount-in-cents', WOMPI_AMOUNT_IN_CENTS);
+            script.setAttribute('data-reference', signatureData.reference);
+            script.setAttribute('data-signature:integrity', signatureData.signature);
+            script.setAttribute('data-redirect-url', `${window.location.origin}/advanced-intro`); // Redirect to success page
+
+            const container = document.getElementById('wompi-container');
+            if (container) {
+                container.innerHTML = ''; // Clear previous button if any
+                container.appendChild(script);
+            }
+        }
+    }, [signatureData]);
+
+    return (
+        <div className="payment-page">
+            <div className="payment-container">
+                <h1 className="payment-title">Análisis Avanzado Eneagrama</h1>
+                <p className="payment-description">
+                    Estás a un paso de descubrir tu perfil auténtico completo.
+                </p>
+                <div className="payment-summary">
+                    <div className="payment-row">
+                        <span>Análisis Completo</span>
+                        <span className="payment-amount">$45.000 COP</span>
+                    </div>
+                </div>
+
+                {loading && <p>Cargando pasarela de pago...</p>}
+                {error && <p className="payment-error">{error}</p>}
+
+                <div id="wompi-container" className="wompi-container">
+                    {/* Wompi Button will render here */}
+                </div>
+
+                <button onClick={() => navigate('/')} className="btn-cancel">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default PaymentPage;

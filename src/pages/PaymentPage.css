@@ -1,0 +1,71 @@
+.payment-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f4f7f6;
+    padding: 20px;
+}
+
+.payment-container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.payment-title {
+    color: #002d44;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.payment-description {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.payment-summary {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.payment-amount {
+    color: #ddbe3d;
+}
+
+.wompi-container {
+    margin-bottom: 20px;
+    min-height: 50px;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
+.btn-cancel:hover {
+    color: #666;
+}
+
+.payment-error {
+    color: red;
+    margin-bottom: 15px;
+}

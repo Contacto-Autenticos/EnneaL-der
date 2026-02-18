@@ -145,7 +145,7 @@ const Result = ({ result, user, onReset }) => {
     };
 
     const handleDetailedAnalysis = () => {
-        navigate('/advanced-intro');
+        navigate('/payment');
     };
 
     return (
