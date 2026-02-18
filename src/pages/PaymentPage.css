@@ -47,6 +47,32 @@
     color: #ddbe3d;
 }
 
+.features-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-bottom: 25px;
+    padding-left: 10px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.check-icon {
+    color: #2ECC71;
+    /* Green check */
+    min-width: 18px;
+}
+
 .wompi-container {
     margin-bottom: 20px;
     min-height: 50px;

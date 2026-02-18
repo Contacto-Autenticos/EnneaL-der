@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { CheckCircle } from 'lucide-react';
 import './PaymentPage.css';
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
-const WOMPI_AMOUNT_IN_CENTS = 4500000; // $45.000 COP
+const WOMPI_AMOUNT_IN_CENTS = 3700000; // $37.000 COP
 
 const PaymentPage = () => {
     const navigate = useNavigate();
@@ -67,9 +68,17 @@ const PaymentPage = () => {
                 <div className="payment-summary">
                     <div className="payment-row">
                         <span>Análisis Completo</span>
-                        <span className="payment-amount">$45.000 COP</span>
+                        <span className="payment-amount">$37.000 COP</span>
                     </div>
                 </div>
+
+                <ul className="features-list">
+                    <li><CheckCircle size={18} className="check-icon" /> Acceso vitalicio al informe detallado</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Motivaciones centrales</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Tu estructura (Tríadas)</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Dinámica de crecimiento</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Consejos para liderazgo</li>
+                </ul>
 
                 {loading && <p>Cargando pasarela de pago...</p>}
                 {error && <p className="payment-error">{error}</p>}
