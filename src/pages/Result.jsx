@@ -93,8 +93,8 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
                 </button>
 
                 <div className="ennea-modal-header">
-                    <h2 className="ennea-modal-title">
-                        Eneatipo <span style={{ color: getNumberColor(type) }}>{type}</span> — {info.name}
+                    <h2 className="ennea-modal-title" style={{ color: getNumberColor(type) }}>
+                        Eneatipo {type} — {info.name}
                     </h2>
                     <p className="ennea-modal-role">{info.role}</p>
                 </div>
