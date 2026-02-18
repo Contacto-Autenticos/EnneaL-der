@@ -253,34 +253,46 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         <div className="advanced-result-page">
             <div className="advanced-result-container">
 
-                {/* Hero Section */}
-                <section className="advanced-hero" ref={heroRef}>
-                    <h1 className="advanced-hero-title">
-                        {user?.name && <span className="user-name-title">{user.name.toUpperCase()}</span>}
-                        <span className="profile-text-title">
-                            TU PERFIL AUT<span className="brand-accent">é</span>NTICO
-                        </span>
-                    </h1>
-                    <p className="advanced-hero-subtitle">
-                        Eneatipo {type} — {winner.name}
-                    </p>
+                <div ref={shareRef} className="share-content-wrapper">
+                    {/* Hero Section */}
+                    <section className="advanced-hero">
+                        <h1 className="advanced-hero-title">
+                            {user?.name && <span className="user-name-title">{user.name.toUpperCase()}</span>}
+                            <span className="profile-text-title">
+                                TU PERFIL AUT<span className="brand-accent">é</span>NTICO
+                            </span>
+                        </h1>
+                        <p className="advanced-hero-subtitle">
+                            Eneatipo {type} — {winner.name}
+                        </p>
 
-                    <div className="advanced-coin-wrapper">
-                        <EnneagramRing activeType={type} />
-                        <div
-                            className={`advanced-coin-container ${result?.results ? 'clickable' : ''}`}
-                            onClick={() => result?.results && setIsModalOpen(true)}
-                            title={result?.results ? "Ver puntajes detallados" : ""}
-                        >
-                            <img
-                                src={winner.image ? encodeURI(winner.image) : "/moneda-autenticos.png"}
-                                alt={`Eneatipo ${type}`}
-                                className="advanced-coin-img"
-                                crossOrigin="anonymous"
-                            />
+                        <div className="advanced-coin-wrapper">
+                            <EnneagramRing activeType={type} />
+                            <div
+                                className={`advanced-coin-container ${result?.results ? 'clickable' : ''}`}
+                                onClick={() => result?.results && setIsModalOpen(true)}
+                                title={result?.results ? "Ver puntajes detallados" : ""}
+                            >
+                                <img
+                                    src={winner.image ? encodeURI(winner.image) : "/moneda-autenticos.png"}
+                                    alt={`Eneatipo ${type}`}
+                                    className="advanced-coin-img"
+                                    crossOrigin="anonymous"
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Section: Internal Phrase */}
+                    <div className="phrase-section">
+                        <div className="phrase-content">
+                            <Quote className="phrase-quote-icon" size={20} />
+                            <p className="phrase-text">
+                                <strong>Frase interna que suele repetirse:</strong> "{details.phrase}"
+                            </p>
                         </div>
                     </div>
-                </section>
+                </div>
 
                 {result?.results && (
                     <ScoreModal
@@ -289,16 +301,6 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         results={result.results || []}
                     />
                 )}
-
-                {/* Section: Internal Phrase */}
-                <div className="phrase-section">
-                    <div className="phrase-content">
-                        <Quote className="phrase-quote-icon" size={20} />
-                        <p className="phrase-text">
-                            <strong>Frase interna que suele repetirse:</strong> "{details.phrase}"
-                        </p>
-                    </div>
-                </div>
 
                 {/* Section 1: Motivations */}
                 <section className="advanced-section">
