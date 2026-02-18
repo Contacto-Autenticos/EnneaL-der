@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import html2canvas from 'html2canvas';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
     Target,
@@ -180,20 +181,60 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         .sort((a, b) => b.score - a.score)
         .slice(0, 2);
 
+    const heroRef = React.useRef(null);
+
     const handleShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: `Mi Perfil Auténtico: Eneatipo ${type} `,
-                    text: `He completado mi análisis avanzado de Eneagrama.Soy Eneatipo ${type} - ${winner.name}.`,
-                    url: window.location.href,
-                });
-            } catch (error) {
-                console.log('Error sharing:', error);
+        if (!heroRef.current) return;
+
+        try {
+            const canvas = await html2canvas(heroRef.current, {
+                backgroundColor: '#ffffff',
+                scale: 3,
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
+                    if (clonedHero) {
+                        clonedHero.style.background = '#ffffff';
+                        clonedHero.style.padding = '40px 20px'; // Add some padding for the card look
+                        clonedHero.style.borderRadius = '0';
+                        clonedHero.style.boxShadow = 'none';
+                    }
+                }
+            });
+
+            const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            const imageFile = new File([imageBlob], `mi-perfil-autentico-${type}.png`, { type: 'image/png' });
+
+            const shareData = {
+                title: `Mi Perfil Auténtico: Eneatipo ${type}`,
+                text: `He completado mi análisis avanzado de Eneagrama. Soy Eneatipo ${type} - ${winner.name}.\n\n¡Descubre el tuyo en https://enesencia.autenticos.co`,
+                files: [imageFile],
+            };
+
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                await navigator.share(shareData);
+            } else {
+                // Fallback download
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `mi-perfil-autentico-${type}.png`;
+                link.click();
+                alert('La imagen se ha descargado porque tu navegador no soporta compartir imágenes directamente.');
             }
-        } else {
-            navigator.clipboard.writeText(window.location.href);
-            alert('¡Enlace de resultado copiado!');
+
+        } catch (error) {
+            console.error('Error sharing image:', error);
+            // Fallback text
+            if (navigator.share) {
+                navigator.share({
+                    title: `Mi Perfil Auténtico: Eneatipo ${type}`,
+                    text: `He completado mi análisis avanzado de Eneagrama. Soy Eneatipo ${type} - ${winner.name}.\n\n¡Descubre el tuyo en https://enesencia.autenticos.co`,
+                    url: window.location.href,
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('¡Enlace de resultado copiado!');
+            }
         }
     };
 
@@ -202,7 +243,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
             <div className="advanced-result-container">
 
                 {/* Hero Section */}
-                <section className="advanced-hero">
+                <section className="advanced-hero" ref={heroRef} data-html2canvas-ignore="false">
                     <h1 className="advanced-hero-title">
                         {user?.name && <span className="user-name-title">{user.name.toUpperCase()}</span>}
                         <span className="profile-text-title">
