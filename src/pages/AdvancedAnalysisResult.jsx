@@ -189,23 +189,32 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         .sort((a, b) => b.score - a.score)
         .slice(0, 2);
 
-    const heroRef = React.useRef(null);
+    const shareRef = React.useRef(null);
 
     const handleShare = async () => {
-        if (!heroRef.current) return;
+        if (!shareRef.current) return;
 
         try {
-            const canvas = await html2canvas(heroRef.current, {
+            const canvas = await html2canvas(shareRef.current, {
                 backgroundColor: '#ffffff',
                 scale: 3,
                 useCORS: true,
                 onclone: (clonedDoc) => {
+                    const clonedWrapper = clonedDoc.querySelector('.share-content-wrapper');
                     const clonedHero = clonedDoc.querySelector('.advanced-hero');
+                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+
+                    if (clonedWrapper) {
+                        clonedWrapper.style.background = '#ffffff';
+                        clonedWrapper.style.padding = '40px 20px';
+                        clonedWrapper.style.width = '100%';
+                        clonedWrapper.style.maxWidth = '600px';
+                        clonedWrapper.style.margin = '0 auto';
+                    }
+
                     if (clonedHero) {
-                        clonedHero.style.background = '#ffffff';
-                        clonedHero.style.padding = '40px 20px'; // Add some padding for the card look
-                        clonedHero.style.borderRadius = '0';
-                        clonedHero.style.boxShadow = 'none';
+                        clonedHero.style.marginBottom = '20px';
+                        clonedHero.style.padding = '0';
 
                         // Fix title breaking
                         const heroTitle = clonedHero.querySelector('.advanced-hero-title');
@@ -217,6 +226,15 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         if (profileText) {
                             profileText.style.whiteSpace = 'nowrap'; // Force single line
                         }
+                    }
+
+                    if (clonedPhrase) {
+                        clonedPhrase.style.boxShadow = 'none';
+                        clonedPhrase.style.background = '#f8f9fa';
+                        clonedPhrase.style.border = '1px solid #eee';
+                        clonedPhrase.style.borderLeft = '5px solid #ddbe3d';
+                        clonedPhrase.style.margin = '0';
+                        clonedPhrase.style.animation = 'none';
                     }
                 }
             });
