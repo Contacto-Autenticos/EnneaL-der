@@ -6,7 +6,7 @@ import './PaymentPage.css';
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
-const BASE_PRICE_IN_CENTS = 1500000; // $15.000 COP
+const BASE_PRICE_IN_CENTS = 3700000; // $37.000 COP
 
 const COUPONS = {
     'ENEAUTOCONOCETE9': 0.50 // 50% discount
@@ -94,21 +94,20 @@ const PaymentPage = () => {
     return (
         <div className="payment-page">
             <div className="payment-container">
-                <h1 className="payment-title">Desbloquea tu Informe Avanzado</h1>
+                <h1 className="payment-title">
+                    Desbloquea tu Informe Avanzado Aut<span className="highlight-letter">é</span>ntico
+                </h1>
                 <p className="payment-description">
-                    Estás a un paso de descubrir tu perfil auténtico completo.
+                    Descubre cómo funciona realmente tu personalidad y cómo crecer sin perder tu esencia.
                 </p>
                 <div className="payment-summary">
                     <div className="payment-row centered-price-column">
-                        <div className="payment-original-row">
-                            <span className="payment-original-price">Precio normal $37.000</span>
-                        </div>
                         <div className="payment-current-row">
                             <span className="payment-amount">
                                 ${(amountInCents / 100).toLocaleString('es-CO')} COP
                             </span>
-                            {!discountApplied && <span className="payment-offer-tag">y solo por hoy</span>}
                         </div>
+                        <p className="payment-features-text">Pago único · Acceso vitalicio · Entrega inmediata</p>
                     </div>
                 </div>
 
@@ -147,6 +146,10 @@ const PaymentPage = () => {
 
                 {loading && <p>Cargando pasarela de pago...</p>}
                 {error && <p className="payment-error">{error}</p>}
+
+                <div className="security-bar">
+                    Pago 100% seguro
+                </div>
 
                 <div id="wompi-container" className="wompi-container">
                     {/* Wompi Button will render here */}
