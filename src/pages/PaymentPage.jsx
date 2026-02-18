@@ -39,7 +39,7 @@ const PaymentPage = () => {
             setSignatureData(data);
         } catch (err) {
             console.error('Error fetching signature:', err);
-            setError('No pudimos iniciar el proceso de pago. Intenta de nuevo.');
+            setError(`Error al iniciar pago: ${err.message || 'Intenta de nuevo'}`);
         } finally {
             setLoading(false);
         }
