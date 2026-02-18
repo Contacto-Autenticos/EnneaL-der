@@ -19,9 +19,25 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
         try {
             // Generate image from modal content
             const canvas = await html2canvas(modalRef.current, {
-                backgroundColor: '#ffffff', // Force white background
-                scale: 2, // Higher resolution
-                useCORS: true // For cross-origin images
+                backgroundColor: '#ffffff', // Force white canvas
+                scale: 3, // Increase scale for better detail
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedModal = clonedDoc.querySelector('.ennea-modal-content');
+                    if (clonedModal) {
+                        clonedModal.style.background = '#ffffff'; // Force solid white
+                        clonedModal.style.boxShadow = 'none'; // Remove shadow for clean card look
+                        clonedModal.style.transform = 'none'; // Avoid transform issues
+                        clonedModal.style.animation = 'none'; // Avoid capture during animation
+                        clonedModal.style.borderRadius = '0'; // Optional: squared look or keep rounded
+                    }
+
+                    // Force image styles if needed
+                    const clonedImg = clonedDoc.querySelector('.ennea-modal-coin img');
+                    if (clonedImg) {
+                        clonedImg.style.mixBlendMode = 'normal'; // Reset blend mode just in case
+                    }
+                }
             });
 
             const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
