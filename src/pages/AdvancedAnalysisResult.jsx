@@ -198,6 +198,17 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         clonedHero.style.padding = '40px 20px'; // Add some padding for the card look
                         clonedHero.style.borderRadius = '0';
                         clonedHero.style.boxShadow = 'none';
+
+                        // Fix title breaking
+                        const heroTitle = clonedHero.querySelector('.advanced-hero-title');
+                        const profileText = clonedHero.querySelector('.profile-text-title');
+
+                        if (heroTitle) {
+                            heroTitle.style.letterSpacing = '1px'; // Reduce spacing to fit
+                        }
+                        if (profileText) {
+                            profileText.style.whiteSpace = 'nowrap'; // Force single line
+                        }
                     }
                 }
             });
