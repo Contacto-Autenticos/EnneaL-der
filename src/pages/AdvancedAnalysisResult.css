@@ -526,7 +526,7 @@
     }
 
     .advanced-footer-actions {
-        flex-direction: column-reverse;
+        flex-direction: column;
         align-items: center;
     }
 
