@@ -204,13 +204,14 @@
 
 .ennea-modal-coin-wrapper {
     width: 260px;
-    height: 260px;
+    max-width: 80vw;
+    height: auto;
+    aspect-ratio: 1/1;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 5px 10px 25px rgba(0, 0, 0, 0.7);
-    /* Directional defined shadow matching reference */
-    background: transparent;
-    /* Ensure no white background */
+    background: white;
+    /* Base background for multiply blend if needed */
 }
 
 .ennea-modal-coin img {
@@ -218,8 +219,9 @@
     height: 100%;
     object-fit: cover;
     transform: scale(1.17);
-    /* Scale slightly closer as in single page */
     display: block;
+    mix-blend-mode: multiply;
+    /* Removes white background corners if they exist */
 }
 
 .ennea-modal-description {
@@ -303,9 +305,8 @@
         font-size: 1.4rem;
     }
 
-    .ennea-modal-coin img {
-        width: 200px;
-        height: 200px;
+    .ennea-modal-coin-wrapper {
+        width: 220px;
     }
 
     .ennea-modal-footer {
