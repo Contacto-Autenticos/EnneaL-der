@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './PaymentPage.css';
 
-const PUBLIC_KEY = 'pub_prod_yw6oGksFzV4MECyLVMG61500w4ZqQo3m'; // Replace with your actual public key
+const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
 const WOMPI_AMOUNT_IN_CENTS = 4500000; // $45.000 COP
 
