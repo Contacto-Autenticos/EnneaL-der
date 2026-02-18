@@ -6,7 +6,7 @@ import './PaymentPage.css';
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
-const WOMPI_AMOUNT_IN_CENTS = 3700000; // $37.000 COP
+const WOMPI_AMOUNT_IN_CENTS = 1500000; // $15.000 COP
 
 const PaymentPage = () => {
     const navigate = useNavigate();
@@ -66,8 +66,14 @@ const PaymentPage = () => {
                     Estás a un paso de descubrir tu perfil auténtico completo.
                 </p>
                 <div className="payment-summary">
-                    <div className="payment-row centered-price">
-                        <span className="payment-amount">$37.000 COP</span>
+                    <div className="payment-row centered-price-column">
+                        <div className="payment-original-row">
+                            <span className="payment-original-price">Precio normal $37.000</span>
+                        </div>
+                        <div className="payment-current-row">
+                            <span className="payment-amount">$15.000 COP</span>
+                            <span className="payment-offer-tag">y solo por hoy</span>
+                        </div>
                     </div>
                 </div>
 
