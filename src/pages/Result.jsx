@@ -19,7 +19,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
         try {
             // Generate image from modal content
             const canvas = await html2canvas(modalRef.current, {
-                backgroundColor: null, // Transparent background if possible, or use #fff
+                backgroundColor: '#ffffff', // Force white background
                 scale: 2, // Higher resolution
                 useCORS: true // For cross-origin images
             });
@@ -91,7 +91,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
 
                 <div className="ennea-modal-description">
                     <p>{info.description}</p>
-                    <p className="ennea-modal-disclaimer">
+                    <p className="ennea-modal-disclaimer" data-html2canvas-ignore>
                         Este resultado no busca encasillarte, sino ofrecerte un punto de partida para la reflexión. El autoconocimiento es un proceso, no una etiqueta.
                     </p>
                 </div>
