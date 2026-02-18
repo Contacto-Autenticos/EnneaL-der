@@ -33,10 +33,10 @@
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 30px;
-    border: 2px solid #0056b3;
-    /* Blue border */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    /* Shadow effect */
+    border: 2px solid #002d44;
+    /* Dark blue border */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    /* More defined shadow */
 }
 
 .payment-row {
