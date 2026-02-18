@@ -141,7 +141,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
 
     // Determine the type and result to display
     const type = urlType || result?.confirmedType;
-    const user = propUser || { name: 'Amigo' };
+    const user = propUser || { name: '' };
 
     if (!type || !advancedEnneagramInfo[type]) {
         return (
