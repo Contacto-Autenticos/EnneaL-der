@@ -144,7 +144,10 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const type = urlType || result?.confirmedType;
     const user = propUser || { name: '' };
 
+    console.log('AdvancedAnalysisResult: Init', { type, user, result });
+
     if (!type || !advancedEnneagramInfo[type]) {
+        console.warn('AdvancedAnalysisResult: Invalid type', type);
         return (
             <div className="advanced-result-page">
                 <div className="advanced-result-container" style={{ textAlign: 'center', background: 'white', padding: '40px', borderRadius: '20px' }}>
@@ -170,10 +173,15 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
             image: basicInfo.image
         }
     };
+
+    // Ensure winner matches displayResult or basicInfo fallback
     const winner = {
         ...displayResult.winner,
-        image: displayResult.winner.image || basicInfo.image
+        image: displayResult.winner?.image || basicInfo.image,
+        name: displayResult.winner?.name || basicInfo.name
     };
+
+    console.log('AdvancedAnalysisResult: Render Data', { details, winner });
 
     // Get the runner-ups (top 2 rivals) for differentiation
     const rivals = (result?.results || [])
@@ -257,7 +265,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     {/* Hero Section */}
                     <section className="advanced-hero">
                         <h1 className="advanced-hero-title">
-                            {user?.name && <span className="user-name-title">{user.name.toUpperCase()}</span>}
+                            {user?.name && <span className="user-name-title">{String(user.name).toUpperCase()}</span>}
                             <span className="profile-text-title">
                                 TU PERFIL AUT<span className="brand-accent">é</span>NTICO
                             </span>
