@@ -5,140 +5,67 @@
     min-height: 100vh;
     background: #f4f7f6;
     padding: 20px;
-    font-family: 'Outfit', sans-serif;
 }
 
-.payment-card {
+.payment-container {
     background: white;
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    /* Soft premium shadow */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 480px;
+    max-width: 500px;
     width: 100%;
-    position: relative;
-}
-
-.back-link {
-    background: none;
-    border: none;
-    color: #666;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-weight: 500;
 }
 
 .payment-title {
     color: #002d44;
     font-size: 1.8rem;
-    font-weight: 800;
-    margin-top: 30px;
     margin-bottom: 10px;
-    line-height: 1.2;
 }
 
-.payment-subtitle {
+.payment-description {
     color: #666;
     margin-bottom: 30px;
-    font-size: 1rem;
 }
 
-.price-box {
-    background: #f8f9fa;
-    padding: 30px 20px;
-    border-radius: 15px;
+.payment-summary {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
     margin-bottom: 30px;
+}
+
+.payment-row {
     display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 8px;
-}
-
-.currency-symbol {
-    color: #ddbe3d;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.price-amount {
-    color: #ddbe3d;
-    font-size: 2.5rem;
-    font-weight: 800;
-}
-
-.currency-code {
-    color: #999;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.features-list {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    margin-bottom: 30px;
-    padding-left: 10px;
-}
-
-.features-list li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
-    color: #444;
-    font-size: 1rem;
-}
-
-.check-icon {
-    color: #2ECC71;
-    /* Green check */
-    min-width: 18px;
-}
-
-.security-note {
-    color: #999;
-    font-size: 0.85rem;
-    margin-bottom: 15px;
-}
-
-.btn-pay-now {
-    background: #ddbe3d;
-    /* Brand Gold */
-    color: white;
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 50px;
-    /* Pill shape */
+    justify-content: space-between;
+    font-weight: bold;
+    color: #333;
     font-size: 1.1rem;
-    font-weight: 700;
+}
+
+.payment-amount {
+    color: #ddbe3d;
+}
+
+.wompi-container {
+    margin-bottom: 20px;
+    min-height: 50px;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: none;
+    color: #999;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.4);
+    font-size: 0.9rem;
+    text-decoration: underline;
 }
 
-.btn-pay-now:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.5);
-    background: #eacb4c;
-}
-
-.btn-pay-now:disabled {
-    background: #ccc;
-    box-shadow: none;
-    cursor: not-allowed;
+.btn-cancel:hover {
+    color: #666;
 }
 
 .payment-error {
-    color: #E74C3C;
-    margin-top: 10px;
-    font-size: 0.9rem;
+    color: red;
+    margin-bottom: 15px;
 }
