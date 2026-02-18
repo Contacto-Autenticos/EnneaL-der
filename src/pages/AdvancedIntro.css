@@ -141,7 +141,7 @@
     align-items: center;
 }
 
-.no-code-label {
+.form-group-adv .no-code-label {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -149,6 +149,8 @@
     color: #666;
     cursor: pointer;
     line-height: 1.4;
+    font-weight: 400;
+    /* Override parent bold */
 }
 
 .no-code-label input[type="checkbox"] {
