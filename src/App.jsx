@@ -200,6 +200,27 @@ function App() {
         />
 
         <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/test-liderazgo"
+          element={
+            <AdvancedIntro
+              onRegister={handleRegister}
+              user={user}
+              targetRoute="/advanced-test-full"
+            />
+          }
+        />
+
+        <Route
+          path="/advanced-test-full"
+          element={
+            <AdvancedTest
+              fullTest={true}
+              onComplete={handleAdvancedTestComplete}
+            />
+          }
+        />
+
         {/* Redirect any other route to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

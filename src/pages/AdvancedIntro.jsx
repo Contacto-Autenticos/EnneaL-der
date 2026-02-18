@@ -5,7 +5,7 @@ import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
 import './AdvancedIntro.css';
 
-const AdvancedIntro = ({ onRegister, user: existingUser }) => {
+const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test' }) => {
     const navigate = useNavigate();
     const [name, setName] = useState(existingUser?.name || '');
     const [day, setDay] = useState('');
@@ -65,7 +65,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser }) => {
         } finally {
             onRegister(userData);
             setLoading(false);
-            navigate('/advanced-test');
+            navigate(targetRoute);
         }
     };
 

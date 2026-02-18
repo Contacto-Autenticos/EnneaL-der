@@ -3,9 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { advancedQuestions, advancedOptions } from '../data/advancedQuestions';
 
-const AdvancedTest = ({ topTypes, onComplete }) => {
-    // Filter and shuffle questions for the top 3 types
+const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
+    // Filter and shuffle questions
     const filteredQuestions = useMemo(() => {
+        // If fullTest is active, use ALL advanced questions
+        if (fullTest) {
+            const shuffled = [...advancedQuestions];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
         if (!topTypes || topTypes.length === 0) return [];
 
         // Filter questions belonging to the top types
@@ -18,7 +28,7 @@ const AdvancedTest = ({ topTypes, onComplete }) => {
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
-    }, [topTypes]);
+    }, [topTypes, fullTest]);
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
