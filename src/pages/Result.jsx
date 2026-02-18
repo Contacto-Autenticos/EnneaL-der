@@ -5,25 +5,59 @@ import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
 import './Result.css';
 
+import html2canvas from 'html2canvas'; // Import html2canvas
+
 const EnneatypeModal = ({ isOpen, onClose, type }) => {
+    const modalRef = React.useRef(null); // Ref for the modal content
+
     if (!isOpen || !type) return null;
     const info = getEnneagramInfo(type);
 
     const handleShare = async () => {
-        const shareUrl = `${window.location.origin}/result/${type}`;
-        if (navigator.share) {
-            try {
-                await navigator.share({
+        if (!modalRef.current) return;
+
+        try {
+            // Generate image from modal content
+            const canvas = await html2canvas(modalRef.current, {
+                backgroundColor: null, // Transparent background if possible, or use #fff
+                scale: 2, // Higher resolution
+                useCORS: true // For cross-origin images
+            });
+
+            const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            const imageFile = new File([imageBlob], `eneatipo-${type}.png`, { type: 'image/png' });
+
+            const shareData = {
+                title: `Mi Eneatipo es ${type} - ${info.name}`,
+                text: `He descubierto que soy Eneatipo ${type} en el Test de Eneagrama. ${info.role}`,
+                files: [imageFile],
+            };
+
+            // Check if native sharing with files is supported
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                await navigator.share(shareData);
+            } else {
+                // Fallback: Download image
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `eneatipo-${type}.png`;
+                link.click();
+                alert('La imagen se ha descargado porque tu navegador no soporta compartir imágenes directamente.');
+            }
+        } catch (error) {
+            console.error('Error sharing image:', error);
+            // Fallback to text sharing if image fails
+            const shareUrl = `${window.location.origin}/result/${type}`;
+            if (navigator.share) {
+                navigator.share({
                     title: `Mi Eneatipo es ${type} - ${info.name}`,
                     text: `He descubierto que soy Eneatipo ${type} en el Test de Eneagrama. ${info.role}`,
                     url: shareUrl,
-                });
-            } catch (error) {
-                console.log('Error sharing:', error);
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(shareUrl);
+                alert('¡Enlace copiado al portapapeles! (No se pudo generar la imagen)');
             }
-        } else {
-            navigator.clipboard.writeText(shareUrl);
-            alert('¡Enlace copiado al portapapeles!');
         }
     };
 
@@ -37,8 +71,8 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
 
     return (
         <div className="ennea-modal-overlay" onClick={onClose}>
-            <div className="ennea-modal-content" onClick={(e) => e.stopPropagation()}>
-                <button className="modal-close-btn" onClick={onClose}>
+            <div className="ennea-modal-content" onClick={(e) => e.stopPropagation()} ref={modalRef}>
+                <button className="modal-close-btn" onClick={onClose} data-html2canvas-ignore>
                     <X size={24} />
                 </button>
 
@@ -62,7 +96,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
                     </p>
                 </div>
 
-                <div className="ennea-modal-footer">
+                <div className="ennea-modal-footer" data-html2canvas-ignore>
                     <button className="modal-btn-back" onClick={onClose}>
                         <ArrowLeft size={18} /> Regresar
                     </button>
