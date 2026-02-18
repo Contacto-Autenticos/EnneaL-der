@@ -4,7 +4,7 @@ import { supabase } from '../supabaseClient';
 import { CheckCircle } from 'lucide-react';
 import './PaymentPage.css';
 
-const PUBLIC_KEY = 'pub_test_krxpyuZrgZjZAitMsHHfLbogQie4ddW8'; // Wompi TEST Key
+const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
 const WOMPI_AMOUNT_IN_CENTS = 3700000; // $37.000 COP
 
