@@ -229,11 +229,11 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 navigator.share({
                     title: `Mi Perfil Auténtico: Eneatipo ${type}`,
                     text: `He completado mi análisis avanzado de Eneagrama. Soy Eneatipo ${type} - ${winner.name}.\n\n¡Descubre el tuyo en https://enesencia.autenticos.co`,
-                    url: window.location.href,
+                    // url property removed to avoid duplication
                 }).catch(console.error);
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('¡Enlace de resultado copiado!');
+                navigator.clipboard.writeText(`He completado mi análisis avanzado de Eneagrama. Soy Eneatipo ${type} - ${winner.name}.\n\n¡Descubre el tuyo en https://enesencia.autenticos.co`);
+                alert('¡Texto copiado al portapapeles!');
             }
         }
     };
