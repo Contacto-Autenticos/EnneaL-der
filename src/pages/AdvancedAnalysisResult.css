@@ -674,30 +674,48 @@
     }
 
     .score-bar-row {
-        flex-direction: column;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "info pts"
+            "track track";
         gap: 12px;
         padding: 15px;
+        align-items: end;
     }
 
     .score-bar-info {
+        grid-area: info;
         width: 100%;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 2px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
     }
 
     .score-bar-pts {
+        grid-area: pts;
+        color: #ddbe3d;
         text-align: right;
-        font-size: 1rem;
+        font-size: 1.1rem;
+        font-weight: 800;
         margin: 0;
         line-height: 1;
     }
 
     .score-bar-track {
+        grid-area: track;
         width: 100%;
-        height: 12px;
+        height: 10px;
+    }
+
+    .score-bar-type {
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .score-bar-name {
+        font-size: 0.8rem;
+        line-height: 1.2;
     }
 }
 
