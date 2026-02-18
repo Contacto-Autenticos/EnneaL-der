@@ -112,14 +112,31 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
 
                         {showOrganization && (
                             <div className="form-group-adv">
-                                <label>Organización o empresa</label>
+                                <label>Código organización</label>
                                 <input
                                     type="text"
                                     value={organization}
                                     onChange={(e) => setOrganization(e.target.value)}
-                                    placeholder="Nombre de la empresa"
+                                    placeholder="Ingresa el código"
                                     className="adv-input"
+                                    disabled={organization === 'NO_CODE'}
                                 />
+                                <div className="no-code-checkbox-wrapper">
+                                    <label className="no-code-label">
+                                        <input
+                                            type="checkbox"
+                                            checked={organization === 'NO_CODE'}
+                                            onChange={(e) => {
+                                                if (e.target.checked) {
+                                                    setOrganization('NO_CODE');
+                                                } else {
+                                                    setOrganization('');
+                                                }
+                                            }}
+                                        />
+                                        No tengo código
+                                    </label>
+                                </div>
                             </div>
                         )}
 

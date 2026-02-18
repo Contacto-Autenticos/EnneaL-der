@@ -128,3 +128,30 @@
         padding: 0 10px;
     }
 }
+
+@media (max-width: 768px) {
+    .date-grid-adv {
+        grid-template-columns: 1fr;
+    }
+}
+
+.no-code-checkbox-wrapper {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.no-code-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.no-code-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
