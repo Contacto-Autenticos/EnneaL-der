@@ -13,6 +13,7 @@ import AdvancedAnalysisResult from './pages/AdvancedAnalysisResult';
 import PaymentPage from './pages/PaymentPage';
 import PaymentStatus from './pages/PaymentStatus';
 import emailjs from '@emailjs/browser';
+import { supabase } from './supabaseClient';
 import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
 import { advancedEnneagramInfo } from './data/advancedInfo';
 
@@ -65,6 +66,19 @@ function App() {
         emailjs.init('jvBHZwalOIEABW7qV');
 
         const type = result.confirmedType;
+
+        // Update Supabase with the confirmed enneatype
+        const { error: supabaseError } = await supabase
+          .from('user_leads')
+          .update({ enneatype: type })
+          .eq('email', user.email);
+
+        if (supabaseError) {
+          console.error('Error updating Supabase:', supabaseError);
+        } else {
+          console.log('Enneatype updated in Supabase');
+        }
+
         const details = advancedEnneagramInfo[type];
         const resultLink = `${window.location.origin}/advanced-analysis-result/${type}`;
 
