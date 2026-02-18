@@ -396,7 +396,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         src="/logo-azul.png"
                         alt="Logo Auténticos"
                         className="register-footer-logo"
-                        style={{ maxWidth: '150px', height: 'auto', opacity: 0.6 }}
+                        style={{ maxWidth: '150px', height: 'auto' }}
                     />
                 </div>
 
