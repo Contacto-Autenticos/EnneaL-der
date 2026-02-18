@@ -6,7 +6,11 @@ import './PaymentPage.css';
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
-const WOMPI_AMOUNT_IN_CENTS = 1500000; // $15.000 COP
+const BASE_PRICE_IN_CENTS = 1500000; // $15.000 COP
+
+const COUPONS = {
+    'ENEAUTOCONOCETE9': 0.50 // 50% discount
+};
 
 const PaymentPage = () => {
     const navigate = useNavigate();
@@ -14,29 +18,58 @@ const PaymentPage = () => {
     const [signatureData, setSignatureData] = useState(null);
     const [error, setError] = useState(null);
 
+    // Coupon state
+    const [couponCode, setCouponCode] = useState('');
+    const [amountInCents, setAmountInCents] = useState(BASE_PRICE_IN_CENTS);
+    const [discountApplied, setDiscountApplied] = useState(false);
+    const [message, setMessage] = useState(''); // For success or error messages
+
+    const fetchSignature = async (amount) => {
+        try {
+            setLoading(true);
+            const reference = `ref-${Date.now()}`; // Unique reference
+
+            const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
+                body: { reference, amount: amount, currency: WOMPI_CURRENCY }
+            });
+
+            if (error) throw error;
+            if (data.error) throw new Error(data.error);
+
+            setSignatureData(data);
+        } catch (err) {
+            console.error('Error fetching signature:', err);
+            setError('No pudimos iniciar el proceso de pago. Intenta de nuevo.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchSignature = async () => {
-            try {
-                const reference = `ref-${Date.now()}`; // Unique reference
-
-                const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
-                    body: { reference, amount: WOMPI_AMOUNT_IN_CENTS, currency: WOMPI_CURRENCY }
-                });
-
-                if (error) throw error;
-                if (data.error) throw new Error(data.error);
-
-                setSignatureData(data);
-            } catch (err) {
-                console.error('Error fetching signature:', err);
-                setError('No pudimos iniciar el proceso de pago. Intenta de nuevo.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchSignature();
+        fetchSignature(BASE_PRICE_IN_CENTS);
     }, []);
+
+    const handleApplyCoupon = () => {
+        if (!couponCode) return;
+
+        const code = couponCode.trim().toUpperCase();
+        const discount = COUPONS[code];
+
+        if (discount) {
+            const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
+            setAmountInCents(newAmount);
+            setDiscountApplied(true);
+            setMessage(`¡Código aplicado! Descuento del ${discount * 100}%`);
+
+            // Re-fetch signature with new amount
+            fetchSignature(newAmount);
+        } else {
+            setMessage('Código no válido');
+            setDiscountApplied(false);
+            setAmountInCents(BASE_PRICE_IN_CENTS);
+            fetchSignature(BASE_PRICE_IN_CENTS);
+        }
+    };
 
     useEffect(() => {
         if (signatureData) {
@@ -45,7 +78,7 @@ const PaymentPage = () => {
             script.setAttribute('data-render', 'button');
             script.setAttribute('data-public-key', PUBLIC_KEY);
             script.setAttribute('data-currency', WOMPI_CURRENCY);
-            script.setAttribute('data-amount-in-cents', WOMPI_AMOUNT_IN_CENTS);
+            script.setAttribute('data-amount-in-cents', amountInCents);
             script.setAttribute('data-reference', signatureData.reference);
             script.setAttribute('data-signature:integrity', signatureData.signature);
             script.setAttribute('data-redirect-url', `${window.location.origin}/payment-status`); // Verify status first
@@ -71,10 +104,37 @@ const PaymentPage = () => {
                             <span className="payment-original-price">Precio normal $37.000</span>
                         </div>
                         <div className="payment-current-row">
-                            <span className="payment-amount">$15.000 COP</span>
-                            <span className="payment-offer-tag">y solo por hoy</span>
+                            <span className="payment-amount">
+                                ${(amountInCents / 100).toLocaleString('es-CO')} COP
+                            </span>
+                            {!discountApplied && <span className="payment-offer-tag">y solo por hoy</span>}
                         </div>
                     </div>
+                </div>
+
+                <div className="coupon-section">
+                    <div className="coupon-input-group">
+                        <input
+                            type="text"
+                            placeholder="Código de descuento"
+                            value={couponCode}
+                            onChange={(e) => setCouponCode(e.target.value)}
+                            disabled={discountApplied}
+                            className="coupon-input"
+                        />
+                        <button
+                            onClick={handleApplyCoupon}
+                            disabled={discountApplied || !couponCode}
+                            className="btn-apply-coupon"
+                        >
+                            Aplicar
+                        </button>
+                    </div>
+                    {message && (
+                        <p className={`coupon-message ${discountApplied ? 'success' : 'error'}`}>
+                            {message}
+                        </p>
+                    )}
                 </div>
 
                 <ul className="features-list">
