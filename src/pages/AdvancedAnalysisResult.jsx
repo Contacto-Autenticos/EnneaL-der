@@ -243,7 +243,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
             <div className="advanced-result-container">
 
                 {/* Hero Section */}
-                <section className="advanced-hero" ref={heroRef} data-html2canvas-ignore="false">
+                <section className="advanced-hero" ref={heroRef}>
                     <h1 className="advanced-hero-title">
                         {user?.name && <span className="user-name-title">{user.name.toUpperCase()}</span>}
                         <span className="profile-text-title">
@@ -265,6 +265,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                 src={winner.image ? encodeURI(winner.image) : "/moneda-autenticos.png"}
                                 alt={`Eneatipo ${type}`}
                                 className="advanced-coin-img"
+                                crossOrigin="anonymous"
                             />
                         </div>
                     </div>
