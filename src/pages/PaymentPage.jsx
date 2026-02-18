@@ -48,7 +48,7 @@ const PaymentPage = () => {
             script.setAttribute('data-amount-in-cents', WOMPI_AMOUNT_IN_CENTS);
             script.setAttribute('data-reference', signatureData.reference);
             script.setAttribute('data-signature:integrity', signatureData.signature);
-            script.setAttribute('data-redirect-url', `${window.location.origin}/advanced-intro`); // Redirect to success page
+            script.setAttribute('data-redirect-url', `${window.location.origin}/payment-status`); // Verify status first
 
             const container = document.getElementById('wompi-container');
             if (container) {
