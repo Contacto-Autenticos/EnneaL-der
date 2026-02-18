@@ -102,7 +102,7 @@ const PaymentStatus = () => {
 
                 {(status === 'DECLINED' || status === 'ERROR') && (
                     <div style={{ marginTop: '30px' }}>
-                        <button onClick={() => navigate('/payment')} className="btn-pay-now" style={{ marginBottom: '10px' }}>
+                        <button onClick={() => navigate('/payment')} className="btn-retry">
                             Intentar de nuevo
                         </button>
                         <br />

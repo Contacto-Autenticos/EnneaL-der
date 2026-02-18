@@ -101,3 +101,25 @@
     color: red;
     margin-bottom: 15px;
 }
+
+.btn-retry {
+    background: #ddbe3d;
+    color: #002d44;
+    /* Blue text */
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.4);
+    margin-bottom: 10px;
+}
+
+.btn-retry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.5);
+    background: #eacb4c;
+}
