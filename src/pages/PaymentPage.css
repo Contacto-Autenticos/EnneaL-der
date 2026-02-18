@@ -43,8 +43,14 @@
     font-size: 1.1rem;
 }
 
+.payment-row.centered-price {
+    justify-content: center;
+}
+
 .payment-amount {
     color: #ddbe3d;
+    font-size: 2.2rem;
+    font-weight: 800;
 }
 
 .features-list {

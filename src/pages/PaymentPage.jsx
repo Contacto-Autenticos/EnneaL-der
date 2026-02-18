@@ -61,13 +61,12 @@ const PaymentPage = () => {
     return (
         <div className="payment-page">
             <div className="payment-container">
-                <h1 className="payment-title">Análisis Avanzado Eneagrama</h1>
+                <h1 className="payment-title">Desbloquea tu Informe Avanzado</h1>
                 <p className="payment-description">
                     Estás a un paso de descubrir tu perfil auténtico completo.
                 </p>
                 <div className="payment-summary">
-                    <div className="payment-row">
-                        <span>Análisis Completo</span>
+                    <div className="payment-row centered-price">
                         <span className="payment-amount">$37.000 COP</span>
                     </div>
                 </div>
