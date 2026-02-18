@@ -5,9 +5,10 @@ import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
 import './AdvancedIntro.css';
 
-const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test' }) => {
+const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test', showOrganization = false }) => {
     const navigate = useNavigate();
     const [name, setName] = useState(existingUser?.name || '');
+    const [organization, setOrganization] = useState('');
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
@@ -55,7 +56,8 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                         full_name: name,
                         email: email,
                         birth_date: formattedDate,
-                        source: 'advanced_analysis'
+                        source: 'advanced_analysis',
+                        organization: showOrganization ? organization : null
                     }
                 ]);
 
@@ -105,6 +107,19 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                                 className="adv-input"
                             />
                         </div>
+
+                        {showOrganization && (
+                            <div className="form-group-adv">
+                                <label>Organización o empresa</label>
+                                <input
+                                    type="text"
+                                    value={organization}
+                                    onChange={(e) => setOrganization(e.target.value)}
+                                    placeholder="Nombre de la empresa"
+                                    className="adv-input"
+                                />
+                            </div>
+                        )}
 
                         <div className="form-group-adv">
                             <label>Fecha de nacimiento</label>

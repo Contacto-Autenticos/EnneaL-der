@@ -221,6 +221,7 @@ function App() {
               onRegister={handleRegister}
               user={user}
               targetRoute="/advanced-test-full"
+              showOrganization={true}
             />
           }
         />
