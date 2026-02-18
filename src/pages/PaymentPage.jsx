@@ -86,7 +86,7 @@ const PaymentPage = () => {
                     {/* Wompi Button will render here */}
                 </div>
 
-                <button onClick={() => navigate('/')} className="btn-cancel">
+                <button onClick={() => navigate('/result')} className="btn-cancel">
                     Cancelar
                 </button>
             </div>
