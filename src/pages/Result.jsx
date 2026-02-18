@@ -206,15 +206,7 @@ const Result = ({ result, user, onReset }) => {
                     <h1 className="result-title">
                         RESULTADO
                     </h1>
-                    <p style={{
-                        color: '#444',
-                        marginTop: '5px',
-                        fontSize: '1rem',
-                        lineHeight: '1.4',
-                        maxWidth: '85%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto'
-                    }}>
+                    <p className="result-subtitle">
                         Tus respuestas muestran una fuerte afinidad<br />
                         con estos tres eneatipos.
                     </p>

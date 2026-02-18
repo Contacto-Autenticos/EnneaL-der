@@ -27,6 +27,26 @@
     margin-bottom: 10px;
 }
 
+/* New class for the subtitle to handle mobile responsiveness */
+.result-subtitle {
+    color: #444;
+    margin-top: 5px;
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 600px) {
+    .result-subtitle {
+        max-width: 100%;
+        padding: 0 5px;
+        font-size: 0.9rem;
+        /* Adjusted to 0.9rem to prevent wrapping */
+    }
+}
+
 .result-chart-wrapper {
     margin-bottom: 25px;
     margin-top: 10px;
