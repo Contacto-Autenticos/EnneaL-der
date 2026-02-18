@@ -37,7 +37,6 @@
 }
 
 .user-name-title {
-    font-size: 1.8rem;
     color: #002d44;
     width: 100%;
     text-align: center;
@@ -516,8 +515,7 @@
         grid-template-columns: 1fr;
     }
 
-    .advanced-hero-title,
-    .user-name-title {
+    .advanced-hero-title {
         font-size: 1.8rem;
     }
 
