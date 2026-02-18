@@ -29,7 +29,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
 
             const shareData = {
                 title: `Mi Eneatipo es ${type} - ${info.name}`,
-                text: `He descubierto que soy Eneatipo ${type} en el Test de Eneagrama. ${info.role}`,
+                text: `He descubierto que soy Eneatipo ${type} en el Test de Eneagrama. ${info.role}\n\n¡Descubre el tuyo en https://enesencia.autenticos.co`,
                 files: [imageFile],
             };
 
@@ -51,7 +51,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
             if (navigator.share) {
                 navigator.share({
                     title: `Mi Eneatipo es ${type} - ${info.name}`,
-                    text: `He descubierto que soy Eneatipo ${type} en el Test de Eneagrama. ${info.role}`,
+                    text: `He descubierto que soy Eneatipo ${type} en el Test de Eneagrama. ${info.role}\n\n¡Descubre el tuyo en https://enesencia.autenticos.co`,
                     url: shareUrl,
                 }).catch(console.error);
             } else {
