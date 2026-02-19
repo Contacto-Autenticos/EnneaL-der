@@ -32,7 +32,8 @@ const ViewAnswersModal = ({ isOpen, onClose, answers }) => {
     questions.forEach(q => {
         if (groupedQuestions[q.type]) {
             const answerValue = answers && answers[q.id];
-            const answerLabel = options.find(o => o.value === answerValue)?.label || "Sin responder";
+            // Use loose equality (==) to handle potential string/number mismatches
+            const answerLabel = options.find(o => o.value == answerValue)?.label || "Sin responder";
             groupedQuestions[q.type].push({ ...q, answerLabel, answerValue });
         }
     });
@@ -62,9 +63,7 @@ const ViewAnswersModal = ({ isOpen, onClose, answers }) => {
                                 <span style={{
                                     fontSize: '0.85rem',
                                     fontWeight: 'bold',
-                                    color:
-                                        q.answerValue === 3 ? '#2ECC71' :
-                                            q.answerValue === 0 ? '#E74C3C' : '#555'
+                                    color: '#ddbe3d' // Force yellow for all answers
                                 }}>
                                     {q.answerLabel}
                                 </span>
