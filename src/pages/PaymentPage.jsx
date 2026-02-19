@@ -23,6 +23,7 @@ const PaymentPage = () => {
     const [amountInCents, setAmountInCents] = useState(BASE_PRICE_IN_CENTS);
     const [discountApplied, setDiscountApplied] = useState(false);
     const [message, setMessage] = useState(''); // For success or error messages
+    const [showCouponInput, setShowCouponInput] = useState(false);
 
     const fetchSignature = async (amount) => {
         try {
@@ -104,7 +105,7 @@ const PaymentPage = () => {
                     <div className="payment-row centered-price-column">
                         <div className="payment-current-row">
                             <span className="payment-amount">
-                                ${(amountInCents / 100).toLocaleString('es-CO')} COP
+                                ${(amountInCents / 100).toLocaleString('es-CO')} <span className="currency-label">COP</span>
                             </span>
                         </div>
                         <p className="payment-features-text">Pago único · Acceso vitalicio · Entrega inmediata</p>
@@ -112,23 +113,32 @@ const PaymentPage = () => {
                 </div>
 
                 <div className="coupon-section">
-                    <div className="coupon-input-group">
-                        <input
-                            type="text"
-                            placeholder="Código de descuento"
-                            value={couponCode}
-                            onChange={(e) => setCouponCode(e.target.value)}
-                            disabled={discountApplied}
-                            className="coupon-input"
-                        />
-                        <button
-                            onClick={handleApplyCoupon}
-                            disabled={discountApplied || !couponCode}
-                            className="btn-apply-coupon"
+                    {!showCouponInput && !discountApplied ? (
+                        <p
+                            className="coupon-toggle-text"
+                            onClick={() => setShowCouponInput(true)}
                         >
-                            Aplicar
-                        </button>
-                    </div>
+                            ¿Tienes un código?
+                        </p>
+                    ) : (
+                        <div className="coupon-input-group">
+                            <input
+                                type="text"
+                                placeholder="Código de descuento"
+                                value={couponCode}
+                                onChange={(e) => setCouponCode(e.target.value)}
+                                disabled={discountApplied}
+                                className="coupon-input"
+                            />
+                            <button
+                                onClick={handleApplyCoupon}
+                                disabled={discountApplied || !couponCode}
+                                className="btn-apply-coupon"
+                            >
+                                Aplicar
+                            </button>
+                        </div>
+                    )}
                     {message && (
                         <p className={`coupon-message ${discountApplied ? 'success' : 'error'}`}>
                             {message}

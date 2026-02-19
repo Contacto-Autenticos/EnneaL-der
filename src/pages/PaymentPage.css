@@ -58,6 +58,15 @@
     font-weight: 800;
 }
 
+.currency-label {
+    color: #537080;
+    /* Opaque blue variant */
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 5px;
+
+}
+
 .features-list {
     list-style: none;
     padding: 0;
@@ -241,8 +250,22 @@
 }
 
 .btn-apply-coupon:disabled {
-    background-color: #ccc;
+    background-color: #002d44;
+    opacity: 0.6;
     cursor: not-allowed;
+}
+
+.coupon-toggle-text {
+    color: #0056b3;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.coupon-toggle-text:hover {
+    color: #003d82;
 }
 
 .coupon-message {
