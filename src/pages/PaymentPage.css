@@ -79,21 +79,29 @@
     padding: 0;
     text-align: left;
     margin-bottom: 25px;
-    padding-left: 10px;
-    max-width: 350px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-left: 0;
+    /* Remove default padding to gain space */
+    max-width: 100%;
+    /* Allow full width of container */
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .features-list li {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 8px;
+    /* Slightly reduce gap */
+    margin-bottom: 10px;
     color: #002d44;
     /* Changed to blue as requested */
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    /* Reduce font size slightly */
     font-weight: 500;
+    line-height: 1.2;
+    /* Tighter line height */
+    justify-content: flex-start;
+    /* Ensure left alignment */
 }
 
 .check-icon {
