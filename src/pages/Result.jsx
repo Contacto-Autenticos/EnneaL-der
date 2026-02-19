@@ -226,7 +226,7 @@ const Result = ({ result, user, onReset }) => {
                 <div className="result-summary">
                     <p style={{
                         color: '#666',
-                        marginBottom: '25px',
+                        marginBottom: '30px', // Increased to 30px
                         fontStyle: 'italic',
                         fontSize: '0.9rem',
                         lineHeight: '1.5',
@@ -285,8 +285,6 @@ const Result = ({ result, user, onReset }) => {
                             </div>
                         ))}
                     </div>
-
-                    <br />
 
                     <p className="advanced-analysis-note">
                         El análisis avanzado te ayudará a identificarlo con mayor profundidad.
