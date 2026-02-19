@@ -189,13 +189,14 @@ const PaymentPage = () => {
                 </div>
 
                 <ul className="features-list">
-                    <li><CheckCircle size={18} className="check-icon" /> Frase interna que suele repetirse</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Tu miedo y deseo más profundo</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Cómo tomas decisiones</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Cómo reaccionas bajo presión</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Cuadro de diferenciación</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Dinámica de crecimiento y desintegración</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Consejos para liderar desde tu eneatipo</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Detalles de tu personalidad</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Reconoce tus miedos y deseos</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Dinámicas de crecimiento</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Formas de tomar decisiones</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Entiende cómo actúas bajo presión</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Consejos para aprovechar tu tipo</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Pasiones y virtudes</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Y mucho más…</li>
                 </ul>
 
                 {loading && <p>Cargando pasarela de pago...</p>}
