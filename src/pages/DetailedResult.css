@@ -78,3 +78,9 @@
     text-align: center;
     line-height: 1.5;
 }
+
+.chart-title {
+    text-align: left;
+    color: #002d44;
+    margin-bottom: 20px;
+}
