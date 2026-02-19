@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
-import { questions, options } from '../data/questions';
+import { getEnneagramInfo } from '../utils/calculator';
 import './Result.css';
 
 import html2canvas from 'html2canvas'; // Import html2canvas
@@ -126,73 +126,13 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
     );
 };
 
-const ViewAnswersModal = ({ isOpen, onClose, answers }) => {
-    if (!isOpen) return null;
 
-    // Group questions by type and map answers
-    const groupedQuestions = {
-        'A': [], 'B': [], 'C': [],
-        'X': [], 'Y': [], 'Z': []
-    };
-
-    questions.forEach(q => {
-        if (groupedQuestions[q.type]) {
-            const answerValue = answers && answers[q.id];
-            const answerLabel = options.find(o => o.value === answerValue)?.label || "Sin responder";
-            groupedQuestions[q.type].push({ ...q, answerLabel, answerValue });
-        }
-    });
-
-    return (
-        <div className="ennea-modal-overlay" onClick={onClose} style={{ zIndex: 10000 }}>
-            <div className="ennea-modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px', maxHeight: '80vh', overflowY: 'auto' }}>
-                <button className="modal-close-btn" onClick={onClose}>
-                    <X size={24} />
-                </button>
-                <h2 style={{ color: '#002d44', marginBottom: '20px', textAlign: 'center' }}>Tus Respuestas</h2>
-
-                {['A', 'B', 'C', 'X', 'Y', 'Z'].map(type => (
-                    <div key={type} style={{ marginBottom: '20px' }}>
-                        <h3 style={{
-                            background: '#f0f4f8',
-                            padding: '8px',
-                            borderRadius: '5px',
-                            color: '#002d44',
-                            marginBottom: '10px'
-                        }}>
-                            Grupo {type}
-                        </h3>
-                        {groupedQuestions[type].map(q => (
-                            <div key={q.id} style={{ marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
-                                <p style={{ fontSize: '0.9rem', marginBottom: '5px' }}>{q.text}</p>
-                                <span style={{
-                                    fontSize: '0.85rem',
-                                    fontWeight: 'bold',
-                                    color:
-                                        q.answerValue === 3 ? '#2ECC71' :
-                                            q.answerValue === 0 ? '#E74C3C' : '#555'
-                                }}>
-                                    {q.answerLabel}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                ))}
-                <div className="ennea-modal-footer">
-                    <button className="modal-btn-back" onClick={onClose} style={{ width: '100%', justifyContent: 'center' }}>
-                        Cerrar
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
 
 const Result = ({ result, user, onReset }) => {
     const navigate = useNavigate();
     const [selectedType, setSelectedType] = React.useState(null);
+    const [selectedType, setSelectedType] = React.useState(null);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const [isAnswersModalOpen, setIsAnswersModalOpen] = React.useState(false);
 
     const openModal = (type) => {
         setSelectedType(type);
@@ -347,21 +287,7 @@ const Result = ({ result, user, onReset }) => {
                     </div>
 
                     <br />
-                    <button
-                        onClick={() => setIsAnswersModalOpen(true)}
-                        style={{
-                            background: 'transparent',
-                            border: '1px solid #002d44',
-                            borderRadius: '20px',
-                            padding: '8px 20px',
-                            color: '#002d44',
-                            cursor: 'pointer',
-                            fontSize: '0.9rem',
-                            marginTop: '10px'
-                        }}
-                    >
-                        Ver respuestas
-                    </button>
+
                     <p className="advanced-analysis-note">
                         El análisis avanzado te ayudará a identificarlo con mayor profundidad.
                     </p>
@@ -395,11 +321,7 @@ const Result = ({ result, user, onReset }) => {
                         type={selectedType}
                     />
 
-                    <ViewAnswersModal
-                        isOpen={isAnswersModalOpen}
-                        onClose={() => setIsAnswersModalOpen(false)}
-                        answers={result.answers}
-                    />
+
                 </div>
 
                 {/* Brand footer */}
