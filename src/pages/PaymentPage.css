@@ -125,6 +125,19 @@
     /* Ensure text is visible */
 }
 
+/* Redundant selectors to ensure override */
+.wompi-container form button,
+.wompi-container button[type="submit"],
+.waybox-button {
+    width: 100% !important;
+    border-radius: 6px !important;
+    min-height: 48px !important;
+    font-size: 1.1rem !important;
+    background-color: #0f2234 !important;
+    border: 4px solid #ddbe3d !important;
+    color: white !important;
+}
+
 .btn-cancel {
     background: transparent;
     border: none;

@@ -89,6 +89,30 @@ const PaymentPage = () => {
             if (container) {
                 container.innerHTML = ''; // Clear previous button if any
                 container.appendChild(script);
+
+                // Force styles via Observer in case CSS is overridden or shadow DOM is used (if open)
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        mutation.addedNodes.forEach((node) => {
+                            if (node.tagName === 'FORM' || node.tagName === 'BUTTON' || node.querySelector?.('button')) {
+                                const btn = node.tagName === 'BUTTON' ? node : node.querySelector('button');
+                                if (btn) {
+                                    btn.style.setProperty('width', '100%', 'important');
+                                    btn.style.setProperty('border-radius', '6px', 'important');
+                                    btn.style.setProperty('background-color', '#0f2234', 'important');
+                                    btn.style.setProperty('border', '4px solid #ddbe3d', 'important');
+                                    btn.style.setProperty('color', 'white', 'important');
+                                    btn.style.setProperty('font-size', '1.1rem', 'important');
+                                    btn.style.setProperty('min-height', '48px', 'important');
+                                }
+                            }
+                        });
+                    });
+                });
+                observer.observe(container, { childList: true, subtree: true });
+
+                // Cleanup observer
+                return () => observer.disconnect();
             }
         }
     }, [signatureData]);
