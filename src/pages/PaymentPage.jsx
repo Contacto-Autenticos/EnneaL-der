@@ -9,7 +9,8 @@ const WOMPI_CURRENCY = 'COP';
 const BASE_PRICE_IN_CENTS = 3700000; // $37.000 COP
 
 const COUPONS = {
-    'ENEAUTOCONOCETE9': 0.50 // 50% discount
+    'ENEAUTOCONOCETE9': 0.20, // 20% discount
+    'CEOB0330': 0.90 // 90% discount
 };
 
 const PaymentPage = () => {
