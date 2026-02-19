@@ -205,9 +205,7 @@ const PaymentPage = () => {
                     {/* Wompi Button will render here */}
                 </div>
 
-                <div className="security-bar">
-                    Pago 100% seguro (verificado)
-                </div>
+                {/* Security bar removed as requested */}
 
                 <button onClick={() => navigate('/result')} className="btn-cancel">
                     Cancelar

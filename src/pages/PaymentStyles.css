@@ -233,33 +233,7 @@
     color: #ddbe3d;
 }
 
-.security-bar {
-    background-color: transparent;
-    color: #ddbe3d;
-    text-align: center;
-    padding: 10px 0;
-    border-radius: 0;
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    position: relative;
-}
-
-.security-bar::before,
-.security-bar::after {
-    content: "";
-    flex: 1;
-    height: 2px;
-    background-color: #ddbe3d;
-    max-width: 60px;
-    /* Short lines */
-    opacity: 0.8;
-}
+/* Security bar styles removed */
 
 .payment-offer-tag {
     background-color: #ffefef;
