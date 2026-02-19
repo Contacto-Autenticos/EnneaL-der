@@ -164,9 +164,9 @@
 
 .payment-current-row {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 5px;
+    flex-wrap: nowrap;
     justify-content: center;
 }
 
@@ -362,9 +362,25 @@
         /* Increase top padding to push content down */
     }
 
+    .payment-current-row {
+        flex-wrap: nowrap;
+        /* Force single line */
+        gap: 5px;
+        /* Reduce gap */
+    }
+
+    .payment-amount {
+        font-size: 2.5rem;
+        /* Slightly smaller for mobile if needed, or keep large but ensure fit */
+        white-space: nowrap;
+    }
+
     .currency-label {
-        margin-left: 2px;
-        /* Bring closer to amount */
+        margin-left: 0;
+        font-size: 1.2rem;
+        /* Adjust label size */
+        align-self: baseline;
+        /* Align with baseline of price */
     }
 }
 
