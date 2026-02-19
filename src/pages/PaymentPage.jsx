@@ -102,8 +102,8 @@ const PaymentPage = () => {
                                     btn.style.setProperty('background-color', '#0f2234', 'important');
                                     btn.style.setProperty('border', '4px solid #ddbe3d', 'important');
                                     btn.style.setProperty('color', 'white', 'important');
-                                    btn.style.setProperty('font-size', '1.1rem', 'important');
-                                    btn.style.setProperty('min-height', '48px', 'important');
+                                    btn.style.setProperty('font-size', '1.35rem', 'important');
+                                    btn.style.setProperty('min-height', '60px', 'important');
                                     btn.style.setProperty('box-shadow', '0 6px 15px rgba(0, 0, 0, 0.5)', 'important');
                                 }
                             }
@@ -201,12 +201,12 @@ const PaymentPage = () => {
                 {loading && <p>Cargando pasarela de pago...</p>}
                 {error && <p className="payment-error">{error}</p>}
 
-                <div className="security-bar">
-                    Pago 100% seguro
-                </div>
-
                 <div id="wompi-container" className="wompi-container">
                     {/* Wompi Button will render here */}
+                </div>
+
+                <div className="security-bar">
+                    Pago 100% seguro
                 </div>
 
                 <button onClick={() => navigate('/result')} className="btn-cancel">
