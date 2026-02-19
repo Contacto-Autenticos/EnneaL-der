@@ -97,19 +97,28 @@ const PaymentPage = () => {
         <div className="payment-page">
             <div className="payment-container">
                 <h1 className="payment-title">
-                    Desbloquea tu Informe Avanzado Aut<span className="highlight-letter">é</span>ntico
+                    Tu informe avanzado
                 </h1>
                 <p className="payment-description">
-                    Descubre cómo funciona realmente tu personalidad y cómo crecer sin perder tu esencia.
+                    Responde el test completo, valida tu tipo y descubre cómo desarrollar todo tu potencial.
                 </p>
                 <div className="payment-summary">
                     <div className="payment-row centered-price-column">
+                        <div className="payment-original-row" style={{ color: '#002d44', textDecoration: 'line-through', fontSize: '1rem', marginBottom: '5px' }}>
+                            Precio regular $75.000
+                        </div>
+                        <div style={{ color: '#002d44', fontWeight: 'bold', fontSize: '1rem', marginBottom: '10px' }}>
+                            Valor especial 50% hasta el 30 de marzo del 2026
+                        </div>
                         <div className="payment-current-row">
+                            <span className="payment-label-investment" style={{ marginRight: '10px', color: '#002d44', fontWeight: 'bold' }}>
+                                Inversión actual:
+                            </span>
                             <span className="payment-amount">
                                 ${(amountInCents / 100).toLocaleString('es-CO')} <span className="currency-label">COP</span>
                             </span>
                         </div>
-                        <p className="payment-features-text">Pago único · Acceso vitalicio · Entrega inmediata</p>
+                        <p className="payment-features-text" style={{ color: '#002d44' }}>Pago único · Acceso vitalicio · Entrega inmediata</p>
                     </div>
                 </div>
 

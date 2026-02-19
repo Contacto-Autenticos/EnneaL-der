@@ -83,8 +83,10 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
-    color: #555;
+    color: #002d44;
+    /* Changed to blue as requested */
     font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .check-icon {

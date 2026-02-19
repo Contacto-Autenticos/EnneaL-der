@@ -246,6 +246,7 @@ export const calculateResults = (answers) => {
         clarityText,
         isVersatile,
         enneatype: dominant.type,
+        answers // Added to access raw answers in result page
     };
 };
 
