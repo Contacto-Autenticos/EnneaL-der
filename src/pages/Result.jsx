@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, Hand } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
 
@@ -235,6 +235,14 @@ const Result = ({ result, user, onReset }) => {
                         marginRight: 'auto'
                     }}>
                         Toca un eneatipo para ver una breve descripción.
+                        <br />
+                        <Hand
+                            size={24}
+                            style={{
+                                marginTop: '10px',
+                                animation: 'tapBounce 2s infinite ease-in-out'
+                            }}
+                        />
                     </p>
 
                     <div className="top-results-cards">
