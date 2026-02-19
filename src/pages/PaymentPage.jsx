@@ -188,11 +188,13 @@ const PaymentPage = () => {
                 </div>
 
                 <ul className="features-list">
-                    <li><CheckCircle size={18} className="check-icon" /> Acceso vitalicio al informe detallado</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Motivaciones centrales</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Tu estructura (Tríadas)</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Dinámica de crecimiento</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Consejos para liderazgo</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Frase interna que suele repetirse</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Tu miedo y deseo más profundo</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Cómo tomas decisiones</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Cómo reaccionas bajo presión</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Cuadro de diferenciación</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Dinámica de crecimiento y desintegración</li>
+                    <li><CheckCircle size={18} className="check-icon" /> Consejos para liderar desde tu eneatipo</li>
                 </ul>
 
                 {loading && <p>Cargando pasarela de pago...</p>}
