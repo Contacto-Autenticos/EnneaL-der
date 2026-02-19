@@ -133,7 +133,7 @@ const PaymentPage = () => {
                         <span className="discount-label">BENEFICIO<br />ESPECIAL</span>
                     </div>
                     <div className="payment-row centered-price-column">
-                        <div className="payment-original-row" style={{ color: '#ccc', textDecoration: 'line-through', fontSize: '1.1rem', marginBottom: '5px' }}>
+                        <div className="payment-original-row">
                             Antes $74.000
                         </div>
 
@@ -144,7 +144,7 @@ const PaymentPage = () => {
                         </div>
                         <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>Pago único · Acceso vitalicio · Entrega inmediata</p>
 
-                        <div className="savings-text" style={{ color: '#ddbe3d', marginTop: '15px', fontSize: '1.4rem', fontWeight: 'bold' }}>
+                        <div className="savings-text">
                             Precio de lanzamiento
                         </div>
                     </div>

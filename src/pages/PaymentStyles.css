@@ -201,11 +201,20 @@
 
 /* New Styles for Pricing Update */
 
-.payment-original-row {
+.payment-validity-note {
+    text-align: center;
+    color: #666;
     font-size: 0.9rem;
-    color: #999;
+    margin-top: -20px;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+.payment-original-row {
+    color: #ccc;
     text-decoration: line-through;
-    margin-bottom: 2px;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
 }
 
 .centered-price-column {
@@ -227,6 +236,13 @@
     color: #555;
     margin-top: 5px;
     font-weight: 500;
+}
+
+.savings-text {
+    color: #ddbe3d;
+    margin-top: 15px;
+    font-size: 1.4rem;
+    font-weight: bold;
 }
 
 .highlight-letter {
@@ -469,9 +485,22 @@
     .currency-label {
         margin-left: 0;
         font-size: 1.2rem;
-        /* Adjust label size */
         align-self: baseline;
-        /* Align with baseline of price */
+    }
+
+    .payment-original-row {
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        font-size: 1rem;
+        margin: 0;
+        text-align: left;
+    }
+
+    .savings-text {
+        font-size: 1.2rem;
+        white-space: nowrap;
+        margin-top: 10px;
     }
 }
 
