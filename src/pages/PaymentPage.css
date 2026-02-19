@@ -105,6 +105,20 @@
 .wompi-container {
     margin-bottom: 20px;
     min-height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.wompi-container form {
+    width: 100%;
+}
+
+.wompi-container button {
+    width: 100% !important;
+    border-radius: 6px !important;
+    min-height: 48px !important;
+    font-size: 1.1rem !important;
 }
 
 .btn-cancel {
