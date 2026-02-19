@@ -26,6 +26,46 @@ const PaymentPage = () => {
     const [message, setMessage] = useState(''); // For success or error messages
     const [showCouponInput, setShowCouponInput] = useState(false);
 
+    // Multi-currency state
+    const [userCountry, setUserCountry] = useState('CO');
+    const [localCurrency, setLocalCurrency] = useState('COP');
+    const [exchangeRate, setExchangeRate] = useState(1);
+    const [isLoadingCurrency, setIsLoadingCurrency] = useState(true);
+
+    useEffect(() => {
+        const detectLocationAndCurrency = async () => {
+            try {
+                // 1. Detect Country and Currency
+                const locationRes = await fetch('https://ipapi.co/json/');
+                const locationData = await locationRes.json();
+
+                const country = locationData.country_code || 'CO';
+                const currency = locationData.currency || 'COP';
+
+                setUserCountry(country);
+                setLocalCurrency(currency);
+
+                // 2. Fetch Exchange Rate if not COP
+                if (currency !== 'COP') {
+                    // Get rates relative to COP
+                    const rateRes = await fetch('https://open.er-api.com/v6/latest/COP');
+                    const rateData = await rateRes.json();
+
+                    if (rateData && rateData.rates && rateData.rates[currency]) {
+                        setExchangeRate(rateData.rates[currency]);
+                    }
+                }
+            } catch (error) {
+                console.error('Error detecting location/currency:', error);
+                // Fallback to COP is already set in initial state
+            } finally {
+                setIsLoadingCurrency(false);
+            }
+        };
+
+        detectLocationAndCurrency();
+    }, []);
+
     const fetchSignature = async (amount) => {
         try {
             setLoading(true);
@@ -118,6 +158,20 @@ const PaymentPage = () => {
         }
     }, [signatureData]);
 
+    const isInternational = userCountry !== 'CO' && localCurrency !== 'COP' && exchangeRate !== 1;
+    const currentPriceCOP = amountInCents / 100;
+    const originalPriceCOP = 74000;
+
+    const displayCurrentPrice = isInternational
+        ? (currentPriceCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+        : currentPriceCOP.toLocaleString('es-CO');
+
+    const displayOriginalPrice = isInternational
+        ? (originalPriceCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+        : originalPriceCOP.toLocaleString('es-CO');
+
+    const displayCurrency = isInternational ? localCurrency : 'COP';
+
     return (
         <div className="payment-page">
             <div className="payment-container">
@@ -134,14 +188,19 @@ const PaymentPage = () => {
                     </div>
                     <div className="payment-row centered-price-column">
                         <div className="payment-original-row">
-                            Antes $74.000
+                            Antes ${displayOriginalPrice} {isInternational && displayCurrency}
                         </div>
 
                         <div className="payment-current-row">
                             <span className="payment-amount" style={{ color: '#ddbe3d', fontSize: '3rem' }}>
-                                ${(amountInCents / 100).toLocaleString('es-CO')} <span className="currency-label" style={{ color: '#fff', opacity: 0.8 }}>COP</span>
+                                ${displayCurrentPrice} <span className="currency-label" style={{ color: '#fff', opacity: 0.8 }}>{displayCurrency}</span>
                             </span>
                         </div>
+                        {isInternational && (
+                            <p className="payment-disclaimer" style={{ fontSize: '0.8rem', color: '#ccc', fontStyle: 'italic', marginTop: '5px', marginBottom: '5px' }}>
+                                *El cargo final será en COP. Valor aprox.
+                            </p>
+                        )}
                         <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>Pago único · Acceso vitalicio · Entrega inmediata</p>
 
                         <div className="savings-text">
