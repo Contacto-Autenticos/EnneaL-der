@@ -102,23 +102,26 @@ const PaymentPage = () => {
                 <p className="payment-description">
                     Responde el test completo, valida tu tipo y descubre cómo desarrollar todo tu potencial.
                 </p>
-                <div className="payment-summary">
+                <div className="payment-summary dark-theme">
+                    <div className="discount-badge">
+                        <span className="discount-percentage">50%</span>
+                        <span className="discount-label">BENEFICIO<br />ESPECIAL</span>
+                    </div>
                     <div className="payment-row centered-price-column">
-                        <div className="payment-original-row" style={{ color: '#002d44', textDecoration: 'line-through', fontSize: '1rem', marginBottom: '5px' }}>
-                            Precio regular $75.000
+                        <div className="payment-original-row" style={{ color: '#ccc', textDecoration: 'line-through', fontSize: '1.1rem', marginBottom: '5px' }}>
+                            Antes $75.000
                         </div>
-                        <div style={{ color: '#002d44', fontWeight: 'bold', fontSize: '1rem', marginBottom: '10px' }}>
-                            Valor especial 50% hasta el 30 de marzo del 2026
-                        </div>
+
                         <div className="payment-current-row">
-                            <span className="payment-label-investment" style={{ marginRight: '10px', color: '#002d44', fontWeight: 'bold' }}>
-                                Inversión actual:
-                            </span>
-                            <span className="payment-amount">
-                                ${(amountInCents / 100).toLocaleString('es-CO')} <span className="currency-label">COP</span>
+                            <span className="payment-amount" style={{ color: '#ddbe3d', fontSize: '3rem' }}>
+                                ${(amountInCents / 100).toLocaleString('es-CO')} <span className="currency-label" style={{ color: '#fff', opacity: 0.8 }}>COP</span>
                             </span>
                         </div>
-                        <p className="payment-features-text" style={{ color: '#002d44' }}>Pago único · Acceso vitalicio · Entrega inmediata</p>
+                        <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>Pago único · Acceso vitalicio · Entrega inmediata</p>
+
+                        <div className="savings-text" style={{ color: '#ddbe3d', marginTop: '15px', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                            Ahorras $38.000 hoy
+                        </div>
                     </div>
                 </div>
 
