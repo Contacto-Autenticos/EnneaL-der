@@ -125,6 +125,10 @@ const PaymentPage = () => {
                     </div>
                 </div>
 
+                <p className="payment-validity-note">
+                    Valor especial válido hasta el 30 de marzo del 2026
+                </p>
+
                 <div className="coupon-section">
                     {!showCouponInput && !discountApplied ? (
                         <p

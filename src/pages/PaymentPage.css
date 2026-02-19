@@ -355,4 +355,20 @@
     .discount-percentage {
         font-size: 1.6rem;
     }
+
+    /* Fix for mobile overlap */
+    .payment-summary {
+        padding-top: 50px;
+        /* Increase top padding to push content down */
+    }
+}
+
+.payment-validity-note {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: -20px;
+    /* Pull closer to the box */
+    margin-bottom: 25px;
+    font-style: italic;
 }
