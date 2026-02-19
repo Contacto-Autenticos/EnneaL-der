@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
-import { getEnneagramInfo } from '../utils/calculator';
+
 import './Result.css';
 
 import html2canvas from 'html2canvas'; // Import html2canvas
@@ -131,7 +131,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
 const Result = ({ result, user, onReset }) => {
     const navigate = useNavigate();
     const [selectedType, setSelectedType] = React.useState(null);
-    const [selectedType, setSelectedType] = React.useState(null);
+
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
     const openModal = (type) => {
