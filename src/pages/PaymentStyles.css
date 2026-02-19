@@ -233,7 +233,40 @@
     color: #ddbe3d;
 }
 
-/* Security bar styles removed */
+/* Security bar styles re-added and updated */
+.security-bar {
+    background-color: transparent;
+    color: #ddbe3d;
+    text-align: center;
+    padding: 15px 0;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.security-bar::before,
+.security-bar::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background-color: #ddbe3d;
+    opacity: 1;
+}
+
+.security-bar::before {
+    margin-right: 15px;
+}
+
+.security-bar::after {
+    margin-left: 15px;
+}
 
 .payment-offer-tag {
     background-color: #ffefef;

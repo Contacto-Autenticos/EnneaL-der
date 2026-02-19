@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ShieldCheck } from 'lucide-react';
 import './PaymentStyles.css'; // Renamed to force cache refresh
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
@@ -205,7 +205,11 @@ const PaymentPage = () => {
                     {/* Wompi Button will render here */}
                 </div>
 
-                {/* Security bar removed as requested */}
+                {/* Security bar added back as requested */}
+                <div className="security-bar">
+                    <ShieldCheck size={20} style={{ marginRight: '8px' }} />
+                    Compra 100% segura
+                </div>
 
                 <button onClick={() => navigate('/result')} className="btn-cancel">
                     Cancelar
