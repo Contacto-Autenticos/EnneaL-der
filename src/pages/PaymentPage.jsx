@@ -104,6 +104,7 @@ const PaymentPage = () => {
                                     btn.style.setProperty('color', 'white', 'important');
                                     btn.style.setProperty('font-size', '1.1rem', 'important');
                                     btn.style.setProperty('min-height', '48px', 'important');
+                                    btn.style.setProperty('box-shadow', '0 6px 15px rgba(0, 0, 0, 0.5)', 'important');
                                 }
                             }
                         });
