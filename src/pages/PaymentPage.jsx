@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { CheckCircle } from 'lucide-react';
-import './PaymentPage.css';
+import './PaymentStyles.css'; // Renamed to force cache refresh
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
