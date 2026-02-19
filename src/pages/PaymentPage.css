@@ -358,8 +358,13 @@
 
     /* Fix for mobile overlap */
     .payment-summary {
-        padding-top: 50px;
+        padding-top: 80px;
         /* Increase top padding to push content down */
+    }
+
+    .currency-label {
+        margin-left: 2px;
+        /* Bring closer to amount */
     }
 }
 
