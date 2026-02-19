@@ -345,3 +345,15 @@
         transform: translateY(10px) rotate(180deg);
     }
 }
+
+@keyframes arrowBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(10px);
+    }
+}
