@@ -206,7 +206,7 @@ const PaymentPage = () => {
                 </div>
 
                 <div className="security-bar">
-                    Pago 100% seguro
+                    Pago 100% seguro (verificado)
                 </div>
 
                 <button onClick={() => navigate('/result')} className="btn-cancel">
