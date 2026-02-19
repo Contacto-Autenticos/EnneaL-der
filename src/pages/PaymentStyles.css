@@ -268,6 +268,27 @@
     margin-left: 15px;
 }
 
+@media (max-width: 480px) {
+    .security-bar {
+        font-size: 0.9rem;
+        /* Smaller font */
+        gap: 5px;
+        /* Reduce gap */
+        white-space: nowrap;
+        /* Prevent wrapping */
+    }
+
+    .security-bar::before {
+        margin-right: 8px;
+        /* Reduce margin */
+    }
+
+    .security-bar::after {
+        margin-left: 8px;
+        /* Reduce margin */
+    }
+}
+
 .payment-offer-tag {
     background-color: #ffefef;
     color: #e74c3c;
