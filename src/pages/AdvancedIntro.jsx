@@ -80,7 +80,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                 <div className="adv-content-wrapper">
                     <div className="home-logo-container">
                         <img
-                            src="/Circulo_Eneagrama_Autenticos_02.png"
+                            src="/moneda-autenticos.png"
                             alt="Logo Eneagrama - Autenticos"
                             className="home-logo animate-zoom-in-slow"
                         />
