@@ -179,7 +179,7 @@ const PaymentPage = () => {
                     Informe avanzado
                 </h1>
                 <p className="payment-description">
-                    <strong style={{ color: '#ddbe3d' }}>Invertir en conocerte es un acto de liderazgo contigo mismo.</strong><br />
+                    <strong style={{ color: '#ddbe3d' }}>Invertir en conocerte es un acto de liderazgo.</strong><br />
                     Realizar el análisis avanzado te brinda la claridad que necesitas para comprender tu esencia y tomar decisiones más alineadas con quien realmente eres.
                 </p>
                 <div className="payment-summary dark-theme">
