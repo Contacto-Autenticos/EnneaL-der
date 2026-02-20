@@ -316,26 +316,31 @@
     }
 
     .adv-test-progress-bar-bg {
-        margin-bottom: 25px;
+        margin-bottom: 35px;
+        /* Increased from 25px */
     }
 
     .adv-test-question-header {
-        margin-bottom: 25px;
+        margin-bottom: 35px;
+        /* Increased from 25px */
     }
 
     .adv-test-question-text {
         font-size: 1.35rem;
-        line-height: 1.3;
+        line-height: 1.35;
     }
 
     .adv-test-slider-wrapper {
-        padding: 30px 25px;
-        margin-bottom: 30px;
+        padding: 35px 25px;
+        /* Increased vertical from 30px */
+        margin-bottom: 40px;
+        /* Increased from 30px */
         border-radius: 20px;
     }
 
     .adv-test-slider-labels {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
+        /* Increased from 20px */
         height: 20px;
         width: 85%;
         /* Narrowed for more side space */
@@ -353,8 +358,9 @@
     }
 
     .adv-btn-nav {
-        width: 45px;
-        height: 45px;
+        width: 48px;
+        /* Slightly larger nav buttons */
+        height: 48px;
     }
 
     .adv-test-dots {
@@ -363,13 +369,15 @@
     }
 
     .adv-test-footer {
-        padding-top: 15px;
-        margin-top: 20px;
+        padding-top: 20px;
+        /* Increased from 15px */
+        margin-top: 25px;
+        /* Increased from 20px */
     }
 
     .adv-test-footer-logo {
-        max-width: 130px;
-        /* Increased 30% from 100px */
+        max-width: 133px;
+        /* Restored 30% from 100px (+ slight rounding) */
     }
 }
 
