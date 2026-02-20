@@ -39,10 +39,11 @@
     display: block;
     width: 100%;
     box-sizing: border-box;
-    font-size: clamp(2.4rem, 8vw, 3.6rem);
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    white-space: nowrap;
     margin: 0;
     text-align: center;
     background-image: linear-gradient(90deg, #8a6a00, #ddbe3d, #fff3a0, #ddbe3d, #8a6a00);
