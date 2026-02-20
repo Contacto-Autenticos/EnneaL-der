@@ -180,7 +180,7 @@ const PaymentPage = () => {
                 </h1>
                 <p className="payment-description">
                     <strong style={{ color: '#ddbe3d' }}>Invertir en conocerte es un acto de liderazgo.</strong><br />
-                    Realiza ahora el análisis avanzado y obtén un resultado con mayor claridad
+                    Realiza ahora el análisis avanzado y obtén un resultado con mayor claridad.
                 </p>
                 <div className="payment-summary dark-theme">
                     <div className="discount-badge">
