@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, ChevronDown } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, ChevronDown, Eye } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
 
@@ -269,6 +269,11 @@ const Result = ({ result, user, onReset }) => {
                                     }}>
                                         {item.title}
                                     </div>
+                                </div>
+
+                                {/* Center: View Icon */}
+                                <div className="card-eye-wrapper">
+                                    <Eye size={20} className="card-view-icon" />
                                 </div>
 
                                 {/* Right Side: Affinity */}

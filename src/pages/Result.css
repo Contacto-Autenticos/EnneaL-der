@@ -91,6 +91,25 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.card-eye-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #002d44;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+}
+
+.result-card:hover .card-eye-wrapper {
+    opacity: 1;
+    color: #ddbe3d;
+    transform: scale(1.1);
+}
+
+.card-view-icon {
+    /* Optional: shadow or specific styling if needed */
+}
+
 .advanced-analysis-note {
     color: #666;
     margin-bottom: 30px;
