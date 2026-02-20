@@ -176,10 +176,11 @@ const PaymentPage = () => {
         <div className="payment-page">
             <div className="payment-container">
                 <h1 className="payment-title">
-                    Tu informe avanzado
+                    Informe avanzado
                 </h1>
                 <p className="payment-description">
-                    Responde el test completo, valida tu tipo y descubre cómo desarrollar todo tu potencial.
+                    <strong style={{ color: '#ddbe3d' }}>Invertir en conocerte es un acto de liderazgo contigo mismo; es un regalo consciente a tu propio camino.</strong><br />
+                    Realizar el análisis avanzado te brinda la claridad que necesitas para comprender tu esencia y tomar decisiones más alineadas con quien realmente eres.
                 </p>
                 <div className="payment-summary dark-theme">
                     <div className="discount-badge">
