@@ -578,7 +578,8 @@
 }
 
 .register-footer-logo {
-    max-width: 150px;
+    max-width: 195px;
+    /* Increased 30% from 150px */
     height: auto;
     opacity: 0.6;
 }

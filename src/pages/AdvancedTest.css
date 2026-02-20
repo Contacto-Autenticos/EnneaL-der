@@ -297,7 +297,8 @@
 }
 
 .adv-test-footer-logo {
-    max-width: 140px;
+    max-width: 182px;
+    /* Increased 30% from 140px */
     height: auto;
     opacity: 0.8;
 }
@@ -367,7 +368,8 @@
     }
 
     .adv-test-footer-logo {
-        max-width: 100px;
+        max-width: 130px;
+        /* Increased 30% from 100px */
     }
 }
 
