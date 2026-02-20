@@ -1,11 +1,11 @@
-﻿/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   OUTER PAGE WRAPPER â€” full viewport dark bg
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+﻿/* ──────────────────────────────────────────
+   OUTER PAGE WRAPPER — full viewport dark bg
+────────────────────────────────────────── */
 .advanced-intro-page {
     position: fixed;
     inset: 0;
     overflow-y: auto;
-    background: linear-gradient(rgba(5, 14, 20, 0.85), rgba(5, 14, 20, 0.85)), url('/MontaÃ±as 03.png');
+    background: linear-gradient(135deg, #071724 0%, #050e14 100%);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -17,7 +17,7 @@
 }
 
 /* ──────────────────────────────────────────
-   INNER CONTAINER ────────────────────────────────────────── centered column, no shared class conflicts
+   INNER CONTAINER — centered column, no shared class conflicts
 ────────────────────────────────────────── */
 .advanced-intro {
     width: 100%;
@@ -91,7 +91,7 @@
 }
 
 /* ──────────────────────────────────────────
-   FORM SECTION ────────────────────────────────────────── dark card with gradient
+   FORM SECTION — dark card with gradient
 ────────────────────────────────────────── */
 .advanced-form-section {
     width: 100%;
