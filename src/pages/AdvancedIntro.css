@@ -14,6 +14,21 @@
     min-height: 0;
 }
 
+.advanced-intro .home-title {
+    font-size: 1.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+
+.advanced-intro .home-description {
+    max-width: 450px;
+    margin: 0 auto 30px;
+    line-height: 1.5;
+}
+
 .advanced-intro .home-footer {
     margin-top: 50px;
     padding-bottom: 20px;
@@ -23,6 +38,7 @@
     max-width: 325px;
     margin: 0 auto;
     display: block;
+    filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.6));
 }
 
 .advanced-intro .home-logo-container {

@@ -78,24 +78,21 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
             <div className="home-content-wrapper">
                 <div className="home-logo-container">
                     <img
-                        src="/Circulo_Eneagrama_Autenticos_02.png"
+                        src="/moneda-autenticos.png"
                         alt="Logo Eneagrama - Autenticos"
                         className="home-logo animate-zoom-in-slow"
                     />
                 </div>
 
                 <h1 className="home-title">
-                    Perfil Auténtico de liderazgo
+                    Personalicemos tu informe
                 </h1>
                 <p className="home-description">
-                    Un análisis profundo de tu motivación central <br />
-                    y patrón de liderazgo.
+                    Solo necesitamos algunos datos básicos antes de comenzar.
                 </p>
 
                 <div className="advanced-form-section">
-                    <p className="advanced-form-instruction">
-                        Completa tus datos para generar tu informe avanzado.
-                    </p>
+
 
                     <form onSubmit={handleSubmit} className="advanced-reg-form">
                         <div className="form-group-adv">
@@ -179,7 +176,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                             disabled={loading}
                             className="btn-start-adv"
                         >
-                            {loading ? 'Procesando...' : 'Análisis avanzado'} <ArrowRight size={19} />
+                            {loading ? 'Procesando...' : 'Continuar con mi análisis'} <ArrowRight size={19} />
                         </button>
                     </form>
                 </div>

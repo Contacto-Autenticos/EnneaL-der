@@ -12,6 +12,7 @@ import AdvancedTest from './pages/AdvancedTest';
 import AdvancedAnalysisResult from './pages/AdvancedAnalysisResult';
 import PaymentPage from './pages/PaymentPage';
 import PaymentStatus from './pages/PaymentStatus';
+import PaymentSuccess from './pages/PaymentSuccess';
 import emailjs from '@emailjs/browser';
 import { supabase } from './supabaseClient';
 import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
@@ -176,6 +177,11 @@ function App() {
         <Route
           path="/payment-status"
           element={<PaymentStatus />}
+        />
+
+        <Route
+          path="/payment-success"
+          element={<PaymentSuccess />}
         />
 
         <Route

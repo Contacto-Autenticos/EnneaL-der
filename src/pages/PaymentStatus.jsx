@@ -37,7 +37,7 @@ const PaymentStatus = () => {
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
                     setTimeout(() => {
-                        navigate('/advanced-intro');
+                        navigate('/payment-success');
                     }, 2000);
                 } else if (transactionStatus === 'DECLINED') {
                     setStatus('DECLINED');
@@ -64,7 +64,7 @@ const PaymentStatus = () => {
                     if (!sandboxData.error && sandboxData.data.status === 'APPROVED') {
                         setStatus('APPROVED');
                         setMessage('¡Pago de prueba exitoso! Redirigiendo...');
-                        setTimeout(() => navigate('/advanced-intro'), 2000);
+                        setTimeout(() => navigate('/payment-success'), 2000);
                         return;
                     }
                 } catch (e) {
