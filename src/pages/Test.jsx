@@ -3,6 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { questions, options } from '../data/questions';
 import { calculateResults } from '../utils/calculator';
+import { supabase } from '../supabaseClient';
+
+// Generate or retrieve an anonymous session ID (one per browser session)
+function getSessionId() {
+    let id = sessionStorage.getItem('anon_session_id');
+    if (!id) {
+        id = crypto.randomUUID();
+        sessionStorage.setItem('anon_session_id', id);
+    }
+    return id;
+}
+
+const ANSWER_LABELS = { 1: 'Muy poco', 2: 'Algo', 3: 'Mucho', 4: 'Totalmente' };
+
+async function saveAnonymousResponses(answers) {
+    const session_id = getSessionId();
+    const rows = Object.entries(answers).map(([question_id, answer]) => ({
+        session_id,
+        question_id: parseInt(question_id),
+        answer: ANSWER_LABELS[answer] ?? answer,
+    }));
+    const { error } = await supabase.from('basic_test_responses').insert(rows);
+    if (error) {
+        console.error('Error saving anonymous responses:', error);
+    }
+}
 
 const Test = ({ onComplete }) => {
     const [shuffledQuestions] = useState(() => {
@@ -27,11 +53,12 @@ const Test = ({ onComplete }) => {
         setAnswers(newAnswers);
 
         // Auto-advance after a short delay
-        setTimeout(() => {
+        setTimeout(async () => {
             if (currentQuestionIndex < totalQuestions - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
+                await saveAnonymousResponses(newAnswers); // await so insert completes before navigating
                 onComplete(newAnswers);
                 navigate('/result');
             }
@@ -50,12 +77,13 @@ const Test = ({ onComplete }) => {
         }
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (answers[currentQuestion.id]) {
             if (currentQuestionIndex < totalQuestions - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
+                await saveAnonymousResponses(answers); // await so insert completes before navigating
                 onComplete(answers);
                 navigate('/result');
             }
