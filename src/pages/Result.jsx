@@ -295,7 +295,7 @@ const Result = ({ result, user, onReset }) => {
                     </div>
 
                     <p className="advanced-analysis-note">
-                        El análisis avanzado te ayudará a identificarlo con mayor profundidad.
+                        Este test te muestra tres posibilidades cercanas a tu personalidad. Si quieres comprender con mayor profundidad tu esencia y la motivación central que guía tus decisiones, el análisis avanzado te dará una lectura mucho más precisa y reveladora.
                     </p>
 
 
