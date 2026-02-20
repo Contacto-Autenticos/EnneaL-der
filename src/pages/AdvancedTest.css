@@ -307,19 +307,19 @@
 ────────────────────────────────────────── */
 @media (max-width: 600px) {
     .advanced-test-page {
-        padding: 10px;
+        padding: 15px;
     }
 
     .adv-test-container {
-        padding: 10px 0;
+        padding: 15px 0;
     }
 
     .adv-test-progress-bar-bg {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     .adv-test-question-header {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     .adv-test-question-text {
@@ -328,22 +328,27 @@
     }
 
     .adv-test-slider-wrapper {
-        padding: 25px 30px;
-        margin-bottom: 25px;
+        padding: 30px 25px;
+        margin-bottom: 30px;
         border-radius: 20px;
     }
 
     .adv-test-slider-labels {
         margin-bottom: 20px;
         height: 20px;
+        width: 85%;
+        /* Narrowed for more side space */
     }
 
     .adv-test-slider-label {
-        font-size: 0.95rem;
+        font-size: 0.8rem;
+        /* Reduced to avoid edge overlap */
     }
 
     .adv-test-slider-track {
         height: 30px;
+        width: 85%;
+        /* Narrowed for more side space */
     }
 
     .adv-btn-nav {
@@ -357,12 +362,12 @@
     }
 
     .adv-test-footer {
-        padding-top: 10px;
-        margin-top: 15px;
+        padding-top: 15px;
+        margin-top: 20px;
     }
 
     .adv-test-footer-logo {
-        max-width: 110px;
+        max-width: 100px;
     }
 }
 
