@@ -107,7 +107,7 @@
 .adv-test-slider-label {
     position: absolute;
     transform: translateX(-50%);
-    font-size: 0.85rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     transition: all 0.3s ease;
@@ -310,6 +310,6 @@
     }
 
     .adv-test-slider-label {
-        font-size: 0.75rem;
+        font-size: 0.9rem;
     }
 }
