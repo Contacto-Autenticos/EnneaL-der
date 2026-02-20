@@ -315,7 +315,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                 title={result?.results ? "Ver puntajes detallados" : ""}
                             >
                                 <img
-                                    src={winner.image ? encodeURI(winner.image) : "/moneda-autenticos.png"}
+                                    src={winner.image ? encodeURI(winner.image) : "/logo-moneda.png"}
                                     alt={`Eneatipo ${type}`}
                                     className="advanced-coin-img"
                                     crossOrigin="anonymous"

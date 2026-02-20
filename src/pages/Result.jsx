@@ -102,7 +102,7 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
 
                 <div className="ennea-modal-coin">
                     <div className="ennea-modal-coin-wrapper">
-                        <img src={info.image || "/moneda-autenticos.png"} alt={`Eneatipo ${type}`} />
+                        <img src={info.image || "/logo-moneda.png"} alt={`Eneatipo ${type}`} />
                     </div>
                 </div>
 

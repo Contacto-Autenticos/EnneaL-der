@@ -92,7 +92,7 @@ const SingleEnneatypeResult = () => {
                     position: 'relative' // For overlay effects if needed
                 }}>
                     <img
-                        src={info.image || "/moneda-autenticos.png"}
+                        src={info.image || "/logo-moneda.png"}
                         alt={`Moneda Eneatipo ${type}`}
                         style={{
                             width: '100%',
