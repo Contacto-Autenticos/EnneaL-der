@@ -104,7 +104,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                     </div>
 
                     <div className="adv-test-slider-wrapper">
-                        <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic', marginBottom: '15px', textAlign: 'center' }}>
+                        <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
                             Me describe:
                         </p>
                         <div className="adv-test-slider-labels">

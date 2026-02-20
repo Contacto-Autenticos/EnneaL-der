@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
     z-index: 10;
     font-family: 'Poppins', sans-serif;
@@ -27,7 +27,7 @@
     max-width: 600px;
     height: 100%;
     max-height: 100vh;
-    padding: 10px 0;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +45,7 @@
     height: 4px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     overflow: hidden;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .adv-test-question-header {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .adv-test-instruction-text {
@@ -81,9 +81,9 @@
 }
 
 .adv-test-question-text {
-    font-size: 1.5rem;
+    font-size: 1.55rem;
     color: #ffffff;
-    line-height: 1.3;
+    line-height: 1.4;
     font-weight: 600;
 }
 
@@ -94,25 +94,25 @@
     width: 100%;
     background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border: 1px solid rgba(221, 190, 61, 0.2);
-    border-radius: 20px;
-    padding: 25px 40px;
+    border-radius: 24px;
+    padding: 35px 45px;
     position: relative;
     box-sizing: border-box;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 .adv-test-slider-labels {
     position: relative;
     width: 90%;
-    margin: 0 auto 20px;
+    margin: 0 auto 25px;
     height: 25px;
 }
 
 .adv-test-slider-label {
     position: absolute;
     transform: translateX(-50%);
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     transition: all 0.3s ease;
@@ -129,7 +129,7 @@
     position: relative;
     width: 90%;
     margin: 0 auto;
-    height: 30px;
+    height: 35px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -137,7 +137,7 @@
 
 .adv-test-slider-rail {
     flex: 1;
-    height: 6px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     position: relative;
@@ -156,10 +156,10 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     background: #0d2535;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     z-index: 2;
     transition: all 0.3s ease;
@@ -170,8 +170,8 @@
 }
 
 .adv-test-slider-dot.active {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     background: #ddbe3d;
     border-color: #ffffff;
     box-shadow: 0 0 12px rgba(221, 190, 61, 0.6);
@@ -189,8 +189,8 @@
 }
 
 .adv-btn-nav {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(221, 190, 61, 0.3);
@@ -219,20 +219,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .adv-test-dots {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
-    max-width: 280px;
+    gap: 8px;
+    max-width: 300px;
 }
 
 .adv-test-dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     transition: all 0.3s ease;
@@ -245,7 +245,7 @@
 }
 
 .adv-test-dots-counter {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.6);
     font-weight: 600;
 }
@@ -292,12 +292,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 10px;
-    margin-top: 15px;
+    padding-top: 15px;
+    margin-top: 25px;
 }
 
 .adv-test-footer-logo {
-    max-width: 120px;
+    max-width: 140px;
     height: auto;
     opacity: 0.8;
 }
@@ -307,85 +307,89 @@
 ────────────────────────────────────────── */
 @media (max-width: 600px) {
     .advanced-test-page {
-        padding: 5px;
+        padding: 10px;
     }
 
     .adv-test-container {
-        padding: 5px 0;
+        padding: 10px 0;
     }
 
     .adv-test-progress-bar-bg {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
     .adv-test-question-header {
-        margin-bottom: 12px;
+        margin-bottom: 20px;
     }
 
     .adv-test-question-text {
-        font-size: 1.25rem;
-        line-height: 1.25;
+        font-size: 1.35rem;
+        line-height: 1.3;
     }
 
     .adv-test-slider-wrapper {
-        padding: 20px 25px;
-        margin-bottom: 15px;
-        border-radius: 16px;
+        padding: 25px 30px;
+        margin-bottom: 25px;
+        border-radius: 20px;
     }
 
     .adv-test-slider-labels {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         height: 20px;
     }
 
     .adv-test-slider-label {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 
     .adv-test-slider-track {
-        height: 25px;
+        height: 30px;
     }
 
     .adv-btn-nav {
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
     }
 
     .adv-test-dots {
-        gap: 4px;
-        max-width: 240px;
+        gap: 6px;
+        max-width: 250px;
     }
 
     .adv-test-footer {
-        padding-top: 5px;
-        margin-top: 10px;
+        padding-top: 10px;
+        margin-top: 15px;
     }
 
     .adv-test-footer-logo {
-        max-width: 100px;
+        max-width: 110px;
     }
 }
 
 /* Ultra-short screens optimization */
 @media (max-height: 650px) {
     .adv-test-progress-bar-bg {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .adv-test-question-header {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .adv-test-slider-wrapper {
-        padding: 15px 25px;
-        margin-bottom: 10px;
+        padding: 20px 25px;
+        margin-bottom: 15px;
+    }
+
+    .adv-test-slider-labels {
+        margin-bottom: 15px;
     }
 
     .adv-test-footer {
-        margin-top: 5px;
+        margin-top: 10px;
     }
 
     .adv-test-footer-logo {
-        max-width: 80px;
+        max-width: 90px;
     }
 }
