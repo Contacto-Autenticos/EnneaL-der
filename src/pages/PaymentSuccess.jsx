@@ -30,7 +30,7 @@ const PaymentSuccess = () => {
 
                 {/* Box 2: Benefits */}
                 <div className="success-box">
-                    <h3 className="success-subtitle">¿Qué encontrarás en tu informe?</h3>
+                    <h3 className="success-subtitle">Lo que descubrirás en tu informe</h3>
                     <ul className="benefit-list">
                         <li className="benefit-item">
                             <Check className="benefit-icon" />
@@ -55,14 +55,11 @@ const PaymentSuccess = () => {
                     </ul>
                 </div>
 
-                {/* Box 3: Final Message */}
-                <div className="success-box">
-                    <p className="success-text final-message">
-                        Este no es un test superficial.
-                        <br />
-                        Es una herramienta de autoconocimiento diseñada para brindarte claridad real.
-                    </p>
-                </div>
+                {/* Elegant Quote */}
+                <blockquote className="success-quote">
+                    Este no es un test superficial.<br />
+                    Es una herramienta de claridad personal.
+                </blockquote>
 
                 <div className="payment-actions">
                     <button

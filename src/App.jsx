@@ -75,10 +75,11 @@ function App() {
         }
 
         // Update Supabase with the confirmed enneatype
+        const normalizedEmail = user.email.trim().toLowerCase();
         const { data, error: supabaseError } = await supabase
           .from('user_leads')
           .update({ enneatype: type })
-          .eq('email', user.email)
+          .eq('email', normalizedEmail)
           .select(); // Select to verify if row was actually found and updated
 
         if (supabaseError) {
@@ -197,7 +198,7 @@ function App() {
 
         <Route
           path="/advanced-intro"
-          element={<AdvancedIntro onRegister={handleRegister} user={user} />}
+          element={<AdvancedIntro onRegister={handleRegister} user={user} initialEnneatype={testResult?.enneatype} />}
         />
 
         <Route
@@ -244,6 +245,7 @@ function App() {
               user={user}
               targetRoute="/advanced-test-full"
               showOrganization={true}
+              initialEnneatype={testResult?.enneatype}
             />
           }
         />

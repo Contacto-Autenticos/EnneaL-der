@@ -38,7 +38,20 @@ const EnneagramRing = ({ activeType }) => {
     return (
         <div className="enneagram-ring-svg-wrapper">
             <svg viewBox="0 0 400 400" className="enneagram-ring-svg">
-                {/* Connection lines to center if needed, but per request just the cells */}
+                <defs>
+                    {/* Filter for a soft glow on the active segment */}
+                    <filter id="activeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="6" result="blur" />
+                        <feComponentTransfer in="blur">
+                            <feFuncA type="linear" slope="1.5" />
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+
                 {types.map((type, index) => {
                     const startAngle = (index * 40 - 20) * (Math.PI / 180);
                     const endAngle = ((index + 1) * 40 - 20) * (Math.PI / 180);
@@ -62,30 +75,32 @@ const EnneagramRing = ({ activeType }) => {
                         A ${radius} ${radius} 0 0 1 ${x2} ${y2}
                         L ${iX2} ${iY2}
                         A ${innerRadius} ${innerRadius} 0 0 0 ${iX1} ${iY1}
-`.replace(/\s+/g, ' ');
+                    `.replace(/\s+/g, ' ');
 
                     const textRadius = (radius + innerRadius) / 2;
                     const tx = centerX + textRadius * Math.sin((startAngle + endAngle) / 2);
                     const ty = centerY - textRadius * Math.cos((startAngle + endAngle) / 2);
 
                     return (
-                        <g key={type} className={`ring - segment ${isActive ? 'active' : 'dimmed'} `}>
+                        <g key={type} className={`ring-segment ${isActive ? 'active' : 'dimmed'}`}>
                             <path
                                 d={pathData}
-                                fill={isActive ? color : '#eee'}
-                                stroke={isActive ? color : '#ddd'}
-                                strokeWidth="1"
-                                fillOpacity={isActive ? 0.9 : 0.3}
+                                fill={isActive ? color : '#1a2228'}
+                                stroke={isActive ? color : '#2a353d'}
+                                strokeWidth={isActive ? "2" : "1"}
+                                fillOpacity={isActive ? 1 : 0.6}
+                                filter={isActive ? 'url(#activeGlow)' : 'none'}
+                                style={{ transition: 'all 0.5s ease' }}
                             />
                             <text
                                 x={tx}
                                 y={ty}
-                                fill={isActive ? 'white' : '#aaa'}
+                                fill={isActive ? 'white' : 'rgba(255,255,255,0.4)'}
                                 textAnchor="middle"
                                 dominantBaseline="middle"
-                                fontSize="14"
-                                fontWeight="800"
-                                style={{ transition: 'all 0.3s ease' }}
+                                fontSize={isActive ? "17" : "14"}
+                                fontWeight="900"
+                                style={{ transition: 'all 0.5s ease' }}
                             >
                                 {type}
                             </text>
@@ -150,10 +165,10 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         console.warn('AdvancedAnalysisResult: Invalid type', type);
         return (
             <div className="advanced-result-page">
-                <div className="advanced-result-container" style={{ textAlign: 'center', background: 'white', padding: '40px', borderRadius: '20px' }}>
+                <div className="advanced-result-container no-data-view">
                     <h2>No se encontraron resultados</h2>
                     <p>Por favor, realiza el análisis avanzado primero.</p>
-                    <button onClick={() => navigate('/')} className="btn-advanced-finish btn-home">
+                    <button onClick={() => navigate('/')} className="btn-advanced-finish btn-deepen-primary">
                         Ir al inicio
                     </button>
                 </div>
@@ -448,23 +463,20 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     <button
                         onClick={() => window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${type}`}
                         className="btn-advanced-finish btn-deepen-primary"
-                        style={{ width: '100%', marginBottom: '15px' }}
                     >
                         Profundizar en mi perfil
                     </button>
 
-                    <div className="footer-bottom-row" style={{ display: 'flex', gap: '15px', width: '100%' }}>
+                    <div className="footer-bottom-row">
                         <button
                             onClick={() => navigate('/')}
                             className="btn-advanced-finish btn-back-alt"
-                            style={{ flex: 1 }}
                         >
                             <ArrowLeft size={18} /> Regresar
                         </button>
                         <button
                             onClick={handleShare}
                             className="btn-advanced-finish btn-share-main"
-                            style={{ flex: 1 }}
                         >
                             <span>Compartir</span> <Share2 size={18} />
                         </button>
@@ -472,12 +484,11 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 </div>
 
                 {/* Brand footer */}
-                <div className="detailed-brand-footer" style={{ marginTop: '20px', textAlign: 'center' }}>
+                <div className="detailed-brand-footer">
                     <img
-                        src="/logo-azul.png"
-                        alt="Logo Auténticos"
+                        src="/Logo-Blanco.png"
+                        alt="Logo Auténticos Blanco"
                         className="register-footer-logo"
-                        style={{ maxWidth: '150px', height: 'auto' }}
                     />
                 </div>
 

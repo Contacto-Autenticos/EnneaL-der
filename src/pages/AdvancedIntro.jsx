@@ -5,7 +5,7 @@ import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
 import './AdvancedIntro.css';
 
-const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test', showOrganization = false }) => {
+const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test', showOrganization = false, initialEnneatype }) => {
     const navigate = useNavigate();
     const [name, setName] = useState(existingUser?.name || '');
     const [organization, setOrganization] = useState('');
@@ -59,7 +59,8 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                         email: normalizedEmail,
                         birth_date: formattedDate,
                         source: 'advanced_analysis',
-                        organization: showOrganization ? organization : null
+                        organization: showOrganization ? organization : null,
+                        enneatype: initialEnneatype
                     }
                 ]);
 
@@ -74,120 +75,115 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
     };
 
     return (
-        <div className="container home-container advanced-intro">
-            <div className="home-content-wrapper">
-                <div className="home-logo-container">
-                    <img
-                        src="/moneda-autenticos.png"
-                        alt="Logo Eneagrama - Autenticos"
-                        className="home-logo animate-zoom-in-slow"
-                    />
-                </div>
+        <div className="advanced-intro-page">
+            <div className="advanced-intro">
+                <div className="adv-content-wrapper">
+                    <div className="home-logo-container">
+                        <img
+                            src="/moneda-autenticos.png"
+                            alt="Logo Eneagrama - Autenticos"
+                            className="home-logo animate-zoom-in-slow"
+                        />
+                    </div>
 
-                <h1 className="home-title">
-                    Personalicemos tu informe
-                </h1>
-                <p className="home-description">
-                    Solo necesitamos algunos datos básicos antes de comenzar.
-                </p>
+                    <h1 className="home-title">
+                        Personalicemos tu informe
+                    </h1>
+                    <p className="home-description">
+                        Solo necesitamos algunos datos básicos antes de comenzar.
+                    </p>
 
-                <div className="advanced-form-section">
+                    <div className="advanced-form-section">
 
 
-                    <form onSubmit={handleSubmit} className="advanced-reg-form">
-                        <div className="form-group-adv">
-                            <label>Nombre y apellido</label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                placeholder="Tu nombre y apellido"
-                                className="adv-input"
-                            />
-                        </div>
-
-                        {showOrganization && (
+                        <form onSubmit={handleSubmit} className="advanced-reg-form">
                             <div className="form-group-adv">
-                                <label>Código organización</label>
+                                <label>Nombre y apellido</label>
                                 <input
                                     type="text"
-                                    value={organization}
-                                    onChange={(e) => setOrganization(e.target.value)}
-                                    placeholder="Ingresa el código"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    placeholder="Tu nombre y apellido"
                                     className="adv-input"
-                                    disabled={organization === 'NO_CODE'}
                                 />
-                                <div className="no-code-checkbox-wrapper">
-                                    <label className="no-code-label">
-                                        <input
-                                            type="checkbox"
-                                            checked={organization === 'NO_CODE'}
-                                            onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setOrganization('NO_CODE');
-                                                } else {
-                                                    setOrganization('');
-                                                }
-                                            }}
-                                        />
-                                        No tengo código
-                                    </label>
+                            </div>
+
+                            {showOrganization && (
+                                <div className="form-group-adv">
+                                    <label>Código organización</label>
+                                    <input
+                                        type="text"
+                                        value={organization}
+                                        onChange={(e) => setOrganization(e.target.value)}
+                                        placeholder="Ingresa el código"
+                                        className="adv-input"
+                                        disabled={organization === 'NO_CODE'}
+                                    />
+                                    <div className="no-code-checkbox-wrapper">
+                                        <label className="no-code-label">
+                                            <input
+                                                type="checkbox"
+                                                checked={organization === 'NO_CODE'}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setOrganization('NO_CODE');
+                                                    } else {
+                                                        setOrganization('');
+                                                    }
+                                                }}
+                                            />
+                                            No tengo código
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="form-group-adv">
+                                <label>Fecha de nacimiento</label>
+                                <div className="date-grid-adv">
+                                    <select value={day} onChange={(e) => setDay(e.target.value)} required className="adv-input">
+                                        <option value="" disabled>Día</option>
+                                        {days.map(d => <option key={d} value={d}>{d}</option>)}
+                                    </select>
+                                    <select value={month} onChange={(e) => setMonth(e.target.value)} required className="adv-input">
+                                        <option value="" disabled>Mes</option>
+                                        {months.map(m => <option key={m} value={m}>{m}</option>)}
+                                    </select>
+                                    <select value={year} onChange={(e) => setYear(e.target.value)} required className="adv-input">
+                                        <option value="" disabled>Año</option>
+                                        {years.map(y => <option key={y} value={y}>{y}</option>)}
+                                    </select>
                                 </div>
                             </div>
-                        )}
 
-                        <div className="form-group-adv">
-                            <label>Fecha de nacimiento</label>
-                            <div className="date-grid-adv">
-                                <select value={day} onChange={(e) => setDay(e.target.value)} required className="adv-input">
-                                    <option value="" disabled>Día</option>
-                                    {days.map(d => <option key={d} value={d}>{d}</option>)}
-                                </select>
-                                <select value={month} onChange={(e) => setMonth(e.target.value)} required className="adv-input">
-                                    <option value="" disabled>Mes</option>
-                                    {months.map(m => <option key={m} value={m}>{m}</option>)}
-                                </select>
-                                <select value={year} onChange={(e) => setYear(e.target.value)} required className="adv-input">
-                                    <option value="" disabled>Año</option>
-                                    {years.map(y => <option key={y} value={y}>{y}</option>)}
-                                </select>
+                            <div className="form-group-adv">
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    placeholder="tu@email.com"
+                                    className="adv-input"
+                                />
                             </div>
-                        </div>
 
-                        <div className="form-group-adv">
-                            <label>Email</label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                placeholder="tu@email.com"
-                                className="adv-input"
-                            />
-                        </div>
+                            <p className="privacy-note">
+                                🔒 Tus datos están protegidos y no serán compartidos con terceros.
+                            </p>
 
-                        <p className="privacy-note">
-                            🔒 Tus datos están protegidos y no serán compartidos con terceros.
-                        </p>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="btn-start-adv"
-                        >
-                            {loading ? 'Procesando...' : 'Continuar con mi análisis'} <ArrowRight size={19} />
-                        </button>
-                    </form>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="btn-start-adv"
+                            >
+                                {loading ? 'Procesando...' : 'Continuar con mi análisis'} <ArrowRight size={19} />
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div className="home-footer">
-                <img
-                    src="/logo-azul.png"
-                    alt="Auténticos Logo Azul"
-                    className="home-footer-logo"
-                />
             </div>
         </div>
     );

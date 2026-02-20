@@ -1,68 +1,127 @@
+/* ──────────────────────────────────────────
+   OUTER PAGE WRAPPER — full viewport dark bg
+────────────────────────────────────────── */
+.advanced-intro-page {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    background: linear-gradient(rgba(5, 14, 20, 0.85), rgba(5, 14, 20, 0.85)), url('/Montañas 03.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+/* ──────────────────────────────────────────
+   INNER CONTAINER — centered column, no shared class conflicts
+────────────────────────────────────────── */
 .advanced-intro {
-    padding: 40px 20px 80px !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: auto !important;
-    display: block !important;
-    /* Change from flex to allow natural flow */
+    width: 100%;
+    max-width: 600px;
+    padding: 20px 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.advanced-intro .home-content-wrapper {
-    display: block;
-    /* Allow content to grow naturally */
-    height: auto;
-    min-height: 0;
+/* ──────────────────────────────────────────
+   CONTENT WRAPPER
+────────────────────────────────────────── */
+.adv-content-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.advanced-intro .home-title {
-    font-size: 1.8rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 10px;
-    max-width: 100%;
-}
-
-.advanced-intro .home-description {
-    max-width: 450px;
-    margin: 0 auto 30px;
-    line-height: 1.5;
-}
-
-.advanced-intro .home-footer {
-    margin-top: 50px;
-    padding-bottom: 20px;
-}
-
-.advanced-intro .home-logo {
-    max-width: 325px;
-    margin: 0 auto;
-    display: block;
-    filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.6));
-}
-
+/* ──────────────────────────────────────────
+   LOGO
+────────────────────────────────────────── */
 .advanced-intro .home-logo-container {
     margin-top: 0;
     margin-bottom: 15px;
 }
 
+.advanced-intro .home-logo {
+    max-width: 264px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.6));
+}
+
+/* ──────────────────────────────────────────
+   TITLE & DESCRIPTION
+────────────────────────────────────────── */
+.advanced-intro .home-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.advanced-intro .home-description {
+    max-width: 450px;
+    margin: 0 auto 18px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 1rem;
+}
+
+/* ──────────────────────────────────────────
+   FOOTER LOGO
+────────────────────────────────────────── */
+.advanced-intro .home-footer {
+    margin-top: 50px;
+    padding-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.advanced-intro .home-footer-logo {
+    max-height: 40px;
+    opacity: 0.8;
+}
+
+/* ──────────────────────────────────────────
+   FORM SECTION — dark card with gradient
+────────────────────────────────────────── */
 .advanced-form-section {
     width: 100%;
     max-width: 450px;
-    margin: 40px auto 0;
+    margin: 0 auto;
     text-align: left;
+    background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
+    border: 1px solid rgba(221, 190, 61, 0.18);
+    border-radius: 18px;
+    padding: 30px 28px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.advanced-form-section:hover {
+    border-color: rgba(221, 190, 61, 0.38);
 }
 
 .advanced-form-instruction {
     font-size: 1.05rem;
-    color: #333;
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 400;
-    /* Lighter look */
     line-height: 1.4;
     margin-bottom: 25px;
     text-align: left;
 }
 
+/* ──────────────────────────────────────────
+   FORM
+────────────────────────────────────────── */
 .advanced-reg-form {
     display: flex;
     flex-direction: column;
@@ -76,25 +135,44 @@
 }
 
 .form-group-adv label {
-    font-size: 1rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    color: #111;
+    color: #ddbe3d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* ──────────────────────────────────────────
+   INPUTS
+────────────────────────────────────────── */
 .adv-input {
     width: 100%;
-    padding: 14px 20px;
-    border: 1px solid #e0e0e0;
+    padding: 13px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
-    font-size: 1rem;
-    background: white;
+    font-size: 0.97rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.88);
     transition: all 0.3s ease;
     outline: none;
+    box-sizing: border-box;
+    appearance: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.adv-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .adv-input:focus {
-    border-color: #ddbe3d;
+    border-color: rgba(221, 190, 61, 0.6);
     box-shadow: 0 0 0 3px rgba(221, 190, 61, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.adv-input option {
+    background: #0d2535;
+    color: #ffffff;
 }
 
 .date-grid-adv {
@@ -103,54 +181,56 @@
     gap: 10px;
 }
 
+/* ──────────────────────────────────────────
+   PRIVACY NOTE
+────────────────────────────────────────── */
 .privacy-note {
-    font-size: 0.85rem;
-    color: #666;
-    margin: 10px 0 20px;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 4px 0 8px;
     line-height: 1.4;
 }
 
+/* ──────────────────────────────────────────
+   SUBMIT BUTTON
+────────────────────────────────────────── */
 .btn-start-adv {
-    background: #ddbe3d;
-    color: white;
+    background: linear-gradient(135deg, #ddbe3d 0%, #b89b2d 100%);
+    color: #050e14;
     border: none;
-    padding: 16px 30px;
+    padding: 15px 30px;
     border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.3);
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.3);
     width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .btn-start-adv:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 28px rgba(221, 190, 61, 0.5);
+    filter: brightness(1.08);
 }
 
 .btn-start-adv:disabled {
-    background: #ccc;
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.4);
     cursor: not-allowed;
     box-shadow: none;
 }
 
-@media (max-width: 600px) {
-    .advanced-form-section {
-        padding: 0 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    .date-grid-adv {
-        grid-template-columns: 1fr;
-    }
-}
-
+/* ──────────────────────────────────────────
+   NO-CODE CHECKBOX
+────────────────────────────────────────── */
 .no-code-checkbox-wrapper {
     margin-top: 8px;
     display: flex;
@@ -162,15 +242,32 @@
     align-items: center;
     gap: 8px;
     font-size: 0.85rem;
-    color: #666;
+    color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     line-height: 1.4;
     font-weight: 400;
-    /* Override parent bold */
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .no-code-label input[type="checkbox"] {
     width: 16px;
     height: 16px;
     cursor: pointer;
+    accent-color: #ddbe3d;
+}
+
+/* ──────────────────────────────────────────
+   RESPONSIVE
+────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .advanced-form-section {
+        padding: 22px 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .date-grid-adv {
+        grid-template-columns: 1fr;
+    }
 }

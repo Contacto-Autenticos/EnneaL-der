@@ -1,142 +1,177 @@
+/* ──────────────────────────────────────────
+   PAGE  — dark solid background
+────────────────────────────────────────── */
 .payment-success-page {
-    background-image: url('/Montañas 02.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: #050e14;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 48px 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     animation: fadeIn 0.8s ease-out;
 }
 
+/* ──────────────────────────────────────────
+   CONTAINER
+────────────────────────────────────────── */
 .payment-success-container {
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 16px;
 }
 
+/* ──────────────────────────────────────────
+   HERO TITLE  — gold shimmer, no box
+────────────────────────────────────────── */
 .success-hero {
     text-align: center;
+    padding: 12px 0 20px;
 }
 
 .success-hero-title {
-    color: #ffd700;
-    background-color: #002d44;
-    padding: 15px 30px;
-    border-radius: 12px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
     display: block;
     width: 100%;
     box-sizing: border-box;
-    font-size: 2.2rem;
+    font-size: clamp(2.4rem, 8vw, 3.6rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 20px;
-    text-shadow: none;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.5);
-    animation: goldPulse 2s infinite ease-in-out;
+    margin: 0;
+    text-align: center;
+    background-image: linear-gradient(90deg, #8a6a00, #ddbe3d, #fff3a0, #ddbe3d, #8a6a00);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 3s linear infinite;
 }
 
+/* ──────────────────────────────────────────
+   CARDS  — dark panels with subtle border
+────────────────────────────────────────── */
 .success-box {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: transform 0.3s ease;
+    background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
+    border: 1px solid rgba(221, 190, 61, 0.18);
+    border-radius: 18px;
+    padding: 28px 30px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
 .success-box:hover {
-    transform: translateY(-5px);
+    border-color: rgba(221, 190, 61, 0.45);
+    transform: translateY(-3px);
 }
 
+/* ──────────────────────────────────────────
+   TEXT INSIDE CARDS
+────────────────────────────────────────── */
 .success-text {
-    font-size: 1rem;
-    color: #002d44;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: center;
+    font-size: 0.97rem;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    text-align: left;
 }
 
 .success-text:last-child {
     margin-bottom: 0;
 }
 
+/* ──────────────────────────────────────────
+   BENEFITS SUBTITLE
+────────────────────────────────────────── */
 .success-subtitle {
-    font-size: 1rem;
-    color: #002d44;
-    font-weight: 700;
+    font-size: 0.78rem;
+    color: #ddbe3d;
+    font-weight: 600;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
-    line-height: normal;
-    /* To reset any inherited line-height if needed */
+    letter-spacing: 1.5px;
 }
 
+/* ──────────────────────────────────────────
+   BENEFIT LIST
+────────────────────────────────────────── */
 .benefit-list {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 14px;
 }
 
 .benefit-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
-    font-size: 1rem;
-    color: #444;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.82);
     font-weight: 400;
     line-height: 1.4;
 }
 
 .benefit-icon {
-    font-weight: bold;
-    color: #ffd700;
-    font-size: 1.2rem;
-    line-height: 1;
+    color: #ddbe3d;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
 }
 
-.final-message {
-    font-weight: 600;
+/* ──────────────────────────────────────────
+   ELEGANT QUOTE  — no box, gold left bar
+────────────────────────────────────────── */
+.success-quote {
+    font-size: 1rem;
     font-style: italic;
-    color: #555;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
     text-align: center;
+    line-height: 1.8;
+    margin: 6px 0;
+    padding: 10px 24px;
+    border-left: 3px solid rgba(221, 190, 61, 0.55);
+}
+
+/* ──────────────────────────────────────────
+   CTA BUTTON
+────────────────────────────────────────── */
+.payment-actions {
+    padding-top: 4px;
 }
 
 .btn-start-analysis {
     background: linear-gradient(135deg, #ddbe3d 0%, #b89b2d 100%);
-    color: white !important;
+    color: #050e14;
     border: none;
     padding: 15px 30px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 800;
     border-radius: 50px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.4);
+    letter-spacing: 1.5px;
+    box-shadow: 0 6px 24px rgba(221, 190, 61, 0.35);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 100%;
     max-width: 500px;
-    margin: 10px auto 0;
+    margin: 0 auto;
     display: block;
     position: relative;
     overflow: hidden;
-    white-space: nowrap;
 }
 
 .btn-start-analysis:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 10px 30px rgba(221, 190, 61, 0.6);
+    transform: scale(1.04) translateY(-2px);
+    box-shadow: 0 10px 32px rgba(221, 190, 61, 0.55);
     filter: brightness(1.1);
 }
 
@@ -147,8 +182,21 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
     animation: shimmer 3s infinite;
+}
+
+/* ──────────────────────────────────────────
+   KEYFRAMES
+────────────────────────────────────────── */
+@keyframes goldShimmer {
+    from {
+        background-position: 0% center;
+    }
+
+    to {
+        background-position: 200% center;
+    }
 }
 
 @keyframes shimmer {
@@ -160,37 +208,28 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
+        transform: translateY(12px);
     }
 
     to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@keyframes goldPulse {
-    0% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-    }
-
-    50% {
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
-    }
-
-    100% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-    }
-}
-
+/* ──────────────────────────────────────────
+   RESPONSIVE
+────────────────────────────────────────── */
 @media (max-width: 600px) {
-    .success-hero-title {
-        font-size: 1.8rem;
-    }
-
     .payment-success-page {
-        padding: 30px 15px;
+        padding: 32px 16px;
     }
 
     .success-box {
-        padding: 20px;
+        padding: 22px 20px;
+    }
+
+    .success-hero-title {
+        font-size: clamp(2rem, 10vw, 2.8rem);
     }
 }
