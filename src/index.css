@@ -221,7 +221,7 @@ h3 {
   height: auto;
   max-height: 40px;
   object-fit: contain;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 /* Register Page */
@@ -368,7 +368,7 @@ h3 {
 
 .register-footer-logo {
   max-height: 40px;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 /* Result Page */
@@ -473,7 +473,7 @@ h3 {
 
 .result-footer-logo {
   max-height: 40px;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 
