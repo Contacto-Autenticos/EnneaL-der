@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, ChevronDown, Eye } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, Eye } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
 
@@ -224,26 +224,6 @@ const Result = ({ result, user, onReset }) => {
                 </div>
 
                 <div className="result-summary">
-                    <p style={{
-                        color: '#666',
-                        marginBottom: '30px', // Increased to 30px
-                        fontStyle: 'italic',
-                        fontSize: '0.9rem',
-                        lineHeight: '1.5',
-                        maxWidth: '85%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto'
-                    }}>
-                        Toca un eneatipo para ver una breve descripción.
-                        <br />
-                        <ChevronDown
-                            size={24}
-                            style={{
-                                marginTop: '5px',
-                                animation: 'arrowBounce 2s infinite ease-in-out'
-                            }}
-                        />
-                    </p>
 
                     <div className="top-results-cards">
                         {top3.map((item) => (
