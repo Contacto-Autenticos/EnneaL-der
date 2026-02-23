@@ -2,9 +2,17 @@ import React from 'react';
 
 const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     // Config
-    const size = 400;
-    const center = size / 2;
-    const radius = 95; // Maximized for the larger container
+    // Base size for internal coordinate math
+    const baseSize = 300;
+    const center = baseSize / 2;
+    // Radius of the outermost edge of the colored segments
+    const radius = 95;
+
+    // Padding added strictly for the glow effect to spill outside the mathematical boundaries
+    const padding = 40;
+    const viewBoxSize = baseSize + (padding * 2);
+    // Offset the starting drawing coordinates by the padding to center it
+    const offsetCenter = center + padding;
 
     // Enneatype order starting from top (9) clockwise
     const types = [9, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -84,8 +92,8 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     };
 
     return (
-        <div className={`enneagram-chart-container phase-${phase}`} style={{ width: '100%', maxWidth: '450px', margin: '0 auto' }}>
-            <svg viewBox={`0 0 ${size} ${size}`} style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
+        <div className={`enneagram-chart-container phase-${phase}`} style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+            <svg viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`} style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
                 {gradients}
 
                 {/* Outer Ring Segments */}
@@ -98,7 +106,7 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
                     const startAngle = (i * step) - (step / 2) + gap;
                     const endAngle = (i * step) + (step / 2) - gap;
 
-                    const arc = describeArc(center, center, ringMid, startAngle, endAngle);
+                    const arc = describeArc(offsetCenter, offsetCenter, ringMid, startAngle, endAngle);
 
                     return (
                         <g key={`seg-${type}`} className={(isTop3 && phase >= 3) ? "top-segment-active" : ""}>
@@ -114,7 +122,7 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
                                 }}
                             />
                             {(() => {
-                                const lp = polarToCartesian(center, center, ringMid, i * 40);
+                                const lp = polarToCartesian(offsetCenter, offsetCenter, ringMid, i * 40);
                                 const isActive = isTop3 && phase >= 3;
                                 return (
                                     <text
@@ -158,7 +166,7 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
                     return (
                         <line
                             key={`spoke-${i}`}
-                            x1={center} y1={center}
+                            x1={offsetCenter} y1={offsetCenter}
                             x2={end.x} y2={end.y}
                             stroke="#ddd"
                             strokeWidth="1.5"
@@ -216,7 +224,7 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
                 })}
 
                 {/* Center Dot */}
-                <circle cx={center} cy={center} r="4" fill="#ddbe3d" opacity={phase >= 2 ? 1 : 0} style={{ transition: 'opacity 0.5s' }} />
+                <circle cx={offsetCenter} cy={offsetCenter} r="4" fill="#ddbe3d" opacity={phase >= 2 ? 1 : 0} style={{ transition: 'opacity 0.5s' }} />
 
             </svg>
         </div>
