@@ -251,7 +251,7 @@ const Result = ({ result, user, onReset }) => {
                             fontSize: '0.8rem',
                             color: '#666',
                             textAlign: 'center',
-                            marginBottom: '10px',
+                            marginBottom: '4px',
                             fontStyle: 'italic'
                         }}>
                             Toca cada tarjeta para mayor información

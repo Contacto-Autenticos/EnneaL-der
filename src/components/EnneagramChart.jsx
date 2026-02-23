@@ -92,7 +92,7 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     };
 
     return (
-        <div className={`enneagram-chart-container phase-${phase}`} style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+        <div className={`enneagram-chart-container phase-${phase}`} style={{ width: '100%', maxWidth: '460px', margin: '0 auto' }}>
             <svg viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`} style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
                 {gradients}
 
