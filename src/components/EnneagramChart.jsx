@@ -2,7 +2,7 @@ import React from 'react';
 
 const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     // Config
-    const size = 300;
+    const size = 340;
     const center = size / 2;
     const radius = 95; // Maximized for the larger container
 
