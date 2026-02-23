@@ -86,8 +86,8 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     const getCoordinates = (r, typeIndex) => {
         const angleStart = -90;
         const angle = (angleStart + (typeIndex * 40)) * (Math.PI / 180);
-        const x = center + r * Math.cos(angle);
-        const y = center + r * Math.sin(angle);
+        const x = offsetCenter + r * Math.cos(angle);
+        const y = offsetCenter + r * Math.sin(angle);
         return { x, y };
     };
 
