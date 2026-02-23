@@ -17,6 +17,8 @@ import emailjs from '@emailjs/browser';
 import { supabase } from './supabaseClient';
 import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
 import { advancedEnneagramInfo } from './data/advancedInfo';
+import ScrollToTop from './components/ScrollToTop';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -148,6 +150,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
 

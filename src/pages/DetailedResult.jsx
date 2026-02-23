@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
 import { questions, options } from '../data/questions';
 import { X } from 'lucide-react';
@@ -184,12 +184,7 @@ const DetailedResult = ({ result }) => {
                         <ArrowLeft size={18} /> Regresar
                     </button>
 
-                    <button
-                        onClick={() => navigate('/register')}
-                        className="btn-action btn-primary-gold"
-                    >
-                        Profundizar <ExternalLink size={18} />
-                    </button>
+
                 </div>
 
                 {/* Brand footer */}

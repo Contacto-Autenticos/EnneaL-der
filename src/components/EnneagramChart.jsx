@@ -1,11 +1,10 @@
 import React from 'react';
 
-const EnneagramChart = ({ scores }) => {
+const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     // Config
     const size = 300;
     const center = size / 2;
-    const radius = 90; // Chart radius
-    const outerRadius = 135; // Ring outer radius
+    const radius = 95; // Maximized for the larger container
 
     // Enneatype order starting from top (9) clockwise
     const types = [9, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -33,36 +32,29 @@ const EnneagramChart = ({ scores }) => {
                 <stop offset="50%" stopColor="#ffe680" />
                 <stop offset="100%" stopColor="#bfa01f" />
             </linearGradient>
+
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
         </defs>
     );
 
-    // Colors per type group using headers for ring
+    // Colors per type group
     const getSegmentFill = (type) => {
-        if ([8, 9, 1].includes(type)) return "url(#grad-red)";
-        if ([2, 3, 4].includes(type)) return "url(#grad-green)";
-        if ([5, 6, 7].includes(type)) return "url(#grad-blue)";
-        return '#ccc';
-    };
+        const isTop3 = top3Types.includes(parseInt(type));
 
-    // Helper to get coordinates
-    // -90 is Top (12 o'clock)
-    const getCoordinates = (r, typeIndex) => {
-        const angleStart = -90;
-        const angle = (angleStart + (typeIndex * 40)) * (Math.PI / 180);
-        const x = center + r * Math.cos(angle);
-        const y = center + r * Math.sin(angle);
-        return { x, y };
-    };
+        // Phase 1-2: All gray
+        if (phase < 3) return '#e0e0e0';
 
-    // Helper for donut segments
-    const describeArc = (x, y, r, startAngle, endAngle) => {
-        const start = polarToCartesian(x, y, r, endAngle);
-        const end = polarToCartesian(x, y, r, startAngle);
-        const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-        return [
-            "M", start.x, start.y,
-            "A", r, r, 0, largeArcFlag, 0, end.x, end.y
-        ].join(" ");
+        // Phase 3+: Top 3 in color, others stay gray
+        if (isTop3) {
+            if ([8, 9, 1].includes(parseInt(type))) return "url(#grad-red)";
+            if ([2, 3, 4].includes(parseInt(type))) return "url(#grad-green)";
+            if ([5, 6, 7].includes(parseInt(type))) return "url(#grad-blue)";
+        }
+
+        return '#e0e0e0';
     };
 
     const polarToCartesian = (centerX, centerY, r, angleInDegrees) => {
@@ -73,39 +65,69 @@ const EnneagramChart = ({ scores }) => {
         };
     }
 
+    const describeArc = (x, y, r, startAngle, endAngle) => {
+        const start = polarToCartesian(x, y, r, endAngle);
+        const end = polarToCartesian(x, y, r, startAngle);
+        const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+        return [
+            "M", start.x, start.y,
+            "A", r, r, 0, largeArcFlag, 0, end.x, end.y
+        ].join(" ");
+    };
+
+    const getCoordinates = (r, typeIndex) => {
+        const angleStart = -90;
+        const angle = (angleStart + (typeIndex * 40)) * (Math.PI / 180);
+        const x = center + r * Math.cos(angle);
+        const y = center + r * Math.sin(angle);
+        return { x, y };
+    };
+
     return (
-        <div className="enneagram-chart-container" style={{ width: '100%', maxWidth: '380px', margin: '0 auto' }}>
+        <div className={`enneagram-chart-container phase-${phase}`} style={{ width: '100%', maxWidth: '450px', margin: '0 auto' }}>
             <svg viewBox={`0 0 ${size} ${size}`} style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
                 {gradients}
 
                 {/* Outer Ring Segments */}
                 {types.map((type, i) => {
-                    const gap = 2; // degrees gap
+                    const isTop3 = top3Types.includes(parseInt(type));
+                    const ringMid = 125;
+                    const ringWidth = 30;
+                    const gap = 1.2;
                     const step = 40;
                     const startAngle = (i * step) - (step / 2) + gap;
                     const endAngle = (i * step) + (step / 2) - gap;
 
-                    const ringMid = 120;
-                    const ringWidth = 30;
-
                     const arc = describeArc(center, center, ringMid, startAngle, endAngle);
 
                     return (
-                        <g key={`seg-${type}`}>
-                            {/* Segment */}
-                            <path d={arc} fill="none" stroke={getSegmentFill(type)} strokeWidth={ringWidth} />
-                            {/* Label */}
+                        <g key={`seg-${type}`} className={(isTop3 && phase >= 3) ? "top-segment-active" : ""}>
+                            <path
+                                d={arc}
+                                fill="none"
+                                stroke={getSegmentFill(type)}
+                                strokeWidth={ringWidth}
+                                style={{
+                                    transition: 'stroke 0.8s ease-out, opacity 0.8s, filter 0.8s',
+                                    filter: (isTop3 && phase >= 3) ? 'url(#glow)' : 'none',
+                                    opacity: phase === 1 ? 0.3 : 1
+                                }}
+                            />
                             {(() => {
                                 const lp = polarToCartesian(center, center, ringMid, i * 40);
+                                const isActive = isTop3 && phase >= 3;
                                 return (
                                     <text
                                         x={lp.x}
                                         y={lp.y + 5}
                                         textAnchor="middle"
-                                        fill="white"
-                                        fontSize="16"
-                                        fontWeight="700"
-                                        style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.3)' }}
+                                        fill={isActive ? "white" : "#999"}
+                                        fontSize="14"
+                                        fontWeight="800"
+                                        style={{
+                                            transition: 'all 0.8s ease-out',
+                                            textShadow: isActive ? '0px 2px 4px rgba(0,0,0,0.5)' : 'none'
+                                        }}
                                     >
                                         {type}
                                     </text>
@@ -115,8 +137,7 @@ const EnneagramChart = ({ scores }) => {
                     )
                 })}
 
-                {/* Spider Web Grid (Behind Data) */}
-                {/* Concentric polygons */}
+                {/* Spider Web Grid */}
                 {[0.25, 0.5, 0.75, 1].map((scale, idx) => (
                     <polygon
                         key={`grid-${idx}`}
@@ -126,74 +147,49 @@ const EnneagramChart = ({ scores }) => {
                         }).join(' ')}
                         fill="none"
                         stroke="#ddd"
-                        strokeWidth="1"
+                        strokeWidth="1.5"
+                        style={{ opacity: phase === 1 ? 0.3 : 0.8, transition: 'opacity 1s' }}
                     />
                 ))}
 
                 {/* Radial Spokes */}
                 {types.map((_, i) => {
-                    const start = { x: center, y: center };
                     const end = getCoordinates(radius, i);
                     return (
                         <line
                             key={`spoke-${i}`}
-                            x1={start.x}
-                            y1={start.y}
-                            x2={end.x}
-                            y2={end.y}
+                            x1={center} y1={center}
+                            x2={end.x} y2={end.y}
                             stroke="#ddd"
-                            strokeWidth="1"
+                            strokeWidth="1.5"
+                            style={{ opacity: phase === 1 ? 0.3 : 0.8, transition: 'opacity 1s' }}
                         />
                     );
                 })}
 
-                {/* Data Polygon Fill */}
-                <polygon
-                    points={types.map((type, i) => {
-                        const maxScore = 18;
-                        const score = scores[type] || scores[type.toString()] || 0;
-                        const r = (score / maxScore) * radius;
-                        const { x, y } = getCoordinates(r, i);
-                        return `${x},${y}`;
-                    }).join(' ')}
-                    fill="#ddbe3d"     // Pantone requested
-                    fillOpacity="0.6"  // "Ligeramente transparente"
-                    stroke="#ddbe3d"
-                    strokeWidth="2"
-                />
-
-                {/* Data Points - Only Top 3 */}
-                {(() => {
-                    // Identify Top 3 types
-                    const top3Types = Object.entries(scores || {})
-                        .sort(([, a], [, b]) => b - a)
-                        .slice(0, 3)
-                        .map(([type]) => parseInt(type));
-
-                    return types.map((type, idx) => {
-                        // Only render dot if it's in the top 3
-                        if (!top3Types.includes(type)) return null;
-
-                        const maxScore = 18;
-                        const score = scores[type] || scores[type.toString()] || 0;
-                        const r = (score / maxScore) * radius;
-                        const { x, y } = getCoordinates(r, idx);
-                        return (
-                            <circle
-                                key={`pt-${idx}`}
-                                cx={x}
-                                cy={y}
-                                r="5"
-                                fill="#ddbe3d"
-                                stroke="white"
-                                strokeWidth="2"
-                            />
-                        );
-                    });
-                })()}
+                {/* Data Polygon Fill - Phase 2+ */}
+                {phase >= 2 && (
+                    <polygon
+                        points={types.map((type, i) => {
+                            const maxScore = 18;
+                            const score = scores[type] || scores[type.toString()] || 0;
+                            // Scale by phase for drawing effect in phase 2
+                            const scale = phase === 2 ? 1 : 1;
+                            const r = (score / maxScore) * radius * scale;
+                            const { x, y } = getCoordinates(r, i);
+                            return `${x},${y}`;
+                        }).join(' ')}
+                        fill="#ddbe3d"
+                        fillOpacity="0.4"
+                        stroke="#ddbe3d"
+                        strokeWidth="2"
+                        className="radar-polygon-anim"
+                        style={{ transition: 'all 1.5s ease-out' }}
+                    />
+                )}
 
                 {/* Center Dot */}
-                <circle cx={center} cy={center} r="4" fill="#ddbe3d" />
+                <circle cx={center} cy={center} r="4" fill="#ddbe3d" opacity={phase >= 2 ? 1 : 0} style={{ transition: 'opacity 0.5s' }} />
 
             </svg>
         </div>

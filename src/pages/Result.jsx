@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, Eye } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, Eye, Lock } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
 
@@ -131,8 +131,23 @@ const EnneatypeModal = ({ isOpen, onClose, type }) => {
 const Result = ({ result, user, onReset }) => {
     const navigate = useNavigate();
     const [selectedType, setSelectedType] = React.useState(null);
-
+    const [activePhase, setActivePhase] = React.useState(1);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    // Progressive revelation sequence
+    React.useEffect(() => {
+        if (!result) return;
+
+        const timers = [
+            setTimeout(() => setActivePhase(2), 1000), // Radar
+            setTimeout(() => setActivePhase(3), 2500), // Highlight
+            setTimeout(() => setActivePhase(4), 4000), // Main Result
+            setTimeout(() => setActivePhase(5), 5200), // Cards
+            setTimeout(() => setActivePhase(6), 6500), // CTAs
+        ];
+
+        return () => timers.forEach(t => clearTimeout(t));
+    }, [result]);
 
     const openModal = (type) => {
         setSelectedType(type);
@@ -206,13 +221,15 @@ const Result = ({ result, user, onReset }) => {
         <div className="result-page fade-in">
             <div className="result-container">
 
-                <header className="result-header">
+                <header className={`result-header phase-active-${activePhase}`}>
                     <h1 className="result-title">
-                        RESULTADO
+                        {activePhase < 4 ? "TÚ PERFIL HA SIDO REVELADO" : "TU RESULTADO"}
                     </h1>
                     <p className="result-subtitle">
-                        Tus respuestas muestran una fuerte afinidad<br />
-                        con estos tres eneatipos.
+                        {activePhase < 4
+                            ? "Estamos analizando tu patrón dominante…"
+                            : "Muestras una fuerte afinidad con 3 eneatipos."
+                        }
                     </p>
                 </header>
 
@@ -220,12 +237,16 @@ const Result = ({ result, user, onReset }) => {
                     className="result-chart-wrapper"
                     onClick={handleChartClick}
                 >
-                    <EnneagramChart scores={enneatypeScores || {}} />
+                    <EnneagramChart
+                        scores={enneatypeScores || {}}
+                        phase={activePhase}
+                        top3Types={top3.map(t => parseInt(t.type))}
+                    />
                 </div>
 
-                <div className="result-summary">
+                <div className={`result-summary phase-active-${activePhase}`}>
 
-                    <div className="top-results-cards">
+                    <div className={`top-results-cards ${activePhase >= 5 ? 'revealed' : 'hidden'}`}>
                         {top3.map((item) => (
                             <div
                                 key={item.type}
@@ -253,7 +274,7 @@ const Result = ({ result, user, onReset }) => {
 
                                 {/* Center: View Icon */}
                                 <div className="card-eye-wrapper">
-                                    <Eye size={20} className="card-view-icon" />
+                                    <Eye size={20} className="card-eye-wrapper-icon" />
                                 </div>
 
                                 {/* Right Side: Affinity */}
@@ -279,31 +300,33 @@ const Result = ({ result, user, onReset }) => {
                         ))}
                     </div>
 
-                    <p className="advanced-analysis-note">
-                        Si quieres comprender con mayor profundidad tu esencia y la motivación central que guía tus decisiones, el análisis avanzado te dará una lectura mucho más precisa y reveladora.
-                    </p>
+                    <div className={`advanced-analysis-section ${activePhase >= 6 ? 'revealed' : 'hidden'}`}>
+                        <h3 className="advanced-analysis-title">
+                            Tu resultado actual es solo la superficie
+                        </h3>
+                        <p className="advanced-analysis-note">
+                            Si quieres comprender con mayor profundidad tu esencia y la motivación central que guía tus decisiones, el análisis avanzado te dará una lectura mucho más precisa y reveladora.
+                        </p>
+                    </div>
 
 
 
-                    <div className="action-buttons-group">
-                        <div className="action-buttons-row">
-                            <button
-                                onClick={onReset}
-                                className="btn-result btn-repeat"
-                            >
-                                <RotateCcw size={18} />
-                                <span>Repetir Test</span>
-                            </button>
+                    <div className={`action-buttons-group ${activePhase >= 6 ? 'revealed' : 'hidden'}`}>
+                        <button
+                            className="btn-result btn-advanced-shimmer"
+                            onClick={handleDetailedAnalysis}
+                        >
+                            <Lock size={20} className="btn-icon-blue" />
+                            <span>DESBLOQUEAR MI ANÁLISIS AVANZADO</span>
+                        </button>
 
-                            <button
-                                className="btn-result btn-advanced"
-                                onClick={handleDetailedAnalysis}
-                            >
-                                <span>Accede al análisis avanzado</span>
-                                <ExternalLink size={18} />
-                            </button>
-                        </div>
-
+                        <button
+                            onClick={onReset}
+                            className="btn-result btn-repeat-secondary"
+                        >
+                            <RotateCcw size={18} />
+                            <span>Repetir Test</span>
+                        </button>
                     </div>
 
                     <EnneatypeModal
@@ -314,6 +337,7 @@ const Result = ({ result, user, onReset }) => {
 
 
                 </div>
+
 
                 {/* Brand footer */}
                 <div className="detailed-brand-footer" style={{ marginTop: '30px', textAlign: 'center' }}>
