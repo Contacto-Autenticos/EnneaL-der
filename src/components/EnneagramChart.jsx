@@ -41,8 +41,8 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
                 <stop offset="100%" stopColor="#bfa01f" />
             </linearGradient>
 
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="2" result="blur" />
+            <filter id="glow" filterUnits="userSpaceOnUse" x="-100" y="-100" width="600" height="600">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
         </defs>
