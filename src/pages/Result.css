@@ -437,3 +437,11 @@
         transform: translateY(10px);
     }
 }
+
+/* Mobile Optimizations for Enneagram Chart */
+@media (max-width: 600px) {
+    .enneagram-chart-container {
+        max-width: 90% !important;
+        /* Match the cards width exactly */
+    }
+}

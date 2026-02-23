@@ -223,7 +223,7 @@ const Result = ({ result, user, onReset }) => {
 
                 <header className={`result-header phase-active-${activePhase}`}>
                     <h1 className="result-title">
-                        {activePhase < 4 ? "TÚ PERFIL HA SIDO REVELADO" : "TU RESULTADO"}
+                        {activePhase < 4 ? "PERFIL REVELADO" : "TU RESULTADO"}
                     </h1>
                     <p className="result-subtitle">
                         {activePhase < 4
