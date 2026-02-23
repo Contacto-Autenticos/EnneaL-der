@@ -8,8 +8,8 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
     // Radius of the outermost edge of the colored segments
     const radius = 95;
 
-    // Padding added strictly for the glow effect to spill outside the mathematical boundaries
-    const padding = 40;
+    // Padding is now 0 because SVG overflow: visible and the absolute-scaled filter perfectly handles the glow
+    const padding = 0;
     const viewBoxSize = baseSize + (padding * 2);
     // Offset the starting drawing coordinates by the padding to center it
     const offsetCenter = center + padding;
