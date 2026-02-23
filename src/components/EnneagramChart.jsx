@@ -188,6 +188,33 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
                     />
                 )}
 
+                {/* Top 3 Result Dots */}
+                {phase >= 2 && types.map((type, i) => {
+                    const isTop3 = top3Types.includes(parseInt(type));
+                    if (!isTop3) return null;
+
+                    const maxScore = 18;
+                    const score = scores[type] || scores[type.toString()] || 0;
+                    const r = (score / maxScore) * radius;
+                    const { x, y } = getCoordinates(r, i);
+
+                    return (
+                        <circle
+                            key={`dot-${type}`}
+                            cx={x} cy={y}
+                            r="5"
+                            fill="#ddbe3d"
+                            stroke="#ffffff"
+                            strokeWidth="2"
+                            opacity={phase >= 3 ? 1 : 0}
+                            style={{
+                                transition: 'opacity 0.8s ease-out 0.3s',
+                                filter: 'drop-shadow(0px 0px 4px rgba(221, 190, 61, 0.8))'
+                            }}
+                        />
+                    );
+                })}
+
                 {/* Center Dot */}
                 <circle cx={center} cy={center} r="4" fill="#ddbe3d" opacity={phase >= 2 ? 1 : 0} style={{ transition: 'opacity 0.5s' }} />
 
