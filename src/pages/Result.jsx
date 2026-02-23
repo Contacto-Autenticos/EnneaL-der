@@ -247,6 +247,15 @@ const Result = ({ result, user, onReset }) => {
                 <div className={`result-summary phase-active-${activePhase}`}>
 
                     <div className={`top-results-cards ${activePhase >= 5 ? 'revealed' : 'hidden'}`}>
+                        <p style={{
+                            fontSize: '0.8rem',
+                            color: '#666',
+                            textAlign: 'center',
+                            marginBottom: '10px',
+                            fontStyle: 'italic'
+                        }}>
+                            Toca cada tarjeta para mayor información
+                        </p>
                         {top3.map((item) => (
                             <div
                                 key={item.type}
