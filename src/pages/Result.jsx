@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, Eye, Lock } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, MousePointerClick, Lock } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import { getEnneagramInfo } from '../utils/calculator';
 
@@ -283,7 +283,7 @@ const Result = ({ result, user, onReset }) => {
 
                                 {/* Center: View Icon */}
                                 <div className="card-eye-wrapper">
-                                    <Eye size={20} className="card-eye-wrapper-icon" />
+                                    <MousePointerClick size={20} className="card-eye-wrapper-icon" />
                                 </div>
 
                                 {/* Right Side: Affinity */}
