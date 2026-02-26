@@ -394,7 +394,10 @@ const AdvancedLanding = ({ result }) => {
                         </div>
 
                         <button onClick={() => navigate('/payment')} className="al-btn-shimmer">
-                            ACCEDER AHORA A MI ANÁLISIS AVANZADO <ArrowRight size={24} />
+                            <span className="al-btn-label">
+                                ACCEDER AHORA A <br className="al-mobile-br" /> MI ANÁLISIS AVANZADO
+                            </span>
+                            <ArrowRight size={24} className="al-btn-icon" />
                         </button>
                     </div>
                 </div>

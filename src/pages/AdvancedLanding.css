@@ -735,29 +735,39 @@ html {
 }
 
 .al-impact-title {
-    font-size: clamp(32px, 5vw, 48px);
+    font-size: clamp(26px, 5vw, 48px);
     font-weight: 800;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     line-height: 1.2;
     color: var(--al-white);
 }
 
+@media (max-width: 768px) {
+    .al-impact-card {
+        padding: 40px 20px;
+    }
+
+    .al-impact-title {
+        margin-bottom: 25px;
+    }
+}
+
 .al-impact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-bottom: 60px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
     text-align: left;
 }
 
 .al-impact-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-size: 18px;
+    gap: 12px;
+    font-size: 16px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
-    padding: 15px 20px;
+    padding: 12px 16px;
     background: rgba(255, 255, 255, 0.02);
     border-radius: 12px;
     transition: all 0.3s ease;
@@ -961,6 +971,29 @@ html {
     gap: 16px;
     box-shadow: 0 20px 40px rgba(221, 190, 61, 0.2);
     margin: 0 auto;
+    line-height: 1.2;
+}
+
+.al-mobile-br {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .al-btn-shimmer {
+        padding: 20px 16px;
+        width: 100%;
+        max-width: 320px;
+        font-size: 16px;
+        gap: 12px;
+    }
+
+    .al-mobile-br {
+        display: block;
+    }
+
+    .al-btn-icon {
+        flex-shrink: 0;
+    }
 }
 
 .al-btn-shimmer:hover {
