@@ -228,7 +228,7 @@ const AdvancedLanding = ({ result }) => {
                                     { t: "Tu motivación inconsciente central", d: "Lo que realmente impulsa tus decisiones… incluso cuando no lo notas." },
                                     { t: "Tu patrón bajo estrés", d: "Cómo reaccionas cuando pierdes control y qué impacto tiene en tus relaciones y liderazgo." },
                                     { t: "Tu mecanismo de defensa automático", d: "La estrategia interna que usas para protegerte… y que muchas veces limita tu crecimiento." },
-                                    { t: "Tu punto ciego principal", d: "El área que otros ven claramente, pero tú no." },
+
                                     { t: "Tu ruta de equilibrio", d: "Acciones prácticas y concretas para fortalecer tu liderazgo y reducir desgaste emocional." }
                                 ].map((item, i) => (
                                     <li key={i} className="al-product-item">
