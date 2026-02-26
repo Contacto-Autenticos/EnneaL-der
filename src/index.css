@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --font-family: 'Poppins', sans-serif;
@@ -672,6 +672,48 @@ h3 {
   background: #ffffff;
   border: 4px solid #002d44;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ═══ Special Question Options ═══ */
+.test-special-options {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+  padding: 0 10px 20px;
+}
+
+.test-special-option-btn {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #333;
+  font-size: 0.92rem;
+  font-family: var(--font-family);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  line-height: 1.4;
+}
+
+.test-special-option-btn:hover {
+  border-color: #3a7ca5;
+  background: rgba(0, 45, 68, 0.04);
+  transform: translateY(-1px);
+}
+
+.test-special-option-btn.selected {
+  border-color: #002d44;
+  background: linear-gradient(135deg, rgba(0, 45, 68, 0.08), rgba(58, 124, 165, 0.08));
+  color: #002d44;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(0, 45, 68, 0.15);
 }
 
 /* â•â•â• Bottom Navigation with Dots â•â•â• */

@@ -224,6 +224,7 @@
     color: #666;
     font-size: 0.9rem;
     margin-top: -20px;
+    /* Pull closer to the box */
     margin-bottom: 25px;
     font-style: italic;
 }
@@ -549,4 +550,233 @@
     /* Pull closer to the box */
     margin-bottom: 25px;
     font-style: italic;
+}
+
+/* PREMIUM ORDER BUMP STYLES - REFINED */
+.order-bump-container {
+    background: #002d44;
+    border-radius: 20px;
+    margin: 40px 0;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 45, 68, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    /* Important for clipping the header image */
+    max-width: 100%;
+}
+
+.order-bump-header-image {
+    width: 100%;
+    position: relative;
+}
+
+.order-bump-full-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.order-bump-badge {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    background: #ddbe3d;
+    color: #002d44;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.order-bump-badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    animation: badgeShimmer 3s infinite;
+}
+
+@keyframes badgeShimmer {
+    to {
+        left: 100%;
+    }
+}
+
+.order-bump-content {
+    padding: 30px;
+}
+
+.order-bump-title {
+    color: #ffffff;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+}
+
+.order-bump-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+.order-bump-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 20px 0;
+}
+
+.order-bump-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-bump-benefits li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.order-bump-benefits li span {
+    color: #ddbe3d;
+    font-weight: 900;
+}
+
+.order-bump-pricing-area {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.order-bump-old-price {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: line-through;
+    font-size: 1rem;
+}
+
+.order-bump-current-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.order-bump-new-price {
+    color: #ddbe3d;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.order-bump-currency-white {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.order-bump-price-bottom-note {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.order-bump-action-area {
+    margin: 0 20px 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.order-bump-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.order-bump-checkbox {
+    display: none;
+}
+
+.order-bump-checkbox-custom {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #002d44;
+    border-radius: 6px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.order-bump-checkbox:checked+.order-bump-checkbox-custom {
+    background: #ddbe3d;
+    border-color: #ddbe3d;
+}
+
+.order-bump-checkbox:checked+.order-bump-checkbox-custom::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #002d44;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.order-bump-action-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-bump-action-main {
+    color: #002d44;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+.order-bump-action-sub {
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+@media (max-width: 600px) {
+    .order-bump-title {
+        font-size: 1.4rem;
+    }
+
+    .order-bump-container {
+        margin: 30px 0;
+    }
+
+    .order-bump-content {
+        padding: 25px 20px;
+    }
+
+    .order-bump-new-price {
+        font-size: 1.8rem;
+    }
 }

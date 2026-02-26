@@ -95,6 +95,46 @@ export const questions = [
     text: "Cuando hay conflicto, tiendo a tomar distancia emocional para no involucrarme demasiado.",
     type: "Z",
   },
+  // Pregunta especial 1 — Dirección de energía bajo presión
+  {
+    id: 19,
+    text: "Cuando estoy en un entorno nuevo o bajo presión, mi reacción más automática es:",
+    type: "special",
+    options: [
+      { value: 1, label: "Me activo claramente hacia afuera: actúo, hablo o intervengo de inmediato." },
+      { value: 2, label: "Me inclino más hacia actuar y mover la situación que hacia quedarme procesando." },
+      { value: 3, label: "Depende mucho del contexto; puedo actuar o procesar según la situación." },
+      { value: 4, label: "Me inclino más hacia pensar o sentir internamente antes de actuar." },
+      { value: 5, label: "Voy claramente hacia adentro: necesito procesar internamente antes de moverme." },
+    ],
+    scoring: {
+      1: { types: ["8", "3", "1"], points: 3 },
+      2: { types: ["3", "8", "7"], points: 2 },
+      3: { types: ["6", "9", "1"], points: 1 },
+      4: { types: ["5", "4", "9"], points: 2 },
+      5: { types: ["5", "4", "9"], points: 3 },
+    },
+  },
+  // Pregunta especial 2 — Prioridad bajo tensión o conflicto
+  {
+    id: 20,
+    text: "Cuando hay tensión o desacuerdo, tiendo a:",
+    type: "special",
+    options: [
+      { value: 1, label: "Defender mi posición o confrontar directamente, aunque haya fricción." },
+      { value: 2, label: "Inclinarme más por resolver el asunto que por preservar la armonía." },
+      { value: 3, label: "Depende del contexto; puedo confrontar o armonizar según la situación." },
+      { value: 4, label: "Inclinarme más por mantener la armonía que por confrontar." },
+      { value: 5, label: "Priorizar claramente el vínculo y la estabilidad, incluso si algo queda pendiente." },
+    ],
+    scoring: {
+      1: { types: ["8", "1", "3"], points: 3 },
+      2: { types: ["8", "1", "3"], points: 2 },
+      3: { types: ["6", "9", "3"], points: 1 },
+      4: { types: ["9", "2", "7"], points: 2 },
+      5: { types: ["9", "2", "7"], points: 3 },
+    },
+  },
 ];
 
 export const options = [

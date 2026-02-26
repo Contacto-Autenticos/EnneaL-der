@@ -32,12 +32,16 @@ async function saveAnonymousResponses(answers) {
 
 const Test = ({ onComplete }) => {
     const [shuffledQuestions] = useState(() => {
-        const shuffled = [...questions];
-        for (let i = shuffled.length - 1; i > 0; i--) {
+        // Separate standard Likert questions from special questions
+        const standardQs = questions.filter(q => q.type !== 'special');
+        const specialQs = questions.filter(q => q.type === 'special');
+        // Shuffle only the standard questions
+        for (let i = standardQs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            [standardQs[i], standardQs[j]] = [standardQs[j], standardQs[i]];
         }
-        return shuffled;
+        // Special questions always go at the end, in order
+        return [...standardQs, ...specialQs];
     });
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -47,6 +51,7 @@ const Test = ({ onComplete }) => {
 
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
     const totalQuestions = shuffledQuestions.length;
+    const isSpecialQuestion = currentQuestion.type === 'special';
 
     const handleAnswer = (value) => {
         const newAnswers = { ...answers, [currentQuestion.id]: value };
@@ -120,53 +125,68 @@ const Test = ({ onComplete }) => {
                     {/* Question Header */}
                     <div className="test-question-header">
                         <p className="test-instruction-text">
-                            Responde con honestidad espontánea.
+                            {isSpecialQuestion ? 'Selecciona la opción que mejor te describe.' : 'Responde con honestidad espontánea.'}
                         </p>
                         <h3 className="test-question-text">
                             {currentQuestion.text}
                         </h3>
                     </div>
 
-                    {/* Slider Answer */}
-                    <div className="test-slider-wrapper">
-                        <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
-                            Me describe:
-                        </p>
-                        <div className="test-slider-labels">
-                            {sliderLabels.map((label, idx) => (
-                                <span
-                                    key={label}
-                                    className={`test-slider-label ${currentValue === idx + 1 ? 'active' : ''}`}
-                                    style={{ left: `${(idx / 3) * 100}%` }}
-                                    onClick={() => handleAnswer(idx + 1)}
+                    {isSpecialQuestion ? (
+                        /* Special Question: Multiple Choice Buttons */
+                        <div className="test-special-options">
+                            {currentQuestion.options.map((opt) => (
+                                <button
+                                    key={opt.value}
+                                    className={`test-special-option-btn ${currentValue === opt.value ? 'selected' : ''}`}
+                                    onClick={() => handleAnswer(opt.value)}
                                 >
-                                    {label}
-                                </span>
+                                    {opt.label}
+                                </button>
                             ))}
                         </div>
-                        <div className="test-slider-track" onClick={(e) => {
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const percent = x / rect.width;
-                            const val = Math.min(4, Math.max(1, Math.round(percent * 3 + 1)));
-                            handleAnswer(val);
-                        }}>
-                            <div className="test-slider-rail">
-                                <div
-                                    className="test-slider-track-fill"
-                                    style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
-                                />
+                    ) : (
+                        /* Standard Question: Slider */
+                        <div className="test-slider-wrapper">
+                            <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
+                                Me describe:
+                            </p>
+                            <div className="test-slider-labels">
+                                {sliderLabels.map((label, idx) => (
+                                    <span
+                                        key={label}
+                                        className={`test-slider-label ${currentValue === idx + 1 ? 'active' : ''}`}
+                                        style={{ left: `${(idx / 3) * 100}%` }}
+                                        onClick={() => handleAnswer(idx + 1)}
+                                    >
+                                        {label}
+                                    </span>
+                                ))}
                             </div>
-                            {[1, 2, 3, 4].map((val) => (
-                                <div
-                                    key={val}
-                                    className={`test-slider-dot ${currentValue >= val ? 'filled' : ''} ${currentValue === val ? 'active' : ''}`}
-                                    style={{ left: `${((val - 1) / 3) * 100}%` }}
-                                    onClick={(e) => { e.stopPropagation(); handleAnswer(val); }}
-                                />
-                            ))}
+                            <div className="test-slider-track" onClick={(e) => {
+                                const rect = e.currentTarget.getBoundingClientRect();
+                                const x = e.clientX - rect.left;
+                                const percent = x / rect.width;
+                                const val = Math.min(4, Math.max(1, Math.round(percent * 3 + 1)));
+                                handleAnswer(val);
+                            }}>
+                                <div className="test-slider-rail">
+                                    <div
+                                        className="test-slider-track-fill"
+                                        style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
+                                    />
+                                </div>
+                                {[1, 2, 3, 4].map((val) => (
+                                    <div
+                                        key={val}
+                                        className={`test-slider-dot ${currentValue >= val ? 'filled' : ''} ${currentValue === val ? 'active' : ''}`}
+                                        style={{ left: `${((val - 1) / 3) * 100}%` }}
+                                        onClick={(e) => { e.stopPropagation(); handleAnswer(val); }}
+                                    />
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Bottom Navigation: Arrows + Dots */}

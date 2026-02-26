@@ -158,13 +158,28 @@ const PaymentPage = () => {
         }
     }, [signatureData]);
 
+    // Order Bump state
+    const [bumpSelected, setBumpSelected] = useState(false);
+    const BUMP_PRICE_IN_CENTS = 1490000; // $14.900 COP
+
+    const getFinalAmount = (currentBaseAmount, bumpIsSelected) => {
+        return bumpIsSelected ? currentBaseAmount + BUMP_PRICE_IN_CENTS : currentBaseAmount;
+    };
+
+    useEffect(() => {
+        const finalAmount = getFinalAmount(amountInCents, bumpSelected);
+        fetchSignature(finalAmount);
+    }, [amountInCents, bumpSelected]);
+
     const isInternational = userCountry !== 'CO' && localCurrency !== 'COP' && exchangeRate !== 1;
-    const currentPriceCOP = amountInCents / 100;
+    const currentPriceBaseCOP = amountInCents / 100;
+    const bumpPriceCOP = BUMP_PRICE_IN_CENTS / 100;
+    const totalAmountCOP = (getFinalAmount(amountInCents, bumpSelected)) / 100;
     const originalPriceCOP = 74000;
 
     const displayCurrentPrice = isInternational
-        ? (currentPriceCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
-        : currentPriceCOP.toLocaleString('es-CO');
+        ? (totalAmountCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+        : totalAmountCOP.toLocaleString('es-CO');
 
     const displayOriginalPrice = isInternational
         ? (originalPriceCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
@@ -202,7 +217,9 @@ const PaymentPage = () => {
                                 *El cargo final será en COP. Valor aprox.
                             </p>
                         )}
-                        <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>Pago único · Acceso vitalicio · Entrega inmediata</p>
+                        <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>
+                            {bumpSelected ? 'Análisis Avanzado + Kit Ejecutivo' : 'Análisis Avanzado'} · Pago único
+                        </p>
 
                         <div className="savings-text">
                             Precio de lanzamiento
@@ -259,7 +276,56 @@ const PaymentPage = () => {
                     <li><CheckCircle size={18} className="check-icon" /> Y mucho más…</li>
                 </ul>
 
-                {loading && <p>Cargando pasarela de pago...</p>}
+                {/* PREMIUM ORDER BUMP SECTION */}
+                <div className="order-bump-container">
+                    <div className="order-bump-header-image">
+                        <img src="/Portada - Kit Ejecutivo de Acción-3.png" alt="Executive Kit Mockup" className="order-bump-full-image" />
+                        <div className="order-bump-badge">OPCIONAL KIT EJECUTIVO</div>
+                    </div>
+
+                    <div className="order-bump-content">
+                        <h2 className="order-bump-title">Convierte tu resultado en un Plan de Acción</h2>
+                        <p className="order-bump-subtitle">Aplica tu resultado en decisiones estratégicas concretas</p>
+
+                        <div className="order-bump-divider"></div>
+
+                        <ul className="order-bump-benefits">
+                            <li><span>✔</span> Plan de implementación de 30 días</li>
+                            <li><span>✔</span> Matriz de decisiones estratégicas</li>
+                            <li><span>✔</span> Protocolo bajo presión</li>
+                            <li><span>✔</span> Guia para conversaciones difíciles</li>
+                        </ul>
+
+                        <div className="order-bump-pricing-area">
+                            <span className="order-bump-old-price">${isInternational ? (29900 * exchangeRate).toLocaleString() : '29.900'}</span>
+                            <div className="order-bump-current-price-row">
+                                <span className="order-bump-new-price">
+                                    ${isInternational ? (14900 * exchangeRate).toLocaleString() : '14.900'}
+                                </span>
+                                <span className="order-bump-currency-white">COP</span>
+                            </div>
+                        </div>
+                        <p className="order-bump-price-bottom-note">Pago único · Acceso inmediato</p>
+                    </div>
+
+                    <div className="order-bump-action-area">
+                        <label className="order-bump-checkbox-label">
+                            <input
+                                type="checkbox"
+                                checked={bumpSelected}
+                                onChange={(e) => setBumpSelected(e.target.checked)}
+                                className="order-bump-checkbox"
+                            />
+                            <div className="order-bump-checkbox-custom"></div>
+                            <div className="order-bump-action-text">
+                                <span className="order-bump-action-main">Sí, agregar mi Kit Ejecutivo de Acción</span>
+                                <span className="order-bump-action-sub">Descarga inmediata en PDF al finalizar el analisis avanzado</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                {loading && <p style={{ marginTop: '20px' }}>Cargando pasarela de pago...</p>}
                 {error && <p className="payment-error">{error}</p>}
 
                 <div id="wompi-container" className="wompi-container">

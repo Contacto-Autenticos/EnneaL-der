@@ -214,7 +214,7 @@ const Result = ({ result, user, onReset }) => {
     };
 
     const handleDetailedAnalysis = () => {
-        navigate('/payment');
+        navigate('/advanced-landing');
     };
 
     return (

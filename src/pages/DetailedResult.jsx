@@ -38,6 +38,16 @@ const ViewAnswersModal = ({ isOpen, onClose, answers }) => {
         }
     });
 
+    // Collect special (bonus) questions
+    const bonusQuestions = questions
+        .filter(q => q.type === 'special')
+        .map(q => {
+            const answerValue = answers && answers[q.id];
+            // For special questions, get the label from the question's own options
+            const answerLabel = q.options?.find(o => o.value == answerValue)?.label || "Sin responder";
+            return { ...q, answerLabel, answerValue };
+        });
+
     return (
         <div className="ennea-modal-overlay" onClick={onClose} style={{ zIndex: 10000 }}>
             <div className="ennea-modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px', maxHeight: '80vh', overflowY: 'auto' }}>
@@ -71,6 +81,33 @@ const ViewAnswersModal = ({ isOpen, onClose, answers }) => {
                         ))}
                     </div>
                 ))}
+
+                {/* Grupo Bonus - Special Questions */}
+                {bonusQuestions.length > 0 && (
+                    <div style={{ marginBottom: '20px' }}>
+                        <h3 style={{
+                            background: '#f0f4f8',
+                            padding: '8px',
+                            borderRadius: '5px',
+                            color: '#002d44',
+                            marginBottom: '10px'
+                        }}>
+                            Grupo Bonus
+                        </h3>
+                        {bonusQuestions.map(q => (
+                            <div key={q.id} style={{ marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>
+                                <p style={{ fontSize: '0.9rem', marginBottom: '5px' }}>{q.text}</p>
+                                <span style={{
+                                    fontSize: '0.85rem',
+                                    fontWeight: 'bold',
+                                    color: '#ddbe3d'
+                                }}>
+                                    {q.answerLabel}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <div className="ennea-modal-footer">
                     <button className="modal-btn-back" onClick={onClose} style={{ width: '100%', justifyContent: 'center' }}>
                         Cerrar

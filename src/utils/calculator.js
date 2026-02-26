@@ -96,7 +96,8 @@ export const calculateResults = (answers) => {
         const question = questions.find((q) => q.id === parseInt(questionId));
         const option = options.find((o) => o.value === answerValue);
 
-        if (question && option) {
+        // Only process standard Likert questions (not special ones)
+        if (question && option && question.type !== "special") {
             scores[question.type] += option.points;
         }
     });
@@ -115,6 +116,22 @@ export const calculateResults = (answers) => {
         "6": scores.C + scores.Y,
         "1": scores.C + scores.Z,
     };
+
+    // -----------------------------------------
+    // 2.5. Apply bonus points from special questions
+    // -----------------------------------------
+    const specialQuestions = questions.filter((q) => q.type === "special");
+    specialQuestions.forEach((sq) => {
+        const answerValue = answers[sq.id];
+        if (answerValue && sq.scoring && sq.scoring[answerValue]) {
+            const { types, points } = sq.scoring[answerValue];
+            types.forEach((type) => {
+                if (enneatypeScores[type] !== undefined) {
+                    enneatypeScores[type] += points;
+                }
+            });
+        }
+    });
 
     // -----------------------------------------
     // 3. Sort all 9 from highest to lowest

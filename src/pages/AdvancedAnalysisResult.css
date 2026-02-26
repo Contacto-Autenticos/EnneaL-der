@@ -32,7 +32,7 @@
 ────────────────────────────────────────── */
 .advanced-hero {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     padding-top: 20px;
 }
 
@@ -148,6 +148,7 @@
    PHRASE SECTION
 ────────────────────────────────────────── */
 .phrase-section {
+    background-color: #0d2535;
     background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border-radius: 20px;
     padding: 25px 30px;
@@ -155,6 +156,7 @@
     border-left: 5px solid #ddbe3d;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     animation: slideIn 0.8s ease-out;
+    margin-bottom: 30px;
 }
 
 .phrase-content {
@@ -191,12 +193,14 @@
    STANDARD SECTIONS
 ────────────────────────────────────────── */
 .advanced-section {
+    background-color: #0d2535;
     background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border-radius: 24px;
     padding: 35px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(221, 190, 61, 0.15);
     transition: transform 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 30px;
 }
 
 .advanced-section:hover {
@@ -490,6 +494,20 @@
     box-shadow: 0 12px 35px rgba(255, 255, 255, 0.2);
 }
 
+.btn-download-pdf {
+    background: #002d44;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 45, 68, 0.3);
+    flex: 0.8 !important;
+}
+
+.btn-download-pdf:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 45, 68, 0.45);
+    background: #003a58;
+}
+
 .footer-bottom-row {
     display: flex;
     gap: 15px;
@@ -606,6 +624,81 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* ──────────────────────────────────────────
+   EXECUTIVE KIT PROMO
+   Order Bump Style
+────────────────────────────────────────── */
+.executive-kit-promo {
+    background: linear-gradient(135deg, #002d44 0%, #001a29 100%);
+    border: 2px solid #ddbe3d;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 20px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(221, 190, 61, 0.15);
+}
+
+.executive-kit-promo h3 {
+    font-size: 1.5rem;
+    color: #ddbe3d;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.executive-kit-promo p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto 25px;
+}
+
+.btn-kit-download {
+    background: #ffffff;
+    color: #002d44;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.btn-kit-download:hover {
+    transform: scale(1.05);
+    background: #ddbe3d;
+    color: #002d44;
+}
+
+.btn-kit-download.loading {
+    background: #e0e0e0;
+    color: #666;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.spinner {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }
 

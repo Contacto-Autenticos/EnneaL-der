@@ -12,8 +12,13 @@ import {
     X,
     Info,
     Quote,
-    HelpCircle
+    HelpCircle,
+    Download,
+    Loader2
 } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import { executiveKitData } from '../data/executiveKitInfo';
+import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
 import { advancedEnneagramInfo } from '../data/advancedInfo';
 import { differentiationInfo } from '../data/differentiationInfo';
 import { getEnneagramInfo } from '../utils/calculator';
@@ -150,6 +155,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const navigate = useNavigate();
     const { type: urlType } = useParams();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isDownloadingKit, setIsDownloadingKit] = React.useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -206,6 +212,132 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
 
     const shareRef = React.useRef(null);
 
+    const handleDownloadPDF = async () => {
+        const reportElement = document.getElementById('advanced-report-content');
+        if (!reportElement) return;
+
+        try {
+            const canvas = await html2canvas(reportElement, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedContent = clonedDoc.getElementById('advanced-report-content');
+                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
+                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+                    const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
+                    const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
+                    const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
+
+                    if (clonedContent) {
+                        clonedContent.style.padding = '40px';
+                        clonedContent.style.background = '#ffffff';
+                        clonedContent.style.width = '210mm';
+                        clonedContent.style.margin = '0 auto';
+                    }
+
+                    if (clonedHero) {
+                        const heroTitle = clonedHero.querySelector('.advanced-hero-title');
+                        const profileText = clonedHero.querySelector('.profile-text-title');
+                        const userName = clonedHero.querySelector('.user-name-title');
+
+                        if (heroTitle) heroTitle.style.color = '#002d44';
+                        if (profileText) profileText.style.color = '#002d44';
+                        if (userName) userName.style.color = '#002d44';
+                    }
+
+                    if (clonedPhrase) {
+                        clonedPhrase.style.setProperty('background', '#0d2535', 'important');
+                        clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
+                        clonedPhrase.style.setProperty('color', '#ffffff', 'important');
+                        clonedPhrase.style.setProperty('animation', 'none', 'important');
+                        clonedPhrase.style.setProperty('transition', 'none', 'important');
+
+                        const text = clonedPhrase.querySelector('.phrase-text');
+                        if (text) text.style.setProperty('color', '#ffffff', 'important');
+
+                        const label = clonedPhrase.querySelector('strong');
+                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
+                    }
+
+                    // Also force other sections to be dark blue and disable animations
+                    const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
+                    advancedSections.forEach(section => {
+                        section.style.setProperty('background', '#0d2535', 'important');
+                        section.style.setProperty('background-color', '#0d2535', 'important');
+                        section.style.setProperty('color', '#ffffff', 'important');
+                        section.style.setProperty('animation', 'none', 'important');
+                        section.style.setProperty('transition', 'none', 'important');
+
+                        const sectionTitle = section.querySelector('.section-title');
+                        if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+                    if (footerActions) footerActions.style.display = 'none';
+                    if (kitPromo) kitPromo.style.display = 'none';
+                    if (brandFooter) brandFooter.style.display = 'none';
+                }
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            if (imgHeight > pdfHeight) {
+                const longPdf = new jsPDF('p', 'mm', [pdfWidth, imgHeight]);
+                longPdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
+                longPdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
+            } else {
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
+                pdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
+            }
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            alert('Hubo un error al generar el PDF.');
+        }
+    };
+
+    const handleDownloadExecutiveKit = async () => {
+        const kitRoot = document.getElementById('executive-kit-printable');
+        if (!kitRoot || isDownloadingKit) return;
+
+        try {
+            setIsDownloadingKit(true);
+            // Show the hidden container for capturing
+            kitRoot.style.display = 'block';
+            kitRoot.style.position = 'absolute';
+            kitRoot.style.left = '-9999px';
+            kitRoot.style.top = '0';
+
+            const pages = kitRoot.querySelectorAll('.kit-page');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            for (let i = 0; i < pages.length; i++) {
+                const canvas = await html2canvas(pages[i], {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff'
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+            }
+
+            pdf.save(`Kit-Ejecutivo-Eneagrama-Tipo-${type}.pdf`);
+            kitRoot.style.display = 'none';
+        } catch (error) {
+            console.error('Error generating Executive Kit:', error);
+            alert('Hubo un error al generar el Kit Ejecutivo.');
+            kitRoot.style.display = 'none';
+        } finally {
+            setIsDownloadingKit(false);
+        }
+    };
+
     const handleShare = async () => {
         if (!shareRef.current) return;
 
@@ -244,13 +376,39 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     }
 
                     if (clonedPhrase) {
-                        clonedPhrase.style.boxShadow = 'none';
-                        clonedPhrase.style.background = '#f8f9fa';
-                        clonedPhrase.style.border = '1px solid #eee';
-                        clonedPhrase.style.borderLeft = '5px solid #ddbe3d';
-                        clonedPhrase.style.margin = '0';
-                        clonedPhrase.style.animation = 'none';
+                        clonedPhrase.style.setProperty('box-shadow', 'none', 'important');
+                        clonedPhrase.style.setProperty('background', '#0d2535', 'important');
+                        clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
+                        clonedPhrase.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
+                        clonedPhrase.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                        clonedPhrase.style.setProperty('margin', '0 0 30px 0', 'important');
+                        clonedPhrase.style.setProperty('animation', 'none', 'important');
+                        clonedPhrase.style.setProperty('transition', 'none', 'important');
+                        clonedPhrase.style.setProperty('color', '#ffffff', 'important');
+
+                        const text = clonedPhrase.querySelector('.phrase-text');
+                        if (text) text.style.setProperty('color', '#ffffff', 'important');
+
+                        const label = clonedPhrase.querySelector('strong');
+                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
+
+                    const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
+                    advancedSections.forEach(section => {
+                        section.style.setProperty('background', '#0d2535', 'important');
+                        section.style.setProperty('background-color', '#0d2535', 'important');
+                        section.style.setProperty('color', '#ffffff', 'important');
+                        section.style.setProperty('animation', 'none', 'important');
+                        section.style.setProperty('transition', 'none', 'important');
+                    });
+
+                    const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
+                    const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
+                    const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
+
+                    if (footerActions) footerActions.style.display = 'none';
+                    if (kitPromo) kitPromo.style.display = 'none';
+                    if (brandFooter) brandFooter.style.display = 'none';
                 }
             });
 
@@ -293,205 +451,245 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     return (
         <div className="advanced-result-page">
             <div className="advanced-result-container">
+                <div id="advanced-report-content">
+                    <div ref={shareRef} className="share-content-wrapper">
+                        {/* Hero Section */}
+                        <section className="advanced-hero">
+                            <h1 className="advanced-hero-title">
+                                {user?.name && <span className="user-name-title">{String(user.name).toUpperCase()}</span>}
+                                <span className="profile-text-title">
+                                    TU PERFIL AUT<span className="brand-accent">é</span>NTICO
+                                </span>
+                            </h1>
+                            <p className="advanced-hero-subtitle">
+                                Eneatipo {type} — {winner.name}
+                            </p>
 
-                <div ref={shareRef} className="share-content-wrapper">
-                    {/* Hero Section */}
-                    <section className="advanced-hero">
-                        <h1 className="advanced-hero-title">
-                            {user?.name && <span className="user-name-title">{String(user.name).toUpperCase()}</span>}
-                            <span className="profile-text-title">
-                                TU PERFIL AUT<span className="brand-accent">é</span>NTICO
-                            </span>
-                        </h1>
-                        <p className="advanced-hero-subtitle">
-                            Eneatipo {type} — {winner.name}
-                        </p>
+                            <div className="advanced-coin-wrapper">
+                                <EnneagramRing activeType={type} />
+                                <div
+                                    className={`advanced-coin-container ${result?.results ? 'clickable' : ''}`}
+                                    onClick={() => result?.results && setIsModalOpen(true)}
+                                    title={result?.results ? "Ver puntajes detallados" : ""}
+                                >
+                                    <img
+                                        src={winner.image ? encodeURI(winner.image) : "/logo-moneda.png"}
+                                        alt={`Eneatipo ${type}`}
+                                        className="advanced-coin-img"
+                                        crossOrigin="anonymous"
+                                    />
+                                </div>
+                            </div>
+                        </section>
 
-                        <div className="advanced-coin-wrapper">
-                            <EnneagramRing activeType={type} />
-                            <div
-                                className={`advanced-coin-container ${result?.results ? 'clickable' : ''}`}
-                                onClick={() => result?.results && setIsModalOpen(true)}
-                                title={result?.results ? "Ver puntajes detallados" : ""}
-                            >
-                                <img
-                                    src={winner.image ? encodeURI(winner.image) : "/logo-moneda.png"}
-                                    alt={`Eneatipo ${type}`}
-                                    className="advanced-coin-img"
-                                    crossOrigin="anonymous"
-                                />
+                        {/* Section: Internal Phrase */}
+                        <div className="phrase-section">
+                            <div className="phrase-content">
+                                <Quote className="phrase-quote-icon" size={20} />
+                                <p className="phrase-text">
+                                    <strong>Frase interna que suele repetirse:</strong> "{details.phrase}"
+                                </p>
                             </div>
                         </div>
+                    </div>
+
+                    {result?.results && (
+                        <ScoreModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            results={result.results || []}
+                        />
+                    )}
+
+                    {/* Section 1: Motivations */}
+                    <section className="advanced-section">
+                        <div className="section-header">
+                            <Target className="section-icon" size={24} />
+                            <h2 className="section-title">Motivaciones Centrales</h2>
+                        </div>
+                        <div className="motivation-grid">
+                            <div className="motivation-item">
+                                <span className="motivation-label">Miedo Básico</span>
+                                <p className="motivation-value">{details.motivations.fear}</p>
+                            </div>
+                            <div className="motivation-item">
+                                <span className="motivation-label">Deseo Básico</span>
+                                <p className="motivation-value">{details.motivations.desire}</p>
+                            </div>
+                        </div>
+                        <p className="motivation-summary">
+                            {details.motivations.msg}
+                        </p>
                     </section>
 
-                    {/* Section: Internal Phrase */}
-                    <div className="phrase-section">
-                        <div className="phrase-content">
-                            <Quote className="phrase-quote-icon" size={20} />
-                            <p className="phrase-text">
-                                <strong>Frase interna que suele repetirse:</strong> "{details.phrase}"
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {result?.results && (
-                    <ScoreModal
-                        isOpen={isModalOpen}
-                        onClose={() => setIsModalOpen(false)}
-                        results={result.results || []}
-                    />
-                )}
-
-                {/* Section 1: Motivations */}
-                <section className="advanced-section">
-                    <div className="section-header">
-                        <Target className="section-icon" size={24} />
-                        <h2 className="section-title">Motivaciones Centrales</h2>
-                    </div>
-                    <div className="motivation-grid">
-                        <div className="motivation-item">
-                            <span className="motivation-label">Miedo Básico</span>
-                            <p className="motivation-value">{details.motivations.fear}</p>
-                        </div>
-                        <div className="motivation-item">
-                            <span className="motivation-label">Deseo Básico</span>
-                            <p className="motivation-value">{details.motivations.desire}</p>
-                        </div>
-                    </div>
-                    <p className="motivation-summary">
-                        {details.motivations.msg}
-                    </p>
-                </section>
-
-                {/* Section 2: The Triads */}
-                <section className="advanced-section">
-                    <div className="section-header">
-                        <Layers className="section-icon" size={24} />
-                        <h2 className="section-title">Tu Estructura (Tríadas)</h2>
-                    </div>
-                    <div className="triad-list">
-                        <div className="triad-row">
-                            <span className="triad-label">Centro de Inteligencia:</span>
-                            <span className="triad-value">{details.triads.center}</span>
-                        </div>
-                        <div className="triad-row">
-                            <span className="triad-label">Estilo Social:</span>
-                            <span className="triad-value">{details.triads.social}</span>
-                        </div>
-                        <div className="triad-row">
-                            <span className="triad-label">Estilo de Afrontamiento:</span>
-                            <span className="triad-value">{details.triads.coping}</span>
-                        </div>
-                    </div>
-                    <p className="triad-desc">
-                        {details.triads.desc}
-                    </p>
-                </section>
-
-                {/* Section 2.5: Differentiation Analysis */}
-                {rivals.length > 0 && (
-                    <section className="advanced-section differentiation-section">
+                    {/* Section 2: The Triads */}
+                    <section className="advanced-section">
                         <div className="section-header">
-                            <HelpCircle className="section-icon" size={24} />
-                            <h2 className="section-title">Análisis de Diferenciación</h2>
+                            <Layers className="section-icon" size={24} />
+                            <h2 className="section-title">Tu Estructura (Tríadas)</h2>
                         </div>
-                        <p className="differentiation-intro">
-                            Es común que tu perfil muestre rasgos de otros eneatipos. Aquí te explicamos por qué
-                            <strong> NO </strong> eres los otros tipos que estuvieron cerca en tu puntaje:
+                        <div className="triad-list">
+                            <div className="triad-row">
+                                <span className="triad-label">Centro de Inteligencia:</span>
+                                <span className="triad-value">{details.triads.center}</span>
+                            </div>
+                            <div className="triad-row">
+                                <span className="triad-label">Estilo Social:</span>
+                                <span className="triad-value">{details.triads.social}</span>
+                            </div>
+                            <div className="triad-row">
+                                <span className="triad-label">Estilo de Afrontamiento:</span>
+                                <span className="triad-value">{details.triads.coping}</span>
+                            </div>
+                        </div>
+                        <p className="triad-desc">
+                            {details.triads.desc}
                         </p>
-                        <div className="differentiation-grid">
-                            {rivals.map((rival) => (
-                                <div key={rival.type} className="differentiation-card">
-                                    <div className="diff-card-header">
-                                        <div className="diff-badge winner-badge">T{type}</div>
-                                        <span className="diff-vs">vs</span>
-                                        <div className="diff-badge rival-badge">T{rival.type}</div>
+                    </section>
+
+                    {/* Section 2.5: Differentiation Analysis */}
+                    {rivals.length > 0 && (
+                        <section className="advanced-section differentiation-section">
+                            <div className="section-header">
+                                <HelpCircle className="section-icon" size={24} />
+                                <h2 className="section-title">Análisis de Diferenciación</h2>
+                            </div>
+                            <p className="differentiation-intro">
+                                Es común que tu perfil muestre rasgos de otros eneatipos. Aquí te explicamos por qué
+                                <strong> NO </strong> eres los otros tipos que estuvieron cerca en tu puntaje:
+                            </p>
+                            <div className="differentiation-grid">
+                                {rivals.map((rival) => (
+                                    <div key={rival.type} className="differentiation-card">
+                                        <div className="diff-card-header">
+                                            <div className="diff-badge winner-badge">T{type}</div>
+                                            <span className="diff-vs">vs</span>
+                                            <div className="diff-badge rival-badge">T{rival.type}</div>
+                                        </div>
+                                        <div className="diff-card-body">
+                                            <h4 className="diff-rival-name">¿Por qué no Eneatipo {rival.type}?</h4>
+                                            <p className="diff-text">
+                                                {differentiationInfo[type]?.[rival.type] ||
+                                                    `Aunque compartes intensidad con el tipo ${rival.type}, tu motivación profunda de ${winner.name} prevalece.`}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div className="diff-card-body">
-                                        <h4 className="diff-rival-name">¿Por qué no Eneatipo {rival.type}?</h4>
-                                        <p className="diff-text">
-                                            {differentiationInfo[type]?.[rival.type] ||
-                                                `Aunque compartes intensidad con el tipo ${rival.type}, tu motivación profunda de ${winner.name} prevalece.`}
-                                        </p>
-                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Section 3: Growth & Stress */}
+                    <section className="advanced-section">
+                        <div className="section-header">
+                            <TrendingUp className="section-icon" size={24} />
+                            <h2 className="section-title">Dinámica de Crecimiento</h2>
+                        </div>
+                        <ul className="advice-list">
+                            <li className="advice-item">
+                                <div className="advice-bullet" style={{ background: '#2ECC71' }}><TrendingUp size={14} /></div>
+                                <div className="advice-text">{details.paths.growth}</div>
+                            </li>
+                            <li className="advice-item">
+                                <div className="advice-bullet" style={{ background: '#E74C3C' }}><TrendingUp size={14} style={{ transform: 'rotate(180deg)' }} /></div>
+                                <div className="advice-text">{details.paths.stress}</div>
+                            </li>
+                        </ul>
+                        <p className="motivation-summary" style={{ marginTop: '20px' }}>
+                            {details.paths.msg}
+                        </p>
+                    </section>
+
+                    {/* Section 4: Actionable Advice */}
+                    <section className="advanced-section">
+                        <div className="section-header">
+                            <Lightbulb className="section-icon" size={24} />
+                            <h2 className="section-title">Consejos para el Liderazgo</h2>
+                        </div>
+                        <div className="advice-list">
+                            {details.leadership.map((item, idx) => (
+                                <div key={idx} className="advice-item">
+                                    <div className="advice-bullet"><CheckCircle2 size={14} /></div>
+                                    <div className="advice-text">{item}</div>
                                 </div>
                             ))}
                         </div>
                     </section>
-                )}
 
-                {/* Section 3: Growth & Stress */}
-                <section className="advanced-section">
-                    <div className="section-header">
-                        <TrendingUp className="section-icon" size={24} />
-                        <h2 className="section-title">Dinámica de Crecimiento</h2>
-                    </div>
-                    <ul className="advice-list">
-                        <li className="advice-item">
-                            <div className="advice-bullet" style={{ background: '#2ECC71' }}><TrendingUp size={14} /></div>
-                            <div className="advice-text">{details.paths.growth}</div>
-                        </li>
-                        <li className="advice-item">
-                            <div className="advice-bullet" style={{ background: '#E74C3C' }}><TrendingUp size={14} style={{ transform: 'rotate(180deg)' }} /></div>
-                            <div className="advice-text">{details.paths.stress}</div>
-                        </li>
-                    </ul>
-                    <p className="motivation-summary" style={{ marginTop: '20px' }}>
-                        {details.paths.msg}
-                    </p>
-                </section>
-
-                {/* Section 4: Actionable Advice */}
-                <section className="advanced-section">
-                    <div className="section-header">
-                        <Lightbulb className="section-icon" size={24} />
-                        <h2 className="section-title">Consejos para el Liderazgo</h2>
-                    </div>
-                    <div className="advice-list">
-                        {details.leadership.map((item, idx) => (
-                            <div key={idx} className="advice-item">
-                                <div className="advice-bullet"><CheckCircle2 size={14} /></div>
-                                <div className="advice-text">{item}</div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Actions Footer */}
-                <div className="advanced-footer-actions">
-                    <button
-                        onClick={() => window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${type}`}
-                        className="btn-advanced-finish btn-deepen-primary"
-                    >
-                        Profundizar en mi perfil
-                    </button>
-
-                    <div className="footer-bottom-row">
+                    {/* Actions Footer */}
+                    <div className="advanced-footer-actions">
                         <button
-                            onClick={() => navigate('/')}
-                            className="btn-advanced-finish btn-back-alt"
+                            onClick={() => window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${type}`}
+                            className="btn-advanced-finish btn-deepen-primary"
                         >
-                            <ArrowLeft size={18} /> Regresar
+                            Profundizar en mi perfil
                         </button>
-                        <button
-                            onClick={handleShare}
-                            className="btn-advanced-finish btn-share-main"
-                        >
-                            <span>Compartir</span> <Share2 size={18} />
-                        </button>
+
+                        <div className="footer-bottom-row">
+                            <button
+                                onClick={() => navigate('/')}
+                                className="btn-advanced-finish btn-back-alt"
+                            >
+                                <ArrowLeft size={18} /> Regresar
+                            </button>
+                            <button
+                                onClick={handleDownloadPDF}
+                                className="btn-advanced-finish btn-download-pdf"
+                                title="Descargar Reporte PDF"
+                            >
+                                <Download size={18} /> <span>PDF</span>
+                            </button>
+                            <button
+                                onClick={handleShare}
+                                className="btn-advanced-finish btn-share-main"
+                            >
+                                <span>Compartir</span> <Share2 size={18} />
+                            </button>
+                        </div>
                     </div>
+
+                    {/* Order Bump Section: Executive Kit */}
+                    <div className="executive-kit-promo">
+                        <div className="kit-promo-content">
+                            <h3>Kit Ejecutivo de Acción</h3>
+                            <p>Liderazgo estratégico según tu eneatipo. Informe de 15 páginas con planes de acción y protocolos corporativos.</p>
+                            <button
+                                onClick={handleDownloadExecutiveKit}
+                                className={`btn-kit-download ${isDownloadingKit ? 'loading' : ''}`}
+                                disabled={isDownloadingKit}
+                            >
+                                {isDownloadingKit ? (
+                                    <>
+                                        <Loader2 size={18} className="spinner" /> Generando Kit Ejecutivo...
+                                    </>
+                                ) : (
+                                    <>
+                                        <CheckCircle2 size={18} /> Descargar Kit Ejecutivo
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Brand footer */}
+                    <div className="detailed-brand-footer">
+                        <img
+                            src="/Logo-Blanco.png"
+                            alt="Logo Auténticos Blanco"
+                            className="register-footer-logo"
+                        />
+                    </div>
+
                 </div>
 
-                {/* Brand footer */}
-                <div className="detailed-brand-footer">
-                    <img
-                        src="/Logo-Blanco.png"
-                        alt="Logo Auténticos Blanco"
-                        className="register-footer-logo"
+                {/* Hidden container for PDF rendering */}
+                <div id="executive-kit-printable" style={{ display: 'none' }}>
+                    <ExecutiveKitTemplate
+                        data={executiveKitData[type]}
+                        type={type}
+                        name={user?.name}
                     />
                 </div>
-
             </div>
         </div>
     );

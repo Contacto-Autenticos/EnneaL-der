@@ -1,0 +1,983 @@
+/* AdvancedLanding.css - Premium Futuristic Aesthetics */
+html {
+    scroll-behavior: smooth;
+}
+
+.advanced-landing-container {
+    --al-blue: #002d44;
+    --al-blue-dark: #001a29;
+    --al-blue-light: #004b70;
+    --al-gold: #ddbe3d;
+    --al-gold-light: #9e872d;
+    --al-black: #000000;
+    --al-white: #ffffff;
+
+    min-height: 100vh;
+    background: var(--al-blue-dark);
+    color: var(--al-white);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Gradients */
+.al-bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 45, 68, 0.4) 0%, transparent 70%);
+    opacity: 0.8;
+    z-index: -10;
+    pointer-events: none;
+}
+
+/* Navigation */
+.al-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 24px 0;
+    transform: translateY(0);
+}
+
+.al-nav.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.al-nav.scrolled {
+    background: rgba(0, 26, 41, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 0;
+}
+
+.al-nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.al-logo {
+    height: 42px;
+    width: auto;
+}
+
+.al-nav-links {
+    display: none;
+    gap: 40px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@media (min-width: 1024px) {
+    .al-nav-links {
+        display: flex;
+    }
+}
+
+.al-nav-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.al-nav-link:hover {
+    color: var(--al-gold);
+}
+
+.al-nav-back-arrow {
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.al-nav-back-arrow:hover {
+    color: var(--al-gold);
+}
+
+.al-btn-nav {
+    background: var(--al-gold);
+    color: var(--al-blue);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    box-shadow: 0 0 20px rgba(221, 190, 61, 0.25);
+    transition: all 0.3s;
+}
+
+.al-btn-nav:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(221, 190, 61, 0.4);
+}
+
+/* Hero Section */
+.al-hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 24px 60px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+}
+
+.al-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--al-gold);
+    margin-bottom: 40px;
+}
+
+.al-hero-title {
+    font-size: clamp(32px, 8vw, 72px);
+    font-weight: 900;
+    line-height: 1.1;
+    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    margin-bottom: 30px;
+    max-width: 1100px;
+    color: var(--al-white);
+    padding: 10px;
+    overflow: visible;
+}
+
+.al-gold-text {
+    background: linear-gradient(to bottom, var(--al-gold) 0%, var(--al-gold-light) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    padding-right: 0.1em;
+    margin-right: -0.1em;
+}
+
+.al-hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 650px;
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.al-hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.al-btn-main {
+    background: linear-gradient(135deg, #ddbe3d 0%, #b89b2d 100%);
+    color: var(--al-blue);
+    padding: 20px 48px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(221, 190, 61, 0.35);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.al-btn-main:hover {
+    transform: translateY(-5px) scale(1.04);
+    box-shadow: 0 15px 45px rgba(221, 190, 61, 0.55);
+    filter: brightness(1.1);
+}
+
+.al-btn-main::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    animation: alShimmerEffect 3s infinite;
+}
+
+@keyframes alShimmerEffect {
+    to {
+        left: 100%;
+    }
+}
+
+@keyframes alBounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.al-scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    opacity: 0.3;
+    animation: alBounce 2s infinite;
+}
+
+/* Recap & Deep Questions Section */
+.al-result-recap {
+    padding: 100px 0;
+    width: 100%;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.al-recap-header {
+    margin-bottom: 40px;
+}
+
+.al-recap-title {
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--al-white);
+    margin-bottom: 40px;
+}
+
+.al-recap-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 700px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-recap-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-recap-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.al-recap-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.al-recap-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--al-gold);
+}
+
+.al-recap-intro {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.al-deep-questions {
+    max-width: 700px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+    padding: 60px 40px;
+    border-radius: 40px;
+    border: 1px solid rgba(221, 190, 61, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.al-deep-questions::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: var(--al-gold);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.1;
+}
+
+.al-deep-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--al-gold);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+.al-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.al-question-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+}
+
+.al-question-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(221, 190, 61, 0.3);
+    transform: translateX(10px);
+}
+
+.al-question-icon {
+    color: var(--al-gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.al-question-item p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.al-deep-footer {
+    font-size: 20px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--al-white);
+    margin-top: 20px;
+}
+
+/* Sections General */
+.al-section {
+    padding: 100px 0;
+    width: 100%;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-section-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.al-section-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: var(--al-white);
+}
+
+.al-title-line {
+    width: 100px;
+    height: 6px;
+    background: var(--al-gold);
+    margin-bottom: 60px;
+}
+
+
+/* Product Info */
+.al-product-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .al-product-flex {
+        flex-direction: row;
+        text-align: left;
+    }
+}
+
+.al-product-text {
+    flex: 1;
+}
+
+.al-product-list {
+    list-style: none;
+    margin-top: 40px;
+    display: grid;
+    gap: 32px;
+}
+
+.al-product-item {
+    display: flex;
+    gap: 20px;
+}
+
+.al-item-bullet {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--al-gold);
+    flex-shrink: 0;
+}
+
+.al-item-title {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-style: italic;
+    margin-bottom: 4px;
+}
+
+.al-item-desc {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.al-product-img-container {
+    flex: 1;
+    position: relative;
+    max-width: 500px;
+}
+
+.al-img-glow {
+    position: absolute;
+    inset: 0;
+    background: var(--al-gold);
+    opacity: 0.15;
+    filter: blur(80px);
+    border-radius: 50%;
+}
+
+.al-product-img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.8));
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    border-radius: 32px;
+}
+
+.al-product-img:hover {
+    transform: translateY(-10px) rotateY(-5deg);
+}
+
+
+/* Pricing Card */
+.al-pricing-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.al-pricing-card {
+    background: linear-gradient(135deg, #001f30 0%, #000a10 100%);
+    border: 1px solid rgba(221, 190, 61, 0.2);
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+}
+
+.al-pricing-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 45, 68, 0.3), transparent, rgba(221, 190, 61, 0.05));
+    pointer-events: none;
+}
+
+.al-pricing-header {
+    background: var(--al-gold);
+    color: var(--al-blue);
+    padding: 30px;
+    text-align: center;
+}
+
+.al-pricing-header h3 {
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: 0.2em;
+}
+
+.al-pricing-content {
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .al-pricing-content {
+        padding: 80px;
+    }
+}
+
+.al-price-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.al-old-price {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.25);
+    text-decoration: line-through;
+    font-weight: 300;
+}
+
+.al-current-price {
+    font-size: clamp(60px, 12vw, 110px);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+.al-currency {
+    font-size: 24px;
+    color: var(--al-gold);
+    letter-spacing: 0.2em;
+    margin-left: 8px;
+}
+
+.al-pricing-grid {
+    width: 100%;
+    max-width: 550px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: left;
+}
+
+@media (min-width: 640px) {
+    .al-pricing-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.al-pricing-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.al-btn-buy {
+    width: 100%;
+    max-width: 550px;
+    padding: 24px;
+    background: var(--al-gold);
+    color: var(--al-blue);
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: 950;
+    text-transform: uppercase;
+    font-style: italic;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 20px 40px rgba(221, 190, 61, 0.25);
+}
+
+.al-btn-buy:hover {
+    transform: scale(1.02);
+    box-shadow: 0 25px 60px rgba(221, 190, 61, 0.4);
+}
+
+
+/* Animations */
+@keyframes alFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.al-animate {
+    animation: alFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Mobile FAB */
+.al-mobile-fab {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    z-index: 500;
+}
+
+@media (min-width: 768px) {
+    .al-mobile-fab {
+        display: none;
+    }
+}
+
+.al-btn-fab {
+    width: 100%;
+    padding: 16px;
+    background: var(--al-gold);
+    color: var(--al-blue);
+    border-radius: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* 4.5 Impact Section */
+.al-impact-section {
+    padding: 100px 20px;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-impact-card {
+    max-width: 900px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+    padding: 60px 40px;
+    border-radius: 40px;
+    border: 1px solid rgba(221, 190, 61, 0.2);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.al-impact-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(221, 190, 61, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.al-impact-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    margin-bottom: 50px;
+    line-height: 1.2;
+    color: var(--al-white);
+}
+
+.al-impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 60px;
+    text-align: left;
+}
+
+.al-impact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.al-impact-item:hover {
+    background: rgba(221, 190, 61, 0.05);
+    transform: translateX(5px);
+}
+
+.al-impact-check {
+    color: var(--al-gold);
+    flex-shrink: 0;
+}
+
+.al-impact-footer {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.4;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 40px;
+}
+
+/* 4.6 Bridge Section */
+.al-bridge-section {
+    padding: 120px 20px;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.al-bridge-container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.al-bridge-content {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.al-bridge-box {
+    padding: 20px;
+}
+
+.al-bridge-text {
+    font-size: 24px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.al-bridge-text.highlight {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--al-white);
+    margin-top: 8px;
+}
+
+.al-bridge-divider {
+    width: 60px;
+    height: 1px;
+    background: rgba(221, 190, 61, 0.3);
+    margin: 0 auto;
+}
+
+.al-bridge-final {
+    margin-top: 40px;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+}
+
+.al-white-text {
+    color: var(--al-white);
+    font-weight: 600;
+}
+
+/* 5.5 FAQ Section */
+.al-faq-section {
+    padding: 100px 20px;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.al-faq-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.al-faq-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(221, 190, 61, 0.3);
+}
+
+.al-faq-item.active {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--al-gold);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.al-faq-question {
+    padding: 24px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.al-faq-question span {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--al-white);
+}
+
+.al-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.al-faq-item.active .al-faq-answer {
+    max-height: 300px;
+    padding: 0 30px 30px;
+}
+
+.al-faq-answer p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+}
+
+/* 7.5 Closure Section */
+.al-closure-section {
+    padding: 120px 20px;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-closure-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.al-closure-title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 40px;
+}
+
+.al-closure-text {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.al-btn-shimmer {
+    position: relative;
+    padding: 24px 48px;
+    background: var(--al-gold);
+    color: var(--al-blue);
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 950;
+    text-transform: uppercase;
+    font-style: italic;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    box-shadow: 0 20px 40px rgba(221, 190, 61, 0.2);
+    margin: 0 auto;
+}
+
+.al-btn-shimmer:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(221, 190, 61, 0.4);
+}
+
+.al-btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    animation: alShimmerEffect 3s infinite;
+}
