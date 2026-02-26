@@ -218,7 +218,7 @@ const AdvancedLanding = ({ result }) => {
 
                     <div className="al-product-flex">
                         <div className="al-product-text al-animate">
-                            <h3 className="al-product-subtitle" style={{ fontSize: '28px', fontWeight: '800', marginBottom: '40px', lineHeight: '1.2' }}>
+                            <h3 className="al-product-subtitle" style={{ fontSize: '28px', fontWeight: '800', marginBottom: '40px', lineHeight: '1.2', color: '#ffffff' }}>
                                 No es más teoría. <br />
                                 <span className="al-gold-text">Es interpretación profunda aplicada a tu perfil específico.</span>
                             </h3>
