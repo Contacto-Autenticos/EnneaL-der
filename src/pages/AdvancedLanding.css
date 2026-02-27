@@ -442,8 +442,17 @@ html {
     font-size: clamp(32px, 5vw, 56px);
     font-weight: 900;
     margin-bottom: 20px;
-    line-height: 1.2;
+    line-height: 1.1;
     color: var(--al-white);
+    letter-spacing: -0.01em;
+}
+
+.al-section-title-top {
+    font-size: 0.65em;
+    font-weight: 800;
+    color: var(--al-white);
+    display: block;
+    margin-bottom: 2px;
 }
 
 .al-title-line {

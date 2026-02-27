@@ -244,9 +244,9 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             {/* 4. Información del Producto */}
             <section id="analisis-avanzado" className="al-section">
                 <div className="al-section-content">
-                    <h2 className="al-section-title" style={{ textAlign: 'center', marginBottom: '80px', maxWidth: '900px', margin: '0 auto 80px' }}>
-                        EL TEST BÁSICO IDENTIFICA <br />
-                        <span className="al-gold-text">EL ANÁLISIS AVANZADO INTERPRETA</span>
+                    <h2 className="al-section-title" style={{ textAlign: 'center', marginBottom: '80px', maxWidth: '1000px', margin: '0 auto 80px' }}>
+                        <span className="al-section-title-top">El test básico identifica</span>
+                        <span className="al-gold-text">El análisis avanzado interpreta</span>
                     </h2>
 
                     <div className="al-product-flex">
