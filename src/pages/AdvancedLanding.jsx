@@ -179,9 +179,9 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </h1>
 
                 <p className="al-hero-subtitle">
-                    Tu perfil no es un número, una etiqueta y mucho menos un defecto. <br />
+                    Tu perfil no es un número, ni una etiqueta y mucho menos un defecto. <br />
                     Es un patrón de comportamiento. <br /><br />
-                    Un mecanismo interno que influye en cómo decides, lideras y reaccionas bajo presión. <br /><br />
+                    Es un mecanismo interno que influye en cómo decides, lideras y reaccionas bajo presión. <br /><br />
                     El test te mostró la estructura que lo describe. <br />
                     El <strong>informe avanzado</strong> revela la arquitectura interna que lo sostiene.
                 </p>
