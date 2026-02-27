@@ -115,8 +115,12 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             a: "No. Está diseñado para ser claro, directo y aplicable."
         },
         {
-            q: "¿Cuánto tiempo tengo acceso?",
+            q: "¿En cuánto tiempo tengo acceso?",
             a: "Acceso inmediato y sin límite de tiempo."
+        },
+        {
+            q: "¿Mi información es confidencial?",
+            a: "Sí. Tu información es completamente confidencial. Tus respuestas no se comparten, no se publican y no se utilizan para ningún fin distinto a la generación de tu informe. Este proceso es personal. Y así se trata."
         }
     ];
 
