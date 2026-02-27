@@ -320,7 +320,10 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             <section className="al-bridge-section al-animate">
                 <div className="al-section-content">
                     <div className="al-bridge-container">
-                        <h2 className="al-section-title">No te quedes a <br /><span className="al-gold-text">mitad del camino</span></h2>
+                        <h2 className="al-section-title">
+                            <span className="al-section-title-top">Ya estás a mitad de camino</span>
+                            <span className="al-gold-text">Tú decides si avanzas para accionar</span>
+                        </h2>
 
                         <div className="al-bridge-content">
                             <div className="al-bridge-box">
