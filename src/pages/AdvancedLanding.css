@@ -546,7 +546,8 @@ html {
 
 .al-product-img {
     width: 100%;
-    height: auto;
+    aspect-ratio: 1 / 0.8;
+    object-fit: cover;
     position: relative;
     z-index: 1;
     filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.8));
