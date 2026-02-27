@@ -279,7 +279,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
                         <div className="al-product-img-container al-animate" style={{ animationDelay: '0.4s' }}>
                             <div className="al-img-glow"></div>
-                            <img src="/Portada-Analisis Avanzado.png" alt="Análisis Avanzado" className="al-product-img" />
+                            <img src="/Portada-Analisis Avanzado-2.png" alt="Análisis Avanzado" className="al-product-img" />
                         </div>
                     </div>
                 </div>
