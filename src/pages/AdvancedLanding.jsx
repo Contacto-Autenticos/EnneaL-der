@@ -170,8 +170,8 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
 
                 <h1 className="al-hero-title">
-                    YA CONOCES TU RESULTADO <br />
-                    <span className="al-gold-text">Ahora descifra tu patrón</span>
+                    Ya conoces tu resultado <br />
+                    <span className="al-gold-text">Ahora descifra el código</span>
                 </h1>
 
                 <p className="al-hero-subtitle">
