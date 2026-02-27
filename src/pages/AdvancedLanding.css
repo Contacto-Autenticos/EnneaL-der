@@ -132,7 +132,7 @@ html {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 120px 24px 60px;
+    padding: 120px 24px 120px;
     position: relative;
     background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
 }
@@ -263,7 +263,7 @@ html {
 
 .al-scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     opacity: 0.3;
     animation: alBounce 2s infinite;
 }
