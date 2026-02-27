@@ -6,7 +6,7 @@ import './PaymentStyles.css'; // Renamed to force cache refresh
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real public key
 const WOMPI_CURRENCY = 'COP';
-const BASE_PRICE_IN_CENTS = 3700000; // $37.000 COP
+const BASE_PRICE_IN_CENTS = 7500000; // $75.000 COP
 
 const COUPONS = {
     'ENEAUTOCONOCETE9': 0.20, // 20% discount
@@ -160,7 +160,7 @@ const PaymentPage = () => {
 
     // Order Bump state
     const [bumpSelected, setBumpSelected] = useState(false);
-    const BUMP_PRICE_IN_CENTS = 1490000; // $14.900 COP
+    const BUMP_PRICE_IN_CENTS = 1500000; // $15.000 COP
 
     const getFinalAmount = (currentBaseAmount, bumpIsSelected) => {
         return bumpIsSelected ? currentBaseAmount + BUMP_PRICE_IN_CENTS : currentBaseAmount;
@@ -175,7 +175,7 @@ const PaymentPage = () => {
     const currentPriceBaseCOP = amountInCents / 100;
     const bumpPriceCOP = BUMP_PRICE_IN_CENTS / 100;
     const totalAmountCOP = (getFinalAmount(amountInCents, bumpSelected)) / 100;
-    const originalPriceCOP = 74000;
+    const originalPriceCOP = 150000;
 
     const displayCurrentPrice = isInternational
         ? (totalAmountCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
@@ -297,10 +297,10 @@ const PaymentPage = () => {
                         </ul>
 
                         <div className="order-bump-pricing-area">
-                            <span className="order-bump-old-price">${isInternational ? (29900 * exchangeRate).toLocaleString() : '29.900'}</span>
+                            <span className="order-bump-old-price">${isInternational ? (30000 * exchangeRate).toLocaleString() : '30.000'}</span>
                             <div className="order-bump-current-price-row">
                                 <span className="order-bump-new-price">
-                                    ${isInternational ? (14900 * exchangeRate).toLocaleString() : '14.900'}
+                                    ${isInternational ? (15000 * exchangeRate).toLocaleString() : '15.000'}
                                 </span>
                                 <span className="order-bump-currency-white">COP</span>
                             </div>

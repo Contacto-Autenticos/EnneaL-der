@@ -343,9 +343,9 @@ const AdvancedLanding = ({ result }) => {
 
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
-                                    <span className="al-old-price">$74.000 COP</span>
+                                    <span className="al-old-price">$150.000 COP</span>
                                     <div className="al-current-price">
-                                        $37.000 <span className="al-currency">COP</span>
+                                        $75.000 <span className="al-currency">COP</span>
                                     </div>
                                 </div>
 

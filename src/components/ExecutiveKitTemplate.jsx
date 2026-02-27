@@ -112,18 +112,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                     <p className="kit-evolution-text">{data.summary.evolutionaryKey}</p>
                 </div>
 
-                {data.summary.maturityLevels && (
-                    <div className="kit-maturity-block" style={{ marginTop: '30px' }}>
-                        <h3>Nivel de Madurez del Perfil</h3>
-                        <div className="kit-maturity-levels">
-                            {data.summary.maturityLevels.map((level, i) => (
-                                <div key={i} className="kit-maturity-item" style={{ marginBottom: '10px', fontSize: '1.1rem' }}>
-                                    <span style={{ color: '#ddbe3d', fontWeight: 700 }}>•</span> {level}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
+
                 <div className="kit-page-footer-logo">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
@@ -145,6 +134,19 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                         </>
                     )}
                 </div>
+
+                {data.summary.maturityLevels && (
+                    <div className="kit-maturity-block" style={{ marginTop: '30px' }}>
+                        <h3>Nivel de Madurez del Perfil</h3>
+                        <div className="kit-maturity-levels">
+                            {data.summary.maturityLevels.map((level, i) => (
+                                <div key={i} className="kit-maturity-item" style={{ marginBottom: '10px', fontSize: '1.1rem' }}>
+                                    <span style={{ color: '#ddbe3d', fontWeight: 700 }}>•</span> {level}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
                 <div className="kit-page-footer-logo">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
@@ -509,19 +511,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                     ))}
                 </div>
 
-                {data.evolutionSignals && (
-                    <div className="kit-evolution-signals" style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '30px' }}>
-                        <h3 style={{ color: '#ddbe3d', marginBottom: '20px' }}>Señales de Evolución Real</h3>
-                        <div className="kit-checklist">
-                            {data.evolutionSignals.map((signal, idx) => (
-                                <div key={idx} className="kit-checklist-item" style={{ marginBottom: '15px' }}>
-                                    <div className="kit-checkbox" style={{ background: '#ddbe3d' }}></div>
-                                    <p style={{ margin: 0, fontSize: '1.1rem' }}>{signal}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
+
                 <div className="kit-page-footer-logo">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
@@ -549,6 +539,20 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                             <span className="kit-metric-label">Meta:</span>
                             <p style={{ margin: '10px 0 0', fontWeight: 700, fontSize: '1.2rem' }}>{data.growthPlanExtended.meta}</p>
                         </div>
+
+                        {data.evolutionSignals && (
+                            <div className="kit-evolution-signals" style={{ marginTop: '40px', borderTop: '1px solid rgba(0,0,0,0.1)', paddingTop: '30px' }}>
+                                <h3 style={{ color: '#ddbe3d', marginBottom: '20px' }}>Señales de Evolución Real</h3>
+                                <div className="kit-checklist">
+                                    {data.evolutionSignals.map((signal, idx) => (
+                                        <div key={idx} className="kit-checklist-item" style={{ marginBottom: '15px' }}>
+                                            <div className="kit-checkbox" style={{ background: '#ddbe3d' }}></div>
+                                            <p style={{ margin: 0, fontSize: '1.1rem' }}>{signal}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div className="kit-timeline">
@@ -586,7 +590,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 </div>
                 <PageNumber num={13} />
             </div>
-        </div>
+        </div >
     );
 };
 

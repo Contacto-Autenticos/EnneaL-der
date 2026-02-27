@@ -132,6 +132,11 @@ export const executiveKitData = {
             blindspot: "Dificultad para establecer límites claros y priorizar objetivos sobre aprobación relacional.",
             risk: "Sobrecarga operativa por asumir responsabilidades ajenas y evitar incomodar.",
             evolutionaryKey: "Desarrollar firmeza, límites visibles y priorización estratégica sin perder empatía.",
+            maturityLevels: [
+                "Nivel Básico: Complaciente, posesivo y manipulador emocional indirecto.",
+                "Nivel Intermedio: Servicial y atento pero con expectativas de reconocimiento.",
+                "Nivel Evolucionado: Generoso incondicional, empático y con límites saludables."
+            ],
             highlights: [
                 "Donde otros ignoran el factor humano, el 2 conecta.",
                 "Donde hay silos, el 2 construye puentes de lealtad."
@@ -208,6 +213,12 @@ export const executiveKitData = {
             "No tomar el bajo desempeño de otros como un fracaso personal",
             "No evadir conversaciones difíciles para mantener el afecto"
         ],
+        evolutionSignals: [
+            "Estableces límites claros sin culpa.",
+            "Cuidas tus propias necesidades primero.",
+            "Ayudas para empoderar, no para generar dependencia.",
+            "Dices 'no' cuando es necesario para mantener tu enfoque."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Fortalecer límites en decisiones operativas." },
@@ -239,6 +250,11 @@ export const executiveKitData = {
             blindspot: "Identificación excesiva con el logro y priorización de imagen sobre profundidad.",
             risk: "Sobrecarga, competitividad interna excesiva y decisiones orientadas a apariencia de éxito más que a sostenibilidad.",
             evolutionaryKey: "Integrar autenticidad, balance y cultura organizacional sin perder excelencia ejecutiva.",
+            maturityLevels: [
+                "Nivel Básico: Vanidoso, competitivo extremo y orientado solo a la imagen.",
+                "Nivel Intermedio: Eficiente y trabajador pero dependiente del éxito externo.",
+                "Nivel Evolucionado: Auténtico, inspirador y orientado a resultados sostenibles."
+            ],
             highlights: [
                 "Donde otros se estancan, el 3 acelera.",
                 "Donde hay confusión, el 3 entrega resultados tangibles."
@@ -315,6 +331,12 @@ export const executiveKitData = {
             "No ignorar el cansancio propio o del equipo",
             "No delegar el desarrollo de cultura organizacional"
         ],
+        evolutionSignals: [
+            "Valoras el proceso tanto como el resultado.",
+            "Muestras vulnerabilidad genuina ante el equipo.",
+            "Desconectas tu valor personal de tus logros laborales.",
+            "Fomentas el éxito de los demás por encima del brillo propio."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Integrar métricas de cultura junto a métricas financieras." },
@@ -346,6 +368,11 @@ export const executiveKitData = {
             blindspot: "Tendencia a tomar decisiones influenciadas por estados emocionales intensos.",
             risk: "Oscilación estratégica, dramatización de conflictos y pérdida de consistencia operativa.",
             evolutionaryKey: "Desarrollar estabilidad emocional y estructura ejecutiva sin perder profundidad creativa.",
+            maturityLevels: [
+                "Nivel Básico: Melancólico, ensimismado y emocionalmente volátil.",
+                "Nivel Intermedio: Creativo y expresivo pero dependiente de su estado de ánimo.",
+                "Nivel Evolucionado: Inspirado, ecuánime y capaz de transformar emoción en valor."
+            ],
             highlights: [
                 "Donde otros ven lo ordinario, el 4 crea significado.",
                 "Donde falta alma, el 4 aporta identidad profunda."
@@ -422,6 +449,12 @@ export const executiveKitData = {
             "No compararte con otros estilos de liderazgo en momentos de crisis",
             "No complicar procesos simples buscando darles mayor profundidad"
         ],
+        evolutionSignals: [
+            "Mantienes la disciplina independientemente de tu estado emocional.",
+            "Te conectas con el equipo sin sentirte incomprendido.",
+            "Transformas tu creatividad en resultados estructurados y útiles.",
+            "Encuentras belleza y valor en lo ordinario y cotidiano."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Consolidar estabilidad en toma de decisiones." },
@@ -453,6 +486,11 @@ export const executiveKitData = {
             blindspot: "Aislamiento operativo y retraso en decisiones por sobreanálisis.",
             risk: "Desconexión del equipo, acumulación excesiva de información y parálisis estratégica.",
             evolutionaryKey: "Integrar análisis con acción visible y presencia relacional activa.",
+            maturityLevels: [
+                "Nivel Básico: Aislado, cínico y tacaño con sus recursos y conocimientos.",
+                "Nivel Intermedio: Observador y analítico pero distante de la acción real.",
+                "Nivel Evolucionado: Visionario, participativo y generoso con su sabiduría."
+            ],
             highlights: [
                 "Donde otros reaccionan, el 5 analiza.",
                 "Donde hay ruido, el 5 aporta claridad y datos."
@@ -529,6 +567,12 @@ export const executiveKitData = {
             "No asumir que los demás entienden tu proceso mental",
             "No evadir el liderazgo visible en momentos de incertidumbre"
         ],
+        evolutionSignals: [
+            "Pasas de la observación a la acción decidida.",
+            "Compartes tus hallazgos sin miedo a quedarte sin recursos.",
+            "Te permites sentir y conectar emocionalmente con el equipo.",
+            "Confías en tu capacidad de ejecutar sin necesitar más información."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Reducir tiempos de decisión en asuntos operativos." },
@@ -560,6 +604,11 @@ export const executiveKitData = {
             blindspot: "Duda excesiva y búsqueda constante de validación externa antes de decidir.",
             risk: "Parálisis por análisis de riesgos, aumento de ansiedad operativa y desconfianza estratégica.",
             evolutionaryKey: "Desarrollar autoconfianza decisional y liderazgo firme en entornos inciertos.",
+            maturityLevels: [
+                "Nivel Básico: Ansioso, vigilante o rebelde por inseguridad.",
+                "Nivel Intermedio: Leal y trabajador pero excesivamente preocupado por riesgos.",
+                "Nivel Evolucionado: Valiente, confiado y constructor de confianza colectiva."
+            ],
             highlights: [
                 "Donde otros descuidan el riesgo, el 6 protege.",
                 "Donde hay falta de compromiso, el 6 construye lealtad."
@@ -636,6 +685,12 @@ export const executiveKitData = {
             "No paralizarte analizando el peor escenario posible",
             "No desconfiar automáticamente de las nuevas iniciativas"
         ],
+        evolutionSignals: [
+            "Confías en tu propio criterio sin buscar validación externa constante.",
+            "Gestionas la incertidumbre con serenidad y valentía.",
+            "Tomas decisiones firmes a pesar de los riesgos identificados.",
+            "Te sientes seguro en tu posición de liderazgo."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Consolidar decisiones autónomas en asuntos operativos." },
@@ -667,6 +722,11 @@ export const executiveKitData = {
             blindspot: "Dispersión estratégica y dificultad para sostener enfoque profundo en una sola prioridad.",
             risk: "Evitar conversaciones incómodas iniciando nuevos proyectos o cambiando de foco prematuramente.",
             evolutionaryKey: "Desarrollar disciplina de cierre, profundidad y priorización estratégica sin perder visión innovadora.",
+            maturityLevels: [
+                "Nivel Básico: Impulsivo, escapista y disperso en múltiples opciones.",
+                "Nivel Intermedio: Entusiasta y creativo pero con dificultad para profundizar.",
+                "Nivel Evolucionado: Enfocado, agradecido y capaz de disfrutar la sobriedad."
+            ],
             highlights: [
                 "Donde otros ven límites, el 7 abre horizontes.",
                 "Donde hay monotonía, el 7 inyecta innovación."
@@ -744,6 +804,12 @@ export const executiveKitData = {
             "No abrumar al equipo con ideas sin asignarles recursos o tiempo",
             "No racionalizar los errores rápidos para evitar la frustración"
         ],
+        evolutionSignals: [
+            "Terminas los proyectos que inicias con excelencia.",
+            "Sostienes conversaciones difíciles sin recurrir al positivismo tóxico.",
+            "Disfrutas del momento presente sin buscar la siguiente novedad.",
+            "Te enfocas en la calidad y profundidad más que en la variedad."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Consolidar disciplina de cierre mensual." },
@@ -775,6 +841,11 @@ export const executiveKitData = {
             blindspot: "Exceso de intensidad que puede percibirse como confrontación o imposición.",
             risk: "Autoritarismo, reducción de escucha activa y desgaste relacional del equipo.",
             evolutionaryKey: "Integrar firmeza con sensibilidad estratégica y liderazgo influyente, no impositivo.",
+            maturityLevels: [
+                "Nivel Básico: Dominante, agresivo y vengativo ante la vulnerabilidad.",
+                "Nivel Intermedio: Protector y fuerte pero con tendencia al control excesivo.",
+                "Nivel Evolucionado: Magnánimo, justo y protector desde la vulnerabilidad."
+            ],
             highlights: [
                 "Donde otros dudan, el 8 impulsa.",
                 "Donde hay estancamiento, el 8 genera movimiento."
@@ -851,6 +922,12 @@ export const executiveKitData = {
             "No saltarte procesos y protocolos de forma rutinaria",
             "No asumir que tu nivel de energía debe ser el estándar para todos"
         ],
+        evolutionSignals: [
+            "Bajas la guardia y muestras tu lado humano al equipo.",
+            "Escuchas y consideras opiniones ajenas antes de imponer.",
+            "Udas tu fuerza para elevar a otros, no para dominarlos.",
+            "Admites errores y vulnerabilidades sin sentir pérdida de poder."
+        ],
         growthPlanExtended: {
             phases: [
                 { t: "Mes 1–2", goal: "Desarrollar escucha activa en decisiones operativas." },
@@ -882,6 +959,11 @@ export const executiveKitData = {
             blindspot: "Evitación de decisiones incómodas para preservar la armonía inmediata.",
             risk: "Pasividad estratégica, postergación de conflictos y dilución de prioridades clave.",
             evolutionaryKey: "Desarrollar posicionamiento firme y priorización visible sin perder empatía.",
+            maturityLevels: [
+                "Nivel Básico: Apático, pasivo-agresivo y desconectado de sus deseos.",
+                "Nivel Intermedio: Conciliador y estable pero con tendencia a la postergación.",
+                "Nivel Evolucionado: Despierto, activo y mediador poderoso con dirección."
+            ],
             highlights: [
                 "Donde otros chocan, el 9 concilia.",
                 "Donde hay frialdad, el 9 aporta armonía y empatía."
@@ -957,6 +1039,12 @@ export const executiveKitData = {
             "No adoptar la opinión del grupo si compromete la estrategia",
             "No posponer retroalimentación negativa para mantener la paz",
             "No difuminar tu autoridad en situaciones de crisis"
+        ],
+        evolutionSignals: [
+            "Tomas posturas firmes y claras en temas de alta fricción.",
+            "Actúas con celeridad en prioridades estratégicas.",
+            "Expresas tus necesidades y opiniones con asertividad sonora.",
+            "Gestionas el conflicto como una oportunidad de crecimiento."
         ],
         growthPlanExtended: {
             phases: [

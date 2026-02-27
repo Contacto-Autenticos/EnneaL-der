@@ -41,7 +41,7 @@
     max-width: 85%;
     margin-left: auto;
     margin-right: auto;
-    transition: opacity 0.8s ease-in;
+    transition: opacity 0.5s ease-in;
 }
 
 .phase-active-1 .result-subtitle {
@@ -142,7 +142,7 @@
     transform: translateY(0);
     pointer-events: auto;
     height: auto;
-    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .action-buttons-group.revealed {
@@ -167,7 +167,7 @@
 }
 
 .radar-polygon-anim {
-    transition: all 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .action-buttons-group {
@@ -176,6 +176,16 @@
     gap: 16px;
     align-items: center;
     width: 100%;
+}
+
+.secondary-buttons-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.secondary-buttons-row .btn-result {
+    flex: 1;
 }
 
 .btn-result {
@@ -412,6 +422,11 @@
 
     .ennea-modal-footer {
         flex-direction: column-reverse;
+    }
+
+    .secondary-buttons-row {
+        flex-direction: column;
+        gap: 12px;
     }
 }
 

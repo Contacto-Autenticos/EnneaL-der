@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, MousePointerClick, Lock } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, MousePointerClick, Lock, Mail } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
+import EmailResultModal from '../components/EmailResultModal';
 import { getEnneagramInfo } from '../utils/calculator';
 
 import './Result.css';
@@ -133,17 +134,20 @@ const Result = ({ result, user, onReset }) => {
     const [selectedType, setSelectedType] = React.useState(null);
     const [activePhase, setActivePhase] = React.useState(1);
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isEmailModalOpen, setIsEmailModalOpen] = React.useState(false);
+    const [chartImageBlob, setChartImageBlob] = React.useState(null);
+    const chartRef = React.useRef(null);
 
     // Progressive revelation sequence
     React.useEffect(() => {
         if (!result) return;
 
         const timers = [
-            setTimeout(() => setActivePhase(2), 1000), // Radar
-            setTimeout(() => setActivePhase(3), 2500), // Highlight
-            setTimeout(() => setActivePhase(4), 4000), // Main Result
-            setTimeout(() => setActivePhase(5), 5200), // Cards
-            setTimeout(() => setActivePhase(6), 6500), // CTAs
+            setTimeout(() => setActivePhase(2), 600), // Radar
+            setTimeout(() => setActivePhase(3), 1500), // Highlight
+            setTimeout(() => setActivePhase(4), 2500), // Main Result
+            setTimeout(() => setActivePhase(5), 3500), // Cards
+            setTimeout(() => setActivePhase(6), 4500), // CTAs
         ];
 
         return () => timers.forEach(t => clearTimeout(t));
@@ -152,6 +156,33 @@ const Result = ({ result, user, onReset }) => {
     const openModal = (type) => {
         setSelectedType(type);
         setIsModalOpen(true);
+    };
+
+    const handleOpenEmailModal = async () => {
+        if (!chartRef.current) return;
+        try {
+            // Give it a tiny bit of time to ensure layout is settled before capture
+            await new Promise(resolve => setTimeout(resolve, 100));
+            const canvas = await html2canvas(chartRef.current, {
+                backgroundColor: '#ffffff',
+                scale: 2, // Good enough for email, keeps file size reasonable
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedChart = clonedDoc.querySelector('.result-chart-wrapper');
+                    if (clonedChart) {
+                        clonedChart.style.background = '#ffffff';
+                        clonedChart.style.padding = '20px'; // Add padding so it looks like a nice card in email
+                        clonedChart.style.borderRadius = '16px';
+                    }
+                }
+            });
+            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            setChartImageBlob(blob);
+            setIsEmailModalOpen(true);
+        } catch (error) {
+            console.error("Error capturing chart:", error);
+            alert("No se pudo preparar el gráfico para enviar.");
+        }
     };
 
     // If no result, redirect
@@ -236,6 +267,7 @@ const Result = ({ result, user, onReset }) => {
                 <div
                     className="result-chart-wrapper"
                     onClick={handleChartClick}
+                    ref={chartRef}
                 >
                     <EnneagramChart
                         scores={enneatypeScores || {}}
@@ -248,13 +280,13 @@ const Result = ({ result, user, onReset }) => {
 
                     <div className={`top-results-cards ${activePhase >= 5 ? 'revealed' : 'hidden'}`}>
                         <p style={{
-                            fontSize: '0.8rem',
-                            color: '#666',
+                            fontSize: '0.85rem',
+                            color: '#ddbe3d',
                             textAlign: 'center',
                             marginBottom: '4px',
-                            fontStyle: 'italic'
+                            fontWeight: 'bold'
                         }}>
-                            Toca cada tarjeta para mayor información
+                            Toca el radar o cada tarjeta para mayor información
                         </p>
                         {top3.map((item) => (
                             <div
@@ -329,13 +361,24 @@ const Result = ({ result, user, onReset }) => {
                             <span>DESBLOQUEAR MI ANÁLISIS AVANZADO</span>
                         </button>
 
-                        <button
-                            onClick={onReset}
-                            className="btn-result btn-repeat-secondary"
-                        >
-                            <RotateCcw size={18} />
-                            <span>Repetir Test</span>
-                        </button>
+                        <div className="secondary-buttons-row">
+                            <button
+                                onClick={onReset}
+                                className="btn-result btn-repeat-secondary"
+                            >
+                                <RotateCcw size={18} />
+                                <span>Repetir Test</span>
+                            </button>
+
+                            <button
+                                onClick={handleOpenEmailModal}
+                                className="btn-result"
+                                style={{ background: '#002d44', color: '#ffffff', border: 'none', fontWeight: '700' }}
+                            >
+                                <Mail size={18} />
+                                <span>Enviar resultados</span>
+                            </button>
+                        </div>
                     </div>
 
                     <EnneatypeModal
@@ -344,6 +387,13 @@ const Result = ({ result, user, onReset }) => {
                         type={selectedType}
                     />
 
+                    <EmailResultModal
+                        isOpen={isEmailModalOpen}
+                        onClose={() => setIsEmailModalOpen(false)}
+                        userEmail={user?.email || ''}
+                        imageBlob={chartImageBlob}
+                        top3={top3}
+                    />
 
                 </div>
 
