@@ -335,12 +335,18 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                 <p className="al-bridge-text highlight">El Informe Avanzado te muestra el <span className="al-gold-text">mapa completo</span></p>
                             </div>
 
-                            <div className="al-bridge-divider"></div>
+                            <div className="al-bridge-arrow">
+                                <ChevronDown size={32} />
+                            </div>
 
                             <div className="al-bridge-box">
                                 <p className="al-bridge-text">Muchos usuarios creen que ya entendieron todo solo con el perfil</p>
                                 <p className="al-bridge-text highlight">Hasta que descubren el código</p>
                                 <p className="al-bridge-text highlight"><span className="al-gold-text">bajo presión y cómo trabajarlo</span></p>
+                            </div>
+
+                            <div className="al-bridge-arrow">
+                                <ChevronDown size={32} />
                             </div>
 
                             <div className="al-bridge-final">

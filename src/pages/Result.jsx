@@ -321,9 +321,9 @@ const Result = ({ result, user, onReset }) => {
                                 {/* Right Side: Affinity */}
                                 <div style={{ textAlign: 'right' }}>
                                     <div style={{
-                                        color: '#ddbe3d',
-                                        fontWeight: '700',
-                                        fontSize: '0.85rem'
+                                        color: '#ffffff',
+                                        fontWeight: '900',
+                                        fontSize: '0.95rem'
                                     }}>
                                         {item.affinity}
                                     </div>

@@ -152,9 +152,9 @@
     background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border-radius: 20px;
     padding: 25px 30px;
-    border: 1px solid rgba(221, 190, 61, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-left: 5px solid #ddbe3d;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1);
     animation: slideIn 0.8s ease-out;
     margin-bottom: 30px;
 }
@@ -197,15 +197,16 @@
     background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border-radius: 24px;
     padding: 35px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(221, 190, 61, 0.15);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 30px;
 }
 
 .advanced-section:hover {
     transform: translateY(-5px);
     border-color: rgba(221, 190, 61, 0.3);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .section-header {

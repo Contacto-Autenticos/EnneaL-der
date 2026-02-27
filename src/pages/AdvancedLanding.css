@@ -308,7 +308,8 @@ html {
     background: rgba(255, 255, 255, 0.03);
     padding: 30px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .al-recap-item {
@@ -332,6 +333,13 @@ html {
     letter-spacing: 0.05em;
 }
 
+.al-recap-label strong {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 1.1em;
+    margin-left: 2px;
+}
+
 .al-recap-value {
     font-size: 15px;
     font-weight: 700;
@@ -352,6 +360,7 @@ html {
     padding: 60px 40px;
     border-radius: 40px;
     border: 1px solid rgba(221, 190, 61, 0.2);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
 }
@@ -392,7 +401,8 @@ html {
     padding: 20px;
     background: rgba(255, 255, 255, 0.02);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
@@ -571,11 +581,11 @@ html {
 
 .al-pricing-card {
     background: linear-gradient(135deg, #001f30 0%, #000a10 100%);
-    border: 1px solid rgba(221, 190, 61, 0.2);
+    border: 1px solid rgba(221, 190, 61, 0.3);
     border-radius: 40px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.9), 0 0 1px rgba(255, 255, 255, 0.15);
 }
 
 .al-pricing-glow {
@@ -752,7 +762,8 @@ html {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
     padding: 60px 40px;
     border-radius: 40px;
-    border: 1px solid rgba(221, 190, 61, 0.2);
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
     text-align: center;
@@ -900,19 +911,19 @@ html {
     }
 }
 
-.al-bridge-divider {
-    width: 100px;
-    height: 1px;
-    background: var(--al-gold);
-    margin: 40px auto;
-    opacity: 0.5;
+.al-bridge-arrow {
+    color: var(--al-gold);
+    margin: 20px auto;
+    animation: alBounce 2s infinite;
+    display: flex;
+    justify-content: center;
+    opacity: 0.8;
 }
 
 .al-bridge-final {
     margin-top: 40px;
     font-size: 32px;
     font-weight: 900;
-    font-style: italic;
     text-transform: uppercase;
     letter-spacing: -0.01em;
 }
