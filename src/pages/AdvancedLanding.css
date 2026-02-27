@@ -165,6 +165,14 @@ html {
     overflow: visible;
 }
 
+.al-hero-title-top {
+    font-size: 0.6em;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    margin-bottom: 10px;
+}
+
 .al-gold-text {
     background: linear-gradient(to bottom, var(--al-gold) 0%, var(--al-gold-light) 100%);
     -webkit-background-clip: text;
