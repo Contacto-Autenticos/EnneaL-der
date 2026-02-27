@@ -18,16 +18,20 @@ export const uploadResultImage = async (imageBlob, fileName) => {
 
         if (error) {
             console.error('Error uploading image to Supabase:', error);
-            return null;
+            throw new Error(`Error en Supabase: ${error.message} (Verifica que el bucket 'test-results' sea público y existan políticas de subida)`);
         }
 
         const { data: publicUrlData } = supabase.storage
             .from('test-results')
             .getPublicUrl(fileName);
 
+        if (!publicUrlData || !publicUrlData.publicUrl) {
+            throw new Error('No se pudo obtener la URL pública de la imagen.');
+        }
+
         return publicUrlData.publicUrl;
     } catch (err) {
         console.error('Unexpected error during image upload:', err);
-        return null;
+        throw err;
     }
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
     Star,
     ShieldCheck,
@@ -20,11 +20,43 @@ import {
 import { getEnneagramInfo } from '../utils/calculator';
 import './AdvancedLanding.css';
 
-const AdvancedLanding = ({ result }) => {
+const AdvancedLanding = ({ result, setTestResult }) => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [isScrolled, setIsScrolled] = useState(false);
     const [navHidden, setNavHidden] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
+
+    // Deep Linking: Recover state from URL if missing
+    useEffect(() => {
+        const typesParam = searchParams.get('t');
+        if (typesParam && !result && setTestResult) {
+            try {
+                const types = typesParam.split(',').filter(t => t.length > 0);
+                if (types.length >= 1) {
+                    // Reconstruct a minimal result object
+                    // We assign dummy descending scores to preserve the order in derived logic
+                    const reconstructedScores = {};
+                    types.forEach((t, i) => {
+                        reconstructedScores[t] = 100 - i;
+                    });
+
+                    const reconstructedResult = {
+                        enneatypeScores: reconstructedScores,
+                        enneatypes: types.map(t => ({ type: t, score: 100 })),
+                        enneatype: types[0]
+                    };
+
+                    setTestResult(reconstructedResult);
+                    // Also save to localStorage to maintain session consistency
+                    localStorage.setItem('enneagramResult', JSON.stringify(reconstructedResult));
+                    console.log('State reconstructed from URL:', types);
+                }
+            } catch (e) {
+                console.error('Error reconstructing state from URL:', e);
+            }
+        }
+    }, [searchParams, result, setTestResult]);
 
     // Isolation and Reset Logic
     useEffect(() => {
@@ -52,9 +84,10 @@ const AdvancedLanding = ({ result }) => {
 
 
     const top3 = React.useMemo(() => {
-        if (!result || !result.enneatypeScores) return [];
+        const currentResult = result;
+        if (!currentResult || !currentResult.enneatypeScores) return [];
         const validTypes = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        return Object.entries(result.enneatypeScores)
+        return Object.entries(currentResult.enneatypeScores)
             .filter(([type]) => validTypes.includes(type))
             .sort(([, a], [, b]) => b - a)
             .slice(0, 3)

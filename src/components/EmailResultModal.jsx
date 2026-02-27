@@ -38,12 +38,15 @@ const EmailResultModal = ({ isOpen, onClose, userEmail, imageBlob, top3 }) => {
             }
 
             // 2. Setup EmailJS Parameters
+            const continueUrl = `${window.location.origin}/advanced-landing?t=${top3.map(t => t.type).join(',')}`;
+
             const templateParams = {
                 user_email: email,
                 image_url: imageUrl,
                 type_1: top3[0]?.title || '',
                 type_2: top3[1]?.title || '',
-                type_3: top3[2]?.title || ''
+                type_3: top3[2]?.title || '',
+                continue_link: continueUrl
             };
 
             // 3. Send Email
@@ -63,9 +66,10 @@ const EmailResultModal = ({ isOpen, onClose, userEmail, imageBlob, top3 }) => {
             }, 3000);
 
         } catch (error) {
-            console.error('Error sending email:', error);
+            console.error('Error detallado:', error);
             setStatus('error');
-            setErrorMessage('Hubo un problema al enviar el correo. Por favor, intenta de nuevo.');
+            // Mostramos el mensaje específico del error para diagnosticar
+            setErrorMessage(error.message || 'Error desconocido al enviar el correo.');
         }
     };
 

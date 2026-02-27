@@ -181,7 +181,7 @@ function App() {
 
         <Route
           path="/advanced-landing"
-          element={<AdvancedLanding result={testResult} />}
+          element={<AdvancedLanding result={testResult} setTestResult={setTestResult} />}
         />
 
         <Route
