@@ -334,8 +334,9 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                             <div className="al-bridge-divider"></div>
 
                             <div className="al-bridge-box">
-                                <p className="al-bridge-text">Muchos usuarios creen que ya entendieron su perfil…</p>
-                                <p className="al-bridge-text highlight">hasta que descubren su <span className="al-gold-text">patrón bajo presión</span>.</p>
+                                <p className="al-bridge-text">Muchos usuarios creen que ya entendieron todo solo con el perfil</p>
+                                <p className="al-bridge-text highlight">Hasta que descubren el código</p>
+                                <p className="al-bridge-text highlight"><span className="al-gold-text">bajo presión y cómo trabajarlo</span></p>
                             </div>
 
                             <div className="al-bridge-final">
