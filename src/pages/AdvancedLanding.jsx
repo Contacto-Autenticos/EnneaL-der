@@ -290,7 +290,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 <div className="al-section-content">
                     <div className="al-impact-card">
                         <div className="al-impact-glow"></div>
-                        <h2 className="al-impact-title">Cuando entiendes tu patrón, <br /><span className="al-gold-text">cambia esto:</span></h2>
+                        <h2 className="al-impact-title">Cuando identificas el código <br /><span className="al-gold-text">Inicia la transformación</span></h2>
 
                         <div className="al-impact-grid">
                             {[
