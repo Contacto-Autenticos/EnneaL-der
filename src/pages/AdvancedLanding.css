@@ -167,8 +167,8 @@ html {
 
 .al-hero-title-top {
     font-size: 0.75em;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.7);
+    font-weight: 800;
+    color: var(--al-white);
     display: block;
     margin-bottom: -10px;
 }
