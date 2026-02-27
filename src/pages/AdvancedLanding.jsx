@@ -327,8 +327,8 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
                         <div className="al-bridge-content">
                             <div className="al-bridge-box">
-                                <p className="al-bridge-text">El test gratuito te mostró una <span className="al-white-text">puerta</span>.</p>
-                                <p className="al-bridge-text highlight">El Informe Avanzado te muestra el <span className="al-gold-text">mapa completo</span>.</p>
+                                <p className="al-bridge-text">El test gratuito te mostró una <span className="al-white-text">puerta</span></p>
+                                <p className="al-bridge-text highlight">El Informe Avanzado te muestra el <span className="al-gold-text">mapa completo</span></p>
                             </div>
 
                             <div className="al-bridge-divider"></div>
@@ -340,7 +340,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                             </div>
 
                             <div className="al-bridge-final">
-                                <p>Y ahí es donde <span className="al-gold-text">todo cobra sentido</span>.</p>
+                                <p>Y ahí es donde <span className="al-gold-text">todo cobra sentido</span></p>
                             </div>
                         </div>
                     </div>

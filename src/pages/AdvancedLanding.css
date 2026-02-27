@@ -901,10 +901,11 @@ html {
 }
 
 .al-bridge-divider {
-    width: 60px;
+    width: 100px;
     height: 1px;
-    background: rgba(221, 190, 61, 0.3);
-    margin: 0 auto;
+    background: var(--al-gold);
+    margin: 40px auto;
+    opacity: 0.5;
 }
 
 .al-bridge-final {
