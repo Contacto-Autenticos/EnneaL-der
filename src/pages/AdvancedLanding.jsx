@@ -310,13 +310,13 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
                         <div className="al-impact-footer">
                             <p>La diferencia no es información.</p>
-                            <p className="al-gold-text">Es conciencia aplicada.</p>
+                            <p className="al-gold-text">Es conocimiento aplicado.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* 4.6 Puente de Conciencia */}
+            {/* 4.6 Puente de Conocimiento */}
             <section className="al-bridge-section al-animate">
                 <div className="al-section-content">
                     <div className="al-bridge-container">
