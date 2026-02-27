@@ -108,7 +108,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
         },
         {
             q: "¿Es realmente personalizado?",
-            a: "Sí. El análisis se genera según tu combinación específica de eneatipos y niveles de intensidad."
+            a: "Absolutamente. Cada informe se genera a partir de tus respuestas. Mientras más honesto seas, más preciso y revelador será tu análisis. No estás recibiendo información estándar. Estás accediendo a tu propia arquitectura interna."
         },
         {
             q: "¿Es muy técnico?",
