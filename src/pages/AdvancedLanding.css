@@ -186,6 +186,14 @@ html {
     margin-bottom: 50px;
 }
 
+@media (max-width: 600px) {
+    .al-hero-subtitle {
+        font-size: 15px;
+        line-height: 1.5;
+        margin-bottom: 40px;
+    }
+}
+
 .al-hero-actions {
     display: flex;
     flex-direction: column;
@@ -497,6 +505,17 @@ html {
     color: rgba(255, 255, 255, 0.5);
 }
 
+@media (max-width: 600px) {
+    .al-item-title {
+        font-size: 16px;
+    }
+
+    .al-item-desc {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
+
 .al-product-img-container {
     flex: 1;
     position: relative;
@@ -744,7 +763,7 @@ html {
 
 @media (max-width: 768px) {
     .al-impact-card {
-        padding: 40px 20px;
+        padding: 40px 16px;
     }
 
     .al-impact-title {
@@ -752,9 +771,27 @@ html {
     }
 }
 
+@media (max-width: 480px) {
+    .al-impact-card {
+        padding: 30px 12px;
+        border-radius: 24px;
+    }
+
+    .al-impact-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .al-impact-item {
+        padding: 10px 12px;
+        font-size: 15px;
+        gap: 10px;
+    }
+}
+
 .al-impact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 16px;
     margin-bottom: 40px;
     text-align: left;
@@ -828,6 +865,24 @@ html {
     font-weight: 700;
     color: var(--al-white);
     margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+    .al-section-title {
+        font-size: 38px;
+    }
+
+    .al-bridge-text {
+        font-size: 16px;
+    }
+
+    .al-bridge-text.highlight {
+        font-size: 20px;
+    }
+
+    .al-bridge-final {
+        font-size: 24px;
+    }
 }
 
 .al-bridge-divider {
