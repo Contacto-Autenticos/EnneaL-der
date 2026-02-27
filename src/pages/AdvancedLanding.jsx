@@ -187,8 +187,8 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     </button>
 
                     <div className="al-social-proof-small">
-                        <div className="al-author-role" style={{ marginTop: '20px', color: 'rgba(255,255,255,0.3)' }}>
-                            Acceso inmediato. Análisis profundo. Aplicación práctica.
+                        <div className="al-author-role" style={{ marginTop: '20px', color: 'rgba(255,255,255,0.4)', fontSize: '15px', fontWeight: '400' }}>
+                            Porque entender el código no es información. Es poder.
                         </div>
                     </div>
                 </div>
