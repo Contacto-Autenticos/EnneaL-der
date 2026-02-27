@@ -42,7 +42,13 @@ export const executiveKitData = {
                 "Se ralentizan procesos por revisión excesiva",
                 "El equipo evita tomar iniciativa",
                 "Se reduce innovación",
-                "Aumenta rotación por presión constante"
+                "Aumenta rotación por presión constante",
+                "Parálisis operativa por estándares inalcanzables",
+                "Fuga silenciosa de talento por microgestión",
+                "Pérdida de agilidad ante nuevas normativas",
+                "Clima de crítica constante que desmotiva",
+                "Dependencia del líder para validación menor",
+                "Rigidez estructural ante crisis dinámicas"
             ],
             closing: "La excelencia sin equilibrio genera desgaste. La excelencia con conciencia genera liderazgo sostenible."
         },
@@ -57,7 +63,13 @@ export const executiveKitData = {
                 "¿Esto compromete el resultado estratégico?",
                 "¿Es un estándar crítico o preferencia personal?",
                 "¿Mi intervención mejora o desgasta?",
-                "¿El costo emocional supera el beneficio operativo?"
+                "¿El costo emocional supera el beneficio operativo?",
+                "¿Esta decisión acelera o retrasa la ejecución buscando perfección?",
+                "¿Evalúo con el estándar necesario o con exigencia desproporcionada?",
+                "¿Qué precedente organizativo establezco si permito excepciones hoy?",
+                "¿Mi necesidad de tener razón nubla la visión a largo plazo?",
+                "¿Podría un equipo con 80% de mi estándar ejecutar esto eficazmente?",
+                "¿Corrijo para mejorar el proyecto o para aliviar mi tensión interna?"
             ],
             rule: "No todo debe ser perfecto para ser excelente."
         },
@@ -76,7 +88,12 @@ export const executiveKitData = {
             "No asumir que solo tu método es válido",
             "No postergar decisiones por falta de perfección",
             "No convertir estándares en identidad personal",
-            "No sobrecargarte por falta de delegación"
+            "No sobrecargarte por falta de delegación",
+            "No rehacer el trabajo de otros por considerarlo insuficiente",
+            "No paralizar proyectos buscando el momento perfecto",
+            "No emitir juicios rápidos sobre la intención de los demás",
+            "No microgestionar tareas que ya fueron delegadas",
+            "No perder perspectiva estratégica por enfocarte en el pequeño error"
         ],
         evolutionSignals: [
             "El equipo propone sin temor.",
@@ -138,7 +155,13 @@ export const executiveKitData = {
                 "Líder agotado y sobreexigido",
                 "Decisiones postergadas para evitar incomodidad",
                 "Equipos con baja autonomía",
-                "Resultados afectados por priorizar relaciones sobre estrategia"
+                "Resultados afectados por priorizar relaciones sobre estrategia",
+                "Falta de claridad en roles y responsabilidades",
+                "Retención de bajo rendimiento por empatía mal orientada",
+                "Liderazgo percibido como débil ante conflictos",
+                "Dificultad para escalar proyectos por excesiva asistencia operativa",
+                "Desgaste emocional por absorber estrés del equipo",
+                "Falta de métricas objetivas de éxito"
             ],
             closing: "El apoyo sin dirección genera dependencia. La empatía con estructura genera rendimiento sostenible."
         },
@@ -153,7 +176,13 @@ export const executiveKitData = {
                 "¿Esto es estratégico o relacional?",
                 "¿Estoy diciendo sí para evitar incomodidad?",
                 "¿Qué impacto tendrá en mis prioridades?",
-                "¿Esta decisión fortalece autonomía del equipo?"
+                "¿Esta decisión fortalece autonomía del equipo?",
+                "¿Asumir esta carga protege al equipo o fomenta su dependencia?",
+                "¿Confundo ser indispensable con ser un líder efectivo?",
+                "¿A quién decepcionaré al negarme, y vale la pena el costo?",
+                "¿Mido el éxito del equipo por cómo se sienten o qué logran?",
+                "¿Mi necesidad de aprobación interfiere con esta métrica?",
+                "¿Si no necesitara validación, mi decisión sería más firme?"
             ],
             rule: "No aceptar tareas que diluyan tus prioridades estratégicas."
         },
@@ -172,7 +201,12 @@ export const executiveKitData = {
             "No priorizar aprobación sobre estrategia",
             "No evitar conflicto necesario",
             "No justificar límites excesivamente",
-            "No descuidar autocuidado ejecutivo"
+            "No descuidar autocuidado ejecutivo",
+            "No decir \"sí\" a nuevas tareas solo para evitar decepcionar",
+            "No ocultar tus propias necesidades operativas al equipo",
+            "No ofrecer ayuda antes de que te la soliciten claramente",
+            "No tomar el bajo desempeño de otros como un fracaso personal",
+            "No evadir conversaciones difíciles para mantener el afecto"
         ],
         growthPlanExtended: {
             phases: [
@@ -228,7 +262,13 @@ export const executiveKitData = {
                 "Clima laboral orientado solo a resultados",
                 "Rotación de talento por sobreexigencia",
                 "Cultura superficial basada en imagen",
-                "Decisiones estratégicas orientadas a corto plazo"
+                "Decisiones estratégicas orientadas a corto plazo",
+                "Agotamiento extremo (burnout) del talento clave",
+                "Ocultamiento de fallas críticas hasta que estallan",
+                "Pérdida de visión a largo plazo por metas mensuales",
+                "Competitividad interna tóxica y destructiva",
+                "Falta de autenticidad en la comunicación",
+                "Desconexión de la misión originaria de la empresa"
             ],
             closing: "El logro sin consciencia genera desgaste. El desempeño con propósito genera liderazgo sostenible."
         },
@@ -243,7 +283,13 @@ export const executiveKitData = {
                 "¿Esta decisión prioriza resultados sostenibles?",
                 "¿Estoy actuando para destacar o para impactar?",
                 "¿Qué efecto tendrá en el equipo?",
-                "¿Estoy equilibrando desempeño con bienestar?"
+                "¿Estoy equilibrando desempeño con bienestar?",
+                "¿Es la decisión correcta para la empresa o la que se verá mejor hoy?",
+                "¿Qué impacto tendrá en la cultura y el desgaste de mis líderes?",
+                "¿Esta meta nace del mercado o de mi necesidad de ganar?",
+                "¿Qué fracaso inminente estoy minimizando ante el comité?",
+                "¿Mi enfoque en el 'cómo se ve' impide evaluar el 'cómo funciona'?",
+                "¿Si no llevara mi nombre, impulsaría esto con igual intensidad?"
             ],
             rule: "El éxito real incluye sostenibilidad y cultura saludable."
         },
@@ -262,7 +308,12 @@ export const executiveKitData = {
             "No sobrecargar al equipo",
             "No priorizar imagen sobre impacto",
             "No competir internamente sin necesidad",
-            "No descuidar descanso estratégico"
+            "No descuidar descanso estratégico",
+            "No sacrificar calidad a largo plazo por resultados inmediatos",
+            "No ocultar fracasos o demoras al equipo directivo",
+            "No transformar cada interacción en una oportunidad de networking",
+            "No ignorar el cansancio propio o del equipo",
+            "No delegar el desarrollo de cultura organizacional"
         ],
         growthPlanExtended: {
             phases: [
@@ -318,7 +369,13 @@ export const executiveKitData = {
                 "Decisiones inconsistentes",
                 "Cultura emocionalmente reactiva",
                 "Proyectos que cambian dirección sin consolidación",
-                "Desgaste por intensidad prolongada"
+                "Desgaste por intensidad prolongada",
+                "Parálisis por búsqueda de la solución única",
+                "Falta de replicabilidad en procesos exitosos",
+                "Dificultad para integrar perfiles pragmáticos al equipo",
+                "Aislamiento de líderes ante críticas constructivas",
+                "Desvío de recursos hacia estética por encima de la función",
+                "Liderazgo percibido como inaccesible o volátil"
             ],
             closing: "La identidad sin estructura genera inestabilidad. La autenticidad con consistencia genera liderazgo transformador."
         },
@@ -333,7 +390,13 @@ export const executiveKitData = {
                 "¿Esta decisión nace de emoción o de estrategia?",
                 "¿Es consistente con la visión definida?",
                 "¿Tengo datos objetivos que respalden esta acción?",
-                "¿Estoy reaccionando o liderando?"
+                "¿Estoy reaccionando o liderando?",
+                "¿Mi frustración se basa en datos o en mi reacción a ellos?",
+                "¿Es el proyecto más importante o solo el más interesante hoy?",
+                "¿Descarto soluciones viables por parecer demasiado ordinarias?",
+                "¿Añado peso emocional a una decisión puramente pragmática?",
+                "¿Qué decidiría si mis emociones no entraran en la ecuación?",
+                "¿Mi distanciamiento es real o un rechazo velado a sugerencias?"
             ],
             rule: "Si la emoción es intensa, pausa antes de decidir."
         },
@@ -352,7 +415,12 @@ export const executiveKitData = {
             "No dramatizar desacuerdos",
             "No cambiar prioridades por comparación externa",
             "No interpretar feedback como rechazo personal",
-            "No abandonar estructura por impulso creativo"
+            "No abandonar estructura por impulso creativo",
+            "No aislarte ante una retroalimentación constructiva",
+            "No priorizar la estética o la originalidad sobre la funcionalidad",
+            "No esperar inspiración para cumplir con rutinas operativas",
+            "No compararte con otros estilos de liderazgo en momentos de crisis",
+            "No complicar procesos simples buscando darles mayor profundidad"
         ],
         growthPlanExtended: {
             phases: [
@@ -408,7 +476,13 @@ export const executiveKitData = {
                 "Decisiones postergadas por análisis excesivo",
                 "Equipos que operan sin dirección inspiradora",
                 "Falta de cohesión interpersonal",
-                "Oportunidades perdidas por demora estratégica"
+                "Oportunidades perdidas por demora estratégica",
+                "Silos de información que frenan la colaboración ágil",
+                "Falta de comunicación clara de la visión organizativa",
+                "Respuestas lentas a amenazas inmediatas del mercado",
+                "Falta de empatía percibida en gestión de crisis",
+                "Sobresaturación de datos sin ejecución directiva",
+                "Desconexión entre liderazgo técnico y decisiones gerenciales"
             ],
             closing: "La claridad sin acción genera estancamiento. La claridad ejecutada genera ventaja competitiva."
         },
@@ -421,9 +495,15 @@ export const executiveKitData = {
         decisionMatrixExtended: {
             questions: [
                 "¿Estoy buscando perfección o avance?",
-                "¿La información actual es suficiente para minimizar riesgo razonable?",
+                "¿La información actual suficiente minimiza un riesgo razonable?",
                 "¿Qué costo tiene esperar más datos?",
-                "¿Estoy evitando interacción al no decidir?"
+                "¿Estoy evitando interacción al no decidir?",
+                "¿El tiempo extra de análisis cerrará nuestra ventana de oportunidad?",
+                "¿Uso los datos como escudo para evitar un veredicto definitivo?",
+                "¿Cuántos proyectos estratégicos he postergado por sentirlos incompletos?",
+                "¿Si dependieran solo de mi equipo, actuaríamos ya o nos congelaríamos?",
+                "¿Soy consciente del coste de ralentizar al equipo frente a mí?",
+                "¿Qué pasaría si hablara un 15% más sin temer perder profundidad?"
             ],
             rule: "Si la decisión es reversible y estratégicamente sólida, actúa."
         },
@@ -442,7 +522,12 @@ export const executiveKitData = {
             "No aislarte cuando aumenta la presión",
             "No retener información estratégica innecesariamente",
             "No evitar exposición pública",
-            "No confundir preparación con liderazgo"
+            "No confundir preparación con liderazgo",
+            "No acumular información sin definir una fecha límite de acción",
+            "No subestimar el impacto del contacto humano en la motivación",
+            "No retirarte mentalmente en medio de reuniones tensas",
+            "No asumir que los demás entienden tu proceso mental",
+            "No evadir el liderazgo visible en momentos de incertidumbre"
         ],
         growthPlanExtended: {
             phases: [
@@ -498,7 +583,13 @@ export const executiveKitData = {
                 "Procesos ralentizados por análisis de riesgo prolongado",
                 "Equipos que dudan ante cada cambio estratégico",
                 "Clima organizacional basado en temor a errores",
-                "Falta de liderazgo firme en momentos críticos"
+                "Falta de liderazgo firme en momentos críticos",
+                "Parálisis por exceso de comités y validaciones de seguridad",
+                "Resistencia estructural fuerte a la innovación acelerada",
+                "Microgestión preventiva que ahoga la creatividad",
+                "Pérdida de agilidad comercial frente a la competencia",
+                "Cultura de la queja y el pesimismo anticipado",
+                "Desconfianza crónica hacia nuevas contrataciones o propuestas"
             ],
             closing: "La prevención sin decisión genera estancamiento. La seguridad con firmeza genera estabilidad sostenible."
         },
@@ -513,7 +604,13 @@ export const executiveKitData = {
                 "¿Este riesgo es real o anticipado?",
                 "¿Tengo evidencia concreta o suposiciones?",
                 "¿Qué probabilidad objetiva tiene este escenario?",
-                "¿Estoy buscando seguridad absoluta o avance estratégico?"
+                "¿Busco seguridad absoluta o avance estratégico?",
+                "¿Confundo estar informado con dudar de mi evaluación inicial?",
+                "¿El comité necesita saber cada paso para respaldarme ante fallos?",
+                "¿Las contingencias salvan al negocio o son mi red de seguridad?",
+                "¿He analizado tantos escenarios alternativos que pergeñé el central?",
+                "¿Cuántos más deben confirmar este movimiento antes de aprobarlo?",
+                "¿Puedo liderar esto sabiendo que hay variables incontrolables?"
             ],
             rule: "Si el riesgo es manejable y el beneficio estratégico es alto, decide."
         },
@@ -532,7 +629,12 @@ export const executiveKitData = {
             "No magnificar riesgos improbables",
             "No transmitir ansiedad al equipo",
             "No retrasar decisiones claras",
-            "No confundir prudencia con duda constante"
+            "No confundir prudencia con duda constante",
+            "No crear reglas excesivas para intentar controlar lo incontrolable",
+            "No buscar consenso absoluto antes de tomar una decisión urgente",
+            "No proyectar tus propias dudas sobre la capacidad de tu equipo",
+            "No paralizarte analizando el peor escenario posible",
+            "No desconfiar automáticamente de las nuevas iniciativas"
         ],
         growthPlanExtended: {
             phases: [
@@ -589,7 +691,13 @@ export const executiveKitData = {
                 "Multiplicidad de iniciativas sin consolidación",
                 "Pérdida de credibilidad estratégica",
                 "Equipos saturados por cambios continuos",
-                "Desalineación en objetivos clave"
+                "Desalineación en objetivos clave",
+                "Falta de profundidad técnica en implementación",
+                "Desperdicio financiero en grandes ideas nunca finalizadas",
+                "Evasión directiva en reuniones críticas de estatus y seguimiento",
+                "Alta rotación de personal por fatiga ante la inestabilidad",
+                "Promesas sobredimensionadas a clientes sin capacidad operativa",
+                "Incapacidad estructural para procesar retroalimentación negativa"
             ],
             closing: "La expansión sin estructura genera dispersión. La visión con enfoque genera crecimiento sostenible."
         },
@@ -604,7 +712,13 @@ export const executiveKitData = {
                 "¿Es estratégico o solo estimulante?",
                 "¿Qué proyecto debo cerrar antes de comenzar este?",
                 "¿Estoy evitando profundidad?",
-                "¿Este movimiento aumenta claridad o complejidad?"
+                "¿Este movimiento aumenta claridad o complejidad?",
+                "¿Esta visión es necesaria o evade conflictos de la fase anterior?",
+                "¿Mi optimismo extremo imposibilita reportar signos de fracaso?",
+                "¿He cerrado mi última directriz antes de presentar una nueva idea?",
+                "¿Calculé la logística o confío en mi discurso comercial vibrante?",
+                "¿Idear sin parar me impide ver la realidad técnica del proyecto?",
+                "¿A quién delego la 'limpieza' de experimentos que ya me aburrieron?"
             ],
             rule: "No abrir nuevas iniciativas sin cerrar una existente."
         },
@@ -623,7 +737,12 @@ export const executiveKitData = {
             "No evitar conflictos con entusiasmo superficial",
             "No cambiar prioridades semanalmente",
             "No prometer más de lo que puedes sostener",
-            "No abrir frentes sin estructura"
+            "No abrir frentes sin estructura",
+            "No abandonar proyectos en la fase de implementación aburrida",
+            "No utilizar el optimismo para evadir problemas estructurales",
+            "No cambiar la estrategia solo porque perdiste el interés",
+            "No abrumar al equipo con ideas sin asignarles recursos o tiempo",
+            "No racionalizar los errores rápidos para evitar la frustración"
         ],
         growthPlanExtended: {
             phases: [
@@ -679,7 +798,13 @@ export const executiveKitData = {
                 "Equipos que obedecen pero no se comprometen",
                 "Pérdida de talento valioso",
                 "Cultura basada en presión constante",
-                "Decisiones unilaterales sin retroalimentación estratégica"
+                "Decisiones unilaterales sin retroalimentación estratégica",
+                "Cultura de miedo que silencia ideas de innovación",
+                "Alta ejecución táctica pero lealtad organizacional nula",
+                "Pérdida de alianzas críticas por confrontación innecesaria",
+                "Falta de planes de sucesión por necesidad de control absoluto",
+                "Aislamiento informativo del líder ante alertas de crisis reales",
+                "Desgaste reputacional de la marca y la organización"
             ],
             closing: "El poder sin sensibilidad genera resistencia. El poder con inteligencia genera liderazgo sólido y duradero."
         },
@@ -694,7 +819,13 @@ export const executiveKitData = {
                 "¿Estoy escuchando realmente o reaccionando?",
                 "¿Esta decisión fortalece compromiso o solo control?",
                 "¿Qué impacto emocional generará?",
-                "¿Estoy priorizando resultados inmediatos sobre sostenibilidad?"
+                "¿Priorizo resultados inmediatos sobre sostenibilidad?",
+                "¿Disfrazo hostilidad de 'liderazgo directo' con el equipo?",
+                "¿Aumento mi volumen vocal para silenciar reportes ajenos?",
+                "¿Mi agresividad busca proteger la meta o dominar por reflejo?",
+                "¿Uso el miedo para obligar a todos a operar bajo mi urgencia?",
+                "¿Entiendo que arrinconar a un colega reduce su cumplimiento futuro?",
+                "¿Vería esto como firmeza si alguien más lo hiciera a mi nivel?"
             ],
             rule: "Si la decisión es firme pero puede comunicarse con claridad empática, ejecútala."
         },
@@ -713,7 +844,12 @@ export const executiveKitData = {
             "No confundir intensidad con liderazgo",
             "No invalidar opiniones distintas",
             "No reaccionar impulsivamente",
-            "No priorizar control sobre compromiso"
+            "No priorizar control sobre compromiso",
+            "No confundir vulnerabilidad del equipo con debilidad",
+            "No escalar conflictos menores para demostrar autoridad",
+            "No intimidar al equipo para acelerar resultados",
+            "No saltarte procesos y protocolos de forma rutinaria",
+            "No asumir que tu nivel de energía debe ser el estándar para todos"
         ],
         growthPlanExtended: {
             phases: [
@@ -769,7 +905,13 @@ export const executiveKitData = {
                 "Decisiones retrasadas que afectan resultados financieros",
                 "Conflictos latentes que erosionan cultura organizacional",
                 "Equipos dominados por perfiles más impositivos",
-                "Proyectos que avanzan sin dirección estratégica definida"
+                "Proyectos que avanzan sin dirección estratégica definida",
+                "Estancamiento competitivo severo por evitación general de riesgo",
+                "Ambigüedad en la estructura que fomenta ineficiencia operativa",
+                "Frustración de talentos altamente proactivos no respaldados",
+                "Aceptación pasiva permanente de estándares promedio o mediocres",
+                "Pérdida de posicionamiento distintivo y diferencial en el mercado",
+                "Dilución sistemática de las responsabilidades a nivel ejecutivo"
             ],
             closing: "La paz sin estructura genera estancamiento. La armonía con dirección genera crecimiento sostenible."
         },
@@ -784,7 +926,13 @@ export const executiveKitData = {
                 "¿Estoy evitando fricción o ejerciendo liderazgo?",
                 "¿Qué costo estratégico tiene no decidir ahora?",
                 "¿Esta decisión mantiene paz superficial o genera avance real?",
-                "¿Estoy priorizando mis objetivos o adaptándome automáticamente?"
+                "¿Priorizo mis objetivos o me adaptó automáticamente?",
+                "¿Delegó mi rol al no tomar posturas firmes y rápidas?",
+                "¿Qué precedente de debilidad marco si permito que esto siga así?",
+                "¿Llamo 'puntos de vista' a conflictos graves para mantener consenso?",
+                "¿Cómo actuaría hoy si mi rol fuera generar fricción útil?",
+                "¿Ofrezco 'revisar' temas críticos en vez de articular un rechazo?",
+                "¿Diluyo la responsabilidad para mantener nuestra calma superficial?"
             ],
             rule: "Si la decisión es clara pero incómoda, decide con firmeza."
         },
@@ -803,7 +951,12 @@ export const executiveKitData = {
             "No asumir que el conflicto siempre es negativo",
             "No minimizar tus propias prioridades",
             "No adaptarte antes de definir tu postura",
-            "No delegar implícitamente tu autoridad"
+            "No delegar implícitamente tu autoridad",
+            "No decir \"sí\" a responsabilidades para evitar incomodidad con otros",
+            "No minimizar problemas evidentes esperando que se resuelvan solos",
+            "No adoptar la opinión del grupo si compromete la estrategia",
+            "No posponer retroalimentación negativa para mantener la paz",
+            "No difuminar tu autoridad en situaciones de crisis"
         ],
         growthPlanExtended: {
             phases: [

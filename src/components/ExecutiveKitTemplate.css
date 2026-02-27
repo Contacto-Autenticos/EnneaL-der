@@ -2,10 +2,11 @@
    EXECUTIVE KIT PDF STYLES
    Corporate, Minimalist, Elegant
    Colors: Blue #002d44, Yellow #ddbe3d
-────────────────────────────────────────── */
+   ────────────────────────────────────────── */
 
 .kit-container {
     font-family: 'Inter', 'Lato', sans-serif;
+    font-size: 1.1rem;
     color: #333;
     line-height: 1.6;
     background: #fff;
@@ -26,6 +27,24 @@
     flex-direction: column;
     background: #fff;
     page-break-after: always;
+}
+
+.kit-header-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25mm;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.kit-header-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    /* Opalizado del 60% */
 }
 
 /* Typography */
@@ -57,14 +76,71 @@
     margin-bottom: 30px;
 }
 
+/* Week Plan Headers */
+.kit-week-container {
+    text-align: left;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.kit-week-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ddbe3d;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.kit-week-title-main {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #002d44;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
 /* Page 1: Portada */
 .kit-page-cover {
-    background: #002d44;
+    background: radial-gradient(circle, #002d44 0%, #000a12 100%);
     color: #fff;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     padding: 40mm 20mm;
+}
+
+.kit-dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.kit-card {
+    background: transparent;
+    padding: 0;
+    border: none;
+}
+
+.kit-card p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.kit-card-label {
+    font-weight: 800;
+    color: #002d44;
+}
+
+.kit-card-value {
+    font-weight: 400;
+    color: #444;
 }
 
 .kit-cover-content {
@@ -139,7 +215,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.15);
+    transform: scale(1.17);
     /* Zoom in to hide white borders from source JPG */
 }
 
@@ -173,7 +249,7 @@
 .kit-profile-general h3 {
     color: #ddbe3d;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     margin-bottom: 10px;
     font-weight: 800;
 }
@@ -186,6 +262,30 @@
     font-weight: 700;
     color: #002d44;
     border: 1px dashed rgba(221, 190, 61, 0.4);
+}
+
+.kit-evolution-block {
+    margin-top: 30px;
+    padding-left: 20px;
+    border-left: 5px solid #ddbe3d;
+}
+
+.kit-evolution-subtitle {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #002d44;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.kit-evolution-text {
+    font-size: 1.25rem;
+    color: #444;
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* Impact Sections */
@@ -207,7 +307,7 @@
     margin: 0 0 12px;
     color: #002d44;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     font-weight: 800;
 }
 
@@ -290,4 +390,73 @@
     border: 2px solid #ddbe3d;
     flex-shrink: 0;
     margin-top: 2px;
+}
+
+/* Footer Logos */
+.kit-page-footer-logo {
+    position: absolute;
+    bottom: 10mm;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kit-page-footer-logo img {
+    height: 45px;
+    object-fit: contain;
+}
+
+.kit-page-footer-logo.cover-logo {
+    bottom: 15mm;
+}
+
+.kit-page-footer-logo.cover-logo img {
+    height: 55px;
+}
+
+/* Watermark */
+.kit-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140mm;
+    height: auto;
+    opacity: 0.5;
+    /* Increased to 50% as requested */
+    z-index: 0;
+    /* Low enough but over backgrounds */
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kit-watermark img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Page Numbering */
+.kit-page-number {
+    position: absolute;
+    bottom: 10mm;
+    right: 15mm;
+    width: 32px;
+    height: 32px;
+    background: #ddbe3d;
+    /* Yellow circle */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #002d44;
+    /* Blue digits */
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    z-index: 20;
 }
