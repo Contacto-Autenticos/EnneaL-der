@@ -425,13 +425,13 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 <div className="al-section-content">
                     <div className="al-closure-container">
                         <h2 className="al-closure-title">
-                            <span className="al-white-text">Lo que no comprendes de ti,</span> <span className="al-gold-text">te controla.</span><br />
-                            <span className="al-white-text">Lo que comprendes,</span> <span className="al-gold-text">lo puedes dirigir.</span>
+                            <span className="al-white-text">Lo que no comprendes de ti,</span> <span className="al-gold-text">te domina.</span><br />
+                            <span className="al-white-text">Lo que comprendes,</span> <span className="al-gold-text">se convierte en liderazgo.</span>
                         </h2>
 
                         <div className="al-closure-text">
                             <p>Ya diste el primer paso.</p>
-                            <p>Ahora decide si quieres profundidad… o solo una idea superficial.</p>
+                            <p>Ahora decide qué tan profundo quieres llegar.</p>
                         </div>
 
                         <button onClick={() => navigate('/payment')} className="al-btn-shimmer">
