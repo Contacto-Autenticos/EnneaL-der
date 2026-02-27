@@ -327,7 +327,7 @@ html {
 .al-recap-label {
     font-size: 13px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
