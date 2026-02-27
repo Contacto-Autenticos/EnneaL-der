@@ -475,6 +475,7 @@ html {
     .al-product-flex {
         flex-direction: row;
         text-align: left;
+        align-items: stretch;
     }
 }
 
@@ -546,7 +547,7 @@ html {
 
 .al-product-img {
     width: 100%;
-    aspect-ratio: 1 / 0.8;
+    height: 100%;
     object-fit: cover;
     position: relative;
     z-index: 1;
