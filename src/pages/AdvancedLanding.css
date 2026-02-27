@@ -170,7 +170,7 @@ html {
     font-weight: 800;
     color: var(--al-white);
     display: block;
-    margin-bottom: -10px;
+    margin-bottom: 2px;
 }
 
 .al-gold-text {
@@ -179,7 +179,7 @@ html {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     display: block;
-    padding-right: 0.1em;
+    padding: 0 0.1em 0.15em 0;
     margin-right: -0.1em;
 }
 
