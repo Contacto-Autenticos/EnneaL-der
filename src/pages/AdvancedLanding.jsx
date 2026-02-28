@@ -179,9 +179,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </h1>
 
                 <p className="al-hero-subtitle">
-                    Tu perfil no es un número, ni una etiqueta y mucho menos un defecto. <br />
-                    Es un patrón de comportamiento. <br /><br />
-                    Es un mecanismo interno que influye en cómo decides, lideras y reaccionas bajo presión. <br /><br />
+                    Tu perfil no es un número, no es una etiqueta y mucho menos un defecto. Es un patrón de comportamiento que influye en cómo decides, lideras y reaccionas bajo presión. <br /><br />
                     El test te mostró la estructura que lo describe. <br />
                     El <strong>informe avanzado</strong> revela la arquitectura interna que lo sostiene.
                 </p>
@@ -194,7 +192,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
                     <div className="al-social-proof-small">
                         <div className="al-author-role" style={{ marginTop: '20px', color: 'rgba(255,255,255,0.4)', fontSize: '15px', fontWeight: '400' }}>
-                            Porque entender el código no es información. Es poder.
+                            Entender el código es solo información, es poder.
                         </div>
                     </div>
                 </div>
@@ -326,13 +324,13 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     <div className="al-bridge-container">
                         <h2 className="al-section-title">
                             <span className="al-section-title-top">Ya estás a mitad de camino</span>
-                            <span className="al-gold-text">Tú decides si avanzas para accionar</span>
+                            <span className="al-gold-text" style={{ whiteSpace: 'nowrap' }}>Decide cuánto seguir avanzando</span>
                         </h2>
 
                         <div className="al-bridge-content">
                             <div className="al-bridge-box">
-                                <p className="al-bridge-text">El test gratuito te mostró una <span className="al-white-text">puerta</span></p>
-                                <p className="al-bridge-text highlight">El Informe Avanzado te muestra el <span className="al-gold-text">mapa completo</span></p>
+                                <p className="al-bridge-text">El test gratuito te mostró una ruta.</p>
+                                <p className="al-bridge-text highlight" style={{ whiteSpace: 'nowrap' }}>El informe avanzado te muestra el <span className="al-gold-text" style={{ display: 'inline' }}>mapa completo.</span></p>
                             </div>
 
                             <div className="al-bridge-arrow">
@@ -340,9 +338,11 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                             </div>
 
                             <div className="al-bridge-box">
-                                <p className="al-bridge-text">Muchos usuarios creen que ya entendieron todo solo con el perfil</p>
-                                <p className="al-bridge-text highlight">Hasta que descubren el código</p>
-                                <p className="al-bridge-text highlight"><span className="al-gold-text">bajo presión y cómo trabajarlo</span></p>
+                                <p className="al-bridge-text">Muchos usuarios creen que con el perfil es suficiente.</p>
+                                <p className="al-bridge-text highlight">
+                                    <span className="al-white-text" style={{ fontWeight: 900 }}>hasta que descubren el código </span>
+                                    <span className="al-gold-text" style={{ display: 'inline', fontWeight: 900 }}>que surge bajo presión y cómo trabajarlo.</span>
+                                </p>
                             </div>
 
                             <div className="al-bridge-arrow">

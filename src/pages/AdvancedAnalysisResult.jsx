@@ -331,7 +331,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
             kitRoot.style.display = 'none';
         } catch (error) {
             console.error('Error generating Executive Kit:', error);
-            alert('Hubo un error al generar el Kit Ejecutivo.');
+            alert('Hubo un error al generar el Plan de Acción.');
             kitRoot.style.display = 'none';
         } finally {
             setIsDownloadingKit(false);
@@ -458,7 +458,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             <h1 className="advanced-hero-title">
                                 {user?.name && <span className="user-name-title">{String(user.name).toUpperCase()}</span>}
                                 <span className="profile-text-title">
-                                    TU PERFIL AUT<span className="brand-accent">é</span>NTICO
+                                    Tu perfil dominante es:
                                 </span>
                             </h1>
                             <p className="advanced-hero-subtitle">
@@ -481,6 +481,17 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                 </div>
                             </div>
                         </section>
+
+                        {/* Section: Brief Description */}
+                        <div className="description-section">
+                            <div className="description-content">
+                                <Info className="description-info-icon" size={20} />
+                                <div className="description-text-wrapper">
+                                    <strong className="description-label">Una breve descripción:</strong>
+                                    <p className="description-text">{details.description}</p>
+                                </div>
+                            </div>
+                        </div>
 
                         {/* Section: Internal Phrase */}
                         <div className="phrase-section">
@@ -526,7 +537,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     <section className="advanced-section">
                         <div className="section-header">
                             <Layers className="section-icon" size={24} />
-                            <h2 className="section-title">Tu Estructura (Tríadas)</h2>
+                            <h2 className="section-title">Tu Estructura</h2>
                         </div>
                         <div className="triad-list">
                             <div className="triad-row">
@@ -534,11 +545,15 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                 <span className="triad-value">{details.triads.center}</span>
                             </div>
                             <div className="triad-row">
-                                <span className="triad-label">Estilo Social:</span>
+                                <span className="triad-label">Buscas:</span>
+                                <span className="triad-value">{details.triads.seeking}</span>
+                            </div>
+                            <div className="triad-row">
+                                <span className="triad-label">Estrategia relacional:</span>
                                 <span className="triad-value">{details.triads.social}</span>
                             </div>
                             <div className="triad-row">
-                                <span className="triad-label">Estilo de Afrontamiento:</span>
+                                <span className="triad-label">Emoción base:</span>
                                 <span className="triad-value">{details.triads.coping}</span>
                             </div>
                         </div>
@@ -588,11 +603,25 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         <ul className="advice-list">
                             <li className="advice-item">
                                 <div className="advice-bullet" style={{ background: '#2ECC71' }}><TrendingUp size={14} /></div>
-                                <div className="advice-text">{details.paths.growth}</div>
+                                <div className="advice-text">
+                                    {details.paths.growth.includes(':') ? (
+                                        <>
+                                            <strong>{details.paths.growth.split(':')[0]}:</strong>
+                                            {details.paths.growth.split(':')[1]}
+                                        </>
+                                    ) : details.paths.growth}
+                                </div>
                             </li>
                             <li className="advice-item">
                                 <div className="advice-bullet" style={{ background: '#E74C3C' }}><TrendingUp size={14} style={{ transform: 'rotate(180deg)' }} /></div>
-                                <div className="advice-text">{details.paths.stress}</div>
+                                <div className="advice-text">
+                                    {details.paths.stress.includes(':') ? (
+                                        <>
+                                            <strong>{details.paths.stress.split(':')[0]}:</strong>
+                                            {details.paths.stress.split(':')[1]}
+                                        </>
+                                    ) : details.paths.stress}
+                                </div>
                             </li>
                         </ul>
                         <p className="motivation-summary" style={{ marginTop: '20px' }}>
@@ -651,8 +680,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     {/* Order Bump Section: Executive Kit */}
                     <div className="executive-kit-promo">
                         <div className="kit-promo-content">
-                            <h3>Kit Ejecutivo de Acción</h3>
-                            <p>Liderazgo estratégico según tu eneatipo. Informe de 15 páginas con planes de acción y protocolos corporativos.</p>
+                            <h3>Plan de Acción</h3>
+                            <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
                             <button
                                 onClick={handleDownloadExecutiveKit}
                                 className={`btn-kit-download ${isDownloadingKit ? 'loading' : ''}`}
@@ -660,11 +689,11 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             >
                                 {isDownloadingKit ? (
                                     <>
-                                        <Loader2 size={18} className="spinner" /> Generando Kit Ejecutivo...
+                                        <Loader2 size={18} className="spinner" /> Generando Plan de Acción...
                                     </>
                                 ) : (
                                     <>
-                                        <CheckCircle2 size={18} /> Descargar Kit Ejecutivo
+                                        <CheckCircle2 size={18} /> Descargar Plan de Acción
                                     </>
                                 )}
                             </button>

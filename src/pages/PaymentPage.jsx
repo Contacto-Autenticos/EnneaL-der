@@ -218,7 +218,7 @@ const PaymentPage = () => {
                             </p>
                         )}
                         <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>
-                            {bumpSelected ? 'Análisis Avanzado + Kit Ejecutivo' : 'Análisis Avanzado'} · Pago único
+                            {bumpSelected ? 'Análisis Avanzado + Plan de Acción' : 'Análisis Avanzado'} · Pago único
                         </p>
 
                         <div className="savings-text">
@@ -280,7 +280,7 @@ const PaymentPage = () => {
                 <div className="order-bump-container">
                     <div className="order-bump-header-image">
                         <img src="/Portada - Kit Ejecutivo de Acción-4.png" alt="Executive Kit Mockup" className="order-bump-full-image" />
-                        <div className="order-bump-badge">OPCIONAL KIT EJECUTIVO</div>
+                        <div className="order-bump-badge">OPCIONAL PLAN DE ACCIÓN</div>
                     </div>
 
                     <div className="order-bump-content">
@@ -318,7 +318,7 @@ const PaymentPage = () => {
                             />
                             <div className="order-bump-checkbox-custom"></div>
                             <div className="order-bump-action-text">
-                                <span className="order-bump-action-main">Sí, agregar mi Kit Ejecutivo de Acción</span>
+                                <span className="order-bump-action-main">Sí, agregar mi Plan de Acción</span>
                                 <span className="order-bump-action-sub">Descarga inmediata en PDF al finalizar el analisis avanzado</span>
                             </div>
                         </label>

@@ -1,21 +1,23 @@
 export const advancedEnneagramInfo = {
     "1": {
-        phrase: "Debo hacerlo bien o tengo que ser perfecto.",
+        description: "Ordenado, íntegro, responsable y orientado a la mejora constante. Busca hacer lo correcto y vivir en coherencia. No busca la perfección por orgullo, sino por el deseo profundo de hacer lo correcto y contribuir a un mundo mejor.",
+        phrase: "“No es suficiente… puedo hacerlo mejor”",
         motivations: {
             fear: "Ser malo, defectuoso, perverso o corrupto.",
             desire: "Ser bueno, tener integridad, ser equilibrado.",
             msg: "Tu motivación principal es el perfeccionamiento. Buscas la excelencia no solo por el resultado, sino por un sentido interno de rectitud ética."
         },
         triads: {
-            center: "Instintivo (Acción)",
-            social: "Diligente / Cumplidor",
-            coping: "Competencia",
-            desc: "Como parte de la tríada instintiva, procesas el mundo a través de la acción correcta. Tu estilo social es cumplidor, buscando el ideal, y ante los conflictos prefieres la objetividad y las reglas claras."
+            center: "Instintivo (cerebro base o reptiliano)\norientado a la Acción",
+            seeking: "Autonomía",
+            social: "adaptativa o complaciente,\nte ganas la autonomía siendo correcto.",
+            coping: "ira expresada en tensión interna,\nautoexigencia y corrección. No explosiva.",
+            desc: "Necesitas sentir que puedes existir con fuerza propia, que tu espacio interno es íntegro y que no estás siendo invadido, controlado o desbordado por el entorno.\n\nTu cuerpo registra primero. Luego actúas."
         },
         paths: {
-            growth: "Hacia el 7: Integras la alegría, la espontaneidad y la flexibilidad.",
-            stress: "Hacia el 4: Te vuelves más autocrítico, melancólico y sientes que nadie te entiende.",
-            msg: "En tu mejor estado, aprendes a soltar el control y disfrutar del presente con la alegría de un 7."
+            growth: "En crecimiento: incorporas ligereza, creatividad y apertura. Dejas de vivir desde la corrección constante y empiezas a permitirte disfrutar, confiar y fluir sin que todo tenga que ser perfecto.",
+            stress: "En estrés: la autoexigencia se intensifica, aparece la frustración contenida y te vuelves más sensible a la crítica. Puedes sentirte incomprendido y caer en una mirada más dura contigo y con los demás.",
+            msg: "En tu mejor estado, descubres que puedes relajarte sin perder tu integridad ni tu disciplina."
         },
         leadership: [
             "Fomenta la flexibilidad: No todas las soluciones tienen una única forma 'correcta'.",
@@ -24,6 +26,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "2": {
+        description: "Generoso, empático y profundamente orientado a las necesidades de los demás. Busca ser amado y apreciado a través del servicio y el apoyo incondicional.",
         phrase: "Si ayudo a los demás, me querrán.",
         motivations: {
             fear: "No ser digno de amor o ser despreciado.",
@@ -32,6 +35,7 @@ export const advancedEnneagramInfo = {
         },
         triads: {
             center: "Emocional (Sentimiento)",
+            seeking: "Atención",
             social: "Diligente / Cumplidor",
             coping: "Optimismo",
             desc: "Perteneces a la tríada del corazón. Tu enfoque es la conexión. En lo social, eres quien cuida a los demás, y ante los problemas buscas mantener una actitud positiva y servicial."
@@ -48,6 +52,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "3": {
+        description: "Pragmático, eficiente y orientado al éxito y la excelencia. Busca validar su valor personal a través de logros tangibles y una imagen profesional impecable.",
         phrase: "Tengo que tener éxito y ser admirado.",
         motivations: {
             fear: "No tener valor, ser un fracaso.",
@@ -56,6 +61,7 @@ export const advancedEnneagramInfo = {
         },
         triads: {
             center: "Emocional (Sentimiento)",
+            seeking: "Atención",
             social: "Asertivo / Combativo",
             coping: "Competencia",
             desc: "Aunque estás en la tríada emocional, a menudo 'apagas' tus sentimientos para ser eficiente. Eres asertivo y te enfocas en la competencia profesional para resolver cualquier reto."
@@ -72,6 +78,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "4": {
+        description: "Sensible, auténtico y profundamente creativo. Busca encontrar un significado único a su existencia y expresar su mundo interno con honestidad absoluta.",
         phrase: "Nadie me entiende como yo me entiendo.",
         motivations: {
             fear: "No tener identidad ni importancia personal.",
@@ -80,6 +87,7 @@ export const advancedEnneagramInfo = {
         },
         triads: {
             center: "Emocional (Sentimiento)",
+            seeking: "Atención",
             social: "Retraído / Alejado",
             coping: "Reactividad",
             desc: "Eres el corazón de la tríada emocional. Tu estilo es retraerse para procesar tus sentimientos internos antes de actuar, y reaccionas con intensidad cuando algo no se siente auténtico."
@@ -96,6 +104,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "5": {
+        description: "Analítico, observador y con una gran sed de conocimiento. Busca entender el mundo a profundidad para sentirse capaz y proteger su independencia emocional.",
         phrase: "Debo entenderlo todo antes de actuar.",
         motivations: {
             fear: "Ser inútil, incapaz o incompetente.",
@@ -104,6 +113,7 @@ export const advancedEnneagramInfo = {
         },
         triads: {
             center: "Mental (Pensamiento)",
+            seeking: "Seguridad",
             social: "Retraído / Alejado",
             coping: "Competencia",
             desc: "Lideras la tríada mental. Te alejas del ruido para analizar datos con objetividad. Tu herramienta ante el conflicto es la competencia técnica y el desapego emocional."
@@ -120,6 +130,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "6": {
+        description: "Leal, responsable y siempre alerta ante posibles riesgos. Busca seguridad y apoyo a través de la preparación, la previsión y la fidelidad a sus vínculos y valores.",
         phrase: "Tengo que estar preparado para lo peor.",
         motivations: {
             fear: "No tener apoyo ni orientación.",
@@ -128,6 +139,7 @@ export const advancedEnneagramInfo = {
         },
         triads: {
             center: "Mental (Pensamiento)",
+            seeking: "Seguridad",
             social: "Diligente / Cumplidor",
             coping: "Reactividad",
             desc: "Perteneces a la tríada mental. Eres cumplidor con las normas y el equipo, y sueles reaccionar con cautela o cuestionamiento ante las amenazas externas."
@@ -144,6 +156,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "7": {
+        description: "Entusiasta, optimista y siempre en busca de nuevas experiencias. Busca la felicidad y la satisfacción evitando el dolor a través de la exploración constante de posibilidades.",
         phrase: "Debo evitar el aburrimiento y buscar lo positivo.",
         motivations: {
             fear: "Sufrir, estar atrapado en el dolor o la privación.",
@@ -152,6 +165,7 @@ export const advancedEnneagramInfo = {
         },
         triads: {
             center: "Mental (Pensamiento)",
+            seeking: "Seguridad",
             social: "Asertivo / Combativo",
             coping: "Optimismo",
             desc: "Aunque eres asertivo y mental, tu motor es el optimismo ciego. Ante los problemas, prefieres ver las oportunidades en lugar de los obstáculos."
@@ -168,6 +182,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "8": {
+        description: "Poderoso, directo y protector de los suyos. Busca ser fuerte y mantener el control de su destino para evitar ser vulnerable o controlado por fuerzas externas.",
         phrase: "Tengo que ser fuerte y tener el control.",
         motivations: {
             fear: "Ser dañado o controlado por otros.",
@@ -175,7 +190,8 @@ export const advancedEnneagramInfo = {
             msg: "Tu presencia es imponente y protectora. No temes al conflicto porque buscas la verdad y el control de tu destino."
         },
         triads: {
-            center: "Instintivo (Acción)",
+            center: "Instintivo (cerebro base o reptiliano)\norientado a la Acción",
+            seeking: "Autonomía",
             social: "Asertivo / Combativo",
             coping: "Reactividad",
             desc: "Eres el líder de la tríada instintiva. Tu estilo social es asertivo y directo. Ante el conflicto, reaccionas de frente, sin rodeos, protegiendo tu territorio y a los tuyos."
@@ -192,6 +208,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "9": {
+        description: "Pacífico, mediador y con una gran capacidad de escucha. Busca la armonía interna y externa, evitando el conflicto para mantener la estabilidad y la conexión con el entorno.",
         phrase: "Debo mantener la paz y evitar el conflicto.",
         motivations: {
             fear: "Perder la conexión, la separación.",
@@ -199,7 +216,8 @@ export const advancedEnneagramInfo = {
             msg: "Eres el gran mediador. Tu capacidad para ver todos los puntos de vista crea puentes donde otros ven muros."
         },
         triads: {
-            center: "Instintivo (Acción)",
+            center: "Instintivo (cerebro base o reptiliano)\norientado a la Acción",
+            seeking: "Autonomía",
             social: "Retraído / Alejado",
             coping: "Optimismo",
             desc: "Eres el centro de la tríada instintiva, pero a menudo 'apagas' tu instinto para mantener la paz. Te retraes de los conflictos y prefieres ver el lado armonioso de la vida."
