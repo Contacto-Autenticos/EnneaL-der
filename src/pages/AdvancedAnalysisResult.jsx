@@ -498,7 +498,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             <div className="phrase-content">
                                 <Quote className="phrase-quote-icon" size={20} />
                                 <p className="phrase-text">
-                                    <strong>Frase interna que suele repetirse:</strong> "{details.phrase}"
+                                    <strong>Frase interna que suele repetirse:</strong> {details.phrase}
                                 </p>
                             </div>
                         </div>

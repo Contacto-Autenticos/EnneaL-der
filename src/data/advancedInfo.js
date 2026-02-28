@@ -1,7 +1,7 @@
 export const advancedEnneagramInfo = {
     "1": {
         description: "Ordenado, íntegro, responsable y orientado a la mejora constante. Busca hacer lo correcto y vivir en coherencia. No busca la perfección por orgullo, sino por el deseo profundo de hacer lo correcto y contribuir a un mundo mejor.",
-        phrase: "“No es suficiente… puedo hacerlo mejor”",
+        phrase: "No es suficiente… puedo hacerlo mejor",
         motivations: {
             fear: "Ser malo, defectuoso, perverso o corrupto.",
             desire: "Ser bueno, tener integridad, ser equilibrado.",
