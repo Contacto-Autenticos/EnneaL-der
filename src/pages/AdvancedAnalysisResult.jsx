@@ -680,7 +680,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     {/* Order Bump Section: Executive Kit */}
                     <div className="executive-kit-promo">
                         <div className="kit-promo-content">
-                            <h3>Plan de Acción</h3>
+                            <h3>Tu Plan de Acción</h3>
                             <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
                             <button
                                 onClick={handleDownloadExecutiveKit}
@@ -689,11 +689,11 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             >
                                 {isDownloadingKit ? (
                                     <>
-                                        <Loader2 size={18} className="spinner" /> Generando Plan de Acción...
+                                        <Loader2 size={18} className="spinner" /> Generando tu Plan de Acción...
                                     </>
                                 ) : (
                                     <>
-                                        <CheckCircle2 size={18} /> Descargar Plan de Acción
+                                        <CheckCircle2 size={18} /> Descargar mi Plan de Acción
                                     </>
                                 )}
                             </button>
