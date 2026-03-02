@@ -12,7 +12,7 @@ const Home = () => {
             <div className="home-content-wrapper">
                 <div className="home-logo-container">
                     <img
-                        src="/Circulo_Eneagrama_Autenticos_02.png"
+                        src="/Circulo_Eneagrama_Autenticos_01.png"
                         alt="Logo Eneagrama - Autenticos"
                         className="home-logo animate-zoom-in-slow"
                     />
