@@ -1,7 +1,7 @@
 export const advancedEnneagramInfo = {
     "1": {
         description: "Ordenado, íntegro, responsable y orientado a la mejora constante. Busca hacer lo correcto y vivir en coherencia. No busca la perfección por orgullo, sino por el deseo profundo de hacer lo correcto y contribuir a un mundo mejor.",
-        phrase: "No es suficiente… puedo hacerlo mejor",
+        phrase: "No es suficiente… puedo hacerlo mejor.",
         motivations: {
             fear: "Ser malo, defectuoso, perverso o corrupto.",
             desire: "Ser bueno, tener integridad, ser equilibrado.",
@@ -56,29 +56,58 @@ export const advancedEnneagramInfo = {
     },
     "2": {
         description: "Cálido, generoso y orientado al vínculo. Buscas sentirte necesario y valioso a través del servicio y la conexión. No ayuda para manipular, sino por el deseo profundo de amar y ser amado.",
-        phrase: "“Créeme, lo hago por tu bien",
+        phrase: "Créeme, lo hago por tu bien.",
         motivations: {
             fear: "No ser digno de amor o ser despreciado.",
             desire: "Sentirse amado y necesitado.",
             msg: "Tu generosidad es tu mayor don, pero a veces la usas para asegurar que los demás permanezcan cerca de ti."
         },
         triads: {
-            center: "Emocional (Sentimiento)",
-            seeking: "Atención",
-            social: "Diligente / Cumplidor",
-            coping: "Optimismo",
-            desc: "Perteneces a la tríada del corazón. Tu enfoque es la conexión. En lo social, eres quien cuida a los demás, y ante los problemas buscas mantener una actitud positiva y servicial."
+            center: "Emocional (cerebro límbico)\norientado al Sentimiento",
+            seeking: "Valor, conexión y reconocimiento afectivo.",
+            social: "Adaptativa o complaciente. (Moverse hacia)\nTe ganas la atención y el amor siendo\nnecesario, atento y disponible.",
+            coping: "Vergüenza transformada en\norgullo relacional y sobreentrega.\nNo suele mostrarse como inseguridad abierta.",
+            desc: "Necesitas sentir que eres importante para alguien, que tu presencia marca una diferencia y que tu amor es correspondido."
         },
         paths: {
-            growth: "Hacia el 4: Aprendes a reconocer y validar tus propias necesidades internas.",
-            stress: "Hacia el 8: Te vuelves exigente, controlador y resentido si no te sientes valorado.",
-            msg: "Tu crecimiento ocurre cuando dejas de buscar amor afuera y empiezas a dártelo a ti mismo."
+            growth: "Desarrollas mayor conexión contigo mismo y autenticidad emocional. Reconoces tus propias necesidades, pones límites con claridad y dejas de dar para obtener aprobación. Aprendes a amar sin sobreentregarte y a recibir sin culpa. Descubres que tu valor no depende de ser indispensable.",
+            stress: "Tu energía se vuelve más intensa y reactiva. Puedes volverte más controlador, reclamar lo que sientes que no te han dado, exigir reconocimiento o expresar enojo acumulado. La frustración aparece cuando no te sientes valorado y, en lugar de seguir ayudando en silencio, puedes confrontar o imponer.",
+            msg: "Reconoces que puedes ser amado sin tener que ganártelo constantemente.\nPuedes decir no sin miedo a perder el vínculo. Te permites ser importante sin dejar de ser tú."
         },
         leadership: [
             "Establece límites claros: Ayudar no significa decir 'sí' a todo.",
             "Pide lo que necesitas: Tu equipo valorará tu honestidad emocional.",
             "Diferencia apoyo de dependencia: Empodera a otros en lugar de solo resolverles."
-        ]
+        ],
+        leadershipStyle: {
+            strengths: ["Empatía genuina", "Capacidad de motivar desde el vínculo", "Cercanía con el equipo", "Generosidad"],
+            risks: ["Dificultad para poner límites", "Tomar decisiones para agradar", "Resentimiento no expresado", "Sobreprotección"]
+        },
+        automaticPattern: {
+            activators: [
+                "Sentir indiferencia",
+                "Percibir frialdad emocional",
+                "No ser tomado en cuenta",
+                "No recibir agradecimiento",
+                "Sentir que no te necesitan"
+            ],
+            responses: [
+                "Detectar necesidad en el otro",
+                "Ofrecer ayuda inmediatamente",
+                "Postergar tus propias necesidades",
+                "Esperar reconocimiento implícito",
+                "Sentir frustración si no eres valorado"
+            ]
+        },
+        bodyImpact: {
+            intro: "Cómo se manifiesta en tu cuerpo la activación de tu patron automático:",
+            items: [
+                "Tensión en pecho o garganta",
+                "Sensación de opresión emocional",
+                "Cansancio por sobreentrega",
+                "Dificultad para descansar sin estar pendiente de alguien"
+            ]
+        }
     },
     "3": {
         description: "Pragmático, eficiente y orientado al éxito y la excelencia. Busca validar su valor personal a través de logros tangibles y una imagen profesional impecable.",

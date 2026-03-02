@@ -183,7 +183,7 @@ h3 {
 .home-title {
   font-size: 2rem;
   margin-bottom: 1vh;
-  color: var(--color-primary);
+  color: var(--color-secondary);
   line-height: 1.2;
 }
 
@@ -192,6 +192,7 @@ h3 {
   margin-bottom: 3vh;
   max-width: 600px;
   line-height: 1.4;
+  color: #888;
 }
 
 .btn-start {
