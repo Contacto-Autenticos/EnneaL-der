@@ -55,8 +55,8 @@ export const advancedEnneagramInfo = {
         }
     },
     "2": {
-        description: "Generoso, empático y profundamente orientado a las necesidades de los demás. Busca ser amado y apreciado a través del servicio y el apoyo incondicional.",
-        phrase: "Si ayudo a los demás, me querrán.",
+        description: "Cálido, generoso y orientado al vínculo. Buscas sentirte necesario y valioso a través del servicio y la conexión. No ayuda para manipular, sino por el deseo profundo de amar y ser amado.",
+        phrase: "“Créeme, lo hago por tu bien",
         motivations: {
             fear: "No ser digno de amor o ser despreciado.",
             desire: "Sentirse amado y necesitado.",
