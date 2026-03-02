@@ -23,7 +23,36 @@ export const advancedEnneagramInfo = {
             "Fomenta la flexibilidad: No todas las soluciones tienen una única forma 'correcta'.",
             "Practica la autocompasión: Tu crítico interno puede ser constructivo si le bajas el volumen.",
             "Delega con confianza: Permite que otros cometan errores en el camino al aprendizaje."
-        ]
+        ],
+        leadershipStyle: {
+            strengths: ["Ética incuestionable", "Coherencia", "Claridad en estándares"],
+            risks: ["Microgestión", "Rigidez", "Frustración silenciosa"]
+        },
+        automaticPattern: {
+            activators: [
+                "Sentir injusticia.",
+                "Percibir irresponsabilidad.",
+                "Ver mediocridad repetida.",
+                "Que cuestionen tu ética.",
+                "Sentir que fallaste moralmente."
+            ],
+            responses: [
+                "Detectar el error inmediatamente.",
+                "Activar tensión corporal.",
+                "Iniciar diálogo crítico interno.",
+                "Intentar corregir o controlar.",
+                "Sentir que aún no es suficiente."
+            ]
+        },
+        bodyImpact: {
+            intro: "Cómo se manifiesta en tu cuerpo la activación de tu patron automatico:",
+            items: [
+                "Tensión en mandíbula.",
+                "Rigidez en espalda o abdomen.",
+                "Respiración superficial.",
+                "Dificultad para descansar sin culpa."
+            ]
+        }
     },
     "2": {
         description: "Generoso, empático y profundamente orientado a las necesidades de los demás. Busca ser amado y apreciado a través del servicio y el apoyo incondicional.",

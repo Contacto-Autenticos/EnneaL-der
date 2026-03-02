@@ -14,7 +14,14 @@ import {
     Quote,
     HelpCircle,
     Download,
-    Loader2
+    Loader2,
+    MousePointerClick,
+    Shield,
+    AlertTriangle,
+    Check,
+    Zap,
+    Activity,
+    Wind
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import { executiveKitData } from '../data/executiveKitInfo';
@@ -120,6 +127,7 @@ const EnneagramRing = ({ activeType }) => {
 const ScoreModal = ({ isOpen, onClose, results }) => {
     if (!isOpen) return null;
 
+    const sortedResults = [...results].sort((a, b) => b.score - a.score);
     const maxScore = Math.max(...results.map(r => r.score));
 
     return (
@@ -128,23 +136,41 @@ const ScoreModal = ({ isOpen, onClose, results }) => {
                 <button className="modal-close-btn" onClick={onClose}>
                     <X size={24} />
                 </button>
-                <h2 className="modal-title">Puntajes por eneatipo</h2>
+                <div className="modal-header">
+                    <h2 className="modal-title">Puntajes por eneatipo</h2>
+                    <p className="modal-subtitle">Tu configuración energética detallada</p>
+                </div>
                 <div className="score-bars-container">
-                    {results.map((res) => (
+                    {sortedResults.map((res, index) => (
                         <div key={res.type} className="score-bar-row">
                             <div className="score-bar-info">
-                                <span className="score-bar-type">Tipo {res.type}</span>
-                                <span className="score-bar-name">{res.name}</span>
+                                <div className="score-bar-labels">
+                                    <span className="score-bar-type">Tipo {res.type}</span>
+                                    <span className="score-bar-name">{res.name}</span>
+                                </div>
                             </div>
-                            <div className="score-bar-track">
-                                <div
-                                    className="score-bar-fill"
-                                    style={{ width: `${(res.score / maxScore) * 100}% ` }}
-                                ></div>
+                            <div className="score-bar-visual">
+                                <div className="score-bar-track-wrapper">
+                                    <div className="score-bar-track">
+                                        <div
+                                            className="score-bar-fill"
+                                            style={{
+                                                width: `${(res.score / maxScore) * 100}%`,
+                                                background: index < 3 ? '#ddbe3d' : '#547689'
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                <span className="score-bar-pts">{res.score}pts</span>
                             </div>
-                            <span className="score-bar-pts">{res.score}pts</span>
                         </div>
                     ))}
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-back-btn" onClick={onClose}>
+                        <ArrowLeft size={18} />
+                        Regresar
+                    </button>
                 </div>
             </div>
         </div>
@@ -157,12 +183,28 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [isDownloadingKit, setIsDownloadingKit] = React.useState(false);
 
+    const [localResult, setLocalResult] = React.useState(null);
+
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+        // Load result from localStorage if not provided via props
+        if (!result) {
+            const stored = localStorage.getItem('enneagramAdvancedResult');
+            if (stored) {
+                try {
+                    setLocalResult(JSON.parse(stored));
+                } catch (e) {
+                    console.error('Error parsing stored advanced result', e);
+                }
+            }
+        }
+    }, [result]);
+
+    // Determine the result to use
+    const activeResult = result || localResult;
 
     // Determine the type and result to display
-    const type = urlType || result?.confirmedType;
+    const type = urlType || activeResult?.confirmedType;
     const user = propUser || { name: '' };
 
     console.log('AdvancedAnalysisResult: Init', { type, user, result });
@@ -205,7 +247,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     console.log('AdvancedAnalysisResult: Render Data', { details, winner });
 
     // Get the runner-ups (top 2 rivals) for differentiation
-    const rivals = (result?.results || [])
+    const rivals = (activeResult?.results || [])
         .filter(r => r.type !== type.toString())
         .sort((a, b) => b.score - a.score)
         .slice(0, 2);
@@ -468,9 +510,9 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             <div className="advanced-coin-wrapper">
                                 <EnneagramRing activeType={type} />
                                 <div
-                                    className={`advanced-coin-container ${result?.results ? 'clickable' : ''}`}
-                                    onClick={() => result?.results && setIsModalOpen(true)}
-                                    title={result?.results ? "Ver puntajes detallados" : ""}
+                                    className={`advanced-coin-container ${activeResult?.results ? 'clickable' : ''}`}
+                                    onClick={() => activeResult?.results && setIsModalOpen(true)}
+                                    title={activeResult?.results ? "Ver puntajes detallados" : ""}
                                 >
                                     <img
                                         src={winner.image ? encodeURI(winner.image) : "/logo-moneda.png"}
@@ -480,6 +522,16 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                     />
                                 </div>
                             </div>
+
+                            {activeResult?.results && (
+                                <div
+                                    className="advanced-coin-hint"
+                                    onClick={() => setIsModalOpen(true)}
+                                >
+                                    <MousePointerClick size={18} />
+                                    <span>Toca el grafico para ver puntajes</span>
+                                </div>
+                            )}
                         </section>
 
                         {/* Section: Brief Description */}
@@ -504,11 +556,11 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         </div>
                     </div>
 
-                    {result?.results && (
+                    {activeResult?.results && (
                         <ScoreModal
                             isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}
-                            results={result.results || []}
+                            results={activeResult.results || []}
                         />
                     )}
 
@@ -628,6 +680,95 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             {details.paths.msg}
                         </p>
                     </section>
+
+                    {/* Section 3.2: Automatic Pattern */}
+                    {details.automaticPattern && (
+                        <section className="advanced-section pattern-section">
+                            <div className="section-header">
+                                <Zap className="section-icon" size={24} />
+                                <h2 className="section-title">Tu Patrón Automático en 5 Pasos</h2>
+                            </div>
+                            <div className="pattern-grid">
+                                <div className="pattern-column activators-column">
+                                    <h4 className="pattern-column-title">Lo que más te activa:</h4>
+                                    <ul className="pattern-list">
+                                        {details.automaticPattern.activators.map((item, idx) => (
+                                            <li key={idx} className="pattern-item">
+                                                <div className="pattern-dot" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="pattern-column responses-column">
+                                    <h4 className="pattern-column-title">Ante lo inesperado, sueles:</h4>
+                                    <ul className="pattern-list">
+                                        {details.automaticPattern.responses.map((item, idx) => (
+                                            <li key={idx} className="pattern-item">
+                                                <Activity size={14} className="pattern-icon-activity" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Section 3.3: Body Impact */}
+                    {details.bodyImpact && (
+                        <section className="advanced-section body-impact-section">
+                            <div className="section-header">
+                                <Wind className="section-icon" size={24} />
+                                <h2 className="section-title">Impacto en el Cuerpo</h2>
+                            </div>
+                            <div className="body-impact-content">
+                                <p className="body-impact-intro">{details.bodyImpact.intro}</p>
+                                <div className="body-impact-grid">
+                                    {details.bodyImpact.items.map((item, idx) => (
+                                        <div key={idx} className="body-impact-item">
+                                            <div className="body-impact-dot" />
+                                            <span>{item}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Section 3.5: Leadership Style */}
+                    {details.leadershipStyle && (
+                        <section className="advanced-section leadership-style-section">
+                            <div className="section-header">
+                                <Shield className="section-icon" size={24} />
+                                <h2 className="section-title">Tu Estilo de Liderazgo</h2>
+                            </div>
+                            <div className="leadership-style-grid">
+                                <div className="style-column strengths-column">
+                                    <h4 className="style-column-title">Fortalezas:</h4>
+                                    <ul className="style-list">
+                                        {details.leadershipStyle.strengths.map((item, idx) => (
+                                            <li key={idx} className="style-item">
+                                                <Check size={16} className="style-icon-check" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="style-column risks-column">
+                                    <h4 className="style-column-title">Riesgos:</h4>
+                                    <ul className="style-list">
+                                        {details.leadershipStyle.risks.map((item, idx) => (
+                                            <li key={idx} className="style-item">
+                                                <AlertTriangle size={16} className="style-icon-alert" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    )}
 
                     {/* Section 4: Actionable Advice */}
                     <section className="advanced-section">

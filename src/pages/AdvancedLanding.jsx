@@ -210,7 +210,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                         <div className="al-recap-grid">
                             {top3.length > 0 ? top3.map((item, i) => (
                                 <div key={i} className="al-recap-item">
-                                    <span className="al-recap-label">Eneatipo con Afinidad <strong>{item.affinity}</strong>:</span>
+                                    <span className="al-recap-label">Eneatipo con Afinidad <strong style={{ color: '#ddbe3d' }}>{item.affinity}</strong>:</span>
                                     <span className="al-recap-value">Tipo {item.type} — {item.title}</span>
                                 </div>
                             )) : (
