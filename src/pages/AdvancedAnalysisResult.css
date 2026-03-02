@@ -1057,11 +1057,46 @@
 }
 
 .executive-kit-promo h3 {
-    font-size: 1.5rem;
-    color: #ddbe3d;
-    margin-bottom: 10px;
+    font-size: 1.4rem;
+    color: #002d44;
+    /* Blue text as requested */
+    margin-bottom: 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+    position: relative;
+    z-index: 1;
+}
+
+.kit-title-shimmer {
+    background: #ddbe3d;
+    /* Yellow bar */
+    padding: 15px 0;
+    margin: -30px -30px 25px -30px;
+    /* Negative margins to fill the space */
+    width: calc(100% + 60px);
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.2);
+}
+
+.kit-title-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    animation: shimmerEffectTitle 3s infinite;
+}
+
+@keyframes shimmerEffectTitle {
+    to {
+        left: 100%;
+    }
 }
 
 .executive-kit-promo p {

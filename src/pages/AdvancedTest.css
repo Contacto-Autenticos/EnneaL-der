@@ -30,7 +30,8 @@
     padding: 20px 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    /* Alignment from the top */
     align-items: center;
     position: relative;
     z-index: 1;
@@ -42,11 +43,14 @@
 ────────────────────────────────────────── */
 .adv-test-progress-bar-bg {
     width: 100%;
-    height: 4px;
+    height: 6px;
+    /* Slightly thicker for better visibility */
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     overflow: hidden;
+    flex-shrink: 0;
+    /* Never shrink or disappear */
 }
 
 .adv-test-progress-bar-fill {

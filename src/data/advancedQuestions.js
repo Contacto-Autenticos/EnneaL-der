@@ -18,7 +18,7 @@ export const advancedQuestions = [
 
     // Grupo 2 - El servicial
     { id: 201, enneatype: '2', text: "Suelo estar muy pendiente de las necesidades de los demás, incluso antes que de las mías.", type: '2' },
-    { id: 202, enneatype: '2', text: "Me siento bien cuando cuando puedo ayudar o hacer algo útil por otra persona.", type: '2' },
+    { id: 202, enneatype: '2', text: "Me siento bien cuando puedo ayudar o hacer algo útil por otra persona.", type: '2' },
     { id: 203, enneatype: '2', text: "Me cuesta decir que no cuando alguien me necesita.", type: '2' },
     { id: 204, enneatype: '2', text: "Disfruto sentir que soy importante en la vida de los demás.", type: '2' },
     { id: 205, enneatype: '2', text: "Cuando alguien cercano está mal, siento un impulso fuerte por cuidarlo o acompañarlo.", type: '2' },

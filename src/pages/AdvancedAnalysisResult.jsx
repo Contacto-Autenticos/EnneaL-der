@@ -821,7 +821,9 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     {/* Order Bump Section: Executive Kit */}
                     <div className="executive-kit-promo">
                         <div className="kit-promo-content">
-                            <h3>Tu Plan de Acción</h3>
+                            <div className="kit-title-shimmer">
+                                <h3>Tu Plan de Acción</h3>
+                            </div>
                             <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
                             <button
                                 onClick={handleDownloadExecutiveKit}

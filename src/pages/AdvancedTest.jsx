@@ -86,7 +86,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                 <div className="adv-test-progress-bar-bg">
                     <div
                         className="adv-test-progress-bar-fill"
-                        style={{ width: `${((currentQuestionIndex) / totalQuestions) * 100}%` }}
+                        style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
                     />
                 </div>
 
@@ -155,16 +155,18 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                     </button>
 
                     <div className="adv-test-dots-wrapper">
-                        <div className="adv-test-dots">
-                            {filteredQuestions.map((_, idx) => (
-                                <span
-                                    key={idx}
-                                    className={`adv-test-dot ${idx <= currentQuestionIndex ? 'adv-test-dot-active' : ''}`}
-                                />
-                            ))}
-                        </div>
+                        {totalQuestions <= 45 && (
+                            <div className="adv-test-dots">
+                                {filteredQuestions.map((_, idx) => (
+                                    <span
+                                        key={idx}
+                                        className={`adv-test-dot ${idx <= currentQuestionIndex ? 'adv-test-dot-active' : ''}`}
+                                    />
+                                ))}
+                            </div>
+                        )}
                         <span className="adv-test-dots-counter">
-                            {currentQuestionIndex + 1}/{totalQuestions}
+                            <span style={{ color: '#ddbe3d' }}>{currentQuestionIndex + 1}</span>/{totalQuestions}
                         </span>
                     </div>
 
