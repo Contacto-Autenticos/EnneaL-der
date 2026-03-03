@@ -335,46 +335,43 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         if (userName) userName.style.color = '#002d44';
                     }
 
-                    if (clonedDescription) {
-                        clonedDescription.style.setProperty('box-shadow', 'none', 'important');
-                        clonedDescription.style.setProperty('background', '#0d2535', 'important');
-                        clonedDescription.style.setProperty('background-color', '#0d2535', 'important');
-                        clonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
-                        clonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
-                        clonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
-                        clonedDescription.style.setProperty('animation', 'none', 'important');
-                        clonedDescription.style.setProperty('transition', 'none', 'important');
-                        clonedDescription.style.setProperty('color', '#ffffff', 'important');
+                    // Función auxiliar para limpiar estilos complejos que fallan en html2canvas
+                    const cleanSectionStyles = (el) => {
+                        if (!el) return;
+                        el.style.setProperty('box-shadow', 'none', 'important');
+                        el.style.setProperty('background', '#0d2535', 'important');
+                        el.style.setProperty('background-color', '#0d2535', 'important');
+                        el.style.setProperty('background-image', 'none', 'important'); // Evitar bug de bordes transparentes/negros con gradientes
+                        el.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.4)', 'important');
+                        el.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                        el.style.setProperty('margin', '0 0 30px 0', 'important');
+                        el.style.setProperty('animation', 'none', 'important');
+                        el.style.setProperty('transition', 'none', 'important');
+                        el.style.setProperty('color', '#ffffff', 'important');
+                    };
 
+                    const clonedDescription = clonedDoc.querySelector('.description-section');
+                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+
+                    if (clonedDescription) {
+                        cleanSectionStyles(clonedDescription);
                         const text = clonedDescription.querySelector('.description-text');
                         if (text) text.style.setProperty('color', '#ffffff', 'important');
-
                         const label = clonedDescription.querySelector('.description-label');
                         if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
                     if (clonedPhrase) {
-                        clonedPhrase.style.setProperty('background', '#0d2535', 'important');
-                        clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
-                        clonedPhrase.style.setProperty('color', '#ffffff', 'important');
-                        clonedPhrase.style.setProperty('animation', 'none', 'important');
-                        clonedPhrase.style.setProperty('transition', 'none', 'important');
-
+                        cleanSectionStyles(clonedPhrase);
                         const text = clonedPhrase.querySelector('.phrase-text');
                         if (text) text.style.setProperty('color', '#ffffff', 'important');
-
                         const label = clonedPhrase.querySelector('strong');
                         if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
                     const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
                     advancedSections.forEach(section => {
-                        section.style.setProperty('background', '#0d2535', 'important');
-                        section.style.setProperty('background-color', '#0d2535', 'important');
-                        section.style.setProperty('color', '#ffffff', 'important');
-                        section.style.setProperty('animation', 'none', 'important');
-                        section.style.setProperty('transition', 'none', 'important');
-
+                        cleanSectionStyles(section);
                         const sectionTitle = section.querySelector('.section-title');
                         if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
                     });
