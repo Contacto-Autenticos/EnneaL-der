@@ -20,9 +20,9 @@ export const advancedEnneagramInfo = {
             msg: "En tu mejor estado: Descubres que puedes relajarte sin perder tu integridad ni tu disciplina."
         },
         leadershipStyle: {
-            strengths: ["Ética incuestionable", "Coherencia", "Claridad en estándares"],
-            risks: ["Microgestión", "Rigidez", "Frustración silenciosa"],
-            footer: "Tu liderazgo florece cuando la rectitud se une a la compasión y la apertura."
+            strengths: ["Ética incuestionable", "Coherencia", "Claridad en estándares", "Capacidad de mejora continua"],
+            risks: ["Microgestión", "Rigidez", "Frustración silenciosa", "⚠️ Autocrítica excesiva"],
+            footer: "Tu liderazgo alcanza su mayor impacto cuando comprendes que no todo depende de ti y transformas la crítica en guía y la exigencia en ejemplo. Sostienes estándares altos sin perder flexibilidad y apertura."
         },
         leadership: [
             "Fomenta la flexibilidad: No todas las soluciones tienen una única forma 'correcta'.",
