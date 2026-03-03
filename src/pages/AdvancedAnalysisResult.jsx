@@ -49,7 +49,7 @@ const EnneagramRing = ({ activeType }) => {
 
     return (
         <div className="enneagram-ring-svg-wrapper">
-            <svg viewBox="0 0 400 400" className="enneagram-ring-svg">
+            <svg viewBox="0 0 400 400" className="enneagram-ring-svg" style={{ overflow: 'visible' }}>
                 <defs>
                     {/* Filter for a soft glow on the active segment */}
                     <filter id="activeGlow" x="-50%" y="-50%" width="200%" height="200%">
@@ -63,6 +63,20 @@ const EnneagramRing = ({ activeType }) => {
                         </feMerge>
                     </filter>
                 </defs>
+
+                {/* Golden Background Elements: Rhombus & Lines */}
+                <g className="background-geometry" style={{ opacity: 0.8 }}>
+                    {/* Horizontal Lines */}
+                    <line x1="-100" y1="40" x2="500" y2="40" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <line x1="-100" y1="360" x2="500" y2="360" stroke="#ddbe3d" strokeWidth="1.5" />
+                    {/* Golden Rhombus matching the card width limits */}
+                    <polygon
+                        points="200,-10 410,200 200,410 -10,200"
+                        fill="none"
+                        stroke="#ddbe3d"
+                        strokeWidth="2"
+                    />
+                </g>
 
                 {types.map((type, index) => {
                     const startAngle = (index * 40 - 20) * (Math.PI / 180);

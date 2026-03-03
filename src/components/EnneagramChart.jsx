@@ -96,19 +96,6 @@ const EnneagramChart = ({ scores, phase = 6, top3Types = [] }) => {
             <svg viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`} style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
                 {gradients}
 
-                {/* Golden Background Elements: Rhombus & Lines */}
-                <g className="background-geometry" style={{ opacity: phase === 1 ? 0 : 0.8, transition: 'opacity 1s ease-in 0.5s' }}>
-                    {/* Horizontal Lines */}
-                    <line x1="-100" y1="20" x2="400" y2="20" stroke="#ddbe3d" strokeWidth="1.5" />
-                    <line x1="-100" y1="280" x2="400" y2="280" stroke="#ddbe3d" strokeWidth="1.5" />
-                    {/* Golden Rhombus matching the card width limits */}
-                    <polygon
-                        points="150,-40 340,150 150,340 -40,150"
-                        fill="none"
-                        stroke="#ddbe3d"
-                        strokeWidth="2"
-                    />
-                </g>
 
                 {/* Outer Ring Segments */}
                 {types.map((type, i) => {
