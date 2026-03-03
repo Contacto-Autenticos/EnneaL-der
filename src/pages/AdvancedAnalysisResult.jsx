@@ -350,9 +350,6 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         el.style.setProperty('color', '#ffffff', 'important');
                     };
 
-                    const clonedDescription = clonedDoc.querySelector('.description-section');
-                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
-
                     if (clonedDescription) {
                         cleanSectionStyles(clonedDescription);
                         const text = clonedDescription.querySelector('.description-text');
