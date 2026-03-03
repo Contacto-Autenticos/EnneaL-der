@@ -288,7 +288,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     // Configurar el contenedor principal para que parezca una gran hoja
                     clonedContent.style.background = '#ffffff';
                     clonedContent.style.width = '210mm'; // Ancho A4
-                    clonedContent.style.padding = '35mm 20mm 35mm 20mm';
+                    clonedContent.style.padding = '15mm 20mm 35mm 20mm'; // Menos espacio arriba
                     clonedContent.style.boxSizing = 'border-box';
                     clonedContent.style.margin = '0 auto';
                     clonedContent.style.position = 'relative';
