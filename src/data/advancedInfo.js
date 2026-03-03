@@ -71,8 +71,8 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que eres importante para alguien, que tu presencia marca una diferencia y que tu amor es correspondido."
         },
         paths: {
-            growth: "Desarrollas mayor conexión contigo mismo y autenticidad emocional. Reconoces tus propias necesidades, pones límites con claridad y dejas de dar para obtener aprobación. Aprendes a amar sin sobreentregarte y a recibir sin culpa. Descubres que tu valor no depende de ser indispensable.",
-            stress: "Tu energía se vuelve más intensa y reactiva. Puedes volverte más controlador, reclamar lo que sientes que no te han dado, exigir reconocimiento o expresar enojo acumulado. La frustración aparece cuando no te sientes valorado y, en lugar de seguir ayudando en silencio, puedes confrontar o imponer.",
+            growth: "En crecimiento: Desarrollas mayor conexión contigo mismo y autenticidad emocional. Reconoces tus propias necesidades, pones límites con claridad y dejas de dar para obtener aprobación. Aprendes a amar sin sobreentregarte y a recibir sin culpa. Descubres que tu valor no depende de ser indispensable.",
+            stress: "En estrés: Tu energía se vuelve más intensa y reactiva. Puedes volverte más controlador, reclamar lo que sientes que no te han dado, exigir reconocimiento o expresar enojo acumulado. La frustración aparece cuando no te sientes valorado y, en lugar de seguir ayudando en silencio, puedes confrontar o imponer.",
             msg: "En tu mejor estado: Reconoces que puedes ser amado sin tener que ganártelo constantemente. Puedes decir no sin miedo a perder el vínculo. Te permites ser importante sin dejar de ser tú."
         },
         leadershipStyle: {
@@ -392,7 +392,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "8": {
-        description: "Intenso, directo y protector. Vives con fuerza y presencia. No te gusta sentirte vulnerable ni depender de otros, por eso tu energía es firme y te permite tener el control para proteger a quienes amas. Reaccionas con contundencia cuando percibes abuso o deslealtad. Prefieres enfrentar el conflicto de frente antes que quedarte en la ambigüedad, porque para ti la verdad siempre es más segura que la traición silenciosa.",
+        description: "Intenso, directo y protector. Vives con fuerza y presencia. No te gusta sentirte vulnerable ni depender de otros, por eso tu energía es firme y te permite tener el control. Reaccionas con contundencia cuando percibes abuso o deslealtad. Prefieres afrontar el conflicto de frente antes que quedarte en la ambigüedad.",
         phrase: "En la vida se camina de frente.",
         motivations: {
             fear: "Ser dañado o controlado por otros.",
@@ -448,7 +448,7 @@ export const advancedEnneagramInfo = {
         ]
     },
     "9": {
-        description: "Calmado, conciliador y profundamente estable. Tienes una presencia tranquila que sostiene a otros sin imponerse. No te gusta el conflicto ni la confrontación directa, por eso desarrollaste una energía adaptable que busca mantener la armonía a tu alrededor. Percibes con facilidad la tensión en el ambiente y haces lo necesario para que todo vuelva a estar en calma. Prefieres suavizar antes que chocar, porque para ti la conexión siempre es más valiosa que tener la razón.",
+        description: "Calmado, conciliador y muy estable. Tu presencia sostiene sin imposición, no te gusta el conflicto ni la confrontación directa, por eso desarrollaste una energía adaptable que busca mantener la armonía. Prefieres suavizar antes que chocar, porque para ti la conexión siempre es más valiosa que tener la razón.",
         phrase: "Sentirme es paz interior, lo es todo.",
         motivations: {
             fear: "Perder la conexión, la separación.",
