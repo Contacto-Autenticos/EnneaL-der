@@ -11,7 +11,7 @@ export const advancedEnneagramInfo = {
             center: "Instintivo | Acción",
             seeking: "Autonomía haciendo lo correcto",
             social: "Adaptativa | Te ganas la autonomía\nhaciendo lo correcto",
-            coping: "ira expresada en tensión interna,\nautoexigencia y corrección. No explosiva.",
+            coping: "Ira contenida.\nSe vuelve rigidez interna, crítica y perfeccionismo",
             desc: "Necesitas sentir que puedes existir con fuerza propia, que tu espacio interno es íntegro y que no estás siendo invadido, controlado o desbordado por el entorno.\n\nTu cuerpo registra primero. Luego actúas."
         },
         paths: {
@@ -67,7 +67,7 @@ export const advancedEnneagramInfo = {
             center: "Emocional | Sentimiento",
             seeking: "Atención siendo necesario",
             social: "Adaptativa | Te ganas la atención\nsiendo atento y disponible",
-            coping: "Vergüenza transformada en\norgullo relacional y sobreentrega.\nNo suele mostrarse como inseguridad abierta.",
+            coping: "Vergüenza negada.\nSe oculta en sobreentrega y disponibilidad.",
             desc: "Necesitas sentir que eres importante para alguien, que tu presencia marca una diferencia y que tu amor es correspondido."
         },
         paths: {
@@ -123,7 +123,7 @@ export const advancedEnneagramInfo = {
             center: "Emocional | Sentimiento",
             seeking: "Atención demostrando tu valor",
             social: "Combativa | Exiges reconocimiento\ndemostrando resultados",
-            coping: "Vergüenza transformada en impulso\nde éxito e imagen competente.",
+            coping: "Vergüenza desconectada.\nPara no dudar de tu valor, te enfocas en la imagen",
             desc: "Necesitas sentir que eres admirable, que destacas y que tu desempeño confirma tu valor. La imagen lo es todo para ti."
         },
         paths: {
@@ -179,7 +179,7 @@ export const advancedEnneagramInfo = {
             center: "Emocional | Sentimiento",
             seeking: "Atención siendo diferente",
             social: "Reservada | Te retiras para proteger\ntu identidad emocional",
-            coping: "Vergüenza transformada en comparación\ny sensación de carencia.",
+            coping: "Vergüenza intensificada. No la evitas,\nla exploras y la conviertes en identidad y autenticidad",
             desc: "Necesitas sentir que tu identidad es única y que tu experiencia emocional tiene valor."
         },
         paths: {
@@ -235,7 +235,7 @@ export const advancedEnneagramInfo = {
             center: "Mental | Pensamiento",
             seeking: "Seguridad a través del conocimiento",
             social: "Reservada | Te retiras para proteger tu energía",
-            coping: "Miedo transformado en distanciamiento\ny acumulación de conocimiento.",
+            coping: "Miedo internalizado.\nEn lugar de reaccionar, te retiras para comprender",
             desc: "Necesitas sentir que tienes suficiente información y control interno antes de exponerte.\nPiensas primero. Luego actúas."
         },
         paths: {
@@ -291,7 +291,7 @@ export const advancedEnneagramInfo = {
             center: "Mental | Pensamiento",
             seeking: "Seguridad a través de la prevención",
             social: "Adaptativa | Te ganas la seguridad\nsiendo comprometido y leal",
-            coping: "Miedo transformado en vigilancia y anticipación.",
+            coping: "Miedo anticipatorio.\nLo utilizas para prever escenarios y reducir riesgos",
             desc: "Necesitas sentir que no estás solo y que puedes confiar en alguien o en algo.\nImaginas y consultas todos los posibles escenarios antes de tomar una decisión."
         },
         paths: {
@@ -347,7 +347,7 @@ export const advancedEnneagramInfo = {
             center: "Mental | Pensamiento",
             seeking: "Seguridad manteniendo posibilidades abiertas",
             social: "Combativa | Exiges libertad tomando la iniciativa",
-            coping: "Miedo transformado en entusiasmo\ny planificación constante.",
+            coping: "Miedo evitado.\nLo enmascaras en entusiasmo. Buscas nuevas posibilidades",
             desc: "Necesitas sentir que siempre hay una salida, una alternativa o algo mejor por venir."
         },
         paths: {
@@ -403,7 +403,7 @@ export const advancedEnneagramInfo = {
             center: "Instintivo | Acción",
             seeking: "Autonomía imponiendo límites",
             social: "Combativa | Exiges independencia\nmarcando límites claros",
-            coping: "Ira transformada en intensidad y acción.\nTu energía va hacia adelante.\nPrefieres confrontar antes que retroceder.",
+            coping: "Ira explosiva.\nSe convierte en intensidad y confrontación directa",
             desc: "Necesitas sentir que tienes el control de tu vida, que nadie puede imponerse sobre ti y que tienes la fuerza suficiente para protegerte, proteger a los tuyos y que no dependes de otros para sobrevivir emocional o materialmente."
         },
         paths: {
@@ -459,7 +459,7 @@ export const advancedEnneagramInfo = {
             center: "Instintivo | Acción",
             seeking: "Autonomía evitando la confrontación",
             social: "Reservada | Te retiras o te adaptas\npara evitar tensión directa",
-            coping: "Ira que se desconecta y se adormece.\nTu energía no explota hacia afuera como en el 8,\nni se rigidiza como en el 1. Se diluye y se anestesia.",
+            coping: "Ira adormecida.\nNo explota ni se contiene; se anestesia",
             desc: "Eres el centro de la tríada instintiva, pero a menudo 'apagas' tu instinto para mantener la paz. Te retraes de los conflictos y prefieres ver el lado armonioso de la vida."
         },
         paths: {
