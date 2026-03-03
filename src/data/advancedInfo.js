@@ -347,7 +347,7 @@ export const advancedEnneagramInfo = {
             center: "Mental | Pensamiento",
             seeking: "Seguridad manteniendo posibilidades abiertas",
             social: "Combativa | Exiges libertad tomando la iniciativa",
-            coping: "Miedo evitado.\nLo enmascaras en entusiasmo. Buscas nuevas posibilidades",
+            coping: "Miedo evitado. Lo enmascaras\nen entusiasmo. Buscas nuevas posibilidades",
             desc: "Necesitas sentir que siempre hay una salida, una alternativa o algo mejor por venir."
         },
         paths: {
