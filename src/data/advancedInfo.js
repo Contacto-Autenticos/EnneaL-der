@@ -21,7 +21,7 @@ export const advancedEnneagramInfo = {
         },
         leadershipStyle: {
             strengths: ["Ética incuestionable", "Coherencia", "Claridad en estándares", "Capacidad de mejora continua"],
-            risks: ["Microgestión", "Rigidez", "Frustración silenciosa", "⚠️ Autocrítica excesiva"],
+            risks: ["Microgestión", "Rigidez", "Frustración silenciosa", "Autocrítica excesiva"],
             footer: "Tu liderazgo alcanza su mayor impacto cuando comprendes que no todo depende de ti y transformas la crítica en guía y la exigencia en ejemplo. Sostienes estándares altos sin perder flexibilidad y apertura."
         },
         leadership: [
