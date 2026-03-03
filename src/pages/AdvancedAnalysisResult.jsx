@@ -306,15 +306,6 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         p.style.background = 'transparent';
                     });
 
-                    // Insertar Header Banner
-                    const headerBanner = clonedDoc.createElement('div');
-                    headerBanner.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 25mm; overflow: hidden; z-index: 1;';
-                    const bannerImg = clonedDoc.createElement('img');
-                    bannerImg.src = '/Eneagrama_banner_04.png';
-                    bannerImg.style.cssText = 'width: 100%; height: 100%; object-fit: cover; opacity: 0.5;';
-                    headerBanner.appendChild(bannerImg);
-                    clonedContent.appendChild(headerBanner);
-
                     // Insertar Footer Logo (sin paginación)
                     const footerLogo = clonedDoc.createElement('div');
                     footerLogo.style.cssText = 'position: absolute; bottom: 10mm; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin: 0; padding: 0;';
