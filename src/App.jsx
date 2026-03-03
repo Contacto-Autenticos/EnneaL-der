@@ -19,6 +19,7 @@ import { supabase } from './supabaseClient';
 import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
 import { advancedEnneagramInfo } from './data/advancedInfo';
 import ScrollToTop from './components/ScrollToTop';
+import FloatingScrollToTop from './components/FloatingScrollToTop';
 
 
 function App() {
@@ -152,6 +153,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <FloatingScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
 
