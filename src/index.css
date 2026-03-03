@@ -829,6 +829,12 @@ h3 {
     font-size: 1.6rem;
   }
 
+  .home-subtitle-gold {
+    font-size: 0.525rem;
+    letter-spacing: 0.8px;
+    margin-top: -2px;
+  }
+
   .home-description {
     font-size: 0.95rem;
     padding: 0 10px;
