@@ -10,7 +10,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Instintivo | Acción",
             seeking: "Autonomía haciendo lo correcto",
-            social: "Adaptativa | Te ganas la autonomía haciendo lo correcto",
+            social: "Adaptativa | Te ganas la autonomía\nhaciendo lo correcto",
             coping: "ira expresada en tensión interna,\nautoexigencia y corrección. No explosiva.",
             desc: "Necesitas sentir que puedes existir con fuerza propia, que tu espacio interno es íntegro y que no estás siendo invadido, controlado o desbordado por el entorno.\n\nTu cuerpo registra primero. Luego actúas."
         },
@@ -66,7 +66,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Emocional | Sentimiento",
             seeking: "Atención siendo necesario",
-            social: "Adaptativa | Te ganas la atención siendo atento y disponible",
+            social: "Adaptativa | Te ganas la atención\nsiendo atento y disponible",
             coping: "Vergüenza transformada en\norgullo relacional y sobreentrega.\nNo suele mostrarse como inseguridad abierta.",
             desc: "Necesitas sentir que eres importante para alguien, que tu presencia marca una diferencia y que tu amor es correspondido."
         },
@@ -122,7 +122,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Emocional | Sentimiento",
             seeking: "Atención demostrando tu valor",
-            social: "Combativa | Exiges reconocimiento demostrando resultados",
+            social: "Combativa | Exiges reconocimiento\ndemostrando resultados",
             coping: "Vergüenza transformada en impulso\nde éxito e imagen competente.",
             desc: "Necesitas sentir que eres admirable, que destacas y que tu desempeño confirma tu valor. La imagen lo es todo para ti."
         },
@@ -178,7 +178,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Emocional | Sentimiento",
             seeking: "Atención siendo diferente",
-            social: "Reservada | Te retiras para proteger tu identidad emocional",
+            social: "Reservada | Te retiras para proteger\ntu identidad emocional",
             coping: "Vergüenza transformada en comparación\ny sensación de carencia.",
             desc: "Necesitas sentir que tu identidad es única y que tu experiencia emocional tiene valor."
         },
