@@ -290,7 +290,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Mental | Pensamiento",
             seeking: "Seguridad a través de la prevención",
-            social: "Adaptativa | Te ganas la seguridad siendo comprometido y leal",
+            social: "Adaptativa | Te ganas la seguridad\nsiendo comprometido y leal",
             coping: "Miedo transformado en vigilancia y anticipación.",
             desc: "Necesitas sentir que no estás solo y que puedes confiar en alguien o en algo.\nImaginas y consultas todos los posibles escenarios antes de tomar una decisión."
         },
