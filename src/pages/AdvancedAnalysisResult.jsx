@@ -276,170 +276,131 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         if (!reportElement) return;
 
         try {
-            const pages = reportElement.querySelectorAll('.pdf-export-page');
+            // Un solo html2canvas para toda la sección para mayor velocidad
+            const canvas = await html2canvas(reportElement, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedContent = clonedDoc.getElementById('advanced-report-content');
+                    if (!clonedContent) return;
 
-            // Si por alguna razón no hay páginas marcadas, aborte y alerte.
-            if (pages.length === 0) {
-                console.error('No .pdf-export-page elements found');
-                return;
-            }
+                    // Configurar el contenedor principal para que parezca una gran hoja
+                    clonedContent.style.background = '#ffffff';
+                    clonedContent.style.width = '210mm'; // Ancho A4
+                    clonedContent.style.padding = '35mm 20mm 35mm 20mm';
+                    clonedContent.style.boxSizing = 'border-box';
+                    clonedContent.style.margin = '0 auto';
+                    clonedContent.style.position = 'relative';
+                    clonedContent.style.display = 'flex';
+                    clonedContent.style.flexDirection = 'column';
+                    clonedContent.style.gap = '20px';
 
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
+                    // Quitar los estilos de páginas individuales
+                    const exportPages = clonedDoc.querySelectorAll('.pdf-export-page');
+                    exportPages.forEach((p) => {
+                        p.style.width = '100%';
+                        p.style.minHeight = 'auto';
+                        p.style.margin = '0';
+                        p.style.padding = '0';
+                        p.style.background = 'transparent';
+                    });
 
-            for (let i = 0; i < pages.length; i++) {
-                const canvas = await html2canvas(pages[i], {
-                    backgroundColor: '#ffffff',
-                    scale: 2,
-                    useCORS: true,
-                    onclone: (clonedDoc) => {
-                        const exportPages = clonedDoc.querySelectorAll('.pdf-export-page');
-                        exportPages.forEach((p, index) => {
-                            p.style.padding = '0';
-                            p.style.background = '#ffffff';
-                            p.style.width = '210mm';
-                            p.style.minHeight = '297mm';
-                            p.style.margin = '0 auto';
-                            p.style.boxSizing = 'border-box';
-                            p.style.position = 'relative';
-                            p.style.overflow = 'hidden';
+                    // Insertar Header Banner
+                    const headerBanner = clonedDoc.createElement('div');
+                    headerBanner.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 25mm; overflow: hidden; z-index: 1;';
+                    const bannerImg = clonedDoc.createElement('img');
+                    bannerImg.src = '/Eneagrama_banner_04.png';
+                    bannerImg.style.cssText = 'width: 100%; height: 100%; object-fit: cover; opacity: 0.5;';
+                    headerBanner.appendChild(bannerImg);
+                    clonedContent.appendChild(headerBanner);
 
-                            const contentWrapper = clonedDoc.createElement('div');
-                            contentWrapper.style.padding = '35mm 20mm 35mm 20mm';
-                            contentWrapper.style.boxSizing = 'border-box';
-                            contentWrapper.style.width = '100%';
-                            contentWrapper.style.minHeight = '100%';
-                            contentWrapper.style.display = 'flex';
-                            contentWrapper.style.flexDirection = 'column';
-                            contentWrapper.style.gap = '15px';
-                            contentWrapper.style.position = 'relative';
-                            contentWrapper.style.zIndex = '10';
+                    // Insertar Footer Logo (sin paginación)
+                    const footerLogo = clonedDoc.createElement('div');
+                    footerLogo.style.cssText = 'position: absolute; bottom: 10mm; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin: 0; padding: 0;';
+                    const footerImg = clonedDoc.createElement('img');
+                    footerImg.src = '/logo-azul.png';
+                    footerImg.style.cssText = 'height: 45px; object-fit: contain;';
+                    footerLogo.appendChild(footerImg);
+                    clonedContent.appendChild(footerLogo);
 
-                            // Move all original content into the wrapper
-                            while (p.firstChild) {
-                                contentWrapper.appendChild(p.firstChild);
-                            }
+                    // Estilizar elementos internos
+                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
+                    const clonedDescription = clonedDoc.querySelector('.description-section');
+                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+                    const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
+                    const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
+                    const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
+                    const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
 
-                            p.appendChild(contentWrapper);
+                    if (clonedHero) {
+                        const heroTitle = clonedHero.querySelector('.advanced-hero-title');
+                        const profileText = clonedHero.querySelector('.profile-text-title');
+                        const userName = clonedHero.querySelector('.user-name-title');
 
-                            // Insert Header Banner ha sido removido a petición del usuario.
-
-                            // Insert Footer Logo
-                            const footerLogo = clonedDoc.createElement('div');
-                            footerLogo.style.cssText = 'position: absolute; bottom: 10mm; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin: 0; padding: 0;';
-                            const footerImg = clonedDoc.createElement('img');
-                            footerImg.src = '/logo-azul.png';
-                            footerImg.style.cssText = 'height: 45px; object-fit: contain;';
-                            footerLogo.appendChild(footerImg);
-                            p.appendChild(footerLogo);
-
-                            // Insert Page Number
-                            const pageNum = clonedDoc.createElement('div');
-                            pageNum.style.cssText = 'position: absolute; bottom: 15mm; right: 15mm; width: 32px; height: 32px; background: #ddbe3d; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #002d44; font-weight: 800; font-family: "Montserrat", sans-serif; font-size: 0.9rem; z-index: 20; margin: 0; padding: 0;';
-                            pageNum.innerText = (index + 1).toString();
-                            p.appendChild(pageNum);
-                        });
-
-                        const clonedContent = clonedDoc.getElementById('advanced-report-content');
-                        if (clonedContent) {
-                            clonedContent.style.background = '#ffffff';
-                            clonedContent.style.padding = '0';
-                        }
-
-                        const clonedHero = clonedDoc.querySelector('.advanced-hero');
-                        const clonedDescription = clonedDoc.querySelector('.description-section');
-                        const clonedPhrase = clonedDoc.querySelector('.phrase-section');
-                        const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
-                        const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
-                        const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
-                        const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
-
-                        if (clonedHero) {
-                            const heroTitle = clonedHero.querySelector('.advanced-hero-title');
-                            const profileText = clonedHero.querySelector('.profile-text-title');
-                            const userName = clonedHero.querySelector('.user-name-title');
-
-                            if (heroTitle) heroTitle.style.color = '#002d44';
-                            if (profileText) profileText.style.color = '#002d44';
-                            if (userName) userName.style.color = '#002d44';
-                        }
-
-                        if (clonedDescription) {
-                            clonedDescription.style.setProperty('box-shadow', 'none', 'important');
-                            clonedDescription.style.setProperty('background', '#0d2535', 'important');
-                            clonedDescription.style.setProperty('background-color', '#0d2535', 'important');
-                            clonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
-                            clonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
-                            clonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
-                            clonedDescription.style.setProperty('animation', 'none', 'important');
-                            clonedDescription.style.setProperty('transition', 'none', 'important');
-                            clonedDescription.style.setProperty('color', '#ffffff', 'important');
-
-                            const text = clonedDescription.querySelector('.description-text');
-                            if (text) text.style.setProperty('color', '#ffffff', 'important');
-
-                            const label = clonedDescription.querySelector('.description-label');
-                            if (label) label.style.setProperty('color', '#ddbe3d', 'important');
-                        }
-
-                        if (clonedPhrase) {
-                            clonedPhrase.style.setProperty('background', '#0d2535', 'important');
-                            clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
-                            clonedPhrase.style.setProperty('color', '#ffffff', 'important');
-                            clonedPhrase.style.setProperty('animation', 'none', 'important');
-                            clonedPhrase.style.setProperty('transition', 'none', 'important');
-
-                            const text = clonedPhrase.querySelector('.phrase-text');
-                            if (text) text.style.setProperty('color', '#ffffff', 'important');
-
-                            const label = clonedPhrase.querySelector('strong');
-                            if (label) label.style.setProperty('color', '#ddbe3d', 'important');
-                        }
-
-                        const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
-                        advancedSections.forEach(section => {
-                            section.style.setProperty('background', '#0d2535', 'important');
-                            section.style.setProperty('background-color', '#0d2535', 'important');
-                            section.style.setProperty('color', '#ffffff', 'important');
-                            section.style.setProperty('animation', 'none', 'important');
-                            section.style.setProperty('transition', 'none', 'important');
-
-                            const sectionTitle = section.querySelector('.section-title');
-                            if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
-                        });
-
-                        if (coinHint) coinHint.style.display = 'none';
-                        if (footerActions) footerActions.style.display = 'none';
-                        if (kitPromo) kitPromo.style.display = 'none';
-                        if (brandFooter) brandFooter.style.display = 'none';
+                        if (heroTitle) heroTitle.style.color = '#002d44';
+                        if (profileText) profileText.style.color = '#002d44';
+                        if (userName) userName.style.color = '#002d44';
                     }
-                });
 
-                const imgData = canvas.toDataURL('image/png');
-                const imgProps = pdf.getImageProperties(imgData);
-                let imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                let printWidth = pdfWidth;
-                let xOffset = 0;
-                let yOffset = 0;
+                    if (clonedDescription) {
+                        clonedDescription.style.setProperty('box-shadow', 'none', 'important');
+                        clonedDescription.style.setProperty('background', '#0d2535', 'important');
+                        clonedDescription.style.setProperty('background-color', '#0d2535', 'important');
+                        clonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
+                        clonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                        clonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
+                        clonedDescription.style.setProperty('animation', 'none', 'important');
+                        clonedDescription.style.setProperty('transition', 'none', 'important');
+                        clonedDescription.style.setProperty('color', '#ffffff', 'important');
 
-                // Margen de seguridad para escalar
-                const topMargin = 5;
-                const maxPrintHeight = pdfHeight - (topMargin * 2);
+                        const text = clonedDescription.querySelector('.description-text');
+                        if (text) text.style.setProperty('color', '#ffffff', 'important');
 
-                if (imgHeight > maxPrintHeight) {
-                    const ratio = maxPrintHeight / imgHeight;
-                    imgHeight = maxPrintHeight;
-                    printWidth = pdfWidth * ratio;
-                    xOffset = (pdfWidth - printWidth) / 2;
-                    yOffset = topMargin;
-                } else {
-                    yOffset = topMargin;
+                        const label = clonedDescription.querySelector('.description-label');
+                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
+                    }
+
+                    if (clonedPhrase) {
+                        clonedPhrase.style.setProperty('background', '#0d2535', 'important');
+                        clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
+                        clonedPhrase.style.setProperty('color', '#ffffff', 'important');
+                        clonedPhrase.style.setProperty('animation', 'none', 'important');
+                        clonedPhrase.style.setProperty('transition', 'none', 'important');
+
+                        const text = clonedPhrase.querySelector('.phrase-text');
+                        if (text) text.style.setProperty('color', '#ffffff', 'important');
+
+                        const label = clonedPhrase.querySelector('strong');
+                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
+                    }
+
+                    const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
+                    advancedSections.forEach(section => {
+                        section.style.setProperty('background', '#0d2535', 'important');
+                        section.style.setProperty('background-color', '#0d2535', 'important');
+                        section.style.setProperty('color', '#ffffff', 'important');
+                        section.style.setProperty('animation', 'none', 'important');
+                        section.style.setProperty('transition', 'none', 'important');
+
+                        const sectionTitle = section.querySelector('.section-title');
+                        if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
+                    });
+
+                    if (coinHint) coinHint.style.display = 'none';
+                    if (footerActions) footerActions.style.display = 'none';
+                    if (kitPromo) kitPromo.style.display = 'none';
+                    if (brandFooter) brandFooter.style.display = 'none';
                 }
+            });
 
-                if (i > 0) pdf.addPage();
-                pdf.addImage(imgData, 'PNG', xOffset, yOffset, printWidth, imgHeight);
-            }
+            // Generar una única página dinámica en el PDF
+            const imgData = canvas.toDataURL('image/png');
+            const pdfWidth = 210; // milímetros A4 fijos
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Calcular la altura en mm basado en ratio del canvas
+
+            const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
             pdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
         } catch (error) {
