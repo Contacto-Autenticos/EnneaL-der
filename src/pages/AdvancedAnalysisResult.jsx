@@ -279,7 +279,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
             // Un solo html2canvas para toda la sección para mayor velocidad
             const canvas = await html2canvas(reportElement, {
                 backgroundColor: '#ffffff',
-                scale: 2,
+                scale: 1, // Reducido de 2 a 1 para hacer la captura mucho más rápida
+                logging: false, // Desactivar logs mejora ligeramente el rendimiento
                 useCORS: true,
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.getElementById('advanced-report-content');
