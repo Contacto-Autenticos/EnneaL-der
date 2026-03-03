@@ -65,7 +65,7 @@ const EnneagramRing = ({ activeType }) => {
                 </defs>
 
                 {/* Golden Background Elements: Broken Lines & Angles */}
-                <g className="background-geometry" style={{ opacity: 0.4 }}>
+                <g className="background-geometry" style={{ opacity: 0.3 }}>
                     {/* Top Horizontal Lines */}
                     <line x1="-150" y1="40" x2="70" y2="40" stroke="#9e7b22" strokeWidth="1.5" />
                     <line x1="330" y1="40" x2="550" y2="40" stroke="#9e7b22" strokeWidth="1.5" />
