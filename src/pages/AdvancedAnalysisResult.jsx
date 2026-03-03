@@ -259,83 +259,172 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         if (!reportElement) return;
 
         try {
-            const canvas = await html2canvas(reportElement, {
-                backgroundColor: '#ffffff',
-                scale: 2,
-                useCORS: true,
-                onclone: (clonedDoc) => {
-                    const clonedContent = clonedDoc.getElementById('advanced-report-content');
-                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
-                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
-                    const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
-                    const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
-                    const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
+            const pages = reportElement.querySelectorAll('.pdf-export-page');
 
-                    if (clonedContent) {
-                        clonedContent.style.padding = '40px';
-                        clonedContent.style.background = '#ffffff';
-                        clonedContent.style.width = '210mm';
-                        clonedContent.style.margin = '0 auto';
-                    }
+            // Si por alguna razón no hay páginas marcadas, aborte y alerte.
+            if (pages.length === 0) {
+                console.error('No .pdf-export-page elements found');
+                return;
+            }
 
-                    if (clonedHero) {
-                        const heroTitle = clonedHero.querySelector('.advanced-hero-title');
-                        const profileText = clonedHero.querySelector('.profile-text-title');
-                        const userName = clonedHero.querySelector('.user-name-title');
-
-                        if (heroTitle) heroTitle.style.color = '#002d44';
-                        if (profileText) profileText.style.color = '#002d44';
-                        if (userName) userName.style.color = '#002d44';
-                    }
-
-                    if (clonedPhrase) {
-                        clonedPhrase.style.setProperty('background', '#0d2535', 'important');
-                        clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
-                        clonedPhrase.style.setProperty('color', '#ffffff', 'important');
-                        clonedPhrase.style.setProperty('animation', 'none', 'important');
-                        clonedPhrase.style.setProperty('transition', 'none', 'important');
-
-                        const text = clonedPhrase.querySelector('.phrase-text');
-                        if (text) text.style.setProperty('color', '#ffffff', 'important');
-
-                        const label = clonedPhrase.querySelector('strong');
-                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
-                    }
-
-                    // Also force other sections to be dark blue and disable animations
-                    const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
-                    advancedSections.forEach(section => {
-                        section.style.setProperty('background', '#0d2535', 'important');
-                        section.style.setProperty('background-color', '#0d2535', 'important');
-                        section.style.setProperty('color', '#ffffff', 'important');
-                        section.style.setProperty('animation', 'none', 'important');
-                        section.style.setProperty('transition', 'none', 'important');
-
-                        const sectionTitle = section.querySelector('.section-title');
-                        if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
-                    });
-
-                    if (footerActions) footerActions.style.display = 'none';
-                    if (kitPromo) kitPromo.style.display = 'none';
-                    if (brandFooter) brandFooter.style.display = 'none';
-                }
-            });
-
-            const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            const imgProps = pdf.getImageProperties(imgData);
-            const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-            if (imgHeight > pdfHeight) {
-                const longPdf = new jsPDF('p', 'mm', [pdfWidth, imgHeight]);
-                longPdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
-                longPdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
-            } else {
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight);
-                pdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
+            for (let i = 0; i < pages.length; i++) {
+                const canvas = await html2canvas(pages[i], {
+                    backgroundColor: '#ffffff',
+                    scale: 2,
+                    useCORS: true,
+                    onclone: (clonedDoc) => {
+                        const exportPages = clonedDoc.querySelectorAll('.pdf-export-page');
+                        exportPages.forEach((p, index) => {
+                            p.style.padding = '0';
+                            p.style.background = '#ffffff';
+                            p.style.width = '210mm';
+                            p.style.minHeight = '297mm';
+                            p.style.margin = '0 auto';
+                            p.style.boxSizing = 'border-box';
+                            p.style.position = 'relative';
+                            p.style.overflow = 'hidden';
+
+                            const contentWrapper = clonedDoc.createElement('div');
+                            contentWrapper.style.padding = '35mm 20mm 35mm 20mm';
+                            contentWrapper.style.boxSizing = 'border-box';
+                            contentWrapper.style.width = '100%';
+                            contentWrapper.style.minHeight = '100%';
+                            contentWrapper.style.display = 'flex';
+                            contentWrapper.style.flexDirection = 'column';
+                            contentWrapper.style.gap = '15px';
+                            contentWrapper.style.position = 'relative';
+                            contentWrapper.style.zIndex = '10';
+
+                            // Move all original content into the wrapper
+                            while (p.firstChild) {
+                                contentWrapper.appendChild(p.firstChild);
+                            }
+
+                            p.appendChild(contentWrapper);
+
+                            // Insert Header Banner ha sido removido a petición del usuario.
+
+                            // Insert Footer Logo
+                            const footerLogo = clonedDoc.createElement('div');
+                            footerLogo.style.cssText = 'position: absolute; bottom: 10mm; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin: 0; padding: 0;';
+                            const footerImg = clonedDoc.createElement('img');
+                            footerImg.src = '/logo-azul.png';
+                            footerImg.style.cssText = 'height: 45px; object-fit: contain;';
+                            footerLogo.appendChild(footerImg);
+                            p.appendChild(footerLogo);
+
+                            // Insert Page Number
+                            const pageNum = clonedDoc.createElement('div');
+                            pageNum.style.cssText = 'position: absolute; bottom: 15mm; right: 15mm; width: 32px; height: 32px; background: #ddbe3d; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #002d44; font-weight: 800; font-family: "Montserrat", sans-serif; font-size: 0.9rem; z-index: 20; margin: 0; padding: 0;';
+                            pageNum.innerText = (index + 1).toString();
+                            p.appendChild(pageNum);
+                        });
+
+                        const clonedContent = clonedDoc.getElementById('advanced-report-content');
+                        if (clonedContent) {
+                            clonedContent.style.background = '#ffffff';
+                            clonedContent.style.padding = '0';
+                        }
+
+                        const clonedHero = clonedDoc.querySelector('.advanced-hero');
+                        const clonedDescription = clonedDoc.querySelector('.description-section');
+                        const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+                        const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
+                        const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
+                        const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
+                        const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
+
+                        if (clonedHero) {
+                            const heroTitle = clonedHero.querySelector('.advanced-hero-title');
+                            const profileText = clonedHero.querySelector('.profile-text-title');
+                            const userName = clonedHero.querySelector('.user-name-title');
+
+                            if (heroTitle) heroTitle.style.color = '#002d44';
+                            if (profileText) profileText.style.color = '#002d44';
+                            if (userName) userName.style.color = '#002d44';
+                        }
+
+                        if (clonedDescription) {
+                            clonedDescription.style.setProperty('box-shadow', 'none', 'important');
+                            clonedDescription.style.setProperty('background', '#0d2535', 'important');
+                            clonedDescription.style.setProperty('background-color', '#0d2535', 'important');
+                            clonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
+                            clonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                            clonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
+                            clonedDescription.style.setProperty('animation', 'none', 'important');
+                            clonedDescription.style.setProperty('transition', 'none', 'important');
+                            clonedDescription.style.setProperty('color', '#ffffff', 'important');
+
+                            const text = clonedDescription.querySelector('.description-text');
+                            if (text) text.style.setProperty('color', '#ffffff', 'important');
+
+                            const label = clonedDescription.querySelector('.description-label');
+                            if (label) label.style.setProperty('color', '#ddbe3d', 'important');
+                        }
+
+                        if (clonedPhrase) {
+                            clonedPhrase.style.setProperty('background', '#0d2535', 'important');
+                            clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
+                            clonedPhrase.style.setProperty('color', '#ffffff', 'important');
+                            clonedPhrase.style.setProperty('animation', 'none', 'important');
+                            clonedPhrase.style.setProperty('transition', 'none', 'important');
+
+                            const text = clonedPhrase.querySelector('.phrase-text');
+                            if (text) text.style.setProperty('color', '#ffffff', 'important');
+
+                            const label = clonedPhrase.querySelector('strong');
+                            if (label) label.style.setProperty('color', '#ddbe3d', 'important');
+                        }
+
+                        const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
+                        advancedSections.forEach(section => {
+                            section.style.setProperty('background', '#0d2535', 'important');
+                            section.style.setProperty('background-color', '#0d2535', 'important');
+                            section.style.setProperty('color', '#ffffff', 'important');
+                            section.style.setProperty('animation', 'none', 'important');
+                            section.style.setProperty('transition', 'none', 'important');
+
+                            const sectionTitle = section.querySelector('.section-title');
+                            if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
+                        });
+
+                        if (coinHint) coinHint.style.display = 'none';
+                        if (footerActions) footerActions.style.display = 'none';
+                        if (kitPromo) kitPromo.style.display = 'none';
+                        if (brandFooter) brandFooter.style.display = 'none';
+                    }
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                const imgProps = pdf.getImageProperties(imgData);
+                let imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                let printWidth = pdfWidth;
+                let xOffset = 0;
+                let yOffset = 0;
+
+                // Margen de seguridad para escalar
+                const topMargin = 5;
+                const maxPrintHeight = pdfHeight - (topMargin * 2);
+
+                if (imgHeight > maxPrintHeight) {
+                    const ratio = maxPrintHeight / imgHeight;
+                    imgHeight = maxPrintHeight;
+                    printWidth = pdfWidth * ratio;
+                    xOffset = (pdfWidth - printWidth) / 2;
+                    yOffset = topMargin;
+                } else {
+                    yOffset = topMargin;
+                }
+
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', xOffset, yOffset, printWidth, imgHeight);
             }
+
+            pdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
             alert('Hubo un error al generar el PDF.');
@@ -391,7 +480,9 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 onclone: (clonedDoc) => {
                     const clonedWrapper = clonedDoc.querySelector('.share-content-wrapper');
                     const clonedHero = clonedDoc.querySelector('.advanced-hero');
+                    const clonedDescription = clonedDoc.querySelector('.description-section');
                     const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+                    const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
 
                     if (clonedWrapper) {
                         clonedWrapper.style.background = '#ffffff';
@@ -415,6 +506,24 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         if (profileText) {
                             profileText.style.whiteSpace = 'nowrap'; // Force single line
                         }
+                    }
+
+                    if (clonedDescription) {
+                        clonedDescription.style.setProperty('box-shadow', 'none', 'important');
+                        clonedDescription.style.setProperty('background', '#0d2535', 'important');
+                        clonedDescription.style.setProperty('background-color', '#0d2535', 'important');
+                        clonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
+                        clonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                        clonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
+                        clonedDescription.style.setProperty('animation', 'none', 'important');
+                        clonedDescription.style.setProperty('transition', 'none', 'important');
+                        clonedDescription.style.setProperty('color', '#ffffff', 'important');
+
+                        const text = clonedDescription.querySelector('.description-text');
+                        if (text) text.style.setProperty('color', '#ffffff', 'important');
+
+                        const label = clonedDescription.querySelector('.description-label');
+                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
                     if (clonedPhrase) {
@@ -448,6 +557,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
                     const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
 
+                    if (coinHint) coinHint.style.display = 'none';
                     if (footerActions) footerActions.style.display = 'none';
                     if (kitPromo) kitPromo.style.display = 'none';
                     if (brandFooter) brandFooter.style.display = 'none';
@@ -494,11 +604,11 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         <div className="advanced-result-page">
             <div className="advanced-result-container">
                 <div id="advanced-report-content">
-                    <div ref={shareRef} className="share-content-wrapper">
+                    <div ref={shareRef} className="share-content-wrapper pdf-export-page">
                         {/* Hero Section */}
                         <section className="advanced-hero">
                             <h1 className="advanced-hero-title">
-                                {user?.name && <span className="user-name-title">{String(user.name).toUpperCase()}</span>}
+                                {user?.name && <span className="user-name-title">{String(user.name).toLowerCase()}</span>}
                                 <span className="profile-text-title">
                                     Tu perfil dominante es:
                                 </span>
@@ -564,227 +674,252 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         />
                     )}
 
-                    {/* Section 1: Motivations */}
-                    <section className="advanced-section">
-                        <div className="section-header">
-                            <Target className="section-icon" size={24} />
-                            <h2 className="section-title">Motivaciones Centrales</h2>
-                        </div>
-                        <div className="motivation-grid">
-                            <div className="motivation-item">
-                                <span className="motivation-label">Miedo Básico</span>
-                                <p className="motivation-value">{details.motivations.fear}</p>
-                            </div>
-                            <div className="motivation-item">
-                                <span className="motivation-label">Deseo Básico</span>
-                                <p className="motivation-value">{details.motivations.desire}</p>
-                            </div>
-                        </div>
-                        <p className="motivation-summary">
-                            {details.motivations.msg}
-                        </p>
-                    </section>
-
-                    {/* Section 2: The Triads */}
-                    <section className="advanced-section">
-                        <div className="section-header">
-                            <Layers className="section-icon" size={24} />
-                            <h2 className="section-title">Tu Estructura</h2>
-                        </div>
-                        <div className="triad-list">
-                            <div className="triad-row">
-                                <span className="triad-label">Centro de Inteligencia:</span>
-                                <span className="triad-value">{details.triads.center}</span>
-                            </div>
-                            <div className="triad-row">
-                                <span className="triad-label">Buscas:</span>
-                                <span className="triad-value">{details.triads.seeking}</span>
-                            </div>
-                            <div className="triad-row">
-                                <span className="triad-label">Estrategia relacional:</span>
-                                <span className="triad-value">{details.triads.social}</span>
-                            </div>
-                            <div className="triad-row">
-                                <span className="triad-label">Emoción base:</span>
-                                <span className="triad-value">{details.triads.coping}</span>
-                            </div>
-                        </div>
-                        <p className="triad-desc">
-                            {details.triads.desc}
-                        </p>
-                    </section>
-
-                    {/* Section 2.5: Differentiation Analysis */}
-                    {rivals.length > 0 && (
-                        <section className="advanced-section differentiation-section">
+                    <div className="pdf-export-page">
+                        {/* Section 1: Motivations */}
+                        <section className="advanced-section">
                             <div className="section-header">
-                                <HelpCircle className="section-icon" size={24} />
-                                <h2 className="section-title">Análisis de Diferenciación</h2>
+                                <Target className="section-icon" size={24} />
+                                <h2 className="section-title">Motivaciones Centrales</h2>
                             </div>
-                            <p className="differentiation-intro">
-                                Es común que tu perfil muestre rasgos de otros eneatipos. Aquí te explicamos por qué
-                                <strong> NO </strong> eres los otros tipos que estuvieron cerca en tu puntaje:
+                            <div className="motivation-grid">
+                                <div className="motivation-item">
+                                    <span className="motivation-label">Miedo Básico</span>
+                                    <p className="motivation-value">{details.motivations.fear}</p>
+                                </div>
+                                <div className="motivation-item">
+                                    <span className="motivation-label">Deseo Básico</span>
+                                    <p className="motivation-value">{details.motivations.desire}</p>
+                                </div>
+                            </div>
+                            <p className="motivation-summary">
+                                {details.motivations.msg}
                             </p>
-                            <div className="differentiation-grid">
-                                {rivals.map((rival) => (
-                                    <div key={rival.type} className="differentiation-card">
-                                        <div className="diff-card-header">
-                                            <div className="diff-badge winner-badge">T{type}</div>
-                                            <span className="diff-vs">vs</span>
-                                            <div className="diff-badge rival-badge">T{rival.type}</div>
-                                        </div>
-                                        <div className="diff-card-body">
-                                            <h4 className="diff-rival-name">¿Por qué no Eneatipo {rival.type}?</h4>
-                                            <p className="diff-text">
-                                                {differentiationInfo[type]?.[rival.type] ||
-                                                    `Aunque compartes intensidad con el tipo ${rival.type}, tu motivación profunda de ${winner.name} prevalece.`}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
                         </section>
-                    )}
 
-                    {/* Section 3: Growth & Stress */}
-                    <section className="advanced-section">
-                        <div className="section-header">
-                            <TrendingUp className="section-icon" size={24} />
-                            <h2 className="section-title">Dinámica de Crecimiento</h2>
-                        </div>
-                        <ul className="advice-list">
-                            <li className="advice-item">
-                                <div className="advice-bullet" style={{ background: '#2ECC71' }}><TrendingUp size={14} /></div>
-                                <div className="advice-text">
-                                    {details.paths.growth.includes(':') ? (
-                                        <>
-                                            <strong>{details.paths.growth.split(':')[0]}:</strong>
-                                            {details.paths.growth.split(':')[1]}
-                                        </>
-                                    ) : details.paths.growth}
-                                </div>
-                            </li>
-                            <li className="advice-item">
-                                <div className="advice-bullet" style={{ background: '#E74C3C' }}><TrendingUp size={14} style={{ transform: 'rotate(180deg)' }} /></div>
-                                <div className="advice-text">
-                                    {details.paths.stress.includes(':') ? (
-                                        <>
-                                            <strong>{details.paths.stress.split(':')[0]}:</strong>
-                                            {details.paths.stress.split(':')[1]}
-                                        </>
-                                    ) : details.paths.stress}
-                                </div>
-                            </li>
-                        </ul>
-                        <p className="motivation-summary" style={{ marginTop: '20px' }}>
-                            {details.paths.msg}
-                        </p>
-                    </section>
-
-                    {/* Section 3.2: Automatic Pattern */}
-                    {details.automaticPattern && (
-                        <section className="advanced-section pattern-section">
+                        {/* Section 2: The Triads */}
+                        <section className="advanced-section">
                             <div className="section-header">
-                                <Zap className="section-icon" size={24} />
-                                <h2 className="section-title">Tu Patrón Automático en 5 Pasos</h2>
+                                <Layers className="section-icon" size={24} />
+                                <h2 className="section-title">Tu Estructura</h2>
                             </div>
-                            <div className="pattern-grid">
-                                <div className="pattern-column activators-column">
-                                    <h4 className="pattern-column-title">Lo que más te activa:</h4>
-                                    <ul className="pattern-list">
-                                        {details.automaticPattern.activators.map((item, idx) => (
-                                            <li key={idx} className="pattern-item">
-                                                <div className="pattern-dot" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                            <div className="triad-list">
+                                <div className="triad-row">
+                                    <span className="triad-label">Centro de Inteligencia:</span>
+                                    <span className="triad-value">{details.triads.center}</span>
                                 </div>
-                                <div className="pattern-column responses-column">
-                                    <h4 className="pattern-column-title">Ante lo inesperado, sueles:</h4>
-                                    <ul className="pattern-list">
-                                        {details.automaticPattern.responses.map((item, idx) => (
-                                            <li key={idx} className="pattern-item">
-                                                <Activity size={14} className="pattern-icon-activity" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                <div className="triad-row">
+                                    <span className="triad-label">Buscas:</span>
+                                    <span className="triad-value">{details.triads.seeking}</span>
+                                </div>
+                                <div className="triad-row">
+                                    <span className="triad-label">Estrategia relacional:</span>
+                                    <span className="triad-value">{details.triads.social}</span>
+                                </div>
+                                <div className="triad-row">
+                                    <span className="triad-label">Emoción base:</span>
+                                    <span className="triad-value">{details.triads.coping}</span>
                                 </div>
                             </div>
+                            <p className="triad-desc">
+                                {details.triads.desc}
+                            </p>
                         </section>
-                    )}
+                    </div>
 
-                    {/* Section 3.3: Body Impact */}
-                    {details.bodyImpact && (
-                        <section className="advanced-section body-impact-section">
-                            <div className="section-header">
-                                <Wind className="section-icon" size={24} />
-                                <h2 className="section-title">Impacto en el Cuerpo</h2>
-                            </div>
-                            <div className="body-impact-content">
-                                <p className="body-impact-intro">{details.bodyImpact.intro}</p>
-                                <div className="body-impact-grid">
-                                    {details.bodyImpact.items.map((item, idx) => (
-                                        <div key={idx} className="body-impact-item">
-                                            <div className="body-impact-dot" />
-                                            <span>{item}</span>
+                    <div className="pdf-export-page">
+                        {/* Section 2.5: Differentiation Analysis */}
+                        {rivals.length > 0 && (
+                            <section className="advanced-section differentiation-section">
+                                <div className="section-header">
+                                    <HelpCircle className="section-icon" size={24} />
+                                    <h2 className="section-title">Análisis de Diferenciación</h2>
+                                </div>
+                                <p className="differentiation-intro">
+                                    Es común que tu perfil muestre rasgos de otros eneatipos. Aquí te explicamos por qué
+                                    <strong> NO </strong> eres los otros tipos que estuvieron cerca en tu puntaje:
+                                </p>
+                                <div className="differentiation-grid">
+                                    {rivals.map((rival) => (
+                                        <div key={rival.type} className="differentiation-card">
+                                            <div className="diff-card-header">
+                                                <div className="diff-badge winner-badge">T{type}</div>
+                                                <span className="diff-vs">vs</span>
+                                                <div className="diff-badge rival-badge">T{rival.type}</div>
+                                            </div>
+                                            <div className="diff-card-body">
+                                                <h4 className="diff-rival-name">¿Por qué no Eneatipo {rival.type}?</h4>
+                                                <p className="diff-text">
+                                                    {differentiationInfo[type]?.[rival.type] ||
+                                                        `Aunque compartes intensidad con el tipo ${rival.type}, tu motivación profunda de ${winner.name} prevalece.`}
+                                                </p>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
-                            </div>
-                        </section>
-                    )}
+                            </section>
+                        )}
 
-                    {/* Section 3.5: Leadership Style */}
-                    {details.leadershipStyle && (
-                        <section className="advanced-section leadership-style-section">
+                        {/* Section 3: Growth & Stress */}
+                        <section className="advanced-section">
                             <div className="section-header">
-                                <Shield className="section-icon" size={24} />
-                                <h2 className="section-title">Tu Estilo de Liderazgo</h2>
+                                <TrendingUp className="section-icon" size={24} />
+                                <h2 className="section-title">Dinámica de Crecimiento</h2>
                             </div>
-                            <div className="leadership-style-grid">
-                                <div className="style-column strengths-column">
-                                    <h4 className="style-column-title">Fortalezas:</h4>
-                                    <ul className="style-list">
-                                        {details.leadershipStyle.strengths.map((item, idx) => (
-                                            <li key={idx} className="style-item">
-                                                <Check size={16} className="style-icon-check" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div className="style-column risks-column">
-                                    <h4 className="style-column-title">Riesgos:</h4>
-                                    <ul className="style-list">
-                                        {details.leadershipStyle.risks.map((item, idx) => (
-                                            <li key={idx} className="style-item">
-                                                <AlertTriangle size={16} className="style-icon-alert" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+                            <ul className="advice-list">
+                                <li className="advice-item">
+                                    <div className="advice-bullet" style={{ background: '#2ECC71' }}><TrendingUp size={14} /></div>
+                                    <div className="advice-text">
+                                        {details.paths.growth.includes(':') ? (
+                                            <>
+                                                <strong style={{ color: '#ddbe3d' }}>{details.paths.growth.split(':')[0]}:</strong>
+                                                {details.paths.growth.split(':')[1]}
+                                            </>
+                                        ) : details.paths.growth}
+                                    </div>
+                                </li>
+                                <li className="advice-item">
+                                    <div className="advice-bullet" style={{ background: '#E74C3C' }}><TrendingUp size={14} style={{ transform: 'rotate(180deg)' }} /></div>
+                                    <div className="advice-text">
+                                        {details.paths.stress.includes(':') ? (
+                                            <>
+                                                <strong style={{ color: '#ddbe3d' }}>{details.paths.stress.split(':')[0]}:</strong>
+                                                {details.paths.stress.split(':')[1]}
+                                            </>
+                                        ) : details.paths.stress}
+                                    </div>
+                                </li>
+                            </ul>
+                            <p className="motivation-summary" style={{ marginTop: '20px' }}>
+                                {details.paths.msg.includes(':') ? (
+                                    <>
+                                        <strong style={{ color: '#ddbe3d' }}>{details.paths.msg.split(':')[0]}:</strong>
+                                        {details.paths.msg.split(':')[1]}
+                                    </>
+                                ) : details.paths.msg}
+                            </p>
                         </section>
-                    )}
+                    </div>
 
-                    {/* Section 4: Actionable Advice */}
-                    <section className="advanced-section">
-                        <div className="section-header">
-                            <Lightbulb className="section-icon" size={24} />
-                            <h2 className="section-title">Consejos para el Liderazgo</h2>
-                        </div>
-                        <div className="advice-list">
-                            {details.leadership.map((item, idx) => (
-                                <div key={idx} className="advice-item">
-                                    <div className="advice-bullet"><CheckCircle2 size={14} /></div>
-                                    <div className="advice-text">{item}</div>
+                    <div className="pdf-export-page">
+                        {/* Section 3.2: Automatic Pattern */}
+                        {details.automaticPattern && (
+                            <section className="advanced-section pattern-section">
+                                <div className="section-header">
+                                    <Zap className="section-icon" size={24} />
+                                    <h2 className="section-title">Tu Patrón Automático en 5 Pasos</h2>
                                 </div>
-                            ))}
-                        </div>
-                    </section>
+                                <div className="pattern-grid">
+                                    <div className="pattern-column activators-column">
+                                        <h4 className="pattern-column-title">Lo que más te activa:</h4>
+                                        <ul className="pattern-list">
+                                            {details.automaticPattern.activators.map((item, idx) => (
+                                                <li key={idx} className="pattern-item">
+                                                    <div className="pattern-dot" />
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="pattern-column responses-column">
+                                        <h4 className="pattern-column-title">Ante lo inesperado, sueles:</h4>
+                                        <ul className="pattern-list">
+                                            {details.automaticPattern.responses.map((item, idx) => (
+                                                <li key={idx} className="pattern-item">
+                                                    <Activity size={14} className="pattern-icon-activity" />
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {/* Section 3.3: Body Impact */}
+                        {details.bodyImpact && (
+                            <section className="advanced-section body-impact-section">
+                                <div className="section-header">
+                                    <Wind className="section-icon" size={24} />
+                                    <h2 className="section-title">Impacto en el Cuerpo</h2>
+                                </div>
+                                <div className="body-impact-content">
+                                    <p className="body-impact-intro">{details.bodyImpact.intro}</p>
+                                    <div className="body-impact-grid">
+                                        {details.bodyImpact.items.map((item, idx) => (
+                                            <div key={idx} className="body-impact-item">
+                                                <div className="body-impact-dot" />
+                                                <span>{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+                    </div>
+
+                    <div className="pdf-export-page">
+                        {/* Section 3.5: Leadership Style */}
+                        {details.leadershipStyle && (
+                            <section className="advanced-section leadership-style-section">
+                                <div className="section-header">
+                                    <Shield className="section-icon" size={24} />
+                                    <h2 className="section-title">Tu Estilo de Liderazgo</h2>
+                                </div>
+                                <div className="leadership-style-grid">
+                                    <div className="style-column strengths-column">
+                                        <h4 className="style-column-title">Fortalezas:</h4>
+                                        <ul className="style-list">
+                                            {details.leadershipStyle?.strengths?.map((item, idx) => (
+                                                <li key={idx} className="style-item">
+                                                    <Check size={16} className="style-icon-check" />
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="style-column risks-column">
+                                        <h4 className="style-column-title">Riesgos:</h4>
+                                        <ul className="style-list">
+                                            {details.leadershipStyle?.risks?.map((item, idx) => (
+                                                <li key={idx} className="style-item">
+                                                    <AlertTriangle size={16} className="style-icon-alert" />
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                                {details.leadershipStyle?.footer && (
+                                    <p className="leadership-footer" style={{
+                                        marginTop: '25px',
+                                        fontStyle: 'italic',
+                                        color: 'rgba(255, 255, 255, 0.75)',
+                                        textAlign: 'center'
+                                    }}>
+                                        {details.leadershipStyle.footer}
+                                    </p>
+                                )}
+                            </section>
+                        )}
+
+                        {/* Section 4: Actionable Advice (Fall back to legacy section) */}
+                        {details.leadership && (
+                            <section className="advanced-section">
+                                <div className="section-header">
+                                    <Lightbulb className="section-icon" size={24} />
+                                    <h2 className="section-title">Consejos para el Liderazgo</h2>
+                                </div>
+                                <div className="advice-list">
+                                    {details.leadership.map((item, idx) => (
+                                        <div key={idx} className="advice-item">
+                                            <div className="advice-bullet"><CheckCircle2 size={14} /></div>
+                                            <div className="advice-text">{item}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
 
                     {/* Actions Footer */}
                     <div className="advanced-footer-actions">
