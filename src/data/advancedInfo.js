@@ -178,7 +178,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Emocional | Sentimiento",
             seeking: "Atención siendo diferente",
-            social: "Reservada | Te retiras para proteger\nReservada | Te retiras para proteger",
+            social: "Reservada | Te retiras para proteger\ntu identidad emocional",
             coping: "Vergüenza transformada en comparación\ny sensación de carencia.",
             desc: "Necesitas sentir que tu identidad es única y que tu experiencia emocional tiene valor."
         },
