@@ -196,13 +196,13 @@ h3 {
 }
 
 .home-subtitle-gold {
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #b89b2d;
   text-transform: uppercase;
   width: 100%;
   text-align-last: justify;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
   margin-top: -5px;
 }
 
