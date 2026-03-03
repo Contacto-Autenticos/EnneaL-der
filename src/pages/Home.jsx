@@ -18,9 +18,14 @@ const Home = () => {
                     />
                 </div>
 
-                <h1 className="home-title">
-                    Eneagrama & Liderazgo
-                </h1>
+                <div className="home-title-container">
+                    <h1 className="home-title">
+                        Enesencia
+                    </h1>
+                    <div className="home-subtitle-gold">
+                        Eneagrama & liderazgo
+                    </div>
+                </div>
                 <p className="home-description">
                     Descubre quién eres y <br />
                     cuál es tu estilo de liderazgo.
