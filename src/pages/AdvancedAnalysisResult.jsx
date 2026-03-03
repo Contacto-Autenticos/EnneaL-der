@@ -65,20 +65,20 @@ const EnneagramRing = ({ activeType }) => {
                 </defs>
 
                 {/* Golden Background Elements: Broken Lines & Angles */}
-                <g className="background-geometry" style={{ opacity: 0.8 }}>
+                <g className="background-geometry" style={{ opacity: 0.4 }}>
                     {/* Top Horizontal Lines */}
-                    <line x1="-150" y1="40" x2="70" y2="40" stroke="#ddbe3d" strokeWidth="1.5" />
-                    <line x1="330" y1="40" x2="550" y2="40" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <line x1="-150" y1="40" x2="70" y2="40" stroke="#9e7b22" strokeWidth="1.5" />
+                    <line x1="330" y1="40" x2="550" y2="40" stroke="#9e7b22" strokeWidth="1.5" />
 
                     {/* Bottom Horizontal Lines */}
-                    <line x1="-150" y1="360" x2="70" y2="360" stroke="#ddbe3d" strokeWidth="1.5" />
-                    <line x1="330" y1="360" x2="550" y2="360" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <line x1="-150" y1="360" x2="70" y2="360" stroke="#9e7b22" strokeWidth="1.5" />
+                    <line x1="330" y1="360" x2="550" y2="360" stroke="#9e7b22" strokeWidth="1.5" />
 
                     {/* Left Diagonal Angle */}
-                    <polyline points="70,40 -30,200 70,360" fill="none" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <polyline points="70,40 -30,200 70,360" fill="none" stroke="#9e7b22" strokeWidth="1.5" />
 
                     {/* Right Diagonal Angle */}
-                    <polyline points="330,40 430,200 330,360" fill="none" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <polyline points="330,40 430,200 330,360" fill="none" stroke="#9e7b22" strokeWidth="1.5" />
                 </g>
 
                 {types.map((type, index) => {
