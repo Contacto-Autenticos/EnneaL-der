@@ -71,9 +71,9 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que eres importante para alguien, que tu presencia marca una diferencia y que tu amor es correspondido."
         },
         paths: {
-            growth: "En crecimiento: Desarrollas mayor conexión contigo mismo y autenticidad emocional. Reconoces tus propias necesidades, pones límites con claridad y dejas de dar para obtener aprobación. Aprendes a amar sin sobreentregarte y a recibir sin culpa. Descubres que tu valor no depende de ser indispensable.",
-            stress: "En estrés: Tu energía se vuelve más intensa y reactiva. Puedes volverte más controlador, reclamar lo que sientes que no te han dado, exigir reconocimiento o expresar enojo acumulado. La frustración aparece cuando no te sientes valorado y, en lugar de seguir ayudando en silencio, puedes confrontar o imponer.",
-            msg: "En tu mejor estado: Reconoces que puedes ser amado sin tener que ganártelo constantemente. Puedes decir no sin miedo a perder el vínculo. Te permites ser importante sin dejar de ser tú."
+            growth: "En crecimiento: desarrollas mayor conexión contigo mismo. Reconoces tus propias necesidades, pones límites con claridad y dejas de dar para obtener aprobación. Aprendes a amar sin sobreentregarte y a recibir sin culpa. Comprendes que tu valor no depende de ser indispensable.",
+            stress: "En estrés: tu energía se vuelve más intensa y reactiva. Puedes volverte más controlador, reclamar lo que sientes que no te han dado, exigir reconocimiento o expresar enojo acumulado y en lugar de seguir ayudando, tiendes a confrontar o imponer.",
+            msg: "En tu mejor estado:\nReconoces que puedes ser amado sin tener que ganártelo. Puedes decir no sin miedo a perder el vínculo. Te permites ser importante sin dejar de ser tú."
         },
         leadershipStyle: {
             strengths: ["Empatía genuina", "Capacidad de motivar desde el vínculo", "Cercanía con el equipo", "Generosidad"],
@@ -127,8 +127,8 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que eres admirable, que destacas y que tu desempeño confirma tu valor. La imagen lo es todo para ti."
         },
         paths: {
-            growth: "En crecimiento: Desarrollas compromiso genuino y autenticidad, confías en otros. Te permites trabajar en equipo, confiar y mostrar vulnerabilidad sin sentir que eso disminuye tu valor. Descubres que tu valor no depende de ser coherente, no solo por tus resultados.",
-            stress: "En estrés: Puedes perder dirección y energía. Te desconectas de tus metas, postergas decisiones, evitas confrontaciones, te distraes o te “anestesias” con actividad superficial y aparece una sensación de apatía o desmotivación. En lugar de rendir más, te apagas por dentro.",
+            growth: "En crecimiento: desarrollas compromiso genuino y autenticidad. Te permites trabajar en equipo, confiar en los demás y mostrar vulnerabilidad sin sentir que eso disminuye tu valor. Descubres que tu valor no depende de tus resultados.",
+            stress: "En estrés: puedes perder dirección y energía. Te desconectas de tus metas, postergas decisiones, evitas confrontaciones, te distraes o te “anestesias” con actividad superficial y aparece una sensación de apatía o desmotivación. En lugar de rendir más, te apagas por dentro.",
             msg: "En tu mejor estado:\nReconoces que tu valor no depende de tu productividad. Puedes descansar sin sentir que desapareces. Te permites ser, no solo hacer."
         },
         leadershipStyle: {
@@ -183,8 +183,8 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que tu identidad es única y que tu experiencia emocional tiene valor."
         },
         paths: {
-            growth: "En crecimiento: Desarrollas estructura, disciplina y claridad. Transformas tu profundidad emocional en acción concreta. Aprendes a sostener procesos sin quedarte atrapado en el sentimiento y canalizas tu creatividad con constancia.",
-            stress: "En estrés: Puedes volverte más dependiente del reconocimiento externo. Buscas validación emocional, intensificas vínculos y puedes sobreinvolucrarte para sentirte importante. La comparación aumenta y aparece la necesidad de ser visto o rescatado.",
+            growth: "En crecimiento: desarrollas estructura, disciplina y claridad. Transformas tu profundidad emocional en acción. Aprendes a sostener procesos sin quedarte en el sentimiento y canalizas tu creatividad con constancia.",
+            stress: "En estrés: buscas ansiosamente validación emocional, intensificas vínculos y puedes sobreinvolucrarte para sentirte importante. La comparación aumenta y aparece la necesidad de ser visto o rescatado.",
             msg: "En tu mejor estado:\nReconoces que no te falta nada esencial. Puedes sentir intensamente sin perder estabilidad. Descubres que tu autenticidad no depende de ser diferente, sino de ser íntegro contigo mismo."
         },
         automaticPattern: {
@@ -239,8 +239,8 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que tienes suficiente información y control interno antes de exponerte.\nPiensas primero. Luego actúas."
         },
         paths: {
-            growth: "En crecimiento: Desarrollas firmeza y presencia. Actúas con mayor decisión, confías en tu criterio y te permites ocupar espacio sin sentir que te invaden. Pasas del análisis a la acción con claridad y fuerza interna.",
-            stress: "En estrés: Tu mente se acelera y puedes dispersarte. Buscas múltiples opciones, consumes más información de la necesaria y te cuesta enfocarte. Aparece inquietud interna y dificultad para sostener profundidad. En lugar de aislarte, puedes intentar llenar la ansiedad con actividad mental constante.",
+            growth: "En crecimiento: pasas del análisis a la acción con claridad y fuerza interna. Desarrollas firmeza, presencia y actúas con mayor decisión. Confías en tu criterio y te permites socializar sin sentir que te invaden.",
+            stress: "En estrés: empiezas a consumir más información de la necesaria y te cuesta enfocarte. Aparece inquietud interna y dificultad para sostener profundidad. Tu mente se acelera y fácilmente puedes dispersarte.",
             msg: "En tu mejor estado:\nReconoces que no necesitas aislarte para estar seguro. Puedes compartir lo que sabes sin miedo a quedarte sin recursos y te permites participar plenamente sin perder tu autonomía."
         },
         automaticPattern: {
@@ -295,9 +295,9 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que no estás solo y que puedes confiar en alguien o en algo.\nImaginas y consultas todos los posibles escenarios antes de tomar una decisión."
         },
         paths: {
-            growth: "En crecimiento: Desarrollas calma interna y confianza. Reduces la hipervigilancia y te permites descansar sin anticipar amenazas. Empiezas a confiar más en tu criterio y en el flujo natural de los procesos. Sueltas la necesidad de demostrar constantemente tu capacidad, porque descubres que tu seguridad no depende de la aprobación externa, sino de la confianza que construyes dentro de ti.",
-            stress: "En estrés: Puedes orientarte al rendimiento y a la imagen como forma de protección. Cuidas excesivamente cómo te presentas y buscas verte competente e impecable para evitar cuestionamientos. Intentas demostrar capacidad para sentir estabilidad y canalizas la ansiedad en productividad constante.",
-            msg: "En tu mejor estado:\nReconoces que puedes confiar en ti mismo. No necesitas tener todas las respuestas para sentirte seguro y te permites avanzar sin que el miedo dirija tus decisiones."
+            growth: "En crecimiento: desarrollas confianza y calma. Reduces la hipervigilancia y te permites descansar sin anticipar amenazas. Empiezas a confiar más en tu criterio y en el flujo natural de los procesos. Sueltas la necesidad de demostrar constantemente que eres capaz.",
+            stress: "En estrés: puedes orientarte al rendimiento y a la imagen como forma de protección. Cuidas excesivamente cómo te presentas, y buscas verte competente e impecable para evitar cuestionamientos.",
+            msg: "En tu mejor estado:\nReconoces que puedes confiar en ti, porque no necesitas tener todas las respuestas para sentir seguridad y te permites avanzar sin que el miedo dirija tus decisiones."
         },
         automaticPattern: {
             activators: [
@@ -351,9 +351,9 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que siempre hay una salida, una alternativa o algo mejor por venir."
         },
         paths: {
-            growth: "En crecimiento: Desarrollas profundidad y enfoque. Aprendes a sostener la atención en una sola experiencia sin escapar. Te permites sentir incomodidad sin huir y encuentras satisfacción en la concentración y la introspección.",
-            stress: "En estrés: Tu energía se contrae. La espontaneidad que te caracteriza se reduce y aparece una rigidez inesperada. Te vuelves más crítico, contigo y con los demás, especialmente cuando las cosas no salen como imaginabas. Puedes cerrarte, volverte más callado e irritable, y empezar a controlar detalles como una forma de recuperar estabilidad. Lo que antes fluía, ahora se siente tenso.",
-            msg: "En tu mejor estado:\nReconoces puedes quedarte en el presente sin anticipar la próxima experiencia.\nDescubres que la verdadera libertad también incluye profundidad y compromiso."
+            growth: "En crecimiento: desarrollas profundidad y enfoque. Aprendes a sostener la atención en una sola experiencia sin querer escapar. Te permites sentir incomodidad sin huir y encuentras satisfacción en la introspección.",
+            stress: "En estrés: tu energía se contrae. La espontaneidad que te caracteriza se reduce y aparece una rigidez inesperada. Te vuelves más crítico, contigo y con los demás cuando las cosas no salen como imaginabas. Puedes volverte más callado e irritable. Lo que antes fluía, ahora se siente tenso.",
+            msg: "En tu mejor estado:\nAprendes a quedarte en el presente sin anticipar la próxima experiencia. Descubres que la verdadera libertad también incluye profundidad y compromiso."
         },
         automaticPattern: {
             activators: [
@@ -407,9 +407,9 @@ export const advancedEnneagramInfo = {
             desc: "Necesitas sentir que tienes el control de tu vida, que nadie puede imponerse sobre ti y que tienes la fuerza suficiente para protegerte, proteger a los tuyos y que no dependes de otros para sobrevivir emocional o materialmente."
         },
         paths: {
-            growth: "En crecimiento: Se suaviza la armadura. Permites que otros vean tu lado protector y afectivo sin sentir que eso te debilita. Descubres que el verdadero poder también incluye cuidado, cercanía y vulnerabilidad consciente.",
-            stress: "En estrés: Puedes cerrarte emocionalmente. Reduces la expresión, te vuelves más reservado y desconfiado. En lugar de confrontar, te retiras estratégicamente y operas desde la mente, acumulando información antes de volver a actuar.",
-            msg: "En tu mejor estado:\nReconoces que no necesitas estar siempre en guardia. Puedes ser fuerte sin endurecerte. Descubres que abrir el corazón no te quita poder, lo expande."
+            growth: "En crecimiento: se suaviza la armadura. Permites que otros vean tu lado protector y afectivo sin sentir que eso te debilita. Descubres que el verdadero poder también incluye cuidado, cercanía y vulnerabilidad consciente.",
+            stress: "En estrés: puedes cerrarte emocionalmente. Reduces la expresión, te vuelves más reservado y desconfiado. En lugar de confrontar, te retiras estratégicamente y operas desde la mente, acumulando información antes de volver a actuar.",
+            msg: "En tu mejor estado:\nReconoces que no necesitas estar siempre en guardia. Puedes ser fuerte sin endurecerte. Descubres que abrir el corazón no te quita poder."
         },
         automaticPattern: {
             activators: [
@@ -463,9 +463,9 @@ export const advancedEnneagramInfo = {
             desc: "Eres el centro de la tríada instintiva, pero a menudo 'apagas' tu instinto para mantener la paz. Te retraes de los conflictos y prefieres ver el lado armonioso de la vida."
         },
         paths: {
-            growth: "En crecimiento: Despiertas energía y dirección. Conectas con metas propias y tomas acción con mayor determinación y liderazgo. No temes decir lo que piensas y descubres que tu presencia también importa, que puedes ocupar espacio sin romper la armonía.",
-            stress: "En estrés: Aumenta la preocupación y la duda. Puedes volverte más ansioso, anticipar problemas y sentir inseguridad frente a decisiones. Lo que normalmente ignoras comienza a inquietarte.",
-            msg: "En tu mejor estado:\nReconoces que tu voz es importante. Puedes decir lo que necesitas sin miedo a perder conexión y descubres que la paz verdadera, se logra contigo presente."
+            growth: "En crecimiento: despiertas energía y dirección. Conectas con metas propias y tomas acción con mayor determinación y liderazgo. No temes decir lo que piensas y descubres que puedes ocupar espacio sin romper la armonía.",
+            stress: "En estrés: empiezas a sentir preocupación y duda. Puedes volverte ansioso, anticipar problemas y sentir inseguridad frente a tus decisiones. Lo que normalmente ignoras comienza a inquietarte.",
+            msg: "En tu mejor estado:\nReconoces que tu voz es importante y que puedes decir lo que piensas sin miedo a la desconexión. Dejas de ser un guardián de la paz silencioso y te conviertes en un pacificador que se hace oír."
         },
         automaticPattern: {
             activators: [
