@@ -8,8 +8,8 @@ export const advancedEnneagramInfo = {
             msg: "Tu motivación principal es el perfeccionamiento. Buscas la excelencia no solo por el resultado, sino por un sentido interno de rectitud ética."
         },
         triads: {
-            center: "Instintivo (cerebro base o reptiliano)\norientado a la Acción",
-            seeking: "Autonomía",
+            center: "Instintivo | Acción",
+            seeking: "Autonomía haciendo lo correcto",
             social: "adaptativa o complaciente,\nte ganas la autonomía siendo correcto.",
             coping: "ira expresada en tensión interna,\nautoexigencia y corrección. No explosiva.",
             desc: "Necesitas sentir que puedes existir con fuerza propia, que tu espacio interno es íntegro y que no estás siendo invadido, controlado o desbordado por el entorno.\n\nTu cuerpo registra primero. Luego actúas."
@@ -64,8 +64,8 @@ export const advancedEnneagramInfo = {
             msg: "Tu generosidad es tu mayor don, pero a veces la usas para asegurar que los demás permanezcan cerca de ti."
         },
         triads: {
-            center: "Emocional (cerebro límbico)\norientado al Sentimiento",
-            seeking: "Valor, conexión y reconocimiento afectivo.",
+            center: "Emocional | Sentimiento",
+            seeking: "Atención siendo necesario",
             social: "Adaptativa o complaciente. (Moverse hacia)\nTe ganas la atención y el amor siendo\nnecesario, atento y disponible.",
             coping: "Vergüenza transformada en\norgullo relacional y sobreentrega.\nNo suele mostrarse como inseguridad abierta.",
             desc: "Necesitas sentir que eres importante para alguien, que tu presencia marca una diferencia y que tu amor es correspondido."
@@ -120,8 +120,8 @@ export const advancedEnneagramInfo = {
             msg: "Eres un motor de resultados. Tu identidad suele estar ligada a lo que logras más que a lo que eres."
         },
         triads: {
-            center: "Emocional (cerebro límbico)\norientado al Sentimiento",
-            seeking: "Valor, reconocimiento y validación.",
+            center: "Emocional | Sentimiento",
+            seeking: "Atención demostrando tu valor",
             social: "Combativa (Moverse en contra)\nExiges reconocimiento demostrando\ncompetencia, eficiencia y resultados.",
             coping: "Vergüenza transformada en impulso\nde éxito e imagen competente.",
             desc: "Necesitas sentir que eres admirable, que destacas y que tu desempeño confirma tu valor. La imagen lo es todo para ti."
@@ -176,8 +176,8 @@ export const advancedEnneagramInfo = {
             msg: "Vives la vida con una profundidad emocional única. Buscas lo que falta para encontrar tu verdadero significado."
         },
         triads: {
-            center: "Emocional (cerebro límbico) orientado al Sentimiento.",
-            seeking: "Identidad, profundidad y significado.",
+            center: "Emocional | Sentimiento",
+            seeking: "Atención siendo diferente",
             social: "Reservada (moverse lejos).\nTe retiras para proteger tu mundo interno\ny preservar tu identidad emocional.",
             coping: "Vergüenza transformada en comparación\ny sensación de carencia.",
             desc: "Necesitas sentir que tu identidad es única y que tu experiencia emocional tiene valor."
@@ -232,8 +232,8 @@ export const advancedEnneagramInfo = {
             msg: "Tu mente es un refugio de conocimiento. Prefieres entender el mundo antes de exponerte emocionalmente a él."
         },
         triads: {
-            center: "Mental (neocórtex) orientado al Pensamiento.",
-            seeking: "Seguridad, claridad y autosuficiencia.",
+            center: "Mental | Pensamiento",
+            seeking: "Seguridad a través del conocimiento",
             social: "Reservada (moverse lejos).\nTe retiras para conservar\nrecursos internos y proteger tu energía.",
             coping: "Miedo transformado en distanciamiento\ny acumulación de conocimiento.",
             desc: "Necesitas sentir que tienes suficiente información y control interno antes de exponerte.\nPiensas primero. Luego actúas."
@@ -288,8 +288,8 @@ export const advancedEnneagramInfo = {
             msg: "Eres el pegamento que mantiene unidos a los equipos. Tu mente siempre está escaneando riesgos para proteger lo que valoras."
         },
         triads: {
-            center: "Mental (neocórtex) orientado al Pensamiento.",
-            seeking: "Seguridad, estabilidad y apoyo confiable.",
+            center: "Mental | Pensamiento",
+            seeking: "Seguridad a través de la prevención",
             social: "Adaptativa (moverse hacia)\nTe ganas la seguridad siendo responsable, comprometido y leal.",
             coping: "Miedo transformado en vigilancia y anticipación.",
             desc: "Necesitas sentir que no estás solo y que puedes confiar en alguien o en algo.\nImaginas y consultas todos los posibles escenarios antes de tomar una decisión."
@@ -344,8 +344,8 @@ export const advancedEnneagramInfo = {
             msg: "Eres una fuente inagotable de opciones y alegría. Buscas la libertad para explorar todas las posibilidades de la vida."
         },
         triads: {
-            center: "Mental (neocórtex) orientado al Pensamiento.",
-            seeking: "Seguridad a través de opciones,\nmovimiento y anticipación positiva.",
+            center: "Mental | Pensamiento",
+            seeking: "Seguridad manteniendo posibilidades abiertas",
             social: "Combativa (moverse contra)\nExiges libertad ampliando posibilidades\ny tomando la iniciativa.",
             coping: "Miedo transformado en entusiasmo\ny planificación constante.",
             desc: "Necesitas sentir que siempre hay una salida, una alternativa o algo mejor por venir."
@@ -400,8 +400,8 @@ export const advancedEnneagramInfo = {
             msg: "Tu presencia es imponente y protectora. No temes al conflicto porque buscas la verdad y el control de tu destino."
         },
         triads: {
-            center: "Instintivo (cerebro base o reptiliano)\norientado a la Acción",
-            seeking: "Autonomía y control sobre tu entorno.",
+            center: "Instintivo | Acción",
+            seeking: "Autonomía imponiendo límites",
             social: "Combativa (moverse contra).\nExiges independencia tomando territorio\ny marcando límites claros.",
             coping: "Ira transformada en intensidad y acción.\nTu energía va hacia adelante.\nPrefieres confrontar antes que retroceder.",
             desc: "Necesitas sentir que tienes el control de tu vida, que nadie puede imponerse sobre ti y que tienes la fuerza suficiente para protegerte, proteger a los tuyos y que no dependes de otros para sobrevivir emocional o materialmente."
@@ -456,8 +456,8 @@ export const advancedEnneagramInfo = {
             msg: "Eres el gran mediador. Tu capacidad para ver todos los puntos de vista crea puentes donde otros ven muros."
         },
         triads: {
-            center: "Instintivo (cerebro base o reptiliano)\norientado a la Acción",
-            seeking: "Autonomía a través de la paz y la no confrontación.",
+            center: "Instintivo | Acción",
+            seeking: "Autonomía evitando la confrontación",
             social: "Reservado (moverse lejos).\nTe retiras o te adaptas para evitar tensión directa.",
             coping: "Ira que se desconecta y se adormece.\nTu energía no explota hacia afuera como en el 8,\nni se rigidiza como en el 1. Se diluye y se anestesia.",
             desc: "Eres el centro de la tríada instintiva, pero a menudo 'apagas' tu instinto para mantener la paz. Te retraes de los conflictos y prefieres ver el lado armonioso de la vida."
