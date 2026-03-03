@@ -64,18 +64,15 @@ const EnneagramRing = ({ activeType }) => {
                     </filter>
                 </defs>
 
-                {/* Golden Background Elements: Rhombus & Lines */}
+                {/* Golden Background Elements: Broken Lines */}
                 <g className="background-geometry" style={{ opacity: 0.8 }}>
-                    {/* Horizontal Lines */}
-                    <line x1="-100" y1="40" x2="500" y2="40" stroke="#ddbe3d" strokeWidth="1.5" />
-                    <line x1="-100" y1="360" x2="500" y2="360" stroke="#ddbe3d" strokeWidth="1.5" />
-                    {/* Golden Rhombus matching the card width limits */}
-                    <polygon
-                        points="200,-10 410,200 200,410 -10,200"
-                        fill="none"
-                        stroke="#ddbe3d"
-                        strokeWidth="2"
-                    />
+                    {/* Top Horizontal Lines */}
+                    <line x1="-100" y1="40" x2="110" y2="40" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <line x1="290" y1="40" x2="500" y2="40" stroke="#ddbe3d" strokeWidth="1.5" />
+
+                    {/* Bottom Horizontal Lines */}
+                    <line x1="-100" y1="360" x2="110" y2="360" stroke="#ddbe3d" strokeWidth="1.5" />
+                    <line x1="290" y1="360" x2="500" y2="360" stroke="#ddbe3d" strokeWidth="1.5" />
                 </g>
 
                 {types.map((type, index) => {
