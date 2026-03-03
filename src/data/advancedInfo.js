@@ -178,7 +178,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Emocional | Sentimiento",
             seeking: "Atención siendo diferente",
-            social: "Reservada | Te retiras para proteger\ntu identidad emocional",
+            social: "Reservada | Te retiras para proteger\nReservada | Te retiras para proteger",
             coping: "Vergüenza transformada en comparación\ny sensación de carencia.",
             desc: "Necesitas sentir que tu identidad es única y que tu experiencia emocional tiene valor."
         },
@@ -402,7 +402,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Instintivo | Acción",
             seeking: "Autonomía imponiendo límites",
-            social: "Combativa | Exiges independencia marcando límites claros",
+            social: "Combativa | Exiges independencia\nmarcando límites claros",
             coping: "Ira transformada en intensidad y acción.\nTu energía va hacia adelante.\nPrefieres confrontar antes que retroceder.",
             desc: "Necesitas sentir que tienes el control de tu vida, que nadie puede imponerse sobre ti y que tienes la fuerza suficiente para protegerte, proteger a los tuyos y que no dependes de otros para sobrevivir emocional o materialmente."
         },
@@ -458,7 +458,7 @@ export const advancedEnneagramInfo = {
         triads: {
             center: "Instintivo | Acción",
             seeking: "Autonomía evitando la confrontación",
-            social: "Reservada | Te retiras o te adaptas para evitar tensión directa",
+            social: "Reservada | Te retiras o te adaptas\npara evitar tensión directa",
             coping: "Ira que se desconecta y se adormece.\nTu energía no explota hacia afuera como en el 8,\nni se rigidiza como en el 1. Se diluye y se anestesia.",
             desc: "Eres el centro de la tríada instintiva, pero a menudo 'apagas' tu instinto para mantener la paz. Te retraes de los conflictos y prefieres ver el lado armonioso de la vida."
         },
