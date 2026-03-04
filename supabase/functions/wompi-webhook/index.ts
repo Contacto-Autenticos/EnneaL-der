@@ -14,11 +14,37 @@ serve(async (req) => {
     if (transaction.status === 'APPROVED') {
         const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
-        // Update the user_leads table or a separate payments table
+        // 1. Generate a new access code
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        const segment = () => {
+            let str = '';
+            for (let i = 0; i < 4; i++) {
+                str += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return str;
+        };
+        const generatedCode = `AUTO-${segment()}-${segment()}`;
+
+        // 2. Insert the code into access_codes table
+        const { error: codeError } = await supabase
+            .from('access_codes')
+            .insert([{
+                code: generatedCode,
+                is_used: false,
+                transaction_id: transaction.id,
+                created_at: new Date().toISOString()
+            }])
+
+        if (codeError) console.error('Error creating access code:', codeError)
+
+        // 3. Update the user_leads table
         const { error } = await supabase
             .from('user_leads')
-            .update({ payment_status: 'APPROVED', updated_at: new Date() })
-            .eq('email', transaction.customer_email) // Or use a custom reference
+            .update({
+                payment_status: 'APPROVED',
+                updated_at: new Date()
+            })
+            .eq('email', transaction.customer_email)
 
         if (error) console.error('Error updating payment status:', error)
     }

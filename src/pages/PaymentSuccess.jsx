@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import './PaymentSuccess.css';
 
 const PaymentSuccess = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const automatedCode = location.state?.automatedCode;
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    const handleProceed = () => {
+        if (automatedCode) {
+            navigate(`/advanced-intro?code=${automatedCode}`);
+        } else {
+            navigate('/advanced-intro');
+        }
+    };
 
     return (
         <div className="payment-success-page">
@@ -63,7 +73,7 @@ const PaymentSuccess = () => {
 
                 <div className="payment-actions">
                     <button
-                        onClick={() => navigate('/advanced-intro')}
+                        onClick={handleProceed}
                         className="btn-start-analysis"
                     >
                         Comenzar mi análisis Avanzado

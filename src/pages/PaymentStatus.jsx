@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import './PaymentStyles.css'; // Reuse styles for consistency
 
 const PaymentStatus = () => {
@@ -45,8 +46,23 @@ const PaymentStatus = () => {
 
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
+
+                    // Retrieve the automated access code from Supabase
+                    let automatedCode = null;
+                    try {
+                        const { data: codeData } = await supabase
+                            .from('access_codes')
+                            .select('code')
+                            .eq('transaction_id', transactionId)
+                            .single();
+
+                        if (codeData) automatedCode = codeData.code;
+                    } catch (err) {
+                        console.error('Error fetching generated code:', err);
+                    }
+
                     setTimeout(() => {
-                        navigate('/payment-success');
+                        navigate('/payment-success', { state: { automatedCode } });
                     }, 2000);
                 } else if (transactionStatus === 'DECLINED') {
                     setStatus('DECLINED');
@@ -82,7 +98,22 @@ const PaymentStatus = () => {
 
                         setStatus('APPROVED');
                         setMessage('¡Pago de prueba exitoso! Redirigiendo...');
-                        setTimeout(() => navigate('/payment-success'), 2000);
+
+                        // Retrieve the automated access code (even in sandbox)
+                        let automatedCode = null;
+                        try {
+                            const { data: codeData } = await supabase
+                                .from('access_codes')
+                                .select('code')
+                                .eq('transaction_id', transactionId)
+                                .single();
+
+                            if (codeData) automatedCode = codeData.code;
+                        } catch (err) {
+                            console.error('Error fetching generated code:', err);
+                        }
+
+                        setTimeout(() => navigate('/payment-success', { state: { automatedCode } }), 2000);
                         return;
                     }
                 } catch (e) {

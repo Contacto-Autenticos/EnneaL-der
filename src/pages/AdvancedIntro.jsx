@@ -26,14 +26,22 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
+    const [searchParams] = useSearchParams();
+
     useEffect(() => {
+        // Read code from URL
+        const codeFromUrl = searchParams.get('code');
+        if (codeFromUrl) {
+            setAccessCode(codeFromUrl);
+        }
+
         if (existingUser?.birth_date) {
             const [y, m, d] = existingUser.birth_date.split('-');
             setYear(parseInt(y).toString());
             setMonth(months[parseInt(m) - 1]);
             setDay(parseInt(d).toString());
         }
-    }, [existingUser]);
+    }, [existingUser, searchParams]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
