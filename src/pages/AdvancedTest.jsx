@@ -82,6 +82,15 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
 
     return (
         <div className="advanced-test-page">
+            {/* Header Banner */}
+            <div className="test-banner" style={{ width: '100%', maxWidth: '750px', margin: '0 auto', flexShrink: 0 }}>
+                <img
+                    src="/Eneagrama banner 02.png"
+                    alt="Eneagrama Banner"
+                    className="test-banner-img animate-fade-in"
+                />
+            </div>
+
             <div className="adv-test-container">
                 <div className="adv-test-progress-bar-bg">
                     <div

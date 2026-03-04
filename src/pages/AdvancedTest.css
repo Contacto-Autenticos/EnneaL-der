@@ -4,16 +4,17 @@
 .advanced-test-page {
     position: fixed;
     inset: 0;
-    overflow: hidden;
-    /* Prevent page-level scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
     background: linear-gradient(135deg, #071724 0%, #050e14 100%);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    padding: 20px;
+    padding: 0;
     box-sizing: border-box;
     z-index: 10;
     font-family: 'Poppins', sans-serif;
@@ -26,16 +27,15 @@
     width: 100%;
     max-width: 600px;
     height: 100%;
-    max-height: 100vh;
-    padding: 20px 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* Alignment from the top */
     align-items: center;
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* ──────────────────────────────────────────
