@@ -384,11 +384,11 @@ const Admin = () => {
                             </p>
 
                             <div className="share-link-item">
-                                <label>Test Inicial (Público)</label>
+                                <label>Página de Inicio (Test Inicial)</label>
                                 <div className="link-input-group">
-                                    <input readOnly value={`${window.location.origin}/test`} />
-                                    <button onClick={() => handleCopyLink('/test')} title="Copiar">
-                                        {copySuccess === '/test' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                    <input readOnly value={window.location.origin} />
+                                    <button onClick={() => handleCopyLink('/')} title="Copiar">
+                                        {copySuccess === '/' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
                                     </button>
                                 </div>
                             </div>
