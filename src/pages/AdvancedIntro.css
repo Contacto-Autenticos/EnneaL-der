@@ -292,3 +292,53 @@
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
+/* Access Code Error Styles */
+.access-code-group .input-error {
+    border-color: #ff4d4f;
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+}
+
+.error-message {
+    background: rgba(255, 77, 79, 0.1);
+    border: 1px solid rgba(255, 77, 79, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+    text-align: left;
+}
+
+.error-message p {
+    color: #ff7875;
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.error-message.used {
+    background: rgba(250, 173, 20, 0.1);
+    border-color: rgba(250, 173, 20, 0.3);
+}
+
+.error-message.used p {
+    color: #ffc53d;
+}
+
+.btn-buy-access {
+    background: transparent;
+    border: 1px solid #ddbe3d;
+    color: #ddbe3d;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-buy-access:hover {
+    background: #ddbe3d;
+    color: #050e14;
+}

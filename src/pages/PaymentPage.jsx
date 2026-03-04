@@ -313,7 +313,10 @@ const PaymentPage = () => {
                             <input
                                 type="checkbox"
                                 checked={bumpSelected}
-                                onChange={(e) => setBumpSelected(e.target.checked)}
+                                onChange={(e) => {
+                                    setBumpSelected(e.target.checked);
+                                    localStorage.setItem('pendingBumpPurchase', e.target.checked.toString());
+                                }}
                                 className="order-bump-checkbox"
                             />
                             <div className="order-bump-checkbox-custom"></div>

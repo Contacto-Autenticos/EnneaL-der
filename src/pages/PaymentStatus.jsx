@@ -34,6 +34,15 @@ const PaymentStatus = () => {
                 const transactionStatus = data.data.status;
 
                 if (transactionStatus === 'APPROVED') {
+                    // Check if they bought the kit
+                    const boughtKit = localStorage.getItem('pendingBumpPurchase') === 'true';
+                    if (boughtKit) {
+                        localStorage.setItem('hasPaidForKit', 'true');
+                    } else {
+                        localStorage.removeItem('hasPaidForKit');
+                    }
+                    localStorage.removeItem('pendingBumpPurchase');
+
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
                     setTimeout(() => {
@@ -62,6 +71,15 @@ const PaymentStatus = () => {
                     const sandboxResponse = await fetch(`https://sandbox.wompi.co/v1/transactions/${transactionId}`);
                     const sandboxData = await sandboxResponse.json();
                     if (!sandboxData.error && sandboxData.data.status === 'APPROVED') {
+                        // Check if they bought the kit in sandbox
+                        const boughtKit = localStorage.getItem('pendingBumpPurchase') === 'true';
+                        if (boughtKit) {
+                            localStorage.setItem('hasPaidForKit', 'true');
+                        } else {
+                            localStorage.removeItem('hasPaidForKit');
+                        }
+                        localStorage.removeItem('pendingBumpPurchase');
+
                         setStatus('APPROVED');
                         setMessage('¡Pago de prueba exitoso! Redirigiendo...');
                         setTimeout(() => navigate('/payment-success'), 2000);

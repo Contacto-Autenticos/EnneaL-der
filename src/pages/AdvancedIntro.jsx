@@ -5,15 +5,17 @@ import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
 import './AdvancedIntro.css';
 
-const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test', showOrganization = false, initialEnneatype }) => {
+const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advanced-test', showOrganization = false, requireAccessCode = false, initialEnneatype }) => {
     const navigate = useNavigate();
     const [name, setName] = useState(existingUser?.name || '');
     const [organization, setOrganization] = useState('');
+    const [accessCode, setAccessCode] = useState('');
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [email, setEmail] = useState(existingUser?.email || '');
     const [loading, setLoading] = useState(false);
+    const [codeError, setCodeError] = useState(null);
 
     // Date helpers
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -36,11 +38,68 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setCodeError(null);
+
+        if (requireAccessCode && !accessCode.trim()) {
+            setCodeError({ type: 'invalid', message: 'Por favor, ingresa un código de acceso.' });
+            setLoading(false);
+            return;
+        }
+
+        const normalizedEmail = email.trim().toLowerCase();
+
+        // Validate access code if required
+        if (requireAccessCode) {
+            try {
+                const cleanCode = accessCode.trim();
+                const { data: codeData, error: fetchError } = await supabase
+                    .from('access_codes')
+                    .select('*')
+                    .eq('code', cleanCode)
+                    .single();
+
+                if (fetchError || !codeData) {
+                    setCodeError({ type: 'invalid', message: 'El código de acceso ingresado no existe o es inválido.' });
+                    setLoading(false);
+                    return;
+                }
+
+                if (codeData.is_used) {
+                    setCodeError({
+                        type: 'used',
+                        message: 'Este código de acceso ya fue utilizado. Puedes adquirir un nuevo acceso aquí.'
+                    });
+                    setLoading(false);
+                    return;
+                }
+
+                // If valid, mark as used
+                const { error: updateError } = await supabase
+                    .from('access_codes')
+                    .update({
+                        is_used: true,
+                        used_by: normalizedEmail,
+                        used_at: new Date().toISOString()
+                    })
+                    .eq('code', cleanCode);
+
+                if (updateError) {
+                    console.error('Error updating access code:', updateError);
+                    // Decide whether to fail hard or soft. Failing hard for security.
+                    setCodeError({ type: 'invalid', message: 'Error procesando el código. Intenta nuevamente.' });
+                    setLoading(false);
+                    return;
+                }
+            } catch (err) {
+                console.error('Code validation error:', err);
+                setCodeError({ type: 'invalid', message: 'Ocurrió un error al validar el código.' });
+                setLoading(false);
+                return;
+            }
+        }
 
         const monthIndex = months.indexOf(month) + 1;
         const formattedDate = `${year}-${monthIndex.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-        const normalizedEmail = email.trim().toLowerCase();
 
         const userData = {
             name,
@@ -146,7 +205,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                                         type="text"
                                         value={organization}
                                         onChange={(e) => setOrganization(e.target.value)}
-                                        placeholder="Ingresa el código"
+                                        placeholder="Ingresa el código (opcional)"
                                         className="adv-input"
                                         disabled={organization === 'NO_CODE'}
                                     />
@@ -163,9 +222,37 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                                                     }
                                                 }}
                                             />
-                                            No tengo código
+                                            No tengo código de organización
                                         </label>
                                     </div>
+                                </div>
+                            )}
+
+                            {requireAccessCode && (
+                                <div className="form-group-adv access-code-group">
+                                    <label>Confirmar Código de Acceso *</label>
+                                    <input
+                                        type="text"
+                                        value={accessCode}
+                                        onChange={(e) => setAccessCode(e.target.value)}
+                                        placeholder="Ingresa tu código de un solo uso"
+                                        className={`adv-input ${codeError ? 'input-error' : ''}`}
+                                        required
+                                    />
+                                    {codeError && (
+                                        <div className={`error-message ${codeError.type}`}>
+                                            <p>{codeError.message}</p>
+                                            {codeError.type === 'used' && (
+                                                <button
+                                                    type="button"
+                                                    className="btn-buy-access"
+                                                    onClick={() => navigate('/payment')}
+                                                >
+                                                    Adquirir nuevo acceso
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             )}
 

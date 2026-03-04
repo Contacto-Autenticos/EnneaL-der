@@ -199,11 +199,19 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const { type: urlType } = useParams();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [isDownloadingKit, setIsDownloadingKit] = React.useState(false);
+    const [hasPaidForKit, setHasPaidForKit] = React.useState(false);
 
     const [localResult, setLocalResult] = React.useState(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        // Check if user has explicitly bought the Executive Kit order bump
+        const purchasedKit = localStorage.getItem('hasPaidForKit') === 'true';
+        if (purchasedKit) {
+            setHasPaidForKit(true);
+        }
+
         // Load result from localStorage if not provided via props
         if (!result) {
             const stored = localStorage.getItem('enneagramAdvancedResult');
@@ -917,30 +925,32 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         </div>
                     </div>
 
-                    {/* Order Bump Section: Executive Kit */}
-                    <div className="executive-kit-promo">
-                        <div className="kit-promo-content">
-                            <div className="kit-title-shimmer">
-                                <h3>Tu Plan de Acción</h3>
+                    {/* Order Bump Section: Executive Kit - CONDITIONALLY RENDERED */}
+                    {hasPaidForKit && (
+                        <div className="executive-kit-promo">
+                            <div className="kit-promo-content">
+                                <div className="kit-title-shimmer">
+                                    <h3>Tu Plan de Acción</h3>
+                                </div>
+                                <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
+                                <button
+                                    onClick={handleDownloadExecutiveKit}
+                                    className={`btn-kit-download ${isDownloadingKit ? 'loading' : ''}`}
+                                    disabled={isDownloadingKit}
+                                >
+                                    {isDownloadingKit ? (
+                                        <>
+                                            <Loader2 size={18} className="spinner" /> Generando tu Plan de Acción...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <CheckCircle2 size={18} /> Descargar mi Plan de Acción
+                                        </>
+                                    )}
+                                </button>
                             </div>
-                            <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
-                            <button
-                                onClick={handleDownloadExecutiveKit}
-                                className={`btn-kit-download ${isDownloadingKit ? 'loading' : ''}`}
-                                disabled={isDownloadingKit}
-                            >
-                                {isDownloadingKit ? (
-                                    <>
-                                        <Loader2 size={18} className="spinner" /> Generando tu Plan de Acción...
-                                    </>
-                                ) : (
-                                    <>
-                                        <CheckCircle2 size={18} /> Descargar mi Plan de Acción
-                                    </>
-                                )}
-                            </button>
                         </div>
-                    </div>
+                    )}
 
                     {/* Brand footer */}
                     <div className="detailed-brand-footer">

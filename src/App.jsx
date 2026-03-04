@@ -256,6 +256,7 @@ function App() {
               user={user}
               targetRoute="/advanced-test-full"
               showOrganization={true}
+              requireAccessCode={true}
               initialEnneatype={testResult?.enneatype}
             />
           }
