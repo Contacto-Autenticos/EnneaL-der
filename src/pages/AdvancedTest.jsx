@@ -165,16 +165,6 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                     </button>
 
                     <div className="adv-test-dots-wrapper">
-                        {totalQuestions <= 45 && (
-                            <div className="adv-test-dots">
-                                {filteredQuestions.map((_, idx) => (
-                                    <span
-                                        key={idx}
-                                        className={`adv-test-dot ${idx <= currentQuestionIndex ? 'adv-test-dot-active' : ''}`}
-                                    />
-                                ))}
-                            </div>
-                        )}
                         <span className="adv-test-dots-counter">
                             <span style={{ color: '#ddbe3d' }}>{currentQuestionIndex + 1}</span>/{totalQuestions}
                         </span>
@@ -196,8 +186,8 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                         className="adv-test-footer-logo"
                     />
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
