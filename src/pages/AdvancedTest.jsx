@@ -83,12 +83,12 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
     return (
         <div className="advanced-test-page">
             {/* Header Banner */}
-            <div className="test-banner" style={{ flexShrink: 0 }}>
+            <div className="test-banner" style={{ flexShrink: 0, opacity: 0.4 }}>
                 <img
                     src="/Eneagrama%20banner%2002.png"
                     alt="Eneagrama Banner"
                     className="test-banner-img animate-fade-in"
-                    style={{ objectPosition: '50% 15%', opacity: 0.4 }}
+                    style={{ objectPosition: '50% 15%' }}
                 />
             </div>
 
