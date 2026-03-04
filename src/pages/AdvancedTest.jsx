@@ -88,7 +88,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                     src="/Eneagrama%20banner%2002.png"
                     alt="Eneagrama Banner"
                     className="test-banner-img animate-fade-in"
-                    style={{ objectPosition: '50% 15%' }}
+                    style={{ objectPosition: '50% 15%', opacity: 0.4 }}
                 />
             </div>
 
