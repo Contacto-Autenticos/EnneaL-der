@@ -826,12 +826,12 @@ h3 {
 
   /* Home - Overriding the h1 !important rule below */
   .home-title {
-    font-size: 4.2rem !important;
+    font-size: 3.5rem !important;
   }
 
   .home-subtitle-gold {
-    font-size: 1.35rem;
-    /* Proporcional a 4.2rem (ratio de escritorio 3.2/1.05 = ~3.05) */
+    font-size: 1.15rem;
+    /* Proporcional a 3.5rem */
     letter-spacing: 1.5px;
     margin-top: -5px;
   }
