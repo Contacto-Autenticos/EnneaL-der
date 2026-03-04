@@ -5,11 +5,38 @@ import { advancedQuestions, advancedOptions } from '../data/advancedQuestions';
 import './AdvancedTest.css';
 
 const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
+    const [dbQuestions, setDbQuestions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    React.useEffect(() => {
+        const fetchAdvancedQuestions = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('advanced_questions')
+                    .select('*')
+                    .order('id', { ascending: true });
+
+                if (error) throw error;
+                setDbQuestions(data);
+            } catch (err) {
+                console.error('Error fetching advanced questions, using fallback:', err);
+                setDbQuestions(advancedQuestions);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchAdvancedQuestions();
+    }, []);
+
     // Filter and shuffle questions
     const filteredQuestions = useMemo(() => {
+        if (loading || dbQuestions.length === 0) return [];
+
+        let baseQs = dbQuestions;
+
         // If fullTest is active, use ALL advanced questions
         if (fullTest) {
-            const shuffled = [...advancedQuestions];
+            const shuffled = [...baseQs];
             for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -20,7 +47,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
         if (!topTypes || topTypes.length === 0) return [];
 
         // Filter questions belonging to the top types
-        const relevant = advancedQuestions.filter(q => topTypes.includes(q.enneatype));
+        const relevant = baseQs.filter(q => topTypes.includes(q.enneatype));
 
         // Shuffle them
         const shuffled = [...relevant];
@@ -29,7 +56,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
-    }, [topTypes, fullTest]);
+    }, [topTypes, fullTest, dbQuestions, loading]);
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
@@ -39,8 +66,12 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
     const currentQuestion = filteredQuestions[currentQuestionIndex];
     const totalQuestions = filteredQuestions.length;
 
-    if (totalQuestions === 0) {
+    if (loading || (totalQuestions === 0 && (topTypes?.length > 0 || fullTest))) {
         return <div className="advanced-test-page"><div className="adv-test-container">Cargando análisis avanzado...</div></div>;
+    }
+
+    if (totalQuestions === 0 && !fullTest && (!topTypes || topTypes.length === 0)) {
+        return <div className="advanced-test-page"><div className="adv-test-container">No hay preguntas para mostrar. Por favor, realiza el test inicial primero.</div></div>;
     }
 
     const handleAnswer = (value) => {
@@ -53,7 +84,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                 setDirection('next');
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
-                onComplete(newAnswers);
+                onComplete(newAnswers, filteredQuestions);
                 navigate('/advanced-analysis-result');
             }
         }, 150);
@@ -72,7 +103,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
-                onComplete(answers);
+                onComplete(answers, filteredQuestions);
                 navigate('/advanced-analysis-result');
             }
         }

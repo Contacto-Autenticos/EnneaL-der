@@ -31,23 +31,51 @@ async function saveAnonymousResponses(answers) {
 }
 
 const Test = ({ onComplete }) => {
-    const [shuffledQuestions] = useState(() => {
-        // Separate standard Likert questions from special questions
-        const standardQs = questions.filter(q => q.type !== 'special');
-        const specialQs = questions.filter(q => q.type === 'special');
-        // Shuffle only the standard questions
-        for (let i = standardQs.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [standardQs[i], standardQs[j]] = [standardQs[j], standardQs[i]];
-        }
-        // Special questions always go at the end, in order
-        return [...standardQs, ...specialQs];
-    });
+    const [shuffledQuestions, setShuffledQuestions] = useState([]);
+    const [loadingQuestions, setLoadingQuestions] = useState(true);
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
     const [direction, setDirection] = useState('next');
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('questions')
+                    .select('*')
+                    .order('id', { ascending: true });
+
+                if (error) throw error;
+
+                // Process questions
+                const standardQs = data.filter(q => q.type !== 'special');
+                const specialQs = data.filter(q => q.type === 'special');
+
+                // Shuffle standard questions
+                for (let i = standardQs.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [standardQs[i], standardQs[j]] = [standardQs[j], standardQs[i]];
+                }
+
+                setShuffledQuestions([...standardQs, ...specialQs]);
+            } catch (err) {
+                console.error('Error fetching questions from Supabase, using fallback:', err);
+                const standardQs = questions.filter(q => q.type !== 'special');
+                const specialQs = questions.filter(q => q.type === 'special');
+                for (let i = standardQs.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [standardQs[i], standardQs[j]] = [standardQs[j], standardQs[i]];
+                }
+                setShuffledQuestions([...standardQs, ...specialQs]);
+            } finally {
+                setLoadingQuestions(false);
+            }
+        };
+
+        fetchQuestions();
+    }, []);
 
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
     const totalQuestions = shuffledQuestions.length;
@@ -64,7 +92,7 @@ const Test = ({ onComplete }) => {
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
                 await saveAnonymousResponses(newAnswers); // await so insert completes before navigating
-                onComplete(newAnswers);
+                onComplete(newAnswers, shuffledQuestions); // Pass questions back for calculation
                 navigate('/result');
             }
         }, 150);
@@ -89,7 +117,7 @@ const Test = ({ onComplete }) => {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
                 await saveAnonymousResponses(answers); // await so insert completes before navigating
-                onComplete(answers);
+                onComplete(answers, shuffledQuestions); // Pass questions back for calculation
                 navigate('/result');
             }
         }
@@ -97,6 +125,16 @@ const Test = ({ onComplete }) => {
 
     const sliderLabels = ["Muy poco", "Algo", "Mucho", "Totalmente"];
     const currentValue = answers[currentQuestion.id] || 0;
+
+    if (loadingQuestions || !currentQuestion) {
+        return (
+            <div className="test-page">
+                <div className="test-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#b89b2d' }}>
+                    <p>Iniciando Test...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="test-page">
@@ -148,7 +186,7 @@ const Test = ({ onComplete }) => {
                     ) : (
                         /* Standard Question: Slider */
                         <div className="test-slider-wrapper">
-                            <p style={{ fontSize: '0.9rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
+                            <p style={{ fontSize: '1.1rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
                                 Me describe:
                             </p>
                             <div className="test-slider-labels">

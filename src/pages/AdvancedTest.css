@@ -81,10 +81,11 @@
     letter-spacing: 2px;
     margin-bottom: 8px;
     opacity: 0.9;
+    font-style: italic;
 }
 
 .adv-test-question-text {
-    font-size: 1.55rem;
+    font-size: 1.30rem;
     color: #ffffff;
     line-height: 1.4;
     font-weight: 600;

@@ -565,7 +565,7 @@ h3 {
 }
 
 .test-question-text {
-  font-size: 1.1rem;
+  font-size: 1.30rem;
   margin-top: 5px;
   line-height: 1.2;
 }
@@ -620,7 +620,7 @@ h3 {
   top: 0;
   transform: translateX(-50%);
   white-space: nowrap;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: #999;
   cursor: pointer;

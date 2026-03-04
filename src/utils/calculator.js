@@ -86,15 +86,19 @@ export const getEnneagramEmailImage = (type) => {
 /**
  * Main calculation function — Direct Sum System
  */
-export const calculateResults = (answers) => {
+export const calculateResults = (answers, customQuestions = null, customOptions = null) => {
+    // Determine which questions and options to use
+    const baseQuestions = customQuestions || questions;
+    const baseOptions = customOptions || options;
+
     // -----------------------------------------
     // 1. Calculate block totals (A, B, C, X, Y, Z)
     // -----------------------------------------
     const scores = { A: 0, B: 0, C: 0, X: 0, Y: 0, Z: 0 };
 
     Object.entries(answers).forEach(([questionId, answerValue]) => {
-        const question = questions.find((q) => q.id === parseInt(questionId));
-        const option = options.find((o) => o.value === answerValue);
+        const question = baseQuestions.find((q) => q.id === parseInt(questionId));
+        const option = baseOptions.find((o) => o.value === answerValue);
 
         // Only process standard Likert questions (not special ones)
         if (question && option && question.type !== "special") {
@@ -120,7 +124,7 @@ export const calculateResults = (answers) => {
     // -----------------------------------------
     // 2.5. Apply bonus points from special questions
     // -----------------------------------------
-    const specialQuestions = questions.filter((q) => q.type === "special");
+    const specialQuestions = baseQuestions.filter((q) => q.type === "special");
     specialQuestions.forEach((sq) => {
         const answerValue = answers[sq.id];
         if (answerValue && sq.scoring && sq.scoring[answerValue]) {
@@ -271,11 +275,12 @@ export const calculateResults = (answers) => {
  * Calculate Advanced Results
  * Focuses only on the types being tested in the advanced phase
  */
-export const calculateAdvancedResults = (answers) => {
+export const calculateAdvancedResults = (answers, customAdvancedQuestions = null) => {
+    const baseQuestions = customAdvancedQuestions || advancedQuestions;
     const scores = {};
 
     Object.entries(answers).forEach(([questionId, answerValue]) => {
-        const question = advancedQuestions.find((q) => q.id === parseInt(questionId));
+        const question = baseQuestions.find((q) => q.id === parseInt(questionId));
         if (question) {
             const type = question.enneatype;
             if (!scores[type]) scores[type] = 0;

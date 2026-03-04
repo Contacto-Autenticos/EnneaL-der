@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import { questions } from '../data/questions';
-import { advancedQuestions } from '../data/advancedQuestions';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -23,6 +21,15 @@ const Admin = () => {
     const [selectedType, setSelectedType] = useState('1');
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [pdfSuccess, setPdfSuccess] = useState(false);
+    const [copySuccess, setCopySuccess] = useState('');
+
+    // Questions State
+    const [adminQuestions, setAdminQuestions] = useState([]);
+    const [adminAdvancedQuestions, setAdminAdvancedQuestions] = useState([]);
+    const [loadingQuestions, setLoadingQuestions] = useState(false);
+    const [editingId, setEditingId] = useState(null); // ID of question being edited
+    const [editValue, setEditValue] = useState('');
+    const [savingId, setSavingId] = useState(null); // ID of question being saved
 
     useEffect(() => {
         // Check local storage for persistent auth
@@ -35,8 +42,57 @@ const Admin = () => {
     useEffect(() => {
         if (isAuthenticated) {
             fetchCodes();
+            fetchAllQuestions();
         }
     }, [isAuthenticated]);
+
+    const fetchAllQuestions = async () => {
+        setLoadingQuestions(true);
+        try {
+            const { data: qData } = await supabase.from('questions').select('*').order('id', { ascending: true });
+            const { data: advData } = await supabase.from('advanced_questions').select('*').order('id', { ascending: true });
+            setAdminQuestions(qData || []);
+            setAdminAdvancedQuestions(advData || []);
+        } catch (error) {
+            console.error('Error fetching questions:', error);
+        } finally {
+            setLoadingQuestions(false);
+        }
+    };
+
+    const handleEditStart = (id, currentText) => {
+        setEditingId(id);
+        setEditValue(currentText);
+    };
+
+    const handleSaveQuestion = async (id, isAdvanced = false) => {
+        setSavingId(id);
+        const table = isAdvanced ? 'advanced_questions' : 'questions';
+
+        try {
+            const { error } = await supabase
+                .from(table)
+                .update({ text: editValue })
+                .eq('id', id);
+
+            if (error) throw error;
+
+            // Update local state
+            if (isAdvanced) {
+                setAdminAdvancedQuestions(prev => prev.map(q => q.id === id ? { ...q, text: editValue } : q));
+            } else {
+                setAdminQuestions(prev => prev.map(q => q.id === id ? { ...q, text: editValue } : q));
+            }
+
+            setEditingId(null);
+            setEditValue('');
+        } catch (error) {
+            console.error('Error saving question:', error);
+            alert('Error al guardar la pregunta.');
+        } finally {
+            setSavingId(null);
+        }
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -112,8 +168,15 @@ const Admin = () => {
         }
     };
 
+    const handleCopyLink = (path) => {
+        const fullLink = `${window.location.origin}${path}`;
+        navigator.clipboard.writeText(fullLink);
+        setCopySuccess(path);
+        setTimeout(() => setCopySuccess(''), 2000);
+    };
+
     // Group advanced questions by enneatype
-    const groupedAdvancedQuestions = advancedQuestions.reduce((acc, q) => {
+    const groupedAdvancedQuestions = adminAdvancedQuestions.reduce((acc, q) => {
         if (!acc[q.enneatype]) {
             acc[q.enneatype] = [];
         }
@@ -203,10 +266,10 @@ const Admin = () => {
                 </button>
             </div>
 
-            <div className="admin-grid">
-
-                {/* COLUMN 1: Accesos Premium y Generación PDF */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            <div className="admin-layout-wrapper">
+                {/* TOP SECTION: 3 Columns */}
+                <div className="admin-top-section">
+                    {/* CARD 1: Accesos Premium */}
                     <div className="admin-card">
                         <div className="admin-card-header">
                             <h2><Key size={20} /> Accesos Premium</h2>
@@ -231,7 +294,7 @@ const Admin = () => {
                                 </button>
                             </div>
 
-                            <div className="codes-table-wrapper" style={{ maxHeight: '300px' }}>
+                            <div className="codes-table-wrapper" style={{ maxHeight: '200px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -243,12 +306,12 @@ const Admin = () => {
                                     <tbody>
                                         {codes.length === 0 ? (
                                             <tr>
-                                                <td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>
-                                                    {loading ? 'Cargando códigos...' : 'Aún no hay códigos generados.'}
+                                                <td colSpan="3" style={{ textAlign: 'center', padding: '10px' }}>
+                                                    {loading ? 'Cargando...' : 'No hay códigos.'}
                                                 </td>
                                             </tr>
                                         ) : (
-                                            codes.map((item) => (
+                                            codes.slice(0, 10).map((item) => (
                                                 <tr key={item.code}>
                                                     <td className="code-cell">{item.code}</td>
                                                     <td>
@@ -266,16 +329,17 @@ const Admin = () => {
                         </div>
                     </div>
 
+                    {/* CARD 2: Generador Kit Ejecutivo */}
                     <div className="admin-card">
                         <div className="admin-card-header">
                             <h2><Download size={20} /> Generador Kit Ejecutivo</h2>
                         </div>
                         <div className="pdf-generator-section">
-                            <p style={{ fontSize: '0.9rem', color: 'var(--color-text-light)', marginTop: '-10px' }}>
-                                Genera y descarga el PDF del Kit Ejecutivo completo para cualquier eneatipo bajo demanda.
+                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                Descarga el PDF completo para cualquier eneatipo.
                             </p>
 
-                            <div className="form-group-admin">
+                            <div className="form-group-admin" style={{ marginBottom: '15px' }}>
                                 <label htmlFor="type-select">Selecciona el Eneatipo:</label>
                                 <select
                                     id="type-select"
@@ -298,86 +362,177 @@ const Admin = () => {
                                 disabled={isGeneratingPdf}
                             >
                                 {isGeneratingPdf ? (
-                                    <>
-                                        <RefreshCw size={18} className="spinning" />
-                                        Generando PDF (Puede tardar un poco)...
-                                    </>
+                                    <RefreshCw size={18} className="spinning" />
                                 ) : pdfSuccess ? (
-                                    <>
-                                        <CheckCircle2 size={18} color="#4ade80" />
-                                        ¡Descargado con éxito!
-                                    </>
+                                    <CheckCircle2 size={18} color="#4ade80" />
                                 ) : (
-                                    <>
-                                        <Download size={18} />
-                                        Descargar PDF del Tipo {selectedType}
-                                    </>
+                                    <Download size={18} />
                                 )}
+                                {isGeneratingPdf ? ' Generando...' : pdfSuccess ? ' ¡Listo!' : ' Descargar PDF'}
                             </button>
+                        </div>
+                    </div>
+
+                    {/* CARD 3: Links de Compartir */}
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <h2><Link size={20} /> Links de Compartir</h2>
+                        </div>
+                        <div className="sharing-links-section">
+                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                Copia los enlaces para enviar a los usuarios.
+                            </p>
+
+                            <div className="share-link-item">
+                                <label>Test Inicial (Público)</label>
+                                <div className="link-input-group">
+                                    <input readOnly value={`${window.location.origin}/test`} />
+                                    <button onClick={() => handleCopyLink('/test')} title="Copiar">
+                                        {copySuccess === '/test' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="share-link-item" style={{ marginTop: '15px' }}>
+                                <label>Test Liderazgo (Corporativo)</label>
+                                <div className="link-input-group">
+                                    <input readOnly value={`${window.location.origin}/test-liderazgo`} />
+                                    <button onClick={() => handleCopyLink('/test-liderazgo')} title="Copiar">
+                                        {copySuccess === '/test-liderazgo' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* COLUMN 2: Banco de Preguntas Iniciales */}
-                <div className="admin-card" style={{ height: 'fit-content' }}>
-                    <div className="admin-card-header">
-                        <h2>Test Inicial</h2>
-                        <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                            {questions.length} Activas
-                        </span>
-                    </div>
+                {/* BOTTOM SECTION: 2 Columns (Questions) */}
+                <div className="admin-bottom-section">
+                    {/* Test Inicial */}
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <h2>Test Inicial</h2>
+                            <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                                {adminQuestions.length} Activas
+                            </span>
+                        </div>
 
-                    <div className="questions-list" style={{ maxHeight: '700px' }}>
-                        {questions.map((q) => (
-                            <div key={q.id} className="question-item">
-                                <span className="q-id">{q.id}.</span>
-                                <span className="q-text">{q.text}</span>
-                                <span className="q-type">Tipo {q.type}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* COLUMN 3: Banco de Preguntas Avanzadas */}
-                <div className="admin-card" style={{ height: 'fit-content' }}>
-                    <div className="admin-card-header">
-                        <h2>Test Avanzado</h2>
-                        <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                            {advancedQuestions.length} Activas
-                        </span>
-                    </div>
-
-                    <div style={{ maxHeight: '700px', overflowY: 'auto', paddingRight: '5px' }}>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(typeNum => {
-                            const typeStr = typeNum.toString();
-                            const groupQ = groupedAdvancedQuestions[typeStr] || [];
-                            const isExpanded = expandedGroup === typeStr;
-
-                            return (
-                                <div key={typeStr} className="question-group">
-                                    <div
-                                        className={`question-group-header ${isExpanded ? 'active' : ''}`}
-                                        onClick={() => toggleGroup(typeStr)}
-                                    >
-                                        <span>Eneatipo {typeStr} ({groupQ.length})</span>
-                                        {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                                    </div>
-                                    <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
-                                        {groupQ.map(q => (
-                                            <div key={q.id} className="question-item" style={{ backgroundColor: 'white' }}>
-                                                <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
-                                                <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
+                        <div className="questions-list">
+                            {loadingQuestions ? (
+                                <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
+                            ) : (
+                                adminQuestions.map((q) => (
+                                    <div key={q.id} className="question-item">
+                                        <div className="question-item-top">
+                                            <span className="q-id">{q.id}.</span>
+                                            {editingId === q.id ? (
+                                                <textarea
+                                                    className="edit-q-textarea"
+                                                    value={editValue}
+                                                    onChange={(e) => setEditValue(e.target.value)}
+                                                    autoFocus
+                                                />
+                                            ) : (
+                                                <span className="q-text">{q.text}</span>
+                                            )}
+                                        </div>
+                                        <div className="question-item-bottom">
+                                            <span className="q-type">Tipo {q.type}</span>
+                                            <div className="q-actions">
+                                                {editingId === q.id ? (
+                                                    <>
+                                                        <button
+                                                            onClick={() => handleSaveQuestion(q.id)}
+                                                            className="btn-save-q"
+                                                            disabled={savingId === q.id}
+                                                        >
+                                                            {savingId === q.id ? '...' : 'Guardar'}
+                                                        </button>
+                                                        <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
+                                                    </>
+                                                ) : (
+                                                    <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
+                                                )}
                                             </div>
-                                        ))}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Test Avanzado */}
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <h2>Test Avanzado</h2>
+                            <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                                {adminAdvancedQuestions.length} Activas
+                            </span>
+                        </div>
+
+                        <div className="questions-list">
+                            {loadingQuestions ? (
+                                <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
+                            ) : (
+                                [1, 2, 3, 4, 5, 6, 7, 8, 9].map(typeNum => {
+                                    const typeStr = typeNum.toString();
+                                    const groupQ = groupedAdvancedQuestions[typeStr] || [];
+                                    const isExpanded = expandedGroup === typeStr;
+
+                                    return (
+                                        <div key={typeStr} className="question-group">
+                                            <div
+                                                className={`question-group-header ${isExpanded ? 'active' : ''}`}
+                                                onClick={() => toggleGroup(typeStr)}
+                                            >
+                                                <span>Eneatipo {typeStr} ({groupQ.length})</span>
+                                                {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                                            </div>
+                                            <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
+                                                {groupQ.map(q => (
+                                                    <div key={q.id} className="question-item" style={{ backgroundColor: 'white', borderBottom: '1px solid #eee' }}>
+                                                        <div className="question-item-top">
+                                                            <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
+                                                            {editingId === q.id ? (
+                                                                <textarea
+                                                                    className="edit-q-textarea"
+                                                                    value={editValue}
+                                                                    onChange={(e) => setEditValue(e.target.value)}
+                                                                    autoFocus
+                                                                />
+                                                            ) : (
+                                                                <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
+                                                            )}
+                                                        </div>
+                                                        <div className="q-actions" style={{ marginTop: '10px' }}>
+                                                            {editingId === q.id ? (
+                                                                <>
+                                                                    <button
+                                                                        onClick={() => handleSaveQuestion(q.id, true)}
+                                                                        className="btn-save-q"
+                                                                        disabled={savingId === q.id}
+                                                                    >
+                                                                        {savingId === q.id ? '...' : 'Guardar'}
+                                                                    </button>
+                                                                    <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
+                                                                </>
+                                                            ) : (
+                                                                <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* ERROR FIX: Hidden wrapper for the PDF Generator target */}
+            {/* Hidden wrapper for the PDF Generator target */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>
                 <ExecutiveKitTemplate
                     data={executiveKitData[selectedType]}
@@ -385,7 +540,6 @@ const Admin = () => {
                     name="Líder"
                 />
             </div>
-
         </div>
     );
 };

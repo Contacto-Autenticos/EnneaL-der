@@ -54,14 +54,16 @@ function App() {
     localStorage.setItem('enneagramUser', JSON.stringify(userWithId));
   };
 
-  const handleTestComplete = (answers) => {
-    const result = calculateResults(answers);
-    setTestResult(result);
-    localStorage.setItem('enneagramResult', JSON.stringify(result));
+  const handleTestComplete = (answers, questionsUsed) => {
+    const result = calculateResults(answers, questionsUsed);
+    // Include questions in result for later use in advanced test or re-calculation
+    const resultWithQuestions = { ...result, questionsUsed };
+    setTestResult(resultWithQuestions);
+    localStorage.setItem('enneagramResult', JSON.stringify(resultWithQuestions));
   };
 
-  const handleAdvancedTestComplete = async (answers) => {
-    const result = calculateAdvancedResults(answers);
+  const handleAdvancedTestComplete = async (answers, advancedQuestionsUsed) => {
+    const result = calculateAdvancedResults(answers, advancedQuestionsUsed);
     setAdvancedTestResult(result);
     localStorage.setItem('enneagramAdvancedResult', JSON.stringify(result));
 
