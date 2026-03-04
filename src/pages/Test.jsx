@@ -78,6 +78,17 @@ const Test = ({ onComplete }) => {
     }, []);
 
     const currentQuestion = shuffledQuestions[currentQuestionIndex];
+
+    if (loadingQuestions || !currentQuestion) {
+        return (
+            <div className="test-page">
+                <div className="test-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#b89b2d' }}>
+                    <p>Iniciando Test...</p>
+                </div>
+            </div>
+        );
+    }
+
     const totalQuestions = shuffledQuestions.length;
     const isSpecialQuestion = currentQuestion.type === 'special';
 
@@ -126,15 +137,7 @@ const Test = ({ onComplete }) => {
     const sliderLabels = ["Muy poco", "Algo", "Mucho", "Totalmente"];
     const currentValue = answers[currentQuestion.id] || 0;
 
-    if (loadingQuestions || !currentQuestion) {
-        return (
-            <div className="test-page">
-                <div className="test-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#b89b2d' }}>
-                    <p>Iniciando Test...</p>
-                </div>
-            </div>
-        );
-    }
+
 
     return (
         <div className="test-page">

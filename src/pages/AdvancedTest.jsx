@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { advancedQuestions, advancedOptions } from '../data/advancedQuestions';
+import { supabase } from '../supabaseClient';
 import './AdvancedTest.css';
 
 const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
