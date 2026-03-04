@@ -95,6 +95,7 @@
 ────────────────────────────────────────── */
 .adv-test-slider-wrapper {
     width: 100%;
+    max-width: 500px;
     background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border: 1px solid rgba(221, 190, 61, 0.2);
     border-radius: 24px;
@@ -103,6 +104,8 @@
     box-sizing: border-box;
     margin-top: auto;
     margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
@@ -189,8 +192,9 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto 10px;
     gap: 15px;
-    padding-bottom: 20px;
 }
 
 .adv-btn-nav {
@@ -298,8 +302,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 15px;
-    margin-top: 25px;
+    padding-bottom: 15px;
 }
 
 .adv-test-footer-logo {
