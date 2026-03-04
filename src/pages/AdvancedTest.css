@@ -312,11 +312,11 @@
 ────────────────────────────────────────── */
 @media (max-width: 600px) {
     .advanced-test-page {
-        padding: 15px;
+        padding: 0;
     }
 
     .adv-test-container {
-        padding: 15px 0;
+        padding: 15px;
     }
 
     .adv-test-progress-bar-bg {
