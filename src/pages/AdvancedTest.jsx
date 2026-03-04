@@ -85,7 +85,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
             {/* Header Banner */}
             <div className="test-banner" style={{ width: '100%', maxWidth: '750px', margin: '0 auto', flexShrink: 0 }}>
                 <img
-                    src="/Eneagrama banner 02.png"
+                    src="/Eneagrama%20banner%2002.png"
                     alt="Eneagrama Banner"
                     className="test-banner-img animate-fade-in"
                 />
