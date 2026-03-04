@@ -834,6 +834,7 @@ h3 {
     /* Proporcional a 2.5rem */
     letter-spacing: 1.5px;
     margin-top: -3px;
+    text-transform: capitalize;
   }
 
   .home-description {
