@@ -490,7 +490,7 @@ const Admin = () => {
                                             </div>
                                             <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
                                                 {groupQ.map(q => (
-                                                    <div key={q.id} className="question-item" style={{ backgroundColor: 'white', borderBottom: '1px solid #eee' }}>
+                                                    <div key={q.id} className="question-item">
                                                         <div className="question-item-top">
                                                             <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
                                                             {editingId === q.id ? (

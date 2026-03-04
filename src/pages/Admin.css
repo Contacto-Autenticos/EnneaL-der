@@ -122,20 +122,26 @@
 }
 
 /* Layout Sections */
+.admin-layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
 .admin-top-section {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 30px;
+    gap: 25px;
 }
 
 .admin-bottom-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 25px;
+    align-items: start;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
     .admin-top-section {
         grid-template-columns: 1fr;
     }
@@ -207,8 +213,13 @@
 
 /* Question List Scroller */
 .questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 700px;
     overflow-y: auto;
-    padding-right: 5px;
+    padding-right: 10px;
+    margin-top: 10px;
 }
 
 /* Scrollbar Style */
@@ -234,13 +245,21 @@
     background: #ccc;
 }
 
-/* Question Editing Improvements */
+/* Question Item Styling */
 .question-item {
     display: flex;
     flex-direction: column;
+    background-color: #fafafa;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     padding: 15px;
-    border-bottom: 1px solid #eee;
-    gap: 10px;
+    gap: 12px;
+    transition: all 0.2s;
+}
+
+.question-item:hover {
+    border-color: var(--color-primary);
+    background-color: white;
 }
 
 .question-item-top {
@@ -556,11 +575,13 @@
 
 /* Question Grouping Styles */
 .question-group {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     border-radius: 8px;
     overflow: hidden;
     background-color: #f8f9fa;
     border: 1px solid #edf2f7;
+    flex-shrink: 0;
+    /* CRITICAL: Prevent headers from squashing when one is expanded */
 }
 
 .question-group-header {
@@ -575,7 +596,6 @@
     color: var(--color-text-dark);
     line-height: 1.4;
     min-height: auto;
-    /* Ensure no fixed height is clipping */
 }
 
 .question-group-header:hover {
@@ -594,23 +614,17 @@
 }
 
 .question-group-content.expanded {
-    max-height: 2000px;
-    padding: 10px;
+    max-height: 2500px;
+    padding: 12px;
+    background-color: #f8f9fa;
 }
 
 .question-group-content .question-item {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    gap: 10px;
     background-color: white;
-    border-radius: 6px;
     margin-bottom: 10px;
 }
 
 .question-group-content .question-item:last-child {
-    border-bottom: none;
     margin-bottom: 0;
 }
 
