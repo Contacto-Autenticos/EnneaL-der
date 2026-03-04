@@ -133,7 +133,7 @@
     position: relative;
     width: 90%;
     margin: 0 auto;
-    height: 35px;
+    height: 45px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -141,7 +141,7 @@
 
 .adv-test-slider-rail {
     flex: 1;
-    height: 8px;
+    height: 20px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     position: relative;
@@ -160,8 +160,8 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     background: #0d2535;
     border: 3px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
@@ -174,8 +174,8 @@
 }
 
 .adv-test-slider-dot.active {
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     background: #ddbe3d;
     border-color: #ffffff;
     box-shadow: 0 0 12px rgba(221, 190, 61, 0.6);
@@ -356,7 +356,7 @@
     }
 
     .adv-test-slider-track {
-        height: 30px;
+        height: 40px;
         width: 85%;
         /* Narrowed for more side space */
     }
