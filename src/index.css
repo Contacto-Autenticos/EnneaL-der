@@ -644,7 +644,7 @@ h3 {
 .test-slider-track {
   position: relative;
   width: 100%;
-  height: 12px;
+  height: 20px;
   cursor: pointer;
   margin-top: 5px;
 }
@@ -671,8 +671,8 @@ h3 {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #d8dde0;
   border: 2px solid #c0c5c9;
@@ -687,8 +687,8 @@ h3 {
 }
 
 .test-slider-dot.active {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   background: #ffffff;
   border: 4px solid #002d44;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
