@@ -83,7 +83,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
     return (
         <div className="advanced-test-page">
             {/* Header Banner */}
-            <div className="test-banner" style={{ width: '100%', maxWidth: '750px', margin: '0 auto', flexShrink: 0 }}>
+            <div className="test-banner" style={{ flexShrink: 0 }}>
                 <img
                     src="/Eneagrama%20banner%2002.png"
                     alt="Eneagrama Banner"
