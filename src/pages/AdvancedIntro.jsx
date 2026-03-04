@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowRight, Lock } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { supabase } from '../supabaseClient';
