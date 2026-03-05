@@ -311,16 +311,14 @@ const Admin = () => {
             groups[key].push(a);
         });
         const sortedKeys = Object.keys(groups).sort((a, b) => Number(a) - Number(b));
-        let n = 0;
         const answerRows = [];
         sortedKeys.forEach(typeKey => {
-            groups[typeKey].forEach(a => {
-                n++;
+            groups[typeKey].forEach((a, i) => {
                 answerRows.push([
-                    e(`Eneatipo ${typeKey}`),
-                    n,
-                    e(a.text),
-                    e(a.answer_label || '-')
+                    e(`Tipo ${typeKey}`),   // Col A: Tipo 1, Tipo 2 ...
+                    i + 1,                  // Col B: 1 a 15 por eneatipo
+                    e(a.text),              // Col C: enunciado
+                    e(a.answer_label || '-') // Col D: respuesta
                 ]);
             });
         });
