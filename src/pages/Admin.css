@@ -1024,11 +1024,43 @@
 /* ── MAIN CONTENT AREA ── */
 .admin-main {
     flex: 1;
-    padding: 32px 36px;
+    padding: 24px 24px;
     overflow-y: auto;
     min-height: 100vh;
+    min-width: 0;
 }
 
 .admin-main .admin-card {
-    max-width: 900px;
+    width: 100%;
+}
+
+/* ── RESPONSES TABLE: compact & full-width ── */
+.admin-main .codes-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.admin-main .codes-table {
+    width: 100%;
+    table-layout: auto;
+    font-size: 0.8rem;
+}
+
+.admin-main .codes-table th,
+.admin-main .codes-table td {
+    padding: 8px 10px;
+    white-space: nowrap;
+}
+
+/* Let email column shrink/truncate */
+.admin-main .codes-table td:nth-child(3) {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Let name column wrap */
+.admin-main .codes-table td:nth-child(2) {
+    min-width: 80px;
+    white-space: normal;
 }
