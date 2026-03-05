@@ -113,7 +113,9 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
             name,
             email: normalizedEmail,
             birth_date: formattedDate,
-            id: existingUser?.id || Date.now().toString()
+            id: existingUser?.id || Date.now().toString(),
+            organization: showOrganization ? organization : null,
+            access_code: requireAccessCode ? accessCode.trim() : null
         };
 
         try {

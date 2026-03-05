@@ -115,6 +115,8 @@ function App() {
           user_email: normalizedEmail,
           enneatype: type,
           test_type: advancedQuestionsUsed.length > 50 ? '135' : '45',
+          organization_code: user.organization || null,
+          access_code: user.access_code || null,
           answers: formattedAnswers
         }]);
         console.log('Advanced test responses saved to Supabase');

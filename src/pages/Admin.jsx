@@ -623,14 +623,16 @@ const Admin = () => {
                                         <th>Correo</th>
                                         <th>Eneatipo</th>
                                         <th>Test</th>
+                                        <th>Organización</th>
+                                        <th>Código acceso</th>
                                         <th>Ver respuestas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {loadingResponses ? (
-                                        <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
                                     ) : testResponses.length === 0 ? (
-                                        <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
                                     ) : (
                                         testResponses.map(r => (
                                             <tr key={r.id}>
@@ -643,6 +645,16 @@ const Admin = () => {
                                                     <span className="status-badge used">Tipo {r.enneatype}</span>
                                                 </td>
                                                 <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>{r.test_type} preguntas</td>
+                                                <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                    {r.organization_code && r.organization_code !== 'NO_CODE'
+                                                        ? <span style={{ background: '#eef2ff', color: '#3730a3', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{r.organization_code}</span>
+                                                        : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                </td>
+                                                <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                    {r.access_code
+                                                        ? <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }}>{r.access_code}</span>
+                                                        : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                </td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <button
                                                         className="btn-ver-respuestas"
@@ -673,8 +685,13 @@ const Admin = () => {
                                     {selectedResponse.user_email} &nbsp;·&nbsp;
                                     <span style={{ color: '#b89b2d', fontWeight: 'bold' }}>Eneatipo {selectedResponse.enneatype}</span> &nbsp;·&nbsp;
                                     Test de {selectedResponse.test_type} preguntas
-                                </p>
-                            </div>
+                                    {selectedResponse.organization_code && selectedResponse.organization_code !== 'NO_CODE' && (
+                                        <> &nbsp;·&nbsp; Org: <strong style={{ color: '#3730a3' }}>{selectedResponse.organization_code}</strong></>
+                                    )}
+                                    {selectedResponse.access_code && (
+                                        <> &nbsp;·&nbsp; Código: <strong style={{ color: '#b89b2d', fontFamily: 'monospace' }}>{selectedResponse.access_code}</strong></>
+                                    )}
+                                </p>                  </div>
                             <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
                         </div>
                         <div className="responses-modal-body">
