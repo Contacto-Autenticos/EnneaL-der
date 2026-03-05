@@ -284,6 +284,58 @@ const Admin = () => {
         }
     };
 
+    const handleDownloadExcel = (response) => {
+        const escape = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+
+        // Info header rows
+        const infoRows = [
+            ['Nombre', 'Correo', 'Eneatipo', 'Test', 'Organización', 'Código Acceso'],
+            [
+                escape(response.user_name || '-'),
+                escape(response.user_email || '-'),
+                escape(`Tipo ${response.enneatype}`),
+                escape(`${response.test_type} preguntas`),
+                escape(response.organization_code && response.organization_code !== 'NO_CODE' ? response.organization_code : '-'),
+                escape(response.access_code || '-')
+            ],
+            [],
+            ['Eneatipo', 'N°', 'Pregunta', 'Respuesta']
+        ];
+
+        // Group answers by enneatype sorted 1-9
+        const answers = response.answers || [];
+        const groups = {};
+        answers.forEach(a => {
+            const key = a.enneatype || 'Sin tipo';
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(a);
+        });
+        const sortedKeys = Object.keys(groups).sort((a, b) => Number(a) - Number(b));
+        let n = 0;
+        const answerRows = [];
+        sortedKeys.forEach(typeKey => {
+            groups[typeKey].forEach(a => {
+                n++;
+                answerRows.push([
+                    escape(`Eneatipo ${typeKey}`),
+                    n,
+                    escape(a.text),
+                    escape(a.answer_label || '-')
+                ]);
+            });
+        });
+
+        const allRows = [...infoRows, ...answerRows];
+        const csvContent = '\uFEFF' + allRows.map(r => r.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        const safeName = (response.user_name || 'usuario').replace(/\s+/g, '_');
+        link.href = url;
+        link.download = `Respuestas_${safeName}_Eneatipo${response.enneatype}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+    };
 
     if (!isAuthenticated) {
         return (
@@ -692,7 +744,17 @@ const Admin = () => {
                                         <> &nbsp;·&nbsp; Código: <strong style={{ color: '#b89b2d', fontFamily: 'monospace' }}>{selectedResponse.access_code}</strong></>
                                     )}
                                 </p>                  </div>
-                            <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                                <button
+                                    className="btn-ver-respuestas"
+                                    onClick={() => handleDownloadExcel(selectedResponse)}
+                                    title="Descargar en Excel"
+                                    style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+                                >
+                                    ↓ Excel
+                                </button>
+                                <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
+                            </div>
                         </div>
                         <div className="responses-modal-body">
                             {(() => {
