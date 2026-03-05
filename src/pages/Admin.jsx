@@ -285,24 +285,24 @@ const Admin = () => {
     };
 
     const handleDownloadExcel = (response) => {
-        const escape = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+        const e = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
 
-        // Info header rows
+        // ── Info block: each field in its own row (Label, Value)
+        const org = response.organization_code && response.organization_code !== 'NO_CODE'
+            ? response.organization_code : '-';
         const infoRows = [
-            ['Nombre', 'Correo', 'Eneatipo', 'Test', 'Organización', 'Código Acceso'],
-            [
-                escape(response.user_name || '-'),
-                escape(response.user_email || '-'),
-                escape(`Tipo ${response.enneatype}`),
-                escape(`${response.test_type} preguntas`),
-                escape(response.organization_code && response.organization_code !== 'NO_CODE' ? response.organization_code : '-'),
-                escape(response.access_code || '-')
-            ],
-            [],
-            ['Eneatipo', 'N°', 'Pregunta', 'Respuesta']
+            [e('Nombre'), e(response.user_name || '-')],
+            [e('Correo electrónico'), e(response.user_email || '-')],
+            [e('Eneatipo resultado final'), e(`Tipo ${response.enneatype}`)],
+            [e('Tipo de test realizado'), e(`${response.test_type} preguntas`)],
+            [e('Organización'), e(org)],
+            [e('Código utilizado'), e(response.access_code || '-')],
+            [],   // blank separator row
+            // ── Q&A table header
+            [e('Eneatipo'), e('N°'), e('Pregunta'), e('Respuesta')]
         ];
 
-        // Group answers by enneatype sorted 1-9
+        // ── Q&A rows grouped by enneatype 1-9
         const answers = response.answers || [];
         const groups = {};
         answers.forEach(a => {
@@ -317,10 +317,10 @@ const Admin = () => {
             groups[typeKey].forEach(a => {
                 n++;
                 answerRows.push([
-                    escape(`Eneatipo ${typeKey}`),
+                    e(`Eneatipo ${typeKey}`),
                     n,
-                    escape(a.text),
-                    escape(a.answer_label || '-')
+                    e(a.text),
+                    e(a.answer_label || '-')
                 ]);
             });
         });
