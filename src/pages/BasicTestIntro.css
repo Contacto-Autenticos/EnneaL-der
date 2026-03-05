@@ -62,7 +62,7 @@
 
 .intro-text-box {
     background-color: rgba(255, 255, 255, 0.7);
-    padding: 2.5vh 30px;
+    padding: 2vh 20px;
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(5px);
@@ -70,10 +70,10 @@
 }
 
 .intro-text-box p {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     color: #444;
-    line-height: 1.4;
-    margin-bottom: 3.5vh;
+    line-height: 1.35;
+    margin-bottom: 2vh;
 }
 
 .intro-text-box strong {
