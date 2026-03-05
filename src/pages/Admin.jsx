@@ -324,9 +324,8 @@ const Admin = () => {
         });
 
         const allRows = [...infoRows, ...answerRows];
-        // Use semicolons: required for Excel in Spanish locale (Colombia)
-        const sep = ';';
-        const csvContent = '\uFEFF' + `sep=${sep}\n` + allRows.map(r => r.join(sep)).join('\n');
+        // Semicolon separator (Spanish Excel locale) + UTF-8 BOM + \r\n for correct encoding
+        const csvContent = '\uFEFF' + allRows.map(r => r.join(';')).join('\r\n');
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
