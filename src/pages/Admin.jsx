@@ -695,15 +695,48 @@ const Admin = () => {
                             <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
                         </div>
                         <div className="responses-modal-body">
-                            {(selectedResponse.answers || []).map((a, idx) => (
-                                <div key={idx} className="response-item">
-                                    <span className="response-number">{idx + 1}</span>
-                                    <div className="response-content">
-                                        <p className="response-question">{a.text}</p>
-                                        <span className="response-answer">{a.answer_label || '—'}</span>
+                            {(() => {
+                                const answers = selectedResponse.answers || [];
+                                const groups = {};
+                                answers.forEach(a => {
+                                    const key = a.enneatype || 'Sin tipo';
+                                    if (!groups[key]) groups[key] = [];
+                                    groups[key].push(a);
+                                });
+                                const sortedKeys = Object.keys(groups).sort((a, b) => Number(a) - Number(b));
+                                let globalIdx = 0;
+                                return sortedKeys.map(typeKey => (
+                                    <div key={typeKey} style={{ marginBottom: '24px' }}>
+                                        <div style={{
+                                            display: 'flex', alignItems: 'center', gap: '10px',
+                                            marginBottom: '12px', paddingBottom: '8px',
+                                            borderBottom: '2px solid #f0f0f0'
+                                        }}>
+                                            <span style={{
+                                                background: '#002d44', color: 'white',
+                                                fontWeight: 700, fontSize: '0.82rem',
+                                                padding: '3px 10px', borderRadius: '20px'
+                                            }}>Eneatipo {typeKey}</span>
+                                            <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
+                                                {groups[typeKey].length} preguntas
+                                            </span>
+                                        </div>
+                                        {groups[typeKey].map((a, i) => {
+                                            globalIdx++;
+                                            const n = globalIdx;
+                                            return (
+                                                <div key={i} className="response-item" style={{ marginBottom: '10px' }}>
+                                                    <span className="response-number">{n}</span>
+                                                    <div className="response-content">
+                                                        <p className="response-question">{a.text}</p>
+                                                        <span className="response-answer">{a.answer_label || '—'}</span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                </div>
-                            ))}
+                                ));
+                            })()}
                         </div>
                     </div>
                 </div>
