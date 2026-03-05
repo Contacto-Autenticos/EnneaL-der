@@ -1,0 +1,140 @@
+.intro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    max-height: 100vh;
+    padding: 1vh 20px;
+    overflow: hidden;
+}
+
+.intro-content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.intro-logo-container {
+    margin-bottom: 0.2vh;
+}
+
+.intro-gold-logo {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    max-height: 30vh;
+    object-fit: contain;
+}
+
+.intro-header {
+    margin-bottom: 0.2vh;
+}
+
+.intro-title {
+    font-size: 2.8rem;
+    color: var(--color-secondary);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.intro-body {
+    margin-bottom: 3vh;
+    width: 100%;
+}
+
+.intro-subtitle {
+    font-size: 1.25rem;
+    color: #b89b2d;
+    /* Dark Gold like Home page */
+    font-weight: 800;
+    margin-bottom: 2vh;
+    letter-spacing: 0.2px;
+}
+
+.intro-text-box {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2.5vh 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(5px);
+    width: 100%;
+}
+
+.intro-text-box p {
+    font-size: 1.05rem;
+    color: #444;
+    line-height: 1.4;
+    margin-bottom: 1.5vh;
+}
+
+.intro-text-box strong {
+    color: var(--color-secondary);
+    font-weight: 700;
+}
+
+.intro-text-box p:last-child {
+    margin-bottom: 0;
+}
+
+.btn-continue {
+    background-color: var(--color-primary);
+    /* Yellow */
+    color: white;
+    padding: 14px 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.3);
+    border: none;
+    transition: all 0.2s ease;
+    margin-bottom: 3vh;
+    /* Separate from logo */
+}
+
+.btn-continue:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(221, 190, 61, 0.4);
+    background-color: #e5c545;
+}
+
+.intro-footer {
+    padding-bottom: 2vh;
+}
+
+.intro-footer-logo {
+    max-width: 180px;
+    height: auto;
+    max-height: 40px;
+    /* Standard size used in Home.jsx */
+    object-fit: contain;
+    opacity: 1;
+}
+
+@media (max-height: 700px) {
+    .intro-title {
+        font-size: 2.2rem;
+    }
+
+    .intro-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .intro-text-box {
+        padding: 15px;
+    }
+
+    .intro-text-box p {
+        font-size: 0.95rem;
+    }
+}

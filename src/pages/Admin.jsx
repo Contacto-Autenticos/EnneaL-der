@@ -18,6 +18,7 @@ const Admin = () => {
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
     const [expandedGroup, setExpandedGroup] = useState(null);
+    const [expandedInitialGroup, setExpandedInitialGroup] = useState(null);
     const [selectedType, setSelectedType] = useState('1');
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [pdfSuccess, setPdfSuccess] = useState(false);
@@ -168,6 +169,14 @@ const Admin = () => {
         }
     };
 
+    const toggleInitialGroup = (group) => {
+        if (expandedInitialGroup === group) {
+            setExpandedInitialGroup(null);
+        } else {
+            setExpandedInitialGroup(group);
+        }
+    };
+
     const handleCopyLink = (path) => {
         const fullLink = `${window.location.origin}${path}`;
         navigator.clipboard.writeText(fullLink);
@@ -183,6 +192,28 @@ const Admin = () => {
         acc[q.enneatype].push(q);
         return acc;
     }, {});
+
+    // Group initial questions by type
+    const groupedInitialQuestions = adminQuestions.reduce((acc, q) => {
+        const type = q.type || 'A';
+        if (!acc[type]) {
+            acc[type] = [];
+        }
+        acc[type].push(q);
+        return acc;
+    }, {});
+
+    const initialGroupLabels = {
+        'A': 'Grupo A',
+        'B': 'Grupo B',
+        'C': 'Grupo C',
+        'X': 'Grupo X',
+        'Y': 'Grupo Y',
+        'Z': 'Grupo Z',
+        'special': 'Tipo Especial'
+    };
+
+    const initialGroupsOrder = ['A', 'B', 'C', 'X', 'Y', 'Z', 'special'];
 
     const handleDownloadPdf = async () => {
         const kitRoot = document.getElementById('admin-hidden-kit-printable');
@@ -217,14 +248,14 @@ const Admin = () => {
                 pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
             }
 
-            pdf.save(`Kit-Ejecutivo-Eneagrama-Tipo-${selectedType}.pdf`);
+            pdf.save(`Plan-de-Accion-Eneagrama-Tipo-${selectedType}.pdf`);
             setPdfSuccess(true);
 
             setTimeout(() => setPdfSuccess(false), 3000);
 
         } catch (error) {
             console.error('Error generating Executive Kit PDF:', error);
-            alert('Hubo un error al generar el Kit Ejecutivo. Revisa la consola para más detalles.');
+            alert('Hubo un error al generar el Plan de Accion. Revisa la consola para más detalles.');
         } finally {
             setIsGeneratingPdf(false);
             if (kitRoot) kitRoot.style.display = 'none';
@@ -329,10 +360,10 @@ const Admin = () => {
                         </div>
                     </div>
 
-                    {/* CARD 2: Generador Kit Ejecutivo */}
+                    {/* CARD 2: Generador Plan de Accion */}
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><Download size={20} /> Generador Kit Ejecutivo</h2>
+                            <h2><Download size={20} /> Generador Plan de Accion</h2>
                         </div>
                         <div className="pdf-generator-section">
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
@@ -421,42 +452,57 @@ const Admin = () => {
                             {loadingQuestions ? (
                                 <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
                             ) : (
-                                adminQuestions.map((q) => (
-                                    <div key={q.id} className="question-item">
-                                        <div className="question-item-top">
-                                            <span className="q-id">{q.id}.</span>
-                                            {editingId === q.id ? (
-                                                <textarea
-                                                    className="edit-q-textarea"
-                                                    value={editValue}
-                                                    onChange={(e) => setEditValue(e.target.value)}
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <span className="q-text">{q.text}</span>
-                                            )}
-                                        </div>
-                                        <div className="question-item-bottom">
-                                            <span className="q-type">Tipo {q.type}</span>
-                                            <div className="q-actions">
-                                                {editingId === q.id ? (
-                                                    <>
-                                                        <button
-                                                            onClick={() => handleSaveQuestion(q.id)}
-                                                            className="btn-save-q"
-                                                            disabled={savingId === q.id}
-                                                        >
-                                                            {savingId === q.id ? '...' : 'Guardar'}
-                                                        </button>
-                                                        <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
-                                                    </>
-                                                ) : (
-                                                    <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
-                                                )}
+                                initialGroupsOrder.map(groupKey => {
+                                    const groupQ = groupedInitialQuestions[groupKey] || [];
+                                    const isExpanded = expandedInitialGroup === groupKey;
+
+                                    return (
+                                        <div key={groupKey} className="question-group">
+                                            <div
+                                                className={`question-group-header ${isExpanded ? 'active' : ''}`}
+                                                onClick={() => toggleInitialGroup(groupKey)}
+                                            >
+                                                <span>{initialGroupLabels[groupKey]} ({groupQ.length})</span>
+                                                {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                                            </div>
+                                            <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
+                                                {groupQ.map(q => (
+                                                    <div key={q.id} className="question-item">
+                                                        <div className="question-item-top">
+                                                            <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
+                                                            {editingId === q.id ? (
+                                                                <textarea
+                                                                    className="edit-q-textarea"
+                                                                    value={editValue}
+                                                                    onChange={(e) => setEditValue(e.target.value)}
+                                                                    autoFocus
+                                                                />
+                                                            ) : (
+                                                                <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
+                                                            )}
+                                                        </div>
+                                                        <div className="q-actions" style={{ marginTop: '10px' }}>
+                                                            {editingId === q.id ? (
+                                                                <>
+                                                                    <button
+                                                                        onClick={() => handleSaveQuestion(q.id)}
+                                                                        className="btn-save-q"
+                                                                        disabled={savingId === q.id}
+                                                                    >
+                                                                        {savingId === q.id ? '...' : 'Guardar'}
+                                                                    </button>
+                                                                    <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
+                                                                </>
+                                                            ) : (
+                                                                <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
-                                    </div>
-                                ))
+                                    );
+                                })
                             )}
                         </div>
                     </div>

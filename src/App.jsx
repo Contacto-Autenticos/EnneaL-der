@@ -20,6 +20,7 @@ import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } fr
 import { advancedEnneagramInfo } from './data/advancedInfo';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingScrollToTop from './components/FloatingScrollToTop';
+import BasicTestIntro from './pages/BasicTestIntro';
 
 
 function App() {
@@ -160,6 +161,11 @@ function App() {
         <Route path="/" element={<Home />} />
 
 
+
+        <Route
+          path="/test-intro"
+          element={<BasicTestIntro />}
+        />
 
         <Route
           path="/test"

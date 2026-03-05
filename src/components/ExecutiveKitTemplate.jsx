@@ -34,7 +34,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page kit-page-cover">
                 <Watermark />
                 <div className="kit-cover-content">
-                    <p className="kit-cover-pretitle">KIT EJECUTIVO DE ACCIÓN</p>
+                    <p className="kit-cover-pretitle">PLAN DE ACCIÓN</p>
                     <div className="kit-cover-title-group">
                         <h1 className="kit-cover-type">{data.subtitle || `ENEATIPO ${type}`}</h1>
                         <h2 className="kit-cover-role">{data.roleName}</h2>

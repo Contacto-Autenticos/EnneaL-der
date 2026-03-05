@@ -7,13 +7,14 @@ const FloatingScrollToTop = () => {
 
     // Show button when page is scrolled down
     const checkScroll = () => {
-        let maxScroll = window.scrollY || document.documentElement.scrollTop || 0;
+        const scrollY = window.scrollY || (document.documentElement && document.documentElement.scrollTop) || 0;
+        let maxScroll = scrollY;
 
         // Also check all known scrollable containers
         const containers = document.querySelectorAll('.advanced-result-page, .advanced-landing-container, .result-page, #root > div, main, .App');
 
         containers.forEach(c => {
-            if (c && c.scrollTop > maxScroll) {
+            if (c && typeof c.scrollTop === 'number' && c.scrollTop > maxScroll) {
                 maxScroll = c.scrollTop;
             }
         });
@@ -36,11 +37,15 @@ const FloatingScrollToTop = () => {
         // Scroll any matching full-page scrollable containers
         const scrollContainers = document.querySelectorAll('.advanced-result-page, .advanced-landing-container, .result-page, #root > div');
         scrollContainers.forEach(container => {
-            if (container && container.scrollTo && container.scrollTop > 0) {
-                container.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
+            if (container && typeof container.scrollTo === 'function' && typeof container.scrollTop === 'number' && container.scrollTop > 0) {
+                try {
+                    container.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                } catch (e) {
+                    console.warn("Scroll to top failed for container:", e);
+                }
             }
         });
     };

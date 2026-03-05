@@ -136,6 +136,16 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 setNavHidden(false);
             }
             lastScrollY = currentScrollY;
+
+            // New logic from user instruction
+            const header = document.querySelector('.advanced-landing-header');
+            if (!header) return; // Defensive check
+
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         };
         window.addEventListener('scroll', handleScroll);
         return () => {

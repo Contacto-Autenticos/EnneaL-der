@@ -32,7 +32,7 @@ const Home = () => {
                 </p>
 
                 <button
-                    onClick={() => navigate('/test')}
+                    onClick={() => navigate('/test-intro')}
                     className="btn-start"
                 >
                     Iniciar ahora <ArrowRight size={19} />
