@@ -596,8 +596,8 @@ h3 {
   width: 100%;
 }
 
-/* â•â•â• Slider â•â•â• */
-.test-slider-wrapper {
+/* ═══ Vertical Selection Options ═══ */
+.test-vertical-wrapper {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -605,93 +605,80 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 45px 70px;
+  padding: 20px 0;
 }
 
-.test-slider-labels {
-  position: relative;
+.test-vertical-options {
   width: 100%;
-  height: 25px;
-  margin-bottom: 5px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 20px 40px;
 }
 
-.test-slider-label {
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #999;
+.test-vertical-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s ease;
+}
+
+.test-vertical-label {
+  width: 95px;
+  /* Fixed width to align bars */
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #777;
+  transition: all 0.2s ease;
   user-select: none;
 }
 
-@media (max-width: 380px) {
-  .test-slider-label {
-    font-size: 0.75rem;
-  }
+.test-vertical-option:hover .test-vertical-label {
+  color: #444;
 }
 
-.test-slider-label.active {
-  color: #ddbe3d;
+.test-vertical-option.active .test-vertical-label {
+  color: var(--color-primary);
   font-weight: 700;
 }
 
-/* Custom dot slider */
-/* Custom dot slider */
-.test-slider-track {
-  position: relative;
-  width: 100%;
-  height: 20px;
-  cursor: pointer;
-  margin-top: 5px;
-}
-
-.test-slider-rail {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #d8dde0;
-  border-radius: 4px;
-  overflow: hidden;
-  clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 60%);
-}
-
-.test-slider-track-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #002d44, #3a7ca5);
-  transition: width 0.2s ease;
-}
-
-.test-slider-dot {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #d8dde0;
-  border: 2px solid #c0c5c9;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 2;
-}
-
-.test-slider-dot.filled {
-  background: #002d44;
-  border-color: #002d44;
-}
-
-.test-slider-dot.active {
-  width: 28px;
+.test-vertical-bar-container {
+  flex: 1;
   height: 28px;
-  background: #ffffff;
-  border: 4px solid #002d44;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  background: #e8ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.test-vertical-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #e9ecef, #dee2e6);
+  border-radius: 8px 0 0 8px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.test-vertical-option:hover .test-vertical-bar {
+  background: linear-gradient(90deg, #dee2e6, #ced4da);
+}
+
+.test-vertical-option.active .test-vertical-bar {
+  background: linear-gradient(90deg, var(--color-secondary), #3a7ca5);
+  box-shadow: 0 2px 8px rgba(0, 45, 68, 0.3);
+}
+
+.test-progress-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 /* ═══ Special Question Options ═══ */
@@ -914,6 +901,26 @@ h3 {
 
   .test-question-header {
     min-height: auto;
+  }
+
+  /* Slider Mobile Optimizations */
+  .test-slider-labels {
+    margin-bottom: 25px;
+    height: 20px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .test-slider-label {
+    font-size: 0.8rem;
+  }
+
+  .test-slider-track {
+    height: 40px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 }

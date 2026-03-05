@@ -233,6 +233,28 @@
     margin-bottom: 0;
 }
 
+.adv-test-progress-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1.5px;
+    margin: 0;
+}
+
+.adv-test-progress-bar-small {
+    width: 180px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.adv-test-progress-bar-small-fill {
+    height: 100%;
+    background: #ddbe3d;
+    transition: width 0.3s ease;
+}
+
 .adv-test-dots {
     display: flex;
     flex-wrap: wrap;
@@ -300,15 +322,17 @@
    FOOTER
 ────────────────────────────────────────── */
 .adv-test-footer {
-    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: center;
-    padding-bottom: 15px;
+    width: 100%;
+    flex: 0 0 auto;
 }
 
 .adv-test-footer-logo {
-    max-width: 182px;
-    /* Increased 30% from 140px */
+    max-height: 40px;
+    max-width: none;
     height: auto;
     opacity: 0.8;
 }
@@ -379,15 +403,9 @@
     }
 
     .adv-test-footer {
-        padding-top: 20px;
-        /* Increased from 15px */
-        margin-top: 25px;
-        /* Increased from 20px */
-    }
-
-    .adv-test-footer-logo {
-        max-width: 133px;
-        /* Restored 30% from 100px (+ slight rounding) */
+        margin-top: 5vh;
+        margin-bottom: 2vh;
+        padding-top: 0;
     }
 }
 
@@ -408,13 +426,5 @@
 
     .adv-test-slider-labels {
         margin-bottom: 15px;
-    }
-
-    .adv-test-footer {
-        margin-top: 10px;
-    }
-
-    .adv-test-footer-logo {
-        max-width: 90px;
     }
 }

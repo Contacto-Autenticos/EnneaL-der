@@ -197,6 +197,13 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                     </button>
 
                     <div className="adv-test-dots-wrapper">
+                        <p className="adv-test-progress-label">Progreso</p>
+                        <div className="adv-test-progress-bar-small">
+                            <div
+                                className="adv-test-progress-bar-small-fill"
+                                style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
+                            />
+                        </div>
                         <span className="adv-test-dots-counter">
                             <span style={{ color: '#ddbe3d' }}>{currentQuestionIndex + 1}</span>/{totalQuestions}
                         </span>

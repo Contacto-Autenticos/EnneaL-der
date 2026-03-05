@@ -187,43 +187,31 @@ const Test = ({ onComplete }) => {
                             ))}
                         </div>
                     ) : (
-                        /* Standard Question: Slider */
-                        <div className="test-slider-wrapper">
+                        /* Standard Question: Vertical Selection */
+                        <div className="test-vertical-wrapper">
                             <p style={{ fontSize: '1.1rem', color: '#555', fontStyle: 'italic', marginBottom: '25px', textAlign: 'center' }}>
-                                Me describe:
+                                ¿En qué medida te describe?
                             </p>
-                            <div className="test-slider-labels">
-                                {sliderLabels.map((label, idx) => (
-                                    <span
-                                        key={label}
-                                        className={`test-slider-label ${currentValue === idx + 1 ? 'active' : ''}`}
-                                        style={{ left: `${(idx / 3) * 100}%` }}
-                                        onClick={() => handleAnswer(idx + 1)}
+                            <div className="test-vertical-options">
+                                {[
+                                    { value: 4, label: "Totalmente", width: "100%" },
+                                    { value: 3, label: "Mucho", width: "75%" },
+                                    { value: 2, label: "Algo", width: "50%" },
+                                    { value: 1, label: "Muy poco", width: "25%" }
+                                ].map((opt) => (
+                                    <div
+                                        key={opt.value}
+                                        className={`test-vertical-option ${currentValue === opt.value ? 'active' : ''}`}
+                                        onClick={() => handleAnswer(opt.value)}
                                     >
-                                        {label}
-                                    </span>
-                                ))}
-                            </div>
-                            <div className="test-slider-track" onClick={(e) => {
-                                const rect = e.currentTarget.getBoundingClientRect();
-                                const x = e.clientX - rect.left;
-                                const percent = x / rect.width;
-                                const val = Math.min(4, Math.max(1, Math.round(percent * 3 + 1)));
-                                handleAnswer(val);
-                            }}>
-                                <div className="test-slider-rail">
-                                    <div
-                                        className="test-slider-track-fill"
-                                        style={{ width: currentValue ? `${((currentValue - 1) / 3) * 100}%` : '0%' }}
-                                    />
-                                </div>
-                                {[1, 2, 3, 4].map((val) => (
-                                    <div
-                                        key={val}
-                                        className={`test-slider-dot ${currentValue >= val ? 'filled' : ''} ${currentValue === val ? 'active' : ''}`}
-                                        style={{ left: `${((val - 1) / 3) * 100}%` }}
-                                        onClick={(e) => { e.stopPropagation(); handleAnswer(val); }}
-                                    />
+                                        <div className="test-vertical-label">{opt.label}</div>
+                                        <div className="test-vertical-bar-container">
+                                            <div
+                                                className="test-vertical-bar"
+                                                style={{ width: opt.width }}
+                                            />
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -242,6 +230,7 @@ const Test = ({ onComplete }) => {
                     </button>
 
                     <div className="test-dots-wrapper">
+                        <p className="test-progress-label">Progreso</p>
                         <div className="test-dots">
                             {shuffledQuestions.map((_, idx) => (
                                 <span
