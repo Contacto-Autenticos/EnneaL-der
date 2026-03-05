@@ -1,13 +1,14 @@
 .intro-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
-    height: 100vh;
-    max-height: 100vh;
-    padding: 1vh 20px;
-    overflow: hidden;
+    min-height: 100vh;
+    height: auto;
+    padding: 2vh 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .intro-content-wrapper {
@@ -51,12 +52,12 @@
 }
 
 .intro-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     color: #b89b2d;
     /* Dark Gold like Home page */
-    font-weight: 800;
+    font-weight: 500;
     margin-bottom: 2vh;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
 }
 
 .intro-text-box {
@@ -123,18 +124,29 @@
 
 @media (max-height: 700px) {
     .intro-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .intro-subtitle {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
     }
 
     .intro-text-box {
         padding: 15px;
+        margin-bottom: 2vh;
     }
 
     .intro-text-box p {
         font-size: 0.95rem;
+        margin-bottom: 2vh;
+    }
+
+    .intro-gold-logo {
+        max-height: 20vh;
+    }
+
+    .btn-continue {
+        margin-bottom: 2vh;
+        padding: 12px 40px;
     }
 }

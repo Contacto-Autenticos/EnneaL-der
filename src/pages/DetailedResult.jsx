@@ -8,9 +8,9 @@ import './DetailedResult.css';
 
 const clarityMessages = {
     clear: "Según tus respuestas, este resultado refleja con gran probabilidad tu tipo de personalidad.",
-    nuanced: "Con tus respuestas actuales no encontramos suficiente consistencia para identificar con claridad tu tipo de personalidad.",
-    low: "Tus respuestas no muestran la consistencia suficiente para identificar con claridad tu tipo de personalidad.",
-    tie: "Tus respuestas no muestran la consistencia suficiente para identificar con claridad tu tipo de personalidad.",
+    nuanced: "Esta es una primera aproximación a los que podrían ser tu rasgo de personalidad.",
+    low: "Esta es una primera aproximación a los que podrían ser tu rasgo de personalidad.",
+    tie: "Esta es una primera aproximación a los que podrían ser tu rasgo de personalidad.",
 };
 
 const clarityLabels = {
