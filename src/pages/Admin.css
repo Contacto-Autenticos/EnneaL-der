@@ -874,3 +874,161 @@
     align-self: flex-start;
     letter-spacing: 0.3px;
 }
+
+/* ═══════════════════════════════════════════════
+   SIDEBAR LAYOUT
+═══════════════════════════════════════════════ */
+
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+    background: #f4f6fb;
+}
+
+/* ── SIDEBAR ── */
+.admin-sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #002d44;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.admin-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 18px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+}
+
+.admin-sidebar-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.admin-sidebar-brand-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #ddbe3d;
+    letter-spacing: 0.5px;
+}
+
+/* ── NAV ── */
+.admin-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 10px;
+    flex: 1;
+}
+
+.admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.18s, color 0.18s;
+}
+
+.admin-nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.admin-nav-item.active {
+    background: rgba(221, 190, 61, 0.18);
+    color: #ddbe3d;
+    font-weight: 600;
+}
+
+/* Sub-items for Preguntas */
+.admin-nav-subitems {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding-left: 14px;
+    margin-bottom: 2px;
+}
+
+.admin-nav-subitem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-left: 2px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.83rem;
+    font-weight: 400;
+    padding: 8px 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.admin-nav-subitem:hover {
+    color: #fff;
+    border-left-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-nav-subitem.active {
+    color: #ddbe3d;
+    border-left-color: #ddbe3d;
+    font-weight: 600;
+}
+
+/* ── LOGOUT ── */
+.admin-sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 10px 20px;
+    padding: 10px 14px;
+    width: calc(100% - 20px);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+}
+
+.admin-sidebar-logout:hover {
+    background: rgba(220, 53, 69, 0.25);
+    color: #ff6b6b;
+    border-color: rgba(220, 53, 69, 0.4);
+}
+
+/* ── MAIN CONTENT AREA ── */
+.admin-main {
+    flex: 1;
+    padding: 32px 36px;
+    overflow-y: auto;
+    min-height: 100vh;
+}
+
+.admin-main .admin-card {
+    max-width: 900px;
+}

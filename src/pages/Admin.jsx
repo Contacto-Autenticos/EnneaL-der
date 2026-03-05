@@ -37,6 +37,10 @@ const Admin = () => {
     const [loadingResponses, setLoadingResponses] = useState(false);
     const [selectedResponse, setSelectedResponse] = useState(null);
 
+    // Sidebar navigation
+    const [activeSection, setActiveSection] = useState('codigos');
+    const [preguntasOpen, setPreguntasOpen] = useState(false);
+
     useEffect(() => {
         // Check local storage for persistent auth
         const savedAuth = localStorage.getItem('adminAuth');
@@ -361,35 +365,74 @@ const Admin = () => {
     }
 
     return (
-        <div className="admin-container" style={{ maxWidth: '1400px' }}>
-            <div className="admin-header">
-                <h1>Panel de Administrador</h1>
-                <p>Gestiona recursos premium y configuración</p>
-                <button onClick={handleLogout} className="btn-logout">
-                    <LogOut size={16} /> Cerrar Sesión
-                </button>
-            </div>
+        <div className="admin-shell">
 
-            <div className="admin-layout-wrapper">
-                {/* TOP SECTION: 3 Columns */}
-                <div className="admin-top-section">
-                    {/* CARD 1: Accesos Premium */}
+            {/* ── SIDEBAR ── */}
+            <aside className="admin-sidebar">
+                <div className="admin-sidebar-brand">
+                    <img src="/Circulo_Eneagrama_Autenticos_02.png" alt="Logo" className="admin-sidebar-logo" />
+                    <span className="admin-sidebar-brand-name">Enesencia</span>
+                </div>
+
+                <nav className="admin-sidebar-nav">
+                    <button className={`admin-nav-item ${activeSection === 'codigos' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('codigos')}>
+                        <Key size={17} /> Códigos de acceso
+                    </button>
+                    <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('plan')}>
+                        <Download size={17} /> Plan de Acción
+                    </button>
+                    <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('compartir')}>
+                        <Link size={17} /> Compartir
+                    </button>
+
+                    <button
+                        className={`admin-nav-item ${activeSection === 'preguntas-inicial' || activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
+                        onClick={() => setPreguntasOpen(o => !o)}>
+                        <ChevronDown size={17} style={{ transform: preguntasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                        Preguntas
+                    </button>
+                    {preguntasOpen && (
+                        <div className="admin-nav-subitems">
+                            <button className={`admin-nav-subitem ${activeSection === 'preguntas-inicial' ? 'active' : ''}`}
+                                onClick={() => setActiveSection('preguntas-inicial')}>
+                                Test inicial
+                            </button>
+                            <button className={`admin-nav-subitem ${activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
+                                onClick={() => setActiveSection('preguntas-avanzado')}>
+                                Test avanzado
+                            </button>
+                        </div>
+                    )}
+
+                    <button className={`admin-nav-item ${activeSection === 'respuestas' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('respuestas')}>
+                        <RefreshCw size={17} /> Respuestas
+                    </button>
+                </nav>
+
+                <button onClick={handleLogout} className="admin-sidebar-logout">
+                    <LogOut size={16} /> Cerrar sesión
+                </button>
+            </aside>
+
+            {/* ── MAIN CONTENT ── */}
+            <main className="admin-main">
+
+                {/* ── SECTION: Códigos de acceso ── */}
+                {activeSection === 'codigos' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><Key size={20} /> Accesos Premium</h2>
+                            <h2><Key size={20} /> Códigos de acceso</h2>
                         </div>
-
                         <div className="code-generator-section">
-                            <button
-                                onClick={handleGenerateCode}
-                                disabled={generating}
-                                className="btn-generate"
-                            >
+                            <button onClick={handleGenerateCode} disabled={generating} className="btn-generate">
                                 <Plus size={18} />
                                 {generating ? 'Generando...' : 'Crear Nuevo Código de Acceso'}
                             </button>
                         </div>
-
                         <div className="codes-list-container">
                             <div className="codes-list-header">
                                 <h3>Últimos códigos</h3>
@@ -397,8 +440,7 @@ const Admin = () => {
                                     <RefreshCw size={16} className={loading ? 'spinning' : ''} />
                                 </button>
                             </div>
-
-                            <div className="codes-table-wrapper" style={{ maxHeight: '200px' }}>
+                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -409,11 +451,9 @@ const Admin = () => {
                                     </thead>
                                     <tbody>
                                         {codes.length === 0 ? (
-                                            <tr>
-                                                <td colSpan="3" style={{ textAlign: 'center', padding: '10px' }}>
-                                                    {loading ? 'Cargando...' : 'No hay códigos.'}
-                                                </td>
-                                            </tr>
+                                            <tr><td colSpan="3" style={{ textAlign: 'center', padding: '10px' }}>
+                                                {loading ? 'Cargando...' : 'No hay códigos.'}
+                                            </td></tr>
                                         ) : (
                                             codes.slice(0, 10).map((item) => (
                                                 <tr key={item.code}>
@@ -432,52 +472,38 @@ const Admin = () => {
                             </div>
                         </div>
                     </div>
+                )}
 
-                    {/* CARD 2: Generador Plan de Accion */}
+                {/* ── SECTION: Plan de Acción ── */}
+                {activeSection === 'plan' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><Download size={20} /> Generador Plan de Accion</h2>
+                            <h2><Download size={20} /> Generador Plan de Acción</h2>
                         </div>
                         <div className="pdf-generator-section">
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
                                 Descarga el PDF completo para cualquier eneatipo.
                             </p>
-
                             <div className="form-group-admin" style={{ marginBottom: '15px' }}>
                                 <label htmlFor="type-select">Selecciona el Eneatipo:</label>
-                                <select
-                                    id="type-select"
-                                    className="select-admin"
-                                    value={selectedType}
-                                    onChange={(e) => setSelectedType(e.target.value)}
-                                    disabled={isGeneratingPdf}
-                                >
+                                <select id="type-select" className="select-admin" value={selectedType}
+                                    onChange={(e) => setSelectedType(e.target.value)} disabled={isGeneratingPdf}>
                                     {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-                                        <option key={num} value={num.toString()}>
-                                            Eneatipo {num}
-                                        </option>
+                                        <option key={num} value={num.toString()}>Eneatipo {num}</option>
                                     ))}
                                 </select>
                             </div>
-
-                            <button
-                                className="btn-download-pdf"
-                                onClick={handleDownloadPdf}
-                                disabled={isGeneratingPdf}
-                            >
-                                {isGeneratingPdf ? (
-                                    <RefreshCw size={18} className="spinning" />
-                                ) : pdfSuccess ? (
-                                    <CheckCircle2 size={18} color="#4ade80" />
-                                ) : (
-                                    <Download size={18} />
-                                )}
+                            <button className="btn-download-pdf" onClick={handleDownloadPdf} disabled={isGeneratingPdf}>
+                                {isGeneratingPdf ? <RefreshCw size={18} className="spinning" /> :
+                                    pdfSuccess ? <CheckCircle2 size={18} color="#4ade80" /> : <Download size={18} />}
                                 {isGeneratingPdf ? ' Generando...' : pdfSuccess ? ' ¡Listo!' : ' Descargar PDF'}
                             </button>
                         </div>
                     </div>
+                )}
 
-                    {/* CARD 3: Links de Compartir */}
+                {/* ── SECTION: Compartir ── */}
+                {activeSection === 'compartir' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
                             <h2><Link size={20} /> Links de Compartir</h2>
@@ -486,7 +512,6 @@ const Admin = () => {
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
                                 Copia los enlaces para enviar a los usuarios.
                             </p>
-
                             <div className="share-link-item">
                                 <label>Página de Inicio (Test Inicial)</label>
                                 <div className="link-input-group">
@@ -496,7 +521,6 @@ const Admin = () => {
                                     </button>
                                 </div>
                             </div>
-
                             <div className="share-link-item" style={{ marginTop: '15px' }}>
                                 <label>Test Liderazgo (Corporativo)</label>
                                 <div className="link-input-group">
@@ -508,11 +532,10 @@ const Admin = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
 
-                {/* BOTTOM SECTION: 2 Columns (Questions) */}
-                <div className="admin-bottom-section">
-                    {/* Test Inicial */}
+                {/* ── SECTION: Preguntas Test Inicial ── */}
+                {activeSection === 'preguntas-inicial' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
                             <h2>Test Inicial</h2>
@@ -520,7 +543,6 @@ const Admin = () => {
                                 {adminQuestions.length} Activas
                             </span>
                         </div>
-
                         <div className="questions-list">
                             {loadingQuestions ? (
                                 <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
@@ -528,13 +550,10 @@ const Admin = () => {
                                 initialGroupsOrder.map(groupKey => {
                                     const groupQ = groupedInitialQuestions[groupKey] || [];
                                     const isExpanded = expandedInitialGroup === groupKey;
-
                                     return (
                                         <div key={groupKey} className="question-group">
-                                            <div
-                                                className={`question-group-header ${isExpanded ? 'active' : ''}`}
-                                                onClick={() => toggleInitialGroup(groupKey)}
-                                            >
+                                            <div className={`question-group-header ${isExpanded ? 'active' : ''}`}
+                                                onClick={() => toggleInitialGroup(groupKey)}>
                                                 <span>{initialGroupLabels[groupKey]} ({groupQ.length})</span>
                                                 {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                                             </div>
@@ -544,12 +563,8 @@ const Admin = () => {
                                                         <div className="question-item-top">
                                                             <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
                                                             {editingId === q.id ? (
-                                                                <textarea
-                                                                    className="edit-q-textarea"
-                                                                    value={editValue}
-                                                                    onChange={(e) => setEditValue(e.target.value)}
-                                                                    autoFocus
-                                                                />
+                                                                <textarea className="edit-q-textarea" value={editValue}
+                                                                    onChange={(e) => setEditValue(e.target.value)} autoFocus />
                                                             ) : (
                                                                 <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
                                                             )}
@@ -557,11 +572,8 @@ const Admin = () => {
                                                         <div className="q-actions" style={{ marginTop: '10px' }}>
                                                             {editingId === q.id ? (
                                                                 <>
-                                                                    <button
-                                                                        onClick={() => handleSaveQuestion(q.id)}
-                                                                        className="btn-save-q"
-                                                                        disabled={savingId === q.id}
-                                                                    >
+                                                                    <button onClick={() => handleSaveQuestion(q.id)} className="btn-save-q"
+                                                                        disabled={savingId === q.id}>
                                                                         {savingId === q.id ? '...' : 'Guardar'}
                                                                     </button>
                                                                     <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
@@ -579,8 +591,10 @@ const Admin = () => {
                             )}
                         </div>
                     </div>
+                )}
 
-                    {/* Test Avanzado */}
+                {/* ── SECTION: Preguntas Test Avanzado ── */}
+                {activeSection === 'preguntas-avanzado' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
                             <h2>Test Avanzado</h2>
@@ -588,7 +602,6 @@ const Admin = () => {
                                 {adminAdvancedQuestions.length} Activas
                             </span>
                         </div>
-
                         <div className="questions-list">
                             {loadingQuestions ? (
                                 <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
@@ -597,13 +610,10 @@ const Admin = () => {
                                     const typeStr = typeNum.toString();
                                     const groupQ = groupedAdvancedQuestions[typeStr] || [];
                                     const isExpanded = expandedGroup === typeStr;
-
                                     return (
                                         <div key={typeStr} className="question-group">
-                                            <div
-                                                className={`question-group-header ${isExpanded ? 'active' : ''}`}
-                                                onClick={() => toggleGroup(typeStr)}
-                                            >
+                                            <div className={`question-group-header ${isExpanded ? 'active' : ''}`}
+                                                onClick={() => toggleGroup(typeStr)}>
                                                 <span>Eneatipo {typeStr} ({groupQ.length})</span>
                                                 {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                                             </div>
@@ -613,12 +623,8 @@ const Admin = () => {
                                                         <div className="question-item-top">
                                                             <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
                                                             {editingId === q.id ? (
-                                                                <textarea
-                                                                    className="edit-q-textarea"
-                                                                    value={editValue}
-                                                                    onChange={(e) => setEditValue(e.target.value)}
-                                                                    autoFocus
-                                                                />
+                                                                <textarea className="edit-q-textarea" value={editValue}
+                                                                    onChange={(e) => setEditValue(e.target.value)} autoFocus />
                                                             ) : (
                                                                 <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
                                                             )}
@@ -626,11 +632,8 @@ const Admin = () => {
                                                         <div className="q-actions" style={{ marginTop: '10px' }}>
                                                             {editingId === q.id ? (
                                                                 <>
-                                                                    <button
-                                                                        onClick={() => handleSaveQuestion(q.id, true)}
-                                                                        className="btn-save-q"
-                                                                        disabled={savingId === q.id}
-                                                                    >
+                                                                    <button onClick={() => handleSaveQuestion(q.id, true)} className="btn-save-q"
+                                                                        disabled={savingId === q.id}>
                                                                         {savingId === q.id ? '...' : 'Guardar'}
                                                                     </button>
                                                                     <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
@@ -648,11 +651,11 @@ const Admin = () => {
                             )}
                         </div>
                     </div>
-                </div>
+                )}
 
-                {/* RESPONSES SECTION: Full width */}
-                <div className="admin-responses-section">
-                    <div className="admin-card" style={{ width: '100%' }}>
+                {/* ── SECTION: Respuestas ── */}
+                {activeSection === 'respuestas' && (
+                    <div className="admin-card">
                         <div className="admin-card-header">
                             <h2>Respuestas del Test Avanzado</h2>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -664,8 +667,7 @@ const Admin = () => {
                                 </button>
                             </div>
                         </div>
-
-                        <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                        <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
                             <table className="codes-table">
                                 <thead>
                                     <tr>
@@ -707,10 +709,7 @@ const Admin = () => {
                                                         : <span style={{ color: '#9ca3af' }}>-</span>}
                                                 </td>
                                                 <td style={{ textAlign: 'center' }}>
-                                                    <button
-                                                        className="btn-ver-respuestas"
-                                                        onClick={() => setSelectedResponse(r)}
-                                                    >
+                                                    <button className="btn-ver-respuestas" onClick={() => setSelectedResponse(r)}>
                                                         Ver respuestas
                                                     </button>
                                                 </td>
@@ -721,10 +720,11 @@ const Admin = () => {
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
+                )}
 
-            {/* MODAL: Ver respuestas */}
+            </main>
+
+            {/* ── MODAL: Ver respuestas ── */}
             {selectedResponse && (
                 <div className="responses-modal-overlay" onClick={() => setSelectedResponse(null)}>
                     <div className="responses-modal" onClick={e => e.stopPropagation()}>
@@ -742,14 +742,13 @@ const Admin = () => {
                                     {selectedResponse.access_code && (
                                         <> &nbsp;·&nbsp; Código: <strong style={{ color: '#b89b2d', fontFamily: 'monospace' }}>{selectedResponse.access_code}</strong></>
                                     )}
-                                </p>                  </div>
+                                </p>
+                            </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-                                <button
-                                    className="btn-ver-respuestas"
+                                <button className="btn-ver-respuestas"
                                     onClick={() => handleDownloadExcel(selectedResponse)}
                                     title="Descargar en Excel"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
-                                >
+                                    style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                     ↓ Excel
                                 </button>
                                 <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
@@ -803,7 +802,7 @@ const Admin = () => {
                 </div>
             )}
 
-            {/* Hidden wrapper for the PDF Generator target */}
+            {/* Hidden wrapper for PDF Generator */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>
                 <ExecutiveKitTemplate
                     data={executiveKitData[selectedType]}
