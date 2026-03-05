@@ -91,8 +91,6 @@ function App() {
 
         if (supabaseError) {
           console.error('Error updating Supabase:', supabaseError);
-          // Fallback: try creating a new record if update passes but row missing? 
-          // Unlikely for update error, but maybe RLS.
         } else {
           console.log('Supabase response data:', data);
           if (data && data.length === 0) {
@@ -101,6 +99,25 @@ function App() {
             console.log('Enneatype updated in Supabase successfully');
           }
         }
+
+        // Save detailed test responses
+        const sliderLabels = ['Muy poco', 'Algo', 'Mucho', 'Totalmente'];
+        const formattedAnswers = advancedQuestionsUsed.map(q => ({
+          question_id: q.id,
+          text: q.text,
+          enneatype: q.enneatype,
+          answer_value: answers[q.id] ?? null,
+          answer_label: answers[q.id] !== undefined ? sliderLabels[answers[q.id]] : null
+        }));
+
+        await supabase.from('advanced_test_responses').insert([{
+          user_name: user.name || null,
+          user_email: normalizedEmail,
+          enneatype: type,
+          test_type: advancedQuestionsUsed.length > 50 ? '135' : '45',
+          answers: formattedAnswers
+        }]);
+        console.log('Advanced test responses saved to Supabase');
 
         const details = advancedEnneagramInfo[type];
         const resultLink = `${window.location.origin}/advanced-analysis-result/${type}`;

@@ -430,7 +430,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
             }
 
-            pdf.save(`Kit-Ejecutivo-Eneagrama-Tipo-${type}.pdf`);
+            pdf.save(`Plan-de-Acción-Eneagrama-Tipo-${type}.pdf`);
             kitRoot.style.display = 'none';
         } catch (error) {
             console.error('Error generating Executive Kit:', error);

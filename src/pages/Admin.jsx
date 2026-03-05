@@ -28,9 +28,14 @@ const Admin = () => {
     const [adminQuestions, setAdminQuestions] = useState([]);
     const [adminAdvancedQuestions, setAdminAdvancedQuestions] = useState([]);
     const [loadingQuestions, setLoadingQuestions] = useState(false);
-    const [editingId, setEditingId] = useState(null); // ID of question being edited
+    const [editingId, setEditingId] = useState(null);
     const [editValue, setEditValue] = useState('');
-    const [savingId, setSavingId] = useState(null); // ID of question being saved
+    const [savingId, setSavingId] = useState(null);
+
+    // Responses State
+    const [testResponses, setTestResponses] = useState([]);
+    const [loadingResponses, setLoadingResponses] = useState(false);
+    const [selectedResponse, setSelectedResponse] = useState(null);
 
     useEffect(() => {
         // Check local storage for persistent auth
@@ -44,6 +49,7 @@ const Admin = () => {
         if (isAuthenticated) {
             fetchCodes();
             fetchAllQuestions();
+            fetchTestResponses();
         }
     }, [isAuthenticated]);
 
@@ -58,6 +64,22 @@ const Admin = () => {
             console.error('Error fetching questions:', error);
         } finally {
             setLoadingQuestions(false);
+        }
+    };
+
+    const fetchTestResponses = async () => {
+        setLoadingResponses(true);
+        try {
+            const { data, error } = await supabase
+                .from('advanced_test_responses')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            setTestResponses(data || []);
+        } catch (error) {
+            console.error('Error fetching responses:', error);
+        } finally {
+            setLoadingResponses(false);
         }
     };
 
@@ -576,7 +598,99 @@ const Admin = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* RESPONSES SECTION: Full width */}
+                <div className="admin-responses-section">
+                    <div className="admin-card" style={{ width: '100%' }}>
+                        <div className="admin-card-header">
+                            <h2>Respuestas del Test Avanzado</h2>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                                    {testResponses.length} registros
+                                </span>
+                                <button onClick={fetchTestResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
+                                    <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                            <table className="codes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th>Eneatipo</th>
+                                        <th>Test</th>
+                                        <th>Ver respuestas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loadingResponses ? (
+                                        <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                    ) : testResponses.length === 0 ? (
+                                        <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
+                                    ) : (
+                                        testResponses.map(r => (
+                                            <tr key={r.id}>
+                                                <td style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                                                    {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                </td>
+                                                <td>{r.user_name || '-'}</td>
+                                                <td style={{ fontSize: '0.82rem' }}>{r.user_email || '-'}</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    <span className="status-badge used">Tipo {r.enneatype}</span>
+                                                </td>
+                                                <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>{r.test_type} preguntas</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    <button
+                                                        className="btn-ver-respuestas"
+                                                        onClick={() => setSelectedResponse(r)}
+                                                    >
+                                                        Ver respuestas
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            {/* MODAL: Ver respuestas */}
+            {selectedResponse && (
+                <div className="responses-modal-overlay" onClick={() => setSelectedResponse(null)}>
+                    <div className="responses-modal" onClick={e => e.stopPropagation()}>
+                        <div className="responses-modal-header">
+                            <div>
+                                <h2>Respuestas del test</h2>
+                                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#666' }}>
+                                    <strong>{selectedResponse.user_name || 'Sin nombre'}</strong> &nbsp;·&nbsp;
+                                    {selectedResponse.user_email} &nbsp;·&nbsp;
+                                    <span style={{ color: '#b89b2d', fontWeight: 'bold' }}>Eneatipo {selectedResponse.enneatype}</span> &nbsp;·&nbsp;
+                                    Test de {selectedResponse.test_type} preguntas
+                                </p>
+                            </div>
+                            <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
+                        </div>
+                        <div className="responses-modal-body">
+                            {(selectedResponse.answers || []).map((a, idx) => (
+                                <div key={idx} className="response-item">
+                                    <span className="response-number">{idx + 1}</span>
+                                    <div className="response-content">
+                                        <p className="response-question">{a.text}</p>
+                                        <span className="response-answer">{a.answer_label || '—'}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Hidden wrapper for the PDF Generator target */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Activity, TrendingUp, AlertTriangle } from 'lucide-react';
 import './ExecutiveKitTemplate.css';
 
 const ExecutiveKitTemplate = ({ data, type, name }) => {
@@ -34,7 +35,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page kit-page-cover">
                 <Watermark />
                 <div className="kit-cover-content">
-                    <p className="kit-cover-pretitle">PLAN DE ACCIÓN</p>
+                    <p className="kit-cover-pretitle">Plan de acción</p>
                     <div className="kit-cover-title-group">
                         <h1 className="kit-cover-type">{data.subtitle || `ENEATIPO ${type}`}</h1>
                         <h2 className="kit-cover-role">{data.roleName}</h2>
@@ -46,7 +47,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                     </div>
 
                     <div className="kit-cover-footer">
-                        <p className="kit-cover-manual">{data.manualTitle || "Manual Ejecutivo de Implementación en Liderazgo"}</p>
+                        <p className="kit-cover-manual">{data.manualTitle || "Manual de implementación en liderazgo"}</p>
                         <div className="kit-cover-divider"></div>
                         <p className="kit-cover-confidential">{data.confidentialLabel || "Informe confidencial – Uso profesional"}</p>
                     </div>
@@ -58,15 +59,14 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 <PageNumber num={1} />
             </div>
 
-            {/* 2. RESUMEN EJECUTIVO */}
+            {/* 2. PERFIL GENERAL */}
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Resumen Ejecutivo</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Perfil general</h2>
 
                 {data.summary.generalProfile && (
                     <div className="kit-profile-general">
-                        <h3>Perfil General</h3>
                         <p>{data.summary.generalProfile}</p>
                         {data.summary.highlights ? (
                             <div className="kit-profile-highlight">
@@ -84,31 +84,31 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 <div className="kit-dashboard-grid">
                     <div className="kit-card">
                         <p>
-                            <span className="kit-card-label">Estilo de Liderazgo Dominante:</span><br />
+                            <span className="kit-card-label">Estilo de liderazgo dominante:</span><br />
                             <span className="kit-card-value">{data.summary.style}</span>
                         </p>
                     </div>
                     <div className="kit-card">
                         <p>
-                            <span className="kit-card-label">Fortaleza Estratégica Principal:</span><br />
+                            <span className="kit-card-label">Fortaleza estratégica principal:</span><br />
                             <span className="kit-card-value">{data.summary.strength}</span>
                         </p>
                     </div>
                     <div className="kit-card">
                         <p>
-                            <span className="kit-card-label">Punto Ciego Crítico:</span><br />
+                            <span className="kit-card-label">Punto ciego crítico:</span><br />
                             <span className="kit-card-value">{data.summary.blindspot}</span>
                         </p>
                     </div>
                     <div className="kit-card">
                         <p>
-                            <span className="kit-card-label">Riesgo Bajo Presión:</span><br />
+                            <span className="kit-card-label">Riesgo bajo presión:</span><br />
                             <span className="kit-card-value">{data.summary.risk}</span>
                         </p>
                     </div>
                 </div>
                 <div className="kit-evolution-block">
-                    <span className="kit-evolution-subtitle">Clave de Evolución</span>
+                    <span className="kit-evolution-subtitle" style={{ textTransform: 'none' }}>Clave de evolución</span>
                     <p className="kit-evolution-text">{data.summary.evolutionaryKey}</p>
                 </div>
 
@@ -123,7 +123,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Tu estilo de liderazgo en contexto empresarial</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Tu estilo de liderazgo en contexto empresarial</h2>
                 <div className="kit-text-block">
                     {data.leadershipContext?.paragraphs ? (
                         data.leadershipContext.paragraphs.map((p, i) => <p key={i}>{p}</p>)
@@ -137,7 +137,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
 
                 {data.summary.maturityLevels && (
                     <div className="kit-maturity-block" style={{ marginTop: '30px' }}>
-                        <h3>Nivel de Madurez del Perfil</h3>
+                        <h3 style={{ marginBottom: '12px' }}>Nivel de madurez del perfil</h3>
                         <div className="kit-maturity-levels">
                             {data.summary.maturityLevels.map((level, i) => (
                                 <div key={i} className="kit-maturity-item" style={{ marginBottom: '10px', fontSize: '1.1rem' }}>
@@ -157,29 +157,38 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Impacto en tu equipo</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Impacto en tus equipos</h2>
 
                 {data.impact ? (
                     <div className="kit-impact-sections">
                         <div className="kit-impact-box">
-                            <h4>Comportamientos Frecuentes</h4>
+                            <h4 style={{ textTransform: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Activity size={22} color="#ddbe3d" />
+                                Comportamientos frecuentes
+                            </h4>
                             <ul>
                                 {data.impact.behaviors.map((b, i) => <li key={i}>{b}</li>)}
                             </ul>
                         </div>
                         <div className="kit-impact-box">
-                            <h4>Impacto Positivo</h4>
+                            <h4 style={{ textTransform: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <TrendingUp size={22} color="#ddbe3d" />
+                                Impacto positivo
+                            </h4>
                             <ul>
                                 {data.impact.positive.map((p, i) => <li key={i}>{p}</li>)}
                             </ul>
                         </div>
                         <div className="kit-impact-box">
-                            <h4>Riesgo Potencial</h4>
+                            <h4 style={{ textTransform: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <AlertTriangle size={22} color="#ddbe3d" />
+                                Riesgo potencial
+                            </h4>
                             <ul>
                                 {data.impact.risks.map((r, i) => <li key={i}>{r}</li>)}
                             </ul>
                         </div>
-                        <p className="kit-impact-footer">Un liderazgo fuerte inspira cuando equilibra firmeza con apertura.</p>
+                        <p className="kit-impact-footer">Un liderazgo fuerte es inspirador, cuando equilibra firmeza con apertura.</p>
                     </div>
                 ) : (
                     <table className="kit-table">
@@ -211,7 +220,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Riesgo organizacional si no evolucionas</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Riesgo organizacional si no evolucionas</h2>
                 <div className="kit-checklist" style={{ marginTop: '30px' }}>
                     {(data.orgRiskExtended?.items || data.orgRisk).map((risk, idx) => (
                         <div key={idx} className="kit-checklist-item">
@@ -235,18 +244,18 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title" style={{ textAlign: 'center', marginBottom: '30px', color: '#002d44' }}>
-                    Plan de implementación – 30 días
+                <h2 className="kit-section-title" style={{ textAlign: 'center', marginBottom: '30px', color: '#002d44', textTransform: 'none' }}>
+                    Plan de implementación en 30 días
                 </h2>
 
                 <div className="kit-weeks-split">
                     {/* SEMANA 1 */}
                     <div className="kit-week-section">
                         <div className="kit-week-container" style={{ marginBottom: '5px' }}>
-                            <div className="kit-week-number">Semana 1</div>
-                            <h3 className="kit-week-title-main">{data.plan.week1.title}</h3>
+                            <div className="kit-week-number" style={{ textTransform: 'none' }}>Semana 1</div>
+                            <h3 className="kit-week-title-main" style={{ textTransform: 'none' }}>{data.plan.week1.title}</h3>
                         </div>
-                        <p style={{ marginBottom: '10px' }}><strong>Enfoque:</strong> {data.plan.week1.focus}</p>
+                        <p style={{ marginBottom: '10px' }}><strong style={{ color: '#ddbe3d' }}>Enfoque:</strong> {data.plan.week1.focus}</p>
                         <div className="kit-action-list">
                             <ul className="kit-checklist">
                                 {data.plan.week1.tasks.map((task, idx) => (
@@ -268,10 +277,10 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                     {/* SEMANA 2 */}
                     <div className="kit-week-section">
                         <div className="kit-week-container" style={{ marginBottom: '5px' }}>
-                            <div className="kit-week-number">Semana 2</div>
-                            <h3 className="kit-week-title-main">{data.plan.week2.title}</h3>
+                            <div className="kit-week-number" style={{ textTransform: 'none' }}>Semana 2</div>
+                            <h3 className="kit-week-title-main" style={{ textTransform: 'none' }}>{data.plan.week2.title}</h3>
                         </div>
-                        <p style={{ marginBottom: '10px' }}><strong>Enfoque:</strong> {data.plan.week2.focus}</p>
+                        <p style={{ marginBottom: '10px' }}><strong style={{ color: '#ddbe3d' }}>Enfoque:</strong> {data.plan.week2.focus}</p>
                         <div className="kit-action-list">
                             <ul className="kit-checklist">
                                 {data.plan.week2.tasks.map((task, idx) => (
@@ -304,10 +313,10 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                     {/* SEMANA 3 */}
                     <div className="kit-week-section">
                         <div className="kit-week-container" style={{ marginBottom: '5px' }}>
-                            <div className="kit-week-number">Semana 3</div>
-                            <h3 className="kit-week-title-main">{data.plan.week3.title}</h3>
+                            <div className="kit-week-number" style={{ textTransform: 'none' }}>Semana 3</div>
+                            <h3 className="kit-week-title-main" style={{ textTransform: 'none' }}>{data.plan.week3.title}</h3>
                         </div>
-                        <p style={{ marginBottom: '10px' }}><strong>Enfoque:</strong> {data.plan.week3.focus}</p>
+                        <p style={{ marginBottom: '10px' }}><strong style={{ color: '#ddbe3d' }}>Enfoque:</strong> {data.plan.week3.focus}</p>
                         <div className="kit-action-list">
                             <ul className="kit-checklist">
                                 {data.plan.week3.tasks.map((task, idx) => (
@@ -329,10 +338,10 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                     {/* SEMANA 4 */}
                     <div className="kit-week-section">
                         <div className="kit-week-container" style={{ marginBottom: '5px' }}>
-                            <div className="kit-week-number">Semana 4</div>
-                            <h3 className="kit-week-title-main">{data.plan.week4.title}</h3>
+                            <div className="kit-week-number" style={{ textTransform: 'none' }}>Semana 4</div>
+                            <h3 className="kit-week-title-main" style={{ textTransform: 'none' }}>{data.plan.week4.title}</h3>
                         </div>
-                        <p style={{ marginBottom: '10px' }}><strong>Enfoque:</strong> {data.plan.week4.focus}</p>
+                        <p style={{ marginBottom: '10px' }}><strong style={{ color: '#ddbe3d' }}>Enfoque:</strong> {data.plan.week4.focus}</p>
                         <div className="kit-action-list">
                             <ul className="kit-checklist">
                                 {data.plan.week4.tasks.map((task, idx) => (
@@ -360,7 +369,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Matriz ejecutiva de toma de decisiones</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Matriz ejecutiva de toma de decisiones</h2>
 
                 {data.decisionMatrixExtended ? (
                     <div className="kit-decision-extended">
@@ -408,18 +417,18 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Protocolo bajo presión</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Protocolo bajo presión</h2>
 
                 {data.pressureProtocolExtended ? (
                     <div className="kit-pressure-extended">
                         <div className="kit-impact-box">
-                            <h4>Señales de Alerta</h4>
+                            <h4 style={{ textTransform: 'none' }}>Señales de alerta</h4>
                             <ul>
                                 {data.pressureProtocolExtended.alerts.map((a, i) => <li key={i}>{a}</li>)}
                             </ul>
                         </div>
                         <div className="kit-evolution-block" style={{ margin: '25px 0' }}>
-                            <span className="kit-evolution-subtitle">Comportamiento Automático</span>
+                            <span className="kit-evolution-subtitle" style={{ textTransform: 'none' }}>Comportamiento automático</span>
                             <p className="kit-evolution-text" style={{ color: '#e74c3c' }}>{data.pressureProtocolExtended.automaticBehavior}</p>
                         </div>
                         <div className="kit-action-list">
@@ -458,7 +467,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Guía para conversaciones difíciles</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Guía para conversaciones difíciles</h2>
 
                 {data.conversationsGuide ? (
                     <div className="kit-conversations-extended">
@@ -474,7 +483,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                             </div>
                         </div>
                         <div className="kit-impact-box" style={{ marginTop: '30px', borderColor: '#e74c3c' }}>
-                            <h4 style={{ color: '#e74c3c' }}>Evitar:</h4>
+                            <h4 style={{ color: '#e74c3c', textTransform: 'none' }}>Evitar:</h4>
                             <ul>
                                 {data.conversationsGuide.avoid.map((a, i) => <li key={i}>{a}</li>)}
                             </ul>
@@ -501,7 +510,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page kit-page-dark">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Checklist Anti-Sabotaje</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Checklist anti-sabotaje</h2>
                 <div className="kit-checklist" style={{ marginTop: '60px' }}>
                     {(data.antiSabotageExtended || data.antiSabotage).map((item, idx) => (
                         <div key={idx} className="kit-checklist-item" style={{ marginBottom: '30px' }}>
@@ -522,7 +531,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
             <div className="kit-page">
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title">Plan de crecimiento – 6 meses</h2>
+                <h2 className="kit-section-title" style={{ textTransform: 'none' }}>Plan de crecimiento – 6 meses</h2>
 
                 {data.growthPlanExtended ? (
                     <div className="kit-growth-extended">
@@ -537,7 +546,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                         </div>
                         <div className="kit-metric-box" style={{ marginTop: '50px' }}>
                             <span className="kit-metric-label">Meta:</span>
-                            <p style={{ margin: '10px 0 0', fontWeight: 700, fontSize: '1.2rem' }}>{data.growthPlanExtended.meta}</p>
+                            <p style={{ margin: '10px 0 0', fontWeight: 700, fontSize: '1.2rem', color: '#27ae60' }}>{data.growthPlanExtended.meta}</p>
                         </div>
 
                         {data.evolutionSignals && (
@@ -571,20 +580,19 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 <PageNumber num={12} />
             </div>
 
-            {/* 15. CIERRE EJECUTIVO */}
+            {/* 15. INTEGRACIÓN */}
             <div className="kit-page" style={{ alignItems: 'center', textAlign: 'center' }}>
                 <HeaderBanner />
                 <Watermark />
-                <h2 className="kit-section-title" style={{ marginTop: '40mm' }}>Cierre Ejecutivo</h2>
-                <div className="kit-text-block" style={{ textAlign: 'center' }}>
-                    {data.closingExtended?.paragraphs ? (
-                        data.closingExtended.paragraphs.map((p, i) => <p key={i} style={{ marginBottom: '20px', fontWeight: i % 2 === 1 ? 700 : 400 }}>{p}</p>)
-                    ) : (
-                        <p>Este informe es una herramienta viva. Su éxito depende de la aplicación consciente de estos marcos de trabajo en el día a día operativo.</p>
-                    )}
+                <h2 className="kit-section-title" style={{ marginTop: '40mm', textTransform: 'none' }}>Integración</h2>
+                <div className="kit-text-block" style={{ textAlign: 'center', marginTop: '30px' }}>
+                    <p style={{ marginBottom: '20px' }}>Este informe no pretende darte respuestas definitivas.</p>
+                    <p style={{ marginBottom: '20px' }}>Fue creado para abrir una mirada distinta sobre tu personalidad dentro del entorno empresarial.</p>
+                    <p style={{ marginBottom: '20px' }}>Comprender tu forma de pensar, decidir y liderar es solo el primer paso.</p>
+                    <p style={{ marginBottom: '20px' }}>La verdadera transformación ocurre cuando esa comprensión se convierte en conciencia y elección.</p>
+                    <p style={{ marginBottom: '20px' }}>Lo que decidas hacer con esta información es lo que realmente transformará tu liderazgo.</p>
                 </div>
                 <div style={{ width: '60px', height: '2px', background: '#ddbe3d', margin: '40px 0' }}></div>
-                <div className="kit-signature-space">Certificación de Liderazgo Consciente</div>
                 <div className="kit-page-footer-logo">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>

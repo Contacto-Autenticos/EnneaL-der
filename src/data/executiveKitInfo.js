@@ -4,7 +4,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 1",
         roleName: "EL REFORMADOR",
         tagline: "Excelencia con Impacto",
-        manualTitle: "Manual Ejecutivo de Implementación en liderazgo",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 1 ejerce un liderazgo basado en principios, estándares elevados y mejora continua. Su motivación central es hacer lo correcto y optimizar sistemas, procesos y personas.",
@@ -50,13 +50,13 @@ export const executiveKitData = {
                 "Dependencia del líder para validación menor",
                 "Rigidez estructural ante crisis dinámicas"
             ],
-            closing: "La excelencia sin equilibrio genera desgaste. La excelencia con conciencia genera liderazgo sostenible."
+            closing: "La excelencia con conciencia crea un liderazgo sostenible; sin equilibrio, genera desgaste."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE ESTÁNDARES", focus: "Detectar cuándo el perfeccionismo interfiere.", tasks: ["Registrar momentos donde corregiste algo menor.", "Identificar si era necesario o emocional.", "Establecer estándar 'suficientemente bueno' en tareas secundarias."], metric: "Reducir en 20% las intervenciones innecesarias." },
-            week2: { title: "FLEXIBILIDAD ESTRATÉGICA", focus: "Practicar delegación sin microgestión.", tasks: ["Delegar una tarea importante sin revisarla hasta el final.", "Aceptar diferencias de estilo si cumplen el objetivo.", "Pedir retroalimentación sobre tu nivel de exigencia."], metric: "Al menos 2 tareas completadas sin intervención intermedia." },
-            week3: { title: "LIDERAZGO INSPIRADOR", focus: "Equilibrar corrección con reconocimiento.", tasks: ["Aplicar proporción 3:1 (Tres reconocimientos por cada corrección).", "Destacar logros públicamente.", "Reducir tono crítico automático."], metric: "Mejora perceptible en clima de equipo." },
-            week4: { title: "CONSOLIDACIÓN", focus: "Integrar excelencia con humanidad.", tasks: ["Aceptar conscientemente un error menor sin intervenir.", "Tomar una decisión con información 85% suficiente.", "Evaluar impacto emocional de tu liderazgo."], metric: "Mayor autonomía del equipo." }
+            week1: { title: "Conciencia de estándares", focus: "Detectar cuándo el perfeccionismo interfiere.", tasks: ["Registrar momentos donde corregiste algo menor.", "Identificar si era necesario o emocional.", "Establecer estándar 'suficientemente bueno' en tareas secundarias."], metric: "Reducir en 20% las intervenciones innecesarias." },
+            week2: { title: "Flexibilidad estratégica", focus: "Practicar delegación sin microgestión.", tasks: ["Delegar una tarea importante sin revisarla hasta el final.", "Aceptar diferencias de estilo si cumplen el objetivo.", "Pedir retroalimentación sobre tu nivel de exigencia."], metric: "Al menos 2 tareas completadas sin intervención intermedia." },
+            week3: { title: "Liderazgo inspirador", focus: "Equilibrar corrección con reconocimiento.", tasks: ["Aplicar proporción 3:1 (Tres reconocimientos por cada corrección).", "Destacar logros públicamente.", "Reducir tono crítico automático."], metric: "Mejora perceptible en clima de equipo." },
+            week4: { title: "Consolidación", focus: "Integrar excelencia con humanidad.", tasks: ["Aceptar conscientemente un error menor sin intervenir.", "Tomar una decisión con información 85% suficiente.", "Evaluar impacto emocional de tu liderazgo."], metric: "Mayor autonomía del equipo." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -123,7 +123,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 2",
         roleName: "EL SERVICIAL",
         tagline: "Influencia con Límites",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 2 ejerce un liderazgo relacional, empático y orientado al servicio. Su capacidad para comprender necesidades, generar confianza y fortalecer vínculos lo convierte en un facilitador clave de cohesión organizacional.",
@@ -171,10 +171,10 @@ export const executiveKitData = {
             closing: "El apoyo sin dirección genera dependencia. La empatía con estructura genera rendimiento sostenible."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE LÍMITES", focus: "Identificar patrones de sobreinvolucramiento.", tasks: ["Registrar tareas asumidas que no te corresponden.", "Detectar solicitudes aceptadas por incomodidad al decir no.", "Definir tres prioridades estratégicas personales por día."], metric: "Reducción visible de tareas asumidas innecesariamente." },
-            week2: { title: "POSICIONAMIENTO EJECUTIVO", focus: "Practicar límites visibles.", tasks: ["Decir no a una solicitud no prioritaria.", "Delegar una responsabilidad que has estado reteniendo.", "Comunicar prioridades organizacionales con claridad."], metric: "Mayor autonomía observada en el equipo." },
-            week3: { title: "PRIORIDAD SOBRE APROBACIÓN", focus: "Tomar decisiones basadas en impacto, no en aceptación.", tasks: ["Tomar una decisión incómoda pero necesaria.", "Evitar justificar excesivamente tus decisiones.", "Solicitar feedback sobre claridad, no solo cercanía."], metric: "Decisiones ejecutadas sin diluir autoridad." },
-            week4: { title: "CONSOLIDACIÓN", focus: "Integrar empatía con dirección firme.", tasks: ["Evaluar resultados obtenidos durante el mes.", "Medir carga personal de trabajo.", "Ajustar sistema de delegación permanente."], metric: "Reducción de sobrecarga y mayor claridad estratégica." }
+            week1: { title: "Conciencia de límites", focus: "Identificar patrones de sobreinvolucramiento.", tasks: ["Registrar tareas asumidas que no te corresponden.", "Detectar solicitudes aceptadas por incomodidad al decir no.", "Definir tres prioridades estratégicas personales por día."], metric: "Reducción visible de tareas asumidas innecesariamente." },
+            week2: { title: "Posicionamiento ejecutivo", focus: "Practicar límites visibles.", tasks: ["Decir no a una solicitud no prioritaria.", "Delegar una responsabilidad que has estado reteniendo.", "Comunicar prioridades organizacionales con claridad."], metric: "Mayor autonomía observada en el equipo." },
+            week3: { title: "Prioridad sobre aprobación", focus: "Tomar decisiones basadas en impacto, no en aceptación.", tasks: ["Tomar una decisión incómoda pero necesaria.", "Evitar justificar excesivamente tus decisiones.", "Solicitar feedback sobre claridad, no solo cercanía."], metric: "Decisiones ejecutadas sin diluir autoridad." },
+            week4: { title: "Consolidación", focus: "Integrar empatía con dirección firme.", tasks: ["Evaluar resultados obtenidos durante el mes.", "Medir carga personal de trabajo.", "Ajustar sistema de delegación permanente."], metric: "Reducción de sobrecarga y mayor claridad estratégica." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -241,7 +241,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 3",
         roleName: "EL COMPETITIVO",
         tagline: "Desempeño con Autenticidad",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 3 ejerce un liderazgo orientado a logro, eficiencia y alto rendimiento. Su capacidad para ejecutar, optimizar procesos y alcanzar metas lo convierte en un impulsor natural de resultados dentro de organizaciones competitivas.",
@@ -289,10 +289,10 @@ export const executiveKitData = {
             closing: "El logro sin consciencia genera desgaste. El desempeño con propósito genera liderazgo sostenible."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE IDENTIFICACIÓN", focus: "Detectar dónde el logro define tu valor personal.", tasks: ["Registrar decisiones tomadas para proteger imagen.", "Identificar tareas asumidas por necesidad de destacar.", "Definir metas realistas y sostenibles para el mes."], metric: "Mayor claridad entre desempeño y autoestima." },
-            week2: { title: "BALANCE RESULTADO–CULTURA", focus: "Integrar indicadores con bienestar.", tasks: ["Medir clima del equipo además de resultados.", "Incluir reconocimiento cualitativo en reuniones.", "Delegar responsabilidades estratégicas."], metric: "Mejor percepción de apoyo y equilibrio." },
-            week3: { title: "AUTENTICIDAD EJECUTIVA", focus: "Practicar liderazgo humano.", tasks: ["Compartir un desafío personal con el equipo.", "Solicitar retroalimentación 360°.", "Reducir carga laboral innecesaria."], metric: "Mayor apertura relacional dentro del equipo." },
-            week4: { title: "CONSOLIDACIÓN", focus: "Sostener excelencia con equilibrio.", tasks: ["Evaluar resultados del mes.", "Medir energía personal y del equipo.", "Ajustar metas a mediano plazo."], metric: "Rendimiento estable sin sobrecarga extrema." }
+            week1: { title: "Conciencia de identificación", focus: "Detectar dónde el logro define tu valor personal.", tasks: ["Registrar decisiones tomadas para proteger imagen.", "Identificar tareas asumidas por necesidad de destacar.", "Definir metas realistas y sostenibles para el mes."], metric: "Mayor claridad entre desempeño y autoestima." },
+            week2: { title: "Balance resultado–cultura", focus: "Integrar indicadores con bienestar.", tasks: ["Medir clima del equipo además de resultados.", "Incluir reconocimiento cualitativo en reuniones.", "Delegar responsabilidades estratégicas."], metric: "Mejor percepción de apoyo y equilibrio." },
+            week3: { title: "Autenticidad ejecutiva", focus: "Practicar liderazgo humano.", tasks: ["Compartir un desafío personal con el equipo.", "Solicitar retroalimentación 360°.", "Reducir carga laboral innecesaria."], metric: "Mayor apertura relacional dentro del equipo." },
+            week4: { title: "Consolidación", focus: "Sostener excelencia con equilibrio.", tasks: ["Evaluar resultados del mes.", "Medir energía personal y del equipo.", "Ajustar metas a mediano plazo."], metric: "Rendimiento estable sin sobrecarga extrema." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -359,7 +359,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 4",
         roleName: "EL CREATIVO",
         tagline: "Autenticidad con Estabilidad",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 4 ejerce un liderazgo creativo, profundo y orientado a significado. Su capacidad para conectar identidad, propósito y diferenciación lo convierte en un constructor natural de cultura organizacional auténtica.",
@@ -407,10 +407,10 @@ export const executiveKitData = {
             closing: "La identidad sin estructura genera inestabilidad. La autenticidad con consistencia genera liderazgo transformador."
         },
         plan: {
-            week1: { title: "CONCIENCIA EMOCIONAL", focus: "Identificar influencia emocional en decisiones.", tasks: ["Registrar decisiones recientes y estado emocional asociado.", "Separar hechos de interpretación emocional.", "Definir tres prioridades objetivas del mes."], metric: "Mayor claridad entre emoción y estrategia." },
-            week2: { title: "ESTRUCTURA OPERATIVA", focus: "Implementar sistemas que sostengan estabilidad.", tasks: ["Establecer métricas claras para proyectos activos.", "Separar sesiones creativas de decisiones ejecutivas.", "Documentar procesos clave."], metric: "Reducción de cambios impulsivos." },
-            week3: { title: "REGULACIÓN EN CONFLICTO", focus: "Manejar intensidad con equilibrio.", tasks: ["Practicar pausa antes de responder en reuniones tensas.", "Solicitar feedback objetivo antes de reaccionar.", "Comunicar desacuerdos sin dramatización."], metric: "Disminución de reactividad en conversaciones difíciles." },
-            week4: { title: "CONSOLIDACIÓN", focus: "Integrar profundidad con consistencia.", tasks: ["Evaluar resultados medibles del mes.", "Revisar coherencia estratégica.", "Ajustar visión con datos objetivos."], metric: "Aumento de estabilidad percibida por el equipo." }
+            week1: { title: "Conciencia emocional", focus: "Identificar influencia emocional en decisiones.", tasks: ["Registrar decisiones recientes y estado emocional asociado.", "Separar hechos de interpretación emocional.", "Definir tres prioridades objetivas del mes."], metric: "Mayor claridad entre emoción y estrategia." },
+            week2: { title: "Estructura operativa", focus: "Implementar sistemas que sostengan estabilidad.", tasks: ["Establecer métricas claras para proyectos activos.", "Separar sesiones creativas de decisiones ejecutivas.", "Documentar procesos clave."], metric: "Reducción de cambios impulsivos." },
+            week3: { title: "Regulación en conflicto", focus: "Manejar intensidad con equilibrio.", tasks: ["Practicar pausa antes de responder en reuniones tensas.", "Solicitar feedback objetivo antes de reaccionar.", "Comunicar desacuerdos sin dramatización."], metric: "Disminución de reactividad en conversaciones difíciles." },
+            week4: { title: "Consolidación", focus: "Integrar profundidad con consistencia.", tasks: ["Evaluar resultados medibles del mes.", "Revisar coherencia estratégica.", "Ajustar visión con datos objetivos."], metric: "Aumento de estabilidad percibida por el equipo." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -477,7 +477,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 5",
         roleName: "EL ANALÍTICO",
         tagline: "Claridad con Ejecución",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 5 ejerce un liderazgo analítico, estratégico y profundamente reflexivo. Su fortaleza radica en comprender sistemas complejos, anticipar riesgos y estructurar decisiones basadas en información sólida.",
@@ -525,10 +525,10 @@ export const executiveKitData = {
             closing: "La claridad sin acción genera estancamiento. La claridad ejecutada genera ventaja competitiva."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE SOBREANÁLISIS", focus: "Detectar patrones de retraso decisional.", tasks: ["Registrar decisiones que hayas postergado más de 48 horas.", "Identificar qué información adicional estabas esperando.", "Definir tiempos límite claros para cada decisión activa."], metric: "Reducir en 30% el tiempo promedio de toma de decisiones menores." },
-            week2: { title: "ACCIÓN CON INFORMACIÓN SUFICIENTE", focus: "Ejecutar con 70% de información validada.", tasks: ["Tomar al menos tres decisiones sin esperar datos perfectos.", "Delegar una tarea que normalmente retendrías.", "Comunicar una decisión sin justificarla excesivamente."], metric: "Aumento en velocidad operativa del equipo." },
-            week3: { title: "PRESENCIA ESTRATÉGICA", focus: "Incrementar visibilidad de liderazgo.", tasks: ["Liderar una reunión con enfoque en decisiones, no solo análisis.", "Expresar opinión estratégica clara en debates clave.", "Solicitar retroalimentación sobre tu nivel de presencia."], metric: "El equipo identifica tu dirección sin ambigüedad." },
-            week4: { title: "INTEGRACIÓN EJECUTIVA", focus: "Combinar análisis con movilización.", tasks: ["Tomar una decisión estratégica con impacto organizacional.", "Comunicar visión a corto y mediano plazo.", "Evaluar resultados obtenidos por mayor velocidad ejecutiva."], metric: "Reducción en ciclos de análisis prolongado." }
+            week1: { title: "Conciencia de sobreanálisis", focus: "Detectar patrones de retraso decisional.", tasks: ["Registrar decisiones que hayas postergado más de 48 horas.", "Identificar qué información adicional estabas esperando.", "Definir tiempos límite claros para cada decisión activa."], metric: "Reducir en 30% el tiempo promedio de toma de decisiones menores." },
+            week2: { title: "Acción con información suficiente", focus: "Ejecutar con 70% de información validada.", tasks: ["Tomar al menos tres decisiones sin esperar datos perfectos.", "Delegar una tarea que normalmente retendrías.", "Comunicar una decisión sin justificarla excesivamente."], metric: "Aumento en velocidad operativa del equipo." },
+            week3: { title: "Presencia estratégica", focus: "Incrementar visibilidad de liderazgo.", tasks: ["Liderar una reunión con enfoque en decisiones, no solo análisis.", "Expresar opinión estratégica clara en debates clave.", "Solicitar retroalimentación sobre tu nivel de presencia."], metric: "El equipo identifica tu dirección sin ambigüedad." },
+            week4: { title: "Integración ejecutiva", focus: "Combinar análisis con movilización.", tasks: ["Tomar una decisión estratégica con impacto organizacional.", "Comunicar visión a corto y mediano plazo.", "Evaluar resultados obtenidos por mayor velocidad ejecutiva."], metric: "Reducción en ciclos de análisis prolongado." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -595,7 +595,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 6",
         roleName: "EL LEAL",
         tagline: "Seguridad con Decisión",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 6 ejerce un liderazgo responsable, comprometido y orientado a la prevención de riesgos. Su capacidad para anticipar escenarios adversos y detectar vulnerabilidades fortalece la estabilidad organizacional.",
@@ -643,10 +643,10 @@ export const executiveKitData = {
             closing: "La prevención sin decisión genera estancamiento. La seguridad con firmeza genera estabilidad sostenible."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE LA DUDA", focus: "Identificar patrones de búsqueda excesiva de validación.", tasks: ["Registrar decisiones donde solicitaste confirmación innecesaria.", "Diferenciar riesgo real de miedo anticipado.", "Establecer criterios claros de decisión independiente."], metric: "Reducir solicitudes de validación en decisiones menores." },
-            week2: { title: "DECISIÓN CON RESPONSABILIDAD", focus: "Practicar autonomía estratégica.", tasks: ["Tomar tres decisiones sin consultar previamente.", "Comunicar dirección con seguridad verbal y corporal.", "Evitar justificar excesivamente cada elección."], metric: "Incremento en percepción de firmeza por parte del equipo." },
-            week3: { title: "GESTIÓN DEL RIESGO INTELIGENTE", focus: "Diferenciar riesgo probable de riesgo hipotético.", tasks: ["Clasificar riesgos en alto, medio y bajo impacto.", "Eliminar análisis de escenarios poco probables.", "Definir planes de contingencia simples y ejecutables."], metric: "Disminución de ansiedad operativa." },
-            week4: { title: "CONSOLIDACIÓN DE CONFIANZA", focus: "Integrar seguridad con liderazgo visible.", tasks: ["Tomar una decisión estratégica en entorno incierto.", "Comunicar visión con claridad sin expresar duda.", "Solicitar retroalimentación sobre tu nivel de seguridad percibida."], metric: "Aumento en cohesión y confianza del equipo." }
+            week1: { title: "Conciencia de la duda", focus: "Identificar patrones de búsqueda excesiva de validación.", tasks: ["Registrar decisiones donde solicitaste confirmación innecesaria.", "Diferenciar riesgo real de miedo anticipado.", "Establecer criterios claros de decisión independiente."], metric: "Reducir solicitudes de validación en decisiones menores." },
+            week2: { title: "Decisión con responsabilidad", focus: "Practicar autonomía estratégica.", tasks: ["Tomar tres decisiones sin consultar previamente.", "Comunicar dirección con seguridad verbal y corporal.", "Evitar justificar excesivamente cada elección."], metric: "Incremento en percepción de firmeza por parte del equipo." },
+            week3: { title: "Gestión del riesgo inteligente", focus: "Diferenciar riesgo probable de riesgo hipotético.", tasks: ["Clasificar riesgos en alto, medio y bajo impacto.", "Eliminar análisis de escenarios poco probables.", "Definir planes de contingencia simples y ejecutables."], metric: "Disminución de ansiedad operativa." },
+            week4: { title: "Consolidación de confianza", focus: "Integrar seguridad con liderazgo visible.", tasks: ["Tomar una decisión estratégica en entorno incierto.", "Comunicar visión con claridad sin expresar duda.", "Solicitar retroalimentación sobre tu nivel de seguridad percibida."], metric: "Aumento en cohesión y confianza del equipo." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -713,7 +713,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 7",
         roleName: "EL ENTUSIASTA",
         tagline: "Visión con Enfoque",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 7 ejerce un liderazgo visionario, dinámico y orientado a expansión. Su capacidad para detectar oportunidades, generar entusiasmo y movilizar energía lo convierte en un catalizador natural de innovación dentro de equipos y organizaciones.",
@@ -762,10 +762,10 @@ export const executiveKitData = {
             closing: "La expansión sin estructura genera dispersión. La visión con enfoque genera crecimiento sostenible."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE DISPERSIÓN", focus: "Identificar patrones de apertura excesiva de proyectos.", tasks: ["Listar todos los proyectos activos.", "Cancelar o pausar al menos uno no prioritario.", "Definir tres objetivos estratégicos centrales para el mes."], metric: "Reducción visible de frentes abiertos." },
-            week2: { title: "DISCIPLINA DE CIERRE", focus: "Practicar finalización antes de expansión.", tasks: ["Completar un proyecto pendiente antes de iniciar uno nuevo.", "Establecer fecha límite clara para una iniciativa clave.", "Comunicar prioridades al equipo por escrito."], metric: "Al menos una iniciativa finalizada formalmente." },
-            week3: { title: "PROFUNDIDAD ESTRATÉGICA", focus: "Sostener foco prolongado.", tasks: ["Bloquear tiempo sin interrupciones para ejecución profunda.", "Evitar introducir nuevas ideas en reuniones estratégicas.", "Solicitar feedback sobre claridad de dirección."], metric: "Equipo puede repetir prioridades sin ambigüedad." },
-            week4: { title: "CONSOLIDACIÓN", focus: "Integrar visión con ejecución.", tasks: ["Evaluar resultados concretos del mes.", "Medir avances reales vs. ideas generadas.", "Establecer sistema permanente de priorización mensual."], metric: "Aumento en proyectos cerrados vs. iniciados." }
+            week1: { title: "Conciencia de dispersión", focus: "Identificar patrones de apertura excesiva de proyectos.", tasks: ["Listar todos los proyectos activos.", "Cancelar o pausar al menos uno no prioritario.", "Definir tres objetivos estratégicos centrales para el mes."], metric: "Reducción visible de frentes abiertos." },
+            week2: { title: "Disciplina de cierre", focus: "Practicar finalización antes de expansión.", tasks: ["Completar un proyecto pendiente antes de iniciar uno nuevo.", "Establecer fecha límite clara para una iniciativa clave.", "Comunicar prioridades al equipo por escrito."], metric: "Al menos una iniciativa finalizada formalmente." },
+            week3: { title: "Profundidad estratégica", focus: "Sostener foco prolongado.", tasks: ["Bloquear tiempo sin interrupciones para ejecución profunda.", "Evitar introducir nuevas ideas en reuniones estratégicas.", "Solicitar feedback sobre claridad de dirección."], metric: "Equipo puede repetir prioridades sin ambigüedad." },
+            week4: { title: "Consolidación", focus: "Integrar visión con ejecución.", tasks: ["Evaluar resultados concretos del mes.", "Medir avances reales vs. ideas generadas.", "Establecer sistema permanente de priorización mensual."], metric: "Aumento en proyectos cerrados vs. iniciados." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -832,7 +832,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 8",
         roleName: "EL LÍDER",
         tagline: "Poder con Inteligencia Estratégica",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 8 ejerce un liderazgo fuerte, decisivo y orientado a resultados. Su energía movilizadora y su capacidad de asumir control en momentos críticos lo convierten en un impulsor natural de acción organizacional.",
@@ -880,10 +880,10 @@ export const executiveKitData = {
             closing: "El poder sin sensibilidad genera resistencia. El poder con inteligencia genera liderazgo sólido y duradero."
         },
         plan: {
-            week1: { title: "CONCIENCIA DE INTENSIDAD", focus: "Identificar el impacto real de tu energía en el equipo.", tasks: ["Solicitar retroalimentación honesta sobre tu estilo.", "Observar reacciones no verbales en reuniones.", "Registrar momentos donde interrumpes o impones."], metric: "Mayor conciencia del efecto emocional que generas." },
-            week2: { title: "ESCUCHA ESTRATÉGICA", focus: "Integrar participación sin perder dirección.", tasks: ["Escuchar completamente antes de responder.", "Solicitar opiniones contrarias en reuniones.", "Retrasar respuesta inmediata en decisiones menores."], metric: "Aumento en participación activa del equipo." },
-            week3: { title: "INFLUENCIA EN LUGAR DE IMPOSICIÓN", focus: "Liderar desde persuasión consciente.", tasks: ["Explicar el porqué detrás de cada decisión relevante.", "Reconocer públicamente aportes del equipo.", "Delegar autoridad en proyectos estratégicos."], metric: "Mayor compromiso voluntario del equipo." },
-            week4: { title: "INTEGRACIÓN DE PODER Y EMPATÍA", focus: "Consolidar liderazgo fuerte y humano.", tasks: ["Tomar una decisión difícil explicando su impacto humano.", "Sostener una conversación vulnerable con un colaborador clave.", "Evaluar resultados relacionales del mes."], metric: "Reducción de tensión percibida y aumento de confianza." }
+            week1: { title: "Conciencia de intensidad", focus: "Identificar el impacto real de tu energía en el equipo.", tasks: ["Solicitar retroalimentación honesta sobre tu estilo.", "Observar reacciones no verbales en reuniones.", "Registrar momentos donde interrumpes o impones."], metric: "Mayor conciencia del efecto emocional que generas." },
+            week2: { title: "Escucha estratégica", focus: "Integrar participación sin perder dirección.", tasks: ["Escuchar completamente antes de responder.", "Solicitar opiniones contrarias en reuniones.", "Retrasar respuesta inmediata en decisiones menores."], metric: "Aumento en participación activa del equipo." },
+            week3: { title: "Influencia en lugar de imposición", focus: "Liderar desde persuasión consciente.", tasks: ["Explicar el porqué detrás de cada decisión relevante.", "Reconocer públicamente aportes del equipo.", "Delegar autoridad en proyectos estratégicos."], metric: "Mayor compromiso voluntario del equipo." },
+            week4: { title: "Integración de poder y empatía", focus: "Consolidar liderazgo fuerte y humano.", tasks: ["Tomar una decisión difícil explicando su impacto humano.", "Sostener una conversación vulnerable con un colaborador clave.", "Evaluar resultados relacionales del mes."], metric: "Reducción de tensión percibida y aumento de confianza." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -950,7 +950,7 @@ export const executiveKitData = {
         subtitle: "ENEATIPO 9",
         roleName: "EL CONCILIADOR",
         tagline: "Armonía con Dirección",
-        manualTitle: "Manual Ejecutivo de Implementación Estratégica",
+        manualTitle: "Manual de implementación en liderazgo",
         confidentialLabel: "Informe confidencial – Uso profesional",
         summary: {
             generalProfile: "El Eneatipo 9 ejerce un liderazgo integrador, estable y conciliador. Su capacidad para escuchar múltiples perspectivas, reducir tensiones y mantener cohesión lo convierte en un estabilizador natural dentro de equipos y organizaciones.",
@@ -998,10 +998,10 @@ export const executiveKitData = {
             closing: "La paz sin estructura genera estancamiento. La armonía con dirección genera crecimiento sostenible."
         },
         plan: {
-            week1: { title: "CONCIENCIA ESTRATÉGICA", focus: "Detectar patrones de evitación decisional.", tasks: ["Registrar cada decisión postergada durante la semana.", "Identificar qué conflicto o incomodidad se estaba evitando.", "Definir tres prioridades personales diarias antes de iniciar la jornada."], metric: "Tomar al menos una decisión diaria sin buscar consenso total." },
-            week2: { title: "POSICIONAMIENTO VISIBLE", focus: "Practicar liderazgo activo y firme.", tasks: ["Expresar desacuerdo respetuoso en al menos dos reuniones.", "Liderar una reunión con agenda estructurada por ti.", "Establecer un límite claro ante una demanda no prioritaria."], metric: "Aumento en claridad percibida por el equipo." },
-            week3: { title: "DIRECCIÓN ESTRATÉGICA", focus: "Claridad en prioridades organizacionales.", tasks: ["Definir tres objetivos no negociables del mes.", "Delegar tareas operativas secundarias que diluyen tu enfoque.", "Comunicar visión concreta y medible al equipo."], metric: "El equipo puede repetir tus prioridades con precisión." },
-            week4: { title: "CONSOLIDACIÓN", focus: "Integrar firmeza con armonía sostenible.", tasks: ["Tomar una decisión incómoda pero necesaria.", "Solicitar retroalimentación directa sobre tu nivel de claridad.", "Evaluar resultados medibles obtenidos durante el mes."], metric: "Reducción de retrasos asociados a indecisión." }
+            week1: { title: "Conciencia estratégica", focus: "Detectar patrones de evitación decisional.", tasks: ["Registrar cada decisión postergada durante la semana.", "Identificar qué conflicto o incomodidad se estaba evitando.", "Definir tres prioridades personales diarias antes de iniciar la jornada."], metric: "Tomar al menos una decisión diaria sin buscar consenso total." },
+            week2: { title: "Posicionamiento visible", focus: "Practicar liderazgo activo y firme.", tasks: ["Expresar desacuerdo respetuoso en al menos dos reuniones.", "Liderar una reunión con agenda estructurada por ti.", "Establecer un límite claro ante una demanda no prioritaria."], metric: "Aumento en claridad percibida por el equipo." },
+            week3: { title: "Dirección estratégica", focus: "Claridad en prioridades organizacionales.", tasks: ["Definir tres objetivos no negociables del mes.", "Delegar tareas operativas secundarias que diluyen tu enfoque.", "Comunicar visión concreta y medible al equipo."], metric: "El equipo puede repetir tus prioridades con precisión." },
+            week4: { title: "Consolidación", focus: "Integrar firmeza con armonía sostenible.", tasks: ["Tomar una decisión incómoda pero necesaria.", "Solicitar retroalimentación directa sobre tu nivel de claridad.", "Evaluar resultados medibles obtenidos durante el mes."], metric: "Reducción de retrasos asociados a indecisión." }
         },
         decisionMatrixExtended: {
             questions: [
