@@ -901,7 +901,7 @@ const Admin = () => {
                                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                                         <XAxis
                                             dataKey="label"
-                                            tick={{ fontSize: 11, fill: '#6b7280', dy: 10 }}
+                                            tick={{ fontSize: 13, fill: '#6b7280', dy: 10 }}
                                             interval={0}
                                             height={60}
                                         />
