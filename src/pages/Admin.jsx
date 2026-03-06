@@ -80,14 +80,32 @@ const Admin = () => {
 
     const buildChartData = (responses, period) => {
         const counts = {};
+        const now = new Date();
+
+        if (period === 'days7') {
+            // Last 7 days, one slot per day
+            const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(now);
+                d.setDate(now.getDate() - i);
+                const key = `${days[d.getDay()]} ${d.getDate()}`;
+                counts[key] = counts[key] || 0;
+            }
+        }
+
         responses.forEach(r => {
             const d = new Date(r.created_at);
             let key;
-            if (period === 'week') {
-                // ISO week: year-Wxx
+            if (period === 'days7') {
+                // Only include last 7 days
+                const diffDays = Math.floor((now - d) / 86400000);
+                if (diffDays > 6) return;
+                const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+                key = `${days[d.getDay()]} ${d.getDate()}`;
+            } else if (period === 'week') {
                 const startOfYear = new Date(d.getFullYear(), 0, 1);
                 const weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
-                key = `Sem ${weekNum}\n${d.getFullYear()}`;
+                key = `Sem ${weekNum} ${d.getFullYear()}`;
             } else if (period === 'month') {
                 const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
                 key = `${months[d.getMonth()]} ${d.getFullYear()}`;
@@ -98,7 +116,7 @@ const Admin = () => {
         });
         const sorted = Object.entries(counts)
             .map(([label, usuarios]) => ({ label, usuarios }))
-            .slice(-12); // last 12 periods
+            .slice(-12);
         setChartData(sorted);
     };
 
@@ -856,6 +874,7 @@ const Admin = () => {
                         {/* Period Selector */}
                         <div className="chart-period-tabs">
                             {[
+                                { id: 'days7', label: '7 días' },
                                 { id: 'week', label: 'Semanas' },
                                 { id: 'month', label: 'Meses' },
                                 { id: 'year', label: 'Años' },
@@ -882,11 +901,9 @@ const Admin = () => {
                                         <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                                         <XAxis
                                             dataKey="label"
-                                            tick={{ fontSize: 12, fill: '#6b7280' }}
-                                            angle={-30}
-                                            textAnchor="end"
+                                            tick={{ fontSize: 11, fill: '#6b7280' }}
                                             interval={0}
-                                            height={50}
+                                            height={44}
                                         />
                                         <YAxis
                                             tick={{ fontSize: 12, fill: '#6b7280' }}
