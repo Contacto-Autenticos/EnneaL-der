@@ -17,13 +17,19 @@ function getSessionId() {
 
 const ANSWER_LABELS = { 1: 'Muy poco', 2: 'Algo', 3: 'Mucho', 4: 'Totalmente' };
 
-async function saveAnonymousResponses(answers) {
+async function saveAnonymousResponses(answers, allQuestions) {
     const session_id = getSessionId();
-    const rows = Object.entries(answers).map(([question_id, answer]) => ({
-        session_id,
-        question_id: parseInt(question_id),
-        answer: ANSWER_LABELS[answer] ?? answer,
-    }));
+    const rows = Object.entries(answers).map(([question_id, answer]) => {
+        const id = parseInt(question_id);
+        const question = allQuestions.find(q => q.id === id);
+        const isSpecial = question?.type === 'special';
+
+        return {
+            session_id,
+            question_id: id,
+            answer: isSpecial ? answer : (ANSWER_LABELS[answer] ?? answer),
+        };
+    });
     const { error } = await supabase.from('basic_test_responses').insert(rows);
     if (error) {
         console.error('Error saving anonymous responses:', error);
@@ -102,7 +108,7 @@ const Test = ({ onComplete }) => {
                 setDirection('next');
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
-                await saveAnonymousResponses(newAnswers); // await so insert completes before navigating
+                await saveAnonymousResponses(newAnswers, shuffledQuestions); // await so insert completes before navigating
                 onComplete(newAnswers, shuffledQuestions); // Pass questions back for calculation
                 navigate('/result');
             }
@@ -127,7 +133,7 @@ const Test = ({ onComplete }) => {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
-                await saveAnonymousResponses(answers); // await so insert completes before navigating
+                await saveAnonymousResponses(answers, shuffledQuestions); // await so insert completes before navigating
                 onComplete(answers, shuffledQuestions); // Pass questions back for calculation
                 navigate('/result');
             }

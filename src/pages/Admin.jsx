@@ -1745,12 +1745,27 @@ const Admin = () => {
                                                                 display: 'inline-block',
                                                                 background: '#f9fafb',
                                                                 border: '1px solid #e5e7eb',
-                                                                padding: '4px 10px',
-                                                                borderRadius: '6px',
+                                                                padding: '6px 12px',
+                                                                borderRadius: '8px',
                                                                 fontWeight: '600',
-                                                                color: '#374151'
+                                                                color: '#374151',
+                                                                fontSize: '0.92rem',
+                                                                lineHeight: '1.4'
                                                             }}>
-                                                                {a.answer || '—'}
+                                                                {(() => {
+                                                                    const qObj = adminQuestions.find(q => q.id === a.question_id);
+                                                                    if (qObj?.type === 'special' && qObj.options) {
+                                                                        // If it's a number (new format)
+                                                                        const valNum = parseInt(a.answer);
+                                                                        if (!isNaN(valNum)) {
+                                                                            const opt = qObj.options.find(o => o.value === valNum);
+                                                                            if (opt) return opt.label;
+                                                                        }
+                                                                        // If it's the old format "Algo", "Mucho"... just return it
+                                                                        return a.answer;
+                                                                    }
+                                                                    return a.answer || '—';
+                                                                })()}
                                                             </span>
                                                         </div>
                                                     </div>
