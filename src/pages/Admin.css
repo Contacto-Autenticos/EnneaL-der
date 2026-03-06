@@ -32,19 +32,56 @@
 .admin-login-input {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #9ca3af;
+    /* Darker border for better visibility */
     border-radius: 8px;
     font-size: 1rem;
     margin-bottom: 20px;
     transition: all 0.3s ease;
     box-sizing: border-box;
     font-family: inherit;
+    background-color: #f9fafb;
+    /* Slight background color for contrast */
 }
 
 .admin-login-input:focus {
     outline: none;
     border-color: var(--color-primary);
+    background-color: #ffffff;
     box-shadow: 0 0 0 2px rgba(221, 190, 61, 0.2);
+}
+
+.password-input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.password-input-container .admin-login-input {
+    margin-bottom: 0;
+    padding-right: 45px;
+    /* Make room for the eye icon */
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+}
+
+.password-toggle-btn:hover {
+    color: var(--color-primary);
 }
 
 .admin-btn-login {

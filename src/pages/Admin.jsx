@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, X } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, X, Eye, EyeOff } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -16,6 +16,7 @@ const Admin = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [usernameInput, setUsernameInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState('');
 
     // Dashboard State
@@ -587,13 +588,24 @@ const Admin = () => {
                             autoFocus
                             style={{ marginBottom: '15px' }}
                         />
-                        <input
-                            type="password"
-                            className="admin-login-input"
-                            placeholder="Contraseña de Administrador"
-                            value={passwordInput}
-                            onChange={(e) => setPasswordInput(e.target.value)}
-                        />
+                        <div className="password-input-container">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className="admin-login-input"
+                                placeholder="Contraseña de Administrador"
+                                value={passwordInput}
+                                onChange={(e) => setPasswordInput(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                tabIndex="-1"
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
                         <button type="submit" className="admin-btn-login">
                             Iniciar Sesión
                         </button>
