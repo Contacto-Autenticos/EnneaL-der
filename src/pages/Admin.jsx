@@ -37,6 +37,12 @@ const Admin = () => {
     const [loadingResponses, setLoadingResponses] = useState(false);
     const [selectedResponse, setSelectedResponse] = useState(null);
 
+    // Response Filters
+    const [filterName, setFilterName] = useState('');
+    const [filterOrg, setFilterOrg] = useState('');
+    const [filterEneatype, setFilterEneatype] = useState('');
+    const [filterTestType, setFilterTestType] = useState('');
+
     // Sidebar navigation
     const [activeSection, setActiveSection] = useState('codigos');
     const [preguntasOpen, setPreguntasOpen] = useState(false);
@@ -654,73 +660,130 @@ const Admin = () => {
                 )}
 
                 {/* ── SECTION: Respuestas ── */}
-                {activeSection === 'respuestas' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2>Respuestas del Test Avanzado</h2>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                    {testResponses.length} registros
-                                </span>
-                                <button onClick={fetchTestResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
-                                    <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
-                                </button>
+                {activeSection === 'respuestas' && (() => {
+                    const filtered = testResponses.filter(r => {
+                        const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
+                        const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
+                        const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
+                        const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
+                        return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
+                    });
+                    const hasFilter = filterName || filterOrg || filterEneatype || filterTestType;
+                    return (
+                        <div className="admin-card">
+                            {/* Header */}
+                            <div className="admin-card-header">
+                                <h2>Respuestas del Test Avanzado</h2>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                                        {hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`} registros
+                                    </span>
+                                    <button onClick={fetchTestResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
+                                        <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Filter bar */}
+                            <div className="resp-filters">
+                                <input
+                                    className="resp-filter-input"
+                                    type="text"
+                                    placeholder="Buscar nombre..."
+                                    value={filterName}
+                                    onChange={e => setFilterName(e.target.value)}
+                                />
+                                <input
+                                    className="resp-filter-input"
+                                    type="text"
+                                    placeholder="Buscar organización..."
+                                    value={filterOrg}
+                                    onChange={e => setFilterOrg(e.target.value)}
+                                />
+                                <select
+                                    className="resp-filter-select"
+                                    value={filterEneatype}
+                                    onChange={e => setFilterEneatype(e.target.value)}
+                                >
+                                    <option value="">Todos los eneatipos</option>
+                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+                                        <option key={n} value={String(n)}>Eneatipo {n}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    className="resp-filter-select"
+                                    value={filterTestType}
+                                    onChange={e => setFilterTestType(e.target.value)}
+                                >
+                                    <option value="">Todos los tests</option>
+                                    <option value="45">45 preguntas</option>
+                                    <option value="135">135 preguntas</option>
+                                </select>
+                                {hasFilter && (
+                                    <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); }}>
+                                        ✕ Limpiar
+                                    </button>
+                                )}
+                            </div>
+
+                            {/* Table */}
+                            <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Nombre</th>
+                                            <th>Correo</th>
+                                            <th>Eneatipo</th>
+                                            <th>Test</th>
+                                            <th>Organización</th>
+                                            <th>Código acceso</th>
+                                            <th>Ver respuestas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loadingResponses ? (
+                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                        ) : filtered.length === 0 ? (
+                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>
+                                                {hasFilter ? 'No hay resultados con estos filtros.' : 'No hay respuestas registradas aún.'}
+                                            </td></tr>
+                                        ) : (
+                                            filtered.map(r => (
+                                                <tr key={r.id}>
+                                                    <td style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                                                        {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                    </td>
+                                                    <td>{r.user_name || '-'}</td>
+                                                    <td style={{ fontSize: '0.82rem' }}>{r.user_email || '-'}</td>
+                                                    <td style={{ textAlign: 'center' }}>
+                                                        <span className="status-badge used">Tipo {r.enneatype}</span>
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>{r.test_type} preguntas</td>
+                                                    <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                        {r.organization_code && r.organization_code !== 'NO_CODE'
+                                                            ? <span style={{ background: '#eef2ff', color: '#3730a3', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{r.organization_code}</span>
+                                                            : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                    </td>
+                                                    <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                        {r.access_code
+                                                            ? <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }}>{r.access_code}</span>
+                                                            : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                    </td>
+                                                    <td style={{ textAlign: 'center' }}>
+                                                        <button className="btn-ver-respuestas" onClick={() => setSelectedResponse(r)}>
+                                                            Ver respuestas
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
-                            <table className="codes-table">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Nombre</th>
-                                        <th>Correo</th>
-                                        <th>Eneatipo</th>
-                                        <th>Test</th>
-                                        <th>Organización</th>
-                                        <th>Código acceso</th>
-                                        <th>Ver respuestas</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loadingResponses ? (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
-                                    ) : testResponses.length === 0 ? (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
-                                    ) : (
-                                        testResponses.map(r => (
-                                            <tr key={r.id}>
-                                                <td style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                                                    {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                                                </td>
-                                                <td>{r.user_name || '-'}</td>
-                                                <td style={{ fontSize: '0.82rem' }}>{r.user_email || '-'}</td>
-                                                <td style={{ textAlign: 'center' }}>
-                                                    <span className="status-badge used">Tipo {r.enneatype}</span>
-                                                </td>
-                                                <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>{r.test_type} preguntas</td>
-                                                <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
-                                                    {r.organization_code && r.organization_code !== 'NO_CODE'
-                                                        ? <span style={{ background: '#eef2ff', color: '#3730a3', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{r.organization_code}</span>
-                                                        : <span style={{ color: '#9ca3af' }}>-</span>}
-                                                </td>
-                                                <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
-                                                    {r.access_code
-                                                        ? <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }}>{r.access_code}</span>
-                                                        : <span style={{ color: '#9ca3af' }}>-</span>}
-                                                </td>
-                                                <td style={{ textAlign: 'center' }}>
-                                                    <button className="btn-ver-respuestas" onClick={() => setSelectedResponse(r)}>
-                                                        Ver respuestas
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
+                    );
+                })()}
 
             </main>
 
