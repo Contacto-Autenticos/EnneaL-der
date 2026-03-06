@@ -906,7 +906,7 @@ const Admin = () => {
                             <div className="admin-card-header chart-header">
                                 <div className="chart-title-group">
                                     <BarChart2 size={22} className="chart-icon" />
-                                    <h2>Actividad de Usuarios (Test Avanzado)</h2>
+                                    <h2>Actividad Test Avanzado</h2>
                                 </div>
                                 <div className="chart-stats-summary">
                                     <span className="total-badge">{testResponses.length} registros totales</span>
