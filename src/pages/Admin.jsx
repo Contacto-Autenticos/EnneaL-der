@@ -20,7 +20,10 @@ const Admin = () => {
     const [loginError, setLoginError] = useState('');
 
     // Dashboard State
+    const [activeSection, setActiveSection] = useState('codigos');
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+    const [preguntasOpen, setPreguntasOpen] = useState(false);
+    const [respuestasOpen, setRespuestasOpen] = useState(false);
     const [codes, setCodes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
@@ -62,6 +65,9 @@ const Admin = () => {
     const [initialResponses, setInitialResponses] = useState([]);
     const [loadingResponses, setLoadingResponses] = useState(false);
     const [selectedResponse, setSelectedResponse] = useState(null);
+    const [selectedInitialResponse, setSelectedInitialResponse] = useState(null);
+    const [loadingInitialDetails, setLoadingInitialDetails] = useState(false);
+    const [initialResponseDetails, setInitialResponseDetails] = useState([]);
 
     // Response Filters
     const [filterName, setFilterName] = useState('');
@@ -78,6 +84,7 @@ const Admin = () => {
     // Sidebar navigation
     const [activeSection, setActiveSection] = useState('codigos');
     const [preguntasOpen, setPreguntasOpen] = useState(false);
+    const [respuestasOpen, setRespuestasOpen] = useState(false);
 
     // Chart State
     const [chartPeriod, setChartPeriod] = useState('days7'); // 'days7' | 'week' | 'month' | 'year'
@@ -211,6 +218,26 @@ const Admin = () => {
             setInitialResponses(uniqueSessions);
         } catch (error) {
             console.error('Error fetching initial responses:', error);
+        }
+    };
+
+    const fetchInitialResponseDetails = async (sessionId) => {
+        setLoadingInitialDetails(true);
+        try {
+            const { data, error } = await supabase
+                .from('basic_test_responses')
+                .select('*')
+                .eq('session_id', sessionId)
+                .order('question_id', { ascending: true });
+
+            if (error) throw error;
+            setInitialResponseDetails(data || []);
+            // Set a dummy selected object just to open the modal
+            setSelectedInitialResponse({ session_id: sessionId });
+        } catch (error) {
+            console.error('Error fetching initial response details:', error);
+        } finally {
+            setLoadingInitialDetails(false);
         }
     };
 
@@ -684,10 +711,25 @@ const Admin = () => {
                         </div>
                     )}
 
-                    <button className={`admin-nav-item ${activeSection === 'respuestas' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('respuestas'); setIsMobileSidebarOpen(false); }}>
+                    <button
+                        className={`admin-nav-item ${activeSection === 'respuestas-inicial' || activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
+                        onClick={() => setRespuestasOpen(o => !o)}>
                         <RefreshCw size={17} /> Respuestas
+                        <ChevronDown size={17} style={{ transform: respuestasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
+                    {respuestasOpen && (
+                        <div className="admin-nav-subitems">
+                            <button className={`admin-nav-subitem ${activeSection === 'respuestas-inicial' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('respuestas-inicial'); setIsMobileSidebarOpen(false); }}>
+                                Test inicial
+                            </button>
+                            <button className={`admin-nav-subitem ${activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('respuestas-avanzado'); setIsMobileSidebarOpen(false); }}>
+                                Test avanzado
+                            </button>
+                        </div>
+                    )}
+
                     <button className={`admin-nav-item ${activeSection === 'graficas' ? 'active' : ''}`}
                         onClick={() => { setActiveSection('graficas'); setIsMobileSidebarOpen(false); }}>
                         <BarChart2 size={17} /> Gráficas
@@ -1121,11 +1163,11 @@ const Admin = () => {
                     </div>
                 )}
 
-                {/* ── SECTION: Respuestas ── */}
-                {activeSection === 'respuestas' && (
+                {/* ── SECTION: Respuestas Avanzado ── */}
+                {activeSection === 'respuestas-avanzado' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2>Respuestas del Test Avanzado</h2>
+                            <h2><RefreshCw size={20} /> Respuestas del Test Avanzado</h2>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
                                     {(() => {
@@ -1243,6 +1285,56 @@ const Admin = () => {
                                                     </td>
                                                 </tr>
                                             ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
+
+                {/* ── SECTION: Respuestas Inicial ── */}
+                {activeSection === 'respuestas-inicial' && (
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <h2><RefreshCw size={20} /> Respuestas del Test Inicial (Sesiones Anónimas)</h2>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>{initialResponses.length} registros</span>
+                                <button onClick={fetchInitialResponses} className="btn-refresh" disabled={loadingResponses}>
+                                    <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                            <table className="codes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha y Hora</th>
+                                        <th>ID de Sesión</th>
+                                        <th style={{ textAlign: 'center' }}>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loadingResponses ? (
+                                        <tr><td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>Cargando sesiones...</td></tr>
+                                    ) : initialResponses.length === 0 ? (
+                                        <tr><td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>No hay sesiones registradas aún.</td></tr>
+                                    ) : (
+                                        initialResponses.map(r => (
+                                            <tr key={r.session_id}>
+                                                <td style={{ fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
+                                                    {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                </td>
+                                                <td style={{ fontSize: '0.85rem', color: '#666', fontFamily: 'monospace' }}>
+                                                    {r.session_id}
+                                                </td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    <button className="btn-ver-respuestas" onClick={() => fetchInitialResponseDetails(r.session_id)} disabled={loadingInitialDetails}>
+                                                        {loadingInitialDetails ? 'Cargando...' : 'Ver respuestas'}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
                                     )}
                                 </tbody>
                             </table>
@@ -1593,6 +1685,56 @@ const Admin = () => {
                 </div>
             )
             }
+
+            {/* ── MODAL: Ver respuestas iniciales ── */}
+            {selectedInitialResponse && (
+                <div className="responses-modal-overlay" onClick={() => setSelectedInitialResponse(null)}>
+                    <div className="responses-modal" onClick={e => e.stopPropagation()}>
+                        <div className="responses-modal-header">
+                            <div>
+                                <h2>Respuestas del test inicial</h2>
+                                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#666' }}>
+                                    Sesión: <span style={{ fontFamily: 'monospace' }}>{selectedInitialResponse.session_id}</span>
+                                </p>
+                            </div>
+                            <button className="responses-modal-close" onClick={() => setSelectedInitialResponse(null)}>✕</button>
+                        </div>
+                        <div className="responses-modal-body">
+                            {initialResponseDetails.length === 0 ? (
+                                <p style={{ textAlign: 'center', padding: '20px', color: '#666' }}>No hay detalles para mostrar.</p>
+                            ) : (
+                                initialResponseDetails.map((a, idx) => {
+                                    // Search for question text in adminQuestions
+                                    const questionObj = adminQuestions.find(q => q.id === a.question_id);
+                                    const questionText = questionObj ? questionObj.text : `Pregunta ID ${a.question_id}`;
+
+                                    return (
+                                        <div key={a.id || idx} className="response-item" style={{ marginBottom: '15px' }}>
+                                            <span className="response-number" style={{ background: '#b89b2d', color: 'white' }}>{idx + 1}</span>
+                                            <div className="response-content">
+                                                <p className="response-question" style={{ fontSize: '1.05rem', color: '#002d44', marginBottom: '4px' }}>
+                                                    {questionText}
+                                                </p>
+                                                <span className="response-answer" style={{
+                                                    display: 'inline-block',
+                                                    background: '#f9fafb',
+                                                    border: '1px solid #e5e7eb',
+                                                    padding: '4px 10px',
+                                                    borderRadius: '6px',
+                                                    fontWeight: '600',
+                                                    color: '#374151'
+                                                }}>
+                                                    {a.answer || '—'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Hidden wrapper for PDF Generator */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>
