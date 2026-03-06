@@ -889,7 +889,7 @@
 .admin-sidebar {
     width: 220px;
     min-width: 220px;
-    background: #002d44;
+    background: linear-gradient(to bottom, #000a12 0%, #002d44 100%);
     display: flex;
     flex-direction: column;
     padding: 0;

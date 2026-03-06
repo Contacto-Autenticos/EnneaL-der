@@ -376,7 +376,7 @@ const Admin = () => {
             {/* ── SIDEBAR ── */}
             <aside className="admin-sidebar">
                 <div className="admin-sidebar-brand">
-                    <img src="/Circulo_Eneagrama_Autenticos_02.png" alt="Logo" className="admin-sidebar-logo" />
+                    <img src="/Circulo_Eneagrama_Autenticos_01.png" alt="Logo" className="admin-sidebar-logo" />
                     <span className="admin-sidebar-brand-name">Enesencia</span>
                 </div>
 
@@ -453,11 +453,12 @@ const Admin = () => {
                                             <th>Código</th>
                                             <th>Estado</th>
                                             <th>Usado por</th>
+                                            <th>Copiar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {codes.length === 0 ? (
-                                            <tr><td colSpan="3" style={{ textAlign: 'center', padding: '10px' }}>
+                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
                                                 {loading ? 'Cargando...' : 'No hay códigos.'}
                                             </td></tr>
                                         ) : (
@@ -470,6 +471,19 @@ const Admin = () => {
                                                         </span>
                                                     </td>
                                                     <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
+                                                    <td style={{ textAlign: 'center' }}>
+                                                        <button
+                                                            onClick={() => {
+                                                                navigator.clipboard.writeText(item.code);
+                                                                setCopySuccess(item.code);
+                                                                setTimeout(() => setCopySuccess(''), 2000);
+                                                            }}
+                                                            title="Copiar código"
+                                                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: copySuccess === item.code ? '#4ade80' : '#b89b2d', padding: '4px' }}
+                                                        >
+                                                            {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))
                                         )}
