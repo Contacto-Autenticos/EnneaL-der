@@ -30,9 +30,9 @@
 }
 
 .admin-login-logo {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 15px;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
     display: block;
     border-radius: 50%;
     /* If you want it circular, optional */
