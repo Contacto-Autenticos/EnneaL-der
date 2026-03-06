@@ -472,7 +472,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 {data.conversationsGuide ? (
                     <div className="kit-conversations-extended">
                         <div className="kit-action-list">
-                            <h4>Estructura Recomendada:</h4>
+                            <h4>Estructura recomendada:</h4>
                             <div className="kit-step-list">
                                 {data.conversationsGuide.structure.map((step, i) => (
                                     <div key={i} className="kit-step-item">
@@ -544,8 +544,8 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                                 </div>
                             ))}
                         </div>
-                        <div className="kit-metric-box" style={{ marginTop: '50px' }}>
-                            <span className="kit-metric-label">Meta:</span>
+                        <div className="kit-impact-box" style={{ marginTop: '50px', borderColor: '#27ae60' }}>
+                            <h4 style={{ color: '#27ae60', textTransform: 'none' }}>Meta:</h4>
                             <p style={{ margin: '10px 0 0', fontWeight: 700, fontSize: '1.2rem', color: '#27ae60' }}>{data.growthPlanExtended.meta}</p>
                         </div>
 
