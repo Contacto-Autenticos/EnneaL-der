@@ -791,18 +791,19 @@ const Admin = () => {
                                                 <th>%</th>
                                                 <th>Estado</th>
                                                 <th>Acciones</th>
+                                                <th>Copiar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {coupons.length === 0 ? (
-                                                <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
+                                                <tr><td colSpan="5" style={{ textAlign: 'center', padding: '10px' }}>
                                                     {loadingCoupons ? 'Cargando...' : 'No hay cupones.'}
                                                 </td></tr>
                                             ) : (
                                                 coupons.map((c) => (
                                                     <tr key={c.id}>
                                                         <td className="code-cell">{c.code}</td>
-                                                        <td>{c.discount_percentage}%</td>
+                                                        <td style={{ textAlign: 'center' }}>{c.discount_percentage}%</td>
                                                         <td>
                                                             <span className={`status-badge ${c.is_active ? 'unused' : 'used'}`}>
                                                                 {c.is_active ? 'Activo' : 'Off'}
@@ -812,19 +813,33 @@ const Admin = () => {
                                                             <div style={{ display: 'flex', gap: '8px' }}>
                                                                 <button
                                                                     onClick={() => handleToggleCoupon(c.id, c.is_active)}
+                                                                    className="btn-action-admin refresh"
                                                                     title={c.is_active ? 'Desactivar' : 'Activar'}
-                                                                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}
                                                                 >
                                                                     <RefreshCw size={14} />
                                                                 </button>
                                                                 <button
                                                                     onClick={() => handleDeleteCoupon(c.id)}
+                                                                    className="btn-action-admin delete"
                                                                     title="Eliminar"
-                                                                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444' }}
                                                                 >
-                                                                    ✕
+                                                                    <span style={{ fontSize: '16px', lineHeight: '1' }}>✕</span>
                                                                 </button>
                                                             </div>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                onClick={() => {
+                                                                    navigator.clipboard.writeText(c.code);
+                                                                    setCopySuccess(c.code);
+                                                                    setTimeout(() => setCopySuccess(''), 2000);
+                                                                }}
+                                                                className="btn-action-admin"
+                                                                title="Copiar cupón"
+                                                                style={{ color: copySuccess === c.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
+                                                            >
+                                                                {copySuccess === c.code ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 ))

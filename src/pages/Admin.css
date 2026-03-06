@@ -1272,6 +1272,40 @@
     margin-bottom: 30px;
 }
 
+/* ── Action Buttons ── */
+.btn-action-admin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #6b7280;
+}
+
+.btn-action-admin:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-action-admin.refresh:hover {
+    color: #b89b2d;
+    border-color: #b89b2d;
+    background: #fdfaf0;
+}
+
+.btn-action-admin.delete:hover {
+    color: #ef4444;
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
 @media (max-width: 1100px) {
     .admin-split-layout {
         grid-template-columns: 1fr;
