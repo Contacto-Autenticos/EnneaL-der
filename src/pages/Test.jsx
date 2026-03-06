@@ -55,9 +55,18 @@ const Test = ({ onComplete }) => {
 
                 if (error) throw error;
 
-                // Process questions
-                const standardQs = data.filter(q => q.type !== 'special');
-                const specialQs = data.filter(q => q.type === 'special');
+                // Merge with local questions to ensure 19 and 20 are present
+                let combinedData = [...data];
+                const specialIds = [19, 20];
+                specialIds.forEach(id => {
+                    if (!combinedData.find(q => q.id === id)) {
+                        const localQ = questions.find(q => q.id === id);
+                        if (localQ) combinedData.push(localQ);
+                    }
+                });
+
+                const standardQs = combinedData.filter(q => q.type !== 'special');
+                const specialQs = combinedData.filter(q => q.type === 'special');
 
                 // Shuffle standard questions
                 for (let i = standardQs.length - 1; i > 0; i--) {

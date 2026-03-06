@@ -599,19 +599,39 @@ const Admin = () => {
 
     const handleDownloadAllInitialExcel = async () => {
         try {
-            const { data, error } = await supabase
-                .from('basic_test_responses')
-                .select('*')
-                .order('created_at', { ascending: true });
+            let allData = [];
+            let from = 0;
+            const limit = 1000;
+            let hasMore = true;
 
-            if (error) throw error;
-            if (!data || data.length === 0) {
+            // Pagination loop to fetch ALL records from basic_test_responses
+            while (hasMore) {
+                const { data, error } = await supabase
+                    .from('basic_test_responses')
+                    .select('*')
+                    .order('created_at', { ascending: true })
+                    .range(from, from + limit - 1);
+
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    hasMore = false;
+                } else {
+                    allData = [...allData, ...data];
+                    if (data.length < limit) {
+                        hasMore = false;
+                    } else {
+                        from += limit;
+                    }
+                }
+            }
+
+            if (allData.length === 0) {
                 alert('No hay datos para exportar.');
                 return;
             }
 
             const sessionMap = new Map();
-            data.forEach(r => {
+            allData.forEach(r => {
                 if (!sessionMap.has(r.session_id)) {
                     sessionMap.set(r.session_id, r.created_at);
                 }
@@ -632,31 +652,43 @@ const Admin = () => {
                 e('Fecha')
             ]];
 
-            data.forEach(r => {
-                const qObj = adminQuestions.find(q => q.id === r.question_id) || staticQuestions.find(q => q.id === r.question_id);
-                let finalAnswer = r.answer;
-                if (qObj?.type === 'special' && qObj.options) {
-                    const valNum = parseInt(r.answer);
-                    if (!isNaN(valNum)) {
-                        const opt = qObj.options.find(o => o.value === valNum);
-                        if (opt) finalAnswer = opt.label;
-                    } else {
-                        const REVERSE_LABELS = { 'Muy poco': 1, 'Algo': 2, 'Mucho': 3, 'Totalmente': 4 };
-                        const mappedValue = REVERSE_LABELS[r.answer];
-                        if (mappedValue) {
-                            const opt = qObj.options.find(o => o.value === mappedValue);
+            // Group by session to sort consistently
+            const groupedBySession = {};
+            allData.forEach(r => {
+                if (!groupedBySession[r.session_id]) groupedBySession[r.session_id] = [];
+                groupedBySession[r.session_id].push(r);
+            });
+
+            sortedSessions.forEach(sid => {
+                const sessionRows = groupedBySession[sid].sort((a, b) => a.question_id - b.question_id);
+                const userNum = getSessionNumber(sid);
+
+                sessionRows.forEach(r => {
+                    const qObj = adminQuestions.find(q => q.id === r.question_id) || staticQuestions.find(q => q.id === r.question_id);
+                    let finalAnswer = r.answer;
+                    if (qObj?.type === 'special' && qObj.options) {
+                        const valNum = parseInt(r.answer);
+                        if (!isNaN(valNum)) {
+                            const opt = qObj.options.find(o => o.value === valNum);
                             if (opt) finalAnswer = opt.label;
+                        } else {
+                            const REVERSE_LABELS = { 'Muy poco': 1, 'Algo': 2, 'Mucho': 3, 'Totalmente': 4 };
+                            const mappedValue = REVERSE_LABELS[r.answer];
+                            if (mappedValue) {
+                                const opt = qObj.options.find(o => o.value === mappedValue);
+                                if (opt) finalAnswer = opt.label;
+                            }
                         }
                     }
-                }
-                const dateStr = new Date(r.created_at).toLocaleString();
-                rows.push([
-                    getSessionNumber(r.session_id),
-                    r.question_id,
-                    e(qObj?.text || `ID ${r.question_id}`),
-                    e(finalAnswer),
-                    e(dateStr)
-                ]);
+                    const dateStr = new Date(r.created_at).toLocaleString();
+                    rows.push([
+                        userNum,
+                        r.question_id,
+                        e(qObj?.text || `ID ${r.question_id}`),
+                        e(finalAnswer),
+                        e(dateStr)
+                    ]);
+                });
             });
 
             const csvContent = '\uFEFF' + rows.map(r => r.join(';')).join('\r\n');
