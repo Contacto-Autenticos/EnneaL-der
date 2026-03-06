@@ -78,7 +78,7 @@ const Admin = () => {
     const [preguntasOpen, setPreguntasOpen] = useState(false);
 
     // Chart State
-    const [chartPeriod, setChartPeriod] = useState('month'); // 'week' | 'month' | 'year'
+    const [chartPeriod, setChartPeriod] = useState('days7'); // 'days7' | 'week' | 'month' | 'year'
     const [chartData, setChartData] = useState([]);
     const [initialChartData, setInitialChartData] = useState([]);
     const [loadingChart, setLoadingChart] = useState(false);

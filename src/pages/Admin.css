@@ -1495,6 +1495,21 @@
         padding: 10px;
     }
 
+    /* Chart Period Filters Responsive Fix */
+    .chart-period-tabs {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    .chart-period-btn {
+        flex: 1 1 calc(50% - 8px);
+        text-align: center;
+        padding: 8px 10px;
+        min-width: 100px;
+    }
+
     .resp-filters {
         flex-direction: column;
         align-items: stretch;
