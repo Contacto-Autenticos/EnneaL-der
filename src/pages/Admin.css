@@ -872,7 +872,66 @@
     padding: 3px 10px;
     border-radius: 20px;
     align-self: flex-start;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
+}
+
+/* ── Transactions Section ── */
+.transactions-table-wrapper {
+    margin-top: 10px;
+    overflow-x: auto;
+}
+
+.transaction-filters {
+    background: #f8fafc;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+.transaction-filters .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.transaction-filters input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #1e293b;
+}
+
+.status-badge-premium {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.status-badge-premium.approved {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.status-badge-premium.declined {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.status-badge-premium.voided,
+.status-badge-premium.error {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
 }
 
 /* ═══════════════════════════════════════════════

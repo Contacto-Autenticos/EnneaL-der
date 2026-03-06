@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2 } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -48,6 +48,12 @@ const Admin = () => {
     const [filterEneatype, setFilterEneatype] = useState('');
     const [filterTestType, setFilterTestType] = useState('');
 
+    // Transactions State
+    const [transactions, setTransactions] = useState([]);
+    const [loadingTransactions, setLoadingTransactions] = useState(false);
+    const [dateFrom, setDateFrom] = useState('');
+    const [dateTo, setDateTo] = useState('');
+
     // Sidebar navigation
     const [activeSection, setActiveSection] = useState('codigos');
     const [preguntasOpen, setPreguntasOpen] = useState(false);
@@ -72,6 +78,7 @@ const Admin = () => {
             fetchAllQuestions();
             fetchTestResponses();
             fetchInitialResponses();
+            fetchTransactions();
         }
     }, [isAuthenticated]);
 
@@ -182,6 +189,31 @@ const Admin = () => {
             setInitialResponses(uniqueSessions);
         } catch (error) {
             console.error('Error fetching initial responses:', error);
+        }
+    };
+
+    const fetchTransactions = async () => {
+        setLoadingTransactions(true);
+        try {
+            let query = supabase
+                .from('transactions')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (dateFrom) {
+                query = query.gte('created_at', `${dateFrom}T00:00:00`);
+            }
+            if (dateTo) {
+                query = query.lte('created_at', `${dateTo}T23:59:59`);
+            }
+
+            const { data, error } = await query;
+            if (error) throw error;
+            setTransactions(data || []);
+        } catch (error) {
+            console.error('Error fetching transactions:', error);
+        } finally {
+            setLoadingTransactions(false);
         }
     };
 
@@ -512,6 +544,10 @@ const Admin = () => {
                     <button className={`admin-nav-item ${activeSection === 'graficas' ? 'active' : ''}`}
                         onClick={() => setActiveSection('graficas')}>
                         <BarChart2 size={17} /> Gráficas
+                    </button>
+                    <button className={`admin-nav-item ${activeSection === 'transacciones' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('transacciones')}>
+                        <CreditCard size={17} /> Transacciones
                     </button>
                 </nav>
 
@@ -1073,6 +1109,84 @@ const Admin = () => {
                                     </div>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                )}
+
+                {/* ── SECTION: Transacciones ── */}
+                {activeSection === 'transacciones' && (
+                    <div className="admin-card">
+                        <div className="admin-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <h2><CreditCard size={20} /> Transacciones Wompi</h2>
+                            <div className="transaction-filters" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                                <div className="filter-group">
+                                    <label><Calendar size={14} /> Desde: </label>
+                                    <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+                                </div>
+                                <div className="filter-group">
+                                    <label><Calendar size={14} /> Hasta: </label>
+                                    <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+                                </div>
+                                <button onClick={fetchTransactions} className="btn-refresh" disabled={loadingTransactions} style={{ background: '#002d44', color: 'white', padding: '6px 15px', borderRadius: '6px' }}>
+                                    <Filter size={16} /> Aplicar
+                                </button>
+                                <button onClick={() => { setDateFrom(''); setDateTo(''); fetchTransactions(); }} className="btn-refresh" title="Limpiar">
+                                    <RefreshCw size={16} className={loadingTransactions ? 'spinning' : ''} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="transactions-table-wrapper">
+                            <table className="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Estado</th>
+                                        <th>Monto y Cliente</th>
+                                        <th>Datos del pago</th>
+                                        <th>Hora y Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loadingTransactions ? (
+                                        <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>Cargando transacciones...</td></tr>
+                                    ) : transactions.length === 0 ? (
+                                        <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>No se encontraron transacciones en este período.</td></tr>
+                                    ) : (
+                                        transactions.map((tr) => (
+                                            <tr key={tr.id}>
+                                                <td style={{ padding: '15px' }}>
+                                                    <span className={`status-badge-premium ${tr.status?.toLowerCase() || ''}`}>
+                                                        {tr.status === 'APPROVED' ? 'Pagada' : tr.status === 'DECLINED' ? 'Declinada' : tr.status}
+                                                    </span>
+                                                </td>
+                                                <td style={{ padding: '15px' }}>
+                                                    <div style={{ fontWeight: '600', color: '#002d44', fontSize: '1.05rem' }}>
+                                                        {tr.currency} ${(tr.amount_in_cents / 100).toLocaleString('es-CO')}
+                                                    </div>
+                                                    <div style={{ fontSize: '0.85rem', color: '#666' }}>{tr.customer_email}</div>
+                                                </td>
+                                                <td style={{ padding: '15px' }}>
+                                                    <div style={{ fontSize: '0.85rem', fontFamily: 'monospace', color: '#002d44' }}>#{tr.transaction_id}</div>
+                                                    <div style={{ fontSize: '0.75rem', color: '#999' }}>Ref: {tr.reference}</div>
+                                                    {tr.payment_method_brand && (
+                                                        <div style={{ fontSize: '0.75rem', marginTop: '4px', fontWeight: 'bold', color: '#b89b2d' }}>
+                                                            {tr.payment_method_brand} {tr.payment_method_type === 'CARD' ? '💳' : ''}
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td style={{ padding: '15px' }}>
+                                                    <div style={{ fontSize: '0.9rem', color: '#002d44', fontWeight: '500' }}>
+                                                        {new Date(tr.created_at).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                                    </div>
+                                                    <div style={{ fontSize: '0.8rem', color: '#999' }}>
+                                                        {new Date(tr.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 )}
