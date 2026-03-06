@@ -597,6 +597,82 @@ const Admin = () => {
         URL.revokeObjectURL(url);
     };
 
+    const handleDownloadAllInitialExcel = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('basic_test_responses')
+                .select('*')
+                .order('created_at', { ascending: true });
+
+            if (error) throw error;
+            if (!data || data.length === 0) {
+                alert('No hay datos para exportar.');
+                return;
+            }
+
+            const sessionMap = new Map();
+            data.forEach(r => {
+                if (!sessionMap.has(r.session_id)) {
+                    sessionMap.set(r.session_id, r.created_at);
+                }
+            });
+
+            const sortedSessions = Array.from(sessionMap.entries())
+                .sort((a, b) => new Date(a[1]) - new Date(b[1]))
+                .map(s => s[0]);
+
+            const getSessionNumber = (sid) => sortedSessions.indexOf(sid) + 1;
+            const e = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+
+            const rows = [[
+                e('Usuario #'),
+                e('N° Pregunta'),
+                e('Enunciado'),
+                e('Respuesta'),
+                e('Fecha')
+            ]];
+
+            data.forEach(r => {
+                const qObj = adminQuestions.find(q => q.id === r.question_id) || staticQuestions.find(q => q.id === r.question_id);
+                let finalAnswer = r.answer;
+                if (qObj?.type === 'special' && qObj.options) {
+                    const valNum = parseInt(r.answer);
+                    if (!isNaN(valNum)) {
+                        const opt = qObj.options.find(o => o.value === valNum);
+                        if (opt) finalAnswer = opt.label;
+                    } else {
+                        const REVERSE_LABELS = { 'Muy poco': 1, 'Algo': 2, 'Mucho': 3, 'Totalmente': 4 };
+                        const mappedValue = REVERSE_LABELS[r.answer];
+                        if (mappedValue) {
+                            const opt = qObj.options.find(o => o.value === mappedValue);
+                            if (opt) finalAnswer = opt.label;
+                        }
+                    }
+                }
+                const dateStr = new Date(r.created_at).toLocaleString();
+                rows.push([
+                    getSessionNumber(r.session_id),
+                    r.question_id,
+                    e(qObj?.text || `ID ${r.question_id}`),
+                    e(finalAnswer),
+                    e(dateStr)
+                ]);
+            });
+
+            const csvContent = '\uFEFF' + rows.map(r => r.join(';')).join('\r\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Reporte_General_Test_Inicial_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error(err);
+            alert('Error al exportar.');
+        }
+    };
+
     if (!isAuthenticated) {
         return (
             <div className="admin-login-wrapper">
@@ -1297,6 +1373,20 @@ const Admin = () => {
                             <h2><RefreshCw size={20} /> Respuestas del Test Inicial (Sesiones Anónimas)</h2>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>{initialResponses.length} registros</span>
+                                <button
+                                    onClick={handleDownloadAllInitialExcel}
+                                    className="btn-add-code"
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        padding: '8px 16px',
+                                        fontSize: '0.85rem'
+                                    }}
+                                >
+                                    <Download size={16} />
+                                    Descargar Excel Completo
+                                </button>
                                 <button onClick={fetchInitialResponses} className="btn-refresh" disabled={loadingResponses}>
                                     <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
                                 </button>
