@@ -40,7 +40,18 @@ const Admin = () => {
     const [coupons, setCoupons] = useState([]);
     const [loadingCoupons, setLoadingCoupons] = useState(false);
     const [generatingCoupon, setGeneratingCoupon] = useState(false);
-    const [newCouponCode, setNewCouponCode] = useState('');
+
+    // Helper to generate a random string for coupons
+    const generateRandomCoupon = () => {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = 'EN'; // Prefix for Enesencia
+        for (let i = 0; i < 4; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    };
+
+    const [newCouponCode, setNewCouponCode] = useState(generateRandomCoupon());
     const [newCouponDiscount, setNewCouponDiscount] = useState('');
 
     // Responses State
@@ -254,7 +265,7 @@ const Admin = () => {
                     is_active: true
                 }]);
             if (error) throw error;
-            setNewCouponCode('');
+            setNewCouponCode(generateRandomCoupon());
             setNewCouponDiscount('');
             fetchCoupons();
         } catch (error) {
@@ -636,162 +647,191 @@ const Admin = () => {
 
                 {/* ── SECTION: Códigos de acceso ── */}
                 {activeSection === 'codigos' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2><Key size={20} /> Códigos de acceso</h2>
-                        </div>
-                        <div className="code-generator-section">
-                            <button onClick={handleGenerateCode} disabled={generating} className="btn-generate">
-                                <Plus size={18} />
-                                {generating ? 'Generando...' : 'Crear Nuevo Código de Acceso'}
-                            </button>
-                        </div>
-                        <div className="codes-list-container">
-                            <div className="codes-list-header">
-                                <h3>Últimos códigos</h3>
-                                <button onClick={fetchCodes} className="btn-refresh" disabled={loading} title="Actualizar">
-                                    <RefreshCw size={16} className={loading ? 'spinning' : ''} />
+                    <div className="admin-split-layout">
+                        {/* Left Column: Access Codes */}
+                        <div className="admin-card">
+                            <div className="admin-card-header">
+                                <h2><Key size={20} /> Códigos de acceso</h2>
+                            </div>
+                            <div className="code-generator-section">
+                                <button onClick={handleGenerateCode} disabled={generating} className="btn-generate">
+                                    <Plus size={18} />
+                                    {generating ? 'Generando...' : 'Crear Nuevo Código de Acceso'}
                                 </button>
                             </div>
-                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
-                                <table className="codes-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Código</th>
-                                            <th>Estado</th>
-                                            <th>Usado por</th>
-                                            <th>Copiar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {codes.length === 0 ? (
-                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
-                                                {loading ? 'Cargando...' : 'No hay códigos.'}
-                                            </td></tr>
-                                        ) : (
-                                            codes.slice(0, 10).map((item) => (
-                                                <tr key={item.code}>
-                                                    <td className="code-cell">{item.code}</td>
-                                                    <td>
-                                                        <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
-                                                            {item.is_used ? 'Usado' : 'Disponible'}
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
-                                                    <td style={{ textAlign: 'center' }}>
-                                                        <button
-                                                            onClick={() => {
-                                                                navigator.clipboard.writeText(item.code);
-                                                                setCopySuccess(item.code);
-                                                                setTimeout(() => setCopySuccess(''), 2000);
-                                                            }}
-                                                            title="Copiar código"
-                                                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: copySuccess === item.code ? '#4ade80' : '#b89b2d', padding: '4px' }}
-                                                        >
-                                                            {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div className="codes-list-header" style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '30px' }}>
-                            <h2><Plus size={20} /> Cupones de Descuento</h2>
-                        </div>
-
-                        <div className="code-generator-section" style={{ background: '#f8fafc', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
-                            <form onSubmit={handleCreateCoupon} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '15px', alignItems: 'end' }}>
-                                <div className="form-group-admin">
-                                    <label>Código del Cupón</label>
-                                    <input
-                                        type="text"
-                                        value={newCouponCode}
-                                        onChange={(e) => setNewCouponCode(e.target.value)}
-                                        placeholder="EJ: PROMO20"
-                                        className="select-admin"
-                                        style={{ background: 'white' }}
-                                        required
-                                    />
+                            <div className="codes-list-container">
+                                <div className="codes-list-header">
+                                    <h3>Últimos códigos</h3>
+                                    <button onClick={fetchCodes} className="btn-refresh" disabled={loading} title="Actualizar">
+                                        <RefreshCw size={16} className={loading ? 'spinning' : ''} />
+                                    </button>
                                 </div>
-                                <div className="form-group-admin">
-                                    <label>% Descuento</label>
-                                    <input
-                                        type="number"
-                                        value={newCouponDiscount}
-                                        onChange={(e) => setNewCouponDiscount(e.target.value)}
-                                        placeholder="20"
-                                        className="select-admin"
-                                        style={{ background: 'white' }}
-                                        min="1"
-                                        max="100"
-                                        required
-                                    />
+                                <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                                    <table className="codes-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Estado</th>
+                                                <th>Correo</th>
+                                                <th>Copiar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {codes.length === 0 ? (
+                                                <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
+                                                    {loading ? 'Cargando...' : 'No hay códigos.'}
+                                                </td></tr>
+                                            ) : (
+                                                codes.slice(0, 10).map((item) => (
+                                                    <tr key={item.code}>
+                                                        <td className="code-cell">{item.code}</td>
+                                                        <td>
+                                                            <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
+                                                                {item.is_used ? 'Usado' : 'Disponible'}
+                                                            </span>
+                                                        </td>
+                                                        <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
+                                                        <td style={{ textAlign: 'center' }}>
+                                                            <button
+                                                                onClick={() => {
+                                                                    navigator.clipboard.writeText(item.code);
+                                                                    setCopySuccess(item.code);
+                                                                    setTimeout(() => setCopySuccess(''), 2000);
+                                                                }}
+                                                                title="Copiar código"
+                                                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: copySuccess === item.code ? '#4ade80' : '#b89b2d', padding: '4px' }}
+                                                            >
+                                                                {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <button type="submit" disabled={generatingCoupon} className="btn-generate" style={{ height: '48px', marginTop: '0' }}>
-                                    {generatingCoupon ? 'Creando...' : 'Crear Cupón'}
-                                </button>
-                            </form>
+                            </div>
                         </div>
 
-                        <div className="codes-list-container">
-                            <div className="codes-list-header">
-                                <h3>Cupones configurados</h3>
-                                <button onClick={fetchCoupons} className="btn-refresh" disabled={loadingCoupons} title="Actualizar">
-                                    <RefreshCw size={16} className={loadingCoupons ? 'spinning' : ''} />
-                                </button>
+                        {/* Right Column: Coupons */}
+                        <div className="admin-card">
+                            <div className="admin-card-header">
+                                <h2><Plus size={20} /> Cupones de Descuento</h2>
                             </div>
-                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
-                                <table className="codes-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Código</th>
-                                            <th>Descuento</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {coupons.length === 0 ? (
-                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
-                                                {loadingCoupons ? 'Cargando...' : 'No hay cupones.'}
-                                            </td></tr>
-                                        ) : (
-                                            coupons.map((c) => (
-                                                <tr key={c.id}>
-                                                    <td className="code-cell">{c.code}</td>
-                                                    <td>{c.discount_percentage}%</td>
-                                                    <td>
-                                                        <span className={`status-badge ${c.is_active ? 'unused' : 'used'}`}>
-                                                            {c.is_active ? 'Activo' : 'Inactivo'}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <div style={{ display: 'flex', gap: '10px' }}>
-                                                            <button
-                                                                onClick={() => handleToggleCoupon(c.id, c.is_active)}
-                                                                title={c.is_active ? 'Desactivar' : 'Activar'}
-                                                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}
-                                                            >
-                                                                <RefreshCw size={16} />
-                                                            </button>
-                                                            <button
-                                                                onClick={() => handleDeleteCoupon(c.id)}
-                                                                title="Eliminar"
-                                                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444' }}
-                                                            >
-                                                                ✕
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        )}
-                                    </tbody>
-                                </table>
+
+                            <div className="code-generator-section" style={{ background: '#f8fafc', padding: '15px', borderRadius: '12px', marginBottom: '20px' }}>
+                                <form onSubmit={handleCreateCoupon} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                                        <div className="form-group-admin">
+                                            <label>Código</label>
+                                            <div style={{ position: 'relative' }}>
+                                                <input
+                                                    type="text"
+                                                    value={newCouponCode}
+                                                    onChange={(e) => setNewCouponCode(e.target.value.toUpperCase())}
+                                                    placeholder="EJ: PROMO20"
+                                                    className="select-admin"
+                                                    style={{ background: 'white', padding: '8px', paddingRight: '35px', width: '100%' }}
+                                                    required
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setNewCouponCode(generateRandomCoupon())}
+                                                    title="Generar otro código"
+                                                    style={{
+                                                        position: 'absolute',
+                                                        right: '8px',
+                                                        top: '50%',
+                                                        transform: 'translateY(-50%)',
+                                                        background: 'none',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        color: '#b89b2d',
+                                                        display: 'flex',
+                                                        alignItems: 'center'
+                                                    }}
+                                                >
+                                                    <RefreshCw size={14} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className="form-group-admin">
+                                            <label>% Desc</label>
+                                            <input
+                                                type="number"
+                                                value={newCouponDiscount}
+                                                onChange={(e) => setNewCouponDiscount(e.target.value)}
+                                                placeholder="20"
+                                                className="select-admin"
+                                                style={{ background: 'white', padding: '8px' }}
+                                                min="1"
+                                                max="100"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <button type="submit" disabled={generatingCoupon} className="btn-generate" style={{ height: '40px', marginTop: '0', fontSize: '0.9rem' }}>
+                                        {generatingCoupon ? 'Creando...' : 'Crear Cupón'}
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div className="codes-list-container" style={{ marginTop: '0' }}>
+                                <div className="codes-list-header">
+                                    <h3>Cupones configurados</h3>
+                                    <button onClick={fetchCoupons} className="btn-refresh" disabled={loadingCoupons} title="Actualizar">
+                                        <RefreshCw size={16} className={loadingCoupons ? 'spinning' : ''} />
+                                    </button>
+                                </div>
+                                <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                                    <table className="codes-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>%</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {coupons.length === 0 ? (
+                                                <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
+                                                    {loadingCoupons ? 'Cargando...' : 'No hay cupones.'}
+                                                </td></tr>
+                                            ) : (
+                                                coupons.map((c) => (
+                                                    <tr key={c.id}>
+                                                        <td className="code-cell">{c.code}</td>
+                                                        <td>{c.discount_percentage}%</td>
+                                                        <td>
+                                                            <span className={`status-badge ${c.is_active ? 'unused' : 'used'}`}>
+                                                                {c.is_active ? 'Activo' : 'Off'}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div style={{ display: 'flex', gap: '8px' }}>
+                                                                <button
+                                                                    onClick={() => handleToggleCoupon(c.id, c.is_active)}
+                                                                    title={c.is_active ? 'Desactivar' : 'Activar'}
+                                                                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}
+                                                                >
+                                                                    <RefreshCw size={14} />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleDeleteCoupon(c.id)}
+                                                                    title="Eliminar"
+                                                                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444' }}
+                                                                >
+                                                                    ✕
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

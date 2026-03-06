@@ -1262,3 +1262,18 @@
     text-transform: uppercase;
     letter-spacing: 0.4px;
 }
+
+/* ── Split Layout (2 Columns) ── */
+.admin-split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-items: start;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1100px) {
+    .admin-split-layout {
+        grid-template-columns: 1fr;
+    }
+}
