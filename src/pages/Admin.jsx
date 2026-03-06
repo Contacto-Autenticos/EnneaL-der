@@ -376,7 +376,7 @@ const Admin = () => {
             {/* ── SIDEBAR ── */}
             <aside className="admin-sidebar">
                 <div className="admin-sidebar-brand">
-                    <img src="/Circulo_Eneagrama_Autenticos_01.png" alt="Logo" className="admin-sidebar-logo" />
+                    <img src="/Circulo_Eneagrama_Autenticos_01.jpg" alt="Logo" className="admin-sidebar-logo" />
                     <span className="admin-sidebar-brand-name">Enesencia</span>
                 </div>
 
