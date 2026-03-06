@@ -1129,3 +1129,77 @@
 .resp-filter-clear:hover {
     background: #fee2e2;
 }
+
+/* ── CHART SECTION ── */
+.chart-period-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 8px;
+}
+
+.chart-period-btn {
+    padding: 7px 20px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 20px;
+    background: #f9fafb;
+    color: #6b7280;
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.chart-period-btn.active {
+    background: #002d44;
+    border-color: #002d44;
+    color: #ddbe3d;
+    font-weight: 700;
+}
+
+.chart-period-btn:hover:not(.active) {
+    border-color: #b89b2d;
+    color: #b89b2d;
+}
+
+.chart-wrapper {
+    margin: 16px 0 8px;
+    padding: 16px 0 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Metric summary cards */
+.chart-metrics {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.chart-metric-card {
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 12px 14px;
+    gap: 6px;
+}
+
+.chart-metric-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #002d44;
+    line-height: 1;
+}
+
+.chart-metric-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-align: center;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}

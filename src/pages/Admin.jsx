@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
+import {
+    ResponsiveContainer, BarChart, Bar, LineChart, Line,
+    XAxis, YAxis, CartesianGrid, Tooltip, Legend
+} from 'recharts';
 import './Admin.css';
 
 const Admin = () => {
@@ -47,6 +51,11 @@ const Admin = () => {
     const [activeSection, setActiveSection] = useState('codigos');
     const [preguntasOpen, setPreguntasOpen] = useState(false);
 
+    // Chart State
+    const [chartPeriod, setChartPeriod] = useState('month'); // 'week' | 'month' | 'year'
+    const [chartData, setChartData] = useState([]);
+    const [loadingChart, setLoadingChart] = useState(false);
+
     useEffect(() => {
         // Check local storage for persistent auth
         const savedAuth = localStorage.getItem('adminAuth');
@@ -62,6 +71,36 @@ const Admin = () => {
             fetchTestResponses();
         }
     }, [isAuthenticated]);
+
+    // Build chart data from testResponses whenever period changes
+    useEffect(() => {
+        if (testResponses.length === 0) return;
+        buildChartData(testResponses, chartPeriod);
+    }, [testResponses, chartPeriod]);
+
+    const buildChartData = (responses, period) => {
+        const counts = {};
+        responses.forEach(r => {
+            const d = new Date(r.created_at);
+            let key;
+            if (period === 'week') {
+                // ISO week: year-Wxx
+                const startOfYear = new Date(d.getFullYear(), 0, 1);
+                const weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+                key = `Sem ${weekNum}\n${d.getFullYear()}`;
+            } else if (period === 'month') {
+                const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                key = `${months[d.getMonth()]} ${d.getFullYear()}`;
+            } else {
+                key = String(d.getFullYear());
+            }
+            counts[key] = (counts[key] || 0) + 1;
+        });
+        const sorted = Object.entries(counts)
+            .map(([label, usuarios]) => ({ label, usuarios }))
+            .slice(-12); // last 12 periods
+        setChartData(sorted);
+    };
 
     const fetchAllQuestions = async () => {
         setLoadingQuestions(true);
@@ -416,6 +455,10 @@ const Admin = () => {
                     <button className={`admin-nav-item ${activeSection === 'respuestas' ? 'active' : ''}`}
                         onClick={() => setActiveSection('respuestas')}>
                         <RefreshCw size={17} /> Respuestas
+                    </button>
+                    <button className={`admin-nav-item ${activeSection === 'graficas' ? 'active' : ''}`}
+                        onClick={() => setActiveSection('graficas')}>
+                        <BarChart2 size={17} /> Gráficas
                     </button>
                 </nav>
 
@@ -799,7 +842,112 @@ const Admin = () => {
                     );
                 })()}
 
+                {/* ── SECTION: Gráficas ── */}
+                {activeSection === 'graficas' && (
+                    <div className="admin-card">
+                        {/* Header */}
+                        <div className="admin-card-header">
+                            <h2><BarChart2 size={20} /> Actividad de Usuarios</h2>
+                            <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                                {testResponses.length} registros totales
+                            </span>
+                        </div>
+
+                        {/* Period Selector */}
+                        <div className="chart-period-tabs">
+                            {[
+                                { id: 'week', label: 'Semanas' },
+                                { id: 'month', label: 'Meses' },
+                                { id: 'year', label: 'Años' },
+                            ].map(p => (
+                                <button
+                                    key={p.id}
+                                    className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
+                                    onClick={() => setChartPeriod(p.id)}
+                                >
+                                    {p.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Chart */}
+                        <div className="chart-wrapper">
+                            {chartData.length === 0 ? (
+                                <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+                                    No hay datos suficientes para mostrar la gráfica.
+                                </div>
+                            ) : (
+                                <ResponsiveContainer width="100%" height={340}>
+                                    <BarChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                        <XAxis
+                                            dataKey="label"
+                                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                                            angle={-30}
+                                            textAnchor="end"
+                                            interval={0}
+                                            height={50}
+                                        />
+                                        <YAxis
+                                            tick={{ fontSize: 12, fill: '#6b7280' }}
+                                            allowDecimals={false}
+                                            width={40}
+                                        />
+                                        <Tooltip
+                                            contentStyle={{ borderRadius: '10px', border: '1px solid #e5e7eb', fontSize: '0.85rem' }}
+                                            formatter={(value) => [`${value} usuarios`, 'Usuarios']}
+                                        />
+                                        <Legend wrapperStyle={{ paddingTop: '12px', fontSize: '0.85rem' }} />
+                                        <Bar
+                                            dataKey="usuarios"
+                                            name="Usuarios"
+                                            fill="#002d44"
+                                            radius={[6, 6, 0, 0]}
+                                            maxBarSize={60}
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="usuarios"
+                                            name="Tendencia"
+                                            stroke="#ddbe3d"
+                                            strokeWidth={2.5}
+                                            dot={{ fill: '#ddbe3d', r: 4 }}
+                                            activeDot={{ r: 6 }}
+                                        />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            )}
+                        </div>
+
+                        {/* Summary metrics */}
+                        {chartData.length > 0 && (() => {
+                            const vals = chartData.map(d => d.usuarios);
+                            const total = vals.reduce((a, b) => a + b, 0);
+                            const avg = (total / vals.length).toFixed(1);
+                            const max = Math.max(...vals);
+                            const maxLabel = chartData.find(d => d.usuarios === max)?.label ?? '-';
+                            return (
+                                <div className="chart-metrics">
+                                    <div className="chart-metric-card">
+                                        <span className="chart-metric-value">{total}</span>
+                                        <span className="chart-metric-label">Total usuarios</span>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <span className="chart-metric-value">{avg}</span>
+                                        <span className="chart-metric-label">Promedio / período</span>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <span className="chart-metric-value">{max}</span>
+                                        <span className="chart-metric-label">Máximo: {maxLabel}</span>
+                                    </div>
+                                </div>
+                            );
+                        })()}
+                    </div>
+                )}
+
             </main>
+
 
             {/* ── MODAL: Ver respuestas ── */}
             {selectedResponse && (
