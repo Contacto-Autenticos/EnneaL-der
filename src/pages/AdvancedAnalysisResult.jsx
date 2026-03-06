@@ -293,6 +293,23 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     const clonedContent = clonedDoc.getElementById('advanced-report-content');
                     if (!clonedContent) return;
 
+                    // ── FORZAR ANCHO DESKTOP independiente del viewport ────
+                    // Fix para móvil: position:fixed en advanced-result-page
+                    // limita el render al ancho de la pantalla (~375px),
+                    // haciendo la moneda desproporcionadamente grande.
+                    const resultPage = clonedDoc.querySelector('.advanced-result-page');
+                    if (resultPage) {
+                        resultPage.style.setProperty('position', 'static', 'important');
+                        resultPage.style.setProperty('width', '800px', 'important');
+                        resultPage.style.setProperty('min-height', 'auto', 'important');
+                        resultPage.style.setProperty('overflow', 'visible', 'important');
+                    }
+                    const resultContainer = clonedDoc.querySelector('.advanced-result-container');
+                    if (resultContainer) {
+                        resultContainer.style.setProperty('max-width', '760px', 'important');
+                        resultContainer.style.setProperty('width', '100%', 'important');
+                    }
+
                     // Configurar el contenedor principal para que parezca una gran hoja
                     clonedContent.style.background = '#ffffff';
                     clonedContent.style.width = '210mm'; // Ancho A4
