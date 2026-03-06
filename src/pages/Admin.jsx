@@ -14,6 +14,7 @@ import './Admin.css';
 const Admin = () => {
     // Auth State
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [usernameInput, setUsernameInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [loginError, setLoginError] = useState('');
 
@@ -338,22 +339,35 @@ const Admin = () => {
         }
     };
 
+    const ADMIN_USERS = [
+        { username: 'Felipe-7', password: 'AdminAutenticos2026*' },
+        { username: 'Carlos-9', password: 'AdminAutenticos2026*' },
+        { username: 'Lorena-1', password: 'AdminAutenticos2026*' }
+    ];
+
     const handleLogin = (e) => {
         e.preventDefault();
-        // Simple secure hardcoded password for now
-        if (passwordInput === 'AdminAutenticos2026*') {
+
+        const user = ADMIN_USERS.find(
+            (u) => u.username === usernameInput.trim() && u.password === passwordInput
+        );
+
+        if (user) {
             setIsAuthenticated(true);
             setLoginError('');
             localStorage.setItem('adminAuth', 'true');
+            localStorage.setItem('adminUser', user.username);
         } else {
-            setLoginError('Contraseña incorrecta. Inténtalo de nuevo.');
+            setLoginError('Usuario o contraseña incorrectos. Inténtalo de nuevo.');
         }
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
+        setUsernameInput('');
         setPasswordInput('');
         localStorage.removeItem('adminAuth');
+        localStorage.removeItem('adminUser');
     };
 
     const fetchCodes = async () => {
@@ -565,12 +579,20 @@ const Admin = () => {
                     <form onSubmit={handleLogin}>
                         {loginError && <div className="admin-login-error">{loginError}</div>}
                         <input
+                            type="text"
+                            className="admin-login-input"
+                            placeholder="Usuario"
+                            value={usernameInput}
+                            onChange={(e) => setUsernameInput(e.target.value)}
+                            autoFocus
+                            style={{ marginBottom: '15px' }}
+                        />
+                        <input
                             type="password"
                             className="admin-login-input"
                             placeholder="Contraseña de Administrador"
                             value={passwordInput}
                             onChange={(e) => setPasswordInput(e.target.value)}
-                            autoFocus
                         />
                         <button type="submit" className="admin-btn-login">
                             Iniciar Sesión
@@ -658,7 +680,36 @@ const Admin = () => {
                     </button>
                 </nav>
 
-                <button onClick={handleLogout} className="admin-sidebar-logout">
+                <div className="admin-sidebar-user-info" style={{
+                    padding: '15px 20px',
+                    borderTop: '1px solid rgba(255,255,255,0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    color: '#e2e8f0',
+                    fontSize: '0.9rem',
+                    marginTop: 'auto'
+                }}>
+                    <div style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        backgroundColor: '#b89b2d',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#0f172a',
+                        fontWeight: 'bold',
+                        flexShrink: 0
+                    }}>
+                        {localStorage.getItem('adminUser') ? localStorage.getItem('adminUser').charAt(0).toUpperCase() : 'A'}
+                    </div>
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Conectado como</div>
+                        <div style={{ fontWeight: '500' }}>{localStorage.getItem('adminUser') || 'Administrador'}</div>
+                    </div>
+                </div>
+                <button onClick={handleLogout} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none' }}>
                     <LogOut size={16} /> Cerrar sesión
                 </button>
             </aside>
