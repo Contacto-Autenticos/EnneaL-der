@@ -475,6 +475,7 @@
 .codes-table-wrapper {
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: auto;
     border: 1px solid var(--border-color);
     border-radius: 8px;
 }
@@ -1334,6 +1335,10 @@
     margin-bottom: 30px;
 }
 
+.admin-split-layout>.admin-card {
+    min-width: 0;
+}
+
 /* ── Action Buttons ── */
 .btn-action-admin {
     display: flex;
@@ -1438,6 +1443,30 @@
         min-height: calc(100vh - 54px);
         /* Subtract header height */
     }
+}
+
+/* ── Custom Scrollbars for Table Wrappers ── */
+.codes-table-wrapper::-webkit-scrollbar,
+.transactions-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.codes-table-wrapper::-webkit-scrollbar-track,
+.transactions-table-wrapper::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.codes-table-wrapper::-webkit-scrollbar-thumb,
+.transactions-table-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.codes-table-wrapper::-webkit-scrollbar-thumb:hover,
+.transactions-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 @media (max-width: 768px) {
