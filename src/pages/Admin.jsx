@@ -9,6 +9,7 @@ import {
     ResponsiveContainer, BarChart, Bar, LineChart, Line,
     XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
+import { questions as staticQuestions } from '../data/questions';
 import './Admin.css';
 
 const Admin = () => {
@@ -1753,16 +1754,31 @@ const Admin = () => {
                                                                 lineHeight: '1.4'
                                                             }}>
                                                                 {(() => {
-                                                                    const qObj = adminQuestions.find(q => q.id === a.question_id);
+                                                                    const qObj = adminQuestions.find(q => q.id === a.question_id) || staticQuestions.find(q => q.id === a.question_id);
                                                                     if (qObj?.type === 'special' && qObj.options) {
-                                                                        // If it's a number (new format)
-                                                                        const valNum = parseInt(a.answer);
+                                                                        const val = a.answer;
+
+                                                                        // 1. If it's already a number (new format)
+                                                                        const valNum = parseInt(val);
                                                                         if (!isNaN(valNum)) {
                                                                             const opt = qObj.options.find(o => o.value === valNum);
                                                                             if (opt) return opt.label;
                                                                         }
-                                                                        // If it's the old format "Algo", "Mucho"... just return it
-                                                                        return a.answer;
+
+                                                                        // 2. If it's the old format "Algo", "Mucho", etc.
+                                                                        const REVERSE_LABELS = {
+                                                                            'Muy poco': 1,
+                                                                            'Algo': 2,
+                                                                            'Mucho': 3,
+                                                                            'Totalmente': 4
+                                                                        };
+                                                                        const mappedValue = REVERSE_LABELS[val];
+                                                                        if (mappedValue) {
+                                                                            const opt = qObj.options.find(o => o.value === mappedValue);
+                                                                            if (opt) return opt.label;
+                                                                        }
+
+                                                                        return val || '—';
                                                                     }
                                                                     return a.answer || '—';
                                                                 })()}
