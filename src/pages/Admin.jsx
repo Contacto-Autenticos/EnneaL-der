@@ -1700,33 +1700,65 @@ const Admin = () => {
                             {initialResponseDetails.length === 0 ? (
                                 <p style={{ textAlign: 'center', padding: '20px', color: '#666' }}>No hay detalles para mostrar.</p>
                             ) : (
-                                initialResponseDetails.map((a, idx) => {
-                                    // Search for question text in adminQuestions
-                                    const questionObj = adminQuestions.find(q => q.id === a.question_id);
-                                    const questionText = questionObj ? questionObj.text : `Pregunta ID ${a.question_id}`;
+                                (() => {
+                                    // Group answers by question type (A, B, C, X, Y, Z, special)
+                                    const groups = {};
+                                    initialResponseDetails.forEach(a => {
+                                        const questionObj = adminQuestions.find(q => q.id === a.question_id);
+                                        const type = questionObj?.type || 'A';
+                                        if (!groups[type]) groups[type] = [];
+                                        groups[type].push({ ...a, questionText: questionObj?.text });
+                                    });
 
-                                    return (
-                                        <div key={a.id || idx} className="response-item" style={{ marginBottom: '15px' }}>
-                                            <span className="response-number" style={{ background: '#b89b2d', color: 'white' }}>{idx + 1}</span>
-                                            <div className="response-content">
-                                                <p className="response-question" style={{ fontSize: '1.05rem', color: '#002d44', marginBottom: '4px' }}>
-                                                    {questionText}
-                                                </p>
-                                                <span className="response-answer" style={{
-                                                    display: 'inline-block',
-                                                    background: '#f9fafb',
-                                                    border: '1px solid #e5e7eb',
-                                                    padding: '4px 10px',
-                                                    borderRadius: '6px',
-                                                    fontWeight: '600',
-                                                    color: '#374151'
-                                                }}>
-                                                    {a.answer || '—'}
+                                    // Sort groups using the same order as initialGroupsOrder
+                                    const sortedKeys = initialGroupsOrder.filter(k => groups[k]).concat(
+                                        Object.keys(groups).filter(k => !initialGroupsOrder.includes(k))
+                                    );
+
+                                    let globalIdx = 0;
+                                    return sortedKeys.map(typeKey => (
+                                        <div key={typeKey} style={{ marginBottom: '24px' }}>
+                                            <div style={{
+                                                display: 'flex', alignItems: 'center', gap: '10px',
+                                                marginBottom: '12px', paddingBottom: '8px',
+                                                borderBottom: '2px solid #f0f0f0'
+                                            }}>
+                                                <span style={{
+                                                    background: '#b89b2d', color: 'white',
+                                                    fontWeight: 700, fontSize: '0.82rem',
+                                                    padding: '3px 10px', borderRadius: '20px'
+                                                }}>{initialGroupLabels[typeKey] || `Grupo ${typeKey}`}</span>
+                                                <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
+                                                    {groups[typeKey].length} respuestas
                                                 </span>
                                             </div>
+                                            {groups[typeKey].map((a, i) => {
+                                                globalIdx++;
+                                                return (
+                                                    <div key={a.id || i} className="response-item" style={{ marginBottom: '15px' }}>
+                                                        <span className="response-number" style={{ background: '#002d44', color: 'white' }}>{globalIdx}</span>
+                                                        <div className="response-content">
+                                                            <p className="response-question" style={{ fontSize: '1.05rem', color: '#002d44', marginBottom: '4px' }}>
+                                                                {a.questionText || `Pregunta ID ${a.question_id}`}
+                                                            </p>
+                                                            <span className="response-answer" style={{
+                                                                display: 'inline-block',
+                                                                background: '#f9fafb',
+                                                                border: '1px solid #e5e7eb',
+                                                                padding: '4px 10px',
+                                                                borderRadius: '6px',
+                                                                fontWeight: '600',
+                                                                color: '#374151'
+                                                            }}>
+                                                                {a.answer || '—'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
-                                    );
-                                })
+                                    ));
+                                })()
                             )}
                         </div>
                     </div>

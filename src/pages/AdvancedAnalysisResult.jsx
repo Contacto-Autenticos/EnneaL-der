@@ -430,7 +430,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
             const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-            pdf.save(`Reporte-Eneagrama-Tipo-${type}.pdf`);
+            pdf.save(`Reporte-Eneatipo-${type}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
             alert('Hubo un error al generar el PDF.');
@@ -464,7 +464,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
             }
 
-            pdf.save(`Plan-de-Acción-Eneagrama-Tipo-${type}.pdf`);
+            pdf.save(`Plan-de-Accion-Eneatipo-${type}.pdf`);
             kitRoot.style.display = 'none';
         } catch (error) {
             console.error('Error generating Executive Kit:', error);
