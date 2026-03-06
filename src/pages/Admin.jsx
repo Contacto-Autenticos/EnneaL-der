@@ -77,39 +77,39 @@ const Admin = () => {
 
     // Build chart data from testResponses whenever period changes
     useEffect(() => {
-        if (testResponses.length > 0) {
-            buildChartData(testResponses, chartPeriod, setChartData);
-        }
-        if (initialResponses.length > 0) {
-            buildChartData(initialResponses, chartPeriod, setInitialChartData);
-        }
-    }, [testResponses, initialResponses, chartPeriod]);
+        buildChartData(testResponses, chartPeriod, setChartData);
+    }, [testResponses, chartPeriod]);
+
+    useEffect(() => {
+        buildChartData(initialResponses, chartPeriod, setInitialChartData);
+    }, [initialResponses, chartPeriod]);
 
     const buildChartData = (responses, period, setter) => {
         const counts = {};
         const now = new Date();
 
+        // Initialize slots if days7
         if (period === 'days7') {
-            // Last 7 days, one slot per day
             const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
             for (let i = 6; i >= 0; i--) {
                 const d = new Date(now);
                 d.setDate(now.getDate() - i);
                 const key = `${days[d.getDay()]} ${d.getDate()}`;
-                counts[key] = counts[key] || 0;
+                counts[key] = 0;
             }
         }
 
-        responses.forEach(r => {
+        (responses || []).forEach(r => {
             const d = new Date(r.created_at);
             let key;
             if (period === 'days7') {
-                // Only include last 7 days
                 const diffDays = Math.floor((now - d) / 86400000);
                 if (diffDays > 6) return;
                 const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
                 key = `${days[d.getDay()]} ${d.getDate()}`;
-            } else if (period === 'week') {
+                if (!(key in counts)) return; // Should not happen with pre-init
+            }
+            else if (period === 'week') {
                 const startOfYear = new Date(d.getFullYear(), 0, 1);
                 const weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
                 key = `Sem ${weekNum} ${d.getFullYear()}`;
