@@ -770,96 +770,100 @@ const Admin = () => {
                 )}
 
                 {/* ── SECTION: Respuestas ── */}
-                {activeSection === 'respuestas' && (() => {
-                    const filtered = testResponses.filter(r => {
-                        const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
-                        const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
-                        const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
-                        const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
-                        return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
-                    });
-                    const hasFilter = filterName || filterOrg || filterEneatype || filterTestType;
-                    return (
-                        <div className="admin-card">
-                            {/* Header */}
-                            <div className="admin-card-header">
-                                <h2>Respuestas del Test Avanzado</h2>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                    <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                        {hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`} registros
-                                    </span>
-                                    <button onClick={fetchTestResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
-                                        <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
-                                    </button>
-                                </div>
+                {activeSection === 'respuestas' && (
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <h2>Respuestas del Test Avanzado</h2>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                                    {(() => {
+                                        const filtered = testResponses.filter(r => {
+                                            const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
+                                            const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
+                                            const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
+                                            const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
+                                            return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
+                                        });
+                                        const hasFilter = filterName || filterOrg || filterEneatype || filterTestType;
+                                        return hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`;
+                                    })()} registros
+                                </span>
+                                <button onClick={fetchTestResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
+                                    <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
+                                </button>
                             </div>
+                        </div>
 
-                            {/* Filter bar */}
-                            <div className="resp-filters">
-                                <input
-                                    className="resp-filter-input"
-                                    type="text"
-                                    placeholder="Buscar nombre..."
-                                    value={filterName}
-                                    onChange={e => setFilterName(e.target.value)}
-                                />
-                                <input
-                                    className="resp-filter-input"
-                                    type="text"
-                                    placeholder="Buscar organización..."
-                                    value={filterOrg}
-                                    onChange={e => setFilterOrg(e.target.value)}
-                                />
-                                <select
-                                    className="resp-filter-select"
-                                    value={filterEneatype}
-                                    onChange={e => setFilterEneatype(e.target.value)}
-                                >
-                                    <option value="">Todos los eneatipos</option>
-                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
-                                        <option key={n} value={String(n)}>Eneatipo {n}</option>
-                                    ))}
-                                </select>
-                                <select
-                                    className="resp-filter-select"
-                                    value={filterTestType}
-                                    onChange={e => setFilterTestType(e.target.value)}
-                                >
-                                    <option value="">Todos los tests</option>
-                                    <option value="45">45 preguntas</option>
-                                    <option value="135">135 preguntas</option>
-                                </select>
-                                {hasFilter && (
-                                    <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); }}>
-                                        ✕ Limpiar
-                                    </button>
-                                )}
-                            </div>
+                        <div className="resp-filters">
+                            <input
+                                className="resp-filter-input"
+                                type="text"
+                                placeholder="Buscar nombre..."
+                                value={filterName}
+                                onChange={e => setFilterName(e.target.value)}
+                            />
+                            <input
+                                className="resp-filter-input"
+                                type="text"
+                                placeholder="Buscar organización..."
+                                value={filterOrg}
+                                onChange={e => setFilterOrg(e.target.value)}
+                            />
+                            <select
+                                className="resp-filter-select"
+                                value={filterEneatype}
+                                onChange={e => setFilterEneatype(e.target.value)}
+                            >
+                                <option value="">Todos los eneatipos</option>
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+                                    <option key={n} value={String(n)}>Eneatipo {n}</option>
+                                ))}
+                            </select>
+                            <select
+                                className="resp-filter-select"
+                                value={filterTestType}
+                                onChange={e => setFilterTestType(e.target.value)}
+                            >
+                                <option value="">Todos los tests</option>
+                                <option value="45">45 preguntas</option>
+                                <option value="135">135 preguntas</option>
+                            </select>
+                            {(filterName || filterOrg || filterEneatype || filterTestType) && (
+                                <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); }}>
+                                    ✕ Limpiar
+                                </button>
+                            )}
+                        </div>
 
-                            {/* Table */}
-                            <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
-                                <table className="codes-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Nombre</th>
-                                            <th>Correo</th>
-                                            <th>Eneatipo</th>
-                                            <th>Test</th>
-                                            <th>Organización</th>
-                                            <th>Código acceso</th>
-                                            <th>Ver respuestas</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {loadingResponses ? (
-                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
-                                        ) : filtered.length === 0 ? (
-                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>
-                                                {hasFilter ? 'No hay resultados con estos filtros.' : 'No hay respuestas registradas aún.'}
-                                            </td></tr>
-                                        ) : (
-                                            filtered.map(r => (
+                        <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                            <table className="codes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th>Eneatipo</th>
+                                        <th>Test</th>
+                                        <th>Organización</th>
+                                        <th>Código acceso</th>
+                                        <th>Ver respuestas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loadingResponses ? (
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                    ) : testResponses.length === 0 ? (
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
+                                    ) : (
+                                        testResponses
+                                            .filter(r => {
+                                                const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
+                                                const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
+                                                const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
+                                                const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
+                                                return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
+                                            })
+                                            .map(r => (
                                                 <tr key={r.id}>
                                                     <td style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
                                                         {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
@@ -887,208 +891,189 @@ const Admin = () => {
                                                     </td>
                                                 </tr>
                                             ))
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
-                    );
-                })()}
+                    </div>
+                )}
 
                 {/* ── SECTION: Gráficas ── */}
                 {activeSection === 'graficas' && (
-                    <div className="admin-card">
-                        {/* Header */}
-                        <div className="admin-card-header">
-                            <h2><BarChart2 size={20} /> Actividad de Usuarios</h2>
-                            <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                {testResponses.length} registros totales
-                            </span>
-                        </div>
-
-                        {/* Period Selector */}
-                        <div className="chart-period-tabs">
-                            {[
-                                { id: 'days7', label: '7 días' },
-                                { id: 'week', label: 'Semanas' },
-                                { id: 'month', label: 'Meses' },
-                                { id: 'year', label: 'Años' },
-                            ].map(p => (
-                                <button
-                                    key={p.id}
-                                    className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
-                                    onClick={() => setChartPeriod(p.id)}
-                                >
-                                    {p.label}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Chart */}
-                        <div className="chart-wrapper">
-                            {chartData.length === 0 ? (
-                                <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
-                                    No hay datos suficientes para mostrar la gráfica.
+                    <div className="charts-main-container">
+                        {/* ── PRIMERA GRÁFICA: TEST AVANZADO ── */}
+                        <div className="admin-card chart-card">
+                            <div className="admin-card-header chart-header">
+                                <div className="chart-title-group">
+                                    <BarChart2 size={22} className="chart-icon" />
+                                    <h2>Actividad de Usuarios (Test Avanzado)</h2>
                                 </div>
-                            ) : (
-                                <ResponsiveContainer width="100%" height={340}>
-                                    <BarChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                                        <XAxis
-                                            dataKey="label"
-                                            tick={{ fontSize: 13, fill: '#6b7280', dy: 10 }}
-                                            interval={0}
-                                            height={60}
-                                        />
-                                        <YAxis
-                                            tick={{ fontSize: 12, fill: '#6b7280' }}
-                                            allowDecimals={false}
-                                            width={40}
-                                        />
-                                        <Tooltip
-                                            contentStyle={{ borderRadius: '10px', border: '1px solid #e5e7eb', fontSize: '0.85rem' }}
-                                            formatter={(value) => [`${value} usuarios`, 'Usuarios']}
-                                        />
-                                        <Legend wrapperStyle={{ paddingTop: '12px', fontSize: '0.85rem' }} />
-                                        <Bar
-                                            dataKey="usuarios"
-                                            name="Usuarios"
-                                            fill="#002d44"
-                                            radius={[6, 6, 0, 0]}
-                                            maxBarSize={60}
-                                        />
-                                        <Line
-                                            type="monotone"
-                                            dataKey="usuarios"
-                                            name="Tendencia"
-                                            stroke="#ddbe3d"
-                                            strokeWidth={2.5}
-                                            dot={{ fill: '#ddbe3d', r: 4 }}
-                                            activeDot={{ r: 6 }}
-                                        />
-                                    </BarChart>
-                                </ResponsiveContainer>
+                                <div className="chart-stats-summary">
+                                    <span className="total-badge">{testResponses.length} registros totales</span>
+                                </div>
+                            </div>
+
+                            <div className="chart-period-tabs">
+                                {[
+                                    { id: 'days7', label: '7 días' },
+                                    { id: 'week', label: 'Semanas' },
+                                    { id: 'month', label: 'Meses' },
+                                    { id: 'year', label: 'Años' }
+                                ].map(p => (
+                                    <button
+                                        key={p.id}
+                                        className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
+                                        onClick={() => setChartPeriod(p.id)}
+                                    >
+                                        {p.label}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className="chart-wrapper">
+                                {chartData.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+                                        No hay datos suficientes para mostrar la gráfica.
+                                    </div>
+                                ) : (
+                                    <ResponsiveContainer width="100%" height={400}>
+                                        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                            <XAxis
+                                                dataKey="label"
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fill: '#666', fontSize: 13, dy: 10 }}
+                                                height={60}
+                                            />
+                                            <YAxis
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fill: '#666', fontSize: 11 }}
+                                            />
+                                            <Tooltip
+                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
+                                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                            />
+                                            <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
+                                            <Bar
+                                                name="Usuarios"
+                                                dataKey="usuarios"
+                                                fill="#002d44"
+                                                radius={[6, 6, 0, 0]}
+                                                barSize={45}
+                                            />
+                                            <Line
+                                                type="monotone"
+                                                dataKey="usuarios"
+                                                stroke="#ddbe3d"
+                                                strokeWidth={3}
+                                                dot={{ fill: '#ddbe3d', strokeWidth: 2, r: 4 }}
+                                                activeDot={{ r: 6 }}
+                                                name="Tendencia"
+                                            />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                )}
+                            </div>
+
+                            {chartData.length > 0 && (
+                                <div className="chart-metrics">
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{chartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
+                                        <div className="chart-metric-label">TOTAL USUARIOS</div>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{(chartData.reduce((acc, curr) => acc + curr.usuarios, 0) / chartData.length).toFixed(1)}</div>
+                                        <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{Math.max(...chartData.map(d => d.usuarios))}</div>
+                                        <div className="chart-metric-label">MÁXIMO</div>
+                                    </div>
+                                </div>
                             )}
                         </div>
 
-                        {/* Summary metrics */}
-                        {chartData.length > 0 && (() => {
-                            const total = chartData.reduce((acc, curr) => acc + curr.usuarios, 0);
-                            const avg = chartData.length > 0 ? (total / chartData.length).toFixed(1) : 0;
-                            const max = chartData.length > 0 ? Math.max(...chartData.map(d => d.usuarios)) : 0;
-                            const maxLabel = chartData.find(d => d.usuarios === max)?.label ?? '-';
-                            return (
-                                <div className="admin-metrics-grid">
-                                    <div className="metric-card">
-                                        <div className="metric-val">{total}</div>
-                                        <div className="metric-label">TOTAL USUARIOS</div>
-                                    </div>
-                                    <div className="metric-card">
-                                        <div className="metric-val">{avg}</div>
-                                        <div className="metric-label">PROMEDIO / PERÍODO</div>
-                                    </div>
-                                    <div className="metric-card">
-                                        <div className="metric-val">{max}</div>
-                                        <div className="metric-label">
-                                            MÁXIMO: {maxLabel}
-                                        </div>
-                                    </div>
+                        {/* ── SEGUNDA GRÁFICA: TEST INICIAL ── */}
+                        <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
+                            <div className="admin-card-header chart-header">
+                                <div className="chart-title-group">
+                                    <BarChart2 size={22} className="chart-icon" />
+                                    <h2>Actividad Test Inicial</h2>
                                 </div>
-                            );
-                        })()}
-                    </div>
-
-                            {/* ── SEGUNDA GRÁFICA: TEST INICIAL ── */}
-                <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
-                    <div className="admin-card-header chart-header">
-                        <div className="chart-title-group">
-                            <BarChart2 size={22} className="chart-icon" />
-                            <h2>Actividad Test Inicial</h2>
-                        </div>
-                        <div className="chart-stats-summary">
-                            <span className="total-badge">{initialResponses.length} registros totales</span>
-                        </div>
-                    </div>
-
-                    <div className="chart-wrapper">
-                        <ResponsiveContainer width="100%" height={400}>
-                            <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                                <defs>
-                                    <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#b89b2d" />
-                                        <stop offset="100%" stopColor="#8c7a22" />
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                                <XAxis
-                                    dataKey="label"
-                                    axisLine={false}
-                                    tickLine={false}
-                                    tick={{ fill: '#666', fontSize: 13, dy: 10 }}
-                                    height={60}
-                                />
-                                <YAxis
-                                    axisLine={false}
-                                    tickLine={false}
-                                    tick={{ fill: '#666', fontSize: 11 }}
-                                />
-                                <Tooltip
-                                    contentStyle={{
-                                        borderRadius: '12px',
-                                        border: 'none',
-                                        boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                                        padding: '12px'
-                                    }}
-                                    cursor={{ fill: 'rgba(0,0,0,0.02)' }}
-                                />
-                                <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
-                                <Bar
-                                    name="Usuarios"
-                                    dataKey="usuarios"
-                                    fill="url(#barGradientInitial)"
-                                    radius={[6, 6, 0, 0]}
-                                    barSize={45}
-                                    animationDuration={1500}
-                                />
-                                <Line
-                                    type="monotone"
-                                    dataKey="usuarios"
-                                    stroke="#002d44"
-                                    strokeWidth={3}
-                                    dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
-                                    activeDot={{ r: 6 }}
-                                    name="Tendencia"
-                                    connectNulls
-                                />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-
-                    {(() => {
-                        const total = initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0);
-                        const avg = initialChartData.length > 0 ? (total / initialChartData.length).toFixed(1) : 0;
-                        const max = initialChartData.length > 0 ? Math.max(...initialChartData.map(d => d.usuarios)) : 0;
-                        const maxLabel = initialChartData.find(d => d.usuarios === max)?.label ?? '-';
-                        return (
-                            <div className="admin-metrics-grid">
-                                <div className="metric-card">
-                                    <div className="metric-val">{total}</div>
-                                    <div className="metric-label">TOTAL USUARIOS</div>
-                                </div>
-                                <div className="metric-card">
-                                    <div className="metric-val">{avg}</div>
-                                    <div className="metric-label">PROMEDIO / PERÍODO</div>
-                                </div>
-                                <div className="metric-card">
-                                    <div className="metric-val">{max}</div>
-                                    <div className="metric-label">
-                                        MÁXIMO: {maxLabel}
-                                    </div>
+                                <div className="chart-stats-summary">
+                                    <span className="total-badge">{initialResponses.length} registros totales</span>
                                 </div>
                             </div>
-                        );
-                    })()}
-                </div>
+
+                            <div className="chart-wrapper">
+                                {initialChartData.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+                                        No hay datos de sesiones para mostrar.
+                                    </div>
+                                ) : (
+                                    <ResponsiveContainer width="100%" height={400}>
+                                        <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                                            <defs>
+                                                <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="#b89b2d" />
+                                                    <stop offset="100%" stopColor="#8c7a22" />
+                                                </linearGradient>
+                                            </defs>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                            <XAxis
+                                                dataKey="label"
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fill: '#666', fontSize: 13, dy: 10 }}
+                                                height={60}
+                                            />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} />
+                                            <Tooltip
+                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
+                                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                            />
+                                            <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
+                                            <Bar
+                                                name="Usuarios"
+                                                dataKey="usuarios"
+                                                fill="url(#barGradientInitial)"
+                                                radius={[6, 6, 0, 0]}
+                                                barSize={45}
+                                            />
+                                            <Line
+                                                type="monotone"
+                                                dataKey="usuarios"
+                                                stroke="#002d44"
+                                                strokeWidth={3}
+                                                dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
+                                                activeDot={{ r: 6 }}
+                                                name="Tendencia"
+                                            />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                )}
+                            </div>
+
+                            {initialChartData.length > 0 && (
+                                <div className="chart-metrics">
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
+                                        <div className="chart-metric-label">TOTAL SESIONES</div>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{(initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0) / initialChartData.length).toFixed(1)}</div>
+                                        <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{Math.max(...initialChartData.map(d => d.usuarios))}</div>
+                                        <div className="chart-metric-label">MÁXIMO</div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 )}
             </main>
 
@@ -1179,7 +1164,7 @@ const Admin = () => {
                     name="Líder"
                 />
             </div>
-        </div >
+        </div>
     );
 };
 
