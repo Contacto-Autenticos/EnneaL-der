@@ -81,10 +81,7 @@ const Admin = () => {
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
 
-    // Sidebar navigation
-    const [activeSection, setActiveSection] = useState('codigos');
-    const [preguntasOpen, setPreguntasOpen] = useState(false);
-    const [respuestasOpen, setRespuestasOpen] = useState(false);
+
 
     // Chart State
     const [chartPeriod, setChartPeriod] = useState('days7'); // 'days7' | 'week' | 'month' | 'year'
