@@ -340,13 +340,13 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     }
                     const coinWrapper = clonedDoc.querySelector('.advanced-coin-wrapper');
                     if (coinWrapper) {
-                        coinWrapper.style.setProperty('margin-bottom', '20px', 'important');
+                        coinWrapper.style.setProperty('margin-bottom', '110px', 'important');
                         coinWrapper.style.setProperty('padding', '10px', 'important');
                     }
                     // Reducir el gap del hero subtitle
                     const heroSubtitle = clonedDoc.querySelector('.advanced-hero-subtitle');
                     if (heroSubtitle) {
-                        heroSubtitle.style.setProperty('margin-bottom', '20px', 'important');
+                        heroSubtitle.style.setProperty('margin-bottom', '110px', 'important');
                     }
 
                     // Insertar Footer Logo
