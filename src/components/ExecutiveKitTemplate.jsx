@@ -585,14 +585,30 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 <HeaderBanner />
                 <Watermark />
                 <h2 className="kit-section-title" style={{ marginTop: '40mm', textTransform: 'none' }}>Integración</h2>
-                <div className="kit-text-block" style={{ textAlign: 'center', marginTop: '30px' }}>
-                    <p style={{ marginBottom: '20px' }}>Este informe no pretende darte respuestas definitivas.</p>
-                    <p style={{ marginBottom: '20px' }}>Fue creado para abrir una mirada distinta sobre tu personalidad dentro del entorno empresarial.</p>
-                    <p style={{ marginBottom: '20px' }}>Comprender tu forma de pensar, decidir y liderar es solo el primer paso.</p>
-                    <p style={{ marginBottom: '20px' }}>La verdadera transformación ocurre cuando esa comprensión se convierte en conciencia y elección.</p>
-                    <p style={{ marginBottom: '20px' }}>Lo que decidas hacer con esta información es lo que realmente transformará tu liderazgo.</p>
+                <p style={{ fontStyle: 'italic', color: '#b89b2d', fontSize: '1.1rem', marginBottom: '30px' }}>Convertir conocimiento en conciencia</p>
+                <div className="kit-text-block" style={{ textAlign: 'left', marginTop: '10px' }}>
+                    <p style={{ marginBottom: '20px' }}>
+                        Este informe no pretende darte respuestas definitivas.<br />
+                        Su propósito es ayudarte a <strong>ver con mayor claridad.</strong>
+                    </p>
+                    <p style={{ marginBottom: '20px' }}>
+                        El Eneagrama revela patrones:<br />
+                        la forma en que piensas, decides y reaccionas ante el mundo.
+                    </p>
+                    <p style={{ marginBottom: '20px' }}>
+                        Comprenderlos es el primer paso.<br />
+                        Pero la verdadera transformación ocurre cuando esa comprensión se convierte en <strong>observación consciente y práctica diaria.</strong>
+                    </p>
+                    <p style={{ marginBottom: '30px' }}>
+                        Durante los próximos días tienes una oportunidad:<br />
+                        <strong>Lo que decidas hacer con esta información es lo que realmente transforma tu liderazgo.</strong>
+                    </p>
                 </div>
-                <div style={{ width: '60px', height: '2px', background: '#ddbe3d', margin: '40px 0' }}></div>
+                <div style={{ width: '60px', height: '2px', background: '#ddbe3d', margin: '20px auto' }}></div>
+                <p style={{ fontStyle: 'italic', textAlign: 'center', fontSize: '1.05rem', color: '#002d44', marginTop: '20px', lineHeight: '1.8' }}>
+                    El autoconocimiento no cambia tu vida.<br />
+                    Las decisiones que tomas a partir de él, sí.
+                </p>
                 <div className="kit-page-footer-logo">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
