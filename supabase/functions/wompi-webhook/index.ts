@@ -10,10 +10,45 @@ const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
 serve(async (req) => {
     const { data } = await req.json()
     const transaction = data.transaction
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+
+    // 0. Try to find the user's name from user_leads
+    let customerName = null;
+    try {
+        const { data: userData } = await supabase
+            .from('user_leads')
+            .select('full_name')
+            .eq('email', transaction.customer_email)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
+
+        if (userData) {
+            customerName = userData.full_name;
+        }
+    } catch (e) {
+        console.log('User not found in leads or multiple leads found');
+    }
+
+    // Always log the transaction in our transactions table
+    const { error: logError } = await supabase
+        .from('transactions')
+        .insert([{
+            transaction_id: transaction.id,
+            reference: transaction.reference,
+            amount_in_cents: transaction.amount_in_cents,
+            currency: transaction.currency,
+            status: transaction.status,
+            customer_email: transaction.customer_email,
+            customer_name: customerName, // New field
+            payment_method_type: transaction.payment_method_type,
+            payment_method_brand: transaction.payment_method?.extra?.brand || transaction.payment_method?.type,
+            raw_data: data
+        }])
+
+    if (logError) console.error('Error logging transaction:', logError)
 
     if (transaction.status === 'APPROVED') {
-        const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
-
         // 1. Generate a new access code
         const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
         const segment = () => {

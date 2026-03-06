@@ -1141,7 +1141,9 @@ const Admin = () => {
                                 <thead>
                                     <tr>
                                         <th>Estado</th>
-                                        <th>Monto y Cliente</th>
+                                        <th>Monto</th>
+                                        <th>Usuario</th>
+                                        <th>Correo</th>
                                         <th>Datos del pago</th>
                                         <th>Hora y Fecha</th>
                                     </tr>
@@ -1163,6 +1165,11 @@ const Admin = () => {
                                                     <div style={{ fontWeight: '600', color: '#002d44', fontSize: '1.05rem' }}>
                                                         {tr.currency} ${(tr.amount_in_cents / 100).toLocaleString('es-CO')}
                                                     </div>
+                                                </td>
+                                                <td style={{ padding: '15px' }}>
+                                                    <div style={{ fontWeight: '600', color: '#002d44' }}>{tr.customer_name || '—'}</div>
+                                                </td>
+                                                <td style={{ padding: '15px' }}>
                                                     <div style={{ fontSize: '0.85rem', color: '#666' }}>{tr.customer_email}</div>
                                                 </td>
                                                 <td style={{ padding: '15px' }}>
