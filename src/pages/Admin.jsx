@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, X } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -18,6 +18,7 @@ const Admin = () => {
     const [loginError, setLoginError] = useState('');
 
     // Dashboard State
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
     const [codes, setCodes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
@@ -582,9 +583,29 @@ const Admin = () => {
 
     return (
         <div className="admin-shell">
+            {/* ── MOBILE HEADER (Visible only on mobile via CSS) ── */}
+            <div className="admin-mobile-header">
+                <div className="admin-mobile-brand">
+                    <img src="/Circulo_Eneagrama_Autenticos_01.jpg" alt="Logo" className="admin-mobile-logo" />
+                    <span className="admin-mobile-brand-name">Enesencia Admin</span>
+                </div>
+                <button
+                    className="admin-mobile-menu-btn"
+                    onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+                    aria-label={isMobileSidebarOpen ? "Cerrar menú" : "Abrir menú"}
+                >
+                    {isMobileSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </div>
+
+            {/* ── SIDEBAR OVERLAY (Mobile) ── */}
+            <div
+                className={`admin-sidebar-overlay ${isMobileSidebarOpen ? 'show' : ''}`}
+                onClick={() => setIsMobileSidebarOpen(false)}
+            />
 
             {/* ── SIDEBAR ── */}
-            <aside className="admin-sidebar">
+            <aside className={`admin-sidebar ${isMobileSidebarOpen ? 'open' : ''}`}>
                 <div className="admin-sidebar-brand">
                     <img src="/Circulo_Eneagrama_Autenticos_01.jpg" alt="Logo" className="admin-sidebar-logo" />
                     <span className="admin-sidebar-brand-name">Enesencia</span>
@@ -592,15 +613,15 @@ const Admin = () => {
 
                 <nav className="admin-sidebar-nav">
                     <button className={`admin-nav-item ${activeSection === 'codigos' ? 'active' : ''}`}
-                        onClick={() => setActiveSection('codigos')}>
+                        onClick={() => { setActiveSection('codigos'); setIsMobileSidebarOpen(false); }}>
                         <Key size={17} /> Códigos de acceso
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
-                        onClick={() => setActiveSection('plan')}>
+                        onClick={() => { setActiveSection('plan'); setIsMobileSidebarOpen(false); }}>
                         <Download size={17} /> Plan de Acción
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
-                        onClick={() => setActiveSection('compartir')}>
+                        onClick={() => { setActiveSection('compartir'); setIsMobileSidebarOpen(false); }}>
                         <Link size={17} /> Compartir
                     </button>
 
@@ -613,26 +634,26 @@ const Admin = () => {
                     {preguntasOpen && (
                         <div className="admin-nav-subitems">
                             <button className={`admin-nav-subitem ${activeSection === 'preguntas-inicial' ? 'active' : ''}`}
-                                onClick={() => setActiveSection('preguntas-inicial')}>
+                                onClick={() => { setActiveSection('preguntas-inicial'); setIsMobileSidebarOpen(false); }}>
                                 Test inicial
                             </button>
                             <button className={`admin-nav-subitem ${activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
-                                onClick={() => setActiveSection('preguntas-avanzado')}>
+                                onClick={() => { setActiveSection('preguntas-avanzado'); setIsMobileSidebarOpen(false); }}>
                                 Test avanzado
                             </button>
                         </div>
                     )}
 
                     <button className={`admin-nav-item ${activeSection === 'respuestas' ? 'active' : ''}`}
-                        onClick={() => setActiveSection('respuestas')}>
+                        onClick={() => { setActiveSection('respuestas'); setIsMobileSidebarOpen(false); }}>
                         <RefreshCw size={17} /> Respuestas
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'graficas' ? 'active' : ''}`}
-                        onClick={() => setActiveSection('graficas')}>
+                        onClick={() => { setActiveSection('graficas'); setIsMobileSidebarOpen(false); }}>
                         <BarChart2 size={17} /> Gráficas
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'transacciones' ? 'active' : ''}`}
-                        onClick={() => setActiveSection('transacciones')}>
+                        onClick={() => { setActiveSection('transacciones'); setIsMobileSidebarOpen(false); }}>
                         <CreditCard size={17} /> Transacciones
                     </button>
                 </nav>
