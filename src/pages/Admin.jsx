@@ -576,6 +576,11 @@ const Admin = () => {
         return (
             <div className="admin-login-wrapper">
                 <div className="admin-login-card">
+                    <img
+                        src="/Circulo_Eneagrama_Autenticos_02.png"
+                        alt="Enesencia Logo"
+                        className="admin-login-logo"
+                    />
                     <h2>Acceso Administrativo</h2>
                     <form onSubmit={handleLogin}>
                         {loginError && <div className="admin-login-error">{loginError}</div>}
@@ -583,6 +588,7 @@ const Admin = () => {
                             type="text"
                             className="admin-login-input"
                             placeholder="Usuario"
+
                             value={usernameInput}
                             onChange={(e) => setUsernameInput(e.target.value)}
                             autoFocus

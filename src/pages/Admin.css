@@ -29,6 +29,16 @@
     font-size: 1.8rem;
 }
 
+.admin-login-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    display: block;
+    border-radius: 50%;
+    /* If you want it circular, optional */
+    object-fit: cover;
+}
+
 .admin-login-input {
     width: 100%;
     padding: 12px 15px;
