@@ -506,7 +506,7 @@ const Admin = () => {
                 pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
             }
 
-            pdf.save(`Plan-de-Accion-Eneagrama-Tipo-${selectedType}.pdf`);
+            pdf.save(`Plan-de-Accion-Eneatipo-${selectedType}.pdf`);
             setPdfSuccess(true);
 
             setTimeout(() => setPdfSuccess(false), 3000);
