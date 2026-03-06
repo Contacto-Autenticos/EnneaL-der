@@ -284,11 +284,10 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         if (!reportElement) return;
 
         try {
-            // Un solo html2canvas para toda la sección para mayor velocidad
             const canvas = await html2canvas(reportElement, {
                 backgroundColor: '#ffffff',
-                scale: 1, // Reducido de 2 a 1 para hacer la captura mucho más rápida
-                logging: false, // Desactivar logs mejora ligeramente el rendimiento
+                scale: 2, // Restaurado a 2 para mantener la calidad del PDF
+                logging: false,
                 useCORS: true,
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.getElementById('advanced-report-content');
@@ -297,7 +296,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     // Configurar el contenedor principal para que parezca una gran hoja
                     clonedContent.style.background = '#ffffff';
                     clonedContent.style.width = '210mm'; // Ancho A4
-                    clonedContent.style.padding = '15mm 20mm 35mm 20mm'; // Menos espacio arriba
+                    clonedContent.style.padding = '15mm 20mm 35mm 20mm';
                     clonedContent.style.boxSizing = 'border-box';
                     clonedContent.style.margin = '0 auto';
                     clonedContent.style.position = 'relative';
@@ -315,7 +314,25 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         p.style.background = 'transparent';
                     });
 
-                    // Insertar Footer Logo (sin paginación)
+                    // ── DETENER ANIMACIONES DE LA MONEDA ──────────────────
+                    const coinContainer = clonedDoc.querySelector('.advanced-coin-container');
+                    if (coinContainer) {
+                        coinContainer.style.setProperty('animation', 'none', 'important');
+                        coinContainer.style.setProperty('transition', 'none', 'important');
+                        coinContainer.style.setProperty('transform', 'none', 'important');
+                    }
+                    const coinWrapper = clonedDoc.querySelector('.advanced-coin-wrapper');
+                    if (coinWrapper) {
+                        coinWrapper.style.setProperty('margin-bottom', '20px', 'important');
+                        coinWrapper.style.setProperty('padding', '10px', 'important');
+                    }
+                    // Reducir el gap del hero subtitle
+                    const heroSubtitle = clonedDoc.querySelector('.advanced-hero-subtitle');
+                    if (heroSubtitle) {
+                        heroSubtitle.style.setProperty('margin-bottom', '20px', 'important');
+                    }
+
+                    // Insertar Footer Logo
                     const footerLogo = clonedDoc.createElement('div');
                     footerLogo.style.cssText = 'position: absolute; bottom: 10mm; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin: 0; padding: 0;';
                     const footerImg = clonedDoc.createElement('img');
@@ -337,7 +354,6 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         const heroTitle = clonedHero.querySelector('.advanced-hero-title');
                         const profileText = clonedHero.querySelector('.profile-text-title');
                         const userName = clonedHero.querySelector('.user-name-title');
-
                         if (heroTitle) heroTitle.style.color = '#002d44';
                         if (profileText) profileText.style.color = '#002d44';
                         if (userName) userName.style.color = '#002d44';
@@ -349,7 +365,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         el.style.setProperty('box-shadow', 'none', 'important');
                         el.style.setProperty('background', '#0d2535', 'important');
                         el.style.setProperty('background-color', '#0d2535', 'important');
-                        el.style.setProperty('background-image', 'none', 'important'); // Evitar bug de bordes transparentes/negros con gradientes
+                        el.style.setProperty('background-image', 'none', 'important');
                         el.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.4)', 'important');
                         el.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
                         el.style.setProperty('margin', '0 0 30px 0', 'important');
@@ -387,6 +403,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     if (brandFooter) brandFooter.style.display = 'none';
                 }
             });
+
 
             // Generar una única página dinámica en el PDF
             const imgData = canvas.toDataURL('image/png');
