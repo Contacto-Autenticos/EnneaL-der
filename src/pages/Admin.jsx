@@ -38,6 +38,7 @@ const Admin = () => {
 
     // Responses State
     const [testResponses, setTestResponses] = useState([]);
+    const [initialResponses, setInitialResponses] = useState([]);
     const [loadingResponses, setLoadingResponses] = useState(false);
     const [selectedResponse, setSelectedResponse] = useState(null);
 
@@ -54,6 +55,7 @@ const Admin = () => {
     // Chart State
     const [chartPeriod, setChartPeriod] = useState('month'); // 'week' | 'month' | 'year'
     const [chartData, setChartData] = useState([]);
+    const [initialChartData, setInitialChartData] = useState([]);
     const [loadingChart, setLoadingChart] = useState(false);
 
     useEffect(() => {
@@ -69,16 +71,21 @@ const Admin = () => {
             fetchCodes();
             fetchAllQuestions();
             fetchTestResponses();
+            fetchInitialResponses();
         }
     }, [isAuthenticated]);
 
     // Build chart data from testResponses whenever period changes
     useEffect(() => {
-        if (testResponses.length === 0) return;
-        buildChartData(testResponses, chartPeriod);
-    }, [testResponses, chartPeriod]);
+        if (testResponses.length > 0) {
+            buildChartData(testResponses, chartPeriod, setChartData);
+        }
+        if (initialResponses.length > 0) {
+            buildChartData(initialResponses, chartPeriod, setInitialChartData);
+        }
+    }, [testResponses, initialResponses, chartPeriod]);
 
-    const buildChartData = (responses, period) => {
+    const buildChartData = (responses, period, setter) => {
         const counts = {};
         const now = new Date();
 
@@ -117,7 +124,7 @@ const Admin = () => {
         const sorted = Object.entries(counts)
             .map(([label, usuarios]) => ({ label, usuarios }))
             .slice(-12);
-        setChartData(sorted);
+        setter(sorted);
     };
 
     const fetchAllQuestions = async () => {
@@ -147,6 +154,34 @@ const Admin = () => {
             console.error('Error fetching responses:', error);
         } finally {
             setLoadingResponses(false);
+        }
+    };
+
+    const fetchInitialResponses = async () => {
+        try {
+            // Since basic_test_responses has 20 rows per test, 
+            // we fetch all but we'll filter by session_id in JS to be safe 
+            // (or use a RPC if supported, but let's keep it simple for now)
+            const { data, error } = await supabase
+                .from('basic_test_responses')
+                .select('session_id, created_at')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            // Extract unique sessions
+            const uniqueSessions = [];
+            const seen = new Set();
+            (data || []).forEach(r => {
+                if (!seen.has(r.session_id)) {
+                    seen.add(r.session_id);
+                    uniqueSessions.push(r);
+                }
+            });
+
+            setInitialResponses(uniqueSessions);
+        } catch (error) {
+            console.error('Error fetching initial responses:', error);
         }
     };
 
@@ -938,33 +973,124 @@ const Admin = () => {
 
                         {/* Summary metrics */}
                         {chartData.length > 0 && (() => {
-                            const vals = chartData.map(d => d.usuarios);
-                            const total = vals.reduce((a, b) => a + b, 0);
-                            const avg = (total / vals.length).toFixed(1);
-                            const max = Math.max(...vals);
+                            const total = chartData.reduce((acc, curr) => acc + curr.usuarios, 0);
+                            const avg = chartData.length > 0 ? (total / chartData.length).toFixed(1) : 0;
+                            const max = chartData.length > 0 ? Math.max(...chartData.map(d => d.usuarios)) : 0;
                             const maxLabel = chartData.find(d => d.usuarios === max)?.label ?? '-';
                             return (
-                                <div className="chart-metrics">
-                                    <div className="chart-metric-card">
-                                        <span className="chart-metric-value">{total}</span>
-                                        <span className="chart-metric-label">Total usuarios</span>
+                                <div className="admin-metrics-grid">
+                                    <div className="metric-card">
+                                        <div className="metric-val">{total}</div>
+                                        <div className="metric-label">TOTAL USUARIOS</div>
                                     </div>
-                                    <div className="chart-metric-card">
-                                        <span className="chart-metric-value">{avg}</span>
-                                        <span className="chart-metric-label">Promedio / período</span>
+                                    <div className="metric-card">
+                                        <div className="metric-val">{avg}</div>
+                                        <div className="metric-label">PROMEDIO / PERÍODO</div>
                                     </div>
-                                    <div className="chart-metric-card">
-                                        <span className="chart-metric-value">{max}</span>
-                                        <span className="chart-metric-label">Máximo: {maxLabel}</span>
+                                    <div className="metric-card">
+                                        <div className="metric-val">{max}</div>
+                                        <div className="metric-label">
+                                            MÁXIMO: {maxLabel}
+                                        </div>
                                     </div>
                                 </div>
                             );
                         })()}
                     </div>
+
+                            {/* ── SEGUNDA GRÁFICA: TEST INICIAL ── */}
+                <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
+                    <div className="admin-card-header chart-header">
+                        <div className="chart-title-group">
+                            <BarChart2 size={22} className="chart-icon" />
+                            <h2>Actividad Test Inicial</h2>
+                        </div>
+                        <div className="chart-stats-summary">
+                            <span className="total-badge">{initialResponses.length} registros totales</span>
+                        </div>
+                    </div>
+
+                    <div className="chart-wrapper">
+                        <ResponsiveContainer width="100%" height={400}>
+                            <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                                <defs>
+                                    <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#b89b2d" />
+                                        <stop offset="100%" stopColor="#8c7a22" />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                <XAxis
+                                    dataKey="label"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#666', fontSize: 13, dy: 10 }}
+                                    height={60}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#666', fontSize: 11 }}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        borderRadius: '12px',
+                                        border: 'none',
+                                        boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                                        padding: '12px'
+                                    }}
+                                    cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                />
+                                <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
+                                <Bar
+                                    name="Usuarios"
+                                    dataKey="usuarios"
+                                    fill="url(#barGradientInitial)"
+                                    radius={[6, 6, 0, 0]}
+                                    barSize={45}
+                                    animationDuration={1500}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="usuarios"
+                                    stroke="#002d44"
+                                    strokeWidth={3}
+                                    dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
+                                    activeDot={{ r: 6 }}
+                                    name="Tendencia"
+                                    connectNulls
+                                />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    {(() => {
+                        const total = initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0);
+                        const avg = initialChartData.length > 0 ? (total / initialChartData.length).toFixed(1) : 0;
+                        const max = initialChartData.length > 0 ? Math.max(...initialChartData.map(d => d.usuarios)) : 0;
+                        const maxLabel = initialChartData.find(d => d.usuarios === max)?.label ?? '-';
+                        return (
+                            <div className="admin-metrics-grid">
+                                <div className="metric-card">
+                                    <div className="metric-val">{total}</div>
+                                    <div className="metric-label">TOTAL USUARIOS</div>
+                                </div>
+                                <div className="metric-card">
+                                    <div className="metric-val">{avg}</div>
+                                    <div className="metric-label">PROMEDIO / PERÍODO</div>
+                                </div>
+                                <div className="metric-card">
+                                    <div className="metric-val">{max}</div>
+                                    <div className="metric-label">
+                                        MÁXIMO: {maxLabel}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })()}
+                </div>
                 )}
-
             </main>
-
 
             {/* ── MODAL: Ver respuestas ── */}
             {selectedResponse && (
@@ -1042,7 +1168,8 @@ const Admin = () => {
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
 
             {/* Hidden wrapper for PDF Generator */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>
@@ -1052,7 +1179,7 @@ const Admin = () => {
                     name="Líder"
                 />
             </div>
-        </div>
+        </div >
     );
 };
 
