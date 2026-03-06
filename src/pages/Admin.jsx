@@ -1363,9 +1363,9 @@ const Admin = () => {
                 {/* ── SECTION: Transacciones ── */}
                 {activeSection === 'transacciones' && (
                     <div className="admin-card">
-                        <div className="admin-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="admin-card-header transactions-header">
                             <h2><CreditCard size={20} /> Transacciones Wompi</h2>
-                            <div className="transaction-filters" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                            <div className="transaction-filters">
                                 <div className="filter-group">
                                     <label><Calendar size={14} /> Desde: </label>
                                     <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
@@ -1374,10 +1374,10 @@ const Admin = () => {
                                     <label><Calendar size={14} /> Hasta: </label>
                                     <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
                                 </div>
-                                <button onClick={fetchTransactions} className="btn-refresh" disabled={loadingTransactions} style={{ background: '#002d44', color: 'white', padding: '6px 15px', borderRadius: '6px' }}>
+                                <button onClick={fetchTransactions} className="btn-refresh transactions-apply" disabled={loadingTransactions}>
                                     <Filter size={16} /> Aplicar
                                 </button>
-                                <button onClick={() => { setDateFrom(''); setDateTo(''); fetchTransactions(); }} className="btn-refresh" title="Limpiar">
+                                <button onClick={() => { setDateFrom(''); setDateTo(''); fetchTransactions(); }} className="btn-refresh transactions-clear" title="Limpiar">
                                     <RefreshCw size={16} className={loadingTransactions ? 'spinning' : ''} />
                                 </button>
                             </div>
