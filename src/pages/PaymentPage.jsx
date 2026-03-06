@@ -8,10 +8,7 @@ const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t'; // User's real p
 const WOMPI_CURRENCY = 'COP';
 const BASE_PRICE_IN_CENTS = 7500000; // $75.000 COP
 
-const COUPONS = {
-    'ENEAUTOCONOCETE9': 0.20, // 20% discount
-    'CEOB0330': 0.90 // 90% discount
-};
+// Hardcoded coupons removed, now using database
 
 const PaymentPage = () => {
     const navigate = useNavigate();
@@ -91,25 +88,39 @@ const PaymentPage = () => {
         fetchSignature(BASE_PRICE_IN_CENTS);
     }, []);
 
-    const handleApplyCoupon = () => {
+    const handleApplyCoupon = async () => {
         if (!couponCode) return;
+        setMessage('Validando...');
 
         const code = couponCode.trim().toUpperCase();
-        const discount = COUPONS[code];
 
-        if (discount) {
+        try {
+            const { data: coupon, error } = await supabase
+                .from('coupons')
+                .select('*')
+                .eq('code', code)
+                .eq('is_active', true)
+                .single();
+
+            if (error || !coupon) {
+                setMessage('Código no válido o expirado');
+                setDiscountApplied(false);
+                setAmountInCents(BASE_PRICE_IN_CENTS);
+                fetchSignature(BASE_PRICE_IN_CENTS);
+                return;
+            }
+
+            const discount = coupon.discount_percentage / 100;
             const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
             setAmountInCents(newAmount);
             setDiscountApplied(true);
-            setMessage(`¡Código aplicado! Descuento del ${discount * 100}%`);
+            setMessage(`¡Código aplicado! Descuento del ${coupon.discount_percentage}%`);
 
             // Re-fetch signature with new amount
             fetchSignature(newAmount);
-        } else {
-            setMessage('Código no válido');
-            setDiscountApplied(false);
-            setAmountInCents(BASE_PRICE_IN_CENTS);
-            fetchSignature(BASE_PRICE_IN_CENTS);
+        } catch (err) {
+            console.error('Error applying coupon:', err);
+            setMessage('Error al validar cupón');
         }
     };
 

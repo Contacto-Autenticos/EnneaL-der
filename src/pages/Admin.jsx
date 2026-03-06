@@ -36,6 +36,13 @@ const Admin = () => {
     const [editValue, setEditValue] = useState('');
     const [savingId, setSavingId] = useState(null);
 
+    // Coupons State
+    const [coupons, setCoupons] = useState([]);
+    const [loadingCoupons, setLoadingCoupons] = useState(false);
+    const [generatingCoupon, setGeneratingCoupon] = useState(false);
+    const [newCouponCode, setNewCouponCode] = useState('');
+    const [newCouponDiscount, setNewCouponDiscount] = useState('');
+
     // Responses State
     const [testResponses, setTestResponses] = useState([]);
     const [initialResponses, setInitialResponses] = useState([]);
@@ -79,6 +86,7 @@ const Admin = () => {
             fetchTestResponses();
             fetchInitialResponses();
             fetchTransactions();
+            fetchCoupons();
         }
     }, [isAuthenticated]);
 
@@ -214,6 +222,73 @@ const Admin = () => {
             console.error('Error fetching transactions:', error);
         } finally {
             setLoadingTransactions(false);
+        }
+    };
+
+    const fetchCoupons = async () => {
+        setLoadingCoupons(true);
+        try {
+            const { data, error } = await supabase
+                .from('coupons')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (error) throw error;
+            setCoupons(data || []);
+        } catch (error) {
+            console.error('Error fetching coupons:', error);
+        } finally {
+            setLoadingCoupons(false);
+        }
+    };
+
+    const handleCreateCoupon = async (e) => {
+        e.preventDefault();
+        if (!newCouponCode || !newCouponDiscount) return;
+        setGeneratingCoupon(true);
+        try {
+            const { error } = await supabase
+                .from('coupons')
+                .insert([{
+                    code: newCouponCode.trim().toUpperCase(),
+                    discount_percentage: parseFloat(newCouponDiscount),
+                    is_active: true
+                }]);
+            if (error) throw error;
+            setNewCouponCode('');
+            setNewCouponDiscount('');
+            fetchCoupons();
+        } catch (error) {
+            console.error('Error creating coupon:', error);
+            alert('Error al crear el cupón. El código podría estar duplicado.');
+        } finally {
+            setGeneratingCoupon(false);
+        }
+    };
+
+    const handleToggleCoupon = async (id, currentStatus) => {
+        try {
+            const { error } = await supabase
+                .from('coupons')
+                .update({ is_active: !currentStatus })
+                .eq('id', id);
+            if (error) throw error;
+            fetchCoupons();
+        } catch (error) {
+            console.error('Error toggling coupon:', error);
+        }
+    };
+
+    const handleDeleteCoupon = async (id) => {
+        if (!window.confirm('¿Estás seguro de eliminar este cupón?')) return;
+        try {
+            const { error } = await supabase
+                .from('coupons')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+            fetchCoupons();
+        } catch (error) {
+            console.error('Error deleting coupon:', error);
         }
     };
 
@@ -615,6 +690,102 @@ const Admin = () => {
                                                         >
                                                             {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                                         </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div className="codes-list-header" style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '30px' }}>
+                            <h2><Plus size={20} /> Cupones de Descuento</h2>
+                        </div>
+
+                        <div className="code-generator-section" style={{ background: '#f8fafc', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
+                            <form onSubmit={handleCreateCoupon} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '15px', alignItems: 'end' }}>
+                                <div className="form-group-admin">
+                                    <label>Código del Cupón</label>
+                                    <input
+                                        type="text"
+                                        value={newCouponCode}
+                                        onChange={(e) => setNewCouponCode(e.target.value)}
+                                        placeholder="EJ: PROMO20"
+                                        className="select-admin"
+                                        style={{ background: 'white' }}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group-admin">
+                                    <label>% Descuento</label>
+                                    <input
+                                        type="number"
+                                        value={newCouponDiscount}
+                                        onChange={(e) => setNewCouponDiscount(e.target.value)}
+                                        placeholder="20"
+                                        className="select-admin"
+                                        style={{ background: 'white' }}
+                                        min="1"
+                                        max="100"
+                                        required
+                                    />
+                                </div>
+                                <button type="submit" disabled={generatingCoupon} className="btn-generate" style={{ height: '48px', marginTop: '0' }}>
+                                    {generatingCoupon ? 'Creando...' : 'Crear Cupón'}
+                                </button>
+                            </form>
+                        </div>
+
+                        <div className="codes-list-container">
+                            <div className="codes-list-header">
+                                <h3>Cupones configurados</h3>
+                                <button onClick={fetchCoupons} className="btn-refresh" disabled={loadingCoupons} title="Actualizar">
+                                    <RefreshCw size={16} className={loadingCoupons ? 'spinning' : ''} />
+                                </button>
+                            </div>
+                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Descuento</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {coupons.length === 0 ? (
+                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
+                                                {loadingCoupons ? 'Cargando...' : 'No hay cupones.'}
+                                            </td></tr>
+                                        ) : (
+                                            coupons.map((c) => (
+                                                <tr key={c.id}>
+                                                    <td className="code-cell">{c.code}</td>
+                                                    <td>{c.discount_percentage}%</td>
+                                                    <td>
+                                                        <span className={`status-badge ${c.is_active ? 'unused' : 'used'}`}>
+                                                            {c.is_active ? 'Activo' : 'Inactivo'}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ display: 'flex', gap: '10px' }}>
+                                                            <button
+                                                                onClick={() => handleToggleCoupon(c.id, c.is_active)}
+                                                                title={c.is_active ? 'Desactivar' : 'Activar'}
+                                                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666' }}
+                                                            >
+                                                                <RefreshCw size={16} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDeleteCoupon(c.id)}
+                                                                title="Eliminar"
+                                                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444' }}
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))
