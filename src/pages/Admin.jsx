@@ -950,6 +950,7 @@ const Admin = () => {
                                                 axisLine={false}
                                                 tickLine={false}
                                                 tick={{ fill: '#666', fontSize: 11 }}
+                                                allowDecimals={false}
                                             />
                                             <Tooltip
                                                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
@@ -1029,7 +1030,7 @@ const Admin = () => {
                                                 tick={{ fill: '#666', fontSize: 13, dy: 10 }}
                                                 height={60}
                                             />
-                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} allowDecimals={false} />
                                             <Tooltip
                                                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
                                                 cursor={{ fill: 'rgba(0,0,0,0.02)' }}
