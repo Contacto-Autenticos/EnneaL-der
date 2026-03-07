@@ -915,7 +915,7 @@ const Admin = () => {
                                             <th style={{ textAlign: 'center' }}>Copiar</th>
                                             <th>Estado</th>
                                             <th>Correo</th>
-                                            <th>Fecha/Hora uso</th>
+                                            <th>Fecha</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -947,7 +947,7 @@ const Admin = () => {
                                                         </span>
                                                     </td>
                                                     <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
-                                                    <td style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                                                    <td style={{ fontSize: '0.8rem' }}>
                                                         {item.used_at ? new Date(item.used_at).toLocaleString('es-CO', {
                                                             day: '2-digit',
                                                             month: '2-digit',
