@@ -790,13 +790,13 @@ const Admin = () => {
                         onClick={() => { setActiveSection('codigos'); setIsMobileSidebarOpen(false); }}>
                         <Key size={17} /> Códigos de acceso
                     </button>
-                    <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('plan'); setIsMobileSidebarOpen(false); }}>
-                        <Download size={17} /> Plan de Acción
-                    </button>
                     <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
                         onClick={() => { setActiveSection('compartir'); setIsMobileSidebarOpen(false); }}>
                         <Link size={17} /> Compartir
+                    </button>
+                    <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
+                        onClick={() => { setActiveSection('plan'); setIsMobileSidebarOpen(false); }}>
+                        <Download size={17} /> Plan de Acción
                     </button>
 
                     <button
@@ -1133,18 +1133,28 @@ const Admin = () => {
                                 <label>Página de Inicio (Test Inicial)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={window.location.origin} />
-                                    <button onClick={() => handleCopyLink('/')} title="Copiar">
-                                        {copySuccess === '/' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
-                                    </button>
+                                    <div style={{ display: 'flex', gap: '5px' }}>
+                                        <button onClick={() => handleCopyLink('/')} title="Copiar">
+                                            {copySuccess === '/' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                        </button>
+                                        <button onClick={() => window.open(window.location.origin, '_blank')} title="Abrir en nueva ventana">
+                                            <ExternalLink size={16} />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div className="share-link-item" style={{ marginTop: '15px' }}>
                                 <label>Test Liderazgo (Corporativo)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={`${window.location.origin}/test-liderazgo`} />
-                                    <button onClick={() => handleCopyLink('/test-liderazgo')} title="Copiar">
-                                        {copySuccess === '/test-liderazgo' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
-                                    </button>
+                                    <div style={{ display: 'flex', gap: '5px' }}>
+                                        <button onClick={() => handleCopyLink('/test-liderazgo')} title="Copiar">
+                                            {copySuccess === '/test-liderazgo' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                        </button>
+                                        <button onClick={() => window.open(`${window.location.origin}/test-liderazgo`, '_blank')} title="Abrir en nueva ventana">
+                                            <ExternalLink size={16} />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
