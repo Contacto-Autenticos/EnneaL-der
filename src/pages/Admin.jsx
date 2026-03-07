@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, X, Eye, EyeOff } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, X, Eye, EyeOff, Lightbulb, HelpCircle } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -802,8 +802,8 @@ const Admin = () => {
                     <button
                         className={`admin-nav-item ${activeSection === 'preguntas-inicial' || activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
                         onClick={() => setPreguntasOpen(o => !o)}>
-                        <ChevronDown size={17} style={{ transform: preguntasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                        Preguntas
+                        <HelpCircle size={17} /> Preguntas
+                        <ChevronDown size={17} style={{ transform: preguntasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
                     {preguntasOpen && (
                         <div className="admin-nav-subitems">
@@ -821,7 +821,7 @@ const Admin = () => {
                     <button
                         className={`admin-nav-item ${activeSection === 'respuestas-inicial' || activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
                         onClick={() => setRespuestasOpen(o => !o)}>
-                        <RefreshCw size={17} /> Respuestas
+                        <Lightbulb size={17} /> Respuestas
                         <ChevronDown size={17} style={{ transform: respuestasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
                     {respuestasOpen && (
@@ -1284,7 +1284,7 @@ const Admin = () => {
                 {activeSection === 'respuestas-avanzado' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><RefreshCw size={20} /> Respuestas del Test Avanzado</h2>
+                            <h2><Lightbulb size={20} /> Respuestas del Test Avanzado</h2>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
                                     {(() => {
@@ -1412,20 +1412,23 @@ const Admin = () => {
                 {/* ── SECTION: Respuestas Inicial ── */}
                 {activeSection === 'respuestas-inicial' && (
                     <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2><RefreshCw size={20} /> Respuestas del Test Inicial (Sesiones Anónimas)</h2>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>{initialResponses.length} registros</span>
-                                <button
-                                    onClick={handleDownloadAllInitialExcel}
-                                    className="btn-download-excel-complete"
-                                >
-                                    <Download size={16} />
-                                    Descargar Excel Completo
-                                </button>
-                                <button onClick={fetchInitialResponses} className="btn-refresh" disabled={loadingResponses}>
-                                    <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
-                                </button>
+                        <div className="admin-card-header responses-header-flex">
+                            <h2><Lightbulb size={20} /> Respuestas del Test Inicial</h2>
+                            <div className="header-actions-group">
+                                <span className="registros-badge">{initialResponses.length} registros</span>
+                                <div className="header-buttons-wrapper">
+                                    <button
+                                        onClick={handleDownloadAllInitialExcel}
+                                        className="btn-download-excel-complete"
+                                        title="Descargar Excel"
+                                    >
+                                        <Download size={16} />
+                                        <span className="btn-text">Descargar Excel</span>
+                                    </button>
+                                    <button onClick={fetchInitialResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
+                                        <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

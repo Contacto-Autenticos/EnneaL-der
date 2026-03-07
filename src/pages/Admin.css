@@ -427,6 +427,35 @@
     margin: 0;
 }
 
+/* Header Flex Utilities */
+.responses-header-flex {
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.header-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.registros-badge {
+    background-color: var(--color-bg-light);
+    color: #b89b2d;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid rgba(184, 155, 45, 0.2);
+}
+
 /* Code Generator specific styles */
 .code-generator-section {
     display: flex;
@@ -1618,5 +1647,35 @@
     .resp-filter-clear {
         width: 100%;
         max-width: none;
+    }
+
+    /* Response Header Mobile Optimization */
+    .admin-card-header.responses-header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .admin-card-header.responses-header-flex h2 {
+        font-size: 1.15rem;
+    }
+
+    .header-actions-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .header-buttons-wrapper {
+        gap: 8px;
+    }
+
+    .btn-download-excel-complete .btn-text {
+        display: none;
+    }
+
+    .btn-download-excel-complete {
+        padding: 8px;
+        min-width: 38px;
+        justify-content: center;
     }
 }
