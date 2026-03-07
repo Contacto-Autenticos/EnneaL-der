@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { questions, options } from '../data/questions';
@@ -42,6 +42,7 @@ const Test = ({ onComplete }) => {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
+    const isSavingRef = useRef(false);
     const [direction, setDirection] = useState('next');
     const navigate = useNavigate();
 
@@ -117,8 +118,10 @@ const Test = ({ onComplete }) => {
                 setDirection('next');
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
-                await saveAnonymousResponses(newAnswers, shuffledQuestions); // await so insert completes before navigating
-                onComplete(newAnswers, shuffledQuestions); // Pass questions back for calculation
+                if (isSavingRef.current) return;
+                isSavingRef.current = true;
+                await saveAnonymousResponses(newAnswers, shuffledQuestions);
+                onComplete(newAnswers, shuffledQuestions);
                 navigate('/result');
             }
         }, 150);
@@ -142,8 +145,10 @@ const Test = ({ onComplete }) => {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
-                await saveAnonymousResponses(answers, shuffledQuestions); // await so insert completes before navigating
-                onComplete(answers, shuffledQuestions); // Pass questions back for calculation
+                if (isSavingRef.current) return;
+                isSavingRef.current = true;
+                await saveAnonymousResponses(answers, shuffledQuestions);
+                onComplete(answers, shuffledQuestions);
                 navigate('/result');
             }
         }
