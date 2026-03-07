@@ -912,9 +912,9 @@ const Admin = () => {
                                     <thead>
                                         <tr>
                                             <th>Código</th>
+                                            <th style={{ textAlign: 'center' }}>Copiar</th>
                                             <th>Estado</th>
                                             <th>Correo</th>
-                                            <th style={{ textAlign: 'center' }}>Copiar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -926,12 +926,6 @@ const Admin = () => {
                                             codes.slice(0, 10).map((item) => (
                                                 <tr key={item.code}>
                                                     <td className="code-cell">{item.code}</td>
-                                                    <td>
-                                                        <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
-                                                            {item.is_used ? 'Usado' : 'Disponible'}
-                                                        </span>
-                                                    </td>
-                                                    <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
                                                     <td style={{ textAlign: 'center' }}>
                                                         <button
                                                             onClick={() => {
@@ -946,6 +940,12 @@ const Admin = () => {
                                                             {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                                         </button>
                                                     </td>
+                                                    <td>
+                                                        <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
+                                                            {item.is_used ? 'Usado' : 'Disponible'}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
                                                 </tr>
                                             ))
                                         )}
@@ -1033,10 +1033,10 @@ const Admin = () => {
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>%</th>
+                                            <th style={{ textAlign: 'center' }}>Copiar</th>
+                                            <th style={{ textAlign: 'center' }}>%</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
-                                            <th style={{ textAlign: 'center' }}>Copiar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1048,6 +1048,20 @@ const Admin = () => {
                                             coupons.map((c) => (
                                                 <tr key={c.id}>
                                                     <td className="code-cell">{c.code}</td>
+                                                    <td style={{ textAlign: 'center' }}>
+                                                        <button
+                                                            onClick={() => {
+                                                                navigator.clipboard.writeText(c.code);
+                                                                setCopySuccess(c.code);
+                                                                setTimeout(() => setCopySuccess(''), 2000);
+                                                            }}
+                                                            className="btn-action-admin"
+                                                            title="Copiar cupón"
+                                                            style={{ color: copySuccess === c.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
+                                                        >
+                                                            {copySuccess === c.code ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+                                                        </button>
+                                                    </td>
                                                     <td style={{ textAlign: 'center' }}>{c.discount_percentage}%</td>
                                                     <td>
                                                         <span className={`status-badge ${c.is_active ? 'unused' : 'used'}`}>
@@ -1071,20 +1085,6 @@ const Admin = () => {
                                                                 <span style={{ fontSize: '16px', lineHeight: '1' }}>✕</span>
                                                             </button>
                                                         </div>
-                                                    </td>
-                                                    <td style={{ textAlign: 'center' }}>
-                                                        <button
-                                                            onClick={() => {
-                                                                navigator.clipboard.writeText(c.code);
-                                                                setCopySuccess(c.code);
-                                                                setTimeout(() => setCopySuccess(''), 2000);
-                                                            }}
-                                                            className="btn-action-admin"
-                                                            title="Copiar cupón"
-                                                            style={{ color: copySuccess === c.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
-                                                        >
-                                                            {copySuccess === c.code ? <CheckCircle2 size={14} /> : <Copy size={14} />}
-                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))
