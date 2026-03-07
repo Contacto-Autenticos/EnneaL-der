@@ -896,8 +896,8 @@ const Admin = () => {
                         </div>
                         <div className="code-generator-section">
                             <button onClick={handleGenerateCode} disabled={generating} className="btn-generate">
-                                <Plus size={18} />
-                                {generating ? 'Generando...' : 'Crear nuevo código de acceso'}
+                                <Plus size={22} />
+                                {generating ? 'Generando...' : 'Nuevo código de acceso'}
                             </button>
                         </div>
                         <div className="codes-list-container">
@@ -1014,8 +1014,9 @@ const Admin = () => {
                                         />
                                     </div>
                                 </div>
-                                <button type="submit" disabled={generatingCoupon} className="btn-generate" style={{ height: '40px', marginTop: '0', fontSize: '0.9rem' }}>
-                                    {generatingCoupon ? 'Creando...' : '+ Crear nuevo cupón de descuento'}
+                                <button type="submit" disabled={generatingCoupon} className="btn-generate">
+                                    <Plus size={22} />
+                                    {generatingCoupon ? 'Creando...' : 'Nuevo cupón de descuento'}
                                 </button>
                             </form>
                         </div>
