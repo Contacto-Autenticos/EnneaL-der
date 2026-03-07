@@ -1408,14 +1408,7 @@ const Admin = () => {
                                 <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>{initialResponses.length} registros</span>
                                 <button
                                     onClick={handleDownloadAllInitialExcel}
-                                    className="btn-add-code"
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '8px',
-                                        padding: '8px 16px',
-                                        fontSize: '0.85rem'
-                                    }}
+                                    className="btn-download-excel-complete"
                                 >
                                     <Download size={16} />
                                     Descargar Excel Completo

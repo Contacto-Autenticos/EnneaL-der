@@ -771,6 +771,27 @@
     box-shadow: 0 3px 8px rgba(221, 190, 61, 0.35);
 }
 
+.btn-download-excel-complete {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #1e3a5f 100%);
+    color: white !important;
+    border: 1px solid var(--color-primary) !important;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-download-excel-complete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(221, 190, 61, 0.35);
+}
+
 /* ── Responses Modal ── */
 .responses-modal-overlay {
     position: fixed;
