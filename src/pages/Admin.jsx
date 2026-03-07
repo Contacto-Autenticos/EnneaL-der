@@ -796,7 +796,7 @@ const Admin = () => {
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
                         onClick={() => { setActiveSection('plan'); setIsMobileSidebarOpen(false); }}>
-                        <Download size={17} /> Plan de Acción
+                        <Download size={17} /> Plan de acción
                     </button>
 
                     <button
@@ -895,7 +895,7 @@ const Admin = () => {
                             <div className="code-generator-section">
                                 <button onClick={handleGenerateCode} disabled={generating} className="btn-generate">
                                     <Plus size={18} />
-                                    {generating ? 'Generando...' : 'Crear Nuevo Código de Acceso'}
+                                    {generating ? 'Generando...' : 'Crear nuevo código de acceso'}
                                 </button>
                             </div>
                             <div className="codes-list-container">
@@ -955,7 +955,7 @@ const Admin = () => {
                         {/* Right Column: Coupons */}
                         <div className="admin-card">
                             <div className="admin-card-header">
-                                <h2><Plus size={20} /> Cupones de Descuento</h2>
+                                <h2><Plus size={20} /> Cupones de descuento</h2>
                             </div>
 
                             <div className="code-generator-section" style={{ background: '#f8fafc', padding: '15px', borderRadius: '12px', marginBottom: '20px' }}>
@@ -1010,7 +1010,7 @@ const Admin = () => {
                                         </div>
                                     </div>
                                     <button type="submit" disabled={generatingCoupon} className="btn-generate" style={{ height: '40px', marginTop: '0', fontSize: '0.9rem' }}>
-                                        {generatingCoupon ? 'Creando...' : 'Crear Cupón'}
+                                        {generatingCoupon ? 'Creando...' : 'Crear cupón'}
                                     </button>
                                 </form>
                             </div>
@@ -1095,7 +1095,7 @@ const Admin = () => {
                 {activeSection === 'plan' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><Download size={20} /> Generador Plan de Acción</h2>
+                            <h2><Download size={20} /> Generador plan de acción</h2>
                         </div>
                         <div className="pdf-generator-section">
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
@@ -1123,14 +1123,14 @@ const Admin = () => {
                 {activeSection === 'compartir' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><Link size={20} /> Links de Compartir</h2>
+                            <h2><Link size={20} /> Links para compartir</h2>
                         </div>
                         <div className="sharing-links-section">
                             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
                                 Copia los enlaces para enviar a los usuarios.
                             </p>
                             <div className="share-link-item">
-                                <label>Página de Inicio (Test Inicial)</label>
+                                <label>Página de inicio (Test inicial)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={window.location.origin} />
                                     <div style={{ display: 'flex', gap: '5px' }}>
@@ -1144,7 +1144,7 @@ const Admin = () => {
                                 </div>
                             </div>
                             <div className="share-link-item" style={{ marginTop: '15px' }}>
-                                <label>Test Liderazgo (Corporativo)</label>
+                                <label>Test liderazgo (Corporativo)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={`${window.location.origin}/test-liderazgo`} />
                                     <div style={{ display: 'flex', gap: '5px' }}>
@@ -1165,9 +1165,9 @@ const Admin = () => {
                 {activeSection === 'preguntas-inicial' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2>Test Inicial</h2>
+                            <h2>Test inicial</h2>
                             <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                {adminQuestions.length} Activas
+                                {adminQuestions.length} activas
                             </span>
                         </div>
                         <div className="questions-list">
@@ -1224,9 +1224,9 @@ const Admin = () => {
                 {activeSection === 'preguntas-avanzado' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2>Test Avanzado</h2>
+                            <h2>Test avanzado</h2>
                             <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                {adminAdvancedQuestions.length} Activas
+                                {adminAdvancedQuestions.length} activas
                             </span>
                         </div>
                         <div className="questions-list">
@@ -1283,10 +1283,10 @@ const Admin = () => {
                 {/* ── SECTION: Respuestas Avanzado ── */}
                 {activeSection === 'respuestas-avanzado' && (
                     <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2><Lightbulb size={20} /> Respuestas del Test Avanzado</h2>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
+                        <div className="admin-card-header responses-header-flex">
+                            <h2><Lightbulb size={20} /> Respuestas del test avanzado</h2>
+                            <div className="header-actions-group">
+                                <span className="registros-badge">
                                     {(() => {
                                         const filtered = testResponses.filter(r => {
                                             const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
@@ -1299,9 +1299,11 @@ const Admin = () => {
                                         return hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`;
                                     })()} registros
                                 </span>
-                                <button onClick={fetchTestResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
-                                    <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
-                                </button>
+                                <div className="header-buttons-wrapper">
+                                    <button onClick={fetchTestResponses} className="btn-refresh-boxed" disabled={loadingResponses} title="Actualizar">
+                                        <RefreshCw size={18} className={loadingResponses ? 'spinning' : ''} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -1413,7 +1415,7 @@ const Admin = () => {
                 {activeSection === 'respuestas-inicial' && (
                     <div className="admin-card">
                         <div className="admin-card-header responses-header-flex">
-                            <h2><Lightbulb size={20} /> Respuestas del Test Inicial</h2>
+                            <h2><Lightbulb size={20} /> Respuestas del test inicial</h2>
                             <div className="header-actions-group">
                                 <span className="registros-badge">{initialResponses.length} registros</span>
                                 <div className="header-buttons-wrapper">
@@ -1423,10 +1425,10 @@ const Admin = () => {
                                         title="Descargar Excel"
                                     >
                                         <Download size={16} />
-                                        <span className="btn-text">Descargar Excel</span>
+                                        <span className="btn-text">Descargar excel</span>
                                     </button>
-                                    <button onClick={fetchInitialResponses} className="btn-refresh" disabled={loadingResponses} title="Actualizar">
-                                        <RefreshCw size={16} className={loadingResponses ? 'spinning' : ''} />
+                                    <button onClick={fetchInitialResponses} className="btn-refresh-boxed" disabled={loadingResponses} title="Actualizar">
+                                        <RefreshCw size={18} className={loadingResponses ? 'spinning' : ''} />
                                     </button>
                                 </div>
                             </div>
