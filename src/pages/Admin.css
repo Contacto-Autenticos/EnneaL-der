@@ -1430,9 +1430,9 @@
 }
 
 .btn-action-admin.refresh:hover {
-    color: #b89b2d;
-    border-color: #b89b2d;
-    background: #fdfaf0;
+    color: #10b981;
+    border-color: #10b981;
+    background: #ecfdf5;
 }
 
 .btn-action-admin.delete:hover {
