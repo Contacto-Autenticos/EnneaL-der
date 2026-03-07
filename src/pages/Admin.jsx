@@ -660,7 +660,8 @@ const Admin = () => {
             });
 
             sortedSessions.forEach(sid => {
-                const sessionRows = groupedBySession[sid].sort((a, b) => a.question_id - b.question_id);
+                // IMPORTANT: Use (a, b) => Number(a.question_id) - Number(b.question_id) for numeric sort
+                const sessionRows = groupedBySession[sid].sort((a, b) => Number(a.question_id) - Number(b.question_id));
                 const userNum = getSessionNumber(sid);
 
                 sessionRows.forEach(r => {
@@ -682,9 +683,9 @@ const Admin = () => {
                     }
                     const dateStr = new Date(r.created_at).toLocaleString();
                     rows.push([
-                        userNum,
-                        r.question_id,
-                        e(qObj?.text || `ID ${r.question_id}`),
+                        Number(userNum),
+                        Number(r.question_id),
+                        e(qObj?.text || staticQuestions.find(sq => sq.id === Number(r.question_id))?.text || `ID ${r.question_id}`),
                         e(finalAnswer),
                         e(dateStr)
                     ]);
