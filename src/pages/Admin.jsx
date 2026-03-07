@@ -1015,7 +1015,7 @@ const Admin = () => {
                                     </div>
                                 </div>
                                 <button type="submit" disabled={generatingCoupon} className="btn-generate" style={{ height: '40px', marginTop: '0', fontSize: '0.9rem' }}>
-                                    {generatingCoupon ? 'Creando...' : 'Crear cupón'}
+                                    {generatingCoupon ? 'Creando...' : '+ Crear nuevo cupón de descuento'}
                                 </button>
                             </form>
                         </div>
@@ -1137,11 +1137,21 @@ const Admin = () => {
                                 <label>Página de inicio (Test inicial)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={window.location.origin} />
-                                    <div style={{ display: 'flex', gap: '5px' }}>
-                                        <button onClick={() => handleCopyLink('/')} title="Copiar">
-                                            {copySuccess === '/' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <button
+                                            onClick={() => handleCopyLink('/')}
+                                            className="btn-action-admin"
+                                            title="Copiar"
+                                            style={{ color: copySuccess === '/' ? '#4ade80' : '#b89b2d' }}
+                                        >
+                                            {copySuccess === '/' ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                         </button>
-                                        <button onClick={() => window.open(window.location.origin, '_blank')} title="Abrir en nueva ventana">
+                                        <button
+                                            onClick={() => window.open(window.location.origin, '_blank')}
+                                            className="btn-action-admin"
+                                            title="Abrir en nueva ventana"
+                                            style={{ color: '#002d44' }}
+                                        >
                                             <ExternalLink size={16} />
                                         </button>
                                     </div>
@@ -1151,11 +1161,73 @@ const Admin = () => {
                                 <label>Test liderazgo (Corporativo)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={`${window.location.origin}/test-liderazgo`} />
-                                    <div style={{ display: 'flex', gap: '5px' }}>
-                                        <button onClick={() => handleCopyLink('/test-liderazgo')} title="Copiar">
-                                            {copySuccess === '/test-liderazgo' ? <CheckCircle2 size={16} color="#4ade80" /> : <Copy size={16} />}
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <button
+                                            onClick={() => handleCopyLink('/test-liderazgo')}
+                                            className="btn-action-admin"
+                                            title="Copiar"
+                                            style={{ color: copySuccess === '/test-liderazgo' ? '#4ade80' : '#b89b2d' }}
+                                        >
+                                            {copySuccess === '/test-liderazgo' ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                         </button>
-                                        <button onClick={() => window.open(`${window.location.origin}/test-liderazgo`, '_blank')} title="Abrir en nueva ventana">
+                                        <button
+                                            onClick={() => window.open(`${window.location.origin}/test-liderazgo`, '_blank')}
+                                            className="btn-action-admin"
+                                            title="Abrir en nueva ventana"
+                                            style={{ color: '#002d44' }}
+                                        >
+                                            <ExternalLink size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="share-link-item" style={{ marginTop: '15px' }}>
+                                <label>Resultado análisis avanzado</label>
+                                <div className="link-input-group">
+                                    <input readOnly value={`${window.location.origin}/advanced-analysis-result/1`} />
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <button
+                                            onClick={() => handleCopyLink('/advanced-analysis-result/1')}
+                                            className="btn-action-admin"
+                                            title="Copiar"
+                                            style={{ color: copySuccess === '/advanced-analysis-result/1' ? '#4ade80' : '#b89b2d' }}
+                                        >
+                                            {copySuccess === '/advanced-analysis-result/1' ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                                        </button>
+                                        <button
+                                            onClick={() => window.open(`${window.location.origin}/advanced-analysis-result/1`, '_blank')}
+                                            className="btn-action-admin"
+                                            title="Abrir en nueva ventana"
+                                            style={{ color: '#002d44' }}
+                                        >
+                                            <ExternalLink size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="share-link-item" style={{ marginTop: '15px' }}>
+                                <label>Ejemplo plan de acción</label>
+                                <div className="link-input-group">
+                                    <input readOnly value="https://drive.google.com/file/d/14o_r-7BBtJs2P5RnAXwvhxjt3NBlGGQB/view?usp=sharing" />
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                        <button
+                                            onClick={() => {
+                                                navigator.clipboard.writeText("https://drive.google.com/file/d/14o_r-7BBtJs2P5RnAXwvhxjt3NBlGGQB/view?usp=sharing");
+                                                setCopySuccess("ejemplo-plan");
+                                                setTimeout(() => setCopySuccess(''), 2000);
+                                            }}
+                                            className="btn-action-admin"
+                                            title="Copiar"
+                                            style={{ color: copySuccess === 'ejemplo-plan' ? '#4ade80' : '#b89b2d' }}
+                                        >
+                                            {copySuccess === 'ejemplo-plan' ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                                        </button>
+                                        <button
+                                            onClick={() => window.open("https://drive.google.com/file/d/14o_r-7BBtJs2P5RnAXwvhxjt3NBlGGQB/view?usp=sharing", '_blank')}
+                                            className="btn-action-admin"
+                                            title="Abrir en nueva ventana"
+                                            style={{ color: '#002d44' }}
+                                        >
                                             <ExternalLink size={16} />
                                         </button>
                                     </div>
