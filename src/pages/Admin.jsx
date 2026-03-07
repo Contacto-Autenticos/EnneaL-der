@@ -1167,11 +1167,13 @@ const Admin = () => {
                 {/* ── SECTION: Preguntas Test Inicial ── */}
                 {activeSection === 'preguntas-inicial' && (
                     <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2>Preguntas test inicial</h2>
-                            <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                {adminQuestions.length} activas
-                            </span>
+                        <div className="admin-card-header responses-header-flex">
+                            <h2><HelpCircle size={20} /> Preguntas test inicial</h2>
+                            <div className="header-actions-group">
+                                <span className="registros-badge">
+                                    {adminQuestions.length} activas
+                                </span>
+                            </div>
                         </div>
                         <div className="questions-list">
                             {loadingQuestions ? (
@@ -1226,11 +1228,13 @@ const Admin = () => {
                 {/* ── SECTION: Preguntas Test Avanzado ── */}
                 {activeSection === 'preguntas-avanzado' && (
                     <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2>Preguntas test avanzado</h2>
-                            <span style={{ fontSize: '0.9rem', color: '#b89b2d', fontWeight: 'bold' }}>
-                                {adminAdvancedQuestions.length} activas
-                            </span>
+                        <div className="admin-card-header responses-header-flex">
+                            <h2><HelpCircle size={20} /> Preguntas test avanzado</h2>
+                            <div className="header-actions-group">
+                                <span className="registros-badge">
+                                    {adminAdvancedQuestions.length} activas
+                                </span>
+                            </div>
                         </div>
                         <div className="questions-list">
                             {loadingQuestions ? (
@@ -1480,10 +1484,7 @@ const Admin = () => {
                         {/* ── PRIMERA GRÁFICA: TEST INICIAL ── */}
                         <div className="admin-card chart-card">
                             <div className="admin-card-header responses-header-flex">
-                                <div className="chart-title-group">
-                                    <BarChart2 size={22} className="chart-icon" />
-                                    <h2>Actividad test inicial</h2>
-                                </div>
+                                <h2><BarChart2 size={22} /> Actividad test inicial</h2>
                                 <div className="header-actions-group">
                                     <span className="registros-badge">{initialResponses.length} registros totales</span>
                                 </div>
@@ -1559,10 +1560,7 @@ const Admin = () => {
                         {/* ── SEGUNDA GRÁFICA: TEST AVANZADO ── */}
                         <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
                             <div className="admin-card-header responses-header-flex">
-                                <div className="chart-title-group">
-                                    <BarChart2 size={22} className="chart-icon" />
-                                    <h2>Actividad test avanzado</h2>
-                                </div>
+                                <h2><BarChart2 size={22} /> Actividad test avanzado</h2>
                                 <div className="header-actions-group">
                                     <span className="registros-badge">{testResponses.length} registros totales</span>
                                 </div>
@@ -1651,205 +1649,138 @@ const Admin = () => {
                             )}
                         </div>
                     </div>
-                )}
+                )
+                }
 
                 {/* ── SECTION: Transacciones ── */}
-                {activeSection === 'transacciones' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header transactions-header">
-                            <h2><CreditCard size={20} /> Transacciones Wompi</h2>
-                            <div className="transaction-filters">
-                                <div className="filter-group">
-                                    <label><Calendar size={14} /> Desde: </label>
-                                    <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+                {
+                    activeSection === 'transacciones' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header transactions-header">
+                                <h2><CreditCard size={20} /> Transacciones Wompi</h2>
+                                <div className="transaction-filters">
+                                    <div className="filter-group">
+                                        <label><Calendar size={14} /> Desde: </label>
+                                        <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+                                    </div>
+                                    <div className="filter-group">
+                                        <label><Calendar size={14} /> Hasta: </label>
+                                        <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+                                    </div>
+                                    <button onClick={fetchTransactions} className="btn-refresh transactions-apply" disabled={loadingTransactions}>
+                                        <Filter size={16} /> Aplicar
+                                    </button>
+                                    <button onClick={() => { setDateFrom(''); setDateTo(''); fetchTransactions(); }} className="btn-refresh transactions-clear" title="Limpiar">
+                                        <RefreshCw size={16} className={loadingTransactions ? 'spinning' : ''} />
+                                    </button>
                                 </div>
-                                <div className="filter-group">
-                                    <label><Calendar size={14} /> Hasta: </label>
-                                    <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
-                                </div>
-                                <button onClick={fetchTransactions} className="btn-refresh transactions-apply" disabled={loadingTransactions}>
-                                    <Filter size={16} /> Aplicar
-                                </button>
-                                <button onClick={() => { setDateFrom(''); setDateTo(''); fetchTransactions(); }} className="btn-refresh transactions-clear" title="Limpiar">
-                                    <RefreshCw size={16} className={loadingTransactions ? 'spinning' : ''} />
-                                </button>
+                            </div>
+
+                            <div className="transactions-table-wrapper">
+                                <table className="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Estado</th>
+                                            <th>Monto</th>
+                                            <th>Usuario</th>
+                                            <th>Correo</th>
+                                            <th>Datos del pago</th>
+                                            <th>Hora y Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loadingTransactions ? (
+                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>Cargando transacciones...</td></tr>
+                                        ) : transactions.length === 0 ? (
+                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>No se encontraron transacciones en este período.</td></tr>
+                                        ) : (
+                                            transactions.map((tr) => (
+                                                <tr key={tr.id}>
+                                                    <td style={{ padding: '15px' }}>
+                                                        <span className={`status-badge-premium ${tr.status?.toLowerCase() || ''}`}>
+                                                            {tr.status === 'APPROVED' ? 'Pagada' : tr.status === 'DECLINED' ? 'Declinada' : tr.status}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ padding: '15px' }}>
+                                                        <div style={{ fontWeight: '600', color: '#002d44', fontSize: '1.05rem' }}>
+                                                            {tr.currency} ${(tr.amount_in_cents / 100).toLocaleString('es-CO')}
+                                                        </div>
+                                                    </td>
+                                                    <td style={{ padding: '15px' }}>
+                                                        <div style={{ fontWeight: '600', color: '#002d44' }}>{tr.customer_name || '—'}</div>
+                                                    </td>
+                                                    <td style={{ padding: '15px' }}>
+                                                        <div style={{ fontSize: '0.85rem', color: '#666' }}>{tr.customer_email}</div>
+                                                    </td>
+                                                    <td style={{ padding: '15px' }}>
+                                                        <div style={{ fontSize: '0.85rem', fontFamily: 'monospace', color: '#002d44' }}>#{tr.transaction_id}</div>
+                                                        <div style={{ fontSize: '0.75rem', color: '#999' }}>Ref: {tr.reference}</div>
+                                                        {tr.payment_method_brand && (
+                                                            <div style={{ fontSize: '0.75rem', marginTop: '4px', fontWeight: 'bold', color: '#b89b2d' }}>
+                                                                {tr.payment_method_brand} {tr.payment_method_type === 'CARD' ? '💳' : ''}
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                    <td style={{ padding: '15px' }}>
+                                                        <div style={{ fontSize: '0.9rem', color: '#002d44', fontWeight: '500' }}>
+                                                            {new Date(tr.created_at).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                                        </div>
+                                                        <div style={{ fontSize: '0.8rem', color: '#999' }}>
+                                                            {new Date(tr.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
-                        <div className="transactions-table-wrapper">
-                            <table className="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>Estado</th>
-                                        <th>Monto</th>
-                                        <th>Usuario</th>
-                                        <th>Correo</th>
-                                        <th>Datos del pago</th>
-                                        <th>Hora y Fecha</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loadingTransactions ? (
-                                        <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>Cargando transacciones...</td></tr>
-                                    ) : transactions.length === 0 ? (
-                                        <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>No se encontraron transacciones en este período.</td></tr>
-                                    ) : (
-                                        transactions.map((tr) => (
-                                            <tr key={tr.id}>
-                                                <td style={{ padding: '15px' }}>
-                                                    <span className={`status-badge-premium ${tr.status?.toLowerCase() || ''}`}>
-                                                        {tr.status === 'APPROVED' ? 'Pagada' : tr.status === 'DECLINED' ? 'Declinada' : tr.status}
-                                                    </span>
-                                                </td>
-                                                <td style={{ padding: '15px' }}>
-                                                    <div style={{ fontWeight: '600', color: '#002d44', fontSize: '1.05rem' }}>
-                                                        {tr.currency} ${(tr.amount_in_cents / 100).toLocaleString('es-CO')}
-                                                    </div>
-                                                </td>
-                                                <td style={{ padding: '15px' }}>
-                                                    <div style={{ fontWeight: '600', color: '#002d44' }}>{tr.customer_name || '—'}</div>
-                                                </td>
-                                                <td style={{ padding: '15px' }}>
-                                                    <div style={{ fontSize: '0.85rem', color: '#666' }}>{tr.customer_email}</div>
-                                                </td>
-                                                <td style={{ padding: '15px' }}>
-                                                    <div style={{ fontSize: '0.85rem', fontFamily: 'monospace', color: '#002d44' }}>#{tr.transaction_id}</div>
-                                                    <div style={{ fontSize: '0.75rem', color: '#999' }}>Ref: {tr.reference}</div>
-                                                    {tr.payment_method_brand && (
-                                                        <div style={{ fontSize: '0.75rem', marginTop: '4px', fontWeight: 'bold', color: '#b89b2d' }}>
-                                                            {tr.payment_method_brand} {tr.payment_method_type === 'CARD' ? '💳' : ''}
-                                                        </div>
-                                                    )}
-                                                </td>
-                                                <td style={{ padding: '15px' }}>
-                                                    <div style={{ fontSize: '0.9rem', color: '#002d44', fontWeight: '500' }}>
-                                                        {new Date(tr.created_at).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
-                                                    </div>
-                                                    <div style={{ fontSize: '0.8rem', color: '#999' }}>
-                                                        {new Date(tr.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
-            </main>
+                    )
+                }
+            </main >
 
             {/* ── MODAL: Ver respuestas ── */}
-            {selectedResponse && (
-                <div className="responses-modal-overlay" onClick={() => setSelectedResponse(null)}>
-                    <div className="responses-modal" onClick={e => e.stopPropagation()}>
-                        <div className="responses-modal-header">
-                            <div>
-                                <h2>Respuestas del test</h2>
-                                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#666' }}>
-                                    <strong>{selectedResponse.user_name || 'Sin nombre'}</strong> &nbsp;·&nbsp;
-                                    {selectedResponse.user_email} &nbsp;·&nbsp;
-                                    <span style={{ color: '#b89b2d', fontWeight: 'bold' }}>Eneatipo {selectedResponse.enneatype}</span> &nbsp;·&nbsp;
-                                    Test de {selectedResponse.test_type} preguntas
-                                    {selectedResponse.organization_code && selectedResponse.organization_code !== 'NO_CODE' && (
-                                        <> &nbsp;·&nbsp; Org: <strong style={{ color: '#3730a3' }}>{selectedResponse.organization_code}</strong></>
-                                    )}
-                                    {selectedResponse.access_code && (
-                                        <> &nbsp;·&nbsp; Código: <strong style={{ color: '#b89b2d', fontFamily: 'monospace' }}>{selectedResponse.access_code}</strong></>
-                                    )}
-                                </p>
+            {
+                selectedResponse && (
+                    <div className="responses-modal-overlay" onClick={() => setSelectedResponse(null)}>
+                        <div className="responses-modal" onClick={e => e.stopPropagation()}>
+                            <div className="responses-modal-header">
+                                <div>
+                                    <h2>Respuestas del test</h2>
+                                    <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#666' }}>
+                                        <strong>{selectedResponse.user_name || 'Sin nombre'}</strong> &nbsp;·&nbsp;
+                                        {selectedResponse.user_email} &nbsp;·&nbsp;
+                                        <span style={{ color: '#b89b2d', fontWeight: 'bold' }}>Eneatipo {selectedResponse.enneatype}</span> &nbsp;·&nbsp;
+                                        Test de {selectedResponse.test_type} preguntas
+                                        {selectedResponse.organization_code && selectedResponse.organization_code !== 'NO_CODE' && (
+                                            <> &nbsp;·&nbsp; Org: <strong style={{ color: '#3730a3' }}>{selectedResponse.organization_code}</strong></>
+                                        )}
+                                        {selectedResponse.access_code && (
+                                            <> &nbsp;·&nbsp; Código: <strong style={{ color: '#b89b2d', fontFamily: 'monospace' }}>{selectedResponse.access_code}</strong></>
+                                        )}
+                                    </p>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                                    <button className="btn-ver-respuestas"
+                                        onClick={() => handleDownloadExcel(selectedResponse)}
+                                        title="Descargar en Excel"
+                                        style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        ↓ Excel
+                                    </button>
+                                    <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
+                                </div>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-                                <button className="btn-ver-respuestas"
-                                    onClick={() => handleDownloadExcel(selectedResponse)}
-                                    title="Descargar en Excel"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    ↓ Excel
-                                </button>
-                                <button className="responses-modal-close" onClick={() => setSelectedResponse(null)}>✕</button>
-                            </div>
-                        </div>
-                        <div className="responses-modal-body">
-                            {(() => {
-                                const answers = selectedResponse.answers || [];
-                                const groups = {};
-                                answers.forEach(a => {
-                                    const key = a.enneatype || 'Sin tipo';
-                                    if (!groups[key]) groups[key] = [];
-                                    groups[key].push(a);
-                                });
-                                const sortedKeys = Object.keys(groups).sort((a, b) => Number(a) - Number(b));
-                                let globalIdx = 0;
-                                return sortedKeys.map(typeKey => (
-                                    <div key={typeKey} style={{ marginBottom: '24px' }}>
-                                        <div style={{
-                                            display: 'flex', alignItems: 'center', gap: '10px',
-                                            marginBottom: '12px', paddingBottom: '8px',
-                                            borderBottom: '2px solid #f0f0f0'
-                                        }}>
-                                            <span style={{
-                                                background: '#002d44', color: 'white',
-                                                fontWeight: 700, fontSize: '0.82rem',
-                                                padding: '3px 10px', borderRadius: '20px'
-                                            }}>Eneatipo {typeKey}</span>
-                                            <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
-                                                {groups[typeKey].length} preguntas
-                                            </span>
-                                        </div>
-                                        {groups[typeKey].map((a, i) => {
-                                            globalIdx++;
-                                            const n = globalIdx;
-                                            return (
-                                                <div key={i} className="response-item" style={{ marginBottom: '10px' }}>
-                                                    <span className="response-number">{n}</span>
-                                                    <div className="response-content">
-                                                        <p className="response-question">{a.text}</p>
-                                                        <span className="response-answer">{a.answer_label || '—'}</span>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                ));
-                            })()}
-                        </div>
-                    </div>
-                </div>
-            )
-            }
-
-            {/* ── MODAL: Ver respuestas iniciales ── */}
-            {selectedInitialResponse && (
-                <div className="responses-modal-overlay" onClick={() => setSelectedInitialResponse(null)}>
-                    <div className="responses-modal" onClick={e => e.stopPropagation()}>
-                        <div className="responses-modal-header">
-                            <div>
-                                <h2>Respuestas del test inicial</h2>
-                                <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#666' }}>
-                                    Sesión: <span style={{ fontFamily: 'monospace' }}>{selectedInitialResponse.session_id}</span>
-                                </p>
-                            </div>
-                            <button className="responses-modal-close" onClick={() => setSelectedInitialResponse(null)}>✕</button>
-                        </div>
-                        <div className="responses-modal-body">
-                            {initialResponseDetails.length === 0 ? (
-                                <p style={{ textAlign: 'center', padding: '20px', color: '#666' }}>No hay detalles para mostrar.</p>
-                            ) : (
-                                (() => {
-                                    // Group answers by question type (A, B, C, X, Y, Z, special)
+                            <div className="responses-modal-body">
+                                {(() => {
+                                    const answers = selectedResponse.answers || [];
                                     const groups = {};
-                                    initialResponseDetails.forEach(a => {
-                                        const questionObj = adminQuestions.find(q => q.id === a.question_id);
-                                        const type = questionObj?.type || 'A';
-                                        if (!groups[type]) groups[type] = [];
-                                        groups[type].push({ ...a, questionText: questionObj?.text });
+                                    answers.forEach(a => {
+                                        const key = a.enneatype || 'Sin tipo';
+                                        if (!groups[key]) groups[key] = [];
+                                        groups[key].push(a);
                                     });
-
-                                    // Sort groups using the same order as initialGroupsOrder
-                                    const sortedKeys = initialGroupsOrder.filter(k => groups[k]).concat(
-                                        Object.keys(groups).filter(k => !initialGroupsOrder.includes(k))
-                                    );
-
+                                    const sortedKeys = Object.keys(groups).sort((a, b) => Number(a) - Number(b));
                                     let globalIdx = 0;
                                     return sortedKeys.map(typeKey => (
                                         <div key={typeKey} style={{ marginBottom: '24px' }}>
@@ -1859,76 +1790,149 @@ const Admin = () => {
                                                 borderBottom: '2px solid #f0f0f0'
                                             }}>
                                                 <span style={{
-                                                    background: '#b89b2d', color: 'white',
+                                                    background: '#002d44', color: 'white',
                                                     fontWeight: 700, fontSize: '0.82rem',
                                                     padding: '3px 10px', borderRadius: '20px'
-                                                }}>{initialGroupLabels[typeKey] || `Grupo ${typeKey}`}</span>
+                                                }}>Eneatipo {typeKey}</span>
                                                 <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
-                                                    {groups[typeKey].length} respuestas
+                                                    {groups[typeKey].length} preguntas
                                                 </span>
                                             </div>
                                             {groups[typeKey].map((a, i) => {
                                                 globalIdx++;
+                                                const n = globalIdx;
                                                 return (
-                                                    <div key={a.id || i} className="response-item" style={{ marginBottom: '15px' }}>
-                                                        <span className="response-number" style={{ background: '#002d44', color: 'white' }}>{globalIdx}</span>
+                                                    <div key={i} className="response-item" style={{ marginBottom: '10px' }}>
+                                                        <span className="response-number">{n}</span>
                                                         <div className="response-content">
-                                                            <p className="response-question" style={{ fontSize: '1.05rem', color: '#002d44', marginBottom: '4px' }}>
-                                                                {a.questionText || `Pregunta ID ${a.question_id}`}
-                                                            </p>
-                                                            <span className="response-answer" style={{
-                                                                display: 'inline-block',
-                                                                background: '#f9fafb',
-                                                                border: '1px solid #e5e7eb',
-                                                                padding: '6px 12px',
-                                                                borderRadius: '8px',
-                                                                fontWeight: '600',
-                                                                color: '#374151',
-                                                                fontSize: '0.92rem',
-                                                                lineHeight: '1.4'
-                                                            }}>
-                                                                {(() => {
-                                                                    const qObj = adminQuestions.find(q => q.id === a.question_id) || staticQuestions.find(q => q.id === a.question_id);
-                                                                    if (qObj?.type === 'special' && qObj.options) {
-                                                                        const val = a.answer;
-
-                                                                        // 1. If it's already a number (new format)
-                                                                        const valNum = parseInt(val);
-                                                                        if (!isNaN(valNum)) {
-                                                                            const opt = qObj.options.find(o => o.value === valNum);
-                                                                            if (opt) return opt.label;
-                                                                        }
-
-                                                                        // 2. If it's the old format "Algo", "Mucho", etc.
-                                                                        const REVERSE_LABELS = {
-                                                                            'Muy poco': 1,
-                                                                            'Algo': 2,
-                                                                            'Mucho': 3,
-                                                                            'Totalmente': 4
-                                                                        };
-                                                                        const mappedValue = REVERSE_LABELS[val];
-                                                                        if (mappedValue) {
-                                                                            const opt = qObj.options.find(o => o.value === mappedValue);
-                                                                            if (opt) return opt.label;
-                                                                        }
-
-                                                                        return val || '—';
-                                                                    }
-                                                                    return a.answer || '—';
-                                                                })()}
-                                                            </span>
+                                                            <p className="response-question">{a.text}</p>
+                                                            <span className="response-answer">{a.answer_label || '—'}</span>
                                                         </div>
                                                     </div>
                                                 );
                                             })}
                                         </div>
                                     ));
-                                })()
-                            )}
+                                })()}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
+
+            {/* ── MODAL: Ver respuestas iniciales ── */}
+            {
+                selectedInitialResponse && (
+                    <div className="responses-modal-overlay" onClick={() => setSelectedInitialResponse(null)}>
+                        <div className="responses-modal" onClick={e => e.stopPropagation()}>
+                            <div className="responses-modal-header">
+                                <div>
+                                    <h2>Respuestas del test inicial</h2>
+                                    <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#666' }}>
+                                        Sesión: <span style={{ fontFamily: 'monospace' }}>{selectedInitialResponse.session_id}</span>
+                                    </p>
+                                </div>
+                                <button className="responses-modal-close" onClick={() => setSelectedInitialResponse(null)}>✕</button>
+                            </div>
+                            <div className="responses-modal-body">
+                                {initialResponseDetails.length === 0 ? (
+                                    <p style={{ textAlign: 'center', padding: '20px', color: '#666' }}>No hay detalles para mostrar.</p>
+                                ) : (
+                                    (() => {
+                                        // Group answers by question type (A, B, C, X, Y, Z, special)
+                                        const groups = {};
+                                        initialResponseDetails.forEach(a => {
+                                            const questionObj = adminQuestions.find(q => q.id === a.question_id);
+                                            const type = questionObj?.type || 'A';
+                                            if (!groups[type]) groups[type] = [];
+                                            groups[type].push({ ...a, questionText: questionObj?.text });
+                                        });
+
+                                        // Sort groups using the same order as initialGroupsOrder
+                                        const sortedKeys = initialGroupsOrder.filter(k => groups[k]).concat(
+                                            Object.keys(groups).filter(k => !initialGroupsOrder.includes(k))
+                                        );
+
+                                        let globalIdx = 0;
+                                        return sortedKeys.map(typeKey => (
+                                            <div key={typeKey} style={{ marginBottom: '24px' }}>
+                                                <div style={{
+                                                    display: 'flex', alignItems: 'center', gap: '10px',
+                                                    marginBottom: '12px', paddingBottom: '8px',
+                                                    borderBottom: '2px solid #f0f0f0'
+                                                }}>
+                                                    <span style={{
+                                                        background: '#b89b2d', color: 'white',
+                                                        fontWeight: 700, fontSize: '0.82rem',
+                                                        padding: '3px 10px', borderRadius: '20px'
+                                                    }}>{initialGroupLabels[typeKey] || `Grupo ${typeKey}`}</span>
+                                                    <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
+                                                        {groups[typeKey].length} respuestas
+                                                    </span>
+                                                </div>
+                                                {groups[typeKey].map((a, i) => {
+                                                    globalIdx++;
+                                                    return (
+                                                        <div key={a.id || i} className="response-item" style={{ marginBottom: '15px' }}>
+                                                            <span className="response-number" style={{ background: '#002d44', color: 'white' }}>{globalIdx}</span>
+                                                            <div className="response-content">
+                                                                <p className="response-question" style={{ fontSize: '1.05rem', color: '#002d44', marginBottom: '4px' }}>
+                                                                    {a.questionText || `Pregunta ID ${a.question_id}`}
+                                                                </p>
+                                                                <span className="response-answer" style={{
+                                                                    display: 'inline-block',
+                                                                    background: '#f9fafb',
+                                                                    border: '1px solid #e5e7eb',
+                                                                    padding: '6px 12px',
+                                                                    borderRadius: '8px',
+                                                                    fontWeight: '600',
+                                                                    color: '#374151',
+                                                                    fontSize: '0.92rem',
+                                                                    lineHeight: '1.4'
+                                                                }}>
+                                                                    {(() => {
+                                                                        const qObj = adminQuestions.find(q => q.id === a.question_id) || staticQuestions.find(q => q.id === a.question_id);
+                                                                        if (qObj?.type === 'special' && qObj.options) {
+                                                                            const val = a.answer;
+
+                                                                            // 1. If it's already a number (new format)
+                                                                            const valNum = parseInt(val);
+                                                                            if (!isNaN(valNum)) {
+                                                                                const opt = qObj.options.find(o => o.value === valNum);
+                                                                                if (opt) return opt.label;
+                                                                            }
+
+                                                                            // 2. If it's the old format "Algo", "Mucho", etc.
+                                                                            const REVERSE_LABELS = {
+                                                                                'Muy poco': 1,
+                                                                                'Algo': 2,
+                                                                                'Mucho': 3,
+                                                                                'Totalmente': 4
+                                                                            };
+                                                                            const mappedValue = REVERSE_LABELS[val];
+                                                                            if (mappedValue) {
+                                                                                const opt = qObj.options.find(o => o.value === mappedValue);
+                                                                                if (opt) return opt.label;
+                                                                            }
+
+                                                                            return val || '—';
+                                                                        }
+                                                                        return a.answer || '—';
+                                                                    })()}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ));
+                                    })()
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
 
             {/* Hidden wrapper for PDF Generator */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>
@@ -1938,7 +1942,7 @@ const Admin = () => {
                     name="Líder"
                 />
             </div>
-        </div>
+        </div >
     );
 };
 
