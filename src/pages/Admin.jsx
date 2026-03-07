@@ -1135,7 +1135,7 @@ const Admin = () => {
                                 Copia los enlaces para enviar a los usuarios.
                             </p>
                             <div className="share-link-item">
-                                <label>Página de inicio (Test inicial)</label>
+                                <label style={{ fontWeight: 'bold' }}>Página de inicio (Test inicial)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={window.location.origin} />
                                     <div style={{ display: 'flex', gap: '8px' }}>
@@ -1159,7 +1159,7 @@ const Admin = () => {
                                 </div>
                             </div>
                             <div className="share-link-item" style={{ marginTop: '15px' }}>
-                                <label>Test liderazgo (Corporativo)</label>
+                                <label style={{ fontWeight: 'bold' }}>Test liderazgo (Corporativo)</label>
                                 <div className="link-input-group">
                                     <input readOnly value={`${window.location.origin}/test-liderazgo`} />
                                     <div style={{ display: 'flex', gap: '8px' }}>
@@ -1183,7 +1183,7 @@ const Admin = () => {
                                 </div>
                             </div>
                             <div className="share-link-item" style={{ marginTop: '15px' }}>
-                                <label>Resultado análisis avanzado</label>
+                                <label style={{ fontWeight: 'bold' }}>Ejemplo resultado análisis avanzado</label>
                                 <div className="link-input-group">
                                     <input readOnly value={`${window.location.origin}/advanced-analysis-result/1`} />
                                     <div style={{ display: 'flex', gap: '8px' }}>
@@ -1207,13 +1207,13 @@ const Admin = () => {
                                 </div>
                             </div>
                             <div className="share-link-item" style={{ marginTop: '15px' }}>
-                                <label>Ejemplo plan de acción</label>
+                                <label style={{ fontWeight: 'bold' }}>Ejemplo plan de acción</label>
                                 <div className="link-input-group">
-                                    <input readOnly value="https://drive.google.com/file/d/14o_r-7BBtJs2P5RnAXwvhxjt3NBlGGQB/view?usp=sharing" />
+                                    <input readOnly value="https://drive.google.com/file/d/1PxjaxcBWnH1g3gZYl1EVRS6FPF8PUs0S/view?usp=sharing" />
                                     <div style={{ display: 'flex', gap: '8px' }}>
                                         <button
                                             onClick={() => {
-                                                navigator.clipboard.writeText("https://drive.google.com/file/d/14o_r-7BBtJs2P5RnAXwvhxjt3NBlGGQB/view?usp=sharing");
+                                                navigator.clipboard.writeText("https://drive.google.com/file/d/1PxjaxcBWnH1g3gZYl1EVRS6FPF8PUs0S/view?usp=sharing");
                                                 setCopySuccess("ejemplo-plan");
                                                 setTimeout(() => setCopySuccess(''), 2000);
                                             }}
@@ -1224,7 +1224,7 @@ const Admin = () => {
                                             {copySuccess === 'ejemplo-plan' ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                         </button>
                                         <button
-                                            onClick={() => window.open("https://drive.google.com/file/d/14o_r-7BBtJs2P5RnAXwvhxjt3NBlGGQB/view?usp=sharing", '_blank')}
+                                            onClick={() => window.open("https://drive.google.com/file/d/1PxjaxcBWnH1g3gZYl1EVRS6FPF8PUs0S/view?usp=sharing", '_blank')}
                                             className="btn-action-admin"
                                             title="Abrir en nueva ventana"
                                             style={{ color: '#002d44' }}
