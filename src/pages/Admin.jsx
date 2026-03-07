@@ -915,11 +915,12 @@ const Admin = () => {
                                             <th style={{ textAlign: 'center' }}>Copiar</th>
                                             <th>Estado</th>
                                             <th>Correo</th>
+                                            <th>Fecha/Hora uso</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {codes.length === 0 ? (
-                                            <tr><td colSpan="4" style={{ textAlign: 'center', padding: '10px' }}>
+                                            <tr><td colSpan="5" style={{ textAlign: 'center', padding: '10px' }}>
                                                 {loading ? 'Cargando...' : 'No hay códigos.'}
                                             </td></tr>
                                         ) : (
@@ -946,6 +947,15 @@ const Admin = () => {
                                                         </span>
                                                     </td>
                                                     <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
+                                                    <td style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+                                                        {item.used_at ? new Date(item.used_at).toLocaleString('es-CO', {
+                                                            day: '2-digit',
+                                                            month: '2-digit',
+                                                            year: 'numeric',
+                                                            hour: '2-digit',
+                                                            minute: '2-digit'
+                                                        }) : '-'}
+                                                    </td>
                                                 </tr>
                                             ))
                                         )}
