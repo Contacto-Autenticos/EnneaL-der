@@ -792,7 +792,7 @@ const Admin = () => {
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'cupones' ? 'active' : ''}`}
                         onClick={() => { setActiveSection('cupones'); setIsMobileSidebarOpen(false); }}>
-                        <Ticket size={17} /> Cupones de descuento
+                        <Ticket size={17} /> Descuentos
                     </button>
                     <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
                         onClick={() => { setActiveSection('compartir'); setIsMobileSidebarOpen(false); }}>
@@ -959,7 +959,7 @@ const Admin = () => {
                 {activeSection === 'cupones' && (
                     <div className="admin-card">
                         <div className="admin-card-header">
-                            <h2><Ticket size={20} /> Cupones de descuento</h2>
+                            <h2><Ticket size={20} /> Descuentos</h2>
                         </div>
 
                         <div className="code-generator-section" style={{ background: '#f8fafc', padding: '15px', borderRadius: '12px', marginBottom: '20px' }}>
