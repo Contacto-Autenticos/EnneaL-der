@@ -1284,7 +1284,7 @@ const Admin = () => {
                 {activeSection === 'respuestas-avanzado' && (
                     <div className="admin-card">
                         <div className="admin-card-header responses-header-flex">
-                            <h2><Lightbulb size={20} /> Respuestas del test avanzado</h2>
+                            <h2><Lightbulb size={20} /> Respuestas test avanzado</h2>
                             <div className="header-actions-group">
                                 <span className="registros-badge">
                                     {(() => {
@@ -1415,7 +1415,7 @@ const Admin = () => {
                 {activeSection === 'respuestas-inicial' && (
                     <div className="admin-card">
                         <div className="admin-card-header responses-header-flex">
-                            <h2><Lightbulb size={20} /> Respuestas del test inicial</h2>
+                            <h2><Lightbulb size={20} /> Respuestas test inicial</h2>
                             <div className="header-actions-group">
                                 <span className="registros-badge">{initialResponses.length} registros</span>
                                 <div className="header-buttons-wrapper">
@@ -1474,15 +1474,94 @@ const Admin = () => {
                 {/* ── SECTION: Gráficas ── */}
                 {activeSection === 'graficas' && (
                     <div className="charts-main-container">
-                        {/* ── PRIMERA GRÁFICA: TEST AVANZADO ── */}
+                        {/* ── PRIMERA GRÁFICA: TEST INICIAL ── */}
                         <div className="admin-card chart-card">
-                            <div className="admin-card-header chart-header">
+                            <div className="admin-card-header responses-header-flex">
                                 <div className="chart-title-group">
                                     <BarChart2 size={22} className="chart-icon" />
-                                    <h2>Actividad Test Avanzado</h2>
+                                    <h2>Actividad test inicial</h2>
                                 </div>
-                                <div className="chart-stats-summary">
-                                    <span className="total-badge">{testResponses.length} registros totales</span>
+                                <div className="header-actions-group">
+                                    <span className="registros-badge">{initialResponses.length} registros totales</span>
+                                </div>
+                            </div>
+
+                            <div className="chart-wrapper">
+                                {initialChartData.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+                                        No hay datos de sesiones para mostrar.
+                                    </div>
+                                ) : (
+                                    <ResponsiveContainer width="100%" height={400}>
+                                        <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                                            <defs>
+                                                <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="#b89b2d" />
+                                                    <stop offset="100%" stopColor="#8c7a22" />
+                                                </linearGradient>
+                                            </defs>
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                            <XAxis
+                                                dataKey="label"
+                                                axisLine={false}
+                                                tickLine={false}
+                                                tick={{ fill: '#666', fontSize: 13, dy: 10 }}
+                                                height={60}
+                                            />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} allowDecimals={false} />
+                                            <Tooltip
+                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
+                                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                            />
+                                            <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
+                                            <Bar
+                                                name="Usuarios"
+                                                dataKey="usuarios"
+                                                fill="url(#barGradientInitial)"
+                                                radius={[6, 6, 0, 0]}
+                                                barSize={45}
+                                            />
+                                            <Line
+                                                type="monotone"
+                                                dataKey="usuarios"
+                                                stroke="#002d44"
+                                                strokeWidth={3}
+                                                dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
+                                                activeDot={{ r: 6 }}
+                                                name="Tendencia"
+                                            />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                )}
+                            </div>
+
+                            {initialChartData.length > 0 && (
+                                <div className="chart-metrics">
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
+                                        <div className="chart-metric-label">TOTAL SESIONES</div>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{(initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0) / initialChartData.length).toFixed(1)}</div>
+                                        <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
+                                    </div>
+                                    <div className="chart-metric-card">
+                                        <div className="chart-metric-value">{Math.max(...initialChartData.map(d => d.usuarios))}</div>
+                                        <div className="chart-metric-label">MÁXIMO</div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* ── SEGUNDA GRÁFICA: TEST AVANZADO ── */}
+                        <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
+                            <div className="admin-card-header responses-header-flex">
+                                <div className="chart-title-group">
+                                    <BarChart2 size={22} className="chart-icon" />
+                                    <h2>Actividad test avanzado</h2>
+                                </div>
+                                <div className="header-actions-group">
+                                    <span className="registros-badge">{testResponses.length} registros totales</span>
                                 </div>
                             </div>
 
@@ -1563,85 +1642,6 @@ const Admin = () => {
                                     </div>
                                     <div className="chart-metric-card">
                                         <div className="chart-metric-value">{Math.max(...chartData.map(d => d.usuarios))}</div>
-                                        <div className="chart-metric-label">MÁXIMO</div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* ── SEGUNDA GRÁFICA: TEST INICIAL ── */}
-                        <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
-                            <div className="admin-card-header chart-header">
-                                <div className="chart-title-group">
-                                    <BarChart2 size={22} className="chart-icon" />
-                                    <h2>Actividad Test Inicial</h2>
-                                </div>
-                                <div className="chart-stats-summary">
-                                    <span className="total-badge">{initialResponses.length} registros totales</span>
-                                </div>
-                            </div>
-
-                            <div className="chart-wrapper">
-                                {initialChartData.length === 0 ? (
-                                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
-                                        No hay datos de sesiones para mostrar.
-                                    </div>
-                                ) : (
-                                    <ResponsiveContainer width="100%" height={400}>
-                                        <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                                            <defs>
-                                                <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="0%" stopColor="#b89b2d" />
-                                                    <stop offset="100%" stopColor="#8c7a22" />
-                                                </linearGradient>
-                                            </defs>
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                                            <XAxis
-                                                dataKey="label"
-                                                axisLine={false}
-                                                tickLine={false}
-                                                tick={{ fill: '#666', fontSize: 13, dy: 10 }}
-                                                height={60}
-                                            />
-                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} allowDecimals={false} />
-                                            <Tooltip
-                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
-                                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
-                                            />
-                                            <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
-                                            <Bar
-                                                name="Usuarios"
-                                                dataKey="usuarios"
-                                                fill="url(#barGradientInitial)"
-                                                radius={[6, 6, 0, 0]}
-                                                barSize={45}
-                                            />
-                                            <Line
-                                                type="monotone"
-                                                dataKey="usuarios"
-                                                stroke="#002d44"
-                                                strokeWidth={3}
-                                                dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
-                                                activeDot={{ r: 6 }}
-                                                name="Tendencia"
-                                            />
-                                        </BarChart>
-                                    </ResponsiveContainer>
-                                )}
-                            </div>
-
-                            {initialChartData.length > 0 && (
-                                <div className="chart-metrics">
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
-                                        <div className="chart-metric-label">TOTAL SESIONES</div>
-                                    </div>
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{(initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0) / initialChartData.length).toFixed(1)}</div>
-                                        <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
-                                    </div>
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{Math.max(...initialChartData.map(d => d.usuarios))}</div>
                                         <div className="chart-metric-label">MÁXIMO</div>
                                     </div>
                                 </div>
