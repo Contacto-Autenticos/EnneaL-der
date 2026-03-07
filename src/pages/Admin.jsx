@@ -914,7 +914,7 @@ const Admin = () => {
                                             <th>Código</th>
                                             <th>Estado</th>
                                             <th>Correo</th>
-                                            <th>Copiar</th>
+                                            <th style={{ textAlign: 'center' }}>Copiar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -939,8 +939,9 @@ const Admin = () => {
                                                                 setCopySuccess(item.code);
                                                                 setTimeout(() => setCopySuccess(''), 2000);
                                                             }}
+                                                            className="btn-action-admin"
                                                             title="Copiar código"
-                                                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: copySuccess === item.code ? '#4ade80' : '#b89b2d', padding: '4px' }}
+                                                            style={{ color: copySuccess === item.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
                                                         >
                                                             {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                                                         </button>
@@ -1034,7 +1035,7 @@ const Admin = () => {
                                             <th>%</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
-                                            <th>Copiar</th>
+                                            <th style={{ textAlign: 'center' }}>Copiar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1070,7 +1071,7 @@ const Admin = () => {
                                                             </button>
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <td style={{ textAlign: 'center' }}>
                                                         <button
                                                             onClick={() => {
                                                                 navigator.clipboard.writeText(c.code);
@@ -1490,6 +1491,22 @@ const Admin = () => {
                                 </div>
                             </div>
 
+                            <div className="chart-period-tabs">
+                                {[
+                                    { id: 'days7', label: '7 días' },
+                                    { id: 'month', label: 'Meses' },
+                                    { id: 'year', label: 'Años' }
+                                ].map(p => (
+                                    <button
+                                        key={p.id}
+                                        className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
+                                        onClick={() => setChartPeriod(p.id)}
+                                    >
+                                        {p.label}
+                                    </button>
+                                ))}
+                            </div>
+
                             <div className="chart-wrapper">
                                 {initialChartData.length === 0 ? (
                                     <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
@@ -1564,23 +1581,6 @@ const Admin = () => {
                                 <div className="header-actions-group">
                                     <span className="registros-badge">{testResponses.length} registros totales</span>
                                 </div>
-                            </div>
-
-                            <div className="chart-period-tabs">
-                                {[
-                                    { id: 'days7', label: '7 días' },
-                                    { id: 'week', label: 'Semanas' },
-                                    { id: 'month', label: 'Meses' },
-                                    { id: 'year', label: 'Años' }
-                                ].map(p => (
-                                    <button
-                                        key={p.id}
-                                        className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
-                                        onClick={() => setChartPeriod(p.id)}
-                                    >
-                                        {p.label}
-                                    </button>
-                                ))}
                             </div>
 
                             <div className="chart-wrapper">
