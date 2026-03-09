@@ -6,12 +6,15 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
     if (!data) return null;
 
     const weeks = ['week1', 'week2', 'week3', 'week4'];
-    const coinImage = `/eneatipo-${type}.jpg`;
+    const coinImage = `/eneatipo-${type}.png`;
 
     // Helper to render watermark
-    const Watermark = () => (
+    const Watermark = ({ isCover = false }) => (
         <div className="kit-watermark">
-            <img src="/Circulo_Eneagrama_dorado.png" alt="Watermark" />
+            <img
+                src={isCover ? "/eneagrama_gold.png" : "/Circulo_Eneagrama_dorado.png"}
+                alt="Watermark"
+            />
         </div>
     );
 
@@ -29,34 +32,75 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
         </div>
     );
 
+    // Helper to render background image based on triad
+    const getTriadBackground = (type) => {
+        const t = parseInt(type);
+        if ([8, 9, 1].includes(t)) return '/Fondo-rojo.png';
+        if ([2, 3, 4].includes(t)) return '/Fondo-verde.png';
+        if ([5, 6, 7].includes(t)) return '/Fondo-azul.png';
+        return '/Fondo-rojo.png';
+    };
+
     return (
         <div className="kit-container" id="executive-kit-root">
             {/* 1. PORTADA */}
             <div className="kit-page kit-page-cover">
-                <Watermark />
+                <div
+                    className="kit-cover-full-background"
+                    style={{ backgroundImage: `url(${getTriadBackground(type)})` }}
+                ></div>
                 <div className="kit-cover-content">
-                    <p className="kit-cover-pretitle">Plan de acción</p>
+                    <div className="kit-cover-header-group">
+                        <p className="kit-serie-title">SERIE DE ARQUETIPOS DE LIDERAZGO</p>
+                        <div className="kit-gold-line"></div>
+                        <p className="kit-cover-pretitle">PLAN DE ACCIÓN</p>
+                    </div>
+
                     <div className="kit-cover-title-group">
                         <h1 className="kit-cover-type">{data.subtitle || `ENEATIPO ${type}`}</h1>
                         <h2 className="kit-cover-role">{data.roleName}</h2>
-                    </div>
-                    <h3 className="kit-cover-tagline">{data.tagline || data.title}</h3>
 
-                    <div className="kit-cover-coin-container">
-                        <img src={coinImage} alt={`Eneatipo ${type}`} className="kit-cover-coin" />
-                    </div>
-
-                    <div className="kit-cover-footer">
-                        <p className="kit-cover-manual">{data.manualTitle || "Manual de implementación en liderazgo"}</p>
-                        <div className="kit-cover-divider"></div>
-                        <p className="kit-cover-confidential">{data.confidentialLabel || "Informe confidencial – Uso profesional"}</p>
+                        <div className="kit-tagline-wrapper">
+                            <div className="kit-gold-line small"></div>
+                            <h3 className="kit-cover-tagline">{data.tagline || data.title}</h3>
+                            <div className="kit-gold-line small"></div>
+                        </div>
                     </div>
 
-                    <div className="kit-page-footer-logo cover-logo">
-                        <img src="/Logo-Blanco.png" alt="Logo Auténticos" />
+                    <div className="kit-cover-coin-container-wrapper">
+                        <Watermark isCover={true} />
+                        <div className="kit-cover-coin-shadow">
+                            <div className="kit-cover-coin-container">
+                                <img src={coinImage} alt={`Eneatipo ${type}`} className="kit-cover-coin" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="kit-cover-bottom-group">
+                        <div className="kit-cover-manual-section">
+                            <p className="kit-cover-manual">Manual estratégico de liderazgo</p>
+                            <div className="kit-manual-details">
+                                <p>Modelo: Eneagrama aplicado</p>
+                                <p>Implementación: 30 días</p>
+                            </div>
+                        </div>
+
+                        <div className="kit-cover-footer-new">
+                            <div className="kit-footer-left">
+                                ARCHIVO <span className="kit-file-number">0{type}/09</span>
+                            </div>
+                            <div className="kit-footer-center">
+                                <img src="/Logo-Blanco.png" alt="Logo Auténticos" />
+                            </div>
+                            <div className="kit-footer-right">
+                                <div className="kit-confidential-lines">
+                                    <span>DOCUMENTO</span>
+                                    <span>CONFIDENCIAL</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <PageNumber num={1} />
             </div>
 
             {/* 2. PERFIL GENERAL */}
@@ -614,7 +658,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                 </div>
                 <PageNumber num={13} />
             </div>
-        </div >
+        </div>
     );
 };
 
