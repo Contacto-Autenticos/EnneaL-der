@@ -21,11 +21,10 @@ import {
     Check,
     Zap,
     Activity,
-    Wind
+    Wind,
+    Rocket
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
-import { executiveKitData } from '../data/executiveKitInfo';
-import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
 import { advancedEnneagramInfo } from '../data/advancedInfo';
 import { differentiationInfo } from '../data/differentiationInfo';
 import { getEnneagramInfo } from '../utils/calculator';
@@ -199,6 +198,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const { type: urlType } = useParams();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [isDownloadingKit, setIsDownloadingKit] = React.useState(false);
+    const [downloadProgress, setDownloadProgress] = React.useState(0);
+    const [totalPages, setTotalPages] = React.useState(0);
     const [hasPaidForKit, setHasPaidForKit] = React.useState(false);
 
     const [localResult, setLocalResult] = React.useState(null);
@@ -437,42 +438,16 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         }
     };
 
-    const handleDownloadExecutiveKit = async () => {
-        const kitRoot = document.getElementById('executive-kit-printable');
-        if (!kitRoot || isDownloadingKit) return;
-
-        try {
-            setIsDownloadingKit(true);
-            // Show the hidden container for capturing
-            kitRoot.style.display = 'block';
-            kitRoot.style.position = 'absolute';
-            kitRoot.style.left = '-9999px';
-            kitRoot.style.top = '0';
-
-            const pages = kitRoot.querySelectorAll('.kit-page');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-
-            for (let i = 0; i < pages.length; i++) {
-                const canvas = await html2canvas(pages[i], {
-                    scale: 2,
-                    useCORS: true,
-                    backgroundColor: '#ffffff'
-                });
-
-                const imgData = canvas.toDataURL('image/png');
-                if (i > 0) pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
-            }
-
-            pdf.save(`Plan-de-Accion-Eneatipo-${type}.pdf`);
-            kitRoot.style.display = 'none';
-        } catch (error) {
-            console.error('Error generating Executive Kit:', error);
-            alert('Hubo un error al generar el Plan de Acción.');
-            kitRoot.style.display = 'none';
-        } finally {
+    const handleDownloadExecutiveKit = () => {
+        if (isDownloadingKit) return;
+        setIsDownloadingKit(true);
+        setTimeout(() => {
+            const link = document.createElement('a');
+            link.href = `/pdfs/Plan-de-Accion-Eneatipo-${type}.pdf`;
+            link.download = `Plan-de-Accion-Eneatipo-${type}.pdf`;
+            link.click();
             setIsDownloadingKit(false);
-        }
+        }, 800);
     };
 
     const handleShare = async () => {
@@ -931,7 +906,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                     <div className="advanced-footer-actions">
                         <button
                             onClick={() => window.location.href = `https://www.autenticos.co/eneagrama-eneatipo-${type}`}
-                            className="btn-advanced-finish btn-deepen-primary"
+                            className="btn-advanced-finish btn-blue-gold"
                         >
                             Profundizar en mi perfil
                         </button>
@@ -957,53 +932,63 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                 <span>Compartir</span> <Share2 size={18} />
                             </button>
                         </div>
-                    </div>
 
-                    {/* Order Bump Section: Executive Kit - CONDITIONALLY RENDERED */}
-                    {hasPaidForKit && (
-                        <div className="executive-kit-promo">
+                        {/* Order Bump Section: Executive Kit - CONDITIONALLY RENDERED */}
+                        {hasPaidForKit && (
+                            <div className="executive-kit-promo">
+                                <div className="kit-promo-content">
+                                    <div className="kit-title-shimmer">
+                                        <h3>Tu Plan de Acción</h3>
+                                    </div>
+                                    <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
+                                    <button
+                                        onClick={handleDownloadExecutiveKit}
+                                        className={`btn-kit-download ${isDownloadingKit ? 'loading' : ''}`}
+                                        disabled={isDownloadingKit}
+                                    >
+                                        {isDownloadingKit ? (
+                                            <>
+                                                <Loader2 size={18} className="spinner" />
+                                                {downloadProgress > 0 && totalPages > 0
+                                                    ? `Generando página ${downloadProgress} de ${totalPages}...`
+                                                    : 'Preparando documento...'}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Download size={18} /> Descargar mi Plan de Acción
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        <div className="executive-kit-promo" style={{ marginTop: '20px', background: 'linear-gradient(135deg, #002d44 0%, #001a29 100%)', border: '1px solid rgba(221, 190, 61, 0.4)' }}>
                             <div className="kit-promo-content">
                                 <div className="kit-title-shimmer">
-                                    <h3>Tu Plan de Acción</h3>
+                                    <h3 style={{ color: '#050e14' }}>Programa avanzado</h3>
                                 </div>
-                                <p>Liderazgo estratégico según tu eneatipo. Informe de 13 páginas con planes de acción y protocolos corporativos.</p>
+                                <h4 style={{ color: '#ffffff', fontSize: '1.2rem', marginBottom: '10px', marginTop: '10px' }}>Transforma tu patrón de personalidad</h4>
+                                <p style={{ color: '#ffffff' }}>Aprende a utilizar tu eneatipo para mejorar tu toma de decisiones y liderar con propósito en este programa exclusivo.</p>
                                 <button
-                                    onClick={handleDownloadExecutiveKit}
-                                    className={`btn-kit-download ${isDownloadingKit ? 'loading' : ''}`}
-                                    disabled={isDownloadingKit}
+                                    onClick={() => navigate('/programa')}
+                                    className="btn-advanced-finish btn-deepen-primary"
+                                    style={{ width: '100%', maxWidth: '100%', marginTop: '15px' }}
                                 >
-                                    {isDownloadingKit ? (
-                                        <>
-                                            <Loader2 size={18} className="spinner" /> Generando tu Plan de Acción...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <CheckCircle2 size={18} /> Descargar mi Plan de Acción
-                                        </>
-                                    )}
+                                    Explorar el programa <Rocket size={18} style={{ marginLeft: '10px' }} />
                                 </button>
                             </div>
                         </div>
-                    )}
 
-                    {/* Brand footer */}
-                    <div className="detailed-brand-footer">
-                        <img
-                            src="/Logo-Blanco.png"
-                            alt="Logo Auténticos Blanco"
-                            className="register-footer-logo"
-                        />
+                        {/* Brand footer */}
+                        <div className="detailed-brand-footer">
+                            <img
+                                src="/Logo-Blanco.png"
+                                alt="Logo Auténticos Blanco"
+                                className="register-footer-logo"
+                            />
+                        </div>
+
                     </div>
-
-                </div>
-
-                {/* Hidden container for PDF rendering */}
-                <div id="executive-kit-printable" style={{ display: 'none' }}>
-                    <ExecutiveKitTemplate
-                        data={executiveKitData[type]}
-                        type={type}
-                        name={user?.name}
-                    />
                 </div>
             </div>
         </div>

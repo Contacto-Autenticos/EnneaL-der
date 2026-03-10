@@ -212,46 +212,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 2.5 Result Recap & Deep Questions */}
-            <section className="al-result-recap al-animate">
-                <div className="al-section-content">
-                    <div className="al-recap-header">
-                        <h2 className="al-recap-title">Este fue tu resultado</h2>
-                        <div className="al-recap-grid">
-                            {top3.length > 0 ? top3.map((item, i) => (
-                                <div key={i} className="al-recap-item">
-                                    <span className="al-recap-label">Eneatipo con Afinidad <strong style={{ color: '#ddbe3d' }}>{item.affinity}</strong>:</span>
-                                    <span className="al-recap-value">Tipo {item.type} — {item.title}</span>
-                                </div>
-                            )) : (
-                                <div className="al-recap-item">
-                                    <span className="al-recap-label">Cargando resultados...</span>
-                                </div>
-                            )}
-                        </div>
-                        <p className="al-recap-intro">Esto explica parte de tu comportamiento.</p>
-                    </div>
 
-                    <div className="al-deep-questions">
-                        <h3 className="al-deep-title">Pero aún no responde:</h3>
-                        <div className="al-questions-list">
-                            {[
-                                "¿Cuál es tu miedo raíz inconsciente?",
-                                "¿Por qué reaccionas con intensidad bajo presión?",
-                                "¿Cuál es tu mecanismo automático de defensa?",
-                                "¿Cómo te saboteas sin darte cuenta?",
-                                "¿Qué activa tu versión más equilibrada y estratégica?"
-                            ].map((q, i) => (
-                                <div key={i} className="al-question-item">
-                                    <HelpCircle size={18} className="al-question-icon" />
-                                    <p>{q}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <p className="al-deep-footer">Ahí es donde comienza el verdadero trabajo.</p>
-                    </div>
-                </div>
-            </section>
 
             {/* 4. Información del Producto */}
             <section id="analisis-avanzado" className="al-section">
@@ -270,6 +231,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
                             <ul className="al-product-list">
                                 {[
+                                    { t: "Identificación de tu eneatipo principal", d: "Aquí te explicamos por qué NO eres los otros tipos que estuvieron cerca en tu puntaje." },
                                     { t: "Tu motivación inconsciente central", d: "Lo que realmente impulsa tus decisiones… incluso cuando no lo notas." },
                                     { t: "Tu patrón bajo estrés", d: "Cómo reaccionas cuando pierdes control y qué impacto tiene en tus relaciones y liderazgo." },
                                     { t: "Tu mecanismo de defensa automático", d: "La estrategia interna que usas para protegerte… y que muchas veces limita tu crecimiento." },
@@ -287,6 +249,10 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                     </li>
                                 ))}
                             </ul>
+
+                            <p className="al-product-detail-note" style={{ marginTop: '30px', color: 'rgba(255,255,255,0.7)', fontSize: '1rem', lineHeight: '1.6', maxWidth: '90%' }}>
+                                El análisis avanzado utiliza <span style={{ color: '#ffffff', fontWeight: 'bold' }}>45 preguntas adicionales</span> diseñadas para diferenciar con mayor precisión entre los eneatipos que aparecen cercanos en el resultado inicial.
+                            </p>
                         </div>
 
                         <div className="al-product-img-container al-animate" style={{ animationDelay: '0.4s' }}>
@@ -297,36 +263,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 4.5 Impacto del Patrón */}
-            <section className="al-impact-section al-animate">
-                <div className="al-section-content">
-                    <div className="al-impact-card">
-                        <div className="al-impact-glow"></div>
-                        <h2 className="al-impact-title">Cuando identificas el código <br /><span className="al-gold-text">Inicia la transformación</span></h2>
 
-                        <div className="al-impact-grid">
-                            {[
-                                "Tomas decisiones con mayor claridad",
-                                "Reduces reacciones impulsivas",
-                                "Actúas con intención, no por impulso",
-                                "Comprendes conflictos repetitivos",
-                                "Lideras con mayor estabilidad",
-                                "Dejas de sabotear oportunidades"
-                            ].map((item, i) => (
-                                <div key={i} className="al-impact-item">
-                                    <CheckCircle2 className="al-impact-check" size={20} />
-                                    <span>{item}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="al-impact-footer">
-                            <p>La diferencia no es información.</p>
-                            <p className="al-gold-text">Es conocimiento aplicado.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* 4.6 Puente de Conocimiento */}
             <section className="al-bridge-section al-animate">
@@ -367,27 +304,6 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 5.5 FAQ Section */}
-            <section id="preguntas" className="al-faq-section al-animate">
-                <div className="al-section-content">
-                    <h2 className="al-section-title" style={{ textAlign: 'center', marginBottom: '60px' }}>Preguntas <span className="al-gold-text">frecuentes</span></h2>
-
-                    <div className="al-faq-container">
-                        {faqs.map((faq, i) => (
-                            <div key={i} className={`al-faq-item ${openFaq === i ? 'active' : ''}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                                <div className="al-faq-question">
-                                    <span>{faq.q}</span>
-                                    {openFaq === i ? <Minus size={20} /> : <Plus size={20} />}
-                                </div>
-                                <div className="al-faq-answer">
-                                    <p>{faq.a}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* 7. Precios */}
             <section id="precios" className="al-section">
                 <div className="al-section-content">
@@ -424,7 +340,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                 </div>
 
                                 <button onClick={() => navigate('/payment')} className="al-btn-buy">
-                                    Acceder al Análisis <CreditCard size={24} />
+                                    Desbloquear análisis completo <Lock size={24} />
                                 </button>
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0' }}>
@@ -436,23 +352,34 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 7.5 Final Closure CTA */}
-            <section className="al-closure-section al-animate">
+            {/* 5.5 FAQ & Closure Section */}
+            <section id="preguntas" className="al-faq-section al-animate">
                 <div className="al-section-content">
-                    <div className="al-closure-container">
-                        <h2 className="al-closure-title">
-                            <span className="al-white-text">Lo que no comprendes de ti,</span> <span className="al-gold-text">te domina.</span><br />
-                            <span className="al-white-text">Lo que comprendes,</span> <span className="al-gold-text">se convierte en liderazgo.</span>
+                    <h2 className="al-section-title" style={{ textAlign: 'center', marginBottom: '60px' }}>Preguntas <span className="al-gold-text">frecuentes</span></h2>
+
+                    <div className="al-faq-container">
+                        {faqs.map((faq, i) => (
+                            <div key={i} className={`al-faq-item ${openFaq === i ? 'active' : ''}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                                <div className="al-faq-question">
+                                    <span>{faq.q}</span>
+                                    {openFaq === i ? <Minus size={20} /> : <Plus size={20} />}
+                                </div>
+                                <div className="al-faq-answer">
+                                    <p>{faq.a}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="al-closure-container" style={{ marginTop: '80px', textAlign: 'center' }}>
+                        <h2 className="al-closure-title" style={{ fontSize: 'clamp(1.1rem, 3.2vw, 1.6rem)', lineHeight: '1.6', marginBottom: '40px' }}>
+                            <div className="al-white-text">Lo que no comprendes de ti, te domina.</div>
+                            <div className="al-gold-text">Lo que comprendes, se convierte en liderazgo.</div>
                         </h2>
 
-                        <div className="al-closure-text">
-                            <p>Ya diste el primer paso.</p>
-                            <p>Ahora decide qué tan profundo quieres llegar.</p>
-                        </div>
-
-                        <button onClick={() => navigate('/payment')} className="al-btn-shimmer">
+                        <button onClick={() => navigate('/payment')} className="al-btn-shimmer" style={{ margin: '0 auto' }}>
                             <span className="al-btn-label">
-                                ACCEDER AHORA A <br className="al-mobile-br" /> MI ANÁLISIS AVANZADO
+                                ACCEDER AHORA A MI ANÁLISIS AVANZADO
                             </span>
                             <ArrowRight size={24} className="al-btn-icon" />
                         </button>

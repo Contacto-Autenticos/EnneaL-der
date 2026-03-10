@@ -806,6 +806,78 @@
     }
 }
 
+/* Static PDF Manager Styles */
+.pdf-static-manager {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.static-pdfs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.static-pdf-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.static-pdf-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.static-pdf-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pdf-type-badge {
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.pdf-filename {
+    font-size: 0.85rem;
+    font-family: monospace;
+    color: #475569;
+}
+
+.btn-ver-static {
+    background-color: white;
+    color: var(--color-secondary);
+    border: 1px solid #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.btn-ver-static:hover {
+    background-color: #f1f5f9;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
 /* ── Responses Section ── */
 .admin-responses-section {
     width: 100%;

@@ -290,7 +290,7 @@ const PaymentPage = () => {
                 {/* PREMIUM ORDER BUMP SECTION */}
                 <div className="order-bump-container">
                     <div className="order-bump-header-image">
-                        <img src="/Portada - Kit Ejecutivo de Acción-4.png" alt="Executive Kit Mockup" className="order-bump-full-image" />
+                        <img src="/Portada - Plan de Acción-1.jpg" alt="Executive Kit Mockup" className="order-bump-full-image" />
                         <div className="order-bump-badge">OPCIONAL PLAN DE ACCIÓN</div>
                     </div>
 

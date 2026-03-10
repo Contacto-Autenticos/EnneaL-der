@@ -26,44 +26,24 @@ const PaymentSuccess = () => {
 
                 <div className="success-hero">
                     <h1 className="success-hero-title">¡Excelente decisión!</h1>
+                    <p className="success-intro-phrase">Comencemos con tu análisis avanzado</p>
                 </div>
 
                 {/* Box 1: Intro */}
                 <div className="success-box">
                     <p className="success-text">
-                        Has dado un paso consciente hacia un mayor nivel de claridad personal.
+                        Has dado un paso consciente hacia un <span style={{ color: '#ffffff', fontWeight: 'bold' }}>mayor nivel de claridad personal.</span>
                     </p>
                     <p className="success-text">
-                        Este es un test avanzado que está diseñado para ofrecerte un análisis profundo de tu personalidad y patrones de liderazgo desde la perspectiva del Eneagrama.
+                        La siguiente evaluación profundiza en <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>tus patrones de pensamiento y comportamiento</span> para identificar con mayor precisión tu estructura de personalidad.
                     </p>
+                    <p className="success-text">
+                        Las preguntas están diseñadas para <span style={{ color: '#ffffff', fontWeight: 'bold' }}>detectar motivaciones y reacciones</span> que no siempre aparecen en una evaluación inicial.
+                    </p>
+                    <p className="success-duration">Duración aproximada: 10 minutos</p>
                 </div>
 
-                {/* Box 2: Benefits */}
-                <div className="success-box">
-                    <h3 className="success-subtitle">Lo que descubrirás en tu informe</h3>
-                    <ul className="benefit-list">
-                        <li className="benefit-item">
-                            <Check className="benefit-icon" />
-                            Identificación precisa de tu eneatipo dominante
-                        </li>
-                        <li className="benefit-item">
-                            <Check className="benefit-icon" />
-                            Motivaciones y miedos centrales
-                        </li>
-                        <li className="benefit-item">
-                            <Check className="benefit-icon" />
-                            Estructura de tus centros de inteligencia
-                        </li>
-                        <li className="benefit-item">
-                            <Check className="benefit-icon" />
-                            Dinámicas de crecimiento y desarrollo
-                        </li>
-                        <li className="benefit-item">
-                            <Check className="benefit-icon" />
-                            Claves aplicadas a liderazgo y toma de decisiones
-                        </li>
-                    </ul>
-                </div>
+
 
                 {/* Elegant Quote */}
                 <blockquote className="success-quote">

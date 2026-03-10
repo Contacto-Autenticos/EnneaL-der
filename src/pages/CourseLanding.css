@@ -1,0 +1,761 @@
+/* CourseLanding.css */
+
+.course-landing-container {
+    --al-blue: #002d44;
+    --al-blue-dark: #000a12;
+    --al-blue-light: #002d44;
+    --al-gold: #ddbe3d;
+    --al-gold-light: #9e872d;
+    --al-black: #000000;
+    --al-white: #ffffff;
+
+    min-height: 100vh;
+    background: var(--al-blue-dark);
+    color: var(--al-white);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.course-intro-content {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+.course-description-text {
+    font-size: clamp(16px, 1.8vw, 19px);
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* Reusing classes from AdvancedLanding.css via common structure or duplicate if necessary */
+/* Since it's a separate file, we replicate the key layout styles */
+
+.al-bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 45, 68, 0.4) 0%, transparent 70%);
+    opacity: 0.8;
+    z-index: -10;
+    pointer-events: none;
+}
+
+.al-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 12px 0;
+    background: rgba(0, 26, 41, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.al-nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.al-logo {
+    height: 42px;
+}
+
+.al-nav-back-arrow {
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+}
+
+.al-hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 140px 24px 80px;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+}
+
+.al-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--al-gold);
+    margin-bottom: 30px;
+}
+
+.al-hero-title {
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 40px;
+}
+
+.al-hero-title-top {
+    font-size: 0.75em;
+    display: block;
+    color: var(--al-white);
+}
+
+.al-gold-text {
+    background: linear-gradient(to bottom, var(--al-gold) 0%, var(--al-gold-light) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+
+.al-hero-subtitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--al-white);
+    margin-bottom: 20px;
+}
+
+.al-btn-main {
+    background: linear-gradient(135deg, #ddbe3d 0%, #b89b2d 100%);
+    color: var(--al-blue);
+    padding: 18px 40px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(221, 190, 61, 0.35);
+}
+
+/* Introspection Section */
+.course-introspection {
+    padding: 120px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.introspection-box {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 80px 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.al-pricing-section {
+    padding-top: 100px;
+    padding-bottom: 120px;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Map Section */
+.course-map {
+    padding: 120px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.course-map-header {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.course-map-highlights {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.map-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.map-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 20px 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.map-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(221, 190, 61, 0.3);
+    transform: translateY(-5px);
+}
+
+.map-item-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--al-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--al-gold);
+}
+
+.map-item span {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: capitalize;
+}
+
+@media (max-width: 600px) {
+    .map-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Experience Section */
+.course-experience {
+    padding: 120px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Modalities Section */
+.course-modalities {
+    padding: 120px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modalities-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.target-audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 60px auto 0;
+}
+
+.target-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: left;
+}
+
+.target-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--al-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--al-gold);
+    flex-shrink: 0;
+}
+
+.target-item span {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+}
+
+.modalities-choice-box {
+    margin-top: 100px;
+}
+
+.modality-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.modality-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px;
+    padding: 40px;
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.modality-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: var(--al-gold);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(221, 190, 61, 0.2);
+}
+
+.card-featured {
+    border-color: rgba(221, 190, 61, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.modality-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(221, 190, 61, 0.1);
+    border: 1px solid rgba(221, 190, 61, 0.2);
+    color: var(--al-gold);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 50px;
+    align-self: flex-start;
+}
+
+.modality-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modality-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--al-gold);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.stats-divider {
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.modality-card p {
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Instructor Section */
+.course-instructor {
+    padding: 120px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.instructor-flex {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.instructor-image-container {
+    flex: 1;
+    position: relative;
+    max-width: 400px;
+}
+
+.instructor-image-glow {
+    position: absolute;
+    inset: -10px;
+    background: var(--al-gold);
+    opacity: 0.15;
+    filter: blur(40px);
+    border-radius: 30px;
+}
+
+.instructor-image {
+    width: 100%;
+    height: auto;
+    border-radius: 30px;
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+}
+
+.instructor-info {
+    flex: 1.2;
+    text-align: left;
+}
+
+.instructor-name {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.name-white {
+    color: #ffffff;
+}
+
+.name-yellow {
+    color: var(--al-gold);
+}
+
+.instructor-divider {
+    width: 60px;
+    height: 4px;
+    background: var(--al-gold);
+    margin-bottom: 30px;
+}
+
+.instructor-bio {
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+.instructor-bio strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.instructor-bio.testimony {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.instructor-bio.testimony:first-of-type {
+    margin-top: 40px;
+}
+
+.instructor-bio.testimony:last-of-type {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+    .instructor-flex {
+        flex-direction: column;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .instructor-info {
+        text-align: center;
+    }
+
+    .instructor-divider {
+        margin: 0 auto 30px;
+    }
+}
+
+
+/* Closing Section */
+.course-closing {
+    padding: 140px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    text-align: center;
+}
+
+.closing-box {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.closing-lead {
+    font-size: 24px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 60px;
+}
+
+.closing-statement {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 80px;
+    letter-spacing: -1px;
+}
+
+.al-btn-primary.closing-cta {
+    background: var(--al-gold);
+    color: var(--al-blue);
+    border: none;
+    padding: 22px 50px;
+    border-radius: 100px;
+    font-size: 18px;
+    font-weight: 900;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(221, 190, 61, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.al-btn-primary.closing-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.al-btn-primary.closing-cta:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: #e6c54a;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(221, 190, 61, 0.6);
+    color: var(--al-blue);
+}
+
+.al-btn-primary.closing-cta:hover::before {
+    opacity: 1;
+}
+
+.introspection-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.introspection-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 50px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.introspection-list li {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    padding-left: 30px;
+    position: relative;
+    text-align: left;
+}
+
+.introspection-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--al-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--al-gold);
+}
+
+.introspection-divider {
+    width: 60px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 40px auto;
+}
+
+.introspection-transition {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.introspection-question {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--al-gold);
+    margin-bottom: 50px;
+    letter-spacing: -1px;
+    text-shadow: 0 0 20px rgba(221, 190, 61, 0.3);
+}
+
+.introspection-closing {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--al-white);
+    font-weight: 500;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .introspection-box {
+        padding: 40px 20px;
+    }
+
+    .introspection-question {
+        font-size: 32px;
+    }
+}
+
+/* Reuse pricing styles or ensure they are global/available */
+/* Since I'm using al- prefix, I assume these were mostly defined in AdvancedLanding.css */
+/* To ensure they work here, I'll include the essential ones */
+
+.al-section {
+    padding: 80px 0;
+}
+
+.al-section-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.al-pricing-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.al-pricing-card {
+    background: linear-gradient(135deg, #001f30 0%, #000a10 100%);
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+}
+
+.al-pricing-header {
+    background: var(--al-gold);
+    color: var(--al-blue);
+    padding: 20px;
+    text-align: center;
+}
+
+.al-pricing-header h3 {
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.al-pricing-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.al-old-price {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.3);
+    text-decoration: line-through;
+}
+
+.al-current-price {
+    font-size: clamp(50px, 10vw, 80px);
+    font-weight: 900;
+}
+
+.al-currency {
+    font-size: 20px;
+    color: var(--al-gold);
+}
+
+.al-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+    text-align: left;
+    width: 100%;
+}
+
+.al-pricing-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.al-pricing-item svg {
+    color: var(--al-gold);
+}
+
+.al-btn-buy {
+    width: 100%;
+    padding: 20px;
+    background: var(--al-gold);
+    color: var(--al-blue);
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+    .al-pricing-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.al-animate {
+    animation: alFadeIn 1s ease-out forwards;
+}
+
+@keyframes alFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

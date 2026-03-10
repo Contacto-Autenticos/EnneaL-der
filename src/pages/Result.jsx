@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, MousePointerClick, Lock, Mail } from 'lucide-react';
+import { RotateCcw, ExternalLink, User, X, Share2, ArrowLeft, MousePointerClick, Lock, Mail, Star, ChevronsRight } from 'lucide-react';
 import EnneagramChart from '../components/EnneagramChart';
 import EmailResultModal from '../components/EmailResultModal';
 import { getEnneagramInfo } from '../utils/calculator';
@@ -136,6 +136,7 @@ const Result = ({ result, user, onReset }) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [isEmailModalOpen, setIsEmailModalOpen] = React.useState(false);
     const [chartImageBlob, setChartImageBlob] = React.useState(null);
+    const [selectedPerception, setSelectedPerception] = React.useState(null);
     const chartRef = React.useRef(null);
 
     // Progressive revelation sequence
@@ -245,7 +246,7 @@ const Result = ({ result, user, onReset }) => {
     };
 
     const handleDetailedAnalysis = () => {
-        navigate('/advanced-landing');
+        navigate('/initial-analysis');
     };
 
     return (
@@ -254,12 +255,12 @@ const Result = ({ result, user, onReset }) => {
 
                 <header className={`result-header phase-active-${activePhase}`}>
                     <h1 className="result-title">
-                        {activePhase < 4 ? "PERFIL REVELADO" : "TU RESULTADO"}
+                        {activePhase < 4 ? "PERFIL REVELADO" : <><span className="gold-text">Tres eneatipos</span> destacan en tu perfil</>}
                     </h1>
                     <p className="result-subtitle">
                         {activePhase < 4
                             ? "Estamos analizando tu patrón dominante…"
-                            : "Muestras una fuerte afinidad con 3 eneatipos."
+                            : "Estos patrones comparten características con tu forma habitual de pensar, reaccionar y tomar decisiones."
                         }
                     </p>
                 </header>
@@ -276,89 +277,134 @@ const Result = ({ result, user, onReset }) => {
                     />
                 </div>
 
+                <div className={`result-precision-section ${activePhase >= 5 ? 'revealed' : 'hidden'}`}>
+                    <p className="precision-label">Precisión del resultado inicial</p>
+                    <div className="precision-bar-container">
+                        <div className="precision-bar-fill"></div>
+                        <span className="precision-percentage">70%</span>
+                    </div>
+                    <div className="precision-description">
+                        <p>El gráfico muestra qué tan cerca se encuentran los nueve patrones del Eneagrama según tus respuestas.</p>
+                    </div>
+                </div>
+
                 <div className={`result-summary phase-active-${activePhase}`}>
 
                     <div className={`top-results-cards ${activePhase >= 5 ? 'revealed' : 'hidden'}`}>
-                        <p style={{
-                            fontSize: '0.85rem',
-                            color: '#ddbe3d',
-                            textAlign: 'center',
-                            marginBottom: '4px',
-                            fontWeight: 'bold'
-                        }}>
-                            Toca el radar o cada tarjeta para mayor información
-                        </p>
-                        {top3.map((item) => (
-                            <div
-                                key={item.type}
-                                onClick={() => openModal(item.type)}
-                                className="result-card"
-                            >
-                                {/* Left Side: Type and Title */}
-                                <div style={{ textAlign: 'left' }}>
-                                    <div style={{
-                                        color: '#002d44',
-                                        fontWeight: '800',
-                                        fontSize: '0.9rem',
-                                        textTransform: 'uppercase'
-                                    }}>
-                                        Eneatipo {item.type}
+                        <div className="top-results-box">
+                            <p style={{
+                                fontSize: '0.85rem',
+                                color: '#ddbe3d',
+                                textAlign: 'left',
+                                marginBottom: '10px',
+                                fontWeight: 'bold',
+                                fontStyle: 'italic'
+                            }}>
+                                Toca el radar o cada tarjeta para mayor información
+                            </p>
+                            {top3.map((item, index) => (
+                                <div
+                                    key={item.type}
+                                    onClick={() => openModal(item.type)}
+                                    className={`result-card ${index === 0 ? 'is-top-result' : ''}`}
+                                >
+                                    {index === 0 && (
+                                        <div className="result-card-badge">
+                                            <Star size={12} fill="#0f2234" />
+                                            <span>Más probable</span>
+                                        </div>
+                                    )}
+                                    {/* Left Side: Type and Title */}
+                                    <div style={{ textAlign: 'left' }}>
+                                        <div style={{
+                                            color: '#002d44',
+                                            fontWeight: '800',
+                                            fontSize: '0.9rem',
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            Eneatipo {item.type}
+                                        </div>
+                                        <div style={{
+                                            color: '#666',
+                                            fontSize: '0.75rem',
+                                            marginTop: '1px'
+                                        }}>
+                                            {item.title}
+                                        </div>
                                     </div>
-                                    <div style={{
-                                        color: '#666',
-                                        fontSize: '0.75rem',
-                                        marginTop: '1px'
-                                    }}>
-                                        {item.title}
-                                    </div>
-                                </div>
 
-                                {/* Center: View Icon */}
-                                <div className="card-eye-wrapper">
-                                    <MousePointerClick size={20} className="card-eye-wrapper-icon" />
-                                </div>
+                                    {/* Center: View Icon */}
+                                    <div className="card-eye-wrapper">
+                                        <MousePointerClick size={20} className="card-eye-wrapper-icon" />
+                                    </div>
 
-                                {/* Right Side: Affinity */}
-                                <div style={{ textAlign: 'right' }}>
-                                    <div style={{
-                                        color: '#ddbe3d',
-                                        fontWeight: '900',
-                                        fontSize: '0.95rem'
-                                    }}>
-                                        {item.affinity}
-                                    </div>
-                                    <div style={{
-                                        color: '#999',
-                                        fontSize: '0.65rem',
-                                        textTransform: 'uppercase',
-                                        marginTop: '1px',
-                                        letterSpacing: '0.5px'
-                                    }}>
-                                        Afinidad
+                                    {/* Right Side: Affinity */}
+                                    <div style={{ textAlign: 'right' }}>
+                                        <div style={{
+                                            color: '#ddbe3d',
+                                            fontWeight: '900',
+                                            fontSize: '0.95rem'
+                                        }}>
+                                            {item.affinity}
+                                        </div>
+                                        <div style={{
+                                            color: '#999',
+                                            fontSize: '0.65rem',
+                                            textTransform: 'uppercase',
+                                            marginTop: '1px',
+                                            letterSpacing: '0.5px'
+                                        }}>
+                                            Afinidad
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     <div className={`advanced-analysis-section ${activePhase >= 6 ? 'revealed' : 'hidden'}`}>
-                        <h3 className="advanced-analysis-title">
-                            Tu resultado actual es solo la superficie
-                        </h3>
-                        <p className="advanced-analysis-note">
-                            Si quieres comprender con mayor profundidad tu esencia y la motivación central que guía tus decisiones, el análisis avanzado te dará una lectura mucho más precisa y reveladora.
-                        </p>
+                        <div className="top-results-box">
+                            <p className="advanced-analysis-title">
+                                En algunas personas varios tipos pueden aparecer próximos entre sí, especialmente cuando comparten conductas externas similares.
+                            </p>
+
+                            <div className="self-perception-survey">
+                                <p className="survey-question">¿Cuál de estos tres crees que se parece más a ti?</p>
+                                <div className="survey-options">
+                                    {top3.map((item) => (
+                                        <button
+                                            key={item.type}
+                                            className={`survey-option ${selectedPerception === item.type ? 'active' : ''}`}
+                                            onClick={() => setSelectedPerception(item.type)}
+                                        >
+                                            <div className="option-radio"></div>
+                                            <span>Eneatipo {item.type} — {item.title}</span>
+                                        </button>
+                                    ))}
+                                    <button
+                                        className={`survey-option ${selectedPerception === 'none' ? 'active' : ''}`}
+                                        onClick={() => setSelectedPerception('none')}
+                                    >
+                                        <div className="option-radio"></div>
+                                        <span>No estoy seguro</span>
+                                    </button>
+                                </div>
+                                <div className="survey-footer-divider">
+                                    <p className="advanced-analysis-note">
+                                        Identificar cuál de ellos representa realmente tu estructura de personalidad requiere analizar patrones más profundos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
 
                     <div className={`action-buttons-group ${activePhase >= 6 ? 'revealed' : 'hidden'}`}>
                         <button
                             className="btn-result btn-advanced-shimmer"
                             onClick={handleDetailedAnalysis}
                         >
-                            <Lock size={20} className="btn-icon-blue" />
-                            <span>DESBLOQUEAR MI ANÁLISIS AVANZADO</span>
+                            <span>CONTINUAR CON EL ANÁLISIS AVANZADO</span>
+                            <ChevronsRight size={20} className="btn-icon-blue" />
                         </button>
 
                         <div className="secondary-buttons-row">
@@ -396,7 +442,6 @@ const Result = ({ result, user, onReset }) => {
                     />
 
                 </div>
-
 
                 {/* Brand footer */}
                 <div className="detailed-brand-footer" style={{ marginTop: '30px', textAlign: 'center' }}>

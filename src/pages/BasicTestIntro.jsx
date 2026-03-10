@@ -17,13 +17,14 @@ const BasicTestIntro = () => {
                     />
                 </div>
                 <div className="intro-header">
-                    <h1 className="intro-title">Test Básico</h1>
+                    <h1 className="intro-title">Antes de comenzar</h1>
                 </div>
 
                 <div className="intro-body">
-                    <p className="intro-subtitle">Lee cada afirmación y responde con honestidad</p>
+                    <p className="intro-subtitle">Este test analiza tus tendencias naturales de pensamiento y comportamiento.</p>
 
                     <div className="intro-text-box">
+                        <p className="intro-box-subtitle">Para obtener un resultado más representativo:</p>
                         <p>
                             No pienses en cómo te gustaría ser, sino en <strong>cómo reaccionas en automático,</strong>
                             especialmente <strong>bajo presión o cansancio.</strong> No hay respuestas correctas o incorrectas.
@@ -31,6 +32,7 @@ const BasicTestIntro = () => {
                         <p>
                             Al terminar, recibirás un resultado con <strong>tus 3 tendencias principales</strong> que te permitirán ver tu manera de liderar en el mundo.
                         </p>
+                        <p className="intro-duration">Duración aproximada: 3 a 5 minutos</p>
                     </div>
                 </div>
 

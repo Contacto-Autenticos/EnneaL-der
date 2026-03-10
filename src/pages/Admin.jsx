@@ -34,6 +34,9 @@ const Admin = () => {
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [pdfSuccess, setPdfSuccess] = useState(false);
     const [copySuccess, setCopySuccess] = useState('');
+    const [isTestModeActive, setIsTestModeActive] = useState(
+        localStorage.getItem('hasPaidForKit') === 'true'
+    );
 
     // Questions State
     const [adminQuestions, setAdminQuestions] = useState([]);
@@ -1130,6 +1133,63 @@ const Admin = () => {
                                     pdfSuccess ? <CheckCircle2 size={18} color="#4ade80" /> : <Download size={18} />}
                                 {isGeneratingPdf ? ' Generando...' : pdfSuccess ? ' ¡Listo!' : ' Descargar PDF'}
                             </button>
+                        </div>
+
+                        <div className="pdf-static-manager" style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid var(--border-color)', marginBottom: '30px' }}>
+                            <h3 style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                {isTestModeActive ? <EyeOff size={18} /> : <Eye size={18} />} Modo de prueba: Caja de descarga
+                            </h3>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                Activa este botón para forzar que el recuadro "Tu Plan de Acción" aparezca en la página de resultados avanzados de <strong>este navegador</strong>, incluso si no se ha realizado ninguna compra. Útil para probar la interfaz y las descargas. Recuerda apagarlo después de probar.
+                            </p>
+                            <button
+                                className={`btn-generate`}
+                                style={{
+                                    background: isTestModeActive ? '#dc2626' : 'linear-gradient(135deg, var(--color-primary) 0%, #b89b2d 100%)',
+                                    maxWidth: '350px'
+                                }}
+                                onClick={() => {
+                                    if (isTestModeActive) {
+                                        localStorage.removeItem('hasPaidForKit');
+                                        setIsTestModeActive(false);
+                                    } else {
+                                        localStorage.setItem('hasPaidForKit', 'true');
+                                        setIsTestModeActive(true);
+                                    }
+                                }}
+                            >
+                                {isTestModeActive ? (
+                                    <><EyeOff size={18} /> Desactivar Modo de Prueba</>
+                                ) : (
+                                    <><Eye size={18} /> Activar Modo de Prueba</>
+                                )}
+                            </button>
+                        </div>
+
+                        <div className="pdf-static-manager">
+                            <h3 style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Download size={18} /> Pdfs estáticos para descarga del usuario
+                            </h3>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                Una vez generes los PDFs, deberás subirlos al servidor en la carpeta <code style={{ background: '#f0f0f0', padding: '2px 4px', borderRadius: '4px', color: '#002d44' }}>public/pdfs/</code> con los nombres correspondientes para que los usuarios puedan descargarlos automáticamente desde su página de resultados avanzados.
+                            </p>
+                            <div className="static-pdfs-grid">
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+                                    <div key={num} className="static-pdf-card">
+                                        <div className="static-pdf-info">
+                                            <span className="pdf-type-badge">Tipo {num}</span>
+                                            <span className="pdf-filename">Plan-de-Accion-Eneatipo-{num}.pdf</span>
+                                        </div>
+                                        <button
+                                            className="btn-ver-static"
+                                            onClick={() => window.open(`/pdfs/Plan-de-Accion-Eneatipo-${num}.pdf`, '_blank')}
+                                            title="Ver PDF guardado actualmente en el servidor"
+                                        >
+                                            <ExternalLink size={16} /> Ver actual
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}

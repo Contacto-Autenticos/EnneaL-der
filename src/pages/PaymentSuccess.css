@@ -54,6 +54,20 @@
     animation: goldShimmer 3s linear infinite;
 }
 
+.success-intro-phrase {
+    color: #ffffff;
+    font-weight: 700;
+    /* Increased size and spacing to match title width */
+    font-size: clamp(0.75rem, 3.5vw, 1.3rem);
+    text-align: center;
+    margin: -15px auto 25px;
+    letter-spacing: 2.8px;
+    text-transform: lowercase;
+    opacity: 0.9;
+    max-width: 100%;
+    display: block;
+}
+
 /* ──────────────────────────────────────────
    CARDS  — dark panels with subtle border
 ────────────────────────────────────────── */
@@ -83,6 +97,16 @@
 
 .success-text:last-child {
     margin-bottom: 0;
+}
+
+.success-duration {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    color: #ddbe3d;
+    font-weight: 600;
 }
 
 /* ──────────────────────────────────────────

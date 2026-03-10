@@ -53,8 +53,8 @@
 
 .intro-subtitle {
     font-size: 1.05rem;
-    color: #b89b2d;
-    /* Dark Gold like Home page */
+    color: #666;
+    /* Gray as requested */
     font-weight: 500;
     margin-bottom: 2vh;
     letter-spacing: 0;
@@ -79,6 +79,24 @@
 .intro-text-box strong {
     color: var(--color-secondary);
     font-weight: 700;
+}
+
+.intro-box-subtitle {
+    color: #ddbe3d !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    margin-bottom: 1.5vh !important;
+    font-size: 1rem !important;
+}
+
+.intro-duration {
+    text-align: center !important;
+    margin-top: 2vh !important;
+    font-size: 0.85rem !important;
+    color: #666 !important;
+    font-weight: 600 !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 1.5vh;
 }
 
 .intro-text-box p:last-child {

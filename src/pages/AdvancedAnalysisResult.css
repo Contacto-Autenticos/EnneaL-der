@@ -736,7 +736,17 @@
     max-width: 500px !important;
 }
 
-.btn-deepen-primary:hover {
+.btn-blue-gold {
+    background: #002d44;
+    color: #ffffff !important;
+    border: 2px solid #ddbe3d;
+    box-shadow: 0 8px 25px rgba(0, 45, 68, 0.3);
+    width: 100%;
+    max-width: 500px !important;
+}
+
+.btn-deepen-primary:hover,
+.btn-blue-gold:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 35px rgba(221, 190, 61, 0.5);
     filter: brightness(1.1);
@@ -1042,26 +1052,26 @@
 }
 
 /* ──────────────────────────────────────────
-   EXECUTIVE KIT PROMO
-   Order Bump Style
+   EXECUTIVE KIT PROMO (Action Plan)
+   White background, blue text
 ────────────────────────────────────────── */
 .executive-kit-promo {
-    background: linear-gradient(135deg, #002d44 0%, #001a29 100%);
+    background: #ffffff;
     border: 2px solid #ddbe3d;
     border-radius: 20px;
     padding: 30px;
     margin-top: 60px;
-    color: #fff;
+    color: #002d44;
     text-align: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(221, 190, 61, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 45, 68, 0.15);
 }
 
 .executive-kit-promo h3 {
     font-size: 1.4rem;
     color: #002d44;
-    /* Blue text as requested */
+    /* Dark blue text */
     margin-bottom: 0;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -1102,15 +1112,16 @@
 }
 
 .executive-kit-promo p {
-    color: rgba(255, 255, 255, 0.8);
+    color: #002d44;
     font-size: 1rem;
     max-width: 500px;
     margin: 0 auto 25px;
+    font-weight: 500;
 }
 
 .btn-kit-download {
-    background: #ffffff;
-    color: #002d44;
+    background: #002d44;
+    color: #ffffff;
     border: none;
     padding: 15px 30px;
     border-radius: 50px;
@@ -1126,8 +1137,9 @@
 
 .btn-kit-download:hover {
     transform: scale(1.05);
-    background: #ddbe3d;
-    color: #002d44;
+    background: #001a29;
+    color: #ddbe3d;
+    box-shadow: 0 10px 20px rgba(0, 45, 68, 0.2);
 }
 
 .btn-kit-download.loading {

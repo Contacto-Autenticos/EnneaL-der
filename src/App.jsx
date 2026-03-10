@@ -14,6 +14,9 @@ import PaymentPage from './pages/PaymentPage';
 import PaymentStatus from './pages/PaymentStatus';
 import PaymentSuccess from './pages/PaymentSuccess';
 import AdvancedLanding from './pages/AdvancedLanding';
+import AdvancedTransition from './pages/AdvancedTransition';
+import InitialTransition from './pages/InitialTransition';
+import CourseLanding from './pages/CourseLanding';
 import emailjs from '@emailjs/browser';
 import { supabase } from './supabaseClient';
 import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
@@ -254,6 +257,16 @@ function App() {
         />
 
         <Route
+          path="/advanced-transition"
+          element={<AdvancedTransition />}
+        />
+
+        <Route
+          path="/initial-analysis"
+          element={<InitialTransition result={testResult} />}
+        />
+
+        <Route
           path="/advanced-analysis-result"
           element={
             advancedTestResult ? (
@@ -275,6 +288,7 @@ function App() {
         />
 
         <Route path="/admin" element={<Admin />} />
+        <Route path="/programa" element={<CourseLanding />} />
         <Route
           path="/test-liderazgo"
           element={

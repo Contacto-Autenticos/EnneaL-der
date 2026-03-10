@@ -3,18 +3,17 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #e6eff5;
-    /* Light tint of #002d44 */
-    padding: 20px;
+    background-color: #5d4a12;
+    padding: 40px 20px;
 }
 
 .payment-container {
     background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 50px 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
     text-align: center;
-    max-width: 500px;
+    max-width: 750px;
     width: 100%;
 }
 
@@ -97,12 +96,12 @@
     padding: 0;
     text-align: left;
     margin-bottom: 25px;
-    padding-left: 0;
-    /* Remove default padding to gain space */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 30px;
     max-width: 100%;
-    /* Allow full width of container */
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .features-list li {
@@ -505,6 +504,16 @@
     .payment-summary {
         padding-top: 80px;
         /* Increase top padding to push content down */
+    }
+
+    .payment-container {
+        padding: 30px 20px;
+        border-radius: 0;
+    }
+
+    .features-list {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .payment-current-row {
