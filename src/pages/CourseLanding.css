@@ -106,10 +106,24 @@
     margin-bottom: 40px;
 }
 
+@media (max-width: 768px) {
+    .al-hero-title {
+        font-size: clamp(40px, 8vw, 64px) !important;
+        text-align: center;
+    }
+}
+
 .al-hero-title-top {
     font-size: 0.75em;
     display: block;
     color: var(--al-white);
+}
+
+@media (max-width: 768px) {
+    .al-hero-title-top {
+        font-size: 0.65em;
+        /* Ligeramente más pequeño en proporción al título grande, pero el título general crece */
+    }
 }
 
 .al-gold-text {
@@ -300,6 +314,17 @@
     gap: 30px;
     max-width: 900px;
     margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .modality-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .modality-card {
+        padding: 30px 20px !important;
+    }
 }
 
 .modality-card {
