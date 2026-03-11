@@ -37,6 +37,9 @@ const Admin = () => {
     const [isTestModeActive, setIsTestModeActive] = useState(
         localStorage.getItem('hasPaidForKit') === 'true'
     );
+    const [isProgramTestActive, setIsProgramTestActive] = useState(
+        localStorage.getItem('hideAdvancedProgram') !== 'true'
+    );
 
     // Questions State
     const [adminQuestions, setAdminQuestions] = useState([]);
@@ -1111,87 +1114,119 @@ const Admin = () => {
 
                 {/* ── SECTION: Plan de Acción ── */}
                 {activeSection === 'plan' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header">
-                            <h2><Download size={20} /> Generador plan de acción</h2>
-                        </div>
-                        <div className="pdf-generator-section">
-                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
-                                Descarga el PDF completo para cualquier eneatipo.
-                            </p>
-                            <div className="form-group-admin" style={{ marginBottom: '15px' }}>
-                                <label htmlFor="type-select">Selecciona el Eneatipo:</label>
-                                <select id="type-select" className="select-admin" value={selectedType}
-                                    onChange={(e) => setSelectedType(e.target.value)} disabled={isGeneratingPdf}>
+                    <>
+                        <div className="admin-card">
+                            <div className="admin-card-header">
+                                <h2><Download size={20} /> Generador plan de acción</h2>
+                            </div>
+                            <div className="pdf-generator-section">
+                                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                    Descarga el PDF completo para cualquier eneatipo.
+                                </p>
+                                <div className="form-group-admin" style={{ marginBottom: '15px' }}>
+                                    <label htmlFor="type-select">Selecciona el Eneatipo:</label>
+                                    <select id="type-select" className="select-admin" value={selectedType}
+                                        onChange={(e) => setSelectedType(e.target.value)} disabled={isGeneratingPdf}>
+                                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+                                            <option key={num} value={num.toString()}>Eneatipo {num}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <button className="btn-download-pdf" onClick={handleDownloadPdf} disabled={isGeneratingPdf}>
+                                    {isGeneratingPdf ? <RefreshCw size={18} className="spinning" /> :
+                                        pdfSuccess ? <CheckCircle2 size={18} color="#4ade80" /> : <Download size={18} />}
+                                    {isGeneratingPdf ? ' Generando...' : pdfSuccess ? ' ¡Listo!' : ' Descargar PDF'}
+                                </button>
+                            </div>
+
+                            <div className="pdf-static-manager">
+                                <h3 style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <Download size={18} /> Pdfs estáticos para descarga del usuario
+                                </h3>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                    Una vez generes los PDFs, deberás subirlos al servidor en la carpeta <code style={{ background: '#f0f0f0', padding: '2px 4px', borderRadius: '4px', color: '#002d44' }}>public/pdfs/</code> con los nombres correspondientes para que los usuarios puedan descargarlos automáticamente desde su página de resultados avanzados.
+                                </p>
+                                <div className="static-pdfs-grid">
                                     {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-                                        <option key={num} value={num.toString()}>Eneatipo {num}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <button className="btn-download-pdf" onClick={handleDownloadPdf} disabled={isGeneratingPdf}>
-                                {isGeneratingPdf ? <RefreshCw size={18} className="spinning" /> :
-                                    pdfSuccess ? <CheckCircle2 size={18} color="#4ade80" /> : <Download size={18} />}
-                                {isGeneratingPdf ? ' Generando...' : pdfSuccess ? ' ¡Listo!' : ' Descargar PDF'}
-                            </button>
-                        </div>
-
-                        <div className="pdf-static-manager" style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px solid var(--border-color)', marginBottom: '30px' }}>
-                            <h3 style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                {isTestModeActive ? <EyeOff size={18} /> : <Eye size={18} />} Modo de prueba: Caja de descarga
-                            </h3>
-                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
-                                Activa este botón para forzar que el recuadro "Tu Plan de Acción" aparezca en la página de resultados avanzados de <strong>este navegador</strong>, incluso si no se ha realizado ninguna compra. Útil para probar la interfaz y las descargas. Recuerda apagarlo después de probar.
-                            </p>
-                            <button
-                                className={`btn-generate`}
-                                style={{
-                                    background: isTestModeActive ? '#dc2626' : 'linear-gradient(135deg, var(--color-primary) 0%, #b89b2d 100%)',
-                                    maxWidth: '350px'
-                                }}
-                                onClick={() => {
-                                    if (isTestModeActive) {
-                                        localStorage.removeItem('hasPaidForKit');
-                                        setIsTestModeActive(false);
-                                    } else {
-                                        localStorage.setItem('hasPaidForKit', 'true');
-                                        setIsTestModeActive(true);
-                                    }
-                                }}
-                            >
-                                {isTestModeActive ? (
-                                    <><EyeOff size={18} /> Desactivar Modo de Prueba</>
-                                ) : (
-                                    <><Eye size={18} /> Activar Modo de Prueba</>
-                                )}
-                            </button>
-                        </div>
-
-                        <div className="pdf-static-manager">
-                            <h3 style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <Download size={18} /> Pdfs estáticos para descarga del usuario
-                            </h3>
-                            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
-                                Una vez generes los PDFs, deberás subirlos al servidor en la carpeta <code style={{ background: '#f0f0f0', padding: '2px 4px', borderRadius: '4px', color: '#002d44' }}>public/pdfs/</code> con los nombres correspondientes para que los usuarios puedan descargarlos automáticamente desde su página de resultados avanzados.
-                            </p>
-                            <div className="static-pdfs-grid">
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-                                    <div key={num} className="static-pdf-card">
-                                        <div className="static-pdf-info">
-                                            <span className="pdf-type-badge">Tipo {num}</span>
-                                            <span className="pdf-filename">Plan-de-Accion-Eneatipo-{num}.pdf</span>
+                                        <div key={num} className="static-pdf-card">
+                                            <div className="static-pdf-info">
+                                                <span className="pdf-type-badge">Tipo {num}</span>
+                                                <span className="pdf-filename">Plan-de-Accion-Eneatipo-{num}.pdf</span>
+                                            </div>
+                                            <button
+                                                className="btn-ver-static"
+                                                onClick={() => window.open(`/pdfs/Plan-de-Accion-Eneatipo-${num}.pdf`, '_blank')}
+                                                title="Ver PDF guardado actualmente en el servidor"
+                                            >
+                                                <ExternalLink size={16} /> Ver actual
+                                            </button>
                                         </div>
-                                        <button
-                                            className="btn-ver-static"
-                                            onClick={() => window.open(`/pdfs/Plan-de-Accion-Eneatipo-${num}.pdf`, '_blank')}
-                                            title="Ver PDF guardado actualmente en el servidor"
-                                        >
-                                            <ExternalLink size={16} /> Ver actual
-                                        </button>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        {/* ── SECTION: Modo de Prueba (Global) ── */}
+                        <div className="admin-card" style={{ marginTop: '20px' }}>
+                            <div className="admin-card-header">
+                                <h2><Eye size={20} /> Modo de prueba: Visualización de recuadros</h2>
+                            </div>
+                            <div style={{ padding: '20px' }}>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-light)', marginBottom: '15px' }}>
+                                    Activa o desactiva estos recuadros para probar su visualización en la página de resultados de <strong>este navegador</strong>.
+                                </p>
+                                <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                                    <button
+                                        className={`btn-generate`}
+                                        style={{
+                                            background: isTestModeActive ? '#dc2626' : 'linear-gradient(135deg, var(--color-primary) 0%, #b89b2d 100%)',
+                                            flex: '1',
+                                            minWidth: '250px'
+                                        }}
+                                        onClick={() => {
+                                            if (isTestModeActive) {
+                                                localStorage.removeItem('hasPaidForKit');
+                                                setIsTestModeActive(false);
+                                            } else {
+                                                localStorage.setItem('hasPaidForKit', 'true');
+                                                setIsTestModeActive(true);
+                                            }
+                                        }}
+                                    >
+                                        {isTestModeActive ? (
+                                            <><EyeOff size={18} /> Ocultar Plan de Acción</>
+                                        ) : (
+                                            <><Eye size={18} /> Mostrar Plan de Acción</>
+                                        )}
+                                    </button>
+
+                                    <button
+                                        className={`btn-generate`}
+                                        style={{
+                                            background: !isProgramTestActive ? 'linear-gradient(135deg, var(--color-primary) 0%, #b89b2d 100%)' : '#dc2626',
+                                            flex: '1',
+                                            minWidth: '250px'
+                                        }}
+                                        onClick={() => {
+                                            if (isProgramTestActive) {
+                                                localStorage.setItem('hideAdvancedProgram', 'true');
+                                                setIsProgramTestActive(false);
+                                            } else {
+                                                localStorage.removeItem('hideAdvancedProgram');
+                                                setIsProgramTestActive(true);
+                                            }
+                                        }}
+                                    >
+                                        {isProgramTestActive ? (
+                                            <><EyeOff size={18} /> Ocultar Programa Avanzado</>
+                                        ) : (
+                                            <><Eye size={18} /> Mostrar Programa Avanzado</>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </>
                 )}
 
                 {/* ── SECTION: Compartir ── */}
@@ -1306,493 +1341,503 @@ const Admin = () => {
                             </div>
                         </div>
                     </div>
-                )}
+                )
+                }
 
                 {/* ── SECTION: Preguntas Test Inicial ── */}
-                {activeSection === 'preguntas-inicial' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header responses-header-flex">
-                            <h2><HelpCircle size={20} /> Preguntas test inicial</h2>
-                            <div className="header-actions-group">
-                                <span className="registros-badge">
-                                    {adminQuestions.length} activas
-                                </span>
-                            </div>
-                        </div>
-                        <div className="questions-list">
-                            {loadingQuestions ? (
-                                <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
-                            ) : (
-                                initialGroupsOrder.map(groupKey => {
-                                    const groupQ = groupedInitialQuestions[groupKey] || [];
-                                    const isExpanded = expandedInitialGroup === groupKey;
-                                    return (
-                                        <div key={groupKey} className="question-group">
-                                            <div className={`question-group-header ${isExpanded ? 'active' : ''}`}
-                                                onClick={() => toggleInitialGroup(groupKey)}>
-                                                <span>{initialGroupLabels[groupKey]} ({groupQ.length})</span>
-                                                {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                                            </div>
-                                            <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
-                                                {groupQ.map(q => (
-                                                    <div key={q.id} className="question-item">
-                                                        <div className="question-item-top">
-                                                            <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
-                                                            {editingId === q.id ? (
-                                                                <textarea className="edit-q-textarea" value={editValue}
-                                                                    onChange={(e) => setEditValue(e.target.value)} autoFocus />
-                                                            ) : (
-                                                                <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
-                                                            )}
-                                                        </div>
-                                                        <div className="q-actions" style={{ marginTop: '10px' }}>
-                                                            {editingId === q.id ? (
-                                                                <>
-                                                                    <button onClick={() => handleSaveQuestion(q.id)} className="btn-save-q"
-                                                                        disabled={savingId === q.id}>
-                                                                        {savingId === q.id ? '...' : 'Guardar'}
-                                                                    </button>
-                                                                    <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
-                                                                </>
-                                                            ) : (
-                                                                <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* ── SECTION: Preguntas Test Avanzado ── */}
-                {activeSection === 'preguntas-avanzado' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header responses-header-flex">
-                            <h2><HelpCircle size={20} /> Preguntas test avanzado</h2>
-                            <div className="header-actions-group">
-                                <span className="registros-badge">
-                                    {adminAdvancedQuestions.length} activas
-                                </span>
-                            </div>
-                        </div>
-                        <div className="questions-list">
-                            {loadingQuestions ? (
-                                <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
-                            ) : (
-                                [1, 2, 3, 4, 5, 6, 7, 8, 9].map(typeNum => {
-                                    const typeStr = typeNum.toString();
-                                    const groupQ = groupedAdvancedQuestions[typeStr] || [];
-                                    const isExpanded = expandedGroup === typeStr;
-                                    return (
-                                        <div key={typeStr} className="question-group">
-                                            <div className={`question-group-header ${isExpanded ? 'active' : ''}`}
-                                                onClick={() => toggleGroup(typeStr)}>
-                                                <span>Eneatipo {typeStr} ({groupQ.length})</span>
-                                                {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                                            </div>
-                                            <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
-                                                {groupQ.map(q => (
-                                                    <div key={q.id} className="question-item">
-                                                        <div className="question-item-top">
-                                                            <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
-                                                            {editingId === q.id ? (
-                                                                <textarea className="edit-q-textarea" value={editValue}
-                                                                    onChange={(e) => setEditValue(e.target.value)} autoFocus />
-                                                            ) : (
-                                                                <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
-                                                            )}
-                                                        </div>
-                                                        <div className="q-actions" style={{ marginTop: '10px' }}>
-                                                            {editingId === q.id ? (
-                                                                <>
-                                                                    <button onClick={() => handleSaveQuestion(q.id, true)} className="btn-save-q"
-                                                                        disabled={savingId === q.id}>
-                                                                        {savingId === q.id ? '...' : 'Guardar'}
-                                                                    </button>
-                                                                    <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
-                                                                </>
-                                                            ) : (
-                                                                <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    );
-                                })
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* ── SECTION: Respuestas Avanzado ── */}
-                {activeSection === 'respuestas-avanzado' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header responses-header-flex">
-                            <h2><Lightbulb size={20} /> Respuestas test avanzado</h2>
-                            <div className="header-actions-group">
-                                <span className="registros-badge">
-                                    {(() => {
-                                        const filtered = testResponses.filter(r => {
-                                            const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
-                                            const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
-                                            const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
-                                            const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
-                                            return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
-                                        });
-                                        const hasFilter = filterName || filterOrg || filterEneatype || filterTestType;
-                                        return hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`;
-                                    })()} registros
-                                </span>
-                                <div className="header-buttons-wrapper">
-                                    <button onClick={fetchTestResponses} className="btn-refresh-boxed" disabled={loadingResponses} title="Actualizar">
-                                        <RefreshCw size={18} className={loadingResponses ? 'spinning' : ''} />
-                                    </button>
+                {
+                    activeSection === 'preguntas-inicial' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header responses-header-flex">
+                                <h2><HelpCircle size={20} /> Preguntas test inicial</h2>
+                                <div className="header-actions-group">
+                                    <span className="registros-badge">
+                                        {adminQuestions.length} activas
+                                    </span>
                                 </div>
                             </div>
+                            <div className="questions-list">
+                                {loadingQuestions ? (
+                                    <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
+                                ) : (
+                                    initialGroupsOrder.map(groupKey => {
+                                        const groupQ = groupedInitialQuestions[groupKey] || [];
+                                        const isExpanded = expandedInitialGroup === groupKey;
+                                        return (
+                                            <div key={groupKey} className="question-group">
+                                                <div className={`question-group-header ${isExpanded ? 'active' : ''}`}
+                                                    onClick={() => toggleInitialGroup(groupKey)}>
+                                                    <span>{initialGroupLabels[groupKey]} ({groupQ.length})</span>
+                                                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                                                </div>
+                                                <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
+                                                    {groupQ.map(q => (
+                                                        <div key={q.id} className="question-item">
+                                                            <div className="question-item-top">
+                                                                <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
+                                                                {editingId === q.id ? (
+                                                                    <textarea className="edit-q-textarea" value={editValue}
+                                                                        onChange={(e) => setEditValue(e.target.value)} autoFocus />
+                                                                ) : (
+                                                                    <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
+                                                                )}
+                                                            </div>
+                                                            <div className="q-actions" style={{ marginTop: '10px' }}>
+                                                                {editingId === q.id ? (
+                                                                    <>
+                                                                        <button onClick={() => handleSaveQuestion(q.id)} className="btn-save-q"
+                                                                            disabled={savingId === q.id}>
+                                                                            {savingId === q.id ? '...' : 'Guardar'}
+                                                                        </button>
+                                                                        <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
+                                                                    </>
+                                                                ) : (
+                                                                    <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
                         </div>
+                    )
+                }
 
-                        <div className="resp-filters">
-                            <input
-                                className="resp-filter-input"
-                                type="text"
-                                placeholder="Buscar nombre..."
-                                value={filterName}
-                                onChange={e => setFilterName(e.target.value)}
-                            />
-                            <input
-                                className="resp-filter-input"
-                                type="text"
-                                placeholder="Buscar organización..."
-                                value={filterOrg}
-                                onChange={e => setFilterOrg(e.target.value)}
-                            />
-                            <select
-                                className="resp-filter-select"
-                                value={filterEneatype}
-                                onChange={e => setFilterEneatype(e.target.value)}
-                            >
-                                <option value="">Todos los eneatipos</option>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
-                                    <option key={n} value={String(n)}>Eneatipo {n}</option>
-                                ))}
-                            </select>
-                            <select
-                                className="resp-filter-select"
-                                value={filterTestType}
-                                onChange={e => setFilterTestType(e.target.value)}
-                            >
-                                <option value="">Todos los tests</option>
-                                <option value="45">45 preguntas</option>
-                                <option value="135">135 preguntas</option>
-                            </select>
-                            {(filterName || filterOrg || filterEneatype || filterTestType) && (
-                                <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); }}>
-                                    ✕ Limpiar
-                                </button>
-                            )}
+                {/* ── SECTION: Preguntas Test Avanzado ── */}
+                {
+                    activeSection === 'preguntas-avanzado' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header responses-header-flex">
+                                <h2><HelpCircle size={20} /> Preguntas test avanzado</h2>
+                                <div className="header-actions-group">
+                                    <span className="registros-badge">
+                                        {adminAdvancedQuestions.length} activas
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="questions-list">
+                                {loadingQuestions ? (
+                                    <p style={{ padding: '20px', textAlign: 'center' }}>Cargando preguntas...</p>
+                                ) : (
+                                    [1, 2, 3, 4, 5, 6, 7, 8, 9].map(typeNum => {
+                                        const typeStr = typeNum.toString();
+                                        const groupQ = groupedAdvancedQuestions[typeStr] || [];
+                                        const isExpanded = expandedGroup === typeStr;
+                                        return (
+                                            <div key={typeStr} className="question-group">
+                                                <div className={`question-group-header ${isExpanded ? 'active' : ''}`}
+                                                    onClick={() => toggleGroup(typeStr)}>
+                                                    <span>Eneatipo {typeStr} ({groupQ.length})</span>
+                                                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                                                </div>
+                                                <div className={`question-group-content ${isExpanded ? 'expanded' : ''}`}>
+                                                    {groupQ.map(q => (
+                                                        <div key={q.id} className="question-item">
+                                                            <div className="question-item-top">
+                                                                <span className="q-id" style={{ fontSize: '0.85rem' }}>{q.id}.</span>
+                                                                {editingId === q.id ? (
+                                                                    <textarea className="edit-q-textarea" value={editValue}
+                                                                        onChange={(e) => setEditValue(e.target.value)} autoFocus />
+                                                                ) : (
+                                                                    <span className="q-text" style={{ fontSize: '0.85rem' }}>{q.text}</span>
+                                                                )}
+                                                            </div>
+                                                            <div className="q-actions" style={{ marginTop: '10px' }}>
+                                                                {editingId === q.id ? (
+                                                                    <>
+                                                                        <button onClick={() => handleSaveQuestion(q.id, true)} className="btn-save-q"
+                                                                            disabled={savingId === q.id}>
+                                                                            {savingId === q.id ? '...' : 'Guardar'}
+                                                                        </button>
+                                                                        <button onClick={() => setEditingId(null)} className="btn-cancel-q">Cancelar</button>
+                                                                    </>
+                                                                ) : (
+                                                                    <button onClick={() => handleEditStart(q.id, q.text)} className="btn-edit-q">Editar</button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
                         </div>
+                    )
+                }
 
-                        <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
-                            <table className="codes-table">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Nombre</th>
-                                        <th>Correo</th>
-                                        <th>Eneatipo</th>
-                                        <th>Test</th>
-                                        <th>Organización</th>
-                                        <th>Código acceso</th>
-                                        <th>Ver respuestas</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loadingResponses ? (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
-                                    ) : testResponses.length === 0 ? (
-                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
-                                    ) : (
-                                        testResponses
-                                            .filter(r => {
+                {/* ── SECTION: Respuestas Avanzado ── */}
+                {
+                    activeSection === 'respuestas-avanzado' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header responses-header-flex">
+                                <h2><Lightbulb size={20} /> Respuestas test avanzado</h2>
+                                <div className="header-actions-group">
+                                    <span className="registros-badge">
+                                        {(() => {
+                                            const filtered = testResponses.filter(r => {
                                                 const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
                                                 const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
                                                 const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
                                                 const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
                                                 return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
-                                            })
-                                            .map(r => (
-                                                <tr key={r.id}>
-                                                    <td style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                                            });
+                                            const hasFilter = filterName || filterOrg || filterEneatype || filterTestType;
+                                            return hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`;
+                                        })()} registros
+                                    </span>
+                                    <div className="header-buttons-wrapper">
+                                        <button onClick={fetchTestResponses} className="btn-refresh-boxed" disabled={loadingResponses} title="Actualizar">
+                                            <RefreshCw size={18} className={loadingResponses ? 'spinning' : ''} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="resp-filters">
+                                <input
+                                    className="resp-filter-input"
+                                    type="text"
+                                    placeholder="Buscar nombre..."
+                                    value={filterName}
+                                    onChange={e => setFilterName(e.target.value)}
+                                />
+                                <input
+                                    className="resp-filter-input"
+                                    type="text"
+                                    placeholder="Buscar organización..."
+                                    value={filterOrg}
+                                    onChange={e => setFilterOrg(e.target.value)}
+                                />
+                                <select
+                                    className="resp-filter-select"
+                                    value={filterEneatype}
+                                    onChange={e => setFilterEneatype(e.target.value)}
+                                >
+                                    <option value="">Todos los eneatipos</option>
+                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
+                                        <option key={n} value={String(n)}>Eneatipo {n}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    className="resp-filter-select"
+                                    value={filterTestType}
+                                    onChange={e => setFilterTestType(e.target.value)}
+                                >
+                                    <option value="">Todos los tests</option>
+                                    <option value="45">45 preguntas</option>
+                                    <option value="135">135 preguntas</option>
+                                </select>
+                                {(filterName || filterOrg || filterEneatype || filterTestType) && (
+                                    <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); }}>
+                                        ✕ Limpiar
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Nombre</th>
+                                            <th>Correo</th>
+                                            <th>Eneatipo</th>
+                                            <th>Test</th>
+                                            <th>Organización</th>
+                                            <th>Código acceso</th>
+                                            <th>Ver respuestas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loadingResponses ? (
+                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                        ) : testResponses.length === 0 ? (
+                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No hay respuestas registradas aún.</td></tr>
+                                        ) : (
+                                            testResponses
+                                                .filter(r => {
+                                                    const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
+                                                    const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
+                                                    const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
+                                                    const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
+                                                    return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
+                                                })
+                                                .map(r => (
+                                                    <tr key={r.id}>
+                                                        <td style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                                                            {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                        </td>
+                                                        <td>{r.user_name || '-'}</td>
+                                                        <td style={{ fontSize: '0.82rem' }}>{r.user_email || '-'}</td>
+                                                        <td style={{ textAlign: 'center' }}>
+                                                            <span className="status-badge used">Tipo {r.enneatype}</span>
+                                                        </td>
+                                                        <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>{r.test_type} preguntas</td>
+                                                        <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                            {r.organization_code && r.organization_code !== 'NO_CODE'
+                                                                ? <span style={{ background: '#eef2ff', color: '#3730a3', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{r.organization_code}</span>
+                                                                : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                        </td>
+                                                        <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                            {r.access_code
+                                                                ? <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }}>{r.access_code}</span>
+                                                                : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                        </td>
+                                                        <td style={{ textAlign: 'center' }}>
+                                                            <button className="btn-ver-respuestas" onClick={() => setSelectedResponse(r)}>
+                                                                Ver respuestas
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* ── SECTION: Respuestas Inicial ── */}
+                {
+                    activeSection === 'respuestas-inicial' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header responses-header-flex">
+                                <h2><Lightbulb size={20} /> Respuestas test inicial</h2>
+                                <div className="header-actions-group">
+                                    <span className="registros-badge">{initialResponses.length} registros</span>
+                                    <div className="header-buttons-wrapper">
+                                        <button
+                                            onClick={handleDownloadAllInitialExcel}
+                                            className="btn-download-excel-complete"
+                                            title="Descargar Excel"
+                                        >
+                                            <Download size={16} />
+                                            <span className="btn-text">Descargar excel</span>
+                                        </button>
+                                        <button onClick={fetchInitialResponses} className="btn-refresh-boxed" disabled={loadingResponses} title="Actualizar">
+                                            <RefreshCw size={18} className={loadingResponses ? 'spinning' : ''} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha y Hora</th>
+                                            <th>ID de Sesión</th>
+                                            <th style={{ textAlign: 'center' }}>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loadingResponses ? (
+                                            <tr><td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>Cargando sesiones...</td></tr>
+                                        ) : initialResponses.length === 0 ? (
+                                            <tr><td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>No hay sesiones registradas aún.</td></tr>
+                                        ) : (
+                                            initialResponses.map(r => (
+                                                <tr key={r.session_id}>
+                                                    <td style={{ fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
                                                         {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                     </td>
-                                                    <td>{r.user_name || '-'}</td>
-                                                    <td style={{ fontSize: '0.82rem' }}>{r.user_email || '-'}</td>
-                                                    <td style={{ textAlign: 'center' }}>
-                                                        <span className="status-badge used">Tipo {r.enneatype}</span>
-                                                    </td>
-                                                    <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>{r.test_type} preguntas</td>
-                                                    <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
-                                                        {r.organization_code && r.organization_code !== 'NO_CODE'
-                                                            ? <span style={{ background: '#eef2ff', color: '#3730a3', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>{r.organization_code}</span>
-                                                            : <span style={{ color: '#9ca3af' }}>-</span>}
-                                                    </td>
-                                                    <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
-                                                        {r.access_code
-                                                            ? <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }}>{r.access_code}</span>
-                                                            : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                    <td style={{ fontSize: '0.85rem', color: '#666', fontFamily: 'monospace' }}>
+                                                        {r.session_id}
                                                     </td>
                                                     <td style={{ textAlign: 'center' }}>
-                                                        <button className="btn-ver-respuestas" onClick={() => setSelectedResponse(r)}>
-                                                            Ver respuestas
+                                                        <button className="btn-ver-respuestas" onClick={() => fetchInitialResponseDetails(r.session_id)} disabled={loadingInitialDetails}>
+                                                            {loadingInitialDetails ? 'Cargando...' : 'Ver respuestas'}
                                                         </button>
                                                     </td>
                                                 </tr>
                                             ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
-
-                {/* ── SECTION: Respuestas Inicial ── */}
-                {activeSection === 'respuestas-inicial' && (
-                    <div className="admin-card">
-                        <div className="admin-card-header responses-header-flex">
-                            <h2><Lightbulb size={20} /> Respuestas test inicial</h2>
-                            <div className="header-actions-group">
-                                <span className="registros-badge">{initialResponses.length} registros</span>
-                                <div className="header-buttons-wrapper">
-                                    <button
-                                        onClick={handleDownloadAllInitialExcel}
-                                        className="btn-download-excel-complete"
-                                        title="Descargar Excel"
-                                    >
-                                        <Download size={16} />
-                                        <span className="btn-text">Descargar excel</span>
-                                    </button>
-                                    <button onClick={fetchInitialResponses} className="btn-refresh-boxed" disabled={loadingResponses} title="Actualizar">
-                                        <RefreshCw size={18} className={loadingResponses ? 'spinning' : ''} />
-                                    </button>
-                                </div>
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-
-                        <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
-                            <table className="codes-table">
-                                <thead>
-                                    <tr>
-                                        <th>Fecha y Hora</th>
-                                        <th>ID de Sesión</th>
-                                        <th style={{ textAlign: 'center' }}>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loadingResponses ? (
-                                        <tr><td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>Cargando sesiones...</td></tr>
-                                    ) : initialResponses.length === 0 ? (
-                                        <tr><td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>No hay sesiones registradas aún.</td></tr>
-                                    ) : (
-                                        initialResponses.map(r => (
-                                            <tr key={r.session_id}>
-                                                <td style={{ fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
-                                                    {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                                                </td>
-                                                <td style={{ fontSize: '0.85rem', color: '#666', fontFamily: 'monospace' }}>
-                                                    {r.session_id}
-                                                </td>
-                                                <td style={{ textAlign: 'center' }}>
-                                                    <button className="btn-ver-respuestas" onClick={() => fetchInitialResponseDetails(r.session_id)} disabled={loadingInitialDetails}>
-                                                        {loadingInitialDetails ? 'Cargando...' : 'Ver respuestas'}
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
+                    )
+                }
 
                 {/* ── SECTION: Gráficas ── */}
-                {activeSection === 'graficas' && (
-                    <div className="charts-main-container">
-                        {/* ── PRIMERA GRÁFICA: TEST INICIAL ── */}
-                        <div className="admin-card chart-card">
-                            <div className="admin-card-header responses-header-flex">
-                                <h2><BarChart2 size={22} /> Actividad test inicial</h2>
-                                <div className="header-actions-group">
-                                    <span className="registros-badge">{initialResponses.length} registros totales</span>
-                                </div>
-                            </div>
-
-                            <div className="chart-period-tabs">
-                                {[
-                                    { id: 'days7', label: '7 días' },
-                                    { id: 'month', label: 'Meses' },
-                                    { id: 'year', label: 'Años' }
-                                ].map(p => (
-                                    <button
-                                        key={p.id}
-                                        className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
-                                        onClick={() => setChartPeriod(p.id)}
-                                    >
-                                        {p.label}
-                                    </button>
-                                ))}
-                            </div>
-
-                            <div className="chart-wrapper">
-                                {initialChartData.length === 0 ? (
-                                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
-                                        No hay datos de sesiones para mostrar.
+                {
+                    activeSection === 'graficas' && (
+                        <div className="charts-main-container">
+                            {/* ── PRIMERA GRÁFICA: TEST INICIAL ── */}
+                            <div className="admin-card chart-card">
+                                <div className="admin-card-header responses-header-flex">
+                                    <h2><BarChart2 size={22} /> Actividad test inicial</h2>
+                                    <div className="header-actions-group">
+                                        <span className="registros-badge">{initialResponses.length} registros totales</span>
                                     </div>
-                                ) : (
-                                    <ResponsiveContainer width="100%" height={400}>
-                                        <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                                            <defs>
-                                                <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="0%" stopColor="#b89b2d" />
-                                                    <stop offset="100%" stopColor="#8c7a22" />
-                                                </linearGradient>
-                                            </defs>
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                                            <XAxis
-                                                dataKey="label"
-                                                axisLine={false}
-                                                tickLine={false}
-                                                tick={{ fill: '#666', fontSize: 13, dy: 10 }}
-                                                height={60}
-                                            />
-                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} allowDecimals={false} />
-                                            <Tooltip
-                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
-                                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
-                                            />
-                                            <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
-                                            <Bar
-                                                name="Usuarios"
-                                                dataKey="usuarios"
-                                                fill="url(#barGradientInitial)"
-                                                radius={[6, 6, 0, 0]}
-                                                barSize={45}
-                                            />
-                                            <Line
-                                                type="monotone"
-                                                dataKey="usuarios"
-                                                stroke="#002d44"
-                                                strokeWidth={3}
-                                                dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
-                                                activeDot={{ r: 6 }}
-                                                name="Tendencia"
-                                            />
-                                        </BarChart>
-                                    </ResponsiveContainer>
+                                </div>
+
+                                <div className="chart-period-tabs">
+                                    {[
+                                        { id: 'days7', label: '7 días' },
+                                        { id: 'month', label: 'Meses' },
+                                        { id: 'year', label: 'Años' }
+                                    ].map(p => (
+                                        <button
+                                            key={p.id}
+                                            className={`chart-period-btn ${chartPeriod === p.id ? 'active' : ''}`}
+                                            onClick={() => setChartPeriod(p.id)}
+                                        >
+                                            {p.label}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div className="chart-wrapper">
+                                    {initialChartData.length === 0 ? (
+                                        <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+                                            No hay datos de sesiones para mostrar.
+                                        </div>
+                                    ) : (
+                                        <ResponsiveContainer width="100%" height={400}>
+                                            <BarChart data={initialChartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                                                <defs>
+                                                    <linearGradient id="barGradientInitial" x1="0" y1="0" x2="0" y2="1">
+                                                        <stop offset="0%" stopColor="#b89b2d" />
+                                                        <stop offset="100%" stopColor="#8c7a22" />
+                                                    </linearGradient>
+                                                </defs>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                                <XAxis
+                                                    dataKey="label"
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                    tick={{ fill: '#666', fontSize: 13, dy: 10 }}
+                                                    height={60}
+                                                />
+                                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#666', fontSize: 11 }} allowDecimals={false} />
+                                                <Tooltip
+                                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
+                                                    cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                                />
+                                                <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
+                                                <Bar
+                                                    name="Usuarios"
+                                                    dataKey="usuarios"
+                                                    fill="url(#barGradientInitial)"
+                                                    radius={[6, 6, 0, 0]}
+                                                    barSize={45}
+                                                />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="usuarios"
+                                                    stroke="#002d44"
+                                                    strokeWidth={3}
+                                                    dot={{ fill: '#002d44', strokeWidth: 2, r: 4 }}
+                                                    activeDot={{ r: 6 }}
+                                                    name="Tendencia"
+                                                />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    )}
+                                </div>
+
+                                {initialChartData.length > 0 && (
+                                    <div className="chart-metrics">
+                                        <div className="chart-metric-card">
+                                            <div className="chart-metric-value">{initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
+                                            <div className="chart-metric-label">TOTAL SESIONES</div>
+                                        </div>
+                                        <div className="chart-metric-card">
+                                            <div className="chart-metric-value">{(initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0) / initialChartData.length).toFixed(1)}</div>
+                                            <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
+                                        </div>
+                                        <div className="chart-metric-card">
+                                            <div className="chart-metric-value">{Math.max(...initialChartData.map(d => d.usuarios))}</div>
+                                            <div className="chart-metric-label">MÁXIMO</div>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
 
-                            {initialChartData.length > 0 && (
-                                <div className="chart-metrics">
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
-                                        <div className="chart-metric-label">TOTAL SESIONES</div>
-                                    </div>
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{(initialChartData.reduce((acc, curr) => acc + curr.usuarios, 0) / initialChartData.length).toFixed(1)}</div>
-                                        <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
-                                    </div>
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{Math.max(...initialChartData.map(d => d.usuarios))}</div>
-                                        <div className="chart-metric-label">MÁXIMO</div>
+                            {/* ── SEGUNDA GRÁFICA: TEST AVANZADO ── */}
+                            <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
+                                <div className="admin-card-header responses-header-flex">
+                                    <h2><BarChart2 size={22} /> Actividad test avanzado</h2>
+                                    <div className="header-actions-group">
+                                        <span className="registros-badge">{testResponses.length} registros totales</span>
                                     </div>
                                 </div>
-                            )}
-                        </div>
 
-                        {/* ── SEGUNDA GRÁFICA: TEST AVANZADO ── */}
-                        <div className="admin-card chart-card" style={{ marginTop: '30px' }}>
-                            <div className="admin-card-header responses-header-flex">
-                                <h2><BarChart2 size={22} /> Actividad test avanzado</h2>
-                                <div className="header-actions-group">
-                                    <span className="registros-badge">{testResponses.length} registros totales</span>
+                                <div className="chart-wrapper">
+                                    {chartData.length === 0 ? (
+                                        <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
+                                            No hay datos suficientes para mostrar la gráfica.
+                                        </div>
+                                    ) : (
+                                        <ResponsiveContainer width="100%" height={400}>
+                                            <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                                                <XAxis
+                                                    dataKey="label"
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                    tick={{ fill: '#666', fontSize: 13, dy: 10 }}
+                                                    height={60}
+                                                />
+                                                <YAxis
+                                                    axisLine={false}
+                                                    tickLine={false}
+                                                    tick={{ fill: '#666', fontSize: 11 }}
+                                                    allowDecimals={false}
+                                                />
+                                                <Tooltip
+                                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
+                                                    cursor={{ fill: 'rgba(0,0,0,0.02)' }}
+                                                />
+                                                <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
+                                                <Bar
+                                                    name="Usuarios"
+                                                    dataKey="usuarios"
+                                                    fill="#002d44"
+                                                    radius={[6, 6, 0, 0]}
+                                                    barSize={45}
+                                                />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="usuarios"
+                                                    stroke="#ddbe3d"
+                                                    strokeWidth={3}
+                                                    dot={{ fill: '#ddbe3d', strokeWidth: 2, r: 4 }}
+                                                    activeDot={{ r: 6 }}
+                                                    name="Tendencia"
+                                                />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    )}
                                 </div>
-                            </div>
 
-                            <div className="chart-wrapper">
-                                {chartData.length === 0 ? (
-                                    <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
-                                        No hay datos suficientes para mostrar la gráfica.
+                                {chartData.length > 0 && (
+                                    <div className="chart-metrics">
+                                        <div className="chart-metric-card">
+                                            <div className="chart-metric-value">{chartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
+                                            <div className="chart-metric-label">TOTAL USUARIOS</div>
+                                        </div>
+                                        <div className="chart-metric-card">
+                                            <div className="chart-metric-value">{(chartData.reduce((acc, curr) => acc + curr.usuarios, 0) / chartData.length).toFixed(1)}</div>
+                                            <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
+                                        </div>
+                                        <div className="chart-metric-card">
+                                            <div className="chart-metric-value">{Math.max(...chartData.map(d => d.usuarios))}</div>
+                                            <div className="chart-metric-label">MÁXIMO</div>
+                                        </div>
                                     </div>
-                                ) : (
-                                    <ResponsiveContainer width="100%" height={400}>
-                                        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                                            <XAxis
-                                                dataKey="label"
-                                                axisLine={false}
-                                                tickLine={false}
-                                                tick={{ fill: '#666', fontSize: 13, dy: 10 }}
-                                                height={60}
-                                            />
-                                            <YAxis
-                                                axisLine={false}
-                                                tickLine={false}
-                                                tick={{ fill: '#666', fontSize: 11 }}
-                                                allowDecimals={false}
-                                            />
-                                            <Tooltip
-                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', padding: '12px' }}
-                                                cursor={{ fill: 'rgba(0,0,0,0.02)' }}
-                                            />
-                                            <Legend verticalAlign="top" align="center" iconType="rect" wrapperStyle={{ paddingBottom: '20px' }} />
-                                            <Bar
-                                                name="Usuarios"
-                                                dataKey="usuarios"
-                                                fill="#002d44"
-                                                radius={[6, 6, 0, 0]}
-                                                barSize={45}
-                                            />
-                                            <Line
-                                                type="monotone"
-                                                dataKey="usuarios"
-                                                stroke="#ddbe3d"
-                                                strokeWidth={3}
-                                                dot={{ fill: '#ddbe3d', strokeWidth: 2, r: 4 }}
-                                                activeDot={{ r: 6 }}
-                                                name="Tendencia"
-                                            />
-                                        </BarChart>
-                                    </ResponsiveContainer>
                                 )}
                             </div>
-
-                            {chartData.length > 0 && (
-                                <div className="chart-metrics">
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{chartData.reduce((acc, curr) => acc + curr.usuarios, 0)}</div>
-                                        <div className="chart-metric-label">TOTAL USUARIOS</div>
-                                    </div>
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{(chartData.reduce((acc, curr) => acc + curr.usuarios, 0) / chartData.length).toFixed(1)}</div>
-                                        <div className="chart-metric-label">PROMEDIO / PERÍODO</div>
-                                    </div>
-                                    <div className="chart-metric-card">
-                                        <div className="chart-metric-value">{Math.max(...chartData.map(d => d.usuarios))}</div>
-                                        <div className="chart-metric-label">MÁXIMO</div>
-                                    </div>
-                                </div>
-                            )}
                         </div>
-                    </div>
-                )
+                    )
                 }
 
                 {/* ── SECTION: Transacciones ── */}

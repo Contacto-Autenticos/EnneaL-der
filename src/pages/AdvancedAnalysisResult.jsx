@@ -201,6 +201,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const [downloadProgress, setDownloadProgress] = React.useState(0);
     const [totalPages, setTotalPages] = React.useState(0);
     const [hasPaidForKit, setHasPaidForKit] = React.useState(false);
+    const [showAdvancedProgram, setShowAdvancedProgram] = React.useState(true);
 
     const [localResult, setLocalResult] = React.useState(null);
 
@@ -211,6 +212,12 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         const purchasedKit = localStorage.getItem('hasPaidForKit') === 'true';
         if (purchasedKit) {
             setHasPaidForKit(true);
+        }
+
+        // Check if Advanced Program should be hidden (test mode)
+        const hideProgram = localStorage.getItem('hideAdvancedProgram') === 'true';
+        if (hideProgram) {
+            setShowAdvancedProgram(false);
         }
 
         // Load result from localStorage if not provided via props
@@ -962,22 +969,24 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                 </div>
                             </div>
                         )}
-                        <div className="executive-kit-promo" style={{ marginTop: '20px', background: 'linear-gradient(135deg, #002d44 0%, #001a29 100%)', border: '1px solid rgba(221, 190, 61, 0.4)' }}>
-                            <div className="kit-promo-content">
-                                <div className="kit-title-shimmer">
-                                    <h3 style={{ color: '#050e14' }}>Programa avanzado</h3>
+                        {showAdvancedProgram && (
+                            <div className="executive-kit-promo" style={{ marginTop: '20px', background: 'linear-gradient(135deg, #002d44 0%, #001a29 100%)', border: '1px solid rgba(221, 190, 61, 0.4)' }}>
+                                <div className="kit-promo-content">
+                                    <div className="kit-title-shimmer">
+                                        <h3 style={{ color: '#050e14' }}>Programa avanzado</h3>
+                                    </div>
+                                    <h4 style={{ color: '#ffffff', fontSize: '1.2rem', marginBottom: '10px', marginTop: '10px' }}>Transforma tu patrón de personalidad</h4>
+                                    <p style={{ color: '#ffffff' }}>Aprende a utilizar tu eneatipo para mejorar tu toma de decisiones y liderar con propósito en este programa exclusivo.</p>
+                                    <button
+                                        onClick={() => navigate('/programa')}
+                                        className="btn-advanced-finish btn-deepen-primary"
+                                        style={{ width: '100%', maxWidth: '100%', marginTop: '15px' }}
+                                    >
+                                        Explorar el programa <Rocket size={18} style={{ marginLeft: '10px' }} />
+                                    </button>
                                 </div>
-                                <h4 style={{ color: '#ffffff', fontSize: '1.2rem', marginBottom: '10px', marginTop: '10px' }}>Transforma tu patrón de personalidad</h4>
-                                <p style={{ color: '#ffffff' }}>Aprende a utilizar tu eneatipo para mejorar tu toma de decisiones y liderar con propósito en este programa exclusivo.</p>
-                                <button
-                                    onClick={() => navigate('/programa')}
-                                    className="btn-advanced-finish btn-deepen-primary"
-                                    style={{ width: '100%', maxWidth: '100%', marginTop: '15px' }}
-                                >
-                                    Explorar el programa <Rocket size={18} style={{ marginLeft: '10px' }} />
-                                </button>
                             </div>
-                        </div>
+                        )}
 
                         {/* Brand footer */}
                         <div className="detailed-brand-footer">
