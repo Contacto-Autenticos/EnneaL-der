@@ -333,9 +333,9 @@ const CourseLanding = () => {
                                         'Jornada Intensiva (8 horas)',
                                         'Material físico de trabajo',
                                         'Refrigerios incluidos',
-                                        'Comunidad exclusiva presencial',
+                                        'Comunidad presencial',
                                         'Networking con asistentes',
-                                        'Certificado de finalización impreso'
+                                        'Certificado de finalización'
                                     ].map((item, i) => (
                                         <div key={i} className="al-pricing-item">
                                             <CheckCircle2 size={16} /> {item}
