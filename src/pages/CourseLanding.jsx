@@ -317,8 +317,8 @@ const CourseLanding = () => {
                         {/* Tarjeta Presencial */}
                         <div className="al-pricing-card card-featured">
                             <div className="al-pricing-glow"></div>
-                            <div className="al-pricing-header" style={{ background: '#002d44', color: '#ddbe3d' }}>
-                                <h3>Programa Presencial</h3>
+                            <div className="al-pricing-header" style={{ background: '#002d44' }}>
+                                <h3 style={{ color: '#ddbe3d' }}>Programa Presencial</h3>
                             </div>
 
                             <div className="al-pricing-content">
