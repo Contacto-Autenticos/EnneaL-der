@@ -271,34 +271,32 @@ const CourseLanding = () => {
                 </div>
             </section>
 
-            {/* Pricing Section (Duplicated from AdvancedLanding) */}
+            {/* Pricing Section */}
             <section id="precios" className="al-section al-pricing-section">
                 <div className="al-section-content">
                     <div className="al-pricing-wrapper al-animate">
+                        {/* Tarjeta Virtual */}
                         <div className="al-pricing-card">
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header">
-                                <h3>Oferta Especial de Lanzamiento</h3>
+                                <h3>Programa Virtual</h3>
                             </div>
 
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
-                                    <span className="al-old-price">$250.000 COP</span>
                                     <div className="al-current-price">
-                                        $125.000 <span className="al-currency">COP</span>
+                                        $360.000 <span className="al-currency">COP</span>
                                     </div>
                                 </div>
 
                                 <div className="al-pricing-grid">
                                     {[
-                                        'Módulos de video paso a paso',
+                                        '4 Sesiones en vivo',
                                         'Guías de ejercicios prácticos',
                                         'Sesiones de Q&A grabadas',
                                         'Comunidad exclusiva',
-                                        'Acceso de por vida',
-                                        'Certificado de finalización',
-                                        'Bonus: Matriz de liderazgo',
-                                        'Y mucho más…'
+                                        'Acceso de por vida a grabaciones',
+                                        'Certificado de finalización'
                                     ].map((item, i) => (
                                         <div key={i} className="al-pricing-item">
                                             <CheckCircle2 size={16} /> {item}
@@ -307,7 +305,7 @@ const CourseLanding = () => {
                                 </div>
 
                                 <button className="al-btn-buy">
-                                    Inscribirme al programa <Lock size={24} />
+                                    Inscribirme Virtual <Lock size={24} />
                                 </button>
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0' }}>
@@ -315,6 +313,49 @@ const CourseLanding = () => {
                                 </p>
                             </div>
                         </div>
+
+                        {/* Tarjeta Presencial */}
+                        <div className="al-pricing-card card-featured">
+                            <div className="al-pricing-glow"></div>
+                            <div className="al-pricing-header" style={{ background: '#002d44', color: '#ddbe3d' }}>
+                                <h3>Programa Presencial</h3>
+                            </div>
+
+                            <div className="al-pricing-content">
+                                <div className="al-price-box">
+                                    <div className="al-current-price">
+                                        $597.000 <span className="al-currency">COP</span>
+                                    </div>
+                                </div>
+
+                                <div className="al-pricing-grid">
+                                    {[
+                                        'Jornada Intensiva (8 horas)',
+                                        'Material físico de trabajo',
+                                        'Refrigerios incluidos',
+                                        'Comunidad exclusiva presencial',
+                                        'Networking con asistentes',
+                                        'Certificado de finalización impreso'
+                                    ].map((item, i) => (
+                                        <div key={i} className="al-pricing-item">
+                                            <CheckCircle2 size={16} /> {item}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <button className="al-btn-buy" style={{ background: '#002d44', color: '#ddbe3d', border: '1px solid #ddbe3d' }}>
+                                    Inscribirme Presencial <Lock size={24} />
+                                </button>
+
+                                <p className="al-footer-desc" style={{ color: 'rgba(255,200,200,0.8)', marginTop: '0', fontWeight: 'bold' }}>
+                                    * NO INCLUYE COSTOS DE DESPLAZAMIENTO *
+                                </p>
+                                <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '5px' }}>
+                                    Cupos limitados • Pago seguro vía Wompi
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>

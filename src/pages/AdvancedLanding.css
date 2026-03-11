@@ -572,10 +572,11 @@ html {
 
 
 /* Pricing Card */
-.al-pricing-wrapper {
+.al-pricing-wrapper-single {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
+    display: block; /* Force block to override any accidental grid inheritance */
 }
 
 .al-pricing-card {

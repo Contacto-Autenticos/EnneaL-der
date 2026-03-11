@@ -307,7 +307,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             {/* 7. Precios */}
             <section id="precios" className="al-section">
                 <div className="al-section-content">
-                    <div className="al-pricing-wrapper al-animate">
+                    <div className="al-pricing-wrapper-single al-animate">
                         <div className="al-pricing-card">
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header">

@@ -674,8 +674,17 @@
 }
 
 .al-pricing-wrapper {
-    max-width: 700px;
+    max-width: 1000px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+@media (max-width: 900px) {
+    .al-pricing-wrapper {
+        grid-template-columns: 1fr;
+    }
 }
 
 .al-pricing-card {
@@ -683,7 +692,10 @@
     border: 1px solid rgba(221, 190, 61, 0.3);
     border-radius: 30px;
     overflow: hidden;
+    position: relative;
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
 }
 
 .al-pricing-header {
