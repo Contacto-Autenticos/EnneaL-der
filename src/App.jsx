@@ -24,6 +24,7 @@ import { advancedEnneagramInfo } from './data/advancedInfo';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingScrollToTop from './components/FloatingScrollToTop';
 import BasicTestIntro from './pages/BasicTestIntro';
+import Analytics from './components/Analytics';
 
 
 function App() {
@@ -177,6 +178,7 @@ function App() {
 
   return (
     <Router>
+      <Analytics />
       <ScrollToTop />
       <FloatingScrollToTop />
       <Routes>

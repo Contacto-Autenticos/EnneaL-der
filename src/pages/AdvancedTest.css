@@ -111,7 +111,7 @@
 
 .adv-test-slider-labels {
     position: relative;
-    width: 90%;
+    width: 85%;
     margin: 0 auto 25px;
     height: 25px;
 }
@@ -119,7 +119,7 @@
 .adv-test-slider-label {
     position: absolute;
     transform: translateX(-50%);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     transition: all 0.3s ease;
@@ -134,7 +134,7 @@
 
 .adv-test-slider-track {
     position: relative;
-    width: 90%;
+    width: 85%;
     margin: 0 auto;
     height: 45px;
     display: flex;
@@ -375,18 +375,18 @@
         margin-bottom: 25px;
         /* Increased from 20px */
         height: 20px;
-        width: 85%;
+        width: 80%;
         /* Narrowed for more side space */
     }
 
     .adv-test-slider-label {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         /* Reduced to avoid edge overlap */
     }
 
     .adv-test-slider-track {
         height: 40px;
-        width: 85%;
+        width: 80%;
         /* Narrowed for more side space */
     }
 
