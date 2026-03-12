@@ -21,6 +21,42 @@ serve(async (req) => {
       throw new Error('Faltan datos obligatorios (email, name, workshop_type)')
     }
 
+    const emailBody = {
+      templateId: 1, // Using the user's template ID
+      sender: {
+        name: "EnneaLíder - Auténticos",
+        email: "hola@autenticos.co"
+      },
+      to: [
+        {
+          email: email,
+          name: name
+        }
+      ],
+      params: {
+        // Send multiple variations to increase compatibility with the template
+        user_name: name,
+        name: name,
+        nombre: name,
+        NAME: name,
+        
+        workshop_name: workshop_type,
+        workshop_type: workshop_type,
+        taller: workshop_type,
+        WORKSHOP: workshop_type,
+        
+        workshop_date: workshop_date,
+        fecha: workshop_date,
+        DATE: workshop_date,
+        
+        workshop_time: workshop_time,
+        horario: workshop_time,
+        TIME: workshop_time
+      }
+    };
+
+    console.log('Enviando a Brevo:', JSON.stringify(emailBody, null, 2));
+
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -28,25 +64,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'api-key': BREVO_API_KEY || ''
       },
-      body: JSON.stringify({
-        templateId: 1, // Using the user's template ID
-        sender: {
-          name: "EnneaLíder - Auténticos",
-          email: "hola@autenticos.co"
-        },
-        to: [
-          {
-            email: email,
-            name: name
-          }
-        ],
-        params: {
-          user_name: name,
-          workshop_name: workshop_type,
-          workshop_date: workshop_date,
-          workshop_time: workshop_time
-        }
-      })
+      body: JSON.stringify(emailBody)
     })
 
     const result = await response.json()
