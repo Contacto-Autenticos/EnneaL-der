@@ -620,7 +620,7 @@ const CourseLanding = () => {
                         </div>
 
                         <a href="#precios" className="al-btn-primary closing-cta">
-                            RESERVA TU LUGAR EN EL TALLER
+                            RESERVA TU LUGAR
                         </a>
                     </div>
                 </div>

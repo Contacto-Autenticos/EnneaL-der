@@ -952,4 +952,11 @@
     .registration-modal-content .al-hero-title {
         font-size: 1.5rem !important;
     }
+
+    /* Fix for "acompañar a:" to stay on one line */
+    .course-experience .al-gold-text {
+        white-space: nowrap !important;
+        font-size: clamp(16px, 6vw, 24px) !important;
+        display: inline-block !important;
+    }
 }
