@@ -365,7 +365,7 @@ const Result = ({ result, user, onReset }) => {
                     <div className={`advanced-analysis-section ${activePhase >= 6 ? 'revealed' : 'hidden'}`}>
                         <div className="top-results-box">
                             <p className="advanced-analysis-title">
-                                En algunas personas varios tipos pueden aparecer próximos entre sí, especialmente cuando comparten conductas externas similares.
+                                En algunas personas varios eneatipos pueden aparecer próximos entre sí, especialmente cuando comparten conductas externas similares.
                             </p>
 
                             <div className="self-perception-survey">
