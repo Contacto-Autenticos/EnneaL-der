@@ -396,7 +396,7 @@ const CourseLanding = () => {
                                     7:00 PM a 9:00 PM (Hora Col)
                                 </div>
                                 <p style={{ marginTop: '15px' }}>Un espacio de aprendizaje progresivo donde exploraremos el sistema completo del Eneagrama.</p>
-                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }} onClick={() => handlePlanSelect('virtual')}>Seleccionar Virtual</button>
+                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handlePlanSelect('virtual')}>Seleccionar Virtual</button>
                             </div>
 
                             <div className="modality-card card-featured">
@@ -412,7 +412,7 @@ const CourseLanding = () => {
                                     9:00 AM a 5:00 PM
                                 </div>
                                 <p style={{ marginTop: '15px' }}>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
-                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }} onClick={() => handlePlanSelect('presencial')}>Seleccionar Presencial</button>
+                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handlePlanSelect('presencial')}>Seleccionar Presencial</button>
                             </div>
                         </div>
                     </div>
