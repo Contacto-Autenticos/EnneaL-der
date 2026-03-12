@@ -556,7 +556,8 @@ const CourseLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-gold-text" style={{ display: 'inline' }}>$360.000</span> <span className="al-currency">COP</span>
+                                        <span className="al-price-number">$360.000</span>
+                                        <span className="al-currency">COP</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
                                         14, 15, 16, 17 de abril
@@ -604,7 +605,8 @@ const CourseLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-gold-text" style={{ display: 'inline' }}>$597.000</span> <span className="al-currency">COP</span>
+                                        <span className="al-price-number">$597.000</span>
+                                        <span className="al-currency">COP</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
                                         11 de abril

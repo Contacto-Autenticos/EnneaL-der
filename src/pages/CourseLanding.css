@@ -785,18 +785,24 @@
 }
 
 .al-current-price {
-    font-size: clamp(50px, 10vw, 80px);
+    font-size: clamp(40px, 8vw, 64px);
     font-weight: 900;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+}
+
+.al-price-number {
+    color: #ffffff;
 }
 
 .al-currency {
-    font-size: 24px;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.1em;
-    display: inline-block;
-    vertical-align: baseline;
-    margin-left: 15px;
-    font-weight: 400;
+    font-size: 0.35em;
+    color: #ddbe3d;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .al-pricing-grid {
