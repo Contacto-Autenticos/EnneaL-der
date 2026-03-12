@@ -33,8 +33,6 @@ const CourseLanding = () => {
     const handlePlanSelect = (plan) => {
         setSelectedPlan(plan);
         setShowRegisterForm(true);
-        // Scroll to form or just open modal if we were using one, but here we will show it inline or as overlay
-        window.scrollTo({ top: document.getElementById('registration-step').offsetTop - 100, behavior: 'smooth' });
     };
 
     const handleRegistration = async (e) => {
@@ -413,16 +411,18 @@ const CourseLanding = () => {
                 </div>
             </section>
 
-            {/* Step 2: Registration Form (Conditional) */}
+            {/* Step 2: Registration Modal */}
             {showRegisterForm && (
-                <section id="registration-step" className="course-registration-form al-animate" style={{ padding: '80px 20px', background: 'rgba(0,0,0,0.2)' }}>
-                    <div className="al-section-content" style={{ maxWidth: '600px' }}>
-                        <h2 className="al-hero-title" style={{ fontSize: '2rem', marginBottom: '30px', textAlign: 'center' }}>
-                            <span className="al-hero-title-top">Completa tus datos</span>
-                            <span className="al-gold-text">para la inscripción {selectedPlan === 'virtual' ? 'Virtual' : 'Presencial'}</span>
+                <div className="registration-modal-overlay" onClick={() => setShowRegisterForm(false)}>
+                    <div className="registration-modal-content al-animate" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close-btn" onClick={() => setShowRegisterForm(false)}>✕</button>
+                        
+                        <h2 className="al-hero-title" style={{ fontSize: '1.8rem', marginBottom: '30px', textAlign: 'center' }}>
+                            <span className="al-hero-title-top" style={{ fontSize: '0.6em' }}>Completa tus datos</span>
+                            <span className="al-gold-text" style={{ fontSize: '0.9em' }}>para la inscripción {selectedPlan === 'virtual' ? 'Virtual' : 'Presencial'}</span>
                         </h2>
                         
-                        <form onSubmit={handleRegistration} className="advanced-reg-form" style={{ background: 'rgba(255,255,255,0.05)', padding: '30px', borderRadius: '20px', border: '1px solid rgba(221, 190, 61, 0.2)' }}>
+                        <form onSubmit={handleRegistration} className="advanced-reg-form" style={{ background: 'rgba(255,255,255,0.02)', padding: '0', border: 'none' }}>
                             <div className="form-group-adv">
                                 <label>Nombre Completo</label>
                                 <input 
@@ -457,16 +457,29 @@ const CourseLanding = () => {
                                 />
                             </div>
 
-                            <button type="submit" className="al-btn-primary" style={{ width: '100%', marginTop: '20px' }} disabled={regLoading}>
+                            <button 
+                                type="submit" 
+                                className="al-btn-primary confirm-btn-premium" 
+                                style={{ 
+                                    width: '100%', 
+                                    marginTop: '20px',
+                                    backgroundColor: '#ffffff',
+                                    color: '#002d44',
+                                    fontSize: '1.1rem',
+                                    padding: '20px',
+                                    fontWeight: '900'
+                                }} 
+                                disabled={regLoading}
+                            >
                                 {regLoading ? 'Procesando...' : 'Confirmar Datos e Inscribirme'}
                             </button>
                             
                             {paymentError && (
-                                <p style={{ color: '#ff6b6b', marginTop: '15px', textAlign: 'center' }}>{paymentError}</p>
+                                <p style={{ color: '#ff6b6b', marginTop: '15px', textAlign: 'center', fontSize: '0.9rem' }}>{paymentError}</p>
                             )}
                         </form>
                     </div>
-                </section>
+                </div>
             )}
 
             {/* NEW: Instructor Section */}
