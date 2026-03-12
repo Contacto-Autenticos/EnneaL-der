@@ -21,10 +21,54 @@ const CourseLanding = () => {
     const [selectedPlan, setSelectedPlan] = useState(null); // 'virtual' or 'presencial'
     const [paymentError, setPaymentError] = useState(null);
 
-    const handlePayment = async (plan) => {
+    // Registration Form State
+    const [showRegisterForm, setShowRegisterForm] = useState(false);
+    const [regData, setRegData] = useState({
+        full_name: '',
+        email: '',
+        phone: ''
+    });
+    const [regLoading, setRegLoading] = useState(false);
+
+    const handlePlanSelect = (plan) => {
+        setSelectedPlan(plan);
+        setShowRegisterForm(true);
+        // Scroll to form or just open modal if we were using one, but here we will show it inline or as overlay
+        window.scrollTo({ top: document.getElementById('registration-step').offsetTop - 100, behavior: 'smooth' });
+    };
+
+    const handleRegistration = async (e) => {
+        e.preventDefault();
+        setRegLoading(true);
+        try {
+            // 1. Save Lead to Supabase
+            const { error: leadError } = await supabase
+                .from('user_leads')
+                .insert([{
+                    full_name: regData.full_name,
+                    email: regData.email.trim().toLowerCase(),
+                    phone: regData.phone,
+                    source: `workshop_${selectedPlan}`,
+                    created_at: new Date().toISOString()
+                }]);
+
+            if (leadError) console.error('Error saving lead:', leadError);
+
+            // 2. Proceed to Payment Signature
+            await initiatePayment(selectedPlan, regData.email);
+            
+            setShowRegisterForm(false);
+        } catch (err) {
+            console.error('Registration error:', err);
+            setPaymentError('Error al registrar tus datos. Por favor intenta de nuevo.');
+        } finally {
+            setRegLoading(false);
+        }
+    };
+
+    const initiatePayment = async (plan, customerEmail) => {
         try {
             setPaymentLoading(true);
-            setSelectedPlan(plan);
             setPaymentError(null);
 
             const amountInCents = plan === 'virtual' ? 36000000 : 59700000;
@@ -39,13 +83,19 @@ const CourseLanding = () => {
 
             setSignatureData({
                 ...data,
-                amountInCents
+                amountInCents,
+                customerEmail // Store for later if needed
             });
         } catch (err) {
             console.error('Error fetching signature:', err);
             setPaymentError(`Error al iniciar pago: ${err.message || 'Intenta de nuevo'}`);
             setPaymentLoading(false);
         }
+    };
+
+    const handlePayment = async (plan) => {
+        // Redundant with handlePlanSelect but kept for compatibility or updated to use select
+        handlePlanSelect(plan);
     };
 
     useEffect(() => {
@@ -344,6 +394,7 @@ const CourseLanding = () => {
                                     <span>2 horas por sesión</span>
                                 </div>
                                 <p>Un espacio de aprendizaje progresivo donde exploraremos el sistema completo del Eneagrama.</p>
+                                <a href="#precios" className="al-btn-secondary" style={{ marginTop: '20px', display: 'inline-block' }} onClick={() => handlePlanSelect('virtual')}>Seleccionar Vitual</a>
                             </div>
 
                             <div className="modality-card card-featured">
@@ -355,11 +406,68 @@ const CourseLanding = () => {
                                     <span>8 horas</span>
                                 </div>
                                 <p>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
+                                <a href="#precios" className="al-btn-primary" style={{ marginTop: '20px', display: 'inline-block' }} onClick={() => handlePlanSelect('presencial')}>Seleccionar Presencial</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            {/* Step 2: Registration Form (Conditional) */}
+            {showRegisterForm && (
+                <section id="registration-step" className="course-registration-form al-animate" style={{ padding: '80px 20px', background: 'rgba(0,0,0,0.2)' }}>
+                    <div className="al-section-content" style={{ maxWidth: '600px' }}>
+                        <h2 className="al-hero-title" style={{ fontSize: '2rem', marginBottom: '30px', textAlign: 'center' }}>
+                            <span className="al-hero-title-top">Completa tus datos</span>
+                            <span className="al-gold-text">para la inscripción {selectedPlan === 'virtual' ? 'Virtual' : 'Presencial'}</span>
+                        </h2>
+                        
+                        <form onSubmit={handleRegistration} className="advanced-reg-form" style={{ background: 'rgba(255,255,255,0.05)', padding: '30px', borderRadius: '20px', border: '1px solid rgba(221, 190, 61, 0.2)' }}>
+                            <div className="form-group-adv">
+                                <label>Nombre Completo</label>
+                                <input 
+                                    type="text" 
+                                    required 
+                                    className="adv-input"
+                                    placeholder="Como aparecerá en tu certificado"
+                                    value={regData.full_name}
+                                    onChange={(e) => setRegData({...regData, full_name: e.target.value})}
+                                />
+                            </div>
+                            <div className="form-group-adv">
+                                <label>Correo Electrónico</label>
+                                <input 
+                                    type="email" 
+                                    required 
+                                    className="adv-input"
+                                    placeholder="Donde recibirás el acceso"
+                                    value={regData.email}
+                                    onChange={(e) => setRegData({...regData, email: e.target.value})}
+                                />
+                            </div>
+                            <div className="form-group-adv">
+                                <label>Número de Celular (WhatsApp)</label>
+                                <input 
+                                    type="tel" 
+                                    required 
+                                    className="adv-input"
+                                    placeholder="Ej: +57 300 123 4567"
+                                    value={regData.phone}
+                                    onChange={(e) => setRegData({...regData, phone: e.target.value})}
+                                />
+                            </div>
+
+                            <button type="submit" className="al-btn-primary" style={{ width: '100%', marginTop: '20px' }} disabled={regLoading}>
+                                {regLoading ? 'Procesando...' : 'Confirmar Datos e Inscribirme'}
+                            </button>
+                            
+                            {paymentError && (
+                                <p style={{ color: '#ff6b6b', marginTop: '15px', textAlign: 'center' }}>{paymentError}</p>
+                            )}
+                        </form>
+                    </div>
+                </section>
+            )}
 
             {/* NEW: Instructor Section */}
             <section className="course-instructor al-animate">
@@ -418,7 +526,7 @@ const CourseLanding = () => {
                 <div className="al-section-content">
                     <div className="al-pricing-wrapper al-animate">
                         {/* Tarjeta Virtual */}
-                        <div className="al-pricing-card">
+                        <div className={`al-pricing-card ${selectedPlan === 'virtual' ? 'card-featured' : ''}`}>
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header">
                                 <h3>Programa Virtual</h3>
@@ -448,7 +556,7 @@ const CourseLanding = () => {
                                 <div id="wompi-container-virtual">
                                     <button
                                         className="al-btn-buy"
-                                        onClick={() => handlePayment('virtual')}
+                                        onClick={() => handlePlanSelect('virtual')}
                                         disabled={paymentLoading && selectedPlan === 'virtual'}
                                     >
                                         {paymentLoading && selectedPlan === 'virtual' ? 'Iniciando...' : 'Inscribirme Virtual'} <Lock size={24} />
@@ -462,7 +570,7 @@ const CourseLanding = () => {
                         </div>
 
                         {/* Tarjeta Presencial */}
-                        <div className="al-pricing-card card-featured">
+                        <div className={`al-pricing-card ${selectedPlan === 'presencial' ? 'card-featured' : ''}`}>
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header" style={{ background: '#002d44' }}>
                                 <h3 style={{ color: '#ddbe3d' }}>Programa Presencial</h3>
@@ -493,7 +601,7 @@ const CourseLanding = () => {
                                 <div id="wompi-container-presencial">
                                     <button
                                         className="al-btn-buy"
-                                        onClick={() => handlePayment('presencial')}
+                                        onClick={() => handlePlanSelect('presencial')}
                                         disabled={paymentLoading && selectedPlan === 'presencial'}
                                     >
                                         {paymentLoading && selectedPlan === 'presencial' ? 'Iniciando...' : 'Inscribirme Presencial'} <Lock size={24} />
