@@ -73,6 +73,7 @@ const CourseLanding = () => {
                             if (node.tagName === 'FORM' || node.tagName === 'BUTTON' || node.querySelector?.('button')) {
                                 const btn = node.tagName === 'BUTTON' ? node : node.querySelector('button');
                                 if (btn) {
+                                    // Forzar estilos premium
                                     btn.style.setProperty('width', '100%', 'important');
                                     btn.style.setProperty('border-radius', '100px', 'important');
                                     btn.style.setProperty('background-color', selectedPlan === 'virtual' ? '#ddbe3d' : 'transparent', 'important');
@@ -84,8 +85,20 @@ const CourseLanding = () => {
                                     btn.style.setProperty('letter-spacing', '0.1em', 'important');
                                     btn.style.setProperty('text-transform', 'uppercase', 'important');
                                     btn.style.setProperty('cursor', 'pointer', 'important');
+                                    btn.style.setProperty('transition', 'all 0.3s ease', 'important');
+                                    
+                                    // Forzar nuestro texto e icono para evitar que Wompi ponga "Paga con Wompi"
+                                    const planText = selectedPlan === 'virtual' ? 'INSCRIBIRME VIRTUAL' : 'INSCRIBIRME PRESENCIAL';
+                                    btn.innerHTML = `<span>${planText}</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" style="margin-left: 10px; vertical-align: middle;"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
                                     
                                     setPaymentLoading(false);
+
+                                    // Intentar abrir automáticamente la pasarela para que el usuario no deba clickear 2 veces
+                                    setTimeout(() => {
+                                        if (btn && typeof btn.click === 'function') {
+                                            btn.click();
+                                        }
+                                    }, 100);
                                 }
                             }
                         });
