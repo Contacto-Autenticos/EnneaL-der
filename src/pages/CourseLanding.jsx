@@ -391,8 +391,12 @@ const CourseLanding = () => {
                                     <div className="stats-divider"></div>
                                     <span>2 horas por sesión</span>
                                 </div>
-                                <p>Un espacio de aprendizaje progresivo donde exploraremos el sistema completo del Eneagrama.</p>
-                                <a href="#precios" className="al-btn-secondary" style={{ marginTop: '20px', display: 'inline-block' }} onClick={() => handlePlanSelect('virtual')}>Seleccionar Vitual</a>
+                                <div className="modality-date-info" style={{ marginTop: '10px', color: '#ddbe3d', fontWeight: '700', fontSize: '0.95rem' }}>
+                                    14, 15, 16, 17 de abril<br/>
+                                    7:00 PM a 9:00 PM (Hora Col)
+                                </div>
+                                <p style={{ marginTop: '15px' }}>Un espacio de aprendizaje progresivo donde exploraremos el sistema completo del Eneagrama.</p>
+                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }} onClick={() => handlePlanSelect('virtual')}>Seleccionar Virtual</button>
                             </div>
 
                             <div className="modality-card card-featured">
@@ -403,8 +407,12 @@ const CourseLanding = () => {
                                     <div className="stats-divider"></div>
                                     <span>8 horas</span>
                                 </div>
-                                <p>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
-                                <a href="#precios" className="al-btn-primary" style={{ marginTop: '20px', display: 'inline-block' }} onClick={() => handlePlanSelect('presencial')}>Seleccionar Presencial</a>
+                                <div className="modality-date-info" style={{ marginTop: '10px', color: '#ddbe3d', fontWeight: '700', fontSize: '0.95rem' }}>
+                                    11 de abril<br/>
+                                    9:00 AM a 5:00 PM
+                                </div>
+                                <p style={{ marginTop: '15px' }}>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
+                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }} onClick={() => handlePlanSelect('presencial')}>Seleccionar Presencial</button>
                             </div>
                         </div>
                     </div>
@@ -550,6 +558,9 @@ const CourseLanding = () => {
                                     <div className="al-current-price">
                                         $360.000 <span className="al-currency">COP</span>
                                     </div>
+                                    <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+                                        14, 15, 16, 17 de abril
+                                    </div>
                                 </div>
 
                                 <div className="al-pricing-grid">
@@ -571,6 +582,7 @@ const CourseLanding = () => {
                                         className="al-btn-buy"
                                         onClick={() => handlePlanSelect('virtual')}
                                         disabled={paymentLoading && selectedPlan === 'virtual'}
+                                        style={{ backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }}
                                     >
                                         {paymentLoading && selectedPlan === 'virtual' ? 'Iniciando...' : 'Inscribirme Virtual'} <Lock size={24} />
                                     </button>
@@ -594,6 +606,9 @@ const CourseLanding = () => {
                                     <div className="al-current-price">
                                         $597.000 <span className="al-currency">COP</span>
                                     </div>
+                                    <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+                                        11 de abril
+                                    </div>
                                 </div>
 
                                 <div className="al-pricing-grid">
@@ -616,6 +631,7 @@ const CourseLanding = () => {
                                         className="al-btn-buy"
                                         onClick={() => handlePlanSelect('presencial')}
                                         disabled={paymentLoading && selectedPlan === 'presencial'}
+                                        style={{ backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }}
                                     >
                                         {paymentLoading && selectedPlan === 'presencial' ? 'Iniciando...' : 'Inscribirme Presencial'} <Lock size={24} />
                                     </button>
