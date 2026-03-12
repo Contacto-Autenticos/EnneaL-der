@@ -24,7 +24,7 @@ serve(async (req) => {
     const emailBody = {
       templateId: 1, // Using the user's template ID
       sender: {
-        name: "EnneaLíder - Auténticos",
+        name: "Auténticos",
         email: "hola@autenticos.co"
       },
       to: [
