@@ -19,7 +19,7 @@
 
 .course-intro-content {
     max-width: 800px;
-    margin: 0 auto 40px;
+    margin: 0 auto 20px;
     text-align: center;
 }
 
@@ -73,13 +73,13 @@
 }
 
 .al-hero {
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 140px 24px 80px;
+    padding: 140px 24px 40px;
     background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
 }
 
@@ -164,16 +164,59 @@
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.introspection-box {
-    max-width: 800px;
+.introspection-no-box {
+    max-width: 1000px;
     margin: 0 auto;
+}
+
+.introspection-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.introspection-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 30px;
     text-align: center;
-    padding: 80px 40px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 40px;
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.introspection-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--al-gold);
+}
+
+.introspection-card p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.introspection-card.question-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(221, 190, 61, 0.2);
+}
+
+.introspection-card.question-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #ddbe3d;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .introspection-cards-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .al-pricing-section {
@@ -206,20 +249,21 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    max-width: 700px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
 .map-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 15px;
     background: rgba(255, 255, 255, 0.03);
-    padding: 20px 25px;
+    padding: 25px 30px;
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
+    text-align: left;
 }
 
 .map-item:hover {
@@ -229,18 +273,20 @@
 }
 
 .map-item-dot {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     background: var(--al-gold);
     border-radius: 50%;
     box-shadow: 0 0 8px var(--al-gold);
+    margin-top: 6px;
+    flex-shrink: 0;
 }
 
 .map-item span {
     font-size: 16px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
-    text-transform: capitalize;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
 }
 
 @media (max-width: 600px) {
@@ -537,6 +583,19 @@
     letter-spacing: -1px;
 }
 
+.closing-statement p {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.closing-statement .al-gold-text {
+    font-size: clamp(24px, 4vw, 32px);
+    display: block;
+    margin-top: 10px;
+}
+
 .al-btn-primary.closing-cta {
     background: var(--al-gold);
     color: var(--al-blue);
@@ -549,28 +608,20 @@
     display: inline-block;
     letter-spacing: 0.1em;
     transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(221, 190, 61, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 }
 
+/* Shine effect removed */
 .al-btn-primary.closing-cta::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
+    display: none;
 }
 
 .al-btn-primary.closing-cta:hover {
-    transform: translateY(-5px) scale(1.05);
-    background: #e6c54a;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(221, 190, 61, 0.6);
+    transform: translateY(-3px) scale(1.02);
+    background: #f1cf4e;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     color: var(--al-blue);
 }
 

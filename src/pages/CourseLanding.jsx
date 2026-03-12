@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import {
     ArrowLeft,
     ArrowRight,
@@ -10,8 +11,92 @@ import {
 } from 'lucide-react';
 import './CourseLanding.css';
 
+const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
+const WOMPI_CURRENCY = 'COP';
+
 const CourseLanding = () => {
     const navigate = useNavigate();
+    const [paymentLoading, setPaymentLoading] = useState(false);
+    const [signatureData, setSignatureData] = useState(null);
+    const [selectedPlan, setSelectedPlan] = useState(null); // 'virtual' or 'presencial'
+    const [paymentError, setPaymentError] = useState(null);
+
+    const handlePayment = async (plan) => {
+        try {
+            setPaymentLoading(true);
+            setSelectedPlan(plan);
+            setPaymentError(null);
+
+            const amountInCents = plan === 'virtual' ? 36000000 : 59700000;
+            const reference = `prog-${plan}-${Date.now()}`;
+
+            const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
+                body: { reference, amount: amountInCents, currency: WOMPI_CURRENCY }
+            });
+
+            if (error) throw error;
+            if (data.error) throw new Error(data.error);
+
+            setSignatureData({
+                ...data,
+                amountInCents
+            });
+        } catch (err) {
+            console.error('Error fetching signature:', err);
+            setPaymentError(`Error al iniciar pago: ${err.message || 'Intenta de nuevo'}`);
+            setPaymentLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (signatureData && selectedPlan) {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.wompi.co/widget.js';
+            script.setAttribute('data-render', 'button');
+            script.setAttribute('data-public-key', PUBLIC_KEY);
+            script.setAttribute('data-currency', WOMPI_CURRENCY);
+            script.setAttribute('data-amount-in-cents', signatureData.amountInCents);
+            script.setAttribute('data-reference', signatureData.reference);
+            script.setAttribute('data-signature:integrity', signatureData.signature);
+            script.setAttribute('data-redirect-url', `${window.location.origin}/payment-status`); 
+
+            const containerId = selectedPlan === 'virtual' ? 'wompi-container-virtual' : 'wompi-container-presencial';
+            const container = document.getElementById(containerId);
+            
+            if (container) {
+                container.innerHTML = ''; 
+                container.appendChild(script);
+
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        mutation.addedNodes.forEach((node) => {
+                            if (node.tagName === 'FORM' || node.tagName === 'BUTTON' || node.querySelector?.('button')) {
+                                const btn = node.tagName === 'BUTTON' ? node : node.querySelector('button');
+                                if (btn) {
+                                    btn.style.setProperty('width', '100%', 'important');
+                                    btn.style.setProperty('border-radius', '100px', 'important');
+                                    btn.style.setProperty('background-color', selectedPlan === 'virtual' ? '#ddbe3d' : 'transparent', 'important');
+                                    btn.style.setProperty('border', selectedPlan === 'virtual' ? 'none' : '1px solid #ddbe3d', 'important');
+                                    btn.style.setProperty('color', selectedPlan === 'virtual' ? '#001a2c' : '#ddbe3d', 'important');
+                                    btn.style.setProperty('font-size', '18px', 'important');
+                                    btn.style.setProperty('font-weight', '900', 'important');
+                                    btn.style.setProperty('min-height', '70px', 'important');
+                                    btn.style.setProperty('letter-spacing', '0.1em', 'important');
+                                    btn.style.setProperty('text-transform', 'uppercase', 'important');
+                                    btn.style.setProperty('cursor', 'pointer', 'important');
+                                    
+                                    setPaymentLoading(false);
+                                }
+                            }
+                        });
+                    });
+                });
+                observer.observe(container, { childList: true, subtree: true });
+
+                return () => observer.disconnect();
+            }
+        }
+    }, [signatureData, selectedPlan]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -50,52 +135,76 @@ const CourseLanding = () => {
                 </div>
 
                 <h1 className="al-hero-title">
-                    <span className="al-hero-title-top">Descubre por qué piensas,</span>
-                    <span className="al-gold-text">decides y reaccionas como lo haces.</span>
+                    <span className="al-hero-title-top" style={{ fontSize: '0.6em', marginBottom: '10px' }}>Descubre qué hay detrás de tu forma de pensar, decidir y reaccionar.</span>
+                    <span className="al-gold-text" style={{ fontSize: '0.8em', lineHeight: '1.2' }}>Aprende a usar ese conocimiento a tu favor.</span>
                 </h1>
 
                 <div className="course-intro-content">
-                    <p className="al-hero-subtitle" style={{ fontSize: '1.2rem', fontWeight: '400', opacity: '0.9', maxWidth: '800px', margin: '0 auto 1.5rem' }}>
-                        Muchas personas sienten que repiten los mismos patrones en su vida sin entender por qué.
-                    </p>
-                    <p className="course-description-text">
-                        El Eneagrama es uno de los mapas más profundos para comprender la personalidad humana y las motivaciones que dirigen nuestras decisiones.
-                    </p>
-                    <p className="course-description-text">
-                        En este taller aprenderás a reconocer los patrones invisibles que influyen en tu forma de pensar, sentir y actuar.
+                    <p className="al-hero-subtitle" style={{ fontSize: '1.2rem', fontWeight: '400', opacity: '0.9', maxWidth: '800px', margin: '0 auto 1.5rem', lineHeight: '1.8' }}>
+                        Cuando comprendes cómo funciona tu personalidad, muchas piezas empiezan a encajar y desde ese lugar, nuevas formas de vivir, decidir y relacionarte comienzan a ser posibles.
                     </p>
                 </div>
 
                 <div className="al-hero-actions">
-                    <a href="#precios" className="al-btn-main">
-                        EXPLORAR EL PROGRAMA
-                        <ArrowRight size={22} />
-                    </a>
                 </div>
             </section>
 
             {/* NEW: Introspection Section */}
             <section className="course-introspection al-animate">
                 <div className="al-section-content">
-                    <div className="introspection-box">
-                        <h2 className="introspection-title">Muchas personas sienten que:</h2>
-                        <ul className="introspection-list">
-                            <li>repiten las mismas historias en sus relaciones</li>
-                            <li>reaccionan de formas que luego lamentan</li>
-                            <li>se exigen más de lo que deberían</li>
-                            <li>toman decisiones que no entienden del todo</li>
-                        </ul>
-
-                        <div className="introspection-divider"></div>
-
-                        <div className="introspection-question-wrapper">
-                            <p className="introspection-transition">Con el tiempo aparece una pregunta inevitable:</p>
-                            <h3 className="introspection-question">¿Por qué soy como soy?</h3>
+                    <div className="introspection-no-box">
+                        <h2 className="introspection-title" style={{ color: '#ddbe3d', fontSize: 'clamp(28px, 5vw, 42px)', marginBottom: '60px' }}>
+                            Tal vez te ha pasado que
+                        </h2>
+                        
+                        <div className="introspection-cards-grid">
+                            {[
+                                "A veces reaccionas de una manera que no entiendes del todo.",
+                                "Repites ciertos patrones en decisiones, relaciones o situaciones importantes, aunque sabes que quisieras hacerlo diferente.",
+                                "En algunos momentos sientes que actúas en automático. Como si una parte de ti tomara decisiones antes de que puedas detenerte a observarlas."
+                            ].map((text, i) => (
+                                <div key={i} className="introspection-card al-animate" style={{ animationDelay: `${i * 0.2}s` }}>
+                                    <p>{text}</p>
+                                </div>
+                            ))}
                         </div>
 
-                        <p className="introspection-closing">
-                            El autoconocimiento comienza cuando dejamos de mirar solamente el mundo y empezamos a comprendernos a nosotros mismos.
-                        </p>
+                        <div className="introspection-divider" style={{ margin: '80px auto' }}></div>
+
+                        <div className="introspection-question-wrapper">
+                            <p className="introspection-transition" style={{ marginBottom: '40px', fontSize: '1.2rem' }}>
+                                Y aunque has leído, reflexionado o trabajado en ti mismo, aún hay preguntas que permanecen abiertas:
+                            </p>
+                            
+                            <div className="introspection-cards-grid questions">
+                                {[
+                                    "¿Por qué pienso de esta manera?",
+                                    "¿Por qué algunas situaciones me afectan tanto?",
+                                    "¿Por qué ciertas decisiones se vuelven tan difíciles?"
+                                ].map((q, i) => (
+                                    <div key={i} className="introspection-card question-card al-animate" style={{ animationDelay: `${(i + 3) * 0.2}s`, borderColor: 'rgba(221, 190, 61, 0.4)' }}>
+                                        <p style={{ color: '#ddbe3d', fontWeight: '700', margin: 0 }}>{q}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div style={{ marginTop: '80px', textAlign: 'center' }}>
+                            <p className="introspection-closing" style={{ marginBottom: '20px' }}>
+                                Muchas personas pasan años intentando cambiar comportamientos sin comprender realmente qué los origina.
+                            </p>
+                            <p className="introspection-closing" style={{ fontWeight: '700', marginBottom: '60px', fontSize: '1.4rem' }}>
+                                El autoconocimiento profundo comienza cuando empiezas a ver con claridad cómo funciona tu personalidad.
+                            </p>
+
+                            <a href="#precios" className="al-btn-primary closing-cta">
+                                Quiero conocer mi personalidad
+                            </a>
+
+                            <p className="introspection-transition" style={{ marginTop: '40px' }}>
+                                Aquí te compartimos un camino para comprenderte con mayor profundidad
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -105,23 +214,25 @@ const CourseLanding = () => {
                 <div className="al-section-content">
                     <div className="course-map-header">
                         <h2 className="al-hero-title">
-                            <span className="al-hero-title-top">El Eneagrama es un</span>
-                            <span className="al-gold-text">mapa de la personalidad</span>
+                            <span className="al-hero-title-top">Autoconocimiento basado en el eneagrama</span>
+                            <span className="al-gold-text" style={{ fontSize: '0.75em', marginTop: '15px' }}>uno de los modelos más profundos para comprender la personalidad humana</span>
                         </h2>
-                        <p className="al-hero-subtitle" style={{ fontSize: '1.4rem', textAlign: 'center', margin: '0 auto' }}>
-                            Describe nueve estructuras fundamentales de comportamiento.
+                        <p className="al-hero-subtitle" style={{ fontSize: '1.2rem', textAlign: 'center', margin: '20px auto 0', fontWeight: '400', color: 'rgba(255,255,255,0.7)', maxWidth: '800px' }}>
+                            No es superstición ni solo teoría, es una herramienta practica para observarte con mayor conciencia y abrir nuevas posibilidades de transformación.
                         </p>
                     </div>
 
                     <div className="course-map-highlights">
-                        <p className="introspection-transition" style={{ marginBottom: '30px' }}>Más que etiquetas, revela:</p>
+                        <p className="introspection-transition" style={{ marginBottom: '30px' }}>En este programa podrás:</p>
 
                         <div className="map-grid">
                             {[
-                                'motivaciones profundas',
-                                'miedos inconscientes',
-                                'patrones emocionales',
-                                'formas de interpretar la realidad'
+                                'Comprender cómo funciona tu tipo de personalidad y cuáles son sus motivaciones profundas.',
+                                'Identificar los patrones automáticos que influyen en tu manera de pensar, decidir y reaccionar.',
+                                'Reconocer las fortalezas naturales que forman parte de tu esencia.',
+                                'Descubrir las trampas inconscientes que muchas veces limitan tu crecimiento.',
+                                'Aprender a observar tus reacciones con mayor conciencia para abrir nuevas posibilidades de elección.',
+                                'Fortalecer tu liderazgo personal y la forma en que te relacionas con otros.'
                             ].map((item, i) => (
                                 <div key={i} className="map-item">
                                     <div className="map-item-dot"></div>
@@ -130,8 +241,26 @@ const CourseLanding = () => {
                             ))}
                         </div>
 
-                        <p className="introspection-closing" style={{ marginTop: '50px' }}>
-                            Comprender este mapa permite ver con mayor claridad cómo funciona nuestra mente y nuestras relaciones.
+                        <p className="introspection-closing" style={{ marginTop: '50px', marginBottom: '40px' }}>
+                            Cuando empiezas a verte con claridad:
+                        </p>
+
+                        <div className="map-grid">
+                            {[
+                                'Dejas de reaccionar en automático y comienzas a tomar decisiones con mayor conciencia.',
+                                'Comprendes mejor tus emociones y las de las personas que te rodean.',
+                                'Puedes reconocer tus patrones antes de que dirijan tus acciones.',
+                                'Tu manera de liderar, relacionarte y tomar decisiones comienza a transformarse.'
+                            ].map((item, i) => (
+                                <div key={i} className="map-item">
+                                    <div className="map-item-dot"></div>
+                                    <span>{item}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="introspection-closing" style={{ marginTop: '60px', fontStyle: 'italic', fontWeight: '400', opacity: '0.8' }}>
+                            "El autoconocimiento no cambia quién eres, pero sí transforma la forma en que te relacionas contigo mismo y con el mundo."
                         </p>
                     </div>
                 </div>
@@ -140,16 +269,16 @@ const CourseLanding = () => {
             <section className="course-experience al-animate">
                 <div className="al-section-content">
                     <div className="introspection-box">
-                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 48px)', marginBottom: '40px' }}>
-                            <span className="al-hero-title-top">En esta experiencia</span>
-                            <span className="al-gold-text">aprenderás a:</span>
+                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 42px)', marginBottom: '60px', textAlign: 'center' }}>
+                            <span className="al-hero-title-top">Este proceso está diseñado para</span>
+                            <span className="al-gold-text">acompañarte a:</span>
                         </h2>
 
                         <ul className="introspection-list">
-                            <li>comprender cómo se forman los patrones de personalidad</li>
-                            <li>identificar tus motivaciones profundas</li>
-                            <li>reconocer tus reacciones automáticas</li>
-                            <li>entender mejor a las personas que te rodean</li>
+                            <li>Observarte con mayor profundidad.</li>
+                            <li>Comprender tu personalidad desde una mirada más amplia.</li>
+                            <li>Reconocer las dinámicas internas que influyen en tu forma de vivir, decidir y relacionarte.</li>
+                            <li>Y abrir un camino de desarrollo que nazca desde la conciencia, no desde la exigencia.</li>
                         </ul>
 
                         <div className="introspection-divider"></div>
@@ -167,17 +296,17 @@ const CourseLanding = () => {
                     <div className="modalities-header">
                         <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 42px)' }}>
                             <span className="al-hero-title-top">Este taller es especialmente</span>
-                            <span className="al-gold-text">valioso para personas que:</span>
+                            <span className="al-gold-text">valioso para ti, sí:</span>
                         </h2>
 
                         <div className="target-audience-grid">
                             {[
-                                'sienten curiosidad por comprenderse mejor',
-                                'desean mejorar sus relaciones',
-                                'están atravesando momentos de cambio o decisiones importantes',
-                                'lideran equipos o trabajan con personas',
-                                'buscan herramientas prácticas de liderazgo consciente',
-                                'quieren potenciar su desarrollo personal y profesional'
+                                'Quieres comprenderte con mayor profundidad.',
+                                'Te interesa el desarrollo personal real, más allá de ideas superficiales.',
+                                'Deseas tomar decisiones con mayor claridad y conciencia.',
+                                'Buscas herramientas para liderar mejor tu vida personal o profesional.',
+                                'Quieres comprender mejor a las personas con las que trabajas o convives.',
+                                'Sientes que es momento de dar un paso profundo hacia tu autoconocimiento y transformación.'
                             ].map((item, i) => (
                                 <div key={i} className="target-item">
                                     <div className="target-dot"></div>
@@ -188,8 +317,8 @@ const CourseLanding = () => {
                     </div>
 
                     <div className="modalities-choice-box">
-                        <p className="introspection-transition text-center" style={{ marginBottom: '40px', fontSize: '1.2rem' }}>
-                            Puedes acceder a este contenido de dos formas:
+                        <p className="introspection-transition text-center" style={{ marginBottom: '40px', fontSize: '1.6rem', color: '#ddbe3d', fontWeight: '800' }}>
+                            Comienza aquí, accede a este contenido de dos formas:
                         </p>
 
                         <div className="modality-cards">
@@ -260,8 +389,8 @@ const CourseLanding = () => {
                         </p>
 
                         <div className="closing-statement">
-                            <p>El autoconocimiento no es solo una idea.</p>
-                            <p className="al-gold-text">Es una experiencia.</p>
+                            <p>El autoconocimiento no cambia tu vida por sí solo.</p>
+                            <p className="al-gold-text">Lo que la transforma es la claridad que aparece cuando comienzas a verte con mayor conciencia.</p>
                         </div>
 
                         <a href="#precios" className="al-btn-primary closing-cta">
@@ -303,10 +432,15 @@ const CourseLanding = () => {
                                         </div>
                                     ))}
                                 </div>
-
-                                <button className="al-btn-buy">
-                                    Inscribirme Virtual <Lock size={24} />
-                                </button>
+                                <div id="wompi-container-virtual">
+                                    <button
+                                        className="al-btn-buy"
+                                        onClick={() => handlePayment('virtual')}
+                                        disabled={paymentLoading && selectedPlan === 'virtual'}
+                                    >
+                                        {paymentLoading && selectedPlan === 'virtual' ? 'Iniciando...' : 'Inscribirme Virtual'} <Lock size={24} />
+                                    </button>
+                                </div>
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0' }}>
                                     Acceso instantáneo • Pago seguro vía Wompi
@@ -343,9 +477,15 @@ const CourseLanding = () => {
                                     ))}
                                 </div>
 
-                                <button className="al-btn-buy" style={{ background: '#002d44', color: '#ddbe3d', border: '1px solid #ddbe3d' }}>
-                                    Inscribirme Presencial <Lock size={24} />
-                                </button>
+                                <div id="wompi-container-presencial">
+                                    <button
+                                        className="al-btn-buy"
+                                        onClick={() => handlePayment('presencial')}
+                                        disabled={paymentLoading && selectedPlan === 'presencial'}
+                                    >
+                                        {paymentLoading && selectedPlan === 'presencial' ? 'Iniciando...' : 'Inscribirme Presencial'} <Lock size={24} />
+                                    </button>
+                                </div>
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(255,200,200,0.8)', marginTop: '0', fontWeight: 'bold' }}>
                                     * NO INCLUYE COSTOS DE DESPLAZAMIENTO *
@@ -359,6 +499,12 @@ const CourseLanding = () => {
                     </div>
                 </div>
             </section>
+            {/* Mobile FAB */}
+            <div className="al-mobile-fab">
+                <a href="#precios" className="al-btn-fab" style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>
+                    Asegurar mi cupo
+                </a>
+            </div>
         </div>
     );
 };
