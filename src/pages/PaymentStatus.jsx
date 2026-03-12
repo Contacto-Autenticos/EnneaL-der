@@ -47,6 +47,44 @@ const PaymentStatus = () => {
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
 
+                    // --- NEW: Send Confirmation Email for Workshop ---
+                    const sendWorkshopEmail = async () => {
+                        const reference = data.data.reference || '';
+                        if (reference.startsWith('prog-')) {
+                            try {
+                                // 1. Get name from user_leads
+                                const { data: leadData } = await supabase
+                                    .from('user_leads')
+                                    .select('full_name')
+                                    .eq('email', data.data.customer_email)
+                                    .order('created_at', { ascending: false })
+                                    .limit(1)
+                                    .single();
+
+                                const fullName = leadData?.full_name || 'Participante';
+                                const isVirtual = reference.includes('virtual');
+
+                                const workshopInfo = {
+                                    email: data.data.customer_email,
+                                    name: fullName,
+                                    workshop_type: isVirtual ? 'VIRTUAL' : 'PRESENCIAL',
+                                    workshop_date: isVirtual ? '14, 15, 16 y 17 de Abr' : '11 de Abril',
+                                    workshop_time: isVirtual ? '7:00 PM - 9:00 PM (Col)' : '9:00 AM - 5:00 PM'
+                                };
+
+                                // 2. Call Edge Function
+                                await supabase.functions.invoke('send-workshop-email', {
+                                    body: workshopInfo
+                                });
+                                console.log('Workshop confirmation email triggered successfully');
+                            } catch (err) {
+                                console.error('Error triggering workshop email:', err);
+                            }
+                        }
+                    };
+                    sendWorkshopEmail();
+                    // ------------------------------------------------
+
                     // Retrieve the automated access code from Supabase
                     let automatedCode = null;
                     try {
