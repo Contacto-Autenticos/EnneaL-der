@@ -791,12 +791,12 @@
 
 .al-currency {
     font-size: 24px;
-    color: var(--al-gold);
-    letter-spacing: 0.2em;
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-    margin-left: 0;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.1em;
+    display: inline-block;
+    vertical-align: baseline;
+    margin-left: 15px;
+    font-weight: 400;
 }
 
 .al-pricing-grid {
