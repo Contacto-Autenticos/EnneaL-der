@@ -488,6 +488,11 @@ const CourseLanding = () => {
                                 >
                                     <span>INSCRIBIRME {selectedPlan?.toUpperCase()}</span> <Lock size={20} />
                                 </button>
+                                {selectedPlan === 'presencial' && (
+                                    <p className="al-footer-desc" style={{ color: 'rgba(255,200,200,0.8)', marginTop: '10px', fontWeight: 'bold', fontSize: '11px', textAlign: 'center' }}>
+                                        * NO INCLUYE COSTOS DE DESPLAZAMIENTO *
+                                    </p>
+                                )}
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0', textAlign: 'center' }}>
                                     Acceso instantáneo • Pago seguro vía Wompi
