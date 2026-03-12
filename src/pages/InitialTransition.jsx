@@ -29,15 +29,15 @@ const InitialTransition = ({ result }) => {
 
     // Dynamic patterns database (Expert-generated traits)
     const patternsData = {
-        '1': 'Buscas la excelencia y tienes un fuerte sentido del deber en todo lo que haces.',
-        '2': 'Priorizas las necesidades de los demás y te esfuerzas por crear conexiones significativas.',
-        '3': 'Te enfocas en objetivos claros y buscas destacar por tu eficiencia y resultados.',
-        '4': 'Valoras la autenticidad y buscas expresar tu identidad única de forma profunda.',
-        '5': 'Analizas cada situación con detenimiento y valoras la autonomía y el conocimiento.',
-        '6': 'Eres previsor, leal y valoras la seguridad y la claridad en tus entornos.',
-        '7': 'Buscas nuevas experiencias y mantienes una perspectiva optimista y ágil ante la vida.',
-        '8': 'Proteges tu independencia y ejerces un liderazgo directo y protector.',
-        '9': 'Buscas la armonía y tienes una gran capacidad para mediar y entender otros puntos de vista.'
+        '1': 'Buscan la excelencia y tienen un fuerte sentido del deber en todo lo que hacen.',
+        '2': 'Priorizan las necesidades de los demás y se esfuerzan por crear conexiones significativas.',
+        '3': 'Se enfocan en objetivos claros y buscan destacar por su eficiencia y resultados.',
+        '4': 'Valoran la autenticidad y buscan expresar su identidad única de forma profunda.',
+        '5': 'Analizan cada situación con detenimiento y valoran la autonomía y el conocimiento.',
+        '6': 'Son previsores, leales y valoran la seguridad y la claridad en sus entornos.',
+        '7': 'Buscan nuevas experiencias y mantienen una perspectiva optimista y ágil ante la vida.',
+        '8': 'Protegen su independencia y ejercen un liderazgo directo y protector.',
+        '9': 'Buscan la armonía y tienen una gran capacidad para mediar y entender otros puntos de vista.'
     };
 
     // Composite traits (expert-blended combinations)
@@ -51,10 +51,10 @@ const InitialTransition = ({ result }) => {
 
         // Blended traits based on triads or specific pairs
         const blendedOptions = [
-            "Combinas una gran capacidad de servicio con un enfoque riguroso en la calidad.",
-            "Equilibras la intuición emocional con un análisis lógico de las situaciones.",
-            "Mantienes un alto nivel de responsabilidad mientras buscas soluciones creativas.",
-            "Tomas decisiones basadas en la lealtad a tus valores y el impacto en los demás."
+            "Combinan una gran capacidad de servicio con un enfoque riguroso en la calidad.",
+            "Equilibran la intuición emocional con un análisis lógico de las situaciones.",
+            "Mantienen un alto nivel de responsabilidad mientras buscan soluciones creativas.",
+            "Toman decisiones basadas en la lealtad a tus valores y el impacto en los demás."
         ];
 
         // Ensure we have 4 traits
@@ -105,10 +105,10 @@ const InitialTransition = ({ result }) => {
 
                     <div className="it-benefits-list">
                         {[
-                            "Qué motiva realmente tus decisiones",
-                            "Cómo reaccionas ante el estrés",
-                            "Qué activa tus patrones automáticos",
-                            "Cuál es tu camino natural de crecimiento"
+                            "¿Qué motiva realmente tus decisiones?",
+                            "¿Cómo reaccionas ante el estrés?",
+                            "¿Qué activa tus patrones automáticos?",
+                            "¿Cuál es tu camino natural de crecimiento?"
                         ].map((benefit, i) => (
                             <div key={i} className="it-benefit-item">
                                 <div className="it-benefit-dot"></div>
