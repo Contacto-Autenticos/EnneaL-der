@@ -95,32 +95,61 @@ const PaymentPage = () => {
         const code = couponCode.trim().toUpperCase();
 
         try {
-            const { data: coupon, error } = await supabase
+            // 1. Check in regular coupons
+            console.log('Buscando cupón:', code);
+            const { data: coupon, error: couponError } = await supabase
                 .from('coupons')
                 .select('*')
                 .eq('code', code)
                 .eq('is_active', true)
-                .single();
+                .maybeSingle();
 
-            if (error || !coupon) {
-                setMessage('Código no válido o expirado');
-                setDiscountApplied(false);
-                setAmountInCents(BASE_PRICE_IN_CENTS);
-                fetchSignature(BASE_PRICE_IN_CENTS);
+            if (coupon) {
+                console.log('Cupón encontrado:', coupon);
+                const discount = coupon.discount_percentage / 100;
+                const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
+                setAmountInCents(newAmount);
+                setDiscountApplied(true);
+                setMessage(`¡Código aplicado! Descuento del ${coupon.discount_percentage}%`);
+                localStorage.removeItem('activeCommercial');
+                fetchSignature(newAmount);
                 return;
             }
 
-            const discount = coupon.discount_percentage / 100;
-            const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
-            setAmountInCents(newAmount);
-            setDiscountApplied(true);
-            setMessage(`¡Código aplicado! Descuento del ${coupon.discount_percentage}%`);
+            // 2. If not found, check in affiliate_codes
+            console.log('No es cupón regular, buscando en afiliados:', code);
+            const { data: affiliate, error: affiliateError } = await supabase
+                .from('affiliate_codes')
+                .select('*')
+                .eq('code', code)
+                .eq('is_active', true)
+                .maybeSingle();
 
-            // Re-fetch signature with new amount
-            fetchSignature(newAmount);
+            if (affiliate) {
+                console.log('Afiliado encontrado:', affiliate);
+                const discount = affiliate.discount_percentage / 100;
+                const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
+                setAmountInCents(newAmount);
+                setDiscountApplied(true);
+                setAmountInCents(newAmount);
+                setMessage(`¡Código de afiliado aplicado! (${affiliate.commercial_name})`);
+                
+                // Store commercial name to attribute the sale later
+                localStorage.setItem('activeCommercial', affiliate.commercial_name);
+                
+                fetchSignature(newAmount);
+            } else {
+                console.log('Código no encontrado en ninguna tabla');
+                if (affiliateError) console.error('Error en búsqueda de afiliado:', affiliateError);
+                setMessage('Código no válido o expirado');
+                setDiscountApplied(false);
+                setAmountInCents(BASE_PRICE_IN_CENTS);
+                localStorage.removeItem('activeCommercial');
+                fetchSignature(BASE_PRICE_IN_CENTS);
+            }
         } catch (err) {
-            console.error('Error applying coupon:', err);
-            setMessage('Error al validar cupón');
+            console.error('Error crítico aplicando cupón/afiliado:', err);
+            setMessage('Error al validar código');
         }
     };
 

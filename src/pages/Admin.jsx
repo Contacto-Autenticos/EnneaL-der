@@ -67,6 +67,14 @@ const Admin = () => {
     const [newCouponCode, setNewCouponCode] = useState(generateRandomCoupon());
     const [newCouponDiscount, setNewCouponDiscount] = useState('');
 
+    // Affiliate Codes State
+    const [affiliates, setAffiliates] = useState([]);
+    const [loadingAffiliates, setLoadingAffiliates] = useState(false);
+    const [generatingAffiliate, setGeneratingAffiliate] = useState(false);
+    const [newAffiliateCode, setNewAffiliateCode] = useState(generateRandomCoupon());
+    const [newAffiliateName, setNewAffiliateName] = useState('');
+    const [newAffiliateDiscount, setNewAffiliateDiscount] = useState('');
+
     // Responses State
     const [testResponses, setTestResponses] = useState([]);
     const [initialResponses, setInitialResponses] = useState([]);
@@ -81,6 +89,7 @@ const Admin = () => {
     const [filterOrg, setFilterOrg] = useState('');
     const [filterEneatype, setFilterEneatype] = useState('');
     const [filterTestType, setFilterTestType] = useState('');
+    const [filterCommercial, setFilterCommercial] = useState('');
 
     // Transactions State
     const [transactions, setTransactions] = useState([]);
@@ -117,6 +126,7 @@ const Admin = () => {
             fetchInitialResponses();
             fetchTransactions();
             fetchCoupons();
+            fetchAffiliates();
             fetchWorkshopRegistrations();
         }
     }, [isAuthenticated]);
@@ -361,30 +371,72 @@ const Admin = () => {
         }
     };
 
-    const handleToggleCoupon = async (id, currentStatus) => {
+    const fetchAffiliates = async () => {
+        setLoadingAffiliates(true);
         try {
-            const { error } = await supabase
-                .from('coupons')
-                .update({ is_active: !currentStatus })
-                .eq('id', id);
+            const { data, error } = await supabase
+                .from('affiliate_codes')
+                .select('*')
+                .order('created_at', { ascending: false });
             if (error) throw error;
-            fetchCoupons();
+            setAffiliates(data || []);
         } catch (error) {
-            console.error('Error toggling coupon:', error);
+            console.error('Error fetching affiliates:', error);
+        } finally {
+            setLoadingAffiliates(false);
         }
     };
 
-    const handleDeleteCoupon = async (id) => {
-        if (!window.confirm('¿Estás seguro de eliminar este cupón?')) return;
+    const handleCreateAffiliate = async (e) => {
+        e.preventDefault();
+        if (!newAffiliateCode || !newAffiliateName || !newAffiliateDiscount) return;
+        setGeneratingAffiliate(true);
         try {
             const { error } = await supabase
-                .from('coupons')
+                .from('affiliate_codes')
+                .insert([{
+                    code: newAffiliateCode.trim().toUpperCase(),
+                    commercial_name: newAffiliateName.trim(),
+                    discount_percentage: parseFloat(newAffiliateDiscount),
+                    is_active: true
+                }]);
+            if (error) throw error;
+            setNewAffiliateCode(generateRandomCoupon());
+            setNewAffiliateName('');
+            setNewAffiliateDiscount('');
+            fetchAffiliates();
+        } catch (error) {
+            console.error('Error creating affiliate:', error);
+            alert(`Error al crear el código de afiliado: ${error.message || 'Código duplicado o tabla no encontrada.'}`);
+        } finally {
+            setGeneratingAffiliate(false);
+        }
+    };
+
+    const handleToggleAffiliate = async (id, currentStatus) => {
+        try {
+            const { error } = await supabase
+                .from('affiliate_codes')
+                .update({ is_active: !currentStatus })
+                .eq('id', id);
+            if (error) throw error;
+            fetchAffiliates();
+        } catch (error) {
+            console.error('Error toggling affiliate:', error);
+        }
+    };
+
+    const handleDeleteAffiliate = async (id) => {
+        if (!window.confirm('¿Estás seguro de eliminar este código de afiliado?')) return;
+        try {
+            const { error } = await supabase
+                .from('affiliate_codes')
                 .delete()
                 .eq('id', id);
             if (error) throw error;
-            fetchCoupons();
+            fetchAffiliates();
         } catch (error) {
-            console.error('Error deleting coupon:', error);
+            console.error('Error deleting affiliate:', error);
         }
     };
 
@@ -851,6 +903,10 @@ const Admin = () => {
                         onClick={() => { setActiveSection('cupones'); setIsMobileSidebarOpen(false); }}>
                         <Ticket size={17} /> Descuentos
                     </button>
+                    <button className={`admin-nav-item ${activeSection === 'afiliados' ? 'active' : ''}`}
+                        onClick={() => { setActiveSection('afiliados'); setIsMobileSidebarOpen(false); }}>
+                        <Plus size={17} /> Afiliados
+                    </button>
                     <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
                         onClick={() => { setActiveSection('compartir'); setIsMobileSidebarOpen(false); }}>
                         <Link size={17} /> Compartir
@@ -1150,6 +1206,160 @@ const Admin = () => {
                                                             </button>
                                                             <button
                                                                 onClick={() => handleDeleteCoupon(c.id)}
+                                                                className="btn-action-admin delete"
+                                                                title="Eliminar"
+                                                            >
+                                                                <span style={{ fontSize: '16px', lineHeight: '1' }}>✕</span>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* ── SECTION: Afiliados ── */}
+                {activeSection === 'afiliados' && (
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <h2><Plus size={20} /> Códigos de Afiliados / Comerciales</h2>
+                        </div>
+
+                        <div className="code-generator-section" style={{ background: '#f8fafc', padding: '15px', borderRadius: '12px', marginBottom: '20px' }}>
+                            <form onSubmit={handleCreateAffiliate} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
+                                    <div className="form-group-admin">
+                                        <label>Código</label>
+                                        <div style={{ position: 'relative' }}>
+                                            <input
+                                                type="text"
+                                                value={newAffiliateCode}
+                                                onChange={(e) => setNewAffiliateCode(e.target.value.toUpperCase())}
+                                                placeholder="EJ: COMERCIAL01"
+                                                className="select-admin"
+                                                style={{ background: 'white', padding: '8px', paddingRight: '35px', width: '100%' }}
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setNewAffiliateCode(generateRandomCoupon())}
+                                                title="Generar otro código"
+                                                style={{
+                                                    position: 'absolute',
+                                                    right: '8px',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    cursor: 'pointer',
+                                                    color: '#b89b2d',
+                                                    display: 'flex',
+                                                    alignItems: 'center'
+                                                }}
+                                            >
+                                                <RefreshCw size={14} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="form-group-admin">
+                                        <label>Nombre Comercial</label>
+                                        <input
+                                            type="text"
+                                            value={newAffiliateName}
+                                            onChange={(e) => setNewAffiliateName(e.target.value)}
+                                            placeholder="Nombre de la persona"
+                                            className="select-admin"
+                                            style={{ background: 'white', padding: '8px', width: '100%' }}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group-admin">
+                                        <label>% Descuento</label>
+                                        <input
+                                            type="number"
+                                            value={newAffiliateDiscount}
+                                            onChange={(e) => setNewAffiliateDiscount(e.target.value)}
+                                            placeholder="20"
+                                            className="select-admin"
+                                            style={{ background: 'white', padding: '8px', width: '100%' }}
+                                            min="1"
+                                            max="100"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <button type="submit" disabled={generatingAffiliate} className="btn-generate">
+                                    <Plus size={22} />
+                                    {generatingAffiliate ? 'Creando...' : 'Crear código de afiliado'}
+                                </button>
+                            </form>
+                        </div>
+
+                        <div className="codes-list-container" style={{ marginTop: '0' }}>
+                            <div className="codes-list-header">
+                                <h3>Afiliados configurados</h3>
+                                <button onClick={fetchAffiliates} className="btn-refresh" disabled={loadingAffiliates} title="Actualizar">
+                                    <RefreshCw size={16} className={loadingAffiliates ? 'spinning' : ''} />
+                                </button>
+                            </div>
+                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th style={{ textAlign: 'center' }}>Copiar</th>
+                                            <th>Comercial</th>
+                                            <th style={{ textAlign: 'center' }}>%</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {affiliates.length === 0 ? (
+                                            <tr><td colSpan="6" style={{ textAlign: 'center', padding: '10px' }}>
+                                                {loadingAffiliates ? 'Cargando...' : 'No hay afiliados configurados.'}
+                                            </td></tr>
+                                        ) : (
+                                            affiliates.map((a) => (
+                                                <tr key={a.id}>
+                                                    <td className="code-cell">{a.code}</td>
+                                                    <td style={{ textAlign: 'center' }}>
+                                                        <button
+                                                            onClick={() => {
+                                                                navigator.clipboard.writeText(a.code);
+                                                                setCopySuccess(a.code);
+                                                                setTimeout(() => setCopySuccess(''), 2000);
+                                                            }}
+                                                            className="btn-action-admin"
+                                                            title="Copiar código"
+                                                            style={{ color: copySuccess === a.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
+                                                        >
+                                                            {copySuccess === a.code ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+                                                        </button>
+                                                    </td>
+                                                    <td style={{ fontWeight: '600' }}>{a.commercial_name}</td>
+                                                    <td style={{ textAlign: 'center' }}>{a.discount_percentage}%</td>
+                                                    <td>
+                                                        <span className={`status-badge ${a.is_active ? 'unused' : 'used'}`}>
+                                                            {a.is_active ? 'Activo' : 'Off'}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ display: 'flex', gap: '8px' }}>
+                                                            <button
+                                                                onClick={() => handleToggleAffiliate(a.id, a.is_active)}
+                                                                className="btn-action-admin refresh"
+                                                                title={a.is_active ? 'Desactivar' : 'Activar'}
+                                                            >
+                                                                <RefreshCw size={14} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDeleteAffiliate(a.id)}
                                                                 className="btn-action-admin delete"
                                                                 title="Eliminar"
                                                             >
@@ -1540,9 +1750,10 @@ const Admin = () => {
                                                 const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
                                                 const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
                                                 const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
-                                                return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
+                                                const commercialMatch = !filterCommercial || (r.commercial_name || '').toLowerCase().includes(filterCommercial.toLowerCase());
+                                                return nameMatch && orgMatch && eneatypeMatch && testTypeMatch && commercialMatch;
                                             });
-                                            const hasFilter = filterName || filterOrg || filterEneatype || filterTestType;
+                                            const hasFilter = filterName || filterOrg || filterEneatype || filterTestType || filterCommercial;
                                             return hasFilter ? `${filtered.length} / ${testResponses.length}` : `${testResponses.length}`;
                                         })()} registros
                                     </span>
@@ -1569,6 +1780,13 @@ const Admin = () => {
                                     value={filterOrg}
                                     onChange={e => setFilterOrg(e.target.value)}
                                 />
+                                <input
+                                    className="resp-filter-input"
+                                    type="text"
+                                    placeholder="Buscar comercial..."
+                                    value={filterCommercial}
+                                    onChange={e => setFilterCommercial(e.target.value)}
+                                />
                                 <select
                                     className="resp-filter-select"
                                     value={filterEneatype}
@@ -1588,8 +1806,8 @@ const Admin = () => {
                                     <option value="45">45 preguntas</option>
                                     <option value="135">135 preguntas</option>
                                 </select>
-                                {(filterName || filterOrg || filterEneatype || filterTestType) && (
-                                    <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); }}>
+                                {(filterName || filterOrg || filterEneatype || filterTestType || filterCommercial) && (
+                                    <button className="resp-filter-clear" onClick={() => { setFilterName(''); setFilterOrg(''); setFilterEneatype(''); setFilterTestType(''); setFilterCommercial(''); }}>
                                         ✕ Limpiar
                                     </button>
                                 )}
@@ -1606,6 +1824,7 @@ const Admin = () => {
                                             <th>Test</th>
                                             <th>Organización</th>
                                             <th>Código acceso</th>
+                                            <th>Comercial</th>
                                             <th>Ver respuestas</th>
                                         </tr>
                                     </thead>
@@ -1643,6 +1862,13 @@ const Admin = () => {
                                                             {r.access_code
                                                                 ? <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }}>{r.access_code}</span>
                                                                 : <span style={{ color: '#9ca3af' }}>-</span>}
+                                                        </td>
+                                                        <td style={{ textAlign: 'center', fontSize: '0.82rem' }}>
+                                                            {r.commercial_name ? (
+                                                                <span style={{ color: '#b89b2d', fontWeight: 600 }}>{r.commercial_name}</span>
+                                                            ) : (
+                                                                <span style={{ color: '#9ca3af' }}>-</span>
+                                                            )}
                                                         </td>
                                                         <td style={{ textAlign: 'center' }}>
                                                             <button className="btn-ver-respuestas" onClick={() => setSelectedResponse(r)}>

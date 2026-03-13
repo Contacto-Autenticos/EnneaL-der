@@ -115,6 +115,8 @@ function App() {
           answer_label: answers[q.id] !== undefined ? sliderLabels[answers[q.id]] : null
         }));
 
+        const commercialName = localStorage.getItem('activeCommercial');
+
         await supabase.from('advanced_test_responses').insert([{
           user_name: user.name || null,
           user_email: normalizedEmail,
@@ -122,8 +124,13 @@ function App() {
           test_type: advancedQuestionsUsed.length > 50 ? '135' : '45',
           organization_code: user.organization || null,
           access_code: user.access_code || null,
+          commercial_name: commercialName || null,
           answers: formattedAnswers
         }]);
+
+        if (commercialName) {
+          localStorage.removeItem('activeCommercial');
+        }
         console.log('Advanced test responses saved to Supabase');
 
         const details = advancedEnneagramInfo[type];
