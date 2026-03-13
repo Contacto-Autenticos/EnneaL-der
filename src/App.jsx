@@ -268,7 +268,7 @@ function App() {
           path="/result-intro"
           element={
             advancedTestResult ? (
-              <ResultVideoIntro />
+              <ResultVideoIntro type={advancedTestResult.confirmedType} />
             ) : (
               <Navigate to="/" replace />
             )

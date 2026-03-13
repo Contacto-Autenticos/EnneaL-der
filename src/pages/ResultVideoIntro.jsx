@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ResultVideoIntro.css';
 
-const ResultVideoIntro = () => {
+const ResultVideoIntro = ({ type }) => {
     const navigate = useNavigate();
     const videoRef = useRef(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -23,12 +23,15 @@ const ResultVideoIntro = () => {
         navigate('/advanced-analysis-result');
     };
 
+    const videoSrc = `/videos/Eneatipo-${type}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4`;
+
     return (
         <div className="video-intro-page">
             <button className="skip-video-btn" onClick={handleSkip}>
                 SALTAR
             </button>
             <video
+                key={videoSrc}
                 ref={videoRef}
                 className="intro-video"
                 autoPlay
@@ -37,7 +40,7 @@ const ResultVideoIntro = () => {
                 onEnded={handleVideoEnded}
             >
                 <source 
-                    src={isMobile ? '/videos/intro-mobile.mp4' : '/videos/intro-desktop.mp4'} 
+                    src={videoSrc} 
                     type="video/mp4" 
                 />
                 Tu navegador no soporta videos.
