@@ -585,8 +585,8 @@ const CourseLanding = () => {
 
                         <div className="instructor-info">
                             <h2 className="instructor-name">
-                                <span className="name-white">Felipe</span>
-                                <span className="name-yellow"> Beltran Hernandez</span>
+                                <span className="name-white">Felipe</span><br />
+                                <span className="name-yellow">Beltran H.</span>
                             </h2>
                             <div className="instructor-divider"></div>
                             <p className="instructor-bio">
