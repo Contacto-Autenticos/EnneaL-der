@@ -7,33 +7,28 @@ const ResultVideoIntro = ({ type }) => {
     const videoRef = useRef(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [videoError, setVideoError] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleVideoEnded = () => {
-        console.log("Video ended, navigating...");
-        navigate('/advanced-analysis-result');
-    };
+    const handleVideoEnded = () => navigate('/advanced-analysis-result');
+    const handleSkip = () => navigate('/advanced-analysis-result');
 
-    const handleSkip = () => {
-        navigate('/advanced-analysis-result');
-    };
-
-    const videoSrc = type ? `/videos/Eneatipo-${type}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4` : null;
+    // Use a clean version of type and a cache buster
+    const cleanType = String(type).trim();
+    const videoSrc = cleanType ? `/videos/Eneatipo-${cleanType}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4?v=${Date.now()}` : null;
 
     useEffect(() => {
-        if (videoSrc) {
-            console.log("Attempting to load video:", videoSrc);
-            if (videoRef.current) {
-                videoRef.current.load();
-                videoRef.current.play().catch(err => {
-                    console.warn("Autoplay was blocked or failed:", err);
+        if (videoRef.current) {
+            const playPromise = videoRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay prevented:", error);
+                    setIsPaused(true);
                 });
             }
         }
@@ -54,10 +49,14 @@ const ResultVideoIntro = ({ type }) => {
 
     return (
         <div className="video-intro-page">
-            <button className="skip-video-btn" onClick={handleSkip}>
-                {videoError ? 'IR AL RESULTADO' : 'SALTAR'}
-            </button>
+            <div className="video-controls-overlay">
+                <button className="skip-video-btn" onClick={handleSkip}>
+                    {videoError ? 'IR AL RESULTADO' : 'SALTAR'}
+                </button>
+            </div>
+
             <video
+                key={videoSrc}
                 ref={videoRef}
                 className="intro-video"
                 autoPlay
@@ -65,18 +64,30 @@ const ResultVideoIntro = ({ type }) => {
                 playsInline
                 onEnded={handleVideoEnded}
                 onError={(e) => {
-                    console.error("Video error details:", e);
+                    console.error("Error loading video:", videoSrc);
                     setVideoError(true);
                 }}
-                onCanPlay={() => console.log("Video can play")}
-                src={videoSrc}
+                onPlay={() => setIsPaused(false)}
+                onPause={() => setIsPaused(true)}
             >
+                <source src={videoSrc} type="video/mp4" />
                 Tu navegador no soporta videos.
             </video>
+
+            {isPaused && !videoError && (
+                <div className="play-overlay" onClick={() => videoRef.current?.play()}>
+                    <div className="play-button-icon">▶</div>
+                    <p>Haz clic para reproducir el video promocional</p>
+                </div>
+            )}
+
             {videoError && (
-                <div style={{ position: 'absolute', bottom: '20%', color: 'white', textAlign: 'center', background: 'rgba(0,0,0,0.7)', padding: '20px', borderRadius: '10px' }}>
-                    <p>Hubo un problema al cargar el video de tu Eneatipo {type}.</p>
-                    <p style={{ fontSize: '12px', marginTop: '10px', opacity: 0.8 }}>Ruta intentada: {videoSrc}</p>
+                <div className="error-overlay">
+                    <p>No se pudo cargar el video de tu Eneatipo {type}.</p>
+                    <span className="error-path">Ruta: {videoSrc.split('?')[0]}</span>
+                    <button className="al-btn-main" onClick={handleSkip} style={{ marginTop: '20px', padding: '12px 30px' }}>
+                        CONTINUAR AL RESULTADO
+                    </button>
                 </div>
             )}
         </div>
