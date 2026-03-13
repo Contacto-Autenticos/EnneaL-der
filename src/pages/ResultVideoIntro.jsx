@@ -18,16 +18,18 @@ const ResultVideoIntro = ({ type }) => {
     const handleVideoEnded = () => navigate('/advanced-analysis-result');
     const handleSkip = () => navigate('/advanced-analysis-result');
 
-    // Use a clean version of type and a cache buster
+    // Use a clean version of type
     const cleanType = String(type).trim();
-    const videoSrc = cleanType ? `/videos/Eneatipo-${cleanType}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4?v=${Date.now()}` : null;
+    // The folder is capitalized as 'Videos' in the public directory
+    const videoSrc = cleanType ? `/Videos/Eneatipo-${cleanType}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4` : null;
 
     useEffect(() => {
-        if (videoRef.current) {
+        if (videoSrc && videoRef.current) {
+            videoRef.current.load();
             const playPromise = videoRef.current.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    console.log("Autoplay prevented:", error);
+                    console.log("Autoplay check:", error);
                     setIsPaused(true);
                 });
             }
@@ -62,15 +64,16 @@ const ResultVideoIntro = ({ type }) => {
                 autoPlay
                 muted
                 playsInline
+                preload="auto"
                 onEnded={handleVideoEnded}
                 onError={(e) => {
-                    console.error("Error loading video:", videoSrc);
+                    console.error("Video element error:", e);
                     setVideoError(true);
                 }}
                 onPlay={() => setIsPaused(false)}
                 onPause={() => setIsPaused(true)}
+                src={videoSrc}
             >
-                <source src={videoSrc} type="video/mp4" />
                 Tu navegador no soporta videos.
             </video>
 
@@ -84,7 +87,11 @@ const ResultVideoIntro = ({ type }) => {
             {videoError && (
                 <div className="error-overlay">
                     <p>No se pudo cargar el video de tu Eneatipo {type}.</p>
-                    <span className="error-path">Ruta: {videoSrc.split('?')[0]}</span>
+                    <span className="error-path">Ruta intentada: {videoSrc}</span>
+                    <div style={{ marginTop: '15px', fontSize: '12px', color: '#ffaaaa' }}>
+                        Por favor verifica que los archivos estén en: <br/>
+                        <code>public/videos/</code>
+                    </div>
                     <button className="al-btn-main" onClick={handleSkip} style={{ marginTop: '20px', padding: '12px 30px' }}>
                         CONTINUAR AL RESULTADO
                     </button>
