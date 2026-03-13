@@ -7,12 +7,32 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.video-fade-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10005;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.fade-out-active .video-fade-overlay {
+    opacity: 1;
 }
 
 .intro-video {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    transition: filter 0.8s ease-in-out;
+}
+
+.fade-out-active .intro-video {
+    filter: brightness(0);
 }
 
 .skip-video-btn {

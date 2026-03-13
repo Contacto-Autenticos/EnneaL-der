@@ -8,6 +8,8 @@ const ResultVideoIntro = ({ type }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [videoError, setVideoError] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [isFading, setIsFading] = useState(false);
+    const [hasEnded, setHasEnded] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -15,8 +17,21 @@ const ResultVideoIntro = ({ type }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleVideoEnded = () => navigate('/advanced-analysis-result');
-    const handleSkip = () => navigate('/advanced-analysis-result');
+    const handleVideoEnded = () => {
+        setHasEnded(true);
+        setIsFading(true);
+        // Wait for CSS transition (0.8s) before navigating
+        setTimeout(() => {
+            navigate('/advanced-analysis-result');
+        }, 800);
+    };
+
+    const handleSkip = () => {
+        setIsFading(true);
+        setTimeout(() => {
+            navigate('/advanced-analysis-result');
+        }, 400); // Shorter fade for skip
+    };
 
     // Use a clean version of type
     const cleanType = String(type).trim();
@@ -30,7 +45,10 @@ const ResultVideoIntro = ({ type }) => {
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     console.log("Autoplay check:", error);
-                    setIsPaused(true);
+                    // Only show play button if it hasn't ended and we're not fading
+                    if (!hasEnded && !isFading) {
+                        setIsPaused(true);
+                    }
                 });
             }
         }
@@ -50,11 +68,16 @@ const ResultVideoIntro = ({ type }) => {
     }
 
     return (
-        <div className="video-intro-page">
+        <div className={`video-intro-page ${isFading ? 'fade-out-active' : ''}`}>
+            {/* Transition Overlay */}
+            <div className="video-fade-overlay"></div>
+
             <div className="video-controls-overlay">
-                <button className="skip-video-btn" onClick={handleSkip}>
-                    {videoError ? 'IR AL RESULTADO' : 'SALTAR'}
-                </button>
+                {!isFading && (
+                    <button className="skip-video-btn" onClick={handleSkip}>
+                        {videoError ? 'IR AL RESULTADO' : 'SALTAR'}
+                    </button>
+                )}
             </div>
 
             <video
@@ -71,13 +94,18 @@ const ResultVideoIntro = ({ type }) => {
                     setVideoError(true);
                 }}
                 onPlay={() => setIsPaused(false)}
-                onPause={() => setIsPaused(true)}
+                onPause={() => {
+                    // Only show pause state if not at end and not fading
+                    if (!videoRef.current?.ended && !isFading) {
+                        setIsPaused(true);
+                    }
+                }}
                 src={videoSrc}
             >
                 Tu navegador no soporta videos.
             </video>
 
-            {isPaused && !videoError && (
+            {isPaused && !videoError && !isFading && !hasEnded && (
                 <div className="play-overlay" onClick={() => videoRef.current?.play()}>
                     <div className="play-button-icon">▶</div>
                     <p>Haz clic para reproducir el video promocional</p>
@@ -90,7 +118,7 @@ const ResultVideoIntro = ({ type }) => {
                     <span className="error-path">Ruta intentada: {videoSrc}</span>
                     <div style={{ marginTop: '15px', fontSize: '12px', color: '#ffaaaa' }}>
                         Por favor verifica que los archivos estén en: <br/>
-                        <code>public/videos/</code>
+                        <code>public/Videos/</code>
                     </div>
                     <button className="al-btn-main" onClick={handleSkip} style={{ marginTop: '20px', padding: '12px 30px' }}>
                         CONTINUAR AL RESULTADO
