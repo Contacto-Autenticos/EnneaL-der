@@ -390,16 +390,16 @@
 }
 
 .coupon-toggle-text {
-    color: #0056b3;
+    color: #b89b2d;
     text-decoration: underline;
     cursor: pointer;
     font-size: 0.95rem;
     margin: 0;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .coupon-toggle-text:hover {
-    color: #003d82;
+    color: #a68b28;
 }
 
 .coupon-message {

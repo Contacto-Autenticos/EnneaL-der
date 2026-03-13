@@ -277,7 +277,7 @@ const PaymentPage = () => {
                             className="coupon-toggle-text"
                             onClick={() => setShowCouponInput(true)}
                         >
-                            ¿Tienes un código?
+                            ¿Tienes un código de descuento?
                         </p>
                     ) : (
                         <div className="coupon-input-group">
