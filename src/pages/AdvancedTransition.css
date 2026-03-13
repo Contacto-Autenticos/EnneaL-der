@@ -19,7 +19,7 @@
 .adv-transition-title {
     font-size: clamp(1.8rem, 5vw, 2.5rem);
     font-weight: 800;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     background: linear-gradient(135deg, #fff 0%, #ddbe3d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -29,12 +29,12 @@
 
 /* Progress Bar */
 .adv-transition-progress-wrapper {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     position: relative;
 }
 
 .adv-transition-progress-bg {
-    height: 8px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     overflow: hidden;
@@ -62,7 +62,7 @@
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-align: center;
     max-width: 500px;
     margin-left: auto;
@@ -72,7 +72,7 @@
 .adv-transition-checklist {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 10px;
     max-width: 400px;
     margin: 0 auto;
     text-align: left;
@@ -117,7 +117,7 @@
 
 /* Footer Logo */
 .adv-transition-footer {
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 .adv-transition-logo {
@@ -128,7 +128,7 @@
 
 /* Status Text Dynamic */
 .adv-transition-status-container {
-    margin-top: 40px;
+    margin-top: 20px;
     min-height: 24px;
     display: flex;
     justify-content: center;
