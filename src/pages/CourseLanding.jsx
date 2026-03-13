@@ -202,13 +202,19 @@ const CourseLanding = () => {
                 </div>
 
                 <h1 className="al-hero-title">
-                    <span className="al-hero-title-top" style={{ fontSize: '0.6em', marginBottom: '10px' }}>Descubre qué hay detrás de tu forma de pensar, decidir y reaccionar.</span>
-                    <span className="al-gold-text" style={{ fontSize: '0.8em', lineHeight: '1.2' }}>Aprende a usar ese conocimiento a tu favor.</span>
+                    <span className="al-hero-title-top" style={{ fontSize: '0.6em', marginBottom: '10px' }}>
+                        Descubre qué hay detrás de tu forma de <br /> pensar, decidir y reaccionar.
+                    </span>
+                    <span className="al-gold-text" style={{ fontSize: '0.8em', lineHeight: '1.2' }}>
+                        Aprende a usar ese <br /> conocimiento a tu favor.
+                    </span>
                 </h1>
 
                 <div className="course-intro-content">
                     <p className="al-hero-subtitle" style={{ fontSize: '1.2rem', fontWeight: '400', opacity: '0.9', maxWidth: '800px', margin: '0 auto 1.5rem', lineHeight: '1.8' }}>
-                        Cuando comprendes cómo funciona tu personalidad, muchas piezas empiezan a encajar y desde ese lugar, nuevas formas de vivir, decidir y relacionarte comienzan a ser posibles.
+                        Cuando comprendes cómo funciona tu personalidad, muchas <br />
+                        piezas empiezan a encajar y desde ese lugar, nuevas formas de <br />
+                        vivir, decidir y relacionarte comienzan a ser posibles.
                     </p>
                 </div>
 
@@ -249,7 +255,7 @@ const CourseLanding = () => {
                                     "¿Por qué algunas situaciones me afectan tanto?",
                                     "¿Por qué ciertas decisiones se vuelven tan difíciles?"
                                 ].map((q, i) => (
-                                    <div key={i} className="introspection-card question-card al-animate" style={{ animationDelay: `${(i + 3) * 0.2}s`, borderColor: 'rgba(221, 190, 61, 0.4)' }}>
+                                    <div key={i} className="introspection-card question-card al-animate" style={{ animationDelay: `${(i + 3) * 0.2}s` }}>
                                         <p style={{ color: '#ddbe3d', fontWeight: '700', margin: 0 }}>{q}</p>
                                     </div>
                                 ))}

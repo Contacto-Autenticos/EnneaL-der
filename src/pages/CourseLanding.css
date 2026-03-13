@@ -179,6 +179,7 @@
 .introspection-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 4px solid var(--al-gold);
     border-radius: 24px;
     padding: 30px;
     text-align: center;
@@ -205,6 +206,7 @@
 .introspection-card.question-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(221, 190, 61, 0.2);
+    border-top: 4px solid var(--al-gold);
 }
 
 .introspection-card.question-card:hover {
@@ -331,10 +333,18 @@
     align-items: center;
     gap: 15px;
     background: rgba(255, 255, 255, 0.02);
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 25px 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(221, 190, 61, 0.3);
     text-align: left;
+    transition: all 0.3s ease;
+}
+
+.target-item:hover {
+    background: rgba(221, 190, 61, 0.08);
+    border-color: rgba(221, 190, 61, 0.6);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .target-dot {
