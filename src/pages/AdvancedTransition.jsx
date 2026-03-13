@@ -56,7 +56,7 @@ const AdvancedTransition = () => {
 
         // Final transition
         const finalTimer = setTimeout(() => {
-            navigate('/advanced-analysis-result');
+            navigate('/result-intro');
         }, totalTime);
 
         return () => {
