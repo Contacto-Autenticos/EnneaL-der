@@ -490,19 +490,20 @@
 }
 
 .instructor-name {
-    font-size: clamp(32px, 5vw, 48px);
+    font-size: clamp(32px, 5vw, 42px);
     font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    width: fit-content;
-    display: block;
+    line-height: 1;
+    margin-bottom: 25px;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
 }
 
 .name-white,
 .name-yellow {
-    display: block;
-    text-align: justify;
-    text-align-last: justify;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
 }
 

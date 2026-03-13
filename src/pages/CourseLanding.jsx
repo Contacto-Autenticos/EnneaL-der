@@ -585,8 +585,12 @@ const CourseLanding = () => {
 
                         <div className="instructor-info">
                             <h2 className="instructor-name">
-                                <span className="name-white">Felipe</span>
-                                <span className="name-yellow">Beltran H.</span>
+                                <span className="name-white">
+                                    {"Felipe".split('').map((char, i) => <span key={i}>{char}</span>)}
+                                </span>
+                                <span className="name-yellow">
+                                    {"Beltran H.".split('').map((char, i) => <span key={i}>{char === ' ' ? '\u00A0' : char}</span>)}
+                                </span>
                             </h2>
                             <div className="instructor-divider"></div>
                             <p className="instructor-bio">
