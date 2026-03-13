@@ -490,29 +490,22 @@
 }
 
 .instructor-name {
-    font-size: clamp(32px, 5vw, 42px);
     font-weight: 900;
-    line-height: 1;
-    margin-bottom: 25px;
-    width: 100%;
-    max-width: 380px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    width: fit-content;
     display: flex;
     flex-direction: column;
 }
 
-.name-white,
-.name-yellow {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
 .name-white {
+    font-size: clamp(48px, 8vw, 72px);
     color: #ffffff;
-    margin-bottom: 5px;
+    line-height: 0.9;
 }
 
 .name-yellow {
+    font-size: clamp(32px, 5vw, 42px);
     color: var(--al-gold);
 }
 
