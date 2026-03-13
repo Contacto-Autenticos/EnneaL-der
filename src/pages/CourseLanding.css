@@ -499,14 +499,17 @@
 }
 
 .name-white {
-    font-size: clamp(48px, 8vw, 72px);
+    font-size: clamp(52px, 8.5vw, 78px);
     color: #ffffff;
     line-height: 0.9;
+    letter-spacing: -0.02em;
 }
 
 .name-yellow {
-    font-size: clamp(32px, 5vw, 42px);
+    font-size: clamp(42px, 7vw, 62px);
     color: var(--al-gold);
+    line-height: 1;
+    letter-spacing: -0.01em;
 }
 
 .instructor-divider {
