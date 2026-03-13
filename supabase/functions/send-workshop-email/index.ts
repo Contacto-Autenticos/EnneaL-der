@@ -15,14 +15,14 @@ serve(async (req) => {
   }
 
   try {
-    const { email, name, workshop_type, workshop_date, workshop_time } = await req.json()
+    const { email, name, workshop_type, workshop_date, workshop_time, templateId, scheduledAt } = await req.json()
 
     if (!email || !name || !workshop_type) {
       throw new Error('Faltan datos obligatorios (email, name, workshop_type)')
     }
 
-    const emailBody = {
-      templateId: 1, // Using the user's template ID
+    const emailBody: any = {
+      templateId: templateId || 1, // Default to confirmation template if not provided
       sender: {
         name: "Auténticos",
         email: "hola@autenticos.co"
@@ -34,7 +34,6 @@ serve(async (req) => {
         }
       ],
       params: {
-        // Send multiple variations to increase compatibility with the template
         user_name: name,
         name: name,
         nombre: name,
@@ -54,6 +53,10 @@ serve(async (req) => {
         TIME: workshop_time
       }
     };
+
+    if (scheduledAt) {
+      emailBody.scheduledAt = scheduledAt;
+    }
 
     console.log('Enviando a Brevo:', JSON.stringify(emailBody, null, 2));
 

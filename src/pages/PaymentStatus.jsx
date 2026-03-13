@@ -47,7 +47,7 @@ const PaymentStatus = () => {
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
 
-                    // --- NEW: Send Confirmation Email for Workshop ---
+                    // --- NEW: Send Confirmation and Scheduled Reminders ---
                     const sendWorkshopEmail = async () => {
                         const reference = data.data.reference || '';
                         if (reference.startsWith('prog-')) {
@@ -60,11 +60,11 @@ const PaymentStatus = () => {
                                     .order('created_at', { ascending: false })
                                     .limit(1)
                                     .single();
-
+                                
                                 const fullName = leadData?.full_name || 'Participante';
                                 const isVirtual = reference.includes('virtual');
 
-                                const workshopInfo = {
+                                const baseWorkshopInfo = {
                                     email: data.data.customer_email,
                                     name: fullName,
                                     workshop_type: isVirtual ? 'VIRTUAL' : 'PRESENCIAL',
@@ -72,13 +72,54 @@ const PaymentStatus = () => {
                                     workshop_time: isVirtual ? '7:00 PM - 9:00 PM (Col)' : '9:00 AM - 5:00 PM'
                                 };
 
-                                // 2. Call Edge Function
-                                await supabase.functions.invoke('send-workshop-email', {
-                                    body: workshopInfo
-                                });
-                                console.log('Workshop confirmation email triggered successfully');
+                                // Define Event Start Date (COT -5:00)
+                                const eventStartDate = isVirtual 
+                                    ? new Date("2026-04-14T19:00:00-05:00") 
+                                    : new Date("2026-04-11T09:00:00-05:00");
+
+                                // List of emails to send
+                                const emailQueue = [
+                                    { templateId: 1 } // Immediate Confirmation
+                                ];
+
+                                // 1. Reminder 3 days before (All)
+                                const rem3Days = new Date(eventStartDate.getTime() - (3 * 24 * 60 * 60 * 1000));
+                                if (rem3Days > new Date()) {
+                                    emailQueue.push({ templateId: 2, scheduledAt: rem3Days.toISOString() });
+                                }
+
+                                // 2. Reminder 24 hours before
+                                const rem24h = new Date(eventStartDate.getTime() - (24 * 60 * 60 * 1000));
+                                if (rem24h > new Date()) {
+                                    emailQueue.push({ 
+                                        templateId: isVirtual ? 6 : 3, 
+                                        scheduledAt: rem24h.toISOString() 
+                                    });
+                                }
+
+                                // 3. Virtual specific reminders (2h and 10m before)
+                                if (isVirtual) {
+                                    const rem2h = new Date(eventStartDate.getTime() - (2 * 60 * 60 * 1000));
+                                    if (rem2h > new Date()) {
+                                        emailQueue.push({ templateId: 4, scheduledAt: rem2h.toISOString() });
+                                    }
+
+                                    const rem10m = new Date(eventStartDate.getTime() - (10 * 60 * 1000));
+                                    if (rem10m > new Date()) {
+                                        emailQueue.push({ templateId: 5, scheduledAt: rem10m.toISOString() });
+                                    }
+                                }
+
+                                // Send everything
+                                await Promise.all(emailQueue.map(item => 
+                                    supabase.functions.invoke('send-workshop-email', {
+                                        body: { ...baseWorkshopInfo, ...item }
+                                    })
+                                ));
+                                
+                                console.log(`Successful payment: ${emailQueue.length} workshop emails enqueued/sent.`);
                             } catch (err) {
-                                console.error('Error triggering workshop email:', err);
+                                console.error('Error triggering workshop emails:', err);
                             }
                         }
                     };
