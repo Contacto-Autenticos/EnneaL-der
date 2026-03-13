@@ -25,14 +25,32 @@ const ResultVideoIntro = ({ type }) => {
         navigate('/advanced-analysis-result');
     };
 
-    const videoSrc = `/videos/Eneatipo-${type}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4`;
+    const videoSrc = type ? `/videos/Eneatipo-${type}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4` : null;
 
     useEffect(() => {
-        console.log("Attempting to load video:", videoSrc);
-        if (videoRef.current) {
-            videoRef.current.load();
+        if (videoSrc) {
+            console.log("Attempting to load video:", videoSrc);
+            if (videoRef.current) {
+                videoRef.current.load();
+                videoRef.current.play().catch(err => {
+                    console.warn("Autoplay was blocked or failed:", err);
+                });
+            }
         }
     }, [videoSrc]);
+
+    if (!type) {
+        return (
+            <div className="video-intro-page">
+                <div style={{ color: 'white', textAlign: 'center' }}>
+                    <p>Cargando información del resultado...</p>
+                    <button className="al-btn-main" onClick={handleSkip} style={{ marginTop: '20px' }}>
+                        VER RESULTADO
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="video-intro-page">
@@ -56,8 +74,9 @@ const ResultVideoIntro = ({ type }) => {
                 Tu navegador no soporta videos.
             </video>
             {videoError && (
-                <div style={{ position: 'absolute', bottom: '20%', color: 'white', textAlign: 'center' }}>
-                    <p>Hubo un problema al cargar el video.</p>
+                <div style={{ position: 'absolute', bottom: '20%', color: 'white', textAlign: 'center', background: 'rgba(0,0,0,0.7)', padding: '20px', borderRadius: '10px' }}>
+                    <p>Hubo un problema al cargar el video de tu Eneatipo {type}.</p>
+                    <p style={{ fontSize: '12px', marginTop: '10px', opacity: 0.8 }}>Ruta intentada: {videoSrc}</p>
                 </div>
             )}
         </div>
