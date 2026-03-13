@@ -580,7 +580,7 @@ const CourseLanding = () => {
                     <div className="instructor-flex">
                         <div className="instructor-image-container">
                             <div className="instructor-image-glow"></div>
-                            <img src="/FB-Enesencia-1.jpg" alt="Felipe Beltrán" className="instructor-image" />
+                            <img src="/FB-Enesencia-2.png" alt="Felipe Beltrán" className="instructor-image" />
                         </div>
 
                         <div className="instructor-info">
