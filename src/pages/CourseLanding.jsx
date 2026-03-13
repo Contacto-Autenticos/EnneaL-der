@@ -384,7 +384,7 @@ const CourseLanding = () => {
                     </div>
 
                     <div className="modalities-choice-box">
-                        <p className="introspection-transition text-center" style={{ marginBottom: '40px', fontSize: '1.6rem', color: '#ddbe3d', fontWeight: '800' }}>
+                        <p className="introspection-transition text-center" style={{ marginBottom: '40px', fontSize: '1.6rem', color: '#ddbe3d', fontWeight: '800', textAlign: 'center' }}>
                             Comienza aquí, accede a este contenido de dos formas:
                         </p>
 
