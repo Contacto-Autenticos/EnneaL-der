@@ -255,12 +255,13 @@
 
 .map-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
     background: rgba(255, 255, 255, 0.03);
     padding: 25px 30px;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid var(--al-gold);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
     text-align: left;
@@ -268,7 +269,8 @@
 
 .map-item:hover {
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(221, 190, 61, 0.3);
+    border-color: rgba(221, 190, 61, 0.5);
+    border-left-color: #f1cf4e;
     transform: translateY(-5px);
 }
 
