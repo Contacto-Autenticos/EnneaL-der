@@ -897,26 +897,12 @@ html {
     margin-top: 8px;
 }
 
-@media (max-width: 600px) {
-    .al-section-title {
-        font-size: 44px;
-    }
-
-    .al-section-title .al-section-title-top {
-        font-size: 1em !important;
-    }
-
-    .al-bridge-text {
-        font-size: 16px;
-    }
-
-    .al-bridge-text.highlight {
-        font-size: 20px;
-    }
-
-    .al-bridge-final {
-        font-size: 20px;
-    }
+.al-bridge-final {
+    margin-top: 40px;
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
 }
 
 .al-bridge-arrow {
@@ -928,12 +914,26 @@ html {
     opacity: 0.8;
 }
 
-.al-bridge-final {
-    margin-top: 40px;
-    font-size: 32px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
+@media (max-width: 600px) {
+    .al-section-title {
+        font-size: 52px !important;
+    }
+
+    .al-section-title .al-section-title-top {
+        font-size: 1em !important;
+    }
+
+    .al-bridge-text {
+        font-size: 16px !important;
+    }
+
+    .al-bridge-text.highlight {
+        font-size: 20px !important;
+    }
+
+    .al-bridge-final {
+        font-size: 18px !important;
+    }
 }
 
 .al-white-text {
