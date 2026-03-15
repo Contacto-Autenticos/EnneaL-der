@@ -192,7 +192,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     Tu perfil no es un número, no es una etiqueta y mucho menos un defecto. <br />
                     <strong>Es un patrón de comportamiento que influye en cómo decides, lideras</strong> <br />
                     <strong>y reaccionas bajo presión.</strong> <br /><br />
-                    El test te mostró la estructura que lo describe. <br />
+                    El test basico te mostró la estructura que lo describe. <br />
                     <strong>El informe avanzado revela la arquitectura interna que lo sostiene.</strong>
                 </p>
 
