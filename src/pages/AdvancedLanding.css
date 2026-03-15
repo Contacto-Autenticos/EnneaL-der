@@ -916,7 +916,7 @@ html {
 
 @media (max-width: 600px) {
     .al-section-title {
-        font-size: 52px !important;
+        font-size: 32px !important;
     }
 
     .al-section-title .al-section-title-top {
