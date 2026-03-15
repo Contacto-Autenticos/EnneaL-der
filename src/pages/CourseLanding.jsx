@@ -31,7 +31,12 @@ const CourseLanding = () => {
     });
     const [regLoading, setRegLoading] = useState(false);
 
-    const handlePlanSelect = (plan) => {
+    const handleSelectPlan = (plan) => {
+        setSelectedPlan(plan);
+        setShowPriceModal(true);
+    };
+
+    const handleEnrollDirect = (plan) => {
         setSelectedPlan(plan);
         setShowRegisterForm(true);
     };
@@ -404,7 +409,7 @@ const CourseLanding = () => {
                                     7:00 PM a 9:00 PM (Hora Col)
                                 </div>
                                 <p style={{ marginTop: '15px' }}>Un espacio de aprendizaje progresivo donde exploraremos el sistema completo del Eneagrama.</p>
-                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handlePlanSelect('virtual')}>Seleccionar Virtual</button>
+                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handleSelectPlan('virtual')}>Seleccionar Virtual</button>
                             </div>
 
                             <div className="modality-card card-featured">
@@ -420,7 +425,7 @@ const CourseLanding = () => {
                                     9:00 AM a 5:00 PM
                                 </div>
                                 <p style={{ marginTop: '15px' }}>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
-                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handlePlanSelect('presencial')}>Seleccionar Presencial</button>
+                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handleSelectPlan('presencial')}>Seleccionar Presencial</button>
                             </div>
                         </div>
                     </div>
@@ -429,6 +434,42 @@ const CourseLanding = () => {
 
 
             {/* Step 3: Registration Modal */}
+            {showPriceModal && (
+                <div className="registration-modal-overlay" onClick={() => setShowPriceModal(false)}>
+                    <div className="registration-modal-content al-animate" onClick={e => e.stopPropagation()} style={{ maxWidth: '600px', padding: '0', overflow: 'hidden' }}>
+                        <button className="modal-close-btn" onClick={() => setShowPriceModal(false)}>✕</button>
+                        
+                        <div className={`al-pricing-card card-featured`} style={{ margin: '0', borderRadius: '0', border: 'none' }}>
+                            <div className="al-pricing-header">
+                                <h3>{selectedPlan === 'virtual' ? 'Programa Virtual' : 'Programa Presencial'}</h3>
+                            </div>
+                            <div className="al-pricing-content" style={{ padding: '40px' }}>
+                                <div className="al-price-box">
+                                    <div className="al-current-price">
+                                        <span className="al-price-number">{selectedPlan === 'virtual' ? '$360.000' : '$597.000'}</span>
+                                        <span className="al-currency">COP</span>
+                                    </div>
+                                    <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+                                        {selectedPlan === 'virtual' ? '14, 15, 16, 17 de abril' : '11 de abril'}
+                                    </div>
+                                </div>
+                                <button 
+                                    className="al-btn-buy" 
+                                    style={{ width: '100%', marginTop: '30px' }}
+                                    onClick={() => {
+                                        setShowPriceModal(false);
+                                        setShowRegisterForm(true);
+                                    }}
+                                >
+                                    Inscribirme {selectedPlan === 'virtual' ? 'Virtual' : 'Presencial'} <Lock size={20} />
+                                </button>
+                                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem', marginTop: '15px' }}>Pago seguro vía Wompi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {showRegisterForm && (
                 <div className="registration-modal-overlay" onClick={() => setShowRegisterForm(false)}>
                     <div className="registration-modal-content al-animate" onClick={e => e.stopPropagation()}>
@@ -590,7 +631,7 @@ const CourseLanding = () => {
                                 <div id="wompi-container-virtual">
                                     <button
                                         className="al-btn-buy"
-                                        onClick={() => handlePlanSelect('virtual')}
+                                        onClick={() => handleEnrollDirect('virtual')}
                                         disabled={paymentLoading && selectedPlan === 'virtual'}
                                         style={{ backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }}
                                     >
@@ -640,7 +681,7 @@ const CourseLanding = () => {
                                 <div id="wompi-container-presencial">
                                     <button
                                         className="al-btn-buy"
-                                        onClick={() => handlePlanSelect('presencial')}
+                                        onClick={() => handleEnrollDirect('presencial')}
                                         disabled={paymentLoading && selectedPlan === 'presencial'}
                                         style={{ backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none' }}
                                     >
