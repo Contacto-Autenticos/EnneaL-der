@@ -483,7 +483,7 @@ html {
 /* Product Info */
 .al-product-flex {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse; /* Shows image first on mobile */
     gap: 60px;
     align-items: center;
 }
