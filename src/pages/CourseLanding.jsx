@@ -453,6 +453,29 @@ const CourseLanding = () => {
                                         {selectedPlan === 'virtual' ? '14, 15, 16, 17 de abril' : '11 de abril'}
                                     </div>
                                 </div>
+
+                                <div className="al-pricing-grid" style={{ marginTop: '30px' }}>
+                                    {(selectedPlan === 'virtual' ? [
+                                        '4 Sesiones en vivo',
+                                        'Guías de ejercicios prácticos',
+                                        'Sesiones de Q&A grabadas',
+                                        'Comunidad exclusiva',
+                                        'Acceso de por vida a grabaciones',
+                                        'Certificado de finalización'
+                                    ] : [
+                                        'Jornada Intensiva (8 horas)',
+                                        'Material físico de trabajo',
+                                        'Refrigerios incluidos',
+                                        'Comunidad presencial',
+                                        'Networking con asistentes',
+                                        'Certificado de finalización'
+                                    ]).map((item, i) => (
+                                        <div key={i} className="al-pricing-item">
+                                            <CheckCircle2 size={16} /> {item}
+                                        </div>
+                                    ))}
+                                </div>
+
                                 <button 
                                     className="al-btn-buy" 
                                     style={{ width: '100%', marginTop: '30px' }}
@@ -463,7 +486,7 @@ const CourseLanding = () => {
                                 >
                                     Inscribirme {selectedPlan === 'virtual' ? 'Virtual' : 'Presencial'} <Lock size={20} />
                                 </button>
-                                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem', marginTop: '15px' }}>Pago seguro vía Wompi</p>
+                                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem', marginTop: '15px', textAlign: 'center' }}>Acceso instantáneo • Pago seguro vía Wompi</p>
                             </div>
                         </div>
                     </div>
