@@ -271,13 +271,13 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     <div className="al-bridge-container">
                         <h2 className="al-section-title">
                             <span className="al-section-title-top">Ya estás a mitad de camino</span>
-                            <span className="al-gold-text" style={{ whiteSpace: 'nowrap' }}>Decide cuánto seguir avanzando</span>
+                            <span className="al-gold-text">Decide cuánto seguir avanzando</span>
                         </h2>
 
                         <div className="al-bridge-content">
                             <div className="al-bridge-box">
                                 <p className="al-bridge-text">El test gratuito te mostró una ruta.</p>
-                                <p className="al-bridge-text highlight" style={{ whiteSpace: 'nowrap' }}>El informe avanzado te muestra el <span className="al-gold-text" style={{ display: 'inline' }}>mapa completo.</span></p>
+                                <p className="al-bridge-text highlight">El informe avanzado te muestra el <span className="al-gold-text" style={{ display: 'inline' }}>mapa completo.</span></p>
                             </div>
 
                             <div className="al-bridge-arrow">

@@ -33,13 +33,9 @@ const CourseLanding = () => {
 
     const handlePlanSelect = (plan) => {
         setSelectedPlan(plan);
-        setShowPriceModal(true);
-    };
-
-    const handleProceedToRegister = () => {
-        setShowPriceModal(false);
         setShowRegisterForm(true);
     };
+
 
     const handleRegistration = async (e) => {
         e.preventDefault();
@@ -431,83 +427,6 @@ const CourseLanding = () => {
                 </div>
             </section>
 
-            {/* Step 2: Price Summary Modal */}
-            {showPriceModal && (
-                <div className="registration-modal-overlay" onClick={() => setShowPriceModal(false)}>
-                    <div className="registration-modal-content al-animate" style={{ padding: '0', overflow: 'hidden', maxWidth: '500px' }} onClick={e => e.stopPropagation()}>
-                        <button className="modal-close-btn" onClick={() => setShowPriceModal(false)} style={{ zIndex: 10 }}>✕</button>
-                        
-                        <div className={`al-pricing-card card-featured`} style={{ border: 'none', borderRadius: '0', margin: '0' }}>
-                            <div className="al-pricing-glow"></div>
-                            <div className="al-pricing-header">
-                                <h3>{selectedPlan === 'virtual' ? 'Programa Virtual' : 'Programa Presencial'}</h3>
-                            </div>
-
-                            <div className="al-pricing-content">
-                                <div className="al-price-box">
-                                    <div className="al-current-price">
-                                        <span className="al-price-number">{selectedPlan === 'virtual' ? '$360.000' : '$597.000'}</span>
-                                        <span className="al-currency">COP</span>
-                                    </div>
-                                    <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                                        {selectedPlan === 'virtual' ? '14, 15, 16, 17 de abril' : '11 de abril'}
-                                    </div>
-                                </div>
-
-                                <div className="al-pricing-grid">
-                                    {(selectedPlan === 'virtual' ? [
-                                        '4 Sesiones en vivo',
-                                        'Guías de ejercicios prácticos',
-                                        'Sesiones de Q&A grabadas',
-                                        'Comunidad exclusiva',
-                                        'Acceso de por vida a grabaciones',
-                                        'Certificado de finalización'
-                                    ] : [
-                                        'Jornada Intensiva (8 horas)',
-                                        'Material físico de trabajo',
-                                        'Refrigerios incluidos',
-                                        'Comunidad presencial',
-                                        'Networking con asistentes',
-                                        'Certificado de finalización'
-                                    ]).map((item, i) => (
-                                        <div key={i} className="al-pricing-item">
-                                            <CheckCircle2 size={16} /> {item}
-                                        </div>
-                                    ))}
-                                </div>
-                                
-                                <button
-                                    className="al-btn-buy"
-                                    onClick={handleProceedToRegister}
-                                    style={{ 
-                                        backgroundColor: '#ddbe3d', 
-                                        color: '#002d44', 
-                                        fontWeight: '900', 
-                                        border: 'none',
-                                        width: '100%',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '10px',
-                                        padding: '20px'
-                                    }}
-                                >
-                                    <span>INSCRIBIRME {selectedPlan?.toUpperCase()}</span> <Lock size={20} />
-                                </button>
-                                {selectedPlan === 'presencial' && (
-                                    <p className="al-footer-desc" style={{ color: 'rgba(255,200,200,0.8)', marginTop: '10px', fontWeight: 'bold', fontSize: '11px', textAlign: 'center' }}>
-                                        * NO INCLUYE COSTOS DE DESPLAZAMIENTO *
-                                    </p>
-                                )}
-
-                                <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0', textAlign: 'center' }}>
-                                    Acceso instantáneo • Pago seguro vía Wompi
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {/* Step 3: Registration Modal */}
             {showRegisterForm && (

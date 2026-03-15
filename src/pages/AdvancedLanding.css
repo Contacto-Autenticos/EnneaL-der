@@ -902,6 +902,10 @@ html {
         font-size: 38px;
     }
 
+    .al-section-title .al-section-title-top {
+        font-size: 1em !important;
+    }
+
     .al-bridge-text {
         font-size: 16px;
     }

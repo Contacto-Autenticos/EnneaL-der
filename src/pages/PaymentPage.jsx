@@ -84,9 +84,8 @@ const PaymentPage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchSignature(BASE_PRICE_IN_CENTS);
-    }, []);
+    // Simplified effect: We only need to fetch signature when the amount changes.
+    // Initial fetch is handled by the useEffect watching [amountInCents, bumpSelected].
 
     const handleApplyCoupon = async () => {
         if (!couponCode) return;
@@ -112,7 +111,7 @@ const PaymentPage = () => {
                 setDiscountApplied(true);
                 setMessage(`¡Código aplicado! Descuento del ${coupon.discount_percentage}%`);
                 localStorage.removeItem('activeCommercial');
-                fetchSignature(newAmount);
+                // No need to fetchSignature here, the [amountInCents, bumpSelected] effect will handle it
                 return;
             }
 
@@ -137,7 +136,7 @@ const PaymentPage = () => {
                 // Store commercial name to attribute the sale later
                 localStorage.setItem('activeCommercial', affiliate.commercial_name);
                 
-                fetchSignature(newAmount);
+                // No need to fetchSignature here
             } else {
                 console.log('Código no encontrado en ninguna tabla');
                 if (affiliateError) console.error('Error en búsqueda de afiliado:', affiliateError);
@@ -145,7 +144,6 @@ const PaymentPage = () => {
                 setDiscountApplied(false);
                 setAmountInCents(BASE_PRICE_IN_CENTS);
                 localStorage.removeItem('activeCommercial');
-                fetchSignature(BASE_PRICE_IN_CENTS);
             }
         } catch (err) {
             console.error('Error crítico aplicando cupón/afiliado:', err);
@@ -160,7 +158,10 @@ const PaymentPage = () => {
             script.setAttribute('data-render', 'button');
             script.setAttribute('data-public-key', PUBLIC_KEY);
             script.setAttribute('data-currency', WOMPI_CURRENCY);
-            script.setAttribute('data-amount-in-cents', amountInCents);
+            // Use finalAmount from signatureData or calculate it here. 
+            // In creation of signature we sent the final amount, so signatureData.amount should have it.
+            // But to be 100% sure we use the same calculation as when fetching signature:
+            script.setAttribute('data-amount-in-cents', getFinalAmount(amountInCents, bumpSelected));
             script.setAttribute('data-reference', signatureData.reference);
             script.setAttribute('data-signature:integrity', signatureData.signature);
             script.setAttribute('data-redirect-url', `${window.location.origin}/payment-status`); // Verify status first
