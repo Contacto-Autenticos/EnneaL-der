@@ -979,4 +979,12 @@
         font-size: 0.65em !important;
         display: inline-block !important;
     }
+
+    .al-mobile-br {
+        display: block;
+    }
+}
+
+.al-mobile-br {
+    display: none;
 }

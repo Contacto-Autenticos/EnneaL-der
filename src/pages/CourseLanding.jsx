@@ -204,7 +204,7 @@ const CourseLanding = () => {
 
                 <h1 className="al-hero-title">
                     <span className="al-hero-title-top" style={{ fontSize: '0.6em', marginBottom: '10px' }}>
-                        Descubre qué hay detrás de tu forma de <br /> pensar, decidir y reaccionar.
+                        Descubre qué hay detrás <br className="al-mobile-br" /> de tu forma de pensar, <br className="al-mobile-br" /> decidir y reaccionar.
                     </span>
                     <span className="al-gold-text" style={{ fontSize: '0.8em', lineHeight: '1.2' }}>
                         Aprende a usar ese <br /> conocimiento a tu favor.
