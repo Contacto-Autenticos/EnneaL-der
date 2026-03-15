@@ -185,11 +185,16 @@ html {
 
 .al-hero-subtitle {
     font-size: clamp(16px, 1.8vw, 20px);
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(255, 255, 255, 0.6);
     max-width: 1000px;
     line-height: 1.8;
-    font-weight: 300 !important;
+    font-weight: 300;
     margin-bottom: 50px;
+}
+
+.al-hero-subtitle strong {
+    color: #ffffff;
+    font-weight: 700;
 }
 
 @media (max-width: 600px) {
@@ -197,7 +202,6 @@ html {
         font-size: 15px;
         line-height: 1.5;
         margin-bottom: 40px;
-        font-weight: 300 !important;
     }
 }
 
