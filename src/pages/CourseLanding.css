@@ -988,3 +988,13 @@
 .al-mobile-br {
     display: none;
 }
+
+.al-desktop-br {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .al-desktop-br {
+        display: none;
+    }
+}
