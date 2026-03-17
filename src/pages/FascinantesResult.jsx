@@ -176,7 +176,7 @@ const FascinantesResult = () => {
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            radarSection.style.setProperty('background', themeBlue, 'important');
+                            radarSection.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
                             radarSection.style.setProperty('background-color', themeBlue, 'important');
                             radarSection.style.setProperty('border-radius', '24px', 'important');
                             radarSection.style.setProperty('padding', '40px', 'important');
@@ -223,7 +223,7 @@ const FascinantesResult = () => {
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            card.style.setProperty('background', themeBlue, 'important');
+                            card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
                             card.style.setProperty('background-color', themeBlue, 'important');
                             card.style.setProperty('color', '#ffffff', 'important');
                             card.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.3)`, 'important');
