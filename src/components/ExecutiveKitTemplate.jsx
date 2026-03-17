@@ -232,7 +232,10 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                                 {data.impact.risks.map((r, i) => <li key={i}>{r}</li>)}
                             </ul>
                         </div>
-                        <p className="kit-impact-footer">Un liderazgo fuerte es inspirador, cuando equilibra firmeza con apertura.</p>
+                        <p className="kit-impact-footer">
+                            Un liderazgo fuerte es inspirador<br />
+                            cuando equilibra firmeza con apertura.
+                        </p>
                     </div>
                 ) : (
                     <table className="kit-table">
@@ -427,7 +430,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                             ))}
                         </ul>
                         <div className="kit-metric-box" style={{ marginTop: '50px' }}>
-                            <span className="kit-metric-label">Regla Ejecutiva:</span>
+                            <span className="kit-metric-label">Clave de liderazgo:</span>
                             <p style={{ margin: '10px 0 0', fontWeight: 700 }}>{data.decisionMatrixExtended.rule}</p>
                         </div>
                     </div>
@@ -476,7 +479,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                             <p className="kit-evolution-text" style={{ color: '#e74c3c' }}>{data.pressureProtocolExtended.automaticBehavior}</p>
                         </div>
                         <div className="kit-action-list">
-                            <h4>Intervención en 3 Pasos:</h4>
+                            <h4>Intervención en 3 pasos:</h4>
                             <div className="kit-step-list">
                                 {data.pressureProtocolExtended.intervention.map((step, i) => (
                                     <div key={i} className="kit-step-item">
@@ -595,7 +598,7 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
 
                         {data.evolutionSignals && (
                             <div className="kit-evolution-signals" style={{ marginTop: '40px', borderTop: '1px solid rgba(0,0,0,0.1)', paddingTop: '30px' }}>
-                                <h3 style={{ color: '#ddbe3d', marginBottom: '20px' }}>Señales de Evolución Real</h3>
+                                <h3 style={{ color: '#ddbe3d', marginBottom: '20px' }}>Señales de evolución real</h3>
                                 <div className="kit-checklist">
                                     {data.evolutionSignals.map((signal, idx) => (
                                         <div key={idx} className="kit-checklist-item" style={{ marginBottom: '15px' }}>

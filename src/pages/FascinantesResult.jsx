@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap } from 'lucide-react';
+import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download } from 'lucide-react';
 import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
 import FascinantesRadar from '../components/FascinantesRadar';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import './FascinantesResult.css';
 
 const DOMAIN_STYLES = {
@@ -36,6 +38,10 @@ const FascinantesResult = () => {
     const [loading, setLoading] = useState(true);
     const [selectedDomain, setSelectedDomain] = useState(null);
     const [userAnswers, setUserAnswers] = useState({});
+    const [isSharing, setIsSharing] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
+    const radarRef = React.useRef(null);
+    const reportRef = React.useRef(null);
 
     useEffect(() => {
         const storedAnswers = localStorage.getItem('fascinantesAnswers');
@@ -90,19 +96,123 @@ const FascinantesResult = () => {
         }
     };
 
+    const handleShare = async () => {
+        if (!radarRef.current || isSharing) return;
+        setIsSharing(true);
+
+        try {
+            const canvas = await html2canvas(radarRef.current, {
+                backgroundColor: '#00121d',
+                scale: 3,
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedRadar = clonedDoc.querySelector('.radar-section');
+                    if (clonedRadar) {
+                        clonedRadar.style.padding = '40px';
+                        clonedRadar.style.background = '#00121d';
+                    }
+                }
+            });
+
+            const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+            const imageFile = new File([imageBlob], 'mi-radar-autodiagnostico.png', { type: 'image/png' });
+
+            const shareData = {
+                title: 'Mi Radar de Autodiagnóstico',
+                text: 'He descubierto mi configuración de personalidad en el Autodiagnóstico de Auténticos. ¡Mira mis resultados!',
+                files: [imageFile],
+            };
+
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                await navigator.share(shareData);
+            } else {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'mi-radar-autodiagnostico.png';
+                link.click();
+                alert('La imagen de tu radar se ha descargado.');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error);
+            alert('No se pudo generar la imagen para compartir.');
+        } finally {
+            setIsSharing(false);
+        }
+    };
+
+    const handleDownloadPDF = async () => {
+        if (!reportRef.current || isDownloading) return;
+        setIsDownloading(true);
+
+        try {
+            const canvas = await html2canvas(reportRef.current, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true,
+                onclone: (clonedDoc) => {
+                    const clonedContent = clonedDoc.querySelector('.result-content');
+                    if (clonedContent) {
+                        clonedContent.style.background = '#ffffff';
+                        clonedContent.style.color = '#00121d';
+                        clonedContent.style.padding = '20px';
+                        
+                        const title = clonedContent.querySelector('h1');
+                        if (title) title.style.color = '#00121d';
+
+                        const cards = clonedContent.querySelectorAll('.domain-result-card');
+                        cards.forEach(card => {
+                            card.style.background = '#f8f9fa';
+                            card.style.color = '#00121d';
+                            card.style.borderColor = '#dee2e6';
+                            card.style.boxShadow = 'none';
+                            
+                            const desc = card.querySelector('.domain-definition');
+                            if (desc) desc.style.color = '#495057';
+
+                            const footerTip = card.querySelector('.card-footer-tip');
+                            if (footerTip) footerTip.style.display = 'none';
+                        });
+
+                        const actions = clonedContent.querySelector('.result-actions');
+                        if (actions) actions.style.display = 'none';
+
+                        const radar = clonedContent.querySelector('.radar-section');
+                        if (radar) {
+                            radar.style.filter = 'none';
+                        }
+                    }
+                }
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('Reporte-Autodiagnostico.pdf');
+        } catch (error) {
+            console.error('Error PDF:', error);
+            alert('Hubo un error al generar el PDF.');
+        } finally {
+            setIsDownloading(false);
+        }
+    };
+
     if (loading) return <div className="loading-fascinantes">Procesando resultados...</div>;
 
     return (
         <div className="fascinantes-result-page">
             <div className="futuristic-overlay"></div>
             
-            <div className="result-content animate-fade-in">
+            <div className="result-content animate-fade-in" ref={reportRef}>
                 <header className="result-header">
                     <h1>RESULTADO AUTODIAGNÓSTICO</h1>
                     <div className="neon-divider"></div>
                 </header>
 
-                <div className="radar-section">
+                <div className="radar-section" ref={radarRef}>
                     <FascinantesRadar data={domainScores} />
                 </div>
 
@@ -143,11 +253,19 @@ const FascinantesResult = () => {
                 </div>
 
                 <div className="result-actions">
-                    <button className="btn-action primary">
-                        <Share2 size={20} /> Compartir
+                    <button 
+                        className="btn-action primary" 
+                        onClick={handleShare}
+                        disabled={isSharing}
+                    >
+                        <Share2 size={20} /> {isSharing ? 'Capturando...' : 'Compartir'}
                     </button>
-                    <button className="btn-action secondary" onClick={() => window.print()}>
-                        Descargar PDF
+                    <button 
+                        className="btn-action secondary" 
+                        onClick={handleDownloadPDF}
+                        disabled={isDownloading}
+                    >
+                        <Download size={20} /> {isDownloading ? 'Generando...' : 'Descargar PDF'}
                     </button>
                 </div>
             </div>

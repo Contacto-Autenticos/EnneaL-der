@@ -42,7 +42,7 @@ const FascinantesTransition = () => {
         // Appearing timing for status text
         // 1. Initial status text appear after the last item (at ~6.1s). Using 6.6s for buffer.
         const introStatusTimer = setTimeout(() => {
-            setStatusText("Preparando tus resultados fascinantes…");
+            setStatusText("Preparando tus resultados del autodiagnóstico...");
             setIsStatusVisible(true);
         }, 6600);
 

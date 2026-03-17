@@ -2,7 +2,7 @@
     min-height: 100vh;
     background: #00121d;
     color: white;
-    padding: 40px 20px;
+    padding: 15px 20px 40px;
     position: relative;
     overflow-x: hidden;
 }
@@ -25,7 +25,7 @@
     font-weight: 900;
     letter-spacing: 5px;
     color: #ddbe3d;
-    margin: 20px 0;
+    margin: 10px 0 20px;
 }
 
 .radar-section {

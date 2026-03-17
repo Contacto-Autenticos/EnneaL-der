@@ -143,6 +143,11 @@ const FascinantesTest = () => {
             setTimeout(() => {
                 goToNext();
             }, 300);
+        } else {
+            // Automatic submission on last question
+            setTimeout(() => {
+                handleSubmit({ ...answers, [currentQuestion.id]: value });
+            }, 500);
         }
     };
 
@@ -175,8 +180,8 @@ const FascinantesTest = () => {
 
     const isComplete = Object.keys(answers).length === fascinantesQuestions.length;
 
-    const handleSubmit = () => {
-        localStorage.setItem('fascinantesAnswers', JSON.stringify(answers));
+    const handleSubmit = (finalAnswers = answers) => {
+        localStorage.setItem('fascinantesAnswers', JSON.stringify(finalAnswers));
         navigate('/autodiag-transition');
     };
 
@@ -237,7 +242,9 @@ const FascinantesTest = () => {
                     </div>
 
                     <div className={`question-container ${isTransitioning ? 'fade-out' : 'fade-in'}`}>
-                        <h3 className="question-text">{currentQuestion.text}</h3>
+                        <div className="question-text-container">
+                            <h3 className="question-text">{currentQuestion.text}</h3>
+                        </div>
                         
                         <div className="speedometer-section">
                             <FascinantesSpeedometer value={answers[currentQuestion.id] || 0} />
@@ -293,8 +300,8 @@ const FascinantesTest = () => {
                 </>
             )}
 
-            <footer className="intro-footer-small" style={{ marginTop: '20px', opacity: 1, textAlign: 'center' }}>
-                <img src="/Logo-Blanco.png" alt="Auténticos" style={{ maxHeight: '40px' }} />
+            <footer className="intro-footer-small">
+                <img src="/Logo-Blanco.png" alt="Auténticos" />
             </footer>
         </div>
     );

@@ -14,9 +14,9 @@ export const executiveKitData = {
             risk: "Incremento de criticidad, rigidez y tensión en el equipo.",
             evolutionaryKey: "Integrar humanidad y flexibilidad sin sacrificar estándares.",
             maturityLevels: [
-                "Nivel Básico: Crítico, controlador y autoexigente extremo.",
-                "Nivel Intermedio: Exigente pero consciente de impacto relacional.",
-                "Nivel Evolucionado: Inspirador, ético y estructurado con equilibrio emocional."
+                "Nivel básico: crítico, controlador y autoexigente extremo.",
+                "Nivel intermedio: exigente pero consciente de impacto relacional.",
+                "Nivel evolucionado: inspirador, ético y estructurado con equilibrio emocional."
             ],
             highlights: [
                 "Donde otros improvisan, el 1 estructura.",
@@ -133,9 +133,9 @@ export const executiveKitData = {
             risk: "Sobrecarga operativa por asumir responsabilidades ajenas y evitar incomodar.",
             evolutionaryKey: "Desarrollar firmeza, límites visibles y priorización estratégica sin perder empatía.",
             maturityLevels: [
-                "Nivel Básico: Complaciente, posesivo y manipulador emocional indirecto.",
-                "Nivel Intermedio: Servicial y atento pero con expectativas de reconocimiento.",
-                "Nivel Evolucionado: Generoso incondicional, empático y con límites saludables."
+                "Nivel básico: complaciente, posesivo y manipulador emocional indirecto.",
+                "Nivel intermedio: servicial y atento pero con expectativas de reconocimiento.",
+                "Nivel evolucionado: generoso incondicional, empático y con límites saludables."
             ],
             highlights: [
                 "Donde otros ignoran el factor humano, el 2 conecta.",
@@ -251,9 +251,9 @@ export const executiveKitData = {
             risk: "Sobrecarga, competitividad interna excesiva y decisiones orientadas a apariencia de éxito más que a sostenibilidad.",
             evolutionaryKey: "Integrar autenticidad, balance y cultura organizacional sin perder excelencia ejecutiva.",
             maturityLevels: [
-                "Nivel Básico: Vanidoso, competitivo extremo y orientado solo a la imagen.",
-                "Nivel Intermedio: Eficiente y trabajador pero dependiente del éxito externo.",
-                "Nivel Evolucionado: Auténtico, inspirador y orientado a resultados sostenibles."
+                "Nivel básico: vanidoso, competitivo extremo y orientado solo a la imagen.",
+                "Nivel intermedio: eficiente y trabajador pero dependiente del éxito externo.",
+                "Nivel evolucionado: auténtico, inspirador y orientado a resultados sostenibles."
             ],
             highlights: [
                 "Donde otros se estancan, el 3 acelera.",
@@ -369,9 +369,9 @@ export const executiveKitData = {
             risk: "Oscilación estratégica, dramatización de conflictos y pérdida de consistencia operativa.",
             evolutionaryKey: "Desarrollar estabilidad emocional y estructura ejecutiva sin perder profundidad creativa.",
             maturityLevels: [
-                "Nivel Básico: Melancólico, ensimismado y emocionalmente volátil.",
-                "Nivel Intermedio: Creativo y expresivo pero dependiente de su estado de ánimo.",
-                "Nivel Evolucionado: Inspirado, ecuánime y capaz de transformar emoción en valor."
+                "Nivel básico: melancólico, ensimismado y emocionalmente volátil.",
+                "Nivel intermedio: creativo y expresivo pero dependiente de su estado de ánimo.",
+                "Nivel evolucionado: inspirado, ecuánime y capaz de transformar emoción en valor."
             ],
             highlights: [
                 "Donde otros ven lo ordinario, el 4 crea significado.",
@@ -487,9 +487,9 @@ export const executiveKitData = {
             risk: "Desconexión del equipo, acumulación excesiva de información y parálisis estratégica.",
             evolutionaryKey: "Integrar análisis con acción visible y presencia relacional activa.",
             maturityLevels: [
-                "Nivel Básico: Aislado, cínico y tacaño con sus recursos y conocimientos.",
-                "Nivel Intermedio: Observador y analítico pero distante de la acción real.",
-                "Nivel Evolucionado: Visionario, participativo y generoso con su sabiduría."
+                "Nivel básico: aislado, cínico y tacaño con sus recursos y conocimientos.",
+                "Nivel intermedio: observador y analítico pero distante de la acción real.",
+                "Nivel evolucionado: visionario, participativo y generoso con su sabiduría."
             ],
             highlights: [
                 "Donde otros reaccionan, el 5 analiza.",
@@ -605,9 +605,9 @@ export const executiveKitData = {
             risk: "Parálisis por análisis de riesgos, aumento de ansiedad operativa y desconfianza estratégica.",
             evolutionaryKey: "Desarrollar autoconfianza decisional y liderazgo firme en entornos inciertos.",
             maturityLevels: [
-                "Nivel Básico: Ansioso, vigilante o rebelde por inseguridad.",
-                "Nivel Intermedio: Leal y trabajador pero excesivamente preocupado por riesgos.",
-                "Nivel Evolucionado: Valiente, confiado y constructor de confianza colectiva."
+                "Nivel básico: ansioso, vigilante o rebelde por inseguridad.",
+                "Nivel intermedio: leal y trabajador pero excesivamente preocupado por riesgos.",
+                "Nivel evolucionado: valiente, confiado y constructor de confianza colectiva."
             ],
             highlights: [
                 "Donde otros descuidan el riesgo, el 6 protege.",
@@ -723,9 +723,9 @@ export const executiveKitData = {
             risk: "Evitar conversaciones incómodas iniciando nuevos proyectos o cambiando de foco prematuramente.",
             evolutionaryKey: "Desarrollar disciplina de cierre, profundidad y priorización estratégica sin perder visión innovadora.",
             maturityLevels: [
-                "Nivel Básico: Impulsivo, escapista y disperso en múltiples opciones.",
-                "Nivel Intermedio: Entusiasta y creativo pero con dificultad para profundizar.",
-                "Nivel Evolucionado: Enfocado, agradecido y capaz de disfrutar la sobriedad."
+                "Nivel básico: impulsivo, escapista y disperso en múltiples opciones.",
+                "Nivel intermedio: entusiasta y creativo pero con dificultad para profundizar.",
+                "Nivel evolucionado: enfocado, agradecido y capaz de disfrutar la sobriedad."
             ],
             highlights: [
                 "Donde otros ven límites, el 7 abre horizontes.",
@@ -842,13 +842,13 @@ export const executiveKitData = {
             risk: "Autoritarismo, reducción de escucha activa y desgaste relacional del equipo.",
             evolutionaryKey: "Integrar firmeza con sensibilidad estratégica y liderazgo influyente, no impositivo.",
             maturityLevels: [
-                "Nivel Básico: Dominante, agresivo y vengativo ante la vulnerabilidad.",
-                "Nivel Intermedio: Protector y fuerte pero con tendencia al control excesivo.",
-                "Nivel Evolucionado: Magnánimo, justo y protector desde la vulnerabilidad."
+                "Nivel básico: dominante, agresivo y vengativo ante la vulnerabilidad.",
+                "Nivel intermedio: protector y fuerte pero con tendencia al control excesivo.",
+                "Nivel evolucionado: magnánimo, justo y protector desde la vulnerabilidad."
             ],
             highlights: [
-                "Donde otros dudan, el 8 impulsa.",
-                "Donde hay estancamiento, el 8 genera movimiento."
+                "La personalidad 8 no duda.",
+                "Donde encuentra estancamiento, genera movimiento."
             ]
         },
         leadershipContext: {
@@ -902,9 +902,9 @@ export const executiveKitData = {
         },
         pressureProtocolExtended: {
             alerts: ["Aumento de tono dominante", "Impaciencia extrema", "Cierre a opiniones externas", "Reacciones impulsivas"],
-            automaticBehavior: "Imponer dirección sin consulta.",
             intervention: ["Respirar profundamente durante 60 segundos.", "Escuchar una opinión alternativa.", "Comunicar decisión con explicación clara."],
-            example: "“Esta es la dirección. Escucho sus aportes antes de ejecutarla.”"
+            example: "“Esta es la dirección. Escucho sus aportes antes de ejecutarla.”",
+            automaticBehavior: "Marcar la dirección de forma unilateral"
         },
         conversationsGuide: {
             structure: ["Reconocer el esfuerzo del colaborador.", "Nombrar el problema con claridad directa.", "Definir expectativa concreta.", "Establecer plan de mejora con seguimiento."],
@@ -925,7 +925,7 @@ export const executiveKitData = {
         evolutionSignals: [
             "Bajas la guardia y muestras tu lado humano al equipo.",
             "Escuchas y consideras opiniones ajenas antes de imponer.",
-            "Udas tu fuerza para elevar a otros, no para dominarlos.",
+            "Usas tu fuerza para elevar a otros, no para dominarlos.",
             "Admites errores y vulnerabilidades sin sentir pérdida de poder."
         ],
         growthPlanExtended: {
@@ -960,9 +960,9 @@ export const executiveKitData = {
             risk: "Pasividad estratégica, postergación de conflictos y dilución de prioridades clave.",
             evolutionaryKey: "Desarrollar posicionamiento firme y priorización visible sin perder empatía.",
             maturityLevels: [
-                "Nivel Básico: Apático, pasivo-agresivo y desconectado de sus deseos.",
-                "Nivel Intermedio: Conciliador y estable pero con tendencia a la postergación.",
-                "Nivel Evolucionado: Despierto, activo y mediador poderoso con dirección."
+                "Nivel básico: apático, pasivo-agresivo y desconectado de sus deseos.",
+                "Nivel intermedio: conciliador y estable pero con tendencia a la postergación.",
+                "Nivel evolucionado: despierto, activo y mediador poderoso con dirección."
             ],
             highlights: [
                 "Donde otros chocan, el 9 concilia.",

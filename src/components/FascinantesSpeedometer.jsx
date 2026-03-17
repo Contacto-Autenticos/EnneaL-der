@@ -60,7 +60,15 @@ const FascinantesSpeedometer = ({ value, label }) => {
                     </svg>
 
                     <div className="speedometer-needle-v2" style={{ transform: `rotate(${-90 + (percentage * 1.8)}deg)` }}>
-                        <div className="needle-head"></div>
+                        <svg className="needle-head-svg" viewBox="0 0 10 10" width="12" height="12">
+                            <path 
+                                d="M 5 0 L 10 10 L 0 10 Z" 
+                                fill="#ddbe3d" 
+                                stroke="#001d2d" 
+                                strokeWidth="1"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
                     </div>
                     
                     <div className="speedometer-center-v2"></div>
