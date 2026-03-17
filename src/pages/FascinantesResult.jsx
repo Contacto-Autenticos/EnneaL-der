@@ -152,111 +152,112 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
-                        // Vivid Blue for the PDF (Blue-900)
-                        const vividBlue = '#1e3a8a';
+                        const themeBlue = '#0d2535';
+                        const themeGold = '#ddbe3d';
+                        const darkGold = '#9e7b22';
                         
-                        clonedContent.style.background = '#ffffff';
-                        clonedContent.style.width = '820px'; // Closer to A4 ratio
-                        clonedContent.style.padding = '40px';
-                        clonedContent.style.margin = '0 auto';
-                        clonedContent.style.display = 'block';
+                        clonedContent.style.setProperty('background', '#ffffff', 'important');
+                        clonedContent.style.setProperty('width', '800px', 'important');
+                        clonedContent.style.setProperty('padding', '40px', 'important');
+                        clonedContent.style.setProperty('margin', '0 auto', 'important');
+                        clonedContent.style.setProperty('display', 'block', 'important');
                         
                         const title = clonedContent.querySelector('h1');
                         if (title) {
-                            title.style.color = '#9e7b22';
-                            title.style.textAlign = 'center';
-                            title.style.fontSize = '2.4rem'; // Reduced to fit on one line
-                            title.style.marginBottom = '30px';
-                            title.style.whiteSpace = 'nowrap';
-                            title.style.width = '1000px'; // Overflow is OK to force single line
-                            title.style.marginLeft = '-90px'; // Offset to center the wide title
-                            title.style.display = 'block';
+                            title.style.setProperty('color', darkGold, 'important');
+                            title.style.setProperty('text-align', 'center', 'important');
+                            title.style.setProperty('font-size', '2.2rem', 'important');
+                            title.style.setProperty('margin-bottom', '40px', 'important');
+                            title.style.setProperty('white-space', 'nowrap', 'important');
+                            title.style.setProperty('width', '1000px', 'important');
+                            title.style.setProperty('margin-left', '-90px', 'important');
+                            title.style.setProperty('display', 'block', 'important');
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            radarSection.style.background = vividBlue;
-                            radarSection.style.borderRadius = '32px';
-                            radarSection.style.padding = '40px';
-                            radarSection.style.marginBottom = '40px';
-                            radarSection.style.display = 'flex';
-                            radarSection.style.flexDirection = 'column';
-                            radarSection.style.justifyContent = 'center';
-                            radarSection.style.alignItems = 'center';
-                            radarSection.style.width = '100%';
-                            radarSection.style.boxSizing = 'border-box';
+                            radarSection.style.setProperty('background', themeBlue, 'important');
+                            radarSection.style.setProperty('border-radius', '24px', 'important');
+                            radarSection.style.setProperty('padding', '30px', 'important');
+                            radarSection.style.setProperty('margin-bottom', '40px', 'important');
+                            radarSection.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.4)`, 'important');
+                            radarSection.style.setProperty('border-left', `5px solid ${themeGold}`, 'important');
+                            radarSection.style.setProperty('display', 'flex', 'important');
+                            radarSection.style.setProperty('justify-content', 'center', 'important');
+                            radarSection.style.setProperty('align-items', 'center', 'important');
+                            radarSection.style.setProperty('width', '100%', 'important');
+                            radarSection.style.setProperty('box-sizing', 'border-box', 'important');
                             
-                            // FORCE horizontal centering of the radar container
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
-                                // Important: Fixed width in pixels for the PDF clone
-                                radarContainer.style.width = '700px'; 
-                                radarContainer.style.height = '600px';
-                                radarContainer.style.margin = '0 auto';
-                                radarContainer.style.display = 'flex';
-                                radarContainer.style.justifyContent = 'center';
-                                radarContainer.style.alignItems = 'center';
+                                radarContainer.style.setProperty('width', '700px', 'important'); 
+                                radarContainer.style.setProperty('height', '580px', 'important');
+                                radarContainer.style.setProperty('margin', '0 auto', 'important');
+                                radarContainer.style.setProperty('display', 'flex', 'important');
+                                radarContainer.style.setProperty('justify-content', 'center', 'important');
+                                radarContainer.style.setProperty('align-items', 'center', 'important');
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
-                                    svg.style.margin = '0 auto';
-                                    svg.style.display = 'block';
-                                    // Ensure ResponsiveContainer doesn't collapse
+                                    svg.style.setProperty('margin', '0 auto', 'important');
+                                    svg.style.setProperty('display', 'block', 'important');
                                     svg.setAttribute('width', '700');
-                                    svg.setAttribute('height', '600');
+                                    svg.setAttribute('height', '580');
                                 }
                             }
                         }
 
                         const grid = clonedContent.querySelector('.interpretations-grid');
                         if (grid) {
-                            grid.style.display = 'grid';
-                            grid.style.gridTemplateColumns = '1fr 1fr';
-                            grid.style.gap = '20px';
-                            grid.style.width = '100%';
-                            grid.style.boxSizing = 'border-box';
+                            grid.style.setProperty('display', 'grid', 'important');
+                            grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
+                            grid.style.setProperty('gap', '20px', 'important');
+                            grid.style.setProperty('width', '100%', 'important');
+                            grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            card.style.background = vividBlue;
-                            card.style.color = '#ffffff';
-                            card.style.borderColor = '#9e7b22';
-                            card.style.borderWidth = '1px';
-                            card.style.borderStyle = 'solid';
-                            card.style.boxShadow = 'none';
-                            card.style.padding = '20px';
-                            card.style.borderRadius = '20px';
-                            card.style.minHeight = '160px';
+                            card.style.setProperty('background', themeBlue, 'important');
+                            card.style.setProperty('background-color', themeBlue, 'important');
+                            card.style.setProperty('color', '#ffffff', 'important');
+                            card.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.4)`, 'important');
+                            card.style.setProperty('border-left', `5px solid ${themeGold}`, 'important');
+                            card.style.setProperty('padding', '20px', 'important');
+                            card.style.setProperty('border-radius', '16px', 'important');
+                            card.style.setProperty('min-height', '150px', 'important');
+                            card.style.setProperty('box-shadow', 'none', 'important');
                             
                             const domainHeader = card.querySelector('h3');
                             if (domainHeader) {
-                                domainHeader.style.color = '#ffffff';
-                                domainHeader.style.fontSize = '1.2rem';
+                                domainHeader.style.setProperty('color', '#ffffff', 'important');
+                                domainHeader.style.setProperty('font-size', '1.2rem', 'important');
                             }
 
                             const desc = card.querySelector('.domain-definition');
                             if (desc) {
-                                desc.style.color = 'rgba(255, 255, 255, 0.9)';
-                                desc.style.fontSize = '0.9rem';
-                                desc.style.lineHeight = '1.4';
+                                desc.style.setProperty('color', 'rgba(255, 255, 255, 0.9)', 'important');
+                                desc.style.setProperty('font-size', '0.9rem', 'important');
+                                desc.style.setProperty('line-height', '1.4', 'important');
                             }
 
                             const scoreNum = card.querySelector('.score-num');
-                            if (scoreNum) scoreNum.style.color = '#ffffff';
+                            if (scoreNum) scoreNum.style.setProperty('color', '#ffffff', 'important');
 
                             const footerTip = card.querySelector('.card-footer-tip');
-                            if (footerTip) footerTip.style.display = 'none';
+                            if (footerTip) footerTip.style.setProperty('display', 'none', 'important');
                         });
 
                         const actions = clonedContent.querySelector('.result-actions');
-                        if (actions) actions.style.display = 'none';
+                        if (actions) actions.style.setProperty('display', 'none', 'important');
 
                         const footer = clonedContent.querySelector('.result-footer-minimal');
                         if (footer) {
-                            footer.style.marginTop = '40px';
+                            footer.style.setProperty('margin-top', '40px', 'important');
+                            footer.style.setProperty('display', 'flex', 'important');
+                            footer.style.setProperty('justify-content', 'center', 'important');
                             const footerImg = footer.querySelector('img');
-                            if (footerImg) footerImg.style.maxHeight = '40px';
+                            if (footerImg) footerImg.style.setProperty('max-height', '40px', 'important');
                         }
                     }
                 }
