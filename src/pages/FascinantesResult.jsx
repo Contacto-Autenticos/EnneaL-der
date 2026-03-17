@@ -169,9 +169,17 @@ const FascinantesResult = () => {
                             title.style.setProperty('text-align', 'center', 'important');
                             title.style.setProperty('font-size', '3rem', 'important');
                             title.style.setProperty('margin-bottom', '50px', 'important');
-                            title.style.setProperty('white-space', 'nowrap', 'important');
+                            title.style.setProperty('line-height', '1', 'important');
                             title.style.setProperty('width', '100%', 'important');
                             title.style.setProperty('display', 'block', 'important');
+                            
+                            const spans = title.querySelectorAll('span');
+                            spans.forEach(span => {
+                                span.style.setProperty('display', 'block', 'important');
+                            });
+                            if (spans.length > 1) {
+                                spans[1].style.setProperty('margin-top', '5px', 'important');
+                            }
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
@@ -326,7 +334,10 @@ const FascinantesResult = () => {
             
             <div className="result-content animate-fade-in" ref={reportRef}>
                 <header className="result-header">
-                    <h1>RESULTADO AUTODIAGNÓSTICO</h1>
+                    <h1 style={{ lineHeight: 1 }}>
+                        <span style={{ display: 'block' }}>RESULTADO</span>
+                        <span style={{ display: 'block', marginTop: '5px' }}>AUTODIAGNÓSTICO</span>
+                    </h1>
                     <div className="neon-divider"></div>
                 </header>
 
