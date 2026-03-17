@@ -216,8 +216,11 @@ const FascinantesResult = () => {
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
                                     svg.style.setProperty('overflow', 'visible', 'important');
-                                    svg.setAttribute('width', '800');
-                                    svg.setAttribute('height', '720');
+                                    const currentW = svg.getAttribute('width') || 800;
+                                    const currentH = svg.getAttribute('height') || 720;
+                                    svg.setAttribute('viewBox', `0 0 ${currentW} ${currentH}`);
+                                    svg.setAttribute('width', '100%');
+                                    svg.setAttribute('height', '100%');
                                 }
                             }
                         }
