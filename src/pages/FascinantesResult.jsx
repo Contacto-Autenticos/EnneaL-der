@@ -208,6 +208,9 @@ const FascinantesResult = () => {
                                 radarContainer.style.setProperty('align-items', 'center', 'important');
                                 radarContainer.style.setProperty('overflow', 'visible', 'important');
                                 
+                                const labels = radarContainer.querySelectorAll('.radar-label-text');
+                                labels.forEach(label => label.style.setProperty('display', 'none', 'important'));
+
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
                                     svg.style.setProperty('margin', '0 auto', 'important');
