@@ -30,7 +30,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
     // We use the actual center provided by Recharts now.
     const angle = Math.atan2(y - cy, x - cx);
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-    const repulsion = isMobile ? 15 : 35; 
+    const repulsion = isMobile ? 15 : 30; 
     const labelX = x + Math.cos(angle) * repulsion;
     const labelY = y + Math.sin(angle) * repulsion;
 
