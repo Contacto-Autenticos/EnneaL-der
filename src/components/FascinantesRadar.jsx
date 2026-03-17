@@ -149,7 +149,7 @@ const FascinantesRadar = ({ data }) => {
     const radarRadius = isMobile ? "90%" : "70%";
 
     return (
-        <div className="fascinantes-radar-container" style={{ width: '100%', height: 720, background: 'rgba(0, 18, 29, 0.4)', borderRadius: '30px', padding: '40px', border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', position: 'relative' }}>
+        <div className="fascinantes-radar-container" style={{ width: '100%', height: 720, background: 'rgba(0, 18, 29, 0.4)', borderRadius: '30px', padding: '40px', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 25px 50px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(20px)', position: 'relative' }}>
             <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
                     <defs>
