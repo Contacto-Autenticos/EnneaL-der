@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download } from 'lucide-react';
+import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download, AlertCircle } from 'lucide-react';
 import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
 import FascinantesRadar from '../components/FascinantesRadar';
 import html2canvas from 'html2canvas';
@@ -257,6 +257,34 @@ const FascinantesResult = () => {
                             if (footerTip) footerTip.style.setProperty('display', 'none', 'important');
                         });
 
+                        const importantNote = clonedContent.querySelector('.important-note-card');
+                        if (importantNote) {
+                            importantNote.style.setProperty('background', themeBlue, 'important');
+                            importantNote.style.setProperty('background-color', themeBlue, 'important');
+                            importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.1)`, 'important');
+                            importantNote.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
+                            importantNote.style.setProperty('padding', '25px 30px', 'important');
+                            importantNote.style.setProperty('margin-top', '40px', 'important');
+                            importantNote.style.setProperty('border-radius', '20px', 'important');
+                            importantNote.style.setProperty('display', 'flex', 'important');
+                            importantNote.style.setProperty('align-items', 'center', 'important');
+                            importantNote.style.setProperty('gap', '20px', 'important');
+                            importantNote.style.setProperty('box-shadow', 'none', 'important');
+
+                            const noteIcon = importantNote.querySelector('.note-icon');
+                            if (noteIcon) noteIcon.style.setProperty('color', themeGold, 'important');
+
+                            const noteText = importantNote.querySelector('.note-text');
+                            if (noteText) {
+                                noteText.style.setProperty('color', '#ffffff', 'important');
+                                noteText.style.setProperty('font-size', '1rem', 'important');
+                                noteText.style.setProperty('line-height', '1.6', 'important');
+                                
+                                const strong = noteText.querySelector('strong');
+                                if (strong) strong.style.setProperty('color', themeGold, 'important');
+                            }
+                        }
+
                         const actions = clonedContent.querySelector('.result-actions');
                         if (actions) actions.style.setProperty('display', 'none', 'important');
 
@@ -338,6 +366,15 @@ const FascinantesResult = () => {
                             <div className="card-footer-tip">Ver detalle <ArrowLeft size={14} style={{ transform: 'rotate(180deg)' }} /></div>
                         </div>
                     ))}
+                </div>
+
+                <div className="important-note-card animate-fade-in">
+                    <div className="note-icon">
+                        <AlertCircle size={28} />
+                    </div>
+                    <p className="note-text">
+                        <strong>Nota Importante:</strong> si alguien está en crisis intensa o con síntomas severos, esto no reemplaza acompañamiento profesional. Pide ayuda.
+                    </p>
                 </div>
 
                 <div className="result-actions">

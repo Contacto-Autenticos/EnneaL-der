@@ -401,3 +401,49 @@
     .fascinantes-result-page { background: white; color: black; }
     .domain-result-card { border: 1px solid #eee; background: none; break-inside: avoid; }
 }
+
+.important-note-card {
+    background: #0d2535;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 8px solid #ddbe3d;
+    padding: 25px 30px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.note-icon {
+    color: #ddbe3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.note-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #fff;
+    margin: 0;
+}
+
+.note-text strong {
+    color: #ddbe3d;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+@media (max-width: 600px) {
+    .important-note-card {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .note-text {
+        font-size: 0.85rem;
+    }
+}
