@@ -1,0 +1,149 @@
+.fascinantes-intro-page {
+    min-height: 100vh;
+    background: radial-gradient(circle at center, #002d44 0%, #00121d 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.futuristic-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 45, 68, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 45, 68, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.intro-content {
+    max-width: 800px;
+    width: 100%;
+    z-index: 10;
+    text-align: center;
+}
+
+.title-image-wrapper {
+    margin: 0 auto 10px;
+    max-width: 400px;
+}
+
+.fascinantes-logo-img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(221, 190, 61, 0.2));
+}
+
+.fascinantes-main-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-top: 10px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.methodology-tag-header {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* .neon-divider removed per user request */
+
+
+.instructions-box {
+    background: rgba(45, 55, 72, 0.4);
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 0 auto 40px;
+    text-align: left;
+    backdrop-filter: blur(10px);
+    max-width: 650px;
+}
+
+.instructions-header h3 {
+    color: #ddbe3d;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    font-weight: 400;
+}
+
+.instructions-header h3 {
+    color: #ddbe3d;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.instructions-body p {
+    font-size: 0.95rem;
+    color: #eee;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.instructions-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 25px 0 20px;
+    width: 100%;
+}
+
+.duration-tip-inside {
+    font-size: 0.9rem;
+    color: #888;
+    text-align: center;
+    font-style: italic;
+    margin: 0;
+}
+
+
+
+.btn-start-fascinantes {
+    background: linear-gradient(135deg, #ddbe3d 0%, #b89b2d 100%);
+    color: #00121d;
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 20px rgba(221, 190, 61, 0.4);
+    transition: all 0.3s;
+    margin: 0 auto 20px;
+}
+
+.btn-start-fascinantes:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(221, 190, 61, 0.6);
+}
+
+
+.intro-footer-small {
+    margin-top: 40px;
+    opacity: 1;
+}
+
+.intro-footer-small img {
+    max-height: 40px;
+}
+
+@media (max-width: 600px) {
+    .fascinantes-title { font-size: 3rem; letter-spacing: 8px; }
+    .intro-grid { display: none; }
+}

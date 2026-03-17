@@ -1,0 +1,116 @@
+.speedometer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.speedometer-container {
+    position: relative;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.speedometer-main {
+    position: relative;
+    width: 200px;
+    height: 100px;
+}
+
+.speedometer-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.speed-fill-path {
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.speedometer-needle-v2 {
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    width: 2px;
+    height: 70px;
+    background: #fff;
+    transform-origin: bottom center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.needle-head {
+    position: absolute;
+    top: -8px;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    background: #ddbe3d;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.speedometer-center-v2 {
+    position: absolute;
+    bottom: -10px;
+    left: 100px;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: #00121d;
+    border: 2px solid #ddbe3d;
+    border-radius: 50%;
+    z-index: 6;
+}
+
+.speedometer-info-v2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    background: rgba(0, 45, 68, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(221, 190, 61, 0.4);
+    min-width: 140px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.intensity-label-internal {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    opacity: 0.5;
+}
+
+.info-val {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #ddbe3d;
+}
+
+.info-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.speedometer-main-label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

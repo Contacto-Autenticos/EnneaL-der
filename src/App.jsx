@@ -26,6 +26,12 @@ import ScrollToTop from './components/ScrollToTop';
 import FloatingScrollToTop from './components/FloatingScrollToTop';
 import BasicTestIntro from './pages/BasicTestIntro';
 import Analytics from './components/Analytics';
+import Hub from './pages/Hub';
+import MyResults from './pages/MyResults';
+import FascinantesIntro from './pages/FascinantesIntro';
+import FascinantesTest from './pages/FascinantesTest';
+import FascinantesTransition from './pages/FascinantesTransition';
+import FascinantesResult from './pages/FascinantesResult';
 
 
 function App() {
@@ -191,6 +197,12 @@ function App() {
       <FloatingScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/hub" element={<Hub />} />
+        <Route path="/my-results" element={<MyResults />} />
+        <Route path="/autodiag-intro" element={<FascinantesIntro />} />
+        <Route path="/autodiag-test" element={<FascinantesTest />} />
+        <Route path="/autodiag-transition" element={<FascinantesTransition />} />
+        <Route path="/autodiag-result" element={<FascinantesResult />} />
 
 
 

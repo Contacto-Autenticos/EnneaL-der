@@ -37,6 +37,13 @@ const Home = () => {
                 >
                     Iniciar ahora <ArrowRight size={19} />
                 </button>
+
+                <button
+                    onClick={() => navigate('/hub')}
+                    className="btn-link-hub"
+                >
+                    Ver otros análisis
+                </button>
             </div>
 
             <div className="home-footer">
