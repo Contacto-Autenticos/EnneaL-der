@@ -153,36 +153,48 @@ const FascinantesResult = () => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
                         clonedContent.style.background = '#ffffff';
-                        clonedContent.style.width = '800px';
-                        clonedContent.style.padding = '40px';
+                        clonedContent.style.width = '1000px';
+                        clonedContent.style.padding = '60px';
                         clonedContent.style.margin = '0 auto';
+                        clonedContent.style.display = 'block';
                         
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.color = '#9e7b22';
                             title.style.textAlign = 'center';
-                            title.style.fontSize = '2.5rem';
-                            title.style.marginBottom = '30px';
+                            title.style.fontSize = '3.5rem';
+                            title.style.marginBottom = '40px';
+                            title.style.whiteSpace = 'nowrap';
+                            title.style.width = '100%';
+                            title.style.display = 'block';
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
                             radarSection.style.background = '#0d2535';
-                            radarSection.style.borderRadius = '24px';
-                            radarSection.style.padding = '30px';
-                            radarSection.style.marginBottom = '40px';
+                            radarSection.style.borderRadius = '32px';
+                            radarSection.style.padding = '40px';
+                            radarSection.style.marginBottom = '50px';
                             radarSection.style.display = 'flex';
                             radarSection.style.justifyContent = 'center';
                             radarSection.style.alignItems = 'center';
                             radarSection.style.width = '100%';
+                            radarSection.style.boxSizing = 'border-box';
                             
-                            // Ensure the radar SVG inside is also centered
+                            // Center the actual chart container
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
-                                radarContainer.style.margin = '0 auto';
                                 radarContainer.style.width = '100%';
+                                radarContainer.style.maxWidth = '100%';
                                 radarContainer.style.display = 'flex';
                                 radarContainer.style.justifyContent = 'center';
+                                radarContainer.style.margin = '0 auto';
+                                
+                                const svg = radarContainer.querySelector('svg');
+                                if (svg) {
+                                    svg.style.margin = '0 auto';
+                                    svg.style.display = 'block';
+                                }
                             }
                         }
 
@@ -190,8 +202,9 @@ const FascinantesResult = () => {
                         if (grid) {
                             grid.style.display = 'grid';
                             grid.style.gridTemplateColumns = '1fr 1fr';
-                            grid.style.gap = '15px';
+                            grid.style.gap = '25px';
                             grid.style.width = '100%';
+                            grid.style.boxSizing = 'border-box';
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
@@ -202,21 +215,21 @@ const FascinantesResult = () => {
                             card.style.borderWidth = '1px';
                             card.style.borderStyle = 'solid';
                             card.style.boxShadow = 'none';
-                            card.style.padding = '15px';
-                            card.style.borderRadius = '16px';
-                            card.style.minHeight = '140px';
+                            card.style.padding = '25px';
+                            card.style.borderRadius = '20px';
+                            card.style.minHeight = '180px';
                             
                             const domainHeader = card.querySelector('h3');
                             if (domainHeader) {
                                 domainHeader.style.color = '#ffffff';
-                                domainHeader.style.fontSize = '1.1rem';
+                                domainHeader.style.fontSize = '1.4rem';
                             }
 
                             const desc = card.querySelector('.domain-definition');
                             if (desc) {
                                 desc.style.color = 'rgba(255, 255, 255, 0.8)';
-                                desc.style.fontSize = '0.8rem';
-                                desc.style.lineHeight = '1.3';
+                                desc.style.fontSize = '1rem';
+                                desc.style.lineHeight = '1.4';
                             }
 
                             const scoreNum = card.querySelector('.score-num');
@@ -231,20 +244,20 @@ const FascinantesResult = () => {
 
                         const footer = clonedContent.querySelector('.result-footer-minimal');
                         if (footer) {
-                            footer.style.marginTop = '40px';
+                            footer.style.marginTop = '60px';
                             const footerImg = footer.querySelector('img');
-                            if (footerImg) footerImg.style.maxHeight = '30px';
+                            if (footerImg) footerImg.style.maxHeight = '45px';
                         }
                     }
                 }
             });
 
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            const pdfWidth = 210; // mm
+            const imgProps = canvas.width / canvas.height;
+            const pdfHeight = pdfWidth / imgProps;
             
+            const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             pdf.save('Reporte-Autodiagnostico.pdf');
         } catch (error) {
