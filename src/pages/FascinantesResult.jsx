@@ -265,7 +265,7 @@ const FascinantesResult = () => {
                         onClick={handleDownloadPDF}
                         disabled={isDownloading}
                     >
-                        <Download size={20} /> {isDownloading ? 'Generando...' : 'Descargar PDF'}
+                        <Download size={20} /> {isDownloading ? 'Generando...' : 'PDF'}
                     </button>
                 </div>
             </div>
