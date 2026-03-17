@@ -82,7 +82,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                         justifyContent: 'center',
                         zIndex: 10
                     }}>
-                        <Icon size={28} strokeWidth={2.5} />
+                        <Icon size={30} strokeWidth={2.5} />
                     </div>
 
                     {/* TEXT: Positioned relative to the center icon */}
