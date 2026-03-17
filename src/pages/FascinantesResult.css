@@ -38,7 +38,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
@@ -414,7 +414,7 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-left: 8px solid #ddbe3d;
     padding: 25px 30px;
-    margin-top: 40px;
+    margin-top: 0;
     margin-bottom: 20px;
     display: flex;
     align-items: center;

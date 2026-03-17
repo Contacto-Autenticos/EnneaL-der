@@ -215,7 +215,8 @@ const FascinantesResult = () => {
                         if (grid) {
                             grid.style.setProperty('display', 'grid', 'important');
                             grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
-                            grid.style.setProperty('gap', '30px', 'important');
+                            grid.style.setProperty('gap', '20px', 'important');
+                            grid.style.setProperty('margin-bottom', '20px', 'important');
                             grid.style.setProperty('width', '100%', 'important');
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
@@ -264,7 +265,8 @@ const FascinantesResult = () => {
                             importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.1)`, 'important');
                             importantNote.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
                             importantNote.style.setProperty('padding', '25px 30px', 'important');
-                            importantNote.style.setProperty('margin-top', '40px', 'important');
+                            importantNote.style.setProperty('margin-top', '0px', 'important');
+                            importantNote.style.setProperty('margin-bottom', '20px', 'important');
                             importantNote.style.setProperty('border-radius', '20px', 'important');
                             importantNote.style.setProperty('display', 'flex', 'important');
                             importantNote.style.setProperty('align-items', 'center', 'important');
