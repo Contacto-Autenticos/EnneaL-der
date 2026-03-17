@@ -160,6 +160,19 @@ const FascinantesRadar = ({ data }) => {
                         </radialGradient>
                     </defs>
                     <PolarGrid stroke="rgba(255,255,255,0.1)" />
+                    
+                    {/* Background depth levels */}
+                    {[80, 60, 40, 20].map((level) => (
+                        <Radar
+                            key={`bg-${level}`}
+                            dataKey={() => level}
+                            stroke="rgba(255,255,255,0.05)"
+                            fill="rgba(255,255,255,0.02)"
+                            fillOpacity={1}
+                            isAnimationActive={false}
+                        />
+                    ))}
+
                     <PolarAngleAxis 
                         dataKey="domain" 
                         tick={<CustomTick />}
