@@ -403,7 +403,7 @@
 }
 
 .important-note-card {
-    background: #0d2535;
+    background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-left: 8px solid #ddbe3d;

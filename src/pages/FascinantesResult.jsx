@@ -259,7 +259,7 @@ const FascinantesResult = () => {
 
                         const importantNote = clonedContent.querySelector('.important-note-card');
                         if (importantNote) {
-                            importantNote.style.setProperty('background', themeBlue, 'important');
+                            importantNote.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
                             importantNote.style.setProperty('background-color', themeBlue, 'important');
                             importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.1)`, 'important');
                             importantNote.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
