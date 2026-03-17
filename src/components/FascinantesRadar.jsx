@@ -154,9 +154,8 @@ const FascinantesRadar = ({ data }) => {
                 <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
                     <defs>
                         <radialGradient id="radarRadialGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                            <stop offset="0%" stopColor="#ffffff" stopOpacity={0.2} />
-                            <stop offset="45%" stopColor="#ddbe3d" stopOpacity={0.4} />
-                            <stop offset="75%" stopColor="#ddbe3d" stopOpacity={0.7} />
+                            <stop offset="0%" stopColor="#ffee00" stopOpacity={0.9} />
+                            <stop offset="50%" stopColor="#ddbe3d" stopOpacity={0.8} />
                             <stop offset="100%" stopColor="#8a6d00" stopOpacity={0.9} />
                         </radialGradient>
                     </defs>
