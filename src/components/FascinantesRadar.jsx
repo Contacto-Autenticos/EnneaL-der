@@ -159,17 +159,16 @@ const FascinantesRadar = ({ data }) => {
                             <stop offset="100%" stopColor="#8a6d00" stopOpacity={0.5} />
                         </radialGradient>
                     </defs>
-                    <PolarGrid stroke="rgba(255,255,255,0.1)" />
-                    
-                    {/* Background depth levels */}
-                    {[80, 60, 40, 20].map((level) => (
+                    {/* Background depth levels - Exactly 4 concentric rings */}
+                    {[100, 75, 50, 25].map((level) => (
                         <Radar
                             key={`bg-${level}`}
                             dataKey={() => level}
-                            stroke="rgba(255,255,255,0.05)"
+                            stroke="rgba(255,255,255,0.08)"
                             fill="rgba(255,255,255,0.02)"
                             fillOpacity={1}
                             isAnimationActive={false}
+                            dot={false}
                         />
                     ))}
 
