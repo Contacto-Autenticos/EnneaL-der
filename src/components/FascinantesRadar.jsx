@@ -152,6 +152,13 @@ const FascinantesRadar = ({ data }) => {
         <div className="fascinantes-radar-container" style={{ width: '100%', height: 720, background: 'rgba(0, 18, 29, 0.4)', borderRadius: '30px', padding: '40px', border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', position: 'relative' }}>
             <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
+                    <defs>
+                        <radialGradient id="radarRadialGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" stopColor="#ffffff" stopOpacity={0.9} />
+                            <stop offset="40%" stopColor="#ddbe3d" stopOpacity={0.5} />
+                            <stop offset="100%" stopColor="#ddbe3d" stopOpacity={0.8} />
+                        </radialGradient>
+                    </defs>
                     <PolarGrid stroke="rgba(255,255,255,0.1)" />
                     <PolarAngleAxis 
                         dataKey="domain" 
@@ -168,8 +175,8 @@ const FascinantesRadar = ({ data }) => {
                         dataKey="score"
                         stroke="#ddbe3d"
                         strokeWidth={2}
-                        fill="#ddbe3d"
-                        fillOpacity={0.4}
+                        fill="url(#radarRadialGradient)"
+                        fillOpacity={1}
                         animationDuration={1500}
                         dot={{ r: 4, fill: '#fff', stroke: '#ddbe3d', strokeWidth: 2 }}
                         label={<CustomLabel cx="50%" cy="50%" />}
