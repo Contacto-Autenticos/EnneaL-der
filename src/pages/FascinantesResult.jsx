@@ -211,16 +211,23 @@ const FascinantesResult = () => {
                                 const labels = radarContainer.querySelectorAll('.radar-label-text');
                                 labels.forEach(label => label.style.setProperty('display', 'none', 'important'));
 
+                                const wrapper = radarContainer.querySelector('.recharts-wrapper');
+                                if (wrapper) {
+                                    wrapper.style.setProperty('width', '800px', 'important');
+                                    wrapper.style.setProperty('height', '720px', 'important');
+                                    wrapper.style.setProperty('position', 'relative', 'important');
+                                }
+
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
-                                    svg.style.setProperty('margin', '0 auto', 'important');
-                                    svg.style.setProperty('display', 'block', 'important');
+                                    svg.style.setProperty('position', 'absolute', 'important');
+                                    svg.style.setProperty('top', '50%', 'important');
+                                    svg.style.setProperty('left', '50%', 'important');
+                                    svg.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
                                     svg.style.setProperty('overflow', 'visible', 'important');
-                                    const currentW = svg.getAttribute('width') || 800;
-                                    const currentH = svg.getAttribute('height') || 720;
-                                    svg.setAttribute('viewBox', `0 0 ${currentW} ${currentH}`);
-                                    svg.setAttribute('width', '100%');
-                                    svg.setAttribute('height', '100%');
+                                    svg.removeAttribute('viewBox');
+                                    svg.removeAttribute('width');
+                                    svg.removeAttribute('height');
                                 }
                             }
                         }
