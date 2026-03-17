@@ -153,21 +153,48 @@ const FascinantesResult = () => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
                         clonedContent.style.background = '#ffffff';
-                        clonedContent.style.color = '#00121d';
-                        clonedContent.style.padding = '20px';
+                        clonedContent.style.padding = '30px';
                         
                         const title = clonedContent.querySelector('h1');
-                        if (title) title.style.color = '#00121d';
+                        if (title) {
+                            title.style.color = '#9e7b22';
+                            title.style.marginBottom = '30px';
+                        }
+
+                        const radarSection = clonedContent.querySelector('.radar-section');
+                        if (radarSection) {
+                            radarSection.style.background = '#00121d';
+                            radarSection.style.borderRadius = '24px';
+                            radarSection.style.padding = '40px';
+                            radarSection.style.marginBottom = '40px';
+                        }
+
+                        const grid = clonedContent.querySelector('.interpretations-grid');
+                        if (grid) {
+                            grid.style.display = 'grid';
+                            grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                            grid.style.gap = '20px';
+                        }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            card.style.background = '#f8f9fa';
-                            card.style.color = '#00121d';
-                            card.style.borderColor = '#dee2e6';
+                            card.style.background = '#00121d';
+                            card.style.color = '#ffffff';
+                            card.style.borderColor = '#9e7b22';
+                            card.style.borderWidth = '1px';
+                            card.style.borderStyle = 'solid';
                             card.style.boxShadow = 'none';
+                            card.style.padding = '20px';
+                            card.style.borderRadius = '16px';
                             
+                            const domainHeader = card.querySelector('h3');
+                            if (domainHeader) domainHeader.style.color = '#ffffff';
+
                             const desc = card.querySelector('.domain-definition');
-                            if (desc) desc.style.color = '#495057';
+                            if (desc) desc.style.color = 'rgba(255, 255, 255, 0.7)';
+
+                            const scoreNum = card.querySelector('.score-num');
+                            if (scoreNum) scoreNum.style.color = '#ffffff';
 
                             const footerTip = card.querySelector('.card-footer-tip');
                             if (footerTip) footerTip.style.display = 'none';
@@ -175,11 +202,6 @@ const FascinantesResult = () => {
 
                         const actions = clonedContent.querySelector('.result-actions');
                         if (actions) actions.style.display = 'none';
-
-                        const radar = clonedContent.querySelector('.radar-section');
-                        if (radar) {
-                            radar.style.filter = 'none';
-                        }
                     }
                 }
             });
