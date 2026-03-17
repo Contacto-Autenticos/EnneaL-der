@@ -94,7 +94,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                     }}>
                         <span style={{ 
                             color: 'rgba(255,255,255,0.6)', 
-                            fontSize: '9px', 
+                            fontSize: '12px', 
                             fontWeight: 700, 
                             letterSpacing: '1px'
                         }}>
@@ -102,7 +102,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                         </span>
                         <span style={{ 
                             color: '#fff', 
-                            fontSize: '12px', 
+                            fontSize: '15px', 
                             fontWeight: 800, 
                             letterSpacing: '0.5px',
                             whiteSpace: 'nowrap'
