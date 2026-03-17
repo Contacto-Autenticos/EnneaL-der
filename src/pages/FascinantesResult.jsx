@@ -153,45 +153,71 @@ const FascinantesResult = () => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
                         clonedContent.style.background = '#ffffff';
-                        clonedContent.style.padding = '30px';
+                        clonedContent.style.width = '800px';
+                        clonedContent.style.padding = '40px';
+                        clonedContent.style.margin = '0 auto';
                         
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.color = '#9e7b22';
+                            title.style.textAlign = 'center';
+                            title.style.fontSize = '2.5rem';
                             title.style.marginBottom = '30px';
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            radarSection.style.background = '#00121d';
+                            radarSection.style.background = '#0d2535';
                             radarSection.style.borderRadius = '24px';
-                            radarSection.style.padding = '40px';
+                            radarSection.style.padding = '30px';
                             radarSection.style.marginBottom = '40px';
+                            radarSection.style.display = 'flex';
+                            radarSection.style.justifyContent = 'center';
+                            radarSection.style.alignItems = 'center';
+                            radarSection.style.width = '100%';
+                            
+                            // Ensure the radar SVG inside is also centered
+                            const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
+                            if (radarContainer) {
+                                radarContainer.style.margin = '0 auto';
+                                radarContainer.style.width = '100%';
+                                radarContainer.style.display = 'flex';
+                                radarContainer.style.justifyContent = 'center';
+                            }
                         }
 
                         const grid = clonedContent.querySelector('.interpretations-grid');
                         if (grid) {
                             grid.style.display = 'grid';
-                            grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-                            grid.style.gap = '20px';
+                            grid.style.gridTemplateColumns = '1fr 1fr';
+                            grid.style.gap = '15px';
+                            grid.style.width = '100%';
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            card.style.background = '#00121d';
+                            card.style.background = '#0d2535';
                             card.style.color = '#ffffff';
                             card.style.borderColor = '#9e7b22';
                             card.style.borderWidth = '1px';
                             card.style.borderStyle = 'solid';
                             card.style.boxShadow = 'none';
-                            card.style.padding = '20px';
+                            card.style.padding = '15px';
                             card.style.borderRadius = '16px';
+                            card.style.minHeight = '140px';
                             
                             const domainHeader = card.querySelector('h3');
-                            if (domainHeader) domainHeader.style.color = '#ffffff';
+                            if (domainHeader) {
+                                domainHeader.style.color = '#ffffff';
+                                domainHeader.style.fontSize = '1.1rem';
+                            }
 
                             const desc = card.querySelector('.domain-definition');
-                            if (desc) desc.style.color = 'rgba(255, 255, 255, 0.7)';
+                            if (desc) {
+                                desc.style.color = 'rgba(255, 255, 255, 0.8)';
+                                desc.style.fontSize = '0.8rem';
+                                desc.style.lineHeight = '1.3';
+                            }
 
                             const scoreNum = card.querySelector('.score-num');
                             if (scoreNum) scoreNum.style.color = '#ffffff';
@@ -202,6 +228,13 @@ const FascinantesResult = () => {
 
                         const actions = clonedContent.querySelector('.result-actions');
                         if (actions) actions.style.display = 'none';
+
+                        const footer = clonedContent.querySelector('.result-footer-minimal');
+                        if (footer) {
+                            footer.style.marginTop = '40px';
+                            const footerImg = footer.querySelector('img');
+                            if (footerImg) footerImg.style.maxHeight = '30px';
+                        }
                     }
                 }
             });
