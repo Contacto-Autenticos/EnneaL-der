@@ -157,52 +157,56 @@ const FascinantesResult = () => {
                         const darkGold = '#9e7b22';
                         
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
-                        clonedContent.style.setProperty('width', '800px', 'important');
-                        clonedContent.style.setProperty('padding', '40px', 'important');
+                        clonedContent.style.setProperty('width', '1000px', 'important');
+                        clonedContent.style.setProperty('padding', '60px', 'important');
                         clonedContent.style.setProperty('margin', '0 auto', 'important');
                         clonedContent.style.setProperty('display', 'block', 'important');
+                        clonedContent.style.setProperty('overflow', 'visible', 'important');
                         
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.setProperty('color', darkGold, 'important');
                             title.style.setProperty('text-align', 'center', 'important');
-                            title.style.setProperty('font-size', '2.2rem', 'important');
-                            title.style.setProperty('margin-bottom', '40px', 'important');
+                            title.style.setProperty('font-size', '3rem', 'important');
+                            title.style.setProperty('margin-bottom', '50px', 'important');
                             title.style.setProperty('white-space', 'nowrap', 'important');
-                            title.style.setProperty('width', '1000px', 'important');
-                            title.style.setProperty('margin-left', '-90px', 'important');
+                            title.style.setProperty('width', '100%', 'important');
                             title.style.setProperty('display', 'block', 'important');
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
                             radarSection.style.setProperty('background', themeBlue, 'important');
+                            radarSection.style.setProperty('background-color', themeBlue, 'important');
                             radarSection.style.setProperty('border-radius', '24px', 'important');
-                            radarSection.style.setProperty('padding', '30px', 'important');
-                            radarSection.style.setProperty('margin-bottom', '40px', 'important');
+                            radarSection.style.setProperty('padding', '40px', 'important');
+                            radarSection.style.setProperty('margin-bottom', '50px', 'important');
                             radarSection.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.4)`, 'important');
-                            radarSection.style.setProperty('border-left', `5px solid ${themeGold}`, 'important');
+                            radarSection.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
                             radarSection.style.setProperty('display', 'flex', 'important');
                             radarSection.style.setProperty('justify-content', 'center', 'important');
                             radarSection.style.setProperty('align-items', 'center', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
                             radarSection.style.setProperty('box-sizing', 'border-box', 'important');
+                            radarSection.style.setProperty('overflow', 'visible', 'important');
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
-                                radarContainer.style.setProperty('width', '700px', 'important'); 
-                                radarContainer.style.setProperty('height', '580px', 'important');
+                                radarContainer.style.setProperty('width', '800px', 'important'); 
+                                radarContainer.style.setProperty('height', '720px', 'important');
                                 radarContainer.style.setProperty('margin', '0 auto', 'important');
                                 radarContainer.style.setProperty('display', 'flex', 'important');
                                 radarContainer.style.setProperty('justify-content', 'center', 'important');
                                 radarContainer.style.setProperty('align-items', 'center', 'important');
+                                radarContainer.style.setProperty('overflow', 'visible', 'important');
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
-                                    svg.setAttribute('width', '700');
-                                    svg.setAttribute('height', '580');
+                                    svg.style.setProperty('overflow', 'visible', 'important');
+                                    svg.setAttribute('width', '800');
+                                    svg.setAttribute('height', '720');
                                 }
                             }
                         }
@@ -211,7 +215,7 @@ const FascinantesResult = () => {
                         if (grid) {
                             grid.style.setProperty('display', 'grid', 'important');
                             grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
-                            grid.style.setProperty('gap', '20px', 'important');
+                            grid.style.setProperty('gap', '30px', 'important');
                             grid.style.setProperty('width', '100%', 'important');
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
@@ -221,28 +225,33 @@ const FascinantesResult = () => {
                             card.style.setProperty('background', themeBlue, 'important');
                             card.style.setProperty('background-color', themeBlue, 'important');
                             card.style.setProperty('color', '#ffffff', 'important');
-                            card.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.4)`, 'important');
-                            card.style.setProperty('border-left', `5px solid ${themeGold}`, 'important');
-                            card.style.setProperty('padding', '20px', 'important');
-                            card.style.setProperty('border-radius', '16px', 'important');
-                            card.style.setProperty('min-height', '150px', 'important');
+                            card.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.3)`, 'important');
+                            card.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
+                            card.style.setProperty('padding', '25px', 'important');
+                            card.style.setProperty('border-radius', '20px', 'important');
+                            card.style.setProperty('min-height', '180px', 'important');
                             card.style.setProperty('box-shadow', 'none', 'important');
+                            card.style.setProperty('animation', 'none', 'important');
                             
                             const domainHeader = card.querySelector('h3');
                             if (domainHeader) {
-                                domainHeader.style.setProperty('color', '#ffffff', 'important');
-                                domainHeader.style.setProperty('font-size', '1.2rem', 'important');
+                                domainHeader.style.setProperty('color', themeGold, 'important');
+                                domainHeader.style.setProperty('font-size', '1.4rem', 'important');
+                                domainHeader.style.setProperty('margin-bottom', '12px', 'important');
                             }
 
                             const desc = card.querySelector('.domain-definition');
                             if (desc) {
-                                desc.style.setProperty('color', 'rgba(255, 255, 255, 0.9)', 'important');
-                                desc.style.setProperty('font-size', '0.9rem', 'important');
-                                desc.style.setProperty('line-height', '1.4', 'important');
+                                desc.style.setProperty('color', '#ffffff', 'important');
+                                desc.style.setProperty('font-size', '1rem', 'important');
+                                desc.style.setProperty('line-height', '1.5', 'important');
                             }
 
                             const scoreNum = card.querySelector('.score-num');
-                            if (scoreNum) scoreNum.style.setProperty('color', '#ffffff', 'important');
+                            if (scoreNum) {
+                                scoreNum.style.setProperty('color', themeGold, 'important');
+                                scoreNum.style.setProperty('font-weight', 'bold', 'important');
+                            }
 
                             const footerTip = card.querySelector('.card-footer-tip');
                             if (footerTip) footerTip.style.setProperty('display', 'none', 'important');
@@ -253,11 +262,11 @@ const FascinantesResult = () => {
 
                         const footer = clonedContent.querySelector('.result-footer-minimal');
                         if (footer) {
-                            footer.style.setProperty('margin-top', '40px', 'important');
+                            footer.style.setProperty('margin-top', '60px', 'important');
                             footer.style.setProperty('display', 'flex', 'important');
                             footer.style.setProperty('justify-content', 'center', 'important');
                             const footerImg = footer.querySelector('img');
-                            if (footerImg) footerImg.style.setProperty('max-height', '40px', 'important');
+                            if (footerImg) footerImg.style.setProperty('max-height', '50px', 'important');
                         }
                     }
                 }
