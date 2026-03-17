@@ -8,7 +8,7 @@
 }
 
 .result-content {
-    max-width: 900px;
+    max-width: 800px;
     width: 100%;
     margin: 0 auto;
     z-index: 10;
@@ -36,9 +36,15 @@
 
 .interpretations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-bottom: 60px;
+}
+
+@media (max-width: 768px) {
+    .interpretations-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .domain-result-card {
