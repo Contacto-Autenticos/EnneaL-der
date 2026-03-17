@@ -215,19 +215,24 @@ const FascinantesResult = () => {
                                 if (wrapper) {
                                     wrapper.style.setProperty('width', '800px', 'important');
                                     wrapper.style.setProperty('height', '720px', 'important');
-                                    wrapper.style.setProperty('position', 'relative', 'important');
+                                    wrapper.style.setProperty('display', 'flex', 'important');
+                                    wrapper.style.setProperty('justify-content', 'center', 'important');
+                                    wrapper.style.setProperty('align-items', 'center', 'important');
+                                    wrapper.style.setProperty('margin', '0 auto', 'important');
                                 }
 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
-                                    svg.style.setProperty('position', 'absolute', 'important');
-                                    svg.style.setProperty('top', '50%', 'important');
-                                    svg.style.setProperty('left', '50%', 'important');
-                                    svg.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+                                    svg.style.setProperty('margin', '0 auto', 'important');
+                                    svg.style.setProperty('display', 'block', 'important');
                                     svg.style.setProperty('overflow', 'visible', 'important');
+                                    svg.setAttribute('width', '800');
+                                    svg.setAttribute('height', '720');
                                     svg.removeAttribute('viewBox');
-                                    svg.removeAttribute('width');
-                                    svg.removeAttribute('height');
+                                    svg.style.removeProperty('position');
+                                    svg.style.removeProperty('top');
+                                    svg.style.removeProperty('left');
+                                    svg.style.removeProperty('transform');
                                 }
                             }
                         }
