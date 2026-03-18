@@ -158,9 +158,10 @@ const FascinantesResult = () => {
             window.scrollTo(0, 0);
 
             const canvas = await html2canvas(reportRef.current, {
-                backgroundColor: '#ffffff',
-                scale: 2,
+                backgroundColor: null,
+                scale: 3,
                 useCORS: true,
+                imageTimeout: 0,
                 windowWidth: 1000,
                 width: 1000,
                 scrollX: 0,
@@ -168,8 +169,8 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
-                        const themeBlue = '#02060a'; // Absolute near-black blue
-                        const themeGold = '#ffcc00'; // High-vibrancy Prestige Gold
+                        const themeBlue = '#000000'; // Pure Black for maximum contrast
+                        const themeGold = '#ffd700'; // Vibrant Gold
                         const bgColor = '#000000'; 
                         
                         // Force rigid width that matches the capture viewport
@@ -194,8 +195,9 @@ const FascinantesResult = () => {
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            // Use absolute black for robustness
-                            radarSection.style.setProperty('background', '#02060a', 'important'); 
+                            // Use pure black for robustness
+                            radarSection.style.setProperty('background', '#000000', 'important'); 
+                            radarSection.style.setProperty('background-color', '#000000', 'important');
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
                             radarSection.style.setProperty('margin', '0 0 40px 0', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
@@ -227,9 +229,10 @@ const FascinantesResult = () => {
                         // Remove explicit grid forced columns so it respects original layout naturally
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // Use absolute black for robustness
-                            card.style.setProperty('background', '#02060a', 'important'); 
-                            card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.3)`, 'important');
+                            // Use pure black for robustness
+                            card.style.setProperty('background', '#000000', 'important'); 
+                            card.style.setProperty('background-color', '#000000', 'important');
+                            card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.4)`, 'important');
                             card.style.setProperty('padding', '30px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
                             card.style.setProperty('break-inside', 'avoid', 'important');
@@ -272,11 +275,14 @@ const FascinantesResult = () => {
 
                         const importantNote = clonedContent.querySelector('.important-note-card');
                         if (importantNote) {
-                            importantNote.style.setProperty('background', '#02060a', 'important');
-                            importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.2)`, 'important');
+                            importantNote.style.setProperty('background', '#000000', 'important');
+                            importantNote.style.setProperty('background-color', '#000000', 'important');
+                            importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.3)`, 'important');
                             importantNote.style.setProperty('border-left', `10px solid ${themeGold}`, 'important');
                             importantNote.style.setProperty('filter', 'none', 'important');
                             importantNote.style.setProperty('backdrop-filter', 'none', 'important');
+                            importantNote.style.setProperty('box-shadow', 'none', 'important');
+                            importantNote.style.setProperty('opacity', '1', 'important');
                             
                             const noteText = importantNote.querySelector('.note-text');
                             if (noteText) noteText.style.setProperty('color', '#ffffff', 'important');
