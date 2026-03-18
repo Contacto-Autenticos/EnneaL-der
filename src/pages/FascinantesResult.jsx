@@ -173,27 +173,48 @@ const FascinantesResult = () => {
                                 const allLabels = clonedSection.querySelectorAll('text, tspan, .recharts-text');
                                 allLabels.forEach(t => {
                                     t.style.setProperty('fill', '#ffffff', 'important');
-                                    t.style.setProperty('color', '#ffffff', 'important');
-                                    t.style.setProperty('opacity', '1', 'important');
-                                    t.style.setProperty('font-weight', '800', 'important');
-                                    t.style.setProperty('font-size', '10px', 'important'); // Balanced size for readability
-                                    t.style.setProperty('visibility', 'visible', 'important');
-                                    t.style.setProperty('display', 'block', 'important');
-                                    t.style.setProperty('text-transform', 'uppercase', 'important');
-                                    t.style.setProperty('text-anchor', 'middle', 'important');
+                                    const textContent = t.textContent.trim().toUpperCase();
+                                    const isNumeric = /^\d+$/.test(textContent);
                                     
-                                    const textContent = t.textContent.toUpperCase();
-                                    
-                                    // Optimization for labels vertical positioning
-                                    if (textContent.includes('CORPORAL')) {
-                                        // Move it ABOVE the icon 
-                                        const isSecondLine = t.tagName === 'tspan' && t.getAttribute('dy') && parseFloat(t.getAttribute('dy')) > 1;
-                                        t.setAttribute('dy', isSecondLine ? '-4.5em' : '-5.5em');
-                                    } else {
-                                        // ALL OTHERS (Mental, Emocional, Social, Financiero, Espiritual)
-                                        // Position BELOW the icon
-                                        const isSecondLine = t.tagName === 'tspan' && t.getAttribute('dy') && parseFloat(t.getAttribute('dy')) > 1;
-                                        t.setAttribute('dy', isSecondLine ? '7.2em' : '6em');
+                                    if (isNumeric) {
+                                        // Keep scores exactly where Recharts put them, just ensure color
+                                        t.style.setProperty('fill', '#ffffff', 'important');
+                                        t.style.setProperty('font-weight', 'bold', 'important');
+                                        t.style.setProperty('font-size', '12px', 'important');
+                                        return; 
+                                    }
+
+                                    // Only apply offsets to domain labels
+                                    const isDomainLabel = textContent.includes('DOMINIO') || 
+                                        ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO', 'RITUAL', 'MENTAL'].some(d => textContent.includes(d));
+
+                                    if (isDomainLabel) {
+                                        t.style.setProperty('fill', '#ffffff', 'important');
+                                        t.style.setProperty('font-weight', '800', 'important');
+                                        t.style.setProperty('font-size', '10px', 'important');
+                                        t.style.setProperty('text-transform', 'uppercase', 'important');
+                                        t.style.setProperty('text-anchor', 'middle', 'important');
+                                        
+                                        const isSecondLine = t.tagName === 'tspan' && t.previousElementSibling;
+                                        
+                                        if (textContent.includes('CORPORAL')) {
+                                            t.setAttribute('dy', isSecondLine ? '1.2em' : '-5.5em');
+                                            // Ensure the first line is shifted enough, and second line follows naturally
+                                            if (isSecondLine) {
+                                                // If it's tspan CORPORAL, it follows DOMINIO which was shifted -5.5em
+                                                // So we don't need a huge negative dy for the second line, just the standard gap
+                                                t.setAttribute('dy', '1.2em'); 
+                                            } else {
+                                                t.setAttribute('dy', '-5.5em');
+                                            }
+                                        } else {
+                                            // Others (BELOW)
+                                            if (isSecondLine) {
+                                                t.setAttribute('dy', '1.2em'); 
+                                            } else {
+                                                t.setAttribute('dy', '6.5em');
+                                            }
+                                        }
                                     }
                                 });
                                 
