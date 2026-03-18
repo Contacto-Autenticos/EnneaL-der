@@ -217,7 +217,7 @@ const FascinantesResult = () => {
 
             const shareData = {
                 title: 'Resultados de mi Autodiagnóstico',
-                text: 'He descubierto mi configuración de personalidad en el Autodiagnóstico "Fascinantes" de Auténticos. ¡Mira mis resultados!',
+                text: 'He descubierto mi configuración en el Autodiagnóstico "Fascinantes" de Auténticos. ¡Mira mis resultados!',
                 files: [imageFile],
             };
 
