@@ -144,6 +144,15 @@ const FascinantesResult = () => {
         if (!reportRef.current || isDownloading) return;
         setIsDownloading(true);
 
+        // Map real SVG physical dimensions to the viewBox inside the clone
+        const liveSvg = reportRef.current.querySelector('.fascinantes-radar-container svg');
+        let realSvgW = 800; let realSvgH = 720;
+        if (liveSvg) {
+            const rect = liveSvg.getBoundingClientRect();
+            realSvgW = rect.width;
+            realSvgH = rect.height;
+        }
+
         try {
             const canvas = await html2canvas(reportRef.current, {
                 backgroundColor: '#ffffff',
@@ -223,13 +232,10 @@ const FascinantesResult = () => {
                                     wrapper.style.setProperty('align-items', 'center', 'important');
                                     wrapper.style.setProperty('margin', '0 auto', 'important');
                                     
-                                    const currentW = svg.getAttribute('width') || 500;
-                                    const currentH = svg.getAttribute('height') || 500;
-                                    
-                                    // html2canvas requires explicit px dimensions on SVG to render paths
+                                    // Set exactly matched viewBox to inner real content scale
+                                    svg.setAttribute('viewBox', `0 0 ${realSvgW} ${realSvgH}`);
                                     svg.setAttribute('width', '800');
                                     svg.setAttribute('height', '720');
-                                    svg.setAttribute('viewBox', `0 0 ${currentW} ${currentH}`);
                                     svg.style.setProperty('overflow', 'visible', 'important');
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
