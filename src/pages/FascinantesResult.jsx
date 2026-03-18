@@ -115,39 +115,54 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedSection = clonedDoc.querySelector('.radar-section');
                     if (clonedSection) {
+                        // COMPLETELY WIPE existing styles to prevent interference
+                        clonedSection.style.cssText = "";
+                        
                         // Force a beautiful square container for social media
-                        clonedSection.style.width = '800px';
-                        clonedSection.style.height = '800px';
-                        clonedSection.style.display = 'flex';
-                        clonedSection.style.flexDirection = 'column';
-                        clonedSection.style.justifyContent = 'center';
-                        clonedSection.style.alignItems = 'center';
-                        clonedSection.style.background = '#00121d';
-                        clonedSection.style.padding = '50px';
-                        clonedSection.style.overflow = 'hidden';
-                        clonedSection.style.position = 'relative';
+                        Object.assign(clonedSection.style, {
+                            width: '800px',
+                            height: '800px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            background: '#00121d',
+                            padding: '0',
+                            margin: '0',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            boxSizing: 'border-box'
+                        });
 
                         const radarContainer = clonedSection.querySelector('.fascinantes-radar-container');
                         if (radarContainer) {
-                            radarContainer.style.width = '100%';
-                            radarContainer.style.height = '90%'; // Leave space for logo
-                            radarContainer.style.background = 'transparent';
-                            radarContainer.style.boxShadow = 'none';
-                            radarContainer.style.border = 'none';
-                            radarContainer.style.transform = 'none'; // No shift for square share
+                            // Reset container styles too
+                            radarContainer.style.cssText = "";
+                            Object.assign(radarContainer.style, {
+                                width: '750px',
+                                height: '700px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                background: 'transparent',
+                                margin: '0',
+                                padding: '0',
+                                transform: 'none',
+                                position: 'relative'
+                            });
                             
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
-                                svg.style.overflow = 'visible';
-                                // Force large fixed dimensions for the SVG in the share image
+                                // Ensure SVG is large and centered
                                 svg.setAttribute('width', '650');
                                 svg.setAttribute('height', '650');
-                                
-                                // Force absolute centering for the SVG inside the square capture
-                                svg.style.setProperty('position', 'absolute', 'important');
-                                svg.style.setProperty('left', '50%', 'important');
-                                svg.style.setProperty('top', '42%', 'important'); // Balanced with branding
-                                svg.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+                                Object.assign(svg.style, {
+                                    width: '650px',
+                                    height: '650px',
+                                    margin: '0',
+                                    position: 'relative',
+                                    overflow: 'visible'
+                                });
                                 
                                 const texts = svg.querySelectorAll('text, tspan');
                                 texts.forEach(t => t.style.fill = '#ffffff');
@@ -163,9 +178,37 @@ const FascinantesResult = () => {
 
                         // Add Official Branding at the bottom
                         const branding = document.createElement('div');
-                        branding.style.position = 'absolute';
-                        branding.style.bottom = '30px';
-                        branding.style.width = '100%';
+                        Object.assign(branding.style, {
+                            position: 'absolute',
+                            bottom: '30px',
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '8px',
+                            zIndex: '10'
+                        });
+
+                        const logo = document.createElement('img');
+                        logo.src = '/Logo-Blanco.png';
+                        logo.style.height = '40px';
+                        logo.style.opacity = '0.9';
+                        
+                        const text = document.createElement('span');
+                        text.innerText = 'AUTODIAGNÓSTICO - AUTÉNTICOS';
+                        Object.assign(text.style, {
+                            color: '#ffd700',
+                            fontSize: '12px',
+                            fontWeight: '800',
+                            letterSpacing: '3px',
+                            fontFamily: 'Inter, sans-serif'
+                        });
+
+                        branding.appendChild(logo);
+                        branding.appendChild(text);
+                        clonedSection.appendChild(branding);
+                    }
+                }
                         branding.style.textAlign = 'center';
                         branding.style.display = 'flex';
                         branding.style.flexDirection = 'column';
