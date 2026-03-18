@@ -259,8 +259,8 @@
     .question-text-container { margin-bottom: 10px; }
     .question-text { font-size: 1.3rem; }
     
-    /* Mueve la sección interactiva (velocímetro, texto y botones) 30px hacia arriba para separarla de la navegación */
-    .interaction-area { margin-top: -30px; }
+    /* Mueve la sección interactiva (velocímetro, texto y botones) 50px hacia arriba para separarla de la navegación */
+    .interaction-area { margin-top: -50px; }
     
     .options-grid { gap: 8px; }
     .option-btn { border-radius: 10px; }
