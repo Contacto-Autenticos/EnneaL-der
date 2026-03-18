@@ -258,6 +258,10 @@
     .question-container { justify-content: flex-start; }
     .question-text-container { margin-bottom: 10px; }
     .question-text { font-size: 1.3rem; }
+    
+    /* Mueve la sección interactiva (velocímetro, texto y botones) 30px hacia arriba para separarla de la navegación */
+    .interaction-area { margin-top: -30px; }
+    
     .options-grid { gap: 8px; }
     .option-btn { border-radius: 10px; }
     .val-num { font-size: 1.3rem; }
