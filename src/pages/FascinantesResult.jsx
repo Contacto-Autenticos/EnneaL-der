@@ -184,6 +184,9 @@ const FascinantesResult = () => {
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.setProperty('color', '#8a6a00', 'important');
+                            title.style.setProperty('text-align', 'center', 'important');
+                            title.style.setProperty('width', '100%', 'important');
+                            title.style.setProperty('margin-bottom', '30px', 'important');
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
@@ -191,6 +194,12 @@ const FascinantesResult = () => {
                             // Restore intense gradient color
                             radarSection.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important'); 
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
+                            radarSection.style.setProperty('margin', '0 auto 40px auto', 'important');
+                            radarSection.style.setProperty('width', '100%', 'important');
+                            radarSection.style.setProperty('transform', 'translateX(15px)', 'important'); // Shift right as requested
+                            radarSection.style.setProperty('display', 'flex', 'important');
+                            radarSection.style.setProperty('justify-content', 'center', 'important');
+                            radarSection.style.setProperty('border-radius', '20px', 'important');
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
