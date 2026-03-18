@@ -128,10 +128,10 @@ const FascinantesResult = () => {
                             alignItems: 'center',
                             background: '#00121d',
                             padding: '0',
-                            paddingTop: '40px', // Extra safety for top label
+                            paddingTop: '60px', // More space for top label
                             margin: '0',
                             position: 'relative',
-                            overflow: 'hidden',
+                            overflow: 'visible', // Changed from hidden to visible
                             boxSizing: 'border-box'
                         });
 
@@ -167,31 +167,35 @@ const FascinantesResult = () => {
                                 });
                                 
                                 // FORCE SVG and its parents to show everything
-                                svg.style.overflow = 'visible';
-                                if (svg.parentNode) svg.parentNode.style.overflow = 'visible';
+                                let curr = svg;
+                                while (curr && curr !== clonedSection) {
+                                    curr.style.overflow = 'visible';
+                                    curr.style.clipPath = 'none';
+                                    curr = curr.parentElement;
+                                }
                                 
                                 const allLabels = clonedSection.querySelectorAll('text, tspan, .recharts-text');
                                 allLabels.forEach(t => {
                                     t.style.setProperty('fill', '#ffffff', 'important');
+                                    t.style.setProperty('opacity', '1', 'important');
+                                    t.style.setProperty('visibility', 'visible', 'important');
+                                    t.style.setProperty('display', 'block', 'important');
+
                                     const textContent = t.textContent.trim().toUpperCase();
                                     const isNumeric = /^\d+$/.test(textContent);
                                     
                                     if (isNumeric) {
-                                        // Keep scores exactly where Recharts put them, just ensure color
-                                        t.style.setProperty('fill', '#ffffff', 'important');
                                         t.style.setProperty('font-weight', 'bold', 'important');
                                         t.style.setProperty('font-size', '12px', 'important');
                                         return; 
                                     }
 
-                                    // Only apply offsets to domain labels
                                     const isDomainLabel = textContent.includes('DOMINIO') || 
-                                        ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO', 'RITUAL', 'MENTAL'].some(d => textContent.includes(d));
+                                        ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO', 'RITUAL'].some(d => textContent.includes(d));
 
                                     if (isDomainLabel) {
-                                        t.style.setProperty('fill', '#ffffff', 'important');
                                         t.style.setProperty('font-weight', '800', 'important');
-                                        t.style.setProperty('font-size', '10px', 'important');
+                                        t.style.setProperty('font-size', '11px', 'important');
                                         t.style.setProperty('text-transform', 'uppercase', 'important');
                                         t.style.setProperty('text-anchor', 'middle', 'important');
                                         
@@ -199,21 +203,8 @@ const FascinantesResult = () => {
                                         
                                         if (textContent.includes('CORPORAL')) {
                                             t.setAttribute('dy', isSecondLine ? '1.2em' : '-5.5em');
-                                            // Ensure the first line is shifted enough, and second line follows naturally
-                                            if (isSecondLine) {
-                                                // If it's tspan CORPORAL, it follows DOMINIO which was shifted -5.5em
-                                                // So we don't need a huge negative dy for the second line, just the standard gap
-                                                t.setAttribute('dy', '1.2em'); 
-                                            } else {
-                                                t.setAttribute('dy', '-5.5em');
-                                            }
                                         } else {
-                                            // Others (BELOW)
-                                            if (isSecondLine) {
-                                                t.setAttribute('dy', '1.2em'); 
-                                            } else {
-                                                t.setAttribute('dy', '6.5em');
-                                            }
+                                            t.setAttribute('dy', isSecondLine ? '1.2em' : '5.3em');
                                         }
                                     }
                                 });
