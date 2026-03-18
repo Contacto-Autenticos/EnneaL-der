@@ -162,7 +162,7 @@ const FascinantesResult = () => {
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(25px, -50px)' // Move right (25) and up (50) to avoid logo
+                                    transform: 'translate(13px, -50px)' // Adjusted horizontally by -12px as requested
                                 });
                                 
                                 const texts = svg.querySelectorAll('text, tspan');
