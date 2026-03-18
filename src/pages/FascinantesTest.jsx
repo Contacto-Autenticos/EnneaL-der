@@ -246,10 +246,11 @@ const FascinantesTest = () => {
                             <h3 className="question-text">{currentQuestion.text}</h3>
                         </div>
                         
-                        <div className="speedometer-section">
-                            <FascinantesSpeedometer value={answers[currentQuestion.id] || 0} />
-                        </div>
-                            
+                        <div className="interaction-area">
+                            <div className="speedometer-section">
+                                <FascinantesSpeedometer value={answers[currentQuestion.id] || 0} />
+                            </div>
+                                
                             <div className="options-grid">
                                 {[1, 2, 3, 4, 5].map((val) => (
                                     <button
@@ -269,6 +270,7 @@ const FascinantesTest = () => {
                                 ))}
                             </div>
                         </div>
+                    </div>
 
                     <div className="test-navigation">
                         <button 
