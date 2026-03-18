@@ -229,14 +229,14 @@ const FascinantesResult = () => {
                                     wrapper.style.setProperty('justify-content', 'center', 'important');
                                     wrapper.style.setProperty('align-items', 'center', 'important');
                                     wrapper.style.setProperty('margin', '0 auto', 'important');
-                                    // Compensate for the removed padding and Recharts's label-width bias
-                                    wrapper.style.setProperty('transform', 'translateX(-15px)', 'important');
+                                    // Compensate for the removed padding and shift upward
+                                    wrapper.style.setProperty('transform', 'translate(-15px, -30px)', 'important');
                                     
                                     // Remove all dimension overrides to prevent html2canvas SVG coordinate breakage
                                     svg.style.setProperty('overflow', 'visible', 'important');
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
-                                    svg.style.setProperty('transform', 'translateX(-15px)', 'important'); // Backup transform for html2canvas
+                                    svg.style.setProperty('transform', 'translate(-15px, -30px)', 'important'); // Backup transform for html2canvas
                                 }
                             }
                         }
