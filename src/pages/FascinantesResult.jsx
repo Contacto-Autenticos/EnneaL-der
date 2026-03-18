@@ -128,6 +128,7 @@ const FascinantesResult = () => {
                             alignItems: 'center',
                             background: '#00121d',
                             padding: '0',
+                            paddingTop: '40px', // Extra safety for top label
                             margin: '0',
                             position: 'relative',
                             overflow: 'hidden',
@@ -162,7 +163,7 @@ const FascinantesResult = () => {
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(13px, -50px)' // Adjusted horizontally by -12px as requested
+                                    transform: 'translate(13px, -30px)' // Slightly less up shift to give top room
                                 });
                                 
                                 // FORCE SVG and its parents to show everything
@@ -175,9 +176,10 @@ const FascinantesResult = () => {
                                     t.style.setProperty('color', '#ffffff', 'important');
                                     t.style.setProperty('opacity', '1', 'important');
                                     t.style.setProperty('font-weight', '800', 'important');
-                                    t.style.setProperty('font-size', '16px', 'important');
+                                    t.style.setProperty('font-size', '8px', 'important'); // Reduced to 8px as requested
                                     t.style.setProperty('visibility', 'visible', 'important');
                                     t.style.setProperty('display', 'block', 'important');
+                                    t.style.setProperty('text-transform', 'uppercase', 'important');
                                 });
                                 
                                 // Lucide icons inside SVG
