@@ -225,17 +225,12 @@ const FascinantesResult = () => {
                                 const svg = radarContainer.querySelector('svg');
                                 
                                 if (wrapper && svg) {
-                                    wrapper.style.setProperty('width', '100%', 'important');
-                                    wrapper.style.setProperty('height', '100%', 'important');
                                     wrapper.style.setProperty('display', 'flex', 'important');
                                     wrapper.style.setProperty('justify-content', 'center', 'important');
                                     wrapper.style.setProperty('align-items', 'center', 'important');
                                     wrapper.style.setProperty('margin', '0 auto', 'important');
                                     
-                                    // Set exactly matched viewBox to inner real content scale
-                                    svg.setAttribute('viewBox', `0 0 ${realSvgW} ${realSvgH}`);
-                                    svg.setAttribute('width', '800');
-                                    svg.setAttribute('height', '720');
+                                    // Remove all dimension overrides to prevent html2canvas SVG coordinate breakage
                                     svg.style.setProperty('overflow', 'visible', 'important');
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
