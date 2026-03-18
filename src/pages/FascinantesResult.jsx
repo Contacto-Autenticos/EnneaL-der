@@ -101,40 +101,110 @@ const FascinantesResult = () => {
         setIsSharing(true);
 
         try {
+            // Force scroll to top to avoid offset issues
+            window.scrollTo(0, 0);
+
             const canvas = await html2canvas(radarRef.current, {
-                backgroundColor: '#00121d',
+                backgroundColor: '#000000',
                 scale: 3,
                 useCORS: true,
+                imageTimeout: 0,
+                // Higher quality but still mobile friendly
+                width: 800,
+                height: 800,
                 onclone: (clonedDoc) => {
-                    const clonedRadar = clonedDoc.querySelector('.radar-section');
-                    if (clonedRadar) {
-                        clonedRadar.style.padding = '40px';
-                        clonedRadar.style.background = '#00121d';
+                    const clonedSection = clonedDoc.querySelector('.radar-section');
+                    if (clonedSection) {
+                        // Force a beautiful square container for social media
+                        clonedSection.style.width = '800px';
+                        clonedSection.style.height = '800px';
+                        clonedSection.style.display = 'flex';
+                        clonedSection.style.flexDirection = 'column';
+                        clonedSection.style.justifyContent = 'center';
+                        clonedSection.style.alignItems = 'center';
+                        clonedSection.style.background = '#000000';
+                        clonedSection.style.padding = '50px';
+                        clonedSection.style.overflow = 'hidden';
+                        clonedSection.style.position = 'relative';
+
+                        const radarContainer = clonedSection.querySelector('.fascinantes-radar-container');
+                        if (radarContainer) {
+                            radarContainer.style.width = '100%';
+                            radarContainer.style.height = '90%'; // Leave space for logo
+                            radarContainer.style.background = 'transparent';
+                            radarContainer.style.boxShadow = 'none';
+                            radarContainer.style.border = 'none';
+                            radarContainer.style.transform = 'none'; // No shift for square share
+                            
+                            const svg = radarContainer.querySelector('svg');
+                            if (svg) {
+                                svg.style.overflow = 'visible';
+                                const texts = svg.querySelectorAll('text, tspan');
+                                texts.forEach(t => t.style.fill = '#ffffff');
+                                
+                                // Lucide icons inside SVG
+                                const icons = svg.querySelectorAll('svg');
+                                icons.forEach(icon => {
+                                    icon.style.filter = 'none';
+                                    icon.style.opacity = '1';
+                                });
+                            }
+                        }
+
+                        // Add Official Branding at the bottom
+                        const branding = document.createElement('div');
+                        branding.style.position = 'absolute';
+                        branding.style.bottom = '30px';
+                        branding.style.width = '100%';
+                        branding.style.textAlign = 'center';
+                        branding.style.display = 'flex';
+                        branding.style.flexDirection = 'column';
+                        branding.style.alignItems = 'center';
+                        branding.style.gap = '8px';
+
+                        const logo = document.createElement('img');
+                        // Use absolute URL or ensure it's loaded in the clone
+                        logo.src = '/Logo-Blanco.png';
+                        logo.style.height = '40px';
+                        logo.style.opacity = '0.9';
+                        
+                        const text = document.createElement('span');
+                        text.innerText = 'AUTODIAGNÓSTICO - AUTÉNTICOS';
+                        text.style.color = '#ffd700';
+                        text.style.fontSize = '12px';
+                        text.style.fontWeight = '800';
+                        text.style.letterSpacing = '3px';
+                        text.style.fontFamily = 'Inter, sans-serif';
+
+                        branding.appendChild(logo);
+                        branding.appendChild(text);
+                        clonedSection.appendChild(branding);
                     }
                 }
             });
 
             const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-            const imageFile = new File([imageBlob], 'mi-radar-autodiagnostico.png', { type: 'image/png' });
+            const imageFile = new File([imageBlob], 'mi-radar-fascinante.png', { type: 'image/png' });
 
             const shareData = {
-                title: 'Mi Radar de Autodiagnóstico',
-                text: 'He descubierto mi configuración de personalidad en el Autodiagnóstico de Auténticos. ¡Mira mis resultados!',
+                title: 'Resultados de mi Autodiagnóstico',
+                text: 'He descubierto mi configuración de personalidad en el Autodiagnóstico "Fascinantes" de Auténticos. ¡Mira mis resultados!',
                 files: [imageFile],
             };
 
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
                 await navigator.share(shareData);
             } else {
+                // Better download fallback for non-sharing browsers
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
-                link.download = 'mi-radar-autodiagnostico.png';
+                link.download = 'mi-radar-autenticos.png';
                 link.click();
-                alert('La imagen de tu radar se ha descargado.');
+                alert('La imagen de tu radar se ha guardado. ¡Ya puedes compartirla manualmente!');
             }
         } catch (error) {
             console.error('Error sharing:', error);
-            alert('No se pudo generar la imagen para compartir.');
+            alert('No se pudo generar la imagen del radar.');
         } finally {
             setIsSharing(false);
         }
