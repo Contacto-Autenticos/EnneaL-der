@@ -245,19 +245,23 @@ const FascinantesResult = () => {
                         if (grid) {
                             grid.style.setProperty('display', 'flex', 'important');
                             grid.style.setProperty('flex-wrap', 'wrap', 'important');
-                            grid.style.setProperty('justify-content', 'center', 'important');
-                            grid.style.setProperty('gap', '30px', 'important');
+                            grid.style.setProperty('justify-content', 'space-between', 'important');
+                            grid.style.setProperty('gap', '0', 'important'); // Remove gap to prevent unpredictable html2canvas width expansion
                             grid.style.setProperty('margin-bottom', '30px', 'important');
-                            grid.style.setProperty('width', '800px', 'important'); // Fixed dimension to prevent squishing
-                            grid.style.setProperty('margin', '0 auto', 'important'); // Center within layout
+                            grid.style.setProperty('width', '100%', 'important'); // Let it fill its container exactly
+                            grid.style.setProperty('margin-top', '0', 'important');
+                            grid.style.setProperty('margin-left', '0', 'important');
+                            grid.style.setProperty('margin-right', '0', 'important');
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // Enforce explicit static pixel sizes to stop html2canvas from auto-expanding
-                            card.style.setProperty('width', '370px', 'important'); // Reduced slightly to ensure it fits 2 columns
-                            card.style.setProperty('flex', '0 0 370px', 'important');
+                            // strictly 48% width to guarantee 2 columns with 4% middle space
+                            card.style.setProperty('width', '48%', 'important');
+                            card.style.setProperty('max-width', '48%', 'important');
+                            card.style.setProperty('flex', '0 0 48%', 'important');
+                            card.style.setProperty('margin-bottom', '25px', 'important');
                             card.style.setProperty('box-sizing', 'border-box', 'important');
                             // Revert to deep dark blue for max contrast, keep vivid borders
                             card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
