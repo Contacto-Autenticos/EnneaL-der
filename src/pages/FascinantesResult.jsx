@@ -270,6 +270,21 @@ const FascinantesResult = () => {
                             if (score) score.style.setProperty('color', '#ffffff', 'important');
                         });
 
+                        const importantNote = clonedContent.querySelector('.important-note-card');
+                        if (importantNote) {
+                            importantNote.style.setProperty('background', '#02060a', 'important');
+                            importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.2)`, 'important');
+                            importantNote.style.setProperty('border-left', `10px solid ${themeGold}`, 'important');
+                            importantNote.style.setProperty('filter', 'none', 'important');
+                            importantNote.style.setProperty('backdrop-filter', 'none', 'important');
+                            
+                            const noteText = importantNote.querySelector('.note-text');
+                            if (noteText) noteText.style.setProperty('color', '#ffffff', 'important');
+                            
+                            const noteIcon = importantNote.querySelector('.note-icon');
+                            if (noteIcon) noteIcon.style.setProperty('color', themeGold, 'important');
+                        }
+
                         const actions = clonedContent.querySelector('.result-actions');
                         if (actions) actions.style.setProperty('display', 'none', 'important');
 
