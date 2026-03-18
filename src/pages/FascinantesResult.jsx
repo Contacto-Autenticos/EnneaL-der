@@ -229,6 +229,8 @@ const FascinantesResult = () => {
                                     wrapper.style.setProperty('justify-content', 'center', 'important');
                                     wrapper.style.setProperty('align-items', 'center', 'important');
                                     wrapper.style.setProperty('margin', '0 auto', 'important');
+                                    // Compensate for the removed 40px padding that Recharts used for its internal center calculation
+                                    wrapper.style.setProperty('transform', 'translateX(-40px)', 'important');
                                     
                                     // Remove all dimension overrides to prevent html2canvas SVG coordinate breakage
                                     svg.style.setProperty('overflow', 'visible', 'important');
