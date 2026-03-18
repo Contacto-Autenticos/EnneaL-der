@@ -212,27 +212,29 @@ const FascinantesResult = () => {
                                 labels.forEach(label => label.style.setProperty('display', 'none', 'important'));
 
                                 const wrapper = radarContainer.querySelector('.recharts-wrapper');
-                                if (wrapper) {
-                                    wrapper.style.setProperty('width', '800px', 'important');
-                                    wrapper.style.setProperty('height', '720px', 'important');
-                                    wrapper.style.setProperty('display', 'flex', 'important');
-                                    wrapper.style.setProperty('justify-content', 'center', 'important');
-                                    wrapper.style.setProperty('align-items', 'center', 'important');
-                                    wrapper.style.setProperty('margin', '0 auto', 'important');
-                                }
-
                                 const svg = radarContainer.querySelector('svg');
-                                if (svg) {
-                                    svg.style.setProperty('margin', '0 auto', 'important');
-                                    svg.style.setProperty('display', 'block', 'important');
+                                
+                                if (wrapper && svg) {
+                                    const currentW = parseFloat(svg.getAttribute('width')) || 500;
+                                    const currentH = parseFloat(svg.getAttribute('height')) || 500;
+                                    
+                                    const scaleX = 800 / currentW;
+                                    const scaleY = 720 / currentH;
+                                    const scale = Math.min(scaleX, scaleY) * 0.95; // 0.95 to ensure safe padding
+                                    
+                                    // Allow radarContainer to center the wrapper perfectly
+                                    radarContainer.style.setProperty('width', '800px', 'important');
+                                    radarContainer.style.setProperty('height', '720px', 'important');
+                                    radarContainer.style.setProperty('display', 'flex', 'important');
+                                    radarContainer.style.setProperty('justify-content', 'center', 'important');
+                                    radarContainer.style.setProperty('align-items', 'center', 'important');
+                                    radarContainer.style.setProperty('margin', '0 auto', 'important');
+
+                                    // Scale the entire wrapper holding the SVG using CSS transforms
+                                    wrapper.style.setProperty('transform', `scale(${scale})`, 'important');
+                                    wrapper.style.setProperty('transform-origin', 'center center', 'important');
+                                    
                                     svg.style.setProperty('overflow', 'visible', 'important');
-                                    svg.setAttribute('width', '800');
-                                    svg.setAttribute('height', '720');
-                                    svg.removeAttribute('viewBox');
-                                    svg.style.removeProperty('position');
-                                    svg.style.removeProperty('top');
-                                    svg.style.removeProperty('left');
-                                    svg.style.removeProperty('transform');
                                 }
                             }
                         }
