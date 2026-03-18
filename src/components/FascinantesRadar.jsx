@@ -49,7 +49,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
             anchor = "start";
             break;
         case 'social': // Bottom: Text BELOW icon
-            textY = 24;
+            textY = 18; // Reduce separation
             break;
         case 'espiritual': // Bottom-Left: Text LEFT, icon RIGHT
         case 'financiero': // Top-Left: Text LEFT, icon RIGHT
@@ -86,7 +86,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
             >
                 <tspan 
                     x={textX} 
-                    dy={domainId === 'social' ? '2.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
+                    dy={domainId === 'social' ? '1.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
                     fill="rgba(255,255,255,0.6)"
                     fontSize="10px"
                     fontWeight="700"
