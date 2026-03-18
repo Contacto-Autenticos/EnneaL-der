@@ -224,8 +224,8 @@ const FascinantesResult = () => {
                                 const svg = radarContainer.querySelector('svg');
                                 
                                 if (wrapper && svg) {
-                                    wrapper.style.setProperty('width', '800px', 'important');
-                                    wrapper.style.setProperty('height', '720px', 'important');
+                                    wrapper.style.setProperty('width', '100%', 'important');
+                                    wrapper.style.setProperty('height', '100%', 'important');
                                     wrapper.style.setProperty('display', 'flex', 'important');
                                     wrapper.style.setProperty('justify-content', 'center', 'important');
                                     wrapper.style.setProperty('align-items', 'center', 'important');
