@@ -30,7 +30,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
     
     // Adjusted repulsion for better mobile view
-    const repulsion = isMobile ? 27 : 37; 
+    const repulsion = isMobile ? 22 : 34; 
     const labelX = x + Math.cos(angle) * repulsion;
     const labelY = y + Math.sin(angle) * repulsion;
 
