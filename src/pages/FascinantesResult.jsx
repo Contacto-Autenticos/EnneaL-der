@@ -165,13 +165,19 @@ const FascinantesResult = () => {
                                     transform: 'translate(13px, -50px)' // Adjusted horizontally by -12px as requested
                                 });
                                 
-                                const texts = svg.querySelectorAll('text, tspan');
-                                texts.forEach(t => {
+                                // FORCE SVG and its parents to show everything
+                                svg.style.overflow = 'visible';
+                                if (svg.parentNode) svg.parentNode.style.overflow = 'visible';
+                                
+                                const allLabels = clonedSection.querySelectorAll('text, tspan, .recharts-text');
+                                allLabels.forEach(t => {
                                     t.style.setProperty('fill', '#ffffff', 'important');
+                                    t.style.setProperty('color', '#ffffff', 'important');
                                     t.style.setProperty('opacity', '1', 'important');
-                                    t.style.setProperty('font-weight', 'bold', 'important');
-                                    t.style.setProperty('font-size', '14px', 'important');
+                                    t.style.setProperty('font-weight', '800', 'important');
+                                    t.style.setProperty('font-size', '16px', 'important');
                                     t.style.setProperty('visibility', 'visible', 'important');
+                                    t.style.setProperty('display', 'block', 'important');
                                 });
                                 
                                 // Lucide icons inside SVG
@@ -180,6 +186,7 @@ const FascinantesResult = () => {
                                     icon.style.filter = 'none';
                                     icon.style.opacity = '1';
                                     icon.style.setProperty('visibility', 'visible', 'important');
+                                    icon.style.setProperty('display', 'block', 'important');
                                 });
                             }
                         }
