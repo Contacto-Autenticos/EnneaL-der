@@ -247,16 +247,18 @@ const FascinantesResult = () => {
                             grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
                             grid.style.setProperty('gap', '30px', 'important');
                             grid.style.setProperty('margin-bottom', '30px', 'important');
-                            grid.style.setProperty('width', '100%', 'important');
+                            grid.style.setProperty('width', '800px', 'important'); // Match radar exact width
+                            grid.style.setProperty('margin', '0 auto', 'important'); // Center horizontally
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // Brighter background colors and stronger border for vividness
-                            card.style.setProperty('background', `linear-gradient(135deg, #13334a 0%, #0a1720 100%)`, 'important');
-                            card.style.setProperty('background-color', '#13334a', 'important');
+                            // Revert to deep dark blue for max contrast, keep vivid borders
+                            card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
+                            card.style.setProperty('background-color', themeBlue, 'important');
                             card.style.setProperty('color', '#ffffff', 'important');
+                            card.style.setProperty('font-family', 'Arial, sans-serif', 'important'); // Safe font
                             card.style.setProperty('border', `2px solid rgba(255, 220, 71, 0.4)`, 'important');
                             card.style.setProperty('border-left', `8px solid #ffdc47`, 'important'); // brighter gold
                             card.style.setProperty('padding', '30px', 'important');
@@ -271,7 +273,7 @@ const FascinantesResult = () => {
                                 domainHeader.style.setProperty('font-size', '1.6rem', 'important');
                                 domainHeader.style.setProperty('font-weight', '800', 'important');
                                 domainHeader.style.setProperty('margin-bottom', '15px', 'important');
-                                domainHeader.style.setProperty('letter-spacing', '0.5px', 'important');
+                                // Removed letter-spacing to prevent html2canvas overlap issues
                             }
 
                             const desc = card.querySelector('.domain-definition');
@@ -280,6 +282,7 @@ const FascinantesResult = () => {
                                 desc.style.setProperty('font-size', '1.1rem', 'important');
                                 desc.style.setProperty('font-weight', '500', 'important');
                                 desc.style.setProperty('line-height', '1.6', 'important');
+                                desc.style.setProperty('font-family', 'Arial, sans-serif', 'important');
                             }
 
                             const scoreNum = card.querySelector('.score-num');
