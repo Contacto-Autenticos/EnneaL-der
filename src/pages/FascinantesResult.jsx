@@ -139,10 +139,14 @@ const FascinantesResult = () => {
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
                                 svg.style.overflow = 'visible';
+                                // Force large fixed dimensions for the SVG in the share image
+                                svg.setAttribute('width', '650');
+                                svg.setAttribute('height', '650');
+                                
                                 // Force absolute centering for the SVG inside the square capture
                                 svg.style.setProperty('position', 'absolute', 'important');
                                 svg.style.setProperty('left', '50%', 'important');
-                                svg.style.setProperty('top', '45%', 'important'); // Balanced with branding
+                                svg.style.setProperty('top', '42%', 'important'); // Balanced with branding
                                 svg.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
                                 
                                 const texts = svg.querySelectorAll('text, tspan');
