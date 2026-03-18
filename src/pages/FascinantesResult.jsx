@@ -230,13 +230,13 @@ const FascinantesResult = () => {
                                     wrapper.style.setProperty('align-items', 'center', 'important');
                                     wrapper.style.setProperty('margin', '0 auto', 'important');
                                     // Compensate for the removed padding and shift upward
-                                    wrapper.style.setProperty('transform', 'translate(-15px, -30px)', 'important');
+                                    wrapper.style.setProperty('transform', 'translate(-15px, -20px)', 'important');
                                     
                                     // Remove all dimension overrides to prevent html2canvas SVG coordinate breakage
                                     svg.style.setProperty('overflow', 'visible', 'important');
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
-                                    svg.style.setProperty('transform', 'translate(-15px, -30px)', 'important'); // Backup transform for html2canvas
+                                    svg.style.setProperty('transform', 'translate(-15px, -20px)', 'important'); // Backup transform for html2canvas
                                 }
                             }
                         }
