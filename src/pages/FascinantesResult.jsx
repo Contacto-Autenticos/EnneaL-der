@@ -209,31 +209,7 @@ const FascinantesResult = () => {
                         clonedSection.appendChild(branding);
                     }
                 }
-                        branding.style.textAlign = 'center';
-                        branding.style.display = 'flex';
-                        branding.style.flexDirection = 'column';
-                        branding.style.alignItems = 'center';
-                        branding.style.gap = '8px';
-
-                        const logo = document.createElement('img');
-                        // Use absolute URL or ensure it's loaded in the clone
-                        logo.src = '/Logo-Blanco.png';
-                        logo.style.height = '40px';
-                        logo.style.opacity = '0.9';
-                        
-                        const text = document.createElement('span');
-                        text.innerText = 'AUTODIAGNÓSTICO - AUTÉNTICOS';
-                        text.style.color = '#ffd700';
-                        text.style.fontSize = '12px';
-                        text.style.fontWeight = '800';
-                        text.style.letterSpacing = '3px';
-                        text.style.fontFamily = 'Inter, sans-serif';
-
-                        branding.appendChild(logo);
-                        branding.appendChild(text);
-                        clonedSection.appendChild(branding);
-                    }
-                }
+            });
             });
 
             const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
