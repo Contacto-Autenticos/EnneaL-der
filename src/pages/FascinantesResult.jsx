@@ -170,8 +170,10 @@ const FascinantesResult = () => {
                         const themeGold = '#ddbe3d';
                         const bgColor = '#00121d'; 
                         
-                        // Keep solid backgrounds and basic padding for clean capture
+                        // Add padding and preserve layout for clean capture
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
+                        clonedContent.style.setProperty('padding', '40px', 'important'); // Add inner margin
+                        clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
                         clonedContent.style.setProperty('filter', 'none', 'important'); 
                         
                         const title = clonedContent.querySelector('h1');
@@ -181,7 +183,8 @@ const FascinantesResult = () => {
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            radarSection.style.setProperty('background', bgColor, 'important'); 
+                            // Restore intense gradient color
+                            radarSection.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important'); 
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
@@ -202,7 +205,8 @@ const FascinantesResult = () => {
                         // Remove explicit grid forced columns so it respects original layout naturally
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            card.style.setProperty('background', themeBlue, 'important'); // SOLID background
+                            // Restore intense gradient color
+                            card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important'); 
                             card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.2)`, 'important');
                             card.style.setProperty('padding', '30px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
