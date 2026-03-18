@@ -163,7 +163,7 @@ const FascinantesResult = () => {
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(13px, -30px)' // Slightly less up shift to give top room
+                                    transform: 'translate(13px, -45px)' // Moved 15px UP as requested (-30 to -45)
                                 });
                                 
                                 // FORCE SVG and its parents to show everything
@@ -176,10 +176,22 @@ const FascinantesResult = () => {
                                     t.style.setProperty('color', '#ffffff', 'important');
                                     t.style.setProperty('opacity', '1', 'important');
                                     t.style.setProperty('font-weight', '800', 'important');
-                                    t.style.setProperty('font-size', '8px', 'important'); // Reduced to 8px as requested
+                                    t.style.setProperty('font-size', '10px', 'important'); // Balanced size for readability
                                     t.style.setProperty('visibility', 'visible', 'important');
                                     t.style.setProperty('display', 'block', 'important');
                                     t.style.setProperty('text-transform', 'uppercase', 'important');
+                                    
+                                    // Optimization for top label (Corporal)
+                                    if (t.textContent.includes('CORPORAL')) {
+                                        // Move it ABOVE the icon instead of below
+                                        if (t.tagName === 'tspan') {
+                                            const currentDy = t.getAttribute('dy') || '0';
+                                            if (currentDy.includes('1em')) t.setAttribute('dy', '-5em');
+                                            if (currentDy.includes('1.2em')) t.setAttribute('dy', '-4em');
+                                        } else {
+                                            t.setAttribute('dy', '-5em');
+                                        }
+                                    }
                                 });
                                 
                                 // Lucide icons inside SVG
