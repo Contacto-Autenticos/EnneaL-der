@@ -88,7 +88,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                     x={textX} 
                     dy={domainId === 'social' ? '1.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
                     fill="rgba(255,255,255,0.6)"
-                    fontSize="10px"
+                    fontSize="13px"
                     fontWeight="700"
                     letterSpacing="1px"
                 >
@@ -98,7 +98,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                     x={textX} 
                     dy="1.2em"
                     fill="#fff"
-                    fontSize="13px"
+                    fontSize="15px"
                     fontWeight="800"
                     letterSpacing="0.5px"
                 >
