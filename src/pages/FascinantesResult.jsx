@@ -161,6 +161,8 @@ const FascinantesResult = () => {
                 backgroundColor: '#ffffff',
                 scale: 2,
                 useCORS: true,
+                windowWidth: 1200,
+                width: 1200,
                 scrollX: 0,
                 scrollY: 0,
                 onclone: (clonedDoc) => {
