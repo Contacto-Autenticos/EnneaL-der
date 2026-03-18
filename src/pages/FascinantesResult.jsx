@@ -168,9 +168,9 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
-                        const themeBlue = '#061624'; // Much darker, intense blue
-                        const themeGold = '#ddbe3d';
-                        const bgColor = '#00121d'; 
+                        const themeBlue = '#02060a'; // Absolute near-black blue
+                        const themeGold = '#ffcc00'; // High-vibrancy Prestige Gold
+                        const bgColor = '#000000'; 
                         
                         // Force rigid width that matches the capture viewport
                         clonedContent.style.setProperty('width', '1000px', 'important');
@@ -180,6 +180,7 @@ const FascinantesResult = () => {
                         clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
                         clonedContent.style.setProperty('display', 'block', 'important');
+                        clonedContent.style.setProperty('color-scheme', 'dark', 'important');
                         clonedContent.style.setProperty('filter', 'none', 'important');
                         clonedContent.style.setProperty('box-shadow', 'none', 'important');
 
@@ -193,8 +194,8 @@ const FascinantesResult = () => {
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            // Use solid color for robustness (gradients often render gray in html2canvas)
-                            radarSection.style.setProperty('background', '#061625', 'important'); 
+                            // Use absolute black for robustness
+                            radarSection.style.setProperty('background', '#02060a', 'important'); 
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
                             radarSection.style.setProperty('margin', '0 0 40px 0', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
@@ -226,9 +227,9 @@ const FascinantesResult = () => {
                         // Remove explicit grid forced columns so it respects original layout naturally
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // Use solid color for robustness
-                            card.style.setProperty('background', '#061625', 'important'); 
-                            card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.2)`, 'important');
+                            // Use absolute black for robustness
+                            card.style.setProperty('background', '#02060a', 'important'); 
+                            card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.3)`, 'important');
                             card.style.setProperty('padding', '30px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
                             card.style.setProperty('break-inside', 'avoid', 'important');
