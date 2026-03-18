@@ -78,6 +78,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                 x={textX} 
                 y={textY} 
                 textAnchor={anchor}
+                className="radar-label-text"
                 style={{ 
                     fontFamily: 'Inter, sans-serif',
                     pointerEvents: 'none'
