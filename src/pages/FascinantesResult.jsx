@@ -206,7 +206,7 @@ const FascinantesResult = () => {
                                 radarContainer.style.setProperty('background', 'transparent', 'important');
                                 radarContainer.style.setProperty('box-shadow', 'none', 'important');
                                 radarContainer.style.setProperty('border', 'none', 'important');
-                                radarContainer.style.setProperty('transform', 'translateX(20px)', 'important'); // Shift ONLY the chart right
+                                radarContainer.style.setProperty('transform', 'translateX(30px)', 'important'); // Shift ONLY the chart right
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
