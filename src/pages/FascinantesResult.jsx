@@ -161,7 +161,8 @@ const FascinantesResult = () => {
                                     height: '650px',
                                     margin: '0',
                                     position: 'relative',
-                                    overflow: 'visible'
+                                    overflow: 'visible',
+                                    transform: 'translate(25px, -50px)' // Move right (25) and up (50) to avoid logo
                                 });
                                 
                                 const texts = svg.querySelectorAll('text, tspan');
