@@ -105,7 +105,7 @@ const FascinantesResult = () => {
             window.scrollTo(0, 0);
 
             const canvas = await html2canvas(radarRef.current, {
-                backgroundColor: '#000000',
+                backgroundColor: '#00121d',
                 scale: 3,
                 useCORS: true,
                 imageTimeout: 0,
@@ -122,7 +122,7 @@ const FascinantesResult = () => {
                         clonedSection.style.flexDirection = 'column';
                         clonedSection.style.justifyContent = 'center';
                         clonedSection.style.alignItems = 'center';
-                        clonedSection.style.background = '#000000';
+                        clonedSection.style.background = '#00121d';
                         clonedSection.style.padding = '50px';
                         clonedSection.style.overflow = 'hidden';
                         clonedSection.style.position = 'relative';
@@ -139,6 +139,12 @@ const FascinantesResult = () => {
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
                                 svg.style.overflow = 'visible';
+                                // Force absolute centering for the SVG inside the square capture
+                                svg.style.setProperty('position', 'absolute', 'important');
+                                svg.style.setProperty('left', '50%', 'important');
+                                svg.style.setProperty('top', '45%', 'important'); // Balanced with branding
+                                svg.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+                                
                                 const texts = svg.querySelectorAll('text, tspan');
                                 texts.forEach(t => t.style.fill = '#ffffff');
                                 
