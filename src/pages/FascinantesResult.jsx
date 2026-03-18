@@ -166,13 +166,20 @@ const FascinantesResult = () => {
                                 });
                                 
                                 const texts = svg.querySelectorAll('text, tspan');
-                                texts.forEach(t => t.style.fill = '#ffffff');
+                                texts.forEach(t => {
+                                    t.style.setProperty('fill', '#ffffff', 'important');
+                                    t.style.setProperty('opacity', '1', 'important');
+                                    t.style.setProperty('font-weight', 'bold', 'important');
+                                    t.style.setProperty('font-size', '14px', 'important');
+                                    t.style.setProperty('visibility', 'visible', 'important');
+                                });
                                 
                                 // Lucide icons inside SVG
                                 const icons = svg.querySelectorAll('svg');
                                 icons.forEach(icon => {
                                     icon.style.filter = 'none';
                                     icon.style.opacity = '1';
+                                    icon.style.setProperty('visibility', 'visible', 'important');
                                 });
                             }
                         }
