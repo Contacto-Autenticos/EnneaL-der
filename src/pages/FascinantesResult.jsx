@@ -191,8 +191,8 @@ const FascinantesResult = () => {
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            // Restore intense gradient color
-                            radarSection.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important'); 
+                            // Use solid color for robustness (gradients often render gray in html2canvas)
+                            radarSection.style.setProperty('background', '#061625', 'important'); 
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
                             radarSection.style.setProperty('margin', '0 0 40px 0', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
@@ -220,8 +220,8 @@ const FascinantesResult = () => {
                         // Remove explicit grid forced columns so it respects original layout naturally
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // Restore intense gradient color
-                            card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important'); 
+                            // Use solid color for robustness
+                            card.style.setProperty('background', '#061625', 'important'); 
                             card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.2)`, 'important');
                             card.style.setProperty('padding', '30px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
