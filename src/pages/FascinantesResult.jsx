@@ -168,7 +168,7 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
-                        const themeBlue = '#0d2535';
+                        const themeBlue = '#061624'; // Much darker, intense blue
                         const themeGold = '#ddbe3d';
                         const bgColor = '#00121d'; 
                         
@@ -183,7 +183,7 @@ const FascinantesResult = () => {
                         clonedContent.style.setProperty('display', 'block', 'important');                        
                         const title = clonedContent.querySelector('h1');
                         if (title) {
-                            title.style.setProperty('color', '#8a6a00', 'important');
+                            title.style.setProperty('color', '#9e7b22', 'important'); // Darker gold for main title
                             title.style.setProperty('text-align', 'center', 'important');
                             title.style.setProperty('width', '100%', 'important');
                             title.style.setProperty('margin-bottom', '30px', 'important');
@@ -237,8 +237,8 @@ const FascinantesResult = () => {
 
                             const header = card.querySelector('h3');
                             if (header) {
-                                header.style.setProperty('color', '#ffffff', 'important');
-                                header.style.setProperty('font-size', '1.5rem', 'important');
+                                header.style.setProperty('color', themeGold, 'important');
+                                header.style.setProperty('font-size', '1.6rem', 'important');
                                 header.style.setProperty('margin-bottom', '10px', 'important');
                             }
 
@@ -251,7 +251,8 @@ const FascinantesResult = () => {
 
                             const tag = card.querySelector('.result-tag');
                             if (tag) {
-                                tag.style.setProperty('background', 'rgba(255, 255, 255, 0.15)', 'important');
+                                tag.style.setProperty('background', 'rgba(0, 0, 0, 0.4)', 'important');
+                                tag.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.2)', 'important');
                                 tag.style.setProperty('color', '#ffffff', 'important');
                             }
                             
