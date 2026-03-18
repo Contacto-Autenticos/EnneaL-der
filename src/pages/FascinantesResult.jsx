@@ -179,8 +179,17 @@ const FascinantesResult = () => {
                         clonedContent.style.setProperty('padding', '50px', 'important'); // Balanced padding
                         clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
-                        clonedContent.style.setProperty('filter', 'none', 'important'); 
-                        clonedContent.style.setProperty('display', 'block', 'important');                        
+                        clonedContent.style.setProperty('display', 'block', 'important');
+
+                        // Global sanitize: Remove ALL filters, shadows and glass effects that cause grayish rendering
+                        const allElements = clonedContent.querySelectorAll('*');
+                        allElements.forEach(el => {
+                            el.style.setProperty('filter', 'none', 'important');
+                            el.style.setProperty('backdrop-filter', 'none', 'important');
+                            el.style.setProperty('box-shadow', 'none', 'important');
+                            el.style.setProperty('text-shadow', 'none', 'important');
+                            el.style.setProperty('background-image', 'none', 'important');
+                        });
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.setProperty('color', '#9e7b22', 'important'); // Darker gold for main title
