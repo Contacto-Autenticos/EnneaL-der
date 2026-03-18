@@ -276,13 +276,39 @@ const FascinantesResult = () => {
                             card.style.setProperty('box-shadow', '0 10px 30px rgba(0,0,0,0.5)', 'important');
                             card.style.setProperty('animation', 'none', 'important');
                             
+                            const domainTop = card.querySelector('.domain-top');
+                            if (domainTop) {
+                                domainTop.style.setProperty('display', 'flex', 'important');
+                                domainTop.style.setProperty('flex-direction', 'column', 'important');
+                                domainTop.style.setProperty('align-items', 'flex-start', 'important');
+                                domainTop.style.setProperty('gap', '10px', 'important');
+                                domainTop.style.setProperty('margin-bottom', '15px', 'important');
+                                domainTop.style.setProperty('width', '100%', 'important');
+                            }
+
+                            const headerInfo = card.querySelector('.domain-info-header');
+                            if (headerInfo) {
+                                headerInfo.style.setProperty('display', 'flex', 'important');
+                                headerInfo.style.setProperty('align-items', 'center', 'important');
+                                headerInfo.style.setProperty('gap', '12px', 'important');
+                                headerInfo.style.setProperty('width', '100%', 'important');
+                            }
+
                             const domainHeader = card.querySelector('h3');
                             if (domainHeader) {
                                 domainHeader.style.setProperty('color', '#ffdc47', 'important'); // Brighter Gold
                                 domainHeader.style.setProperty('font-size', '1.6rem', 'important');
                                 domainHeader.style.setProperty('font-weight', '800', 'important');
-                                domainHeader.style.setProperty('margin-bottom', '15px', 'important');
-                                // Removed letter-spacing to prevent html2canvas overlap issues
+                                domainHeader.style.setProperty('margin', '0', 'important');
+                            }
+
+                            const tag = card.querySelector('.result-tag');
+                            if (tag) {
+                                tag.style.setProperty('margin', '0', 'important');
+                                tag.style.setProperty('font-size', '0.8rem', 'important');
+                                tag.style.setProperty('padding', '4px 12px', 'important');
+                                tag.style.setProperty('align-self', 'flex-start', 'important');
+                                tag.style.setProperty('display', 'inline-block', 'important');
                             }
 
                             const desc = card.querySelector('.domain-definition');
