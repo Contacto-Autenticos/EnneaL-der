@@ -144,15 +144,6 @@ const FascinantesResult = () => {
         if (!reportRef.current || isDownloading) return;
         setIsDownloading(true);
 
-        // Map real SVG physical dimensions to the viewBox inside the clone
-        const liveSvg = reportRef.current.querySelector('.fascinantes-radar-container svg');
-        let realSvgW = 500; let realSvgH = 500;
-        if (liveSvg) {
-            const rect = liveSvg.getBoundingClientRect();
-            realSvgW = rect.width;
-            realSvgH = rect.height;
-        }
-
         try {
             const canvas = await html2canvas(reportRef.current, {
                 backgroundColor: '#ffffff',
@@ -211,6 +202,7 @@ const FascinantesResult = () => {
                             if (radarContainer) {
                                 radarContainer.style.setProperty('width', '800px', 'important'); 
                                 radarContainer.style.setProperty('height', '720px', 'important');
+                                radarContainer.style.setProperty('padding', '0', 'important'); // Crucial for centering!
                                 radarContainer.style.setProperty('margin', '0 auto', 'important');
                                 radarContainer.style.setProperty('display', 'flex', 'important');
                                 radarContainer.style.setProperty('justify-content', 'center', 'important');
@@ -230,13 +222,14 @@ const FascinantesResult = () => {
                                     wrapper.style.setProperty('justify-content', 'center', 'important');
                                     wrapper.style.setProperty('align-items', 'center', 'important');
                                     wrapper.style.setProperty('margin', '0 auto', 'important');
-                                    wrapper.style.removeProperty('transform');
-                                    wrapper.style.removeProperty('transform-origin');
                                     
-                                    // Use exact pre-measured pixel dimensions so html2canvas correctly maps internal coordinates
-                                    svg.setAttribute('viewBox', `0 0 ${realSvgW} ${realSvgH}`);
-                                    svg.setAttribute('width', '100%');
-                                    svg.setAttribute('height', '100%');
+                                    const currentW = svg.getAttribute('width') || 500;
+                                    const currentH = svg.getAttribute('height') || 500;
+                                    
+                                    // html2canvas requires explicit px dimensions on SVG to render paths
+                                    svg.setAttribute('width', '800');
+                                    svg.setAttribute('height', '720');
+                                    svg.setAttribute('viewBox', `0 0 ${currentW} ${currentH}`);
                                     svg.style.setProperty('overflow', 'visible', 'important');
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
