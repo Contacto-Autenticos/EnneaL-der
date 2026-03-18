@@ -243,17 +243,21 @@ const FascinantesResult = () => {
 
                         const grid = clonedContent.querySelector('.interpretations-grid');
                         if (grid) {
-                            grid.style.setProperty('display', 'grid', 'important');
-                            grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
+                            grid.style.setProperty('display', 'flex', 'important');
+                            grid.style.setProperty('flex-wrap', 'wrap', 'important');
+                            grid.style.setProperty('justify-content', 'center', 'important');
                             grid.style.setProperty('gap', '30px', 'important');
                             grid.style.setProperty('margin-bottom', '30px', 'important');
-                            grid.style.setProperty('width', '800px', 'important'); // Match radar exact width
-                            grid.style.setProperty('margin', '0 auto', 'important'); // Center horizontally
+                            grid.style.setProperty('width', '100%', 'important');
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
+                            // Enforce explicit static pixel sizes to stop html2canvas from auto-expanding
+                            card.style.setProperty('width', '385px', 'important');
+                            card.style.setProperty('flex', '0 0 385px', 'important');
+                            card.style.setProperty('box-sizing', 'border-box', 'important');
                             // Revert to deep dark blue for max contrast, keep vivid borders
                             card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
                             card.style.setProperty('background-color', themeBlue, 'important');
@@ -261,7 +265,7 @@ const FascinantesResult = () => {
                             card.style.setProperty('font-family', 'Arial, sans-serif', 'important'); // Safe font
                             card.style.setProperty('border', `2px solid rgba(255, 220, 71, 0.4)`, 'important');
                             card.style.setProperty('border-left', `8px solid #ffdc47`, 'important'); // brighter gold
-                            card.style.setProperty('padding', '30px', 'important');
+                            card.style.setProperty('padding', '25px', 'important'); // Reduced padding for text space
                             card.style.setProperty('border-radius', '20px', 'important');
                             card.style.setProperty('min-height', '180px', 'important');
                             card.style.setProperty('box-shadow', '0 10px 30px rgba(0,0,0,0.5)', 'important');
