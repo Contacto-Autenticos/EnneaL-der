@@ -456,18 +456,24 @@ const FascinantesResult = () => {
 
                 <div className="result-actions">
                     <button 
-                        className="btn-action primary" 
-                        onClick={handleShare}
-                        disabled={isSharing}
+                        className="btn-action tertiary" 
+                        onClick={() => navigate('/autodiag-intro')}
                     >
-                        <Share2 size={20} /> {isSharing ? 'Capturando...' : 'Compartir'}
+                        <ArrowLeft size={18} /> REGRESAR
                     </button>
                     <button 
                         className="btn-action secondary" 
                         onClick={handleDownloadPDF}
                         disabled={isDownloading}
                     >
-                        <Download size={20} /> {isDownloading ? 'Generando...' : 'PDF'}
+                        <Download size={18} /> {isDownloading ? '...' : 'PDF'}
+                    </button>
+                    <button 
+                        className="btn-action primary" 
+                        onClick={handleShare}
+                        disabled={isSharing}
+                    >
+                        {isSharing ? '...' : 'COMPARTIR'} <Share2 size={18} />
                     </button>
                 </div>
             </div>

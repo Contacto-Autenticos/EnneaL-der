@@ -150,33 +150,53 @@
 .result-actions {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
+    margin-top: 40px;
+    flex-wrap: wrap;
 }
 
 .btn-action {
-    padding: 15px 35px;
+    padding: 12px 28px;
     border-radius: 50px;
-    font-weight: 800;
+    font-weight: 700;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.btn-action.primary {
-    background: #ddbe3d;
-    color: #00121d;
-}
-
-.btn-action.secondary {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+.btn-action.tertiary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: white;
 }
 
+.btn-action.secondary {
+    background: #003049;
+    border: none;
+    color: white;
+}
+
+.btn-action.primary {
+    background: white;
+    color: #00121d;
+    border: none;
+}
+
 .btn-action:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1);
+}
+
+.btn-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .result-footer-minimal {
