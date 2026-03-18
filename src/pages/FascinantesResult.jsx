@@ -180,17 +180,20 @@ const FascinantesResult = () => {
                                     t.style.setProperty('visibility', 'visible', 'important');
                                     t.style.setProperty('display', 'block', 'important');
                                     t.style.setProperty('text-transform', 'uppercase', 'important');
+                                    t.style.setProperty('text-anchor', 'middle', 'important');
                                     
-                                    // Optimization for top label (Corporal)
-                                    if (t.textContent.includes('CORPORAL')) {
-                                        // Move it ABOVE the icon instead of below
-                                        if (t.tagName === 'tspan') {
-                                            const currentDy = t.getAttribute('dy') || '0';
-                                            if (currentDy.includes('1em')) t.setAttribute('dy', '-5em');
-                                            if (currentDy.includes('1.2em')) t.setAttribute('dy', '-4em');
-                                        } else {
-                                            t.setAttribute('dy', '-5em');
-                                        }
+                                    const textContent = t.textContent.toUpperCase();
+                                    
+                                    // Optimization for labels vertical positioning
+                                    if (textContent.includes('CORPORAL')) {
+                                        // Move it ABOVE the icon 
+                                        const isSecondLine = t.tagName === 'tspan' && t.getAttribute('dy') && parseFloat(t.getAttribute('dy')) > 1;
+                                        t.setAttribute('dy', isSecondLine ? '-4.5em' : '-5.5em');
+                                    } else {
+                                        // ALL OTHERS (Mental, Emocional, Social, Financiero, Espiritual)
+                                        // Position BELOW the icon
+                                        const isSecondLine = t.tagName === 'tspan' && t.getAttribute('dy') && parseFloat(t.getAttribute('dy')) > 1;
+                                        t.setAttribute('dy', isSecondLine ? '7.2em' : '6em');
                                     }
                                 });
                                 
