@@ -13,6 +13,8 @@
     margin: 0 auto;
     z-index: 10;
     position: relative;
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
 .result-header {
@@ -95,7 +97,7 @@
     margin: 0;
 }
 
-.neon-corporal h3 { color: #ff3131; }
+.neon-corporal h3 { color: #cc0000; }
 .neon-mental h3 { color: #ff9100; }
 .neon-emocional h3 { color: #ffee00; }
 .neon-social h3 { color: #00ff00; }
@@ -153,6 +155,7 @@
     gap: 15px;
     margin-top: 40px;
     flex-wrap: wrap;
+    border-bottom: none !important;
 }
 
 .btn-action {
@@ -203,6 +206,9 @@
     margin-top: 60px;
     text-align: center;
     opacity: 1;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
 .result-footer-minimal img {
@@ -308,7 +314,7 @@
 
 .btn-close-modal:hover {
     background: rgba(255, 49, 49, 0.2);
-    color: #ff3131;
+    color: #cc0000;
 }
 
 .modal-body {

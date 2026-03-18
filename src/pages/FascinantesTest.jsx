@@ -97,7 +97,7 @@ const FascinantesTest = () => {
     };
 
     const DOMAIN_STYLES = {
-        corporal: { color: '#ff3131', class: 'neon-corporal' },
+        corporal: { color: '#cc0000', class: 'neon-corporal' },
         mental: { color: '#ff9100', class: 'neon-mental' },
         emocional: { color: '#ffee00', class: 'neon-emocional' },
         social: { color: '#00ff00', class: 'neon-social' },
@@ -138,16 +138,16 @@ const FascinantesTest = () => {
     const handleAnswer = (value) => {
         setAnswers({ ...answers, [currentQuestion.id]: value });
         
-        // Auto advance after short delay
+        // Auto advance after longer delay to allow speedometer animation
         if (currentIndex < fascinantesQuestions.length - 1) {
             setTimeout(() => {
                 goToNext();
-            }, 300);
+            }, 1000);
         } else {
             // Automatic submission on last question
             setTimeout(() => {
                 handleSubmit({ ...answers, [currentQuestion.id]: value });
-            }, 500);
+            }, 1000);
         }
     };
 

@@ -7,7 +7,7 @@ import { User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap } from 'lucide
 
 
 const DOMAIN_STYLES = {
-    corporal: { color: '#ff3131', Icon: User },
+    corporal: { color: '#cc0000', Icon: User },
     mental: { color: '#ff9100', Icon: Brain },
     emocional: { color: '#ffee00', Icon: HeartPulse },
     social: { color: '#00ff00', Icon: Handshake },
@@ -26,92 +26,84 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
     const line2 = words[1].toUpperCase();
 
     // Calculate angle from center to push labels OUTSIDE the radar
-    // Recharts uses cx/cy for the chart center. 
-    // We use the actual center provided by Recharts now.
     const angle = Math.atan2(y - cy, x - cx);
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-    const repulsion = isMobile ? 15 : 30; 
+    
+    // Adjusted repulsion for better mobile view
+    const repulsion = isMobile ? 32 : 45; 
     const labelX = x + Math.cos(angle) * repulsion;
     const labelY = y + Math.sin(angle) * repulsion;
 
-    // Configuration based on domain requirement:
-    // Corporal: Text above icon
-    // Mental/Emocional: Icon left, text right
-    // Social: Text below icon
-    // Espiritual/Financiero: Text left, icon right
-    
-    let textStyle = { position: 'absolute' };
-    
+    // Positioning logic for text relative to the icon center
+    let textX = 0;
+    let textY = 0;
+    let anchor = "middle";
+
     switch(domainId) {
-        case 'corporal': // Top
-            textStyle = { ...textStyle, bottom: 'calc(50% + 20px)', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' };
+        case 'corporal': // Top: Text ABOVE icon
+            textY = -28;
             break;
-        case 'mental': // Top-Right
-        case 'emocional': // Bottom-Right
-            textStyle = { ...textStyle, left: 'calc(50% + 20px)', top: '50%', transform: 'translateY(-50%)', textAlign: 'left' };
+        case 'mental': // Top-Right: Icon LEFT, text RIGHT
+        case 'emocional': // Bottom-Right: Icon LEFT, text RIGHT
+            textX = 26;
+            anchor = "start";
             break;
-        case 'social': // Bottom
-            textStyle = { ...textStyle, top: 'calc(50% + 20px)', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' };
+        case 'social': // Bottom: Text BELOW icon
+            textY = 24;
             break;
-        case 'espiritual': // Bottom-Left
-        case 'financiero': // Top-Left
-            textStyle = { ...textStyle, right: 'calc(50% + 20px)', top: '50%', transform: 'translateY(-50%)', textAlign: 'right' };
+        case 'espiritual': // Bottom-Left: Text LEFT, icon RIGHT
+        case 'financiero': // Top-Left: Text LEFT, icon RIGHT
+            textX = -26;
+            anchor = "end";
             break;
     }
 
-    // Centering the foreignObject on the new pushed label position
-    const width = 180;
-    const height = 100;
-    const offsetX = labelX - width / 2;
-    const offsetY = labelY - height / 2;
-
     return (
-        <g transform={`translate(${offsetX},${offsetY})`}>
-            <foreignObject width={width} height={height} style={{ overflow: 'visible' }}>
-                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                    {/* ICON: Exactly at center-center of foreignObject (which is at radar vertex) */}
-                    <div style={{ 
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        color: style.color, 
-                        filter: `drop-shadow(0 0 5px ${style.color})`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10
-                    }}>
-                        <Icon size={30} strokeWidth={2.5} />
-                    </div>
+        <g transform={`translate(${labelX},${labelY})`}>
+            {/* Subtle glow circle behind icon */}
+            <circle r="16" fill={style.color} fillOpacity="0.12" />
 
-                    {/* TEXT: Positioned relative to the center icon */}
-                    <div className="radar-label-text" style={{ 
-                        ...textStyle,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1px'
-                    }}>
-                        <span style={{ 
-                            color: 'rgba(255,255,255,0.6)', 
-                            fontSize: '12px', 
-                            fontWeight: 700, 
-                            letterSpacing: '1px'
-                        }}>
-                            {line1}
-                        </span>
-                        <span style={{ 
-                            color: '#fff', 
-                            fontSize: '15px', 
-                            fontWeight: 800, 
-                            letterSpacing: '0.5px',
-                            whiteSpace: 'nowrap'
-                        }}>
-                            {line2}
-                        </span>
-                    </div>
-                </div>
-            </foreignObject>
+            {/* Pure SVG Icon container */}
+            <g transform="translate(-15, -15)">
+                <Icon 
+                    size={30} 
+                    stroke={style.color} 
+                    strokeWidth={2.2} 
+                    style={{ filter: `drop-shadow(0 0 5px ${style.color})` }} 
+                />
+            </g>
+
+            {/* Two-line label text */}
+            <text 
+                x={textX} 
+                y={textY} 
+                textAnchor={anchor}
+                style={{ 
+                    fontFamily: 'Inter, sans-serif',
+                    pointerEvents: 'none'
+                }}
+            >
+                <tspan 
+                    x={textX} 
+                    dy={domainId === 'social' ? '2.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
+                    fill="rgba(255,255,255,0.6)"
+                    fontSize="10px"
+                    fontWeight="700"
+                    letterSpacing="1px"
+                >
+                    {line1}
+                </tspan>
+                <tspan 
+                    x={textX} 
+                    dy="1.2em"
+                    fill="#fff"
+                    fontSize="13px"
+                    fontWeight="800"
+                    letterSpacing="0.5px"
+                >
+                    {line2}
+                </tspan>
+            </text>
         </g>
     );
 };

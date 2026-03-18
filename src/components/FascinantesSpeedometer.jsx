@@ -2,8 +2,8 @@ import React from 'react';
 import './FascinantesSpeedometer.css';
 
 const FascinantesSpeedometer = ({ value, label }) => {
-    // Value is 1-5
-    const percentage = ((value) / 5) * 100;
+    // Value is 1-5, default to 0 if invalid or "Pendiente"
+    const percentage = (value >= 1 && value <= 5) ? (value / 5) * 100 : 0;
     const rotation = -90 + (percentage * 1.8); // -90 to 90 degrees for half circle
 
     const getInterpretation = (val) => {

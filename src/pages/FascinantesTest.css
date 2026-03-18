@@ -45,7 +45,7 @@
     font-size: 0.8rem;
 }
 
-.neon-corporal .domain-name { color: #ff3131; }
+.neon-corporal .domain-name { color: #cc0000; }
 .neon-mental .domain-name { color: #ff9100; }
 .neon-emocional .domain-name { color: #ffee00; }
 .neon-social .domain-name { color: #00ff00; }
@@ -127,7 +127,7 @@
     transform: scale(1.15);
 }
 
-.neon-corporal .custom-domain-icon { filter: drop-shadow(0 0 5px #ff3131); }
+.neon-corporal .custom-domain-icon { filter: drop-shadow(0 0 5px #cc0000); }
 .neon-mental .custom-domain-icon { filter: drop-shadow(0 0 5px #ff9100); }
 .neon-emocional .custom-domain-icon { filter: drop-shadow(0 0 5px #ffee00); }
 .neon-social .custom-domain-icon { filter: drop-shadow(0 0 5px #00ff00); }

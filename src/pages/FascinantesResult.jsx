@@ -8,7 +8,7 @@ import { jsPDF } from 'jspdf';
 import './FascinantesResult.css';
 
 const DOMAIN_STYLES = {
-    corporal: { color: '#ff3131', class: 'neon-corporal' },
+    corporal: { color: '#cc0000', class: 'neon-corporal' },
     mental: { color: '#ff9100', class: 'neon-mental' },
     emocional: { color: '#ffee00', class: 'neon-emocional' },
     social: { color: '#00ff00', class: 'neon-social' },
@@ -76,7 +76,7 @@ const FascinantesResult = () => {
 
     const getAnswerColor = (val) => {
         switch(val) {
-            case 1: return '#ff3131'; // Rojo
+            case 1: return '#cc0000'; // Rojo
             case 2: return '#ff9100'; // Naranja
             case 3: return '#ffee00'; // Amarillo
             case 4: return '#00e5ff'; // Azul claro
@@ -158,6 +158,7 @@ const FascinantesResult = () => {
                 backgroundColor: '#ffffff',
                 scale: 2,
                 useCORS: true,
+                windowWidth: 1200, // Force desktop-like media queries on mobile
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
@@ -165,6 +166,7 @@ const FascinantesResult = () => {
                         const themeGold = '#ddbe3d';
                         const darkGold = '#9e7b22';
                         
+                        // Force desktop dimensions and layout
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
                         clonedContent.style.setProperty('width', '1000px', 'important');
                         clonedContent.style.setProperty('padding', '60px', 'important');
@@ -176,199 +178,99 @@ const FascinantesResult = () => {
                         if (title) {
                             title.style.setProperty('color', darkGold, 'important');
                             title.style.setProperty('text-align', 'center', 'important');
-                            title.style.setProperty('font-size', '3rem', 'important');
+                            title.style.setProperty('font-size', '3.5rem', 'important'); // Slightly larger
                             title.style.setProperty('margin-bottom', '50px', 'important');
-                            title.style.setProperty('line-height', '1', 'important');
+                            title.style.setProperty('line-height', '1.1', 'important');
                             title.style.setProperty('width', '100%', 'important');
                             title.style.setProperty('display', 'block', 'important');
                             
                             const spans = title.querySelectorAll('span');
                             spans.forEach(span => {
                                 span.style.setProperty('display', 'block', 'important');
+                                span.style.setProperty('width', '100%', 'important');
                             });
-                            if (spans.length > 1) {
-                                spans[1].style.setProperty('margin-top', '5px', 'important');
-                            }
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
                             radarSection.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
-                            radarSection.style.setProperty('background-color', themeBlue, 'important');
                             radarSection.style.setProperty('border-radius', '24px', 'important');
-                            radarSection.style.setProperty('padding', '40px', 'important');
+                            radarSection.style.setProperty('padding', '60px 40px', 'important');
                             radarSection.style.setProperty('margin-bottom', '50px', 'important');
                             radarSection.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.4)`, 'important');
                             radarSection.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
                             radarSection.style.setProperty('display', 'flex', 'important');
                             radarSection.style.setProperty('justify-content', 'center', 'important');
-                            radarSection.style.setProperty('align-items', 'center', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
                             radarSection.style.setProperty('box-sizing', 'border-box', 'important');
-                            radarSection.style.setProperty('overflow', 'visible', 'important');
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
                                 radarContainer.style.setProperty('width', '800px', 'important'); 
-                                radarContainer.style.setProperty('height', '600px', 'important'); // Reduced height
-                                radarContainer.style.setProperty('padding', '0', 'important'); // Crucial for centering!
+                                radarContainer.style.setProperty('height', '600px', 'important');
+                                radarContainer.style.setProperty('padding', '0', 'important');
                                 radarContainer.style.setProperty('margin', '0 auto', 'important');
-                                radarContainer.style.setProperty('display', 'flex', 'important');
-                                radarContainer.style.setProperty('justify-content', 'center', 'important');
-                                radarContainer.style.setProperty('align-items', 'center', 'important');
-                                radarContainer.style.setProperty('overflow', 'visible', 'important');
-                                
-                                const labels = radarContainer.querySelectorAll('.radar-label-text');
-                                labels.forEach(label => label.style.setProperty('display', 'none', 'important'));
-
-                                const wrapper = radarContainer.querySelector('.recharts-wrapper');
-                                const svg = radarContainer.querySelector('svg');
-                                
-                                if (wrapper && svg) {
-                                    wrapper.style.setProperty('display', 'flex', 'important');
-                                    wrapper.style.setProperty('justify-content', 'center', 'important');
-                                    wrapper.style.setProperty('align-items', 'center', 'important');
-                                    wrapper.style.setProperty('margin', '0 auto', 'important');
-                                    // Compensate for the removed padding and shift upward
-                                    wrapper.style.setProperty('transform', 'translate(-15px, -5px)', 'important');
-                                    
-                                    // Remove all dimension overrides to prevent html2canvas SVG coordinate breakage
-                                    svg.style.setProperty('overflow', 'visible', 'important');
-                                    svg.style.setProperty('margin', '0 auto', 'important');
-                                    svg.style.setProperty('display', 'block', 'important');
-                                    svg.style.setProperty('transform', 'translate(-15px, -5px)', 'important'); // Backup transform for html2canvas
-                                }
+                                radarContainer.style.setProperty('background', 'transparent', 'important');
+                                radarContainer.style.setProperty('box-shadow', 'none', 'important');
+                                radarContainer.style.setProperty('border', 'none', 'important');
                             }
                         }
 
                         const grid = clonedContent.querySelector('.interpretations-grid');
                         if (grid) {
-                            grid.style.setProperty('display', 'flex', 'important');
-                            grid.style.setProperty('flex-wrap', 'wrap', 'important');
-                            grid.style.setProperty('justify-content', 'space-between', 'important');
-                            grid.style.setProperty('gap', '0', 'important'); // Remove gap to prevent unpredictable html2canvas width expansion
-                            grid.style.setProperty('margin-bottom', '30px', 'important');
-                            grid.style.setProperty('width', '100%', 'important'); // Let it fill its container exactly
-                            grid.style.setProperty('margin-top', '0', 'important');
-                            grid.style.setProperty('margin-left', '0', 'important');
-                            grid.style.setProperty('margin-right', '0', 'important');
+                            // FORCE 2 COLUMNS explicitly
+                            grid.style.setProperty('display', 'grid', 'important');
+                            grid.style.setProperty('grid-template-columns', 'repeat(2, 1fr)', 'important');
+                            grid.style.setProperty('gap', '25px', 'important');
+                            grid.style.setProperty('margin-bottom', '40px', 'important');
+                            grid.style.setProperty('width', '100%', 'important');
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // strictly 48% width to guarantee 2 columns with 4% middle space
-                            card.style.setProperty('width', '48%', 'important');
-                            card.style.setProperty('max-width', '48%', 'important');
-                            card.style.setProperty('flex', '0 0 48%', 'important');
-                            card.style.setProperty('margin-bottom', '25px', 'important');
-                            card.style.setProperty('box-sizing', 'border-box', 'important');
-                            // Revert to deep dark blue for max contrast, keep vivid borders
+                            card.style.setProperty('width', '100%', 'important'); // Fill cell
+                            card.style.setProperty('margin-bottom', '0', 'important');
                             card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
-                            card.style.setProperty('background-color', themeBlue, 'important');
-                            card.style.setProperty('color', '#ffffff', 'important');
-                            card.style.setProperty('font-family', 'Arial, sans-serif', 'important'); // Safe font
-                            card.style.setProperty('border', `2px solid rgba(255, 220, 71, 0.4)`, 'important');
-                            card.style.setProperty('border-left', `8px solid #ffdc47`, 'important'); // brighter gold
-                            card.style.setProperty('padding', '25px', 'important'); // Reduced padding for text space
+                            card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.1)`, 'important');
+                            card.style.setProperty('border-left', `8px solid #cc0000`, 'important'); // Default will be overridden below
+                            card.style.setProperty('padding', '25px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
-                            card.style.setProperty('min-height', '180px', 'important');
-                            card.style.setProperty('box-shadow', '0 10px 30px rgba(0,0,0,0.5)', 'important');
-                            card.style.setProperty('animation', 'none', 'important');
+                            card.style.setProperty('break-inside', 'avoid', 'important');
                             
-                            const domainTop = card.querySelector('.domain-top');
-                            if (domainTop) {
-                                domainTop.style.setProperty('display', 'flex', 'important');
-                                domainTop.style.setProperty('flex-direction', 'column', 'important');
-                                domainTop.style.setProperty('align-items', 'flex-start', 'important');
-                                domainTop.style.setProperty('gap', '10px', 'important');
-                                domainTop.style.setProperty('margin-bottom', '15px', 'important');
-                                domainTop.style.setProperty('width', '100%', 'important');
-                            }
-
-                            const headerInfo = card.querySelector('.domain-info-header');
-                            if (headerInfo) {
-                                headerInfo.style.setProperty('display', 'flex', 'important');
-                                headerInfo.style.setProperty('align-items', 'center', 'important');
-                                headerInfo.style.setProperty('gap', '12px', 'important');
-                                headerInfo.style.setProperty('width', '100%', 'important');
+                            // Domain-specific color for left border in PDF
+                            const domainId = card.className.match(/neon-(\w+)/);
+                            if (domainId && domainId[1]) {
+                                const color = DOMAIN_STYLES[domainId[1]]?.color || themeGold;
+                                card.style.setProperty('border-left-color', color, 'important');
                             }
 
                             const domainHeader = card.querySelector('h3');
                             if (domainHeader) {
-                                domainHeader.style.setProperty('color', '#ffdc47', 'important'); // Brighter Gold
-                                domainHeader.style.setProperty('font-size', '1.6rem', 'important');
+                                domainHeader.style.setProperty('font-size', '1.4rem', 'important');
                                 domainHeader.style.setProperty('font-weight', '800', 'important');
-                                domainHeader.style.setProperty('margin', '0', 'important');
-                            }
-
-                            const tag = card.querySelector('.result-tag');
-                            if (tag) {
-                                tag.style.setProperty('margin', '0', 'important');
-                                tag.style.setProperty('font-size', '0.8rem', 'important');
-                                tag.style.setProperty('padding', '4px 12px', 'important');
-                                tag.style.setProperty('align-self', 'flex-start', 'important');
-                                tag.style.setProperty('display', 'inline-block', 'important');
                             }
 
                             const desc = card.querySelector('.domain-definition');
                             if (desc) {
-                                desc.style.setProperty('color', '#ffffff', 'important');
-                                desc.style.setProperty('font-size', '1.1rem', 'important');
-                                desc.style.setProperty('font-weight', '500', 'important');
-                                desc.style.setProperty('line-height', '1.6', 'important');
-                                desc.style.setProperty('font-family', 'Arial, sans-serif', 'important');
+                                desc.style.setProperty('color', '#dddddd', 'important');
+                                desc.style.setProperty('font-size', '1rem', 'important');
                             }
-
-                            const scoreNum = card.querySelector('.score-num');
-                            if (scoreNum) {
-                                scoreNum.style.setProperty('color', themeGold, 'important');
-                                scoreNum.style.setProperty('font-weight', 'bold', 'important');
-                            }
-
-                            const footerTip = card.querySelector('.card-footer-tip');
-                            if (footerTip) footerTip.style.setProperty('display', 'none', 'important');
+                            
+                            const tip = card.querySelector('.card-footer-tip');
+                            if (tip) tip.style.setProperty('display', 'none', 'important');
                         });
-
-                        const importantNote = clonedContent.querySelector('.important-note-card');
-                        if (importantNote) {
-                            importantNote.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
-                            importantNote.style.setProperty('background-color', themeBlue, 'important');
-                            importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.1)`, 'important');
-                            importantNote.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
-                            importantNote.style.setProperty('padding', '25px 30px', 'important');
-                            importantNote.style.setProperty('margin-top', '0px', 'important');
-                            importantNote.style.setProperty('margin-bottom', '20px', 'important');
-                            importantNote.style.setProperty('border-radius', '20px', 'important');
-                            importantNote.style.setProperty('display', 'flex', 'important');
-                            importantNote.style.setProperty('align-items', 'center', 'important');
-                            importantNote.style.setProperty('gap', '20px', 'important');
-                            importantNote.style.setProperty('box-shadow', 'none', 'important');
-
-                            const noteIcon = importantNote.querySelector('.note-icon');
-                            if (noteIcon) noteIcon.style.setProperty('color', themeGold, 'important');
-
-                            const noteText = importantNote.querySelector('.note-text');
-                            if (noteText) {
-                                noteText.style.setProperty('color', '#ffffff', 'important');
-                                noteText.style.setProperty('font-size', '1rem', 'important');
-                                noteText.style.setProperty('line-height', '1.6', 'important');
-                                
-                                const strong = noteText.querySelector('strong');
-                                if (strong) strong.style.setProperty('color', themeGold, 'important');
-                            }
-                        }
 
                         const actions = clonedContent.querySelector('.result-actions');
                         if (actions) actions.style.setProperty('display', 'none', 'important');
 
                         const footer = clonedContent.querySelector('.result-footer-minimal');
                         if (footer) {
-                            footer.style.setProperty('margin-top', '60px', 'important');
+                            footer.style.setProperty('margin-top', '50px', 'important');
                             footer.style.setProperty('display', 'flex', 'important');
                             footer.style.setProperty('justify-content', 'center', 'important');
-                            const footerImg = footer.querySelector('img');
-                            if (footerImg) footerImg.style.setProperty('max-height', '50px', 'important');
+                            const img = footer.querySelector('img');
+                            if (img) img.style.setProperty('max-height', '60px', 'important');
                         }
                     }
                 }
@@ -402,7 +304,6 @@ const FascinantesResult = () => {
                         <span style={{ display: 'block' }}>RESULTADO</span>
                         <span style={{ display: 'block', marginTop: '5px' }}>AUTODIAGNÓSTICO</span>
                     </h1>
-                    <div className="neon-divider"></div>
                 </header>
 
                 <div className="radar-section" ref={radarRef}>
@@ -525,9 +426,9 @@ const FascinantesResult = () => {
                 </div>
             )}
             
-            <footer className="result-footer-minimal">
+            <div className="result-footer-minimal">
                 <img src="/Logo-Blanco.png" alt="Auténticos" />
-            </footer>
+            </div>
         </div>
     );
 };
