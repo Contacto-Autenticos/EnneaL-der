@@ -180,16 +180,9 @@ const FascinantesResult = () => {
                         clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
                         clonedContent.style.setProperty('display', 'block', 'important');
+                        clonedContent.style.setProperty('filter', 'none', 'important');
+                        clonedContent.style.setProperty('box-shadow', 'none', 'important');
 
-                        // Global sanitize: Remove ALL filters, shadows and glass effects that cause grayish rendering
-                        const allElements = clonedContent.querySelectorAll('*');
-                        allElements.forEach(el => {
-                            el.style.setProperty('filter', 'none', 'important');
-                            el.style.setProperty('backdrop-filter', 'none', 'important');
-                            el.style.setProperty('box-shadow', 'none', 'important');
-                            el.style.setProperty('text-shadow', 'none', 'important');
-                            el.style.setProperty('background-image', 'none', 'important');
-                        });
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.setProperty('color', '#9e7b22', 'important'); // Darker gold for main title
@@ -209,6 +202,10 @@ const FascinantesResult = () => {
                             radarSection.style.setProperty('justify-content', 'center', 'important');
                             radarSection.style.setProperty('align-items', 'center', 'important');
                             radarSection.style.setProperty('border-radius', '20px', 'important');
+                            radarSection.style.setProperty('filter', 'none', 'important');
+                            radarSection.style.setProperty('backdrop-filter', 'none', 'important');
+                            radarSection.style.setProperty('box-shadow', 'none', 'important');
+
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
@@ -237,6 +234,9 @@ const FascinantesResult = () => {
                             card.style.setProperty('break-inside', 'avoid', 'important');
                             card.style.setProperty('width', '100%', 'important');
                             card.style.setProperty('box-shadow', 'none', 'important');
+                            card.style.setProperty('filter', 'none', 'important');
+                            card.style.setProperty('backdrop-filter', 'none', 'important');
+
                             
                             const domainId = card.className.match(/neon-(\w+)/);
                             if (domainId && domainId[1]) {
