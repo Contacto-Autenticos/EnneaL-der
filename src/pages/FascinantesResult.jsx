@@ -161,8 +161,6 @@ const FascinantesResult = () => {
                 backgroundColor: '#ffffff',
                 scale: 2,
                 useCORS: true,
-                windowWidth: 1200,
-                width: 1200, // Explicit canvas width
                 scrollX: 0,
                 scrollY: 0,
                 onclone: (clonedDoc) => {
@@ -170,74 +168,38 @@ const FascinantesResult = () => {
                     if (clonedContent) {
                         const themeBlue = '#0d2535';
                         const themeGold = '#ddbe3d';
-                        const darkGold = '#9e7b22';
-                        const bgColor = '#00121d'; // Background color of the cards
+                        const bgColor = '#00121d'; 
                         
-                        // Force desktop dimensions and layout
+                        // Keep solid backgrounds and basic padding for clean capture
                         clonedContent.style.setProperty('background', '#ffffff', 'important');
-                        clonedContent.style.setProperty('width', '1100px', 'important'); // Slightly wider
-                        clonedContent.style.setProperty('padding', '60px', 'important');
-                        clonedContent.style.setProperty('margin', '0 auto', 'important');
-                        clonedContent.style.setProperty('display', 'block', 'important');
-                        clonedContent.style.setProperty('filter', 'none', 'important'); // Remove any greyscale/filters
+                        clonedContent.style.setProperty('filter', 'none', 'important'); 
                         
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.setProperty('color', '#8a6a00', 'important');
-                            title.style.setProperty('text-align', 'center', 'important');
-                            title.style.setProperty('font-size', '3.5rem', 'important');
-                            title.style.setProperty('margin-bottom', '50px', 'important');
-                            title.style.setProperty('width', '100%', 'important');
-                            title.style.setProperty('display', 'block', 'important');
                         }
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            radarSection.style.setProperty('background', bgColor, 'important'); // SOLID background
-                            radarSection.style.setProperty('border-radius', '24px', 'important');
-                            radarSection.style.setProperty('padding', '60px 20px', 'important');
-                            radarSection.style.setProperty('margin-bottom', '50px', 'important');
+                            radarSection.style.setProperty('background', bgColor, 'important'); 
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
-                            radarSection.style.setProperty('display', 'flex', 'important');
-                            radarSection.style.setProperty('justify-content', 'center', 'important');
-                            radarSection.style.setProperty('width', '100%', 'important');
-                            radarSection.style.setProperty('box-sizing', 'border-box', 'important');
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
-                                radarContainer.style.setProperty('width', '900px', 'important'); // Larger container
-                                radarContainer.style.setProperty('height', '700px', 'important');
-                                radarContainer.style.setProperty('padding', '0', 'important');
-                                radarContainer.style.setProperty('margin', '0 auto', 'important');
-                                radarContainer.style.setProperty('display', 'flex', 'important');
-                                radarContainer.style.setProperty('justify-content', 'center', 'important');
-                                radarContainer.style.setProperty('align-items', 'center', 'important');
                                 radarContainer.style.setProperty('background', 'transparent', 'important');
+                                radarContainer.style.setProperty('box-shadow', 'none', 'important');
+                                radarContainer.style.setProperty('border', 'none', 'important');
                                 
-                                // Direct SVG targeting for centering
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
-                                    svg.style.setProperty('width', '850px', 'important');
-                                    svg.style.setProperty('height', '650px', 'important');
-                                    svg.style.setProperty('margin', '0 auto', 'important');
-                                    svg.style.setProperty('display', 'block', 'important');
-                                    svg.style.setProperty('overflow', 'visible', 'important');
-                                    
-                                    // Ensure all path/text in SVG are visible
+                                    // Ensure all path/text in SVG are visibly white in PDF
                                     const svgTexts = svg.querySelectorAll('text, tspan');
                                     svgTexts.forEach(t => t.style.setProperty('fill', '#ffffff', 'important'));
                                 }
                             }
                         }
 
-                        const grid = clonedContent.querySelector('.interpretations-grid');
-                        if (grid) {
-                            grid.style.setProperty('display', 'grid', 'important');
-                            grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
-                            grid.style.setProperty('gap', '30px', 'important');
-                            grid.style.setProperty('width', '100%', 'important');
-                        }
-
+                        // Remove explicit grid forced columns so it respects original layout naturally
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
                             card.style.setProperty('background', themeBlue, 'important'); // SOLID background
