@@ -194,11 +194,11 @@ const FascinantesResult = () => {
                             // Restore intense gradient color
                             radarSection.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important'); 
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
-                            radarSection.style.setProperty('margin', '0 auto 40px auto', 'important');
+                            radarSection.style.setProperty('margin', '0 0 40px 0', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
-                            radarSection.style.setProperty('transform', 'translateX(30px)', 'important'); // Shift right as requested
                             radarSection.style.setProperty('display', 'flex', 'important');
                             radarSection.style.setProperty('justify-content', 'center', 'important');
+                            radarSection.style.setProperty('align-items', 'center', 'important');
                             radarSection.style.setProperty('border-radius', '20px', 'important');
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
@@ -206,6 +206,7 @@ const FascinantesResult = () => {
                                 radarContainer.style.setProperty('background', 'transparent', 'important');
                                 radarContainer.style.setProperty('box-shadow', 'none', 'important');
                                 radarContainer.style.setProperty('border', 'none', 'important');
+                                radarContainer.style.setProperty('transform', 'translateX(20px)', 'important'); // Shift ONLY the chart right
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
