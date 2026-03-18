@@ -210,7 +210,7 @@ const FascinantesResult = () => {
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
                             if (radarContainer) {
                                 radarContainer.style.setProperty('width', '800px', 'important'); 
-                                radarContainer.style.setProperty('height', '720px', 'important');
+                                radarContainer.style.setProperty('height', '600px', 'important'); // Reduced height
                                 radarContainer.style.setProperty('padding', '0', 'important'); // Crucial for centering!
                                 radarContainer.style.setProperty('margin', '0 auto', 'important');
                                 radarContainer.style.setProperty('display', 'flex', 'important');
@@ -245,37 +245,41 @@ const FascinantesResult = () => {
                         if (grid) {
                             grid.style.setProperty('display', 'grid', 'important');
                             grid.style.setProperty('grid-template-columns', '1fr 1fr', 'important');
-                            grid.style.setProperty('gap', '20px', 'important');
-                            grid.style.setProperty('margin-bottom', '20px', 'important');
+                            grid.style.setProperty('gap', '30px', 'important');
+                            grid.style.setProperty('margin-bottom', '30px', 'important');
                             grid.style.setProperty('width', '100%', 'important');
                             grid.style.setProperty('box-sizing', 'border-box', 'important');
                         }
 
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            card.style.setProperty('background', `linear-gradient(135deg, ${themeBlue} 0%, #070f14 100%)`, 'important');
-                            card.style.setProperty('background-color', themeBlue, 'important');
+                            // Brighter background colors and stronger border for vividness
+                            card.style.setProperty('background', `linear-gradient(135deg, #13334a 0%, #0a1720 100%)`, 'important');
+                            card.style.setProperty('background-color', '#13334a', 'important');
                             card.style.setProperty('color', '#ffffff', 'important');
-                            card.style.setProperty('border', `1px solid rgba(221, 190, 61, 0.3)`, 'important');
-                            card.style.setProperty('border-left', `8px solid ${themeGold}`, 'important');
-                            card.style.setProperty('padding', '25px', 'important');
+                            card.style.setProperty('border', `2px solid rgba(255, 220, 71, 0.4)`, 'important');
+                            card.style.setProperty('border-left', `8px solid #ffdc47`, 'important'); // brighter gold
+                            card.style.setProperty('padding', '30px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
                             card.style.setProperty('min-height', '180px', 'important');
-                            card.style.setProperty('box-shadow', 'none', 'important');
+                            card.style.setProperty('box-shadow', '0 10px 30px rgba(0,0,0,0.5)', 'important');
                             card.style.setProperty('animation', 'none', 'important');
                             
                             const domainHeader = card.querySelector('h3');
                             if (domainHeader) {
-                                domainHeader.style.setProperty('color', themeGold, 'important');
-                                domainHeader.style.setProperty('font-size', '1.4rem', 'important');
-                                domainHeader.style.setProperty('margin-bottom', '12px', 'important');
+                                domainHeader.style.setProperty('color', '#ffdc47', 'important'); // Brighter Gold
+                                domainHeader.style.setProperty('font-size', '1.6rem', 'important');
+                                domainHeader.style.setProperty('font-weight', '800', 'important');
+                                domainHeader.style.setProperty('margin-bottom', '15px', 'important');
+                                domainHeader.style.setProperty('letter-spacing', '0.5px', 'important');
                             }
 
                             const desc = card.querySelector('.domain-definition');
                             if (desc) {
                                 desc.style.setProperty('color', '#ffffff', 'important');
-                                desc.style.setProperty('font-size', '1rem', 'important');
-                                desc.style.setProperty('line-height', '1.5', 'important');
+                                desc.style.setProperty('font-size', '1.1rem', 'important');
+                                desc.style.setProperty('font-weight', '500', 'important');
+                                desc.style.setProperty('line-height', '1.6', 'important');
                             }
 
                             const scoreNum = card.querySelector('.score-num');
