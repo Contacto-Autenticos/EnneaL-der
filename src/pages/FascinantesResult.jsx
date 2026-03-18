@@ -161,8 +161,8 @@ const FascinantesResult = () => {
                 backgroundColor: '#ffffff',
                 scale: 2,
                 useCORS: true,
-                windowWidth: 1200,
-                width: 1200,
+                windowWidth: 1000,
+                width: 1000,
                 scrollX: 0,
                 scrollY: 0,
                 onclone: (clonedDoc) => {
@@ -172,12 +172,15 @@ const FascinantesResult = () => {
                         const themeGold = '#ddbe3d';
                         const bgColor = '#00121d'; 
                         
-                        // Add padding and preserve layout for clean capture
-                        clonedContent.style.setProperty('background', '#ffffff', 'important');
-                        clonedContent.style.setProperty('padding', '40px', 'important'); // Add inner margin
+                        // Force rigid width that matches the capture viewport
+                        clonedContent.style.setProperty('width', '1000px', 'important');
+                        clonedContent.style.setProperty('min-width', '1000px', 'important');
+                        clonedContent.style.setProperty('margin', '0', 'important');
+                        clonedContent.style.setProperty('padding', '50px', 'important'); // Balanced padding
                         clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
+                        clonedContent.style.setProperty('background', '#ffffff', 'important');
                         clonedContent.style.setProperty('filter', 'none', 'important'); 
-                        
+                        clonedContent.style.setProperty('display', 'block', 'important');                        
                         const title = clonedContent.querySelector('h1');
                         if (title) {
                             title.style.setProperty('color', '#8a6a00', 'important');
