@@ -210,7 +210,6 @@ const FascinantesResult = () => {
                     }
                 }
             });
-            });
 
             const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
             const imageFile = new File([imageBlob], 'mi-radar-fascinante.png', { type: 'image/png' });
