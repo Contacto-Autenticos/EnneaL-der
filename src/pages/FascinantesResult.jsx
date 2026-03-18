@@ -144,6 +144,15 @@ const FascinantesResult = () => {
         if (!reportRef.current || isDownloading) return;
         setIsDownloading(true);
 
+        // Map real SVG physical dimensions to the viewBox inside the clone
+        const liveSvg = reportRef.current.querySelector('.fascinantes-radar-container svg');
+        let realSvgW = 500; let realSvgH = 500;
+        if (liveSvg) {
+            const rect = liveSvg.getBoundingClientRect();
+            realSvgW = rect.width;
+            realSvgH = rect.height;
+        }
+
         try {
             const canvas = await html2canvas(reportRef.current, {
                 backgroundColor: '#ffffff',
@@ -215,26 +224,22 @@ const FascinantesResult = () => {
                                 const svg = radarContainer.querySelector('svg');
                                 
                                 if (wrapper && svg) {
-                                    const currentW = parseFloat(svg.getAttribute('width')) || 500;
-                                    const currentH = parseFloat(svg.getAttribute('height')) || 500;
+                                    wrapper.style.setProperty('width', '800px', 'important');
+                                    wrapper.style.setProperty('height', '720px', 'important');
+                                    wrapper.style.setProperty('display', 'flex', 'important');
+                                    wrapper.style.setProperty('justify-content', 'center', 'important');
+                                    wrapper.style.setProperty('align-items', 'center', 'important');
+                                    wrapper.style.setProperty('margin', '0 auto', 'important');
+                                    wrapper.style.removeProperty('transform');
+                                    wrapper.style.removeProperty('transform-origin');
                                     
-                                    const scaleX = 800 / currentW;
-                                    const scaleY = 720 / currentH;
-                                    const scale = Math.min(scaleX, scaleY) * 0.95; // 0.95 to ensure safe padding
-                                    
-                                    // Allow radarContainer to center the wrapper perfectly
-                                    radarContainer.style.setProperty('width', '800px', 'important');
-                                    radarContainer.style.setProperty('height', '720px', 'important');
-                                    radarContainer.style.setProperty('display', 'flex', 'important');
-                                    radarContainer.style.setProperty('justify-content', 'center', 'important');
-                                    radarContainer.style.setProperty('align-items', 'center', 'important');
-                                    radarContainer.style.setProperty('margin', '0 auto', 'important');
-
-                                    // Scale the entire wrapper holding the SVG using CSS transforms
-                                    wrapper.style.setProperty('transform', `scale(${scale})`, 'important');
-                                    wrapper.style.setProperty('transform-origin', 'center center', 'important');
-                                    
+                                    // Use exact pre-measured pixel dimensions so html2canvas correctly maps internal coordinates
+                                    svg.setAttribute('viewBox', `0 0 ${realSvgW} ${realSvgH}`);
+                                    svg.setAttribute('width', '100%');
+                                    svg.setAttribute('height', '100%');
                                     svg.style.setProperty('overflow', 'visible', 'important');
+                                    svg.style.setProperty('margin', '0 auto', 'important');
+                                    svg.style.setProperty('display', 'block', 'important');
                                 }
                             }
                         }
