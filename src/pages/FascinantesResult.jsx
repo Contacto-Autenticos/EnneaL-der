@@ -235,37 +235,28 @@ const FascinantesResult = () => {
                                     const isSocial = textContent.includes('SOCIAL');
                                     const isCorporal = textContent.includes('CORPORAL');
 
+                                    // FINAL REFINEMENT: All labels CENTERED BELOW icons at 11px
+                                    textBlock.setAttribute('x', '0');
+                                    textBlock.style.textAnchor = 'middle';
+
                                     if (isCorporal) {
-                                        // TOP: Centered above icon
-                                        textBlock.setAttribute('x', '0');
-                                        textBlock.style.textAnchor = 'middle';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.3em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-1.3em');
+                                        // TOP
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.5em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-1.5em');
                                     } else if (isSocial) {
-                                        // BOTTOM: Centered below icon
-                                        textBlock.setAttribute('x', '0');
-                                        textBlock.style.textAnchor = 'middle';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '1.2em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '1.2em');
-                                    } else if (isFinanciero || isEspiritual) {
-                                        // LEFT SIDE (Financiero, Espiritual): BELOW AND RIGHT ALIGNED
-                                        textBlock.setAttribute('x', '10'); // Small offset to end under the icon
-                                        textBlock.style.textAnchor = 'end';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
-                                    } else if (isMental || isEmocional) {
-                                        // RIGHT SIDE (Mental, Emocional): BELOW AND LEFT ALIGNED
-                                        textBlock.setAttribute('x', '-10'); // Small offset to start under the icon
-                                        textBlock.style.textAnchor = 'start';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
+                                        // BOTTOM
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
+                                    } else {
+                                        // SIDE 4: Clearly BELOW the icon
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.8em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.8em');
                                     }
 
-                                    // Uniform white styling as previously configured
                                     tspans.forEach(ts => {
-                                        ts.setAttribute('x', textBlock.getAttribute('x'));
+                                        ts.setAttribute('x', '0');
                                         ts.style.fill = '#ffffff';
-                                        ts.style.fontSize = '8px';
+                                        ts.style.fontSize = '11px'; // Enlarged to 11px
                                         ts.style.fontWeight = '800';
                                         ts.style.opacity = '1';
                                         ts.style.visibility = 'visible';
