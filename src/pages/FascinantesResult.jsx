@@ -211,14 +211,14 @@ const FascinantesResult = () => {
                                         });
 
                                         if (isCorporal) {
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-3.2em'); // Closer
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-4em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-3.2em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-4em');
                                         } else {
                                             // Others (BELOW and CLOSER)
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '2.5em'); // Significantly closer
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '2.5em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3em');
                                         }
                                     }
                                 });
