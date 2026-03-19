@@ -261,12 +261,23 @@ const FascinantesResult = () => {
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                     }
 
-                                    // Align all tspans to the same x-axis as the parent text block
-                                    tspans.forEach(ts => {
+                                    // Styling all tspans with hierarchy
+                                    tspans.forEach((ts, idx) => {
                                         ts.setAttribute('x', textBlock.getAttribute('x'));
-                                        ts.style.fill = '#ffffff';
                                         ts.style.opacity = '1';
                                         ts.style.visibility = 'visible';
+                                        
+                                        // "DOMINIO" first line: Smaller & Gray
+                                        if (idx === 0) {
+                                            ts.style.fill = 'rgba(255, 255, 255, 0.6)';
+                                            ts.style.fontSize = '7px';
+                                            ts.style.fontWeight = '700';
+                                        } else {
+                                            // Second line (Domain name): Larger & White
+                                            ts.style.fill = '#ffffff';
+                                            ts.style.fontSize = '9px';
+                                            ts.style.fontWeight = '900';
+                                        }
                                     });
 
                                     // Secondary line spacing remains consistent
