@@ -225,6 +225,7 @@ const FascinantesResult = () => {
                                         textTransform: 'uppercase',
                                         textAnchor: 'middle'
                                     });
+                                    const tspans = textBlock.querySelectorAll('tspan');
                                     
                                     // Precision positioning for all 6 domains
                                     const isFinanciero = textContent.includes('FINANCIERO');
