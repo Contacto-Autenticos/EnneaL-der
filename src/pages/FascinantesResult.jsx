@@ -236,17 +236,22 @@ const FascinantesResult = () => {
                                         ts.style.visibility = 'visible';
                                     });
 
-                                    // Precision spacing to match FascinantesRadar logic
+                                    // Precision spacing to match user request and FascinantesRadar logic
                                     if (isCorporal) {
+                                        // TOP: Text ABOVE the icon
+                                        textBlock.setAttribute('x', '0');
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.3em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '-1.3em');
                                     } else if (isSocial) {
+                                        // BOTTOM: Text BELOW the icon
+                                        textBlock.setAttribute('x', '0');
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '1.2em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.2em');
                                     } else {
-                                        // For Mental, Emocional, Espiritual, Financiero: Vertical center align
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                        // SIDES (Mental, Emocional, Espiritual, Financiero): Also below their icons
+                                        textBlock.setAttribute('x', '0'); // Force center under icon
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                     }
 
                                     // Secondary line spacing remains the same
