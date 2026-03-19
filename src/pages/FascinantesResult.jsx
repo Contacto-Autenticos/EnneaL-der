@@ -122,13 +122,9 @@ const FascinantesResult = () => {
                         Object.assign(clonedSection.style, {
                             width: '800px',
                             height: '800px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                            display: 'block', // Switch to block for absolute children
                             background: '#00121d',
                             padding: '0',
-                            paddingTop: '0', // Centered via flex
                             margin: '0',
                             position: 'relative',
                             overflow: 'visible',
@@ -142,6 +138,9 @@ const FascinantesResult = () => {
                             Object.assign(radarContainer.style, {
                                 width: '650px',
                                 height: '650px',
+                                position: 'absolute',
+                                left: '75px', // (800 - 650) / 2
+                                top: '75px',  // (800 - 650) / 2
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -149,21 +148,21 @@ const FascinantesResult = () => {
                                 margin: '0',
                                 padding: '0',
                                 transform: 'none',
-                                position: 'relative',
                                 overflow: 'visible'
                             });
                             
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
-                                // Keep SVG at its natural size and let Flexbox center it
-                                svg.setAttribute('width', '600');
-                                svg.setAttribute('height', '600');
+                                // Keep SVG at its natural size
+                                svg.setAttribute('width', '650');
+                                svg.setAttribute('height', '650');
                                 svg.setAttribute('viewBox', '0 0 650 650');
                                 
                                 Object.assign(svg.style, {
-                                    width: '600px',
-                                    height: '600px',
+                                    width: '650px',
+                                    height: '650px',
                                     margin: '0',
+                                    padding: '0',
                                     position: 'relative',
                                     overflow: 'visible',
                                     transform: 'none', 
