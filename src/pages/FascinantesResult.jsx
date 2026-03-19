@@ -225,6 +225,7 @@ const FascinantesResult = () => {
                                         textTransform: 'uppercase',
                                         textAnchor: 'middle'
                                     });
+                                    const tspans = textBlock.querySelectorAll('tspan');
                                     // REFINED POSITIONING: Matching the user's second reference image
                                     const isFinanciero = textContent.includes('FINANCIERO');
                                     const isEspiritual = textContent.includes('ESPIRITUAL');
