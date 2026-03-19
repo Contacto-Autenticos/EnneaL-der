@@ -170,7 +170,7 @@ const FascinantesResult = () => {
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(15px, -50px)', // Moved 20px RIGHT as requested (-5 to 15) and 5px more UP
+                                    transform: 'translate(30px, -50px)', // Moved 15px further RIGHT as requested (15 to 30)
                                     display: 'block'
                                 });
                                 
