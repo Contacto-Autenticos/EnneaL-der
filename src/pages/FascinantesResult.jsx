@@ -115,14 +115,15 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedSection = clonedDoc.querySelector('.radar-section');
                     if (clonedSection) {
-                        // COMPLETELY WIPE existing styles to prevent interference
-                        clonedSection.style.cssText = "";
+                        // 1. RECONSTRUCTION: Total wipeout of captured content
+                        clonedSection.innerHTML = '';
                         
-                        // Force a beautiful square container for social media
+                        // 2. ISOLATED CANVAS (800x800)
+                        // This ensures the capture area is exactly what we want, regardless of the screen
                         Object.assign(clonedSection.style, {
                             width: '800px',
                             height: '800px',
-                            display: 'block', // Switch to block for absolute children
+                            display: 'block',
                             background: '#00121d',
                             padding: '0',
                             margin: '0',
@@ -131,119 +132,119 @@ const FascinantesResult = () => {
                             boxSizing: 'border-box'
                         });
 
-                        const radarContainer = clonedSection.querySelector('.fascinantes-radar-container');
-                        if (radarContainer) {
-                            // Reset container styles too
-                            radarContainer.style.cssText = "";
-                            Object.assign(radarContainer.style, {
+                        // 3. DEDICATED RADAR CONTAINER (650x650 centered)
+                        const radarContainer = clonedDoc.createElement('div');
+                        Object.assign(radarContainer.style, {
+                            width: '650px',
+                            height: '650px',
+                            position: 'absolute',
+                            left: '75px', // Absolute Horizontal Center: (800 - 650) / 2
+                            top: '75px',  // Absolute Vertical Center: (800 - 650) / 2
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            background: 'transparent',
+                            margin: '0',
+                            padding: '0',
+                            overflow: 'visible'
+                        });
+                        clonedSection.appendChild(radarContainer);
+
+                        // 4. SVG CLONE & SANITIZE
+                        const originalSvg = document.querySelector('.radar-section svg');
+                        if (originalSvg) {
+                            const svg = originalSvg.cloneNode(true);
+                            svg.setAttribute('width', '650');
+                            svg.setAttribute('height', '650');
+                            svg.setAttribute('viewBox', '0 0 650 650');
+                            
+                            Object.assign(svg.style, {
                                 width: '650px',
                                 height: '650px',
-                                position: 'absolute',
-                                left: '75px', // (800 - 650) / 2
-                                top: '75px',  // (800 - 650) / 2
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                background: 'transparent',
                                 margin: '0',
                                 padding: '0',
-                                transform: 'none',
-                                overflow: 'visible'
+                                position: 'relative',
+                                overflow: 'visible',
+                                transform: 'none', 
+                                display: 'block',
+                                filter: 'none'
                             });
                             
-                            const svg = radarContainer.querySelector('svg');
-                            if (svg) {
-                                // Keep SVG at its natural size
-                                svg.setAttribute('width', '650');
-                                svg.setAttribute('height', '650');
-                                svg.setAttribute('viewBox', '0 0 650 650');
-                                
-                                Object.assign(svg.style, {
-                                    width: '650px',
-                                    height: '650px',
-                                    margin: '0',
-                                    padding: '0',
-                                    position: 'relative',
-                                    overflow: 'visible',
-                                    transform: 'none', 
+                            // Force absolute visibility on all nested elements
+                            svg.querySelectorAll('*').forEach(el => {
+                                if (el.style) {
+                                    el.style.overflow = 'visible';
+                                    el.style.clipPath = 'none';
+                                }
+                            });
+                            
+                            radarContainer.appendChild(svg);
+                            
+                            // 5. SURGICAL LABEL POSITIONING
+                            const textBlocks = svg.querySelectorAll('text');
+                            textBlocks.forEach(textBlock => {
+                                Object.assign(textBlock.style, {
+                                    fill: '#ffffff',
+                                    opacity: '1',
+                                    visibility: 'visible',
                                     display: 'block'
                                 });
+
+                                const textContent = textBlock.textContent.trim().toUpperCase();
+                                const isNumeric = /^\d+$/.test(textContent);
                                 
-                                // FORCE SVG and its parents to show everything (important for labels)
-                                let curr = svg;
-                                while (curr && curr !== clonedSection) {
-                                    curr.style.overflow = 'visible';
-                                    curr.style.clipPath = 'none';
-                                    curr = curr.parentElement;
+                                if (isNumeric) {
+                                    textBlock.style.fontWeight = 'bold';
+                                    textBlock.style.fontSize = '12px';
+                                    return; 
                                 }
-                                
-                                // Target <text> elements to keep tspan lines grouped
-                                const textBlocks = clonedSection.querySelectorAll('text');
-                                textBlocks.forEach(textBlock => {
-                                    textBlock.style.setProperty('fill', '#ffffff', 'important');
-                                    textBlock.style.setProperty('opacity', '1', 'important');
-                                    textBlock.style.setProperty('visibility', 'visible', 'important');
-                                    textBlock.style.setProperty('display', 'block', 'important');
 
-                                    const textContent = textBlock.textContent.trim().toUpperCase();
-                                    const isNumeric = /^\d+$/.test(textContent);
+                                const isDomainLabel = textContent.includes('DOMINIO') || 
+                                    ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO', 'RITUAL'].some(d => textContent.includes(d));
+
+                                if (isDomainLabel) {
+                                    Object.assign(textBlock.style, {
+                                        fontWeight: '800',
+                                        fontSize: '8px',
+                                        textTransform: 'uppercase',
+                                        textAnchor: 'middle'
+                                    });
                                     
-                                    if (isNumeric) {
-                                        textBlock.style.setProperty('font-weight', 'bold', 'important');
-                                        textBlock.style.setProperty('font-size', '12px', 'important');
-                                        return; 
+                                    const tspans = textBlock.querySelectorAll('tspan');
+                                    const isCorporal = textContent.includes('CORPORAL');
+                                    
+                                    tspans.forEach(ts => {
+                                        ts.style.fill = '#ffffff';
+                                        ts.style.opacity = '1';
+                                        ts.style.visibility = 'visible';
+                                    });
+
+                                    // Tight 2.2em proximity for ALL domains
+                                    if (isCorporal) {
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-2.2em'); 
+                                        if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-2.2em');
+                                    } else {
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
+                                        if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                     }
-
-                                    const isDomainLabel = textContent.includes('DOMINIO') || 
-                                        ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO', 'RITUAL'].some(d => textContent.includes(d));
-
-                                    if (isDomainLabel) {
-                                        textBlock.style.setProperty('font-weight', '800', 'important');
-                                        textBlock.style.setProperty('font-size', '8px', 'important'); // Reduced as requested
-                                        textBlock.style.setProperty('text-transform', 'uppercase', 'important');
-                                        textBlock.style.setProperty('text-anchor', 'middle', 'important');
-                                        
-                                        const tspans = textBlock.querySelectorAll('tspan');
-                                        const isCorporal = textContent.includes('CORPORAL');
-                                        
-                                        // Ensure tspans are also visible
-                                        tspans.forEach(ts => {
-                                            ts.style.setProperty('fill', '#ffffff', 'important');
-                                            ts.style.setProperty('opacity', '1', 'important');
-                                            ts.style.setProperty('visibility', 'visible', 'important');
-                                        });
-
-                                        if (isCorporal) {
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-2.2em'); // Matches Social distance
-                                            if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-2.2em');
-                                        } else if (textContent.includes('SOCIAL')) {
-                                            // Ensure Social is BELOW and visible
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
-                                            if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
-                                        } else {
-                                            // Others (BELOW and CLOSER)
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
-                                            if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
-                                        }
-                                    }
+                                }
+                            });
+                            
+                            // Ensure all icons are visible
+                            svg.querySelectorAll('svg').forEach(icon => {
+                                Object.assign(icon.style, {
+                                    filter: 'none',
+                                    opacity: '1',
+                                    visibility: 'visible',
+                                    display: 'block'
                                 });
-                                
-                                // Lucide icons inside SVG
-                                const icons = svg.querySelectorAll('svg');
-                                icons.forEach(icon => {
-                                    icon.style.filter = 'none';
-                                    icon.style.opacity = '1';
-                                    icon.style.setProperty('visibility', 'visible', 'important');
-                                    icon.style.setProperty('display', 'block', 'important');
-                                });
-                            }
+                            });
                         }
 
-                        // Add Official Branding at the bottom
-                        const branding = document.createElement('div');
+                        // 6. BRANDING RECONSTRUCTION
+                        const branding = clonedDoc.createElement('div');
                         Object.assign(branding.style, {
                             position: 'absolute',
                             bottom: '30px',
@@ -255,23 +256,27 @@ const FascinantesResult = () => {
                             zIndex: '10'
                         });
 
-                        const logo = document.createElement('img');
+                        const logo = clonedDoc.createElement('img');
                         logo.src = '/Logo-Blanco.png';
-                        logo.style.height = '40px';
-                        logo.style.opacity = '0.9';
-                        
-                        const text = document.createElement('span');
-                        text.innerText = 'AUTODIAGNÓSTICO - AUTÉNTICOS';
-                        Object.assign(text.style, {
-                            color: '#ffd700',
-                            fontSize: '12px',
-                            fontWeight: '800',
-                            letterSpacing: '3px',
-                            fontFamily: 'Inter, sans-serif'
+                        Object.assign(logo.style, {
+                            height: '40px',
+                            width: 'auto',
+                            display: 'block',
+                            marginBottom: '4px'
                         });
-
                         branding.appendChild(logo);
-                        branding.appendChild(text);
+
+                        const footerText = clonedDoc.createElement('div');
+                        footerText.textContent = 'AUTODIAGNÓSTICO - AUTÉNTICOS';
+                        Object.assign(footerText.style, {
+                            color: '#FFD700',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            letterSpacing: '2px',
+                            fontFamily: 'sans-serif'
+                        });
+                        branding.appendChild(footerText);
+
                         clonedSection.appendChild(branding);
                     }
                 }
