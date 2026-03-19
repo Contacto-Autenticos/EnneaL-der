@@ -156,16 +156,21 @@ const FascinantesResult = () => {
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
                                 // Ensure SVG is large and centered
-                                // CRITICAL: Expand SVG viewport to full 800x800 to prevent label clipping
+                                // CRITICAL: Expand SVG viewport and viewBox to full 800x800 to prevent label clipping
                                 svg.setAttribute('width', '800');
                                 svg.setAttribute('height', '800');
+                                // Adjust viewBox to center the original 650x650 area within the 800x800 area
+                                // Original center was 325,325. New center should be 400,400.
+                                // So we shift the origin by (325-400) = -75
+                                svg.setAttribute('viewBox', '-75 -75 800 800');
+                                
                                 Object.assign(svg.style, {
                                     width: '800px',
                                     height: '800px',
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(0px, -20px)', // True centering with slight upward lift
+                                    transform: 'translate(-5px, -45px)', // 5px LEFT and 25px more UP (-20 to -45)
                                     display: 'block'
                                 });
                                 
@@ -214,9 +219,14 @@ const FascinantesResult = () => {
                                         });
 
                                         if (isCorporal) {
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-4.5em'); 
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-4em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-4.5em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-4em');
+                                        } else if (textContent.includes('SOCIAL')) {
+                                            // Ensure Social is BELOW and visible
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em'); 
+                                            if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
                                         } else {
                                             // Others (BELOW and CLOSER)
                                             if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em'); 
