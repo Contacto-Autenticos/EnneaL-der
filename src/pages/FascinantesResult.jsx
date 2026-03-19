@@ -228,6 +228,7 @@ const FascinantesResult = () => {
                                     
                                     const tspans = textBlock.querySelectorAll('tspan');
                                     const isCorporal = textContent.includes('CORPORAL');
+                                    const isSocial = textContent.includes('SOCIAL');
                                     
                                     tspans.forEach(ts => {
                                         ts.style.fill = '#ffffff';
@@ -235,15 +236,22 @@ const FascinantesResult = () => {
                                         ts.style.visibility = 'visible';
                                     });
 
-                                    // Tight 2.2em proximity for ALL domains
+                                    // Precision spacing to match FascinantesRadar logic
                                     if (isCorporal) {
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-2.2em'); 
-                                        if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-2.2em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.3em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-1.3em');
+                                    } else if (isSocial) {
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '1.2em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '1.2em');
                                     } else {
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
-                                        if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
+                                        // For Mental, Emocional, Espiritual, Financiero: Vertical center align
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                    }
+
+                                    // Secondary line spacing remains the same
+                                    if (tspans.length > 1) {
+                                        tspans[1].setAttribute('dy', '1.2em');
                                     }
                                 }
                             });
@@ -268,7 +276,7 @@ const FascinantesResult = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: '8px',
+                            gap: '2px', // Tightened gap
                             zIndex: '10'
                         });
 
@@ -278,12 +286,12 @@ const FascinantesResult = () => {
                             height: '40px',
                             width: 'auto',
                             display: 'block',
-                            marginBottom: '4px'
+                            marginBottom: '0px' // Removed margin
                         });
                         branding.appendChild(logo);
 
                         const footerText = clonedDoc.createElement('div');
-                        footerText.textContent = 'AUTODIAGNÓSTICO - AUTÉNTICOS';
+                        footerText.textContent = 'AUTODIAGNÓSTICO'; // Removed "- AUTÉNTICOS"
                         Object.assign(footerText.style, {
                             color: '#FFD700',
                             fontSize: '11px',
