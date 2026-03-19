@@ -227,7 +227,7 @@ const FascinantesResult = () => {
                                     });
                                     const tspans = textBlock.querySelectorAll('tspan');
                                     
-                                    // REFINED POSITIONING: User's definitive Below & Aligned configuration
+                                    // FINAL REFINEMENT: Detailed Below & Aligned configuration
                                     const isFinanciero = textContent.includes('FINANCIERO');
                                     const isEspiritual = textContent.includes('ESPIRITUAL');
                                     const isMental = textContent.includes('MENTAL');
@@ -236,29 +236,29 @@ const FascinantesResult = () => {
                                     const isCorporal = textContent.includes('CORPORAL');
 
                                     if (isCorporal) {
-                                        // TOP: Symmetrical center
+                                        // TOP: Text ABOVE icon
                                         textBlock.setAttribute('x', '0');
                                         textBlock.style.textAnchor = 'middle';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '-1.5em');
                                     } else if (isSocial) {
-                                        // BOTTOM: Symmetrical center
+                                        // BOTTOM: Text BELOW icon
                                         textBlock.setAttribute('x', '0');
                                         textBlock.style.textAnchor = 'middle';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
                                     } else if (isFinanciero || isEspiritual) {
-                                        // LEFT SIDE: Below icon + Left Aligned (Start)
-                                        textBlock.setAttribute('x', '-40');
+                                        // LEFT SIDE: BELOW icon + Left Aligned (Start)
+                                        textBlock.setAttribute('x', '-30');
                                         textBlock.style.textAnchor = 'start';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.5em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.5em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '3.2em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '3.2em');
                                     } else if (isMental || isEmocional) {
-                                        // RIGHT SIDE: Below icon + Right Aligned (End)
-                                        textBlock.setAttribute('x', '40');
+                                        // RIGHT SIDE: BELOW icon + Right Aligned (End)
+                                        textBlock.setAttribute('x', '30');
                                         textBlock.style.textAnchor = 'end';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.5em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.5em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '3.2em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '3.2em');
                                     }
 
                                     // Apply core styling and shared properties to tspan children in one pass
