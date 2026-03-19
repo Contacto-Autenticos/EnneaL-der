@@ -140,8 +140,8 @@ const FascinantesResult = () => {
                             // Reset container styles too
                             radarContainer.style.cssText = "";
                             Object.assign(radarContainer.style, {
-                                width: '750px',
-                                height: '700px',
+                                width: '800px',
+                                height: '800px',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -149,21 +149,24 @@ const FascinantesResult = () => {
                                 margin: '0',
                                 padding: '0',
                                 transform: 'none',
-                                position: 'relative'
+                                position: 'relative',
+                                overflow: 'visible'
                             });
                             
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
                                 // Ensure SVG is large and centered
-                                svg.setAttribute('width', '650');
-                                svg.setAttribute('height', '650');
+                                // CRITICAL: Expand SVG viewport to full 800x800 to prevent label clipping
+                                svg.setAttribute('width', '800');
+                                svg.setAttribute('height', '800');
                                 Object.assign(svg.style, {
-                                    width: '550px', // Scaled down to give room for labels
-                                    height: '550px',
+                                    width: '800px',
+                                    height: '800px',
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(13px, -15px)' // Moderate shift
+                                    transform: 'translate(0px, -20px)', // True centering with slight upward lift
+                                    display: 'block'
                                 });
                                 
                                 // FORCE SVG and its parents to show everything
@@ -211,14 +214,14 @@ const FascinantesResult = () => {
                                         });
 
                                         if (isCorporal) {
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-4em'); 
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-4.5em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-4em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-4.5em');
                                         } else {
                                             // Others (BELOW and CLOSER)
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3em'); 
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
                                         }
                                     }
                                 });
