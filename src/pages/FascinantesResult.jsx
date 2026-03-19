@@ -226,35 +226,49 @@ const FascinantesResult = () => {
                                         textAnchor: 'middle'
                                     });
                                     
-                                    const tspans = textBlock.querySelectorAll('tspan');
-                                    const isCorporal = textContent.includes('CORPORAL');
+                                    // Precision positioning for all 6 domains
+                                    const isFinanciero = textContent.includes('FINANCIERO');
+                                    const isEspiritual = textContent.includes('ESPIRITUAL');
+                                    const isMental = textContent.includes('MENTAL');
+                                    const isEmocional = textContent.includes('EMOCIONAL');
                                     const isSocial = textContent.includes('SOCIAL');
-                                    
+                                    const isCorporal = textContent.includes('CORPORAL');
+
+                                    if (isCorporal) {
+                                        // TOP: Centered above icon
+                                        textBlock.setAttribute('x', '0');
+                                        textBlock.style.textAnchor = 'middle';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.3em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-1.3em');
+                                    } else if (isSocial) {
+                                        // BOTTOM: Centered below icon
+                                        textBlock.setAttribute('x', '0');
+                                        textBlock.style.textAnchor = 'middle';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '1.2em'); 
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '1.2em');
+                                    } else if (isFinanciero || isEspiritual) {
+                                        // LEFT SIDE: Right aligned (facing radar)
+                                        textBlock.setAttribute('x', '-26');
+                                        textBlock.style.textAnchor = 'end';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                    } else if (isMental || isEmocional) {
+                                        // RIGHT SIDE: Left aligned (facing radar)
+                                        textBlock.setAttribute('x', '26');
+                                        textBlock.style.textAnchor = 'start';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                    }
+
+                                    // Align all tspans to the same x-axis as the parent text block
                                     tspans.forEach(ts => {
+                                        ts.setAttribute('x', textBlock.getAttribute('x'));
                                         ts.style.fill = '#ffffff';
                                         ts.style.opacity = '1';
                                         ts.style.visibility = 'visible';
                                     });
 
-                                    // Precision spacing to match user request and FascinantesRadar logic
-                                    if (isCorporal) {
-                                        // TOP: Text ABOVE the icon
-                                        textBlock.setAttribute('x', '0');
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.3em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '-1.3em');
-                                    } else if (isSocial) {
-                                        // BOTTOM: Text BELOW the icon
-                                        textBlock.setAttribute('x', '0');
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '1.2em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '1.2em');
-                                    } else {
-                                        // SIDES (Mental, Emocional, Espiritual, Financiero): Also below their icons
-                                        textBlock.setAttribute('x', '0'); // Force center under icon
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
-                                    }
-
-                                    // Secondary line spacing remains the same
+                                    // Secondary line spacing remains consistent
                                     if (tspans.length > 1) {
                                         tspans[1].setAttribute('dy', '1.2em');
                                     }
