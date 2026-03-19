@@ -128,10 +128,10 @@ const FascinantesResult = () => {
                             alignItems: 'center',
                             background: '#00121d',
                             padding: '0',
-                            paddingTop: '60px', // More space for top label
+                            paddingTop: '0', // Centered via flex
                             margin: '0',
                             position: 'relative',
-                            overflow: 'visible', // Changed from hidden to visible
+                            overflow: 'visible',
                             boxSizing: 'border-box'
                         });
 
@@ -158,12 +158,12 @@ const FascinantesResult = () => {
                                 svg.setAttribute('width', '650');
                                 svg.setAttribute('height', '650');
                                 Object.assign(svg.style, {
-                                    width: '650px',
-                                    height: '650px',
+                                    width: '550px', // Scaled down to give room for labels
+                                    height: '550px',
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(13px, -45px)' // Moved 15px UP as requested (-30 to -45)
+                                    transform: 'translate(13px, -15px)' // Moderate shift
                                 });
                                 
                                 // FORCE SVG and its parents to show everything
@@ -196,7 +196,7 @@ const FascinantesResult = () => {
 
                                     if (isDomainLabel) {
                                         textBlock.style.setProperty('font-weight', '800', 'important');
-                                        textBlock.style.setProperty('font-size', '10px', 'important');
+                                        textBlock.style.setProperty('font-size', '8px', 'important'); // Reduced as requested
                                         textBlock.style.setProperty('text-transform', 'uppercase', 'important');
                                         textBlock.style.setProperty('text-anchor', 'middle', 'important');
                                         
@@ -211,14 +211,14 @@ const FascinantesResult = () => {
                                         });
 
                                         if (isCorporal) {
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-5.5em');
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-3.2em'); // Closer
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-5.5em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-3.2em');
                                         } else {
                                             // Others (BELOW and CLOSER)
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3.8em');
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '2.5em'); // Significantly closer
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3.8em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '2.5em');
                                         }
                                     }
                                 });
