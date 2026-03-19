@@ -248,17 +248,17 @@ const FascinantesResult = () => {
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '1.2em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.2em');
                                     } else if (isFinanciero || isEspiritual) {
-                                        // LEFT SIDE: Right aligned (facing radar)
-                                        textBlock.setAttribute('x', '-26');
+                                        // LEFT SIDE (Financiero, Espiritual): BELOW AND RIGHT ALIGNED
+                                        textBlock.setAttribute('x', '10'); // Small offset to end under the icon
                                         textBlock.style.textAnchor = 'end';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                     } else if (isMental || isEmocional) {
-                                        // RIGHT SIDE: Left aligned (facing radar)
-                                        textBlock.setAttribute('x', '26');
+                                        // RIGHT SIDE (Mental, Emocional): BELOW AND LEFT ALIGNED
+                                        textBlock.setAttribute('x', '-10'); // Small offset to start under the icon
                                         textBlock.style.textAnchor = 'start';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                     }
 
                                     // Align all tspans to the same x-axis as the parent text block
