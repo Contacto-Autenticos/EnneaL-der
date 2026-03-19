@@ -140,8 +140,8 @@ const FascinantesResult = () => {
                             // Reset container styles too
                             radarContainer.style.cssText = "";
                             Object.assign(radarContainer.style, {
-                                width: '800px',
-                                height: '800px',
+                                width: '650px',
+                                height: '650px',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -155,27 +155,22 @@ const FascinantesResult = () => {
                             
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
-                                // Ensure SVG is large and centered
-                                // CRITICAL: Expand SVG viewport and viewBox to full 800x800 and center it
-                                svg.setAttribute('width', '800');
-                                svg.setAttribute('height', '800');
-                                
-                                // ABSOLUTE MATHEMATICAL CENTERING:
-                                // Image Center: 400, 400. Recharts Center: 325, 325.
-                                // xmin = 325 - 400 = -75. ymin = 325 - 400 = -75.
-                                svg.setAttribute('viewBox', '-75 -75 800 800');
+                                // Keep SVG at its natural size and let Flexbox center it
+                                svg.setAttribute('width', '600');
+                                svg.setAttribute('height', '600');
+                                svg.setAttribute('viewBox', '0 0 650 650');
                                 
                                 Object.assign(svg.style, {
-                                    width: '800px',
-                                    height: '800px',
+                                    width: '600px',
+                                    height: '600px',
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'none', // PERFECT CENTERING
+                                    transform: 'none', 
                                     display: 'block'
                                 });
                                 
-                                // FORCE SVG and its parents to show everything
+                                // FORCE SVG and its parents to show everything (important for labels)
                                 let curr = svg;
                                 while (curr && curr !== clonedSection) {
                                     curr.style.overflow = 'visible';
