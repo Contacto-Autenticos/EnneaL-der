@@ -135,14 +135,14 @@ const FascinantesResult = () => {
                             boxSizing: 'border-box'
                         });
 
-                        // 3. DEDICATED RADAR CONTAINER (650x650 centered)
+                        // 3. DEDICATED RADAR CONTAINER (800x800 full-size)
                         const radarContainer = clonedDoc.createElement('div');
                         Object.assign(radarContainer.style, {
-                            width: '650px',
-                            height: '650px',
+                            width: '800px',
+                            height: '800px',
                             position: 'absolute',
-                            left: '75px', // Absolute Horizontal Center: (800 - 650) / 2
-                            top: '75px',  // Absolute Vertical Center: (800 - 650) / 2
+                            left: '0', 
+                            top: '0',
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -153,17 +153,15 @@ const FascinantesResult = () => {
                         });
                         clonedSection.appendChild(radarContainer);
 
-                        // 4. SVG CLONE & SANITIZE
+                        // 4. SVG CLONE & DYNAMIC CENTERING
                         const originalSvg = document.querySelector('.radar-section svg');
                         if (originalSvg) {
                             const svg = originalSvg.cloneNode(true);
-                            svg.setAttribute('width', '650');
-                            svg.setAttribute('height', '650');
-                            svg.setAttribute('viewBox', '0 0 650 650');
                             
+                            // Reset SVG container styles
                             Object.assign(svg.style, {
-                                width: '650px',
-                                height: '650px',
+                                width: '800px',
+                                height: '800px',
                                 margin: '0',
                                 padding: '0',
                                 position: 'relative',
@@ -172,6 +170,25 @@ const FascinantesResult = () => {
                                 display: 'block',
                                 filter: 'none'
                             });
+
+                            // DYNAMIC VIEWBOX CALCULATION
+                            // Recharts renders elements at absolute coordinates based on the current window size.
+                            // We find the actual center (cx, cy) of the radar grid to frame it perfectly.
+                            const gridCircles = svg.querySelectorAll('circle');
+                            let centerX = 400; // Fallback
+                            let centerY = 400; // Fallback
+                            
+                            if (gridCircles.length > 0) {
+                                // The polar grid circles are always centered at the radar's heart
+                                centerX = parseFloat(gridCircles[0].getAttribute('cx')) || centerX;
+                                centerY = parseFloat(gridCircles[0].getAttribute('cy')) || centerY;
+                            }
+                            
+                            // We want this Point (centerX, centerY) to be the EXACT center of our 800x800 image.
+                            // So the viewBox must start at (centerX - 400, centerY - 400)
+                            svg.setAttribute('width', '800');
+                            svg.setAttribute('height', '800');
+                            svg.setAttribute('viewBox', `${centerX - 400} ${centerY - 400} 800 800`);
                             
                             // Force absolute visibility on all nested elements
                             svg.querySelectorAll('*').forEach(el => {
