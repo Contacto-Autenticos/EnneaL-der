@@ -226,7 +226,8 @@ const FascinantesResult = () => {
                                         textAnchor: 'middle'
                                     });
                                     const tspans = textBlock.querySelectorAll('tspan');
-                                    // REFINED POSITIONING: Matching the user's second reference image
+                                    
+                                    // REFINED POSITIONING: User's definitive Below & Aligned configuration
                                     const isFinanciero = textContent.includes('FINANCIERO');
                                     const isEspiritual = textContent.includes('ESPIRITUAL');
                                     const isMental = textContent.includes('MENTAL');
@@ -235,32 +236,32 @@ const FascinantesResult = () => {
                                     const isCorporal = textContent.includes('CORPORAL');
 
                                     if (isCorporal) {
-                                        // TOP: Same separation as Social
+                                        // TOP: Symmetrical center
                                         textBlock.setAttribute('x', '0');
                                         textBlock.style.textAnchor = 'middle';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '-1.5em');
                                     } else if (isSocial) {
-                                        // BOTTOM: Standard 1.5em separation
+                                        // BOTTOM: Symmetrical center
                                         textBlock.setAttribute('x', '0');
                                         textBlock.style.textAnchor = 'middle';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
                                     } else if (isFinanciero || isEspiritual) {
-                                        // LEFT SIDE: Right aligned (facing radar), shifted left to touch margin
-                                        textBlock.setAttribute('x', '-35');
-                                        textBlock.style.textAnchor = 'end';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
-                                    } else if (isMental || isEmocional) {
-                                        // RIGHT SIDE: Left aligned (facing radar), shifted right to touch margin
-                                        textBlock.setAttribute('x', '35');
+                                        // LEFT SIDE: Below icon + Left Aligned (Start)
+                                        textBlock.setAttribute('x', '-40');
                                         textBlock.style.textAnchor = 'start';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.5em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.5em');
+                                    } else if (isMental || isEmocional) {
+                                        // RIGHT SIDE: Below icon + Right Aligned (End)
+                                        textBlock.setAttribute('x', '40');
+                                        textBlock.style.textAnchor = 'end';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.5em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.5em');
                                     }
 
-                                    // Apply styling and shared properties to tspan children in one pass
+                                    // Apply core styling and shared properties to tspan children in one pass
                                     tspans.forEach(ts => {
                                         ts.setAttribute('x', textBlock.getAttribute('x'));
                                         ts.style.fill = '#ffffff';
