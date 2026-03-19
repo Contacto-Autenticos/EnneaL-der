@@ -174,19 +174,16 @@ const FascinantesResult = () => {
                                     curr = curr.parentElement;
                                 }
                                 
-                                const allLabels = clonedSection.querySelectorAll('text, tspan, .recharts-text');
-                                allLabels.forEach(t => {
-                                    t.style.setProperty('fill', '#ffffff', 'important');
-                                    t.style.setProperty('opacity', '1', 'important');
-                                    t.style.setProperty('visibility', 'visible', 'important');
-                                    t.style.setProperty('display', 'block', 'important');
-
-                                    const textContent = t.textContent.trim().toUpperCase();
+                                // Target <text> elements to keep tspan lines grouped
+                                const textBlocks = clonedSection.querySelectorAll('text');
+                                textBlocks.forEach(textBlock => {
+                                    const textContent = textBlock.textContent.trim().toUpperCase();
                                     const isNumeric = /^\d+$/.test(textContent);
                                     
                                     if (isNumeric) {
-                                        t.style.setProperty('font-weight', 'bold', 'important');
-                                        t.style.setProperty('font-size', '12px', 'important');
+                                        textBlock.style.setProperty('fill', '#ffffff', 'important');
+                                        textBlock.style.setProperty('font-weight', 'bold', 'important');
+                                        textBlock.style.setProperty('font-size', '12px', 'important');
                                         return; 
                                     }
 
@@ -194,17 +191,24 @@ const FascinantesResult = () => {
                                         ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO', 'RITUAL'].some(d => textContent.includes(d));
 
                                     if (isDomainLabel) {
-                                        t.style.setProperty('font-weight', '800', 'important');
-                                        t.style.setProperty('font-size', '11px', 'important');
-                                        t.style.setProperty('text-transform', 'uppercase', 'important');
-                                        t.style.setProperty('text-anchor', 'middle', 'important');
+                                        textBlock.style.setProperty('fill', '#ffffff', 'important');
+                                        textBlock.style.setProperty('font-weight', '800', 'important');
+                                        textBlock.style.setProperty('font-size', '10px', 'important');
+                                        textBlock.style.setProperty('text-transform', 'uppercase', 'important');
+                                        textBlock.style.setProperty('text-anchor', 'middle', 'important');
                                         
-                                        const isSecondLine = t.tagName === 'tspan' && t.previousElementSibling;
+                                        const tspans = textBlock.querySelectorAll('tspan');
+                                        const isCorporal = textContent.includes('CORPORAL');
                                         
-                                        if (textContent.includes('CORPORAL')) {
-                                            t.setAttribute('dy', isSecondLine ? '1.2em' : '-5.5em');
+                                        if (isCorporal) {
+                                            // Move FIRST line significantly up, SECOND line follows naturally
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-5.5em');
+                                            if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
                                         } else {
-                                            t.setAttribute('dy', isSecondLine ? '1.2em' : '5.3em');
+                                            // Others (BELOW and CLOSER)
+                                            // Reduced dy from 5.3em/6.5em to 3.8em to bring them closer to icons
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3.8em');
+                                            if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
                                         }
                                     }
                                 });
