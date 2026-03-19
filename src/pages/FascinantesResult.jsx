@@ -159,10 +159,12 @@ const FascinantesResult = () => {
                                 // CRITICAL: Expand SVG viewport and viewBox to full 800x800 to prevent label clipping
                                 svg.setAttribute('width', '800');
                                 svg.setAttribute('height', '800');
-                                // Adjust viewBox to center the original 650x650 area within the 800x800 area
-                                // Original center was 325,325. New center should be 400,400.
-                                // So we shift the origin by (325-400) = -75
-                                svg.setAttribute('viewBox', '-75 -75 800 800');
+                                
+                                // ABSOLUTE CENTERING & SHIFT (Direct viewBox for 100% compatibility):
+                                // Target center in 800x800: X=440 (40px Right), Y=350 (50px Up)
+                                // Standard Recharts center: 325, 325.
+                                // xmin = 325 - 440 = -115. ymin = 325 - 350 = -25.
+                                svg.setAttribute('viewBox', '-115 -25 800 800');
                                 
                                 Object.assign(svg.style, {
                                     width: '800px',
@@ -170,7 +172,7 @@ const FascinantesResult = () => {
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'translate(30px, -50px)', // Moved 15px further RIGHT as requested (15 to 30)
+                                    transform: 'none', // ViewBox handles it now
                                     display: 'block'
                                 });
                                 
