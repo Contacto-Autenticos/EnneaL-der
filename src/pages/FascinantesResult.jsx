@@ -249,16 +249,16 @@ const FascinantesResult = () => {
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
                                     } else if (isFinanciero || isEspiritual) {
                                         // LEFT SIDE: BELOW icon + Left Aligned (Start)
-                                        textBlock.setAttribute('x', '-30');
+                                        textBlock.setAttribute('x', '-80');
                                         textBlock.style.textAnchor = 'start';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '3.2em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '3.2em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
                                     } else if (isMental || isEmocional) {
                                         // RIGHT SIDE: BELOW icon + Right Aligned (End)
-                                        textBlock.setAttribute('x', '30');
+                                        textBlock.setAttribute('x', '80');
                                         textBlock.style.textAnchor = 'end';
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '3.2em');
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '3.2em');
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
                                     }
 
                                     // Apply core styling and shared properties to tspan children in one pass
