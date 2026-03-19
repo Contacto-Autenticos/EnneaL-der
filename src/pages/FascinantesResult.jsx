@@ -175,8 +175,8 @@ const FascinantesResult = () => {
                             }
 
                             Object.assign(svg.style, {
-                                width: '680px', // Slightly larger for impact
-                                height: '680px',
+                                width: '600px', // Adjusted to user request for 600px
+                                height: '600px',
                                 margin: '0 auto',
                                 padding: '0',
                                 position: 'relative',
