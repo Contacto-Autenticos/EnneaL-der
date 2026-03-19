@@ -153,42 +153,38 @@ const FascinantesResult = () => {
                         });
                         clonedSection.appendChild(radarContainer);
 
-                        // 4. SVG CLONE & DYNAMIC CENTERING
+                        // 4. SVG CLONE & ASPECT RATIO PRESERVATION
                         const originalSvg = document.querySelector('.radar-section svg');
                         if (originalSvg) {
                             const svg = originalSvg.cloneNode(true);
                             
-                            // Reset SVG container styles
+                            // Instead of forcing a viewBox, we respect the original one
+                            // and let Flexbox on the parent handle the centering.
+                            const originalViewBox = originalSvg.getAttribute('viewBox');
+                            const originalW = originalSvg.getAttribute('width') || 650;
+                            const originalH = originalSvg.getAttribute('height') || 650;
+
+                            // Reset SVG to be a clean, styled child of the flex container
+                            svg.removeAttribute('width');
+                            svg.removeAttribute('height');
+                            
+                            if (originalViewBox) {
+                                svg.setAttribute('viewBox', originalViewBox);
+                            } else {
+                                svg.setAttribute('viewBox', `0 0 ${originalW} ${originalH}`);
+                            }
+
                             Object.assign(svg.style, {
-                                width: '800px',
-                                height: '800px',
-                                margin: '0',
+                                width: '680px', // Slightly larger for impact
+                                height: '680px',
+                                margin: '0 auto',
                                 padding: '0',
                                 position: 'relative',
                                 overflow: 'visible',
                                 transform: 'none', 
                                 display: 'block',
                                 filter: 'none'
-                            });
-
-                            // DYNAMIC VIEWBOX CALCULATION
-                            // Recharts renders elements at absolute coordinates based on the current window size.
-                            // We find the actual center (cx, cy) of the radar grid to frame it perfectly.
-                            const gridCircles = svg.querySelectorAll('circle');
-                            let centerX = 400; // Fallback
-                            let centerY = 400; // Fallback
-                            
-                            if (gridCircles.length > 0) {
-                                // The polar grid circles are always centered at the radar's heart
-                                centerX = parseFloat(gridCircles[0].getAttribute('cx')) || centerX;
-                                centerY = parseFloat(gridCircles[0].getAttribute('cy')) || centerY;
-                            }
-                            
-                            // We want this Point (centerX, centerY) to be the EXACT center of our 800x800 image.
-                            // So the viewBox must start at (centerX - 400, centerY - 400)
-                            svg.setAttribute('width', '800');
-                            svg.setAttribute('height', '800');
-                            svg.setAttribute('viewBox', `${centerX - 400} ${centerY - 400} 800 800`);
+                             });
                             
                             // Force absolute visibility on all nested elements
                             svg.querySelectorAll('*').forEach(el => {
@@ -225,7 +221,7 @@ const FascinantesResult = () => {
                                 if (isDomainLabel) {
                                     Object.assign(textBlock.style, {
                                         fontWeight: '800',
-                                        fontSize: '8px',
+                                        fontSize: '8px', // High readability
                                         textTransform: 'uppercase',
                                         textAnchor: 'middle'
                                     });
