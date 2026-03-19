@@ -386,9 +386,9 @@ const FascinantesResult = () => {
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
-                        const themeBlue = '#000000'; // Pure Black for maximum contrast
+                        const themeBlue = '#00121d'; // App's Dark Blue for thematic consistency
                         const themeGold = '#ffd700'; // Vibrant Gold
-                        const bgColor = '#000000'; 
+                        const bgColor = '#00121d'; 
                         
                         // Force rigid width that matches the capture viewport
                         clonedContent.style.setProperty('width', '1000px', 'important');
@@ -396,7 +396,7 @@ const FascinantesResult = () => {
                         clonedContent.style.setProperty('margin', '0', 'important');
                         clonedContent.style.setProperty('padding', '50px', 'important'); // Balanced padding
                         clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
-                        clonedContent.style.setProperty('background', '#ffffff', 'important');
+                        clonedContent.style.setProperty('background', '#00121d', 'important');
                         clonedContent.style.setProperty('display', 'block', 'important');
                         clonedContent.style.setProperty('color-scheme', 'dark', 'important');
                         clonedContent.style.setProperty('filter', 'none', 'important');
@@ -404,7 +404,7 @@ const FascinantesResult = () => {
 
                         const title = clonedContent.querySelector('h1');
                         if (title) {
-                            title.style.setProperty('color', '#9e7b22', 'important'); // Darker gold for main title
+                            title.style.setProperty('color', '#ffd700', 'important'); // Vibrant gold for better contrast on blue
                             title.style.setProperty('text-align', 'center', 'important');
                             title.style.setProperty('width', '100%', 'important');
                             title.style.setProperty('margin-bottom', '30px', 'important');
@@ -412,9 +412,9 @@ const FascinantesResult = () => {
 
                         const radarSection = clonedContent.querySelector('.radar-section');
                         if (radarSection) {
-                            // Use pure black for robustness
-                            radarSection.style.setProperty('background', '#000000', 'important'); 
-                            radarSection.style.setProperty('background-color', '#000000', 'important');
+                            // Use theme blue instead of black
+                            radarSection.style.setProperty('background', '#00121d', 'important'); 
+                            radarSection.style.setProperty('background-color', '#00121d', 'important');
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
                             radarSection.style.setProperty('margin', '0 0 40px 0', 'important');
                             radarSection.style.setProperty('width', '100%', 'important');
@@ -446,9 +446,9 @@ const FascinantesResult = () => {
                         // Remove explicit grid forced columns so it respects original layout naturally
                         const cards = clonedContent.querySelectorAll('.domain-result-card');
                         cards.forEach(card => {
-                            // Use pure black for robustness
-                            card.style.setProperty('background', '#000000', 'important'); 
-                            card.style.setProperty('background-color', '#000000', 'important');
+                            // Use theme blue instead of black
+                            card.style.setProperty('background', '#00121d', 'important'); 
+                            card.style.setProperty('background-color', '#00121d', 'important');
                             card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.4)`, 'important');
                             card.style.setProperty('padding', '30px', 'important');
                             card.style.setProperty('border-radius', '20px', 'important');
@@ -492,8 +492,8 @@ const FascinantesResult = () => {
 
                         const importantNote = clonedContent.querySelector('.important-note-card');
                         if (importantNote) {
-                            importantNote.style.setProperty('background', '#000000', 'important');
-                            importantNote.style.setProperty('background-color', '#000000', 'important');
+                            importantNote.style.setProperty('background', '#00121d', 'important');
+                            importantNote.style.setProperty('background-color', '#00121d', 'important');
                             importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.3)`, 'important');
                             importantNote.style.setProperty('border-left', `10px solid ${themeGold}`, 'important');
                             importantNote.style.setProperty('filter', 'none', 'important');
