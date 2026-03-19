@@ -156,15 +156,14 @@ const FascinantesResult = () => {
                             const svg = radarContainer.querySelector('svg');
                             if (svg) {
                                 // Ensure SVG is large and centered
-                                // CRITICAL: Expand SVG viewport and viewBox to full 800x800 to prevent label clipping
+                                // CRITICAL: Expand SVG viewport and viewBox to full 800x800 and center it
                                 svg.setAttribute('width', '800');
                                 svg.setAttribute('height', '800');
                                 
-                                // ABSOLUTE CENTERING & SHIFT (Direct viewBox for 100% compatibility):
-                                // Target center in 800x800: X=440 (40px Right), Y=350 (50px Up)
-                                // Standard Recharts center: 325, 325.
-                                // xmin = 325 - 440 = -115. ymin = 325 - 350 = -25.
-                                svg.setAttribute('viewBox', '-115 -25 800 800');
+                                // ABSOLUTE MATHEMATICAL CENTERING:
+                                // Image Center: 400, 400. Recharts Center: 325, 325.
+                                // xmin = 325 - 400 = -75. ymin = 325 - 400 = -75.
+                                svg.setAttribute('viewBox', '-75 -75 800 800');
                                 
                                 Object.assign(svg.style, {
                                     width: '800px',
@@ -172,7 +171,7 @@ const FascinantesResult = () => {
                                     margin: '0',
                                     position: 'relative',
                                     overflow: 'visible',
-                                    transform: 'none', // ViewBox handles it now
+                                    transform: 'none', // PERFECT CENTERING
                                     display: 'block'
                                 });
                                 
