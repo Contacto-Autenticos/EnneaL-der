@@ -142,7 +142,7 @@ const FascinantesResult = () => {
                             height: '800px',
                             position: 'absolute',
                             left: '0', 
-                            top: '0',
+                            top: '-30px', // Shifted up for balance
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
