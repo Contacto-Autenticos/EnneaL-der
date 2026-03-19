@@ -225,9 +225,7 @@ const FascinantesResult = () => {
                                         textTransform: 'uppercase',
                                         textAnchor: 'middle'
                                     });
-                                    const tspans = textBlock.querySelectorAll('tspan');
-                                    
-                                    // REFINED POSITIONING: User-specified alignments and safe offsets
+                                    // REFINED POSITIONING: Matching the user's second reference image
                                     const isFinanciero = textContent.includes('FINANCIERO');
                                     const isEspiritual = textContent.includes('ESPIRITUAL');
                                     const isMental = textContent.includes('MENTAL');
@@ -248,20 +246,20 @@ const FascinantesResult = () => {
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
                                     } else if (isFinanciero || isEspiritual) {
-                                        // LEFT SIDE: Left aligned (Start), far from radar
-                                        textBlock.setAttribute('x', '-140');
-                                        textBlock.style.textAnchor = 'start';
+                                        // LEFT SIDE: Right aligned (facing radar), shifted left to touch margin
+                                        textBlock.setAttribute('x', '-35');
+                                        textBlock.style.textAnchor = 'end';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
                                     } else if (isMental || isEmocional) {
-                                        // RIGHT SIDE: Right aligned (End), far from radar
-                                        textBlock.setAttribute('x', '140');
-                                        textBlock.style.textAnchor = 'end';
+                                        // RIGHT SIDE: Left aligned (facing radar), shifted right to touch margin
+                                        textBlock.setAttribute('x', '35');
+                                        textBlock.style.textAnchor = 'start';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
                                     }
 
-                                    // Apply styling and shared properties to tspan children
+                                    // Apply styling and shared properties to tspan children in one pass
                                     tspans.forEach(ts => {
                                         ts.setAttribute('x', textBlock.getAttribute('x'));
                                         ts.style.fill = '#ffffff';
