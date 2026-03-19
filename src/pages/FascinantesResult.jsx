@@ -227,7 +227,7 @@ const FascinantesResult = () => {
                                     });
                                     const tspans = textBlock.querySelectorAll('tspan');
                                     
-                                    // Precision positioning for all 6 domains
+                                    // REFINED POSITIONING: User-specified alignments and safe offsets
                                     const isFinanciero = textContent.includes('FINANCIERO');
                                     const isEspiritual = textContent.includes('ESPIRITUAL');
                                     const isMental = textContent.includes('MENTAL');
@@ -235,28 +235,37 @@ const FascinantesResult = () => {
                                     const isSocial = textContent.includes('SOCIAL');
                                     const isCorporal = textContent.includes('CORPORAL');
 
-                                    // FINAL REFINEMENT: All labels CENTERED BELOW icons at 11px
-                                    textBlock.setAttribute('x', '0');
-                                    textBlock.style.textAnchor = 'middle';
-
                                     if (isCorporal) {
-                                        // TOP
+                                        // TOP: Same separation as Social
+                                        textBlock.setAttribute('x', '0');
+                                        textBlock.style.textAnchor = 'middle';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '-1.5em');
                                     } else if (isSocial) {
-                                        // BOTTOM
+                                        // BOTTOM: Standard 1.5em separation
+                                        textBlock.setAttribute('x', '0');
+                                        textBlock.style.textAnchor = 'middle';
                                         if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
                                         if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
-                                    } else {
-                                        // SIDE 4: Clearly BELOW the icon
-                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '2.8em'); 
-                                        if (tspans.length === 0) textBlock.setAttribute('dy', '2.8em');
+                                    } else if (isFinanciero || isEspiritual) {
+                                        // LEFT SIDE: Left aligned (Start), far from radar
+                                        textBlock.setAttribute('x', '-140');
+                                        textBlock.style.textAnchor = 'start';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
+                                    } else if (isMental || isEmocional) {
+                                        // RIGHT SIDE: Right aligned (End), far from radar
+                                        textBlock.setAttribute('x', '140');
+                                        textBlock.style.textAnchor = 'end';
+                                        if (tspans.length > 0) tspans[0].setAttribute('dy', '0.15em');
+                                        if (tspans.length === 0) textBlock.setAttribute('dy', '0.15em');
                                     }
 
+                                    // Apply styling and shared properties to tspan children
                                     tspans.forEach(ts => {
-                                        ts.setAttribute('x', '0');
+                                        ts.setAttribute('x', textBlock.getAttribute('x'));
                                         ts.style.fill = '#ffffff';
-                                        ts.style.fontSize = '11px'; // Enlarged to 11px
+                                        ts.style.fontSize = '11px';
                                         ts.style.fontWeight = '800';
                                         ts.style.opacity = '1';
                                         ts.style.visibility = 'visible';
