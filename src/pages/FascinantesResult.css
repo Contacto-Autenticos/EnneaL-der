@@ -480,3 +480,73 @@
         font-size: 0.85rem;
     }
 }
+
+/* Social Fallback UI */
+.social-fallback-container {
+    margin-top: 30px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social-fallback-container p {
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #ddbe3d;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.social-link.wa { background: #25D366; }
+.social-link.tw { background: #1DA1F2; }
+.social-link.in { background: #0077b5; }
+
+.social-link:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.btn-close-social {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

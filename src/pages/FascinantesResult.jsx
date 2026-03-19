@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download, AlertCircle, MessageCircle, Twitter, Linkedin } from 'lucide-react';
 import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
 import FascinantesRadar from '../components/FascinantesRadar';
 import html2canvas from 'html2canvas';
@@ -40,6 +40,7 @@ const FascinantesResult = () => {
     const [userAnswers, setUserAnswers] = useState({});
     const [isSharing, setIsSharing] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
+    const [showSocialOptions, setShowSocialOptions] = useState(false); // Senior: Better state management for fallback
     const radarRef = React.useRef(null);
     const reportRef = React.useRef(null);
 
@@ -101,12 +102,14 @@ const FascinantesResult = () => {
         setIsSharing(true);
 
         try {
-            // Force scroll to top to avoid offset issues
+            // SENIOR: Ensure UI is settled and animations (Recharts) are done
             window.scrollTo(0, 0);
+            await new Promise(resolve => requestAnimationFrame(resolve));
+            await new Promise(resolve => setTimeout(resolve, 500)); // Safety buffer for SVG rendering
 
             const canvas = await html2canvas(radarRef.current, {
                 backgroundColor: '#00121d',
-                scale: 3,
+                scale: 3, // High-quality for text/labels
                 useCORS: true,
                 imageTimeout: 0,
                 // Higher quality but still mobile friendly
@@ -294,12 +297,14 @@ const FascinantesResult = () => {
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
                 await navigator.share(shareData);
             } else {
-                // Better download fallback for non-sharing browsers
+                // SENIOR: Proper fallback UX for Desktop
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
                 link.download = 'mi-radar-autenticos.png';
                 link.click();
-                alert('La imagen de tu radar se ha guardado. ¡Ya puedes compartirla manualmente!');
+                
+                // Show social links since we can't share the file directly on Desktop
+                setShowSocialOptions(true);
             }
         } catch (error) {
             console.error('Error sharing:', error);
@@ -573,9 +578,37 @@ const FascinantesResult = () => {
                         onClick={handleShare}
                         disabled={isSharing}
                     >
-                        {isSharing ? '...' : 'COMPARTIR'} <Share2 size={18} />
+                        {isSharing ? 'GENERANDO...' : 'COMPARTIR'} <Share2 size={18} />
                     </button>
                 </div>
+
+                {/* SENIOR: Desktop Social Fallback UI */}
+                {showSocialOptions && (
+                    <div className="social-fallback-container animate-fade-in">
+                        <p>¡Imagen lista! Compártela también en:</p>
+                        <div className="social-links">
+                            <a 
+                                href={`https://wa.me/?text=${encodeURIComponent('He descubierto mi perfil fascinante en Auténticos. ¡Mira mis resultados! ' + window.location.href)}`}
+                                target="_blank" rel="noopener noreferrer" className="social-link wa"
+                            >
+                                <MessageCircle size={16} /> WhatsApp
+                            </a>
+                            <a 
+                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Mi perfil en Auténticos:')}&url=${encodeURIComponent(window.location.href)}`}
+                                target="_blank" rel="noopener noreferrer" className="social-link tw"
+                            >
+                                <Twitter size={16} /> Twitter/X
+                            </a>
+                            <a 
+                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+                                target="_blank" rel="noopener noreferrer" className="social-link in"
+                            >
+                                <Linkedin size={16} /> LinkedIn
+                            </a>
+                        </div>
+                        <button className="btn-close-social" onClick={() => setShowSocialOptions(false)}>Cerrar</button>
+                    </div>
+                )}
             </div>
 
             {selectedDomain && (
