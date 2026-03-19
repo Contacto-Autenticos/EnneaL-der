@@ -219,19 +219,19 @@ const FascinantesResult = () => {
                                         });
 
                                         if (isCorporal) {
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-4em'); 
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '-3.2em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-4em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '-3.2em');
                                         } else if (textContent.includes('SOCIAL')) {
                                             // Ensure Social is BELOW and visible
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em'); 
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                         } else {
                                             // Others (BELOW and CLOSER)
-                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em'); 
+                                            if (tspans.length > 0) tspans[0].setAttribute('dy', '2.2em'); 
                                             if (tspans.length > 1) tspans[1].setAttribute('dy', '1.2em');
-                                            if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
+                                            if (tspans.length === 0) textBlock.setAttribute('dy', '2.2em');
                                         }
                                     }
                                 });
