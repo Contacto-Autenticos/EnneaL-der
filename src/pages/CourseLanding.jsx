@@ -76,7 +76,7 @@ const CourseLanding = () => {
             setPaymentLoading(true);
             setPaymentError(null);
 
-            const amountInCents = plan === 'virtual' ? 36000000 : 59700000;
+            const amountInCents = plan === 'virtual' ? 36000000 : 57000000;
             const reference = `prog-${plan}-${Date.now()}`;
 
             const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
@@ -446,7 +446,7 @@ const CourseLanding = () => {
                             <div className="al-pricing-content" style={{ padding: '40px' }}>
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">{selectedPlan === 'virtual' ? '$360.000' : '$597.000'}</span>
+                                        <span className="al-price-number">{selectedPlan === 'virtual' ? '$360.000' : '$570.000'}</span>
                                         <span className="al-currency">COP</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
@@ -678,7 +678,7 @@ const CourseLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">$597.000</span>
+                                        <span className="al-price-number">$570.000</span>
                                         <span className="al-currency">COP</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>

@@ -434,11 +434,22 @@ const FascinantesResult = () => {
                                 radarContainer.style.setProperty('border', 'none', 'important');
                                 radarContainer.style.setProperty('transform', 'translateX(30px)', 'important'); // Shift ONLY the chart right
                                 
+                                // FORCE height and label visibility for PDF capture context
+                                radarContainer.style.setProperty('height', '720px', 'important');
+                                
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
                                     // Ensure all path/text in SVG are visibly white in PDF
                                     const svgTexts = svg.querySelectorAll('text, tspan');
-                                    svgTexts.forEach(t => t.style.setProperty('fill', '#ffffff', 'important'));
+                                    svgTexts.forEach(t => {
+                                        t.style.setProperty('fill', '#ffffff', 'important');
+                                        // CRITICAL: Force label visibility that might be hidden by CSS media queries
+                                        if (t.classList.contains('radar-label-text') || t.closest('.radar-label-text')) {
+                                            t.style.setProperty('display', 'block', 'important');
+                                            t.style.setProperty('visibility', 'visible', 'important');
+                                            t.style.setProperty('opacity', '1', 'important');
+                                        }
+                                    });
                                 }
                             }
                         }
