@@ -437,30 +437,96 @@ const FascinantesResult = () => {
                                 radarContainer.style.setProperty('background', 'transparent', 'important');
                                 radarContainer.style.setProperty('box-shadow', 'none', 'important');
                                 radarContainer.style.setProperty('border', 'none', 'important');
-                                radarContainer.style.setProperty('transform', 'translateX(30px)', 'important'); // Shift ONLY the chart right
+                                radarContainer.style.setProperty('transform', 'none', 'important'); // Remove any historical offset
                                 
-                                // FORCE height and label visibility for PDF capture context
+                                // FORCE height and centered layout for PDF capture context
                                 radarContainer.style.setProperty('height', '720px', 'important');
                                 radarContainer.style.setProperty('width', '100%', 'important');
+                                radarContainer.style.setProperty('display', 'flex', 'important');
+                                radarContainer.style.setProperty('justify-content', 'center', 'important');
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
                                     // CRITICAL: Force physical width/height so Recharts doesn't render 0x0 in clone
-                                    svg.setAttribute('width', '900');
-                                    svg.setAttribute('height', '720');
-                                    svg.style.setProperty('width', '900px', 'important');
-                                    svg.style.setProperty('height', '720px', 'important');
+                                    svg.setAttribute('width', '800');
+                                    svg.setAttribute('height', '700');
+                                    svg.style.setProperty('width', '800px', 'important');
+                                    svg.style.setProperty('height', '700px', 'important');
+                                    svg.style.setProperty('margin', '0 auto', 'important');
+                                    svg.style.setProperty('display', 'block', 'important');
                                     
-                                    // Ensure all path/text in SVG are visibly white in PDF
-                                    const svgTexts = svg.querySelectorAll('text, tspan');
-                                    svgTexts.forEach(t => {
-                                        t.style.setProperty('fill', '#ffffff', 'important');
-                                        // CRITICAL: Force label visibility that might be hidden by CSS media queries
-                                        if (t.classList.contains('radar-label-text') || t.closest('.radar-label-text')) {
-                                            t.style.setProperty('display', 'block', 'important');
-                                            t.style.setProperty('visibility', 'visible', 'important');
-                                            t.style.setProperty('opacity', '1', 'important');
+                                    // SURGICAL LABEL POSITIONING (Logic from Share feature)
+                                    const textBlocks = svg.querySelectorAll('text');
+                                    textBlocks.forEach(textBlock => {
+                                        Object.assign(textBlock.style, {
+                                            fill: '#ffffff',
+                                            opacity: '1',
+                                            visibility: 'visible',
+                                            display: 'block'
+                                        });
+
+                                        const textContent = textBlock.textContent.trim().toUpperCase();
+                                        const isNumeric = /^\d+$/.test(textContent);
+                                        
+                                        if (isNumeric) {
+                                            textBlock.style.fontWeight = 'bold';
+                                            textBlock.style.fontSize = '12px';
+                                            return; 
                                         }
+
+                                        const isDomainLabel = textContent.includes('DOMINIO') || 
+                                            ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO'].some(d => textContent.includes(d));
+
+                                        if (isDomainLabel) {
+                                            Object.assign(textBlock.style, {
+                                                fontWeight: '800',
+                                                fontSize: '10px', 
+                                                textTransform: 'uppercase',
+                                                textAnchor: 'middle'
+                                            });
+                                            const tspans = textBlock.querySelectorAll('tspan');
+                                            
+                                            const isFinanciero = textContent.includes('FINANCIERO');
+                                            const isEspiritual = textContent.includes('ESPIRITUAL');
+                                            const isMental = textContent.includes('MENTAL');
+                                            const isEmocional = textContent.includes('EMOCIONAL');
+                                            const isSocial = textContent.includes('SOCIAL');
+                                            const isCorporal = textContent.includes('CORPORAL');
+
+                                            if (isCorporal) {
+                                                textBlock.setAttribute('x', '0');
+                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.5em'); 
+                                                if (tspans.length === 0) textBlock.setAttribute('dy', '-1.5em');
+                                            } else if (isSocial) {
+                                                textBlock.setAttribute('x', '0');
+                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
+                                                if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
+                                            } else if (isFinanciero || isEspiritual) {
+                                                textBlock.setAttribute('x', '-80');
+                                                textBlock.style.textAnchor = 'start';
+                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em');
+                                                if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
+                                            } else if (isMental || isEmocional) {
+                                                textBlock.setAttribute('x', '80');
+                                                textBlock.style.textAnchor = 'end';
+                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em');
+                                                if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
+                                            }
+
+                                            tspans.forEach(ts => {
+                                                ts.setAttribute('x', textBlock.getAttribute('x'));
+                                                ts.style.fill = '#ffffff';
+                                                ts.style.fontSize = '12px';
+                                                ts.style.fontWeight = '800';
+                                            });
+                                        }
+                                    });
+
+                                    // Ensure icons are centered and visible
+                                    svg.querySelectorAll('svg').forEach(icon => {
+                                        icon.style.setProperty('filter', 'none', 'important');
+                                        icon.style.setProperty('opacity', '1', 'important');
+                                        icon.style.setProperty('display', 'block', 'important');
                                     });
                                 }
                             }
