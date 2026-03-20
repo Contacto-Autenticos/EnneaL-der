@@ -32,6 +32,7 @@ import FascinantesIntro from './pages/FascinantesIntro';
 import FascinantesTest from './pages/FascinantesTest';
 import FascinantesTransition from './pages/FascinantesTransition';
 import FascinantesResult from './pages/FascinantesResult';
+import GenuinosLanding from './pages/GenuinosLanding';
 
 
 function App() {
@@ -322,6 +323,7 @@ function App() {
 
         <Route path="/admin" element={<Admin />} />
         <Route path="/programa" element={<CourseLanding />} />
+        <Route path="/programa-genuinos" element={<GenuinosLanding />} />
         <Route
           path="/test-liderazgo"
           element={
