@@ -406,6 +406,7 @@ const FascinantesResult = () => {
                         clonedContent.style.setProperty('color-scheme', 'dark', 'important');
                         clonedContent.style.setProperty('filter', 'none', 'important');
                         clonedContent.style.setProperty('box-shadow', 'none', 'important');
+                        clonedContent.style.setProperty('overflow', 'visible', 'important');
 
                         const title = clonedContent.querySelector('h1');
                         if (title) {
@@ -421,15 +422,10 @@ const FascinantesResult = () => {
                             radarSection.style.setProperty('background', '#00121d', 'important'); 
                             radarSection.style.setProperty('background-color', '#00121d', 'important');
                             radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
-                            radarSection.style.setProperty('margin', '0 0 40px 0', 'important');
-                            radarSection.style.setProperty('width', '100%', 'important');
-                            radarSection.style.setProperty('display', 'flex', 'important');
-                            radarSection.style.setProperty('justify-content', 'center', 'important');
-                            radarSection.style.setProperty('align-items', 'center', 'important');
-                            radarSection.style.setProperty('border-radius', '20px', 'important');
-                            radarSection.style.setProperty('filter', 'none', 'important');
                             radarSection.style.setProperty('backdrop-filter', 'none', 'important');
                             radarSection.style.setProperty('box-shadow', 'none', 'important');
+                            radarSection.style.setProperty('overflow', 'visible', 'important');
+                            radarSection.style.setProperty('margin-bottom', '100px', 'important'); // Separate cards from radar
 
                             
                             const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
@@ -440,20 +436,23 @@ const FascinantesResult = () => {
                                 radarContainer.style.setProperty('transform', 'none', 'important'); // Remove any historical offset
                                 
                                 // FORCE height and centered layout for PDF capture context
-                                radarContainer.style.setProperty('height', '720px', 'important');
+                                radarContainer.style.setProperty('height', '750px', 'important');
                                 radarContainer.style.setProperty('width', '100%', 'important');
                                 radarContainer.style.setProperty('display', 'flex', 'important');
                                 radarContainer.style.setProperty('justify-content', 'center', 'important');
+                                radarContainer.style.setProperty('overflow', 'visible', 'important');
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
                                     // CRITICAL: Force physical width/height so Recharts doesn't render 0x0 in clone
-                                    svg.setAttribute('width', '800');
-                                    svg.setAttribute('height', '700');
-                                    svg.style.setProperty('width', '800px', 'important');
-                                    svg.style.setProperty('height', '700px', 'important');
+                                    // Increased width to 950 to avoid label clipping
+                                    svg.setAttribute('width', '950');
+                                    svg.setAttribute('height', '750');
+                                    svg.style.setProperty('width', '950px', 'important');
+                                    svg.style.setProperty('height', '750px', 'important');
                                     svg.style.setProperty('margin', '0 auto', 'important');
                                     svg.style.setProperty('display', 'block', 'important');
+                                    svg.style.setProperty('overflow', 'visible', 'important');
                                     
                                     // SURGICAL LABEL POSITIONING (Logic from Share feature)
                                     const textBlocks = svg.querySelectorAll('text');
@@ -462,8 +461,10 @@ const FascinantesResult = () => {
                                             fill: '#ffffff',
                                             opacity: '1',
                                             visibility: 'visible',
-                                            display: 'block'
+                                            display: 'block',
+                                            overflow: 'visible'
                                         });
+                                        textBlock.setAttribute('overflow', 'visible');
 
                                         const textContent = textBlock.textContent.trim().toUpperCase();
                                         const isNumeric = /^\d+$/.test(textContent);
