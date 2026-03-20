@@ -11,16 +11,16 @@ export const executiveKitData = {
             style: "Liderazgo estructurado, orientado a calidad, ética y cumplimiento riguroso.",
             strength: "Capacidad de elevar estándares y construir sistemas sólidos y sostenibles.",
             blindspot: "Confundir excelencia con perfeccionismo inflexible.",
-            risk: "Incremento de criticidad, rigidez y tensión en el equipo.",
+            risk: "Incremento de críticas, juicios y rigidez, lo que provoca tensión en el equipo.",
             evolutionaryKey: "Integrar humanidad y flexibilidad sin sacrificar estándares.",
             maturityLevels: [
                 "Nivel básico: crítico, controlador y autoexigente extremo.",
-                "Nivel intermedio: exigente pero consciente de impacto relacional.",
+                "Nivel intermedio: exigente, pero consciente del impacto relacional.",
                 "Nivel evolucionado: inspirador, ético y estructurado con equilibrio emocional."
             ],
             highlights: [
-                "Donde otros improvisan, el 1 estructura.",
-                "Donde otros aceptan lo mediocre, el 1 exige excelencia."
+                "La personalidad 1 corrige.",
+                "Transforma el error en mejora."
             ]
         },
         leadershipContext: {
@@ -35,7 +35,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Corrección constante", "Revisión detallada", "Alta autoexigencia", "Comunicación directa"],
             positive: ["Claridad en expectativas", "Procesos eficientes", "Responsabilidad individual elevada", "Cultura de mejora continua"],
-            risks: ["Clima de tensión silenciosa", "Temor al error", "Disminución de creatividad", "Agotamiento del líder"]
+            risks: ["Clima de tensión silenciosa", "Temor al error", "Disminución de creatividad", "Agotamiento del líder"],
+            footer: "No lideras corrigiendo...\nlideras siendo."
         },
         orgRiskExtended: {
             items: [
@@ -55,7 +56,7 @@ export const executiveKitData = {
         plan: {
             week1: { title: "Conciencia de estándares", focus: "Detectar cuándo el perfeccionismo interfiere.", tasks: ["Registrar momentos donde corregiste algo menor.", "Identificar si era necesario o emocional.", "Establecer estándar 'suficientemente bueno' en tareas secundarias."], metric: "Reducir en 20% las intervenciones innecesarias." },
             week2: { title: "Flexibilidad estratégica", focus: "Practicar delegación sin microgestión.", tasks: ["Delegar una tarea importante sin revisarla hasta el final.", "Aceptar diferencias de estilo si cumplen el objetivo.", "Pedir retroalimentación sobre tu nivel de exigencia."], metric: "Al menos 2 tareas completadas sin intervención intermedia." },
-            week3: { title: "Liderazgo inspirador", focus: "Equilibrar corrección con reconocimiento.", tasks: ["Aplicar proporción 3:1 (Tres reconocimientos por cada corrección).", "Destacar logros públicamente.", "Reducir tono crítico automático."], metric: "Mejora perceptible en clima de equipo." },
+            week3: { title: "LIDERAZGO INSPIRADOR", focus: "Equilibrar corrección con reconocimiento.", tasks: ["Aplicar proporción 3:1 (tres reconocimientos por cada corrección).", "Destacar logros públicamente.", "Reducir tono crítico automático."], metric: "Mejora perceptible en clima de equipo." },
             week4: { title: "Consolidación", focus: "Integrar excelencia con humanidad.", tasks: ["Aceptar conscientemente un error menor sin intervenir.", "Tomar una decisión con información 85% suficiente.", "Evaluar impacto emocional de tu liderazgo."], metric: "Mayor autonomía del equipo." }
         },
         decisionMatrixExtended: {
@@ -134,12 +135,12 @@ export const executiveKitData = {
             evolutionaryKey: "Desarrollar firmeza, límites visibles y priorización estratégica sin perder empatía.",
             maturityLevels: [
                 "Nivel básico: complaciente, posesivo y manipulador emocional indirecto.",
-                "Nivel intermedio: servicial y atento pero con expectativas de reconocimiento.",
+                "Nivel intermedio: servicial y atento, pero con expectativas de reconocimiento.",
                 "Nivel evolucionado: generoso incondicional, empático y con límites saludables."
             ],
             highlights: [
-                "Donde otros ignoran el factor humano, el 2 conecta.",
-                "Donde hay silos, el 2 construye puentes de lealtad."
+                "La personalidad 2 conecta.",
+                "Hace sentir al otro visto y valioso."
             ]
         },
         leadershipContext: {
@@ -151,9 +152,10 @@ export const executiveKitData = {
             ]
         },
         impact: {
-            behaviors: ["Disponibilidad constante para apoyar", "Intervención rápida ante tensiones", "Asunción de tareas para aliviar carga ajena", "Comunicación cálida y cercana"],
+            behaviors: ["Disponibilidad constante para apoyar", "Intervención rápida ante tensiones", "Asumir tareas para aliviar carga ajena", "Comunicación cálida y cercana"],
             positive: ["Alto nivel de confianza", "Clima laboral estable", "Compromiso emocional del equipo", "Cultura colaborativa"],
-            risks: ["Confusión en jerarquías", "Dependencia excesiva del líder", "Sobrecarga personal", "Dificultad para priorizar resultados"]
+            risks: ["Confusión en jerarquías", "Dependencia excesiva del líder", "Sobrecarga personal", "Dificultad para priorizar resultados"],
+            footer: "Tu liderazgo es fuerte, cuando aprendes a cuidarte\npara poder cuidar."
         },
         orgRiskExtended: {
             items: [
@@ -252,12 +254,12 @@ export const executiveKitData = {
             evolutionaryKey: "Integrar autenticidad, balance y cultura organizacional sin perder excelencia ejecutiva.",
             maturityLevels: [
                 "Nivel básico: vanidoso, competitivo extremo y orientado solo a la imagen.",
-                "Nivel intermedio: eficiente y trabajador pero dependiente del éxito externo.",
+                "Nivel intermedio: eficiente y trabajador, pero dependiente del éxito externo.",
                 "Nivel evolucionado: auténtico, inspirador y orientado a resultados sostenibles."
             ],
             highlights: [
-                "Donde otros se estancan, el 3 acelera.",
-                "Donde hay confusión, el 3 entrega resultados tangibles."
+                "La personalidad 3 impulsa.",
+                "Convierte la visión en resultados, hace que las cosas sucedan."
             ]
         },
         leadershipContext: {
@@ -271,7 +273,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Definición constante de metas", "Seguimiento riguroso de indicadores", "Enfoque en eficiencia y productividad", "Alta exigencia personal y colectiva"],
             positive: ["Cultura de alto desempeño", "Claridad en objetivos", "Velocidad de ejecución", "Orientación a resultados medibles"],
-            risks: ["Burnout del equipo", "Competencia interna innecesaria", "Desconexión emocional", "Priorizar métricas sobre cultura"]
+            risks: ["Burnout del equipo", "Competencia interna innecesaria", "Desconexión emocional", "Priorizar métricas sobre cultura"],
+            footer: "Tu liderazgo es fuerte, cuando dejas de perseguir\nel reconocimiento y empiezas a liderar desde tu verdad."
         },
         orgRiskExtended: {
             items: [
@@ -284,7 +287,7 @@ export const executiveKitData = {
                 "Pérdida de visión a largo plazo por metas mensuales",
                 "Competitividad interna tóxica y destructiva",
                 "Falta de autenticidad en la comunicación",
-                "Desconexión de la misión originaria de la empresa"
+                "Desconexión de la misión de la empresa"
             ],
             closing: "El logro sin consciencia genera desgaste. El desempeño con propósito genera liderazgo sostenible."
         },
@@ -364,18 +367,18 @@ export const executiveKitData = {
         summary: {
             generalProfile: "El Eneatipo 4 ejerce un liderazgo creativo, profundo y orientado a significado. Su capacidad para conectar identidad, propósito y diferenciación lo convierte en un constructor natural de cultura organizacional auténtica.",
             style: "Liderazgo inspirador orientado a propósito, identidad y expresión estratégica diferenciada.",
-            strength: "Capacidad de generar propuesta únicas y culturas organizacionales con identidad sólida.",
+            strength: "Capacidad de generar propuestas únicas y culturas organizacionales con identidad sólida.",
             blindspot: "Tendencia a tomar decisiones influenciadas por estados emocionales intensos.",
             risk: "Oscilación estratégica, dramatización de conflictos y pérdida de consistencia operativa.",
             evolutionaryKey: "Desarrollar estabilidad emocional y estructura ejecutiva sin perder profundidad creativa.",
             maturityLevels: [
                 "Nivel básico: melancólico, ensimismado y emocionalmente volátil.",
-                "Nivel intermedio: creativo y expresivo pero dependiente de su estado de ánimo.",
+                "Nivel intermedio: creativo y expresivo, pero dependiente de su estado de ánimo.",
                 "Nivel evolucionado: inspirado, ecuánime y capaz de transformar emoción en valor."
             ],
             highlights: [
-                "Donde otros ven lo ordinario, el 4 crea significado.",
-                "Donde falta alma, el 4 aporta identidad profunda."
+                "La personalidad 4 revela.",
+                "Transforma lo ordinario en extraordinario. Aporta creatividad, profundidad y significado."
             ]
         },
         leadershipContext: {
@@ -389,7 +392,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Comunicación emocionalmente expresiva", "Búsqueda de significado en decisiones", "Alta sensibilidad a dinámicas relacionales", "Innovación estética o conceptual"],
             positive: ["Cultura con identidad fuerte", "Diferenciación estratégica", "Conexión emocional profunda", "Alto compromiso creativo"],
-            risks: ["Cambios estratégicos influenciados por estados de ánimo", "Sensibilidad a la crítica", "Percepción de volatilidad", "Intensidad en conflictos"]
+            risks: ["Cambios estratégicos influenciados por estados de ánimo", "Sensibilidad a la crítica", "Percepción de volatilidad", "Intensidad en conflictos"],
+            footer: "Cuando dejas de buscar lo que te falta\ny empiezas a crear desde lo que eres, te conviertes en un líder auténtico."
         },
         orgRiskExtended: {
             items: [
@@ -423,7 +427,7 @@ export const executiveKitData = {
                 "¿Descarto soluciones viables por parecer demasiado ordinarias?",
                 "¿Añado peso emocional a una decisión puramente pragmática?",
                 "¿Qué decidiría si mis emociones no entraran en la ecuación?",
-                "¿Mi distanciamiento es real o un rechazo velado a sugerencias?"
+                "¿Mi distanciamiento es real o un rechazo asociado a diferencias?"
             ],
             rule: "Si la emoción es intensa, pausa antes de decidir."
         },
@@ -461,7 +465,7 @@ export const executiveKitData = {
                 { t: "Mes 3–4", goal: "Integrar métricas objetivas en procesos creativos." },
                 { t: "Mes 5–6", goal: "Posicionarte como líder creativo con consistencia ejecutiva." }
             ],
-            meta: "Convertirte en un líder que inspira profundidad con estabilidad estratégica."
+            meta: "Convertirte en un líder que inspira singularidad con estabilidad estratégica."
         },
         closingExtended: {
             paragraphs: [
@@ -488,12 +492,12 @@ export const executiveKitData = {
             evolutionaryKey: "Integrar análisis con acción visible y presencia relacional activa.",
             maturityLevels: [
                 "Nivel básico: aislado, cínico y tacaño con sus recursos y conocimientos.",
-                "Nivel intermedio: observador y analítico pero distante de la acción real.",
+                "Nivel intermedio: observador y analítico, pero distante de la acción real.",
                 "Nivel evolucionado: visionario, participativo y generoso con su sabiduría."
             ],
             highlights: [
-                "Donde otros reaccionan, el 5 analiza.",
-                "Donde hay ruido, el 5 aporta claridad y datos."
+                "La personalidad 5 observa.",
+                "Analiza muy bien y profundiza cada cosa para entender su mundo."
             ]
         },
         leadershipContext: {
@@ -507,7 +511,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Análisis detallado antes de actuar", "Comunicación técnica y directa", "Alta autonomía operativa", "Reserva emocional"],
             positive: ["Reducción de riesgos innecesarios", "Decisiones fundamentadas", "Estabilidad estratégica en crisis", "Capacidad de planificación a largo plazo"],
-            risks: ["Percepción de distancia emocional", "Retrasos por exceso de validación técnica", "Falta de energía movilizadora", "Desconexión relacional con el equipo"]
+            risks: ["Percepción de distancia emocional", "Retrasos por exceso de validación técnica", "Falta de energía movilizadora", "Desconexión relacional con el equipo"],
+            footer: "Un liderazgo extraordinario es aquel donde empiezas a participar\nde la vida, dejas de acumular respuestas y empiezas a compartirlas."
         },
         orgRiskExtended: {
             items: [
@@ -603,15 +608,15 @@ export const executiveKitData = {
             strength: "Capacidad de identificar riesgos antes de que impacten resultados y fortalecer sistemas internos.",
             blindspot: "Duda excesiva y búsqueda constante de validación externa antes de decidir.",
             risk: "Parálisis por análisis de riesgos, aumento de ansiedad operativa y desconfianza estratégica.",
-            evolutionaryKey: "Desarrollar autoconfianza decisional y liderazgo firme en entornos inciertos.",
+            evolutionaryKey: "Desarrollar autoconfianza para la toma de decisiones y liderazgo firme en entornos inciertos.",
             maturityLevels: [
                 "Nivel básico: ansioso, vigilante o rebelde por inseguridad.",
-                "Nivel intermedio: leal y trabajador pero excesivamente preocupado por riesgos.",
+                "Nivel intermedio: leal y trabajador, pero excesivamente preocupado por riesgos.",
                 "Nivel evolucionado: valiente, confiado y constructor de confianza colectiva."
             ],
             highlights: [
-                "Donde otros descuidan el riesgo, el 6 protege.",
-                "Donde hay falta de compromiso, el 6 construye lealtad."
+                "La personalidad 6 anticipa.",
+                "En su mirada construye seguridad."
             ]
         },
         leadershipContext: {
@@ -625,7 +630,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Evaluación constante de riesgos", "Consulta frecuente con superiores o pares", "Comunicación preventiva", "Necesidad de claridad estructural"],
             positive: ["Reducción de errores estratégicos", "Equipos preparados ante contingencias", "Ambiente de responsabilidad compartida", "Alta cultura de prevención"],
-            risks: ["Ambiente de tensión anticipatoria", "Retrasos por validación excesiva", "Desconfianza implícita", "Dudas percibidas como falta de dirección"]
+            risks: ["Ambiente de tensión anticipatoria", "Retrasos por validación excesiva", "Desconfianza implícita", "Dudas percibidas como falta de dirección"],
+            footer: "Tu liderazgo se fortalece cuando dejas de buscar certezas\ny empiezas a confiar en tus capacidades para resolver."
         },
         orgRiskExtended: {
             items: [
@@ -646,7 +652,7 @@ export const executiveKitData = {
             week1: { title: "Conciencia de la duda", focus: "Identificar patrones de búsqueda excesiva de validación.", tasks: ["Registrar decisiones donde solicitaste confirmación innecesaria.", "Diferenciar riesgo real de miedo anticipado.", "Establecer criterios claros de decisión independiente."], metric: "Reducir solicitudes de validación en decisiones menores." },
             week2: { title: "Decisión con responsabilidad", focus: "Practicar autonomía estratégica.", tasks: ["Tomar tres decisiones sin consultar previamente.", "Comunicar dirección con seguridad verbal y corporal.", "Evitar justificar excesivamente cada elección."], metric: "Incremento en percepción de firmeza por parte del equipo." },
             week3: { title: "Gestión del riesgo inteligente", focus: "Diferenciar riesgo probable de riesgo hipotético.", tasks: ["Clasificar riesgos en alto, medio y bajo impacto.", "Eliminar análisis de escenarios poco probables.", "Definir planes de contingencia simples y ejecutables."], metric: "Disminución de ansiedad operativa." },
-            week4: { title: "Consolidación de confianza", focus: "Integrar seguridad con liderazgo visible.", tasks: ["Tomar una decisión estratégica en entorno incierto.", "Comunicar visión con claridad sin expresar duda.", "Solicitar retroalimentación sobre tu nivel de seguridad percibida."], metric: "Aumento en cohesión y confianza del equipo." }
+            week4: { title: "Consolidación de confianza", focus: "Integrar seguridad con liderazgo visible.", tasks: ["Tomar una decisión estratégica en un entorno incierto.", "Comunicar visión con claridad sin expresar duda.", "Solicitar retroalimentación sobre tu nivel de seguridad percibida."], metric: "Aumento en cohesión y confianza del equipo." }
         },
         decisionMatrixExtended: {
             questions: [
@@ -657,7 +663,7 @@ export const executiveKitData = {
                 "¿Confundo estar informado con dudar de mi evaluación inicial?",
                 "¿El comité necesita saber cada paso para respaldarme ante fallos?",
                 "¿Las contingencias salvan al negocio o son mi red de seguridad?",
-                "¿He analizado tantos escenarios alternativos que pergeñé el central?",
+                "¿He analizado tantos escenarios alternativos que dejé de tener claridad y fuerza en el camino principal?",
                 "¿Cuántos más deben confirmar este movimiento antes de aprobarlo?",
                 "¿Puedo liderar esto sabiendo que hay variables incontrolables?"
             ],
@@ -724,12 +730,12 @@ export const executiveKitData = {
             evolutionaryKey: "Desarrollar disciplina de cierre, profundidad y priorización estratégica sin perder visión innovadora.",
             maturityLevels: [
                 "Nivel básico: impulsivo, escapista y disperso en múltiples opciones.",
-                "Nivel intermedio: entusiasta y creativo pero con dificultad para profundizar.",
+                "Nivel intermedio: entusiasta y creativo, pero con dificultad para profundizar.",
                 "Nivel evolucionado: enfocado, agradecido y capaz de disfrutar la sobriedad."
             ],
             highlights: [
-                "Donde otros ven límites, el 7 abre horizontes.",
-                "Donde hay monotonía, el 7 inyecta innovación."
+                "La personalidad 7 explora.",
+                "Abre caminos y convierte su vida en oportunidades."
             ]
         },
         leadershipContext: {
@@ -744,7 +750,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Generación constante de nuevas ideas", "Cambios frecuentes de enfoque", "Optimismo ante desafíos", "Reencuadre positivo de conflictos"],
             positive: ["Cultura innovadora", "Alta motivación inicial", "Energía colectiva elevada", "Mentalidad de crecimiento"],
-            risks: ["Proyectos inconclusos", "Confusión en prioridades", "Fatiga por cambios constantes", "Percepción de falta de seguimiento"]
+            risks: ["Proyectos inconclusos", "Confusión en prioridades", "Fatiga por cambios constantes", "Percepción de falta de seguimiento"],
+            footer: "Tu liderazgo se fortalece cuando dejas de perseguir experiencias\ny empiezas a comprometerte con una."
         },
         orgRiskExtended: {
             items: [
@@ -764,7 +771,7 @@ export const executiveKitData = {
         plan: {
             week1: { title: "Conciencia de dispersión", focus: "Identificar patrones de apertura excesiva de proyectos.", tasks: ["Listar todos los proyectos activos.", "Cancelar o pausar al menos uno no prioritario.", "Definir tres objetivos estratégicos centrales para el mes."], metric: "Reducción visible de frentes abiertos." },
             week2: { title: "Disciplina de cierre", focus: "Practicar finalización antes de expansión.", tasks: ["Completar un proyecto pendiente antes de iniciar uno nuevo.", "Establecer fecha límite clara para una iniciativa clave.", "Comunicar prioridades al equipo por escrito."], metric: "Al menos una iniciativa finalizada formalmente." },
-            week3: { title: "Profundidad estratégica", focus: "Sostener foco prolongado.", tasks: ["Bloquear tiempo sin interrupciones para ejecución profunda.", "Evitar introducir nuevas ideas en reuniones estratégicas.", "Solicitar feedback sobre claridad de dirección."], metric: "Equipo puede repetir prioridades sin ambigüedad." },
+            week3: { title: "Profundidad estratégica", focus: "Sostener foco prolongado.", tasks: ["Bloquear tiempo sin interrupciones para ejecución profunda.", "Evitar introducir nuevas ideas en reuniones estratégicas.", "Solicitar feedback sobre claridad de dirección."], metric: "El equipo puede repetir prioridades sin ambigüedad." },
             week4: { title: "Consolidación", focus: "Integrar visión con ejecución.", tasks: ["Evaluar resultados concretos del mes.", "Medir avances reales vs. ideas generadas.", "Establecer sistema permanente de priorización mensual."], metric: "Aumento en proyectos cerrados vs. iniciados." }
         },
         decisionMatrixExtended: {
@@ -843,7 +850,7 @@ export const executiveKitData = {
             evolutionaryKey: "Integrar firmeza con sensibilidad estratégica y liderazgo influyente, no impositivo.",
             maturityLevels: [
                 "Nivel básico: dominante, agresivo y vengativo ante la vulnerabilidad.",
-                "Nivel intermedio: protector y fuerte pero con tendencia al control excesivo.",
+                "Nivel intermedio: protector y fuerte, pero con tendencia al control excesivo.",
                 "Nivel evolucionado: magnánimo, justo y protector desde la vulnerabilidad."
             ],
             highlights: [
@@ -961,12 +968,12 @@ export const executiveKitData = {
             evolutionaryKey: "Desarrollar posicionamiento firme y priorización visible sin perder empatía.",
             maturityLevels: [
                 "Nivel básico: apático, pasivo-agresivo y desconectado de sus deseos.",
-                "Nivel intermedio: conciliador y estable pero con tendencia a la postergación.",
-                "Nivel evolucionado: despierto, activo y mediador poderoso con dirección."
+                "Nivel intermedio: conciliador y estable, pero con tendencia a la postergación.",
+                "Nivel evolucionado: despierto, activo, mediador y ejecutivo con dirección."
             ],
             highlights: [
-                "Donde otros chocan, el 9 concilia.",
-                "Donde hay frialdad, el 9 aporta armonía y empatía."
+                "La personalidad 9 trae calma.",
+                "Donde encuentra tensión, crea espacio para el encuentro."
             ]
         },
         leadershipContext: {
@@ -980,7 +987,8 @@ export const executiveKitData = {
         impact: {
             behaviors: ["Escucha activa constante", "Adaptación flexible a distintas posturas", "Evita confrontaciones directas", "Tono conciliador y diplomático"],
             positive: ["Ambiente psicológico seguro", "Reducción de conflictos innecesarios", "Alta cohesión interpersonal", "Clima organizacional estable"],
-            risks: ["Falta de decisiones claras", "Ambigüedad en prioridades", "Percepción de liderazgo difuso", "Espacio excesivo para perfiles dominantes"]
+            risks: ["Falta de decisiones claras", "Ambigüedad en prioridades", "Percepción de liderazgo difuso", "Espacio excesivo para perfiles dominantes"],
+            footer: "Tu liderazgo resurge cuando dejas de adaptarte\nal entorno y empiezas a darle forma."
         },
         orgRiskExtended: {
             items: [
@@ -1009,7 +1017,7 @@ export const executiveKitData = {
                 "¿Qué costo estratégico tiene no decidir ahora?",
                 "¿Esta decisión mantiene paz superficial o genera avance real?",
                 "¿Priorizo mis objetivos o me adaptó automáticamente?",
-                "¿Delegó mi rol al no tomar posturas firmes y rápidas?",
+                "¿Delego mi rol al no tomar posturas firmes y rápidas?",
                 "¿Qué precedente de debilidad marco si permito que esto siga así?",
                 "¿Llamo 'puntos de vista' a conflictos graves para mantener consenso?",
                 "¿Cómo actuaría hoy si mi rol fuera generar fricción útil?",
@@ -1021,7 +1029,7 @@ export const executiveKitData = {
         pressureProtocolExtended: {
             alerts: ["Procrastinación de conversaciones clave", "Distracción en tareas secundarias", "Adaptación excesiva a posturas ajenas", "Desconexión momentánea de prioridades propias"],
             automaticBehavior: "Desaparecer del conflicto o diluir la decisión para mantener armonía.",
-            intervention: ["Respirar profundamente durante 60 segundos.", "Definir con claridad el resultado deseado.", "Comunicar decirlo en una frase directa y concreta."],
+            intervention: ["Respirar profundamente durante 60 segundos.", "Definir con claridad el resultado deseado.", "Comunicar ideas a través de frases directas y concretas."],
             example: "“Tras escuchar todas las posturas, avanzaremos con esta dirección.”"
         },
         conversationsGuide: {
@@ -1048,11 +1056,11 @@ export const executiveKitData = {
         ],
         growthPlanExtended: {
             phases: [
-                { t: "Mes 1–2", goal: "Consolidar toma de decisiones rápida en asuntos operativos." },
+                { t: "Mes 1–2", goal: "Consolidar toma de decisiones rápidas en asuntos operativos." },
                 { t: "Mes 3–4", goal: "Ejercer liderazgo visible en proyectos estratégicos prioritarios." },
                 { t: "Mes 5–6", goal: "Integrar armonía con dirección firme como parte de la cultura organizacional." }
             ],
-            meta: "Convertirte en un líder que inspira paz, claridad y moviliza acción sostenible."
+            meta: "Liderar desde tu centro, transformando tu serenidad en una voz firme de guía y movilizando con determinación."
         },
         closingExtended: {
             paragraphs: [

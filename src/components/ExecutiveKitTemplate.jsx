@@ -233,8 +233,19 @@ const ExecutiveKitTemplate = ({ data, type, name }) => {
                             </ul>
                         </div>
                         <p className="kit-impact-footer">
-                            Un liderazgo fuerte es inspirador<br />
-                            cuando equilibra firmeza con apertura.
+                            {data.impact.footer ? (
+                                data.impact.footer.split('\n').map((line, i) => (
+                                    <React.Fragment key={i}>
+                                        {line}
+                                        {i < data.impact.footer.split('\n').length - 1 && <br />}
+                                    </React.Fragment>
+                                ))
+                            ) : (
+                                <>
+                                    Un liderazgo fuerte es inspirador<br />
+                                    cuando equilibra firmeza con apertura.
+                                </>
+                            )}
                         </p>
                     </div>
                 ) : (
