@@ -371,18 +371,23 @@ const FascinantesResult = () => {
         }
 
         try {
-            // Ensure we are at the top for capture
-            window.scrollTo(0, 0);
+            const element = reportRef.current;
+            const captureWidth = 1000;
+            // Get actual height to ensure the canvas is large enough
+            const captureHeight = element.scrollHeight + 100;
 
-            const canvas = await html2canvas(reportRef.current, {
-                backgroundColor: null,
-                scale: 3,
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#00121d',
+                scale: 2.5, // slightly lower for better memory stability on mobile
                 useCORS: true,
-                imageTimeout: 0,
-                windowWidth: 1000,
-                width: 1000,
+                imageTimeout: 15000, // wait up to 15s for resources
+                windowWidth: captureWidth,
+                width: captureWidth,
+                height: captureHeight,
                 scrollX: 0,
                 scrollY: 0,
+                x: 0,
+                y: 0,
                 onclone: (clonedDoc) => {
                     const clonedContent = clonedDoc.querySelector('.result-content');
                     if (clonedContent) {
@@ -436,9 +441,16 @@ const FascinantesResult = () => {
                                 
                                 // FORCE height and label visibility for PDF capture context
                                 radarContainer.style.setProperty('height', '720px', 'important');
+                                radarContainer.style.setProperty('width', '100%', 'important');
                                 
                                 const svg = radarContainer.querySelector('svg');
                                 if (svg) {
+                                    // CRITICAL: Force physical width/height so Recharts doesn't render 0x0 in clone
+                                    svg.setAttribute('width', '900');
+                                    svg.setAttribute('height', '720');
+                                    svg.style.setProperty('width', '900px', 'important');
+                                    svg.style.setProperty('height', '720px', 'important');
+                                    
                                     // Ensure all path/text in SVG are visibly white in PDF
                                     const svgTexts = svg.querySelectorAll('text, tspan');
                                     svgTexts.forEach(t => {
