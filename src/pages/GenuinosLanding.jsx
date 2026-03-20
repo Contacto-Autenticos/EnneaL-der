@@ -204,22 +204,48 @@ const GenuinosLanding = () => {
 
                 <h1 className="al-hero-title">
                     <span className="al-hero-title-top" style={{ fontSize: '0.6em', marginBottom: '10px' }}>
-                        Descubre qué hay detrás <br className="al-mobile-br" /> de tu forma <br className="al-desktop-br" /> de pensar, <br className="al-mobile-br" /> decidir y reaccionar.
+                        Descubre cómo estás liderando realmente <br className="al-mobile-br" /> (aunque no te des cuenta)
                     </span>
                     <span className="al-gold-text" style={{ fontSize: '0.8em', lineHeight: '1.2' }}>
-                        Aprende a usar ese <br /> conocimiento a tu favor.
+                        Identifica la estructura desde la que tomas <br className="al-mobile-br" /> decisiones, reaccionas bajo presión <br className="al-mobile-br" /> y lideras a otros usando el Eneagrama <br className="al-mobile-br" /> aplicado al mundo empresarial.
                     </span>
                 </h1>
 
-                <div className="course-intro-content">
-                    <p className="al-hero-subtitle" style={{ fontSize: '1.2rem', fontWeight: '400', opacity: '0.9', maxWidth: '800px', margin: '0 auto 1.5rem', lineHeight: '1.8' }}>
-                        Cuando comprendes cómo funciona tu personalidad, muchas <br />
-                        piezas empiezan a encajar y desde ese lugar, nuevas formas de <br />
-                        vivir, decidir y relacionarte comienzan a ser posibles.
-                    </p>
+                <div className="course-intro-content" style={{ marginTop: '30px' }}>
+                    <div className="al-hero-bullets" style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '12px', 
+                        alignItems: 'center',
+                        marginBottom: '40px'
+                    }}>
+                        {[
+                            "Descubre tu tipo de liderazgo dominante",
+                            "Entiende por qué repites ciertos patrones",
+                            "Aprende cómo mejorar tu forma de decidir"
+                        ].map((bullet, idx) => (
+                            <div key={idx} style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '10px',
+                                fontSize: '1.1rem',
+                                color: 'rgba(255,255,255,0.9)',
+                                background: 'rgba(255,255,255,0.05)',
+                                padding: '10px 20px',
+                                borderRadius: '50px',
+                                border: '1px solid rgba(255,255,255,0.1)'
+                            }}>
+                                <span style={{ color: '#ddbe3d' }}>✔</span>
+                                <span>{bullet}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="al-hero-actions">
+                    <a href="#precios" className="al-btn-primary" style={{ padding: '20px 40px', fontSize: '1.1rem', fontWeight: '900' }}>
+                        QUIERO DESCUBRIR MI MAPA INTERIOR
+                    </a>
                 </div>
             </section>
 
