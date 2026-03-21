@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Play, ArrowLeft, Lock, Rocket } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import './CourseLanding.css';
 
 const VideoLoopWithFlash = ({ src }) => {
