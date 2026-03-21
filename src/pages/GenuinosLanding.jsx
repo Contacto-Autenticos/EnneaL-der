@@ -1131,7 +1131,7 @@ const GenuinosLanding = () => {
             </section>
 
             {/* NEW: FAQ Section (Accordion Style) */}
-            <section className="course-faq al-section al-animate" style={{ background: '#000a12', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '140px' }}>
+            <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '140px' }}>
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
                         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
@@ -1156,14 +1156,6 @@ const GenuinosLanding = () => {
                                 {
                                     q: "¿Este programa es solo teoría?",
                                     a: "No. El proceso incluye ejercicios prácticos y un plan de acción personal para aplicar lo aprendido."
-                                },
-                                {
-                                    q: "¿Vale la pena si ya vi mis resultados?",
-                                    a: "Totalmente. Los resultados te dan el 'qué', pero el programa te da el 'cómo' aplicar ese conocimiento para transformar tu liderazgo y relaciones."
-                                },
-                                {
-                                    q: "¿Es realmente personalizado?",
-                                    a: "Sí. Aunque el contenido es estructurado, tu Plan de Acción se basa específicamente en tu eneatipo y tus desafíos actuales."
                                 }
                             ].map((item, i) => (
                                 <div key={i} style={{ 
