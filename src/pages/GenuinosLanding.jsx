@@ -1,15 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import {
-    ArrowLeft,
-    ArrowRight,
-    CheckCircle2,
-    Lock,
-    Rocket,
-    Star
-} from 'lucide-react';
+import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Play, ArrowLeft, Lock, Rocket } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import './CourseLanding.css';
+
+const VideoLoopWithFlash = ({ src }) => {
+    const videoRef = useRef(null);
+    const [showFlash, setShowFlash] = useState(false);
+
+    const handleVideoEnd = () => {
+        setShowFlash(true);
+        setTimeout(() => {
+            if (videoRef.current) {
+                videoRef.current.currentTime = 0;
+                videoRef.current.play();
+            }
+            setTimeout(() => {
+                setShowFlash(false);
+            }, 300); // Duration of the flash effect
+        }, 100); // Buffer before restart
+    };
+
+    return (
+        <div style={{ position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <video 
+                ref={videoRef}
+                src={src}
+                autoPlay 
+                muted 
+                playsInline
+                onEnded={handleVideoEnd}
+                style={{ width: '100%', display: 'block' }}
+            />
+            {showFlash && (
+                <div style={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    left: 0, 
+                    right: 0, 
+                    bottom: 0, 
+                    background: '#fff', 
+                    zIndex: 10,
+                    transition: 'opacity 0.2s ease-in-out'
+                }} />
+            )}
+        </div>
+    );
+};
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
 const WOMPI_CURRENCY = 'COP';
@@ -337,59 +375,61 @@ const GenuinosLanding = () => {
                 </div>
             </section>
 
-            {/* NEW: Map Section */}
+            {/* NEW: Map Section - Two Columns */}
             <section className="course-map al-animate">
                 <div className="al-section-content">
-                    <div className="course-map-header">
-                        <h2 className="al-hero-title">
-                            <span className="al-hero-title-top">Autoconocimiento basado en el eneagrama</span>
-                            <span className="al-gold-text" style={{ fontSize: '0.75em', marginTop: '15px' }}>uno de los modelos más profundos para comprender la personalidad humana</span>
-                        </h2>
-                        <p className="al-hero-subtitle" style={{ fontSize: '1.2rem', textAlign: 'center', margin: '20px auto 0', fontWeight: '400', color: 'rgba(255,255,255,0.7)', maxWidth: '800px' }}>
-                            No es superstición ni solo teoría, es una herramienta practica para observarte con mayor conciencia y abrir nuevas posibilidades de transformación.
-                        </p>
-                    </div>
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+                        gap: '60px',
+                        alignItems: 'center',
+                        marginTop: '40px'
+                    }}>
+                        {/* Left Column: Text */}
+                        <div className="map-text-column">
+                            <h2 style={{ fontSize: '2.2rem', color: '#ddbe3d', marginBottom: '25px', lineHeight: '1.2' }}>
+                                Imagina que tu forma de pensar, sentir y actuar estuviera guiada por un mapa invisible.
+                            </h2>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.85)', marginBottom: '35px', lineHeight: '1.6' }}>
+                                Un mapa que se formó a lo largo de tu vida para ayudarte a adaptarte al mundo.
+                            </p>
 
-                    <div className="course-map-highlights">
-                        <p className="introspection-transition" style={{ marginBottom: '30px' }}>En este programa podrás:</p>
+                            <div style={{ marginBottom: '40px' }}>
+                                <p style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '20px', fontWeight: '600' }}>Ese mapa determina:</p>
+                                <ul style={{ listStyle: 'none', padding: 0 }}>
+                                    {[
+                                        'cómo percibes las oportunidades',
+                                        'cómo interpretas el conflicto',
+                                        'cómo reaccionas bajo presión',
+                                        'cómo tomas decisiones importantes'
+                                    ].map((item, i) => (
+                                        <li key={i} style={{ 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            gap: '12px', 
+                                            fontSize: '1.2rem', 
+                                            color: 'rgba(255,255,255,0.8)',
+                                            marginBottom: '12px'
+                                        }}>
+                                            <div style={{ width: '6px', height: '6px', background: '#ddbe3d', borderRadius: '50%' }}></div>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
 
-                        <div className="map-grid">
-                            {[
-                                'Comprender cómo funciona tu tipo de personalidad y cuáles son sus motivaciones profundas.',
-                                'Identificar los patrones automáticos que influyen en tu manera de pensar, decidir y reaccionar.',
-                                'Reconocer las fortalezas naturales que forman parte de tu esencia.',
-                                'Descubrir las trampas inconscientes que muchas veces limitan tu crecimiento.',
-                                'Aprender a observar tus reacciones con mayor conciencia para abrir nuevas posibilidades de elección.',
-                                'Fortalecer tu liderazgo personal y la forma en que te relacionas con otros.'
-                            ].map((item, i) => (
-                                <div key={i} className="map-item">
-                                    <div className="map-item-dot"></div>
-                                    <span>{item}</span>
-                                </div>
-                            ))}
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.9)', marginBottom: '20px', lineHeight: '1.6' }}>
+                                El Eneagrama es uno de los sistemas más profundos que existen para comprender ese mapa.
+                            </p>
+                            <p style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', lineHeight: '1.6' }}>
+                                Cuando puedes verlo con claridad, empiezas a recuperar algo muy valioso: <span style={{ color: '#ddbe3d' }}>la capacidad de elegir cómo responder.</span>
+                            </p>
                         </div>
 
-                        <p className="introspection-closing" style={{ marginTop: '50px', marginBottom: '40px' }}>
-                            Cuando empiezas a verte con claridad:
-                        </p>
-
-                        <div className="map-grid">
-                            {[
-                                'Dejas de reaccionar en automático y comienzas a tomar decisiones con mayor conciencia.',
-                                'Comprendes mejor tus emociones y las de las personas que te rodean.',
-                                'Puedes reconocer tus patrones antes de que dirijan tus acciones.',
-                                'Tu manera de liderar, relacionarte y tomar decisiones comienza a transformarse.'
-                            ].map((item, i) => (
-                                <div key={i} className="map-item">
-                                    <div className="map-item-dot"></div>
-                                    <span>{item}</span>
-                                </div>
-                            ))}
+                        {/* Right Column: Video */}
+                        <div className="map-video-column">
+                            <VideoLoopWithFlash src="/Videos/Eneagrama-Autenticos.mp4" />
                         </div>
-
-                        <p className="introspection-closing" style={{ marginTop: '60px', fontStyle: 'italic', fontWeight: '400', opacity: '0.8' }}>
-                            "El autoconocimiento no cambia quién eres, pero sí transforma la forma en que te relacionas contigo mismo y con el mundo."
-                        </p>
                     </div>
                 </div>
             </section>
