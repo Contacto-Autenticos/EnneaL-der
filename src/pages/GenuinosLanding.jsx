@@ -22,15 +22,7 @@ const VideoLoopWithFlash = ({ src }) => {
     };
 
     return (
-        <div style={{ 
-            position: 'relative', 
-            width: '100%', 
-            maxHeight: '520px', // Restricting height for symmetric crop
-            borderRadius: '24px', 
-            overflow: 'hidden', 
-            boxShadow: '0 20px 40px rgba(0,0,0,0.4)', 
-            border: '1px solid rgba(255,255,255,0.1)' 
-        }}>
+        <div style={{ position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
             <video 
                 ref={videoRef}
                 src={src}
@@ -38,25 +30,8 @@ const VideoLoopWithFlash = ({ src }) => {
                 muted 
                 playsInline
                 onEnded={handleVideoEnd}
-                style={{ 
-                    width: '100%', 
-                    height: '100%',
-                    display: 'block',
-                    objectFit: 'cover',
-                    objectPosition: 'center' // This ensures top and bottom are cropped equally
-                }}
+                style={{ width: '100%', display: 'block' }}
             />
-            {/* Mask for "Veo" logo at bottom right */}
-            <div style={{ 
-                position: 'absolute', 
-                bottom: '8px', 
-                right: '8px', 
-                width: '60px', 
-                height: '30px', 
-                background: '#0a161e', 
-                zIndex: 5,
-                borderRadius: '4px'
-            }} />
             {showFlash && (
                 <div style={{ 
                     position: 'absolute', 
