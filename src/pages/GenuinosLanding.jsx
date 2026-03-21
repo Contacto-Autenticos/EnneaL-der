@@ -203,10 +203,10 @@ const GenuinosLanding = () => {
                 </div>
 
                 <h1 className="al-hero-title">
-                    <span className="al-hero-title-top" style={{ fontSize: '0.6em', marginBottom: '10px' }}>
+                    <span className="al-hero-title-top" style={{ fontSize: '0.8em', marginBottom: '10px' }}>
                         Descubre cómo estás liderando realmente <br className="al-mobile-br" /> (aunque no te des cuenta)
                     </span>
-                    <span className="al-gold-text" style={{ fontSize: '0.8em', lineHeight: '1.2' }}>
+                    <span className="al-gold-text" style={{ fontSize: '0.5em', lineHeight: '1.2' }}>
                         Identifica la estructura desde la que tomas <br className="al-mobile-br" /> decisiones, reaccionas bajo presión <br className="al-mobile-br" /> y lideras a otros usando el Eneagrama <br className="al-mobile-br" /> aplicado al mundo empresarial.
                     </span>
                 </h1>
