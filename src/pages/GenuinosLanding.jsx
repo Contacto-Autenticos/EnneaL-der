@@ -432,27 +432,36 @@ const GenuinosLanding = () => {
                     </div>
                 </div>
             </section>
-            {/* NEW: Experience Section */}
+            {/* NEW: Experience Section - Simplified with Image */}
             <section className="course-experience al-animate">
                 <div className="al-section-content">
-                    <div className="introspection-box">
-                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 42px)', marginBottom: '60px', textAlign: 'center' }}>
-                            <span className="al-hero-title-top">Este proceso está diseñado para</span>
-                            <span className="al-gold-text">acompañarte a:</span>
-                        </h2>
-
-                        <ul className="introspection-list">
-                            <li>Observarte con mayor profundidad.</li>
-                            <li>Comprender tu personalidad desde una mirada más amplia.</li>
-                            <li>Reconocer las dinámicas internas que influyen en tu forma de vivir, decidir y relacionarte.</li>
-                            <li>Y abrir un camino de desarrollo que nazca desde la conciencia, no desde la exigencia.</li>
-                        </ul>
-
-                        <div className="introspection-divider"></div>
-
-                        <p className="introspection-closing" style={{ fontSize: '1.4rem', fontWeight: '700' }}>
-                            El objetivo no es etiquetarte, sino comprenderte con mayor profundidad.
-                        </p>
+                    <div style={{ textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
+                        <img 
+                            src="/Genuinos-programa-autenticos.png" 
+                            alt="Genuinos Programa Auténticos" 
+                            style={{ 
+                                width: '100%', 
+                                maxWidth: '800px', 
+                                height: 'auto', 
+                                borderRadius: '24px',
+                                marginBottom: '50px',
+                                boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                            }} 
+                        />
+                        
+                        <div style={{ padding: '0 20px' }}>
+                            <p style={{ fontSize: '1.6rem', color: '#fff', lineHeight: '1.5', marginBottom: '30px', fontWeight: '500' }}>
+                                Un proceso diseñado para ayudarte a comprender tu estructura interior y desarrollar una forma más consciente de liderar tu vida y tu trabajo.
+                            </p>
+                            
+                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '800', marginBottom: '30px' }}>
+                                No es teoría.
+                            </p>
+                            
+                            <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', maxWidth: '800px', margin: '0 auto' }}>
+                                Este sistema práctico para transformar cómo piensas, decides y actúas. Combina tres elementos fundamentales.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
