@@ -102,6 +102,55 @@ const ImageCarousel = ({ images }) => {
     );
 };
 
+const TestimonialCarousel = ({ testimonials }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+    useEffect(() => {
+        const interval = setInterval(next, 10000); // More time to read
+        return () => clearInterval(interval);
+    }, [testimonials.length]);
+
+    return (
+        <div style={{ position: 'relative', width: '100%', minHeight: '380px' }}>
+            <div key={currentIndex} className="al-animate" style={{ 
+                background: 'rgba(255, 255, 255, 0.03)', 
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '32px',
+                padding: '45px 40px',
+                position: 'relative',
+                boxShadow: '0 30px 60px rgba(0,0,0,0.4)',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+            }}>
+                <div style={{ color: '#ddbe3d', fontSize: '4rem', position: 'absolute', top: '15px', left: '25px', opacity: 0.2, lineHeight: '1', fontFamily: 'serif' }}>❝</div>
+                <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.8', marginBottom: '35px', position: 'relative', zIndex: 1, fontStyle: 'italic' }}>
+                    {testimonials[currentIndex].text}
+                </p>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '25px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <div>
+                        <h5 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: '4px', fontWeight: '800' }}>{testimonials[currentIndex].name}</h5>
+                        <p style={{ color: '#ddbe3d', fontSize: '0.85rem', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{testimonials[currentIndex].title}</p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button onClick={prev} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronLeft size={18} /></button>
+                        <button onClick={next} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronRight size={18} /></button>
+                    </div>
+                </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '25px' }}>
+                {testimonials.map((_, i) => (
+                    <div key={i} style={{ width: i === currentIndex ? '20px' : '6px', height: '6px', borderRadius: '3px', background: i === currentIndex ? '#ddbe3d' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s' }} />
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
 const WOMPI_CURRENCY = 'COP';
 
@@ -715,6 +764,99 @@ const GenuinosLanding = () => {
                                 <p style={{ marginTop: '15px' }}>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
                                 <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handleSelectPlan('presencial')}>Seleccionar Presencial</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Results & Testimonials Section */}
+            <section className="course-results al-animate" style={{ padding: '120px 0', background: 'var(--al-blue-dark)', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                <div className="al-section-content" style={{ maxWidth: '1150px', margin: '0 auto' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '100px', alignItems: 'start' }}>
+                        {/* Left Column */}
+                        <div style={{ paddingRight: '20px' }}>
+                            <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+                                RESULTADOS QUE PUEDES ESPERAR
+                            </h3>
+                            <p style={{ fontSize: '1.15rem', marginBottom: '30px', color: '#fff', fontWeight: '500' }}>
+                                Las personas que realizan este proceso suelen experimentar:
+                            </p>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 60px 0', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                                {[
+                                    'mayor claridad sobre su forma de pensar y reaccionar',
+                                    'comprensión de patrones repetitivos en su vida',
+                                    'mejoras en comunicación y relaciones',
+                                    'decisiones más conscientes',
+                                    'mayor coherencia entre lo que piensan, sienten y hacen'
+                                ].map((item, i) => (
+                                    <li key={i} style={{ display: 'flex', gap: '14px', color: 'rgba(255,255,255,0.9)', fontSize: '1.05rem', alignItems: 'center' }}>
+                                        <CheckCircle2 size={22} style={{ color: '#ddbe3d', flexShrink: 0 }} />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+                                DIFERENCIA DE ESTE PROCESO
+                            </h3>
+                            <p style={{ fontSize: '1.15rem', lineHeight: '1.7', color: 'rgba(255,255,255,0.9)', marginBottom: '30px' }}>
+                                Muchos cursos de Eneagrama se enfocan en describir tipos de personalidad. <strong style={{color: '#fff'}}>GENUINOS</strong> se enfoca en algo distinto. No se trata solo de saber qué tipo eres, se trata de comprender:
+                            </p>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 45px 0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                {[
+                                    'la estructura desde la cual interpretas el mundo',
+                                    'la emoción que guía tus reacciones',
+                                    'el patrón que aparece bajo presión',
+                                    'las posibilidades de desarrollo que tienes por delante'
+                                ].map((item, i) => (
+                                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem' }}>
+                                        <div style={{ width: '10px', height: '2px', background: '#ddbe3d', borderRadius: '2px' }}></div>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <div style={{  
+                                borderLeft: '4px solid #ddbe3d', 
+                                padding: '10px 25px', 
+                                background: 'rgba(221, 190, 61, 0.05)',
+                                borderRadius: '0 12px 12px 0'
+                            }}>
+                                <p style={{ fontSize: '1.2rem', color: '#fff', fontWeight: '700', margin: 0 }}>
+                                    Por eso este programa no es solo información. <br/>
+                                    <span style={{ color: '#ddbe3d', fontSize: '1.3rem' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Right Column */}
+                        <div style={{ position: 'sticky', top: '120px' }}>
+                            <TestimonialCarousel testimonials={[
+                                {
+                                    name: "Pilar Martínez",
+                                    title: "Coach Transformacional | Facilitadora de Consciencias | Directora de Mandrágora Life",
+                                    text: "Alegría, sabiduría, entusiasmo, acción, pasión, conocimiento, energía, líder, compromiso social... son solo unas pocas palabras entre muchas que siento y pienso con Felipe. Gran emprendedor, sabio y líder. Auténticos fue una experiencia para mirar hacia dentro, conocerse y quererse más. Como terapeuta me abre una ventana para saber cómo conectar con cada paciente con el fin de potenciar su ser. Gracias Felipe por tu luz, entrega y pasión. Nos inspiramos cada día con hermosos y valiosos seres como tu."
+                                },
+                                {
+                                    name: "Felipe Andrés Varela Chavéz",
+                                    title: "Músico / Empresario y CEO de Bluetidemusic-Musician Agent",
+                                    text: "A través de Auténticos con Felipe pude entender tantas, pero tantas cosas acerca de mi personalidad que no podría nombrarlas todas. Es un espacio muy poderoso para mejorar las relaciones personales a todo nivel, por lo que te va a hacer tu vida familiar, personal y laboral mucho más llevadera. Gracias Felipe Beltrán por compartir todo tu conocimiento de una manera clara y divertida."
+                                },
+                                {
+                                    name: "Isabela Echeverry Penon",
+                                    title: "Directora de Emprendimiento e Innovación de la Cámara de Comercio de Cali",
+                                    text: "El equipo de Auténticos tiene una genuina pasión e interés por ayudar a otros. Personalmente su MLT, me sirvió (y al equipo) para aprender a comunicarnos mejor y moderar nuestro fuego interior. Además es el líder metodológico y facilitador de más de 10 talleres con 200 emprendedores de la CCC en el marco de #ValientesCCC. Su carisma y conocimiento hacen que cada sesión sea no solo productiva sino inolvidable."
+                                },
+                                {
+                                    name: "Josué Cobaleda",
+                                    title: "Profesional de escalamiento e innovación en Innpulsa Colombia",
+                                    text: "Felipe y su equipo de Auténticos a través de la mentoría me ayudaron a acercarme a mi mejor versión. Comencé a leer hasta 4 veces más que lo que leía antes, me ejercitaba el doble de lo que antes lo hacía, cambié varios modelos mentales y mi energía tuvo una subida importante. Incluso mi relación con Dios comenzó a fortalecerse al formar hábitos diarios que me ayudaron a seguir construyendo la vida que quiero. La base de conocimiento y la practicidad de sus consejos hacen tener resultados desde el primer día. Sin duda se puede confiar en este equipo, Lo recomiendo."
+                                },
+                                {
+                                    name: "Carlos Andrés Duque",
+                                    title: "Consultor Junior en proyectos de consultoría Financiera",
+                                    text: "Para mi los talleres de Auténticos, han significado un cambio fuertes para mi vida, he podido a través del eneagrama abrazar el autoconocimiento , darme cuenta de la estructura de mi personalidad y cómo me manejaba ante actitudes inconscientes o automáticas que debía traer a la luz y sanar. Me comencé a reconocer con todo mi potencial, cómo un diamante en bruto que decidí forjar y pulir."
+                                }
+                            ]} />
                         </div>
                     </div>
                 </div>
