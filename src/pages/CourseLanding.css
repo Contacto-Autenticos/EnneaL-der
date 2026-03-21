@@ -1112,3 +1112,9 @@
     0% { transform: translateX(calc(-50% - 20px)); }
     100% { transform: translateX(0); }
 }
+
+@media (max-width: 768px) {
+    .mobile-img-top {
+        order: -1 !important;
+    }
+}

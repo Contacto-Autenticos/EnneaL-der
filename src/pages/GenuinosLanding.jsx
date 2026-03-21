@@ -427,7 +427,7 @@ const GenuinosLanding = () => {
             <section className="course-introspection al-animate">
                 <div className="al-section-content">
                     <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                        <p className="introspection-closing" style={{ fontSize: '2.5rem', marginBottom: '40px', textAlign: 'center', fontWeight: '800', lineHeight: '1.2' }}>
+                        <p className="introspection-closing" style={{ fontSize: 'clamp(1.8rem, 6vw, 2.5rem)', marginBottom: '40px', textAlign: 'center', fontWeight: '800', lineHeight: '1.2' }}>
                             Muchas personas con talento y potencial de liderazgo se encuentran con una realidad difícil de explicar.
                         </p>
                         
@@ -446,7 +446,7 @@ const GenuinosLanding = () => {
                                     border: '1px solid rgba(221, 190, 61, 0.3)',
                                     color: '#ddbe3d',
                                     fontWeight: '700',
-                                    fontSize: '1.25rem'
+                                    fontSize: 'clamp(1rem, 4vw, 1.25rem)'
                                 }}>
                                     {text}
                                 </div>
@@ -463,7 +463,7 @@ const GenuinosLanding = () => {
                                 padding: '0', 
                                 margin: '0 0 50px 0',
                                 display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
                                 gap: '20px'
                             }}>
                                 {[
@@ -516,14 +516,14 @@ const GenuinosLanding = () => {
                 <div className="al-section-content">
                     <div style={{ 
                         display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', 
                         gap: '60px',
                         alignItems: 'center',
                         marginTop: '40px'
                     }}>
                         {/* Left Column: Text */}
                         <div className="map-text-column">
-                            <h2 style={{ fontSize: '2.2rem', color: '#ddbe3d', marginBottom: '25px', lineHeight: '1.2' }}>
+                            <h2 style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', color: '#ddbe3d', marginBottom: '25px', lineHeight: '1.2' }}>
                                 Imagina que tu forma de pensar, sentir y actuar estuviera guiada por un mapa invisible.
                             </h2>
                             <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.85)', marginBottom: '35px', lineHeight: '1.6' }}>
@@ -622,7 +622,7 @@ const GenuinosLanding = () => {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '120px' }}>
                         {/* 1. Diagnóstico */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'center', gap: '60px' }}>
                             <div>
                                 <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
                                     1. Diagnóstico profundo de personalidad
@@ -648,7 +648,7 @@ const GenuinosLanding = () => {
                                     Este diagnóstico te permitirá ver con mayor claridad el mapa desde el cual estás operando hoy.
                                 </p>
                             </div>
-                            <div style={{ position: 'relative' }}>
+                            <div className="mobile-img-top" style={{ position: 'relative' }}>
                                 <img 
                                     src="/Portada-Analisis Avanzado-3.png?v=2" 
                                     alt="Diagnóstico profundo" 
@@ -658,7 +658,7 @@ const GenuinosLanding = () => {
                         </div>
 
                         {/* 2. Curso */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'center', gap: '60px' }}>
                             <div className="program-media-order-mobile" style={{ order: 1 }}>
                                 <ImageCarousel images={['/genuinos-virtual-1.png', '/genuinos-presencial-1.JPG', '/genuinos-presencial-2.JPG', '/genuinos-presencial-3.JPG']} />
                             </div>
@@ -690,7 +690,7 @@ const GenuinosLanding = () => {
                         </div>
 
                         {/* 3. Plan de Acción */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'center', gap: '60px' }}>
                             <div>
                                 <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
                                     3. Plan de acción personal
@@ -723,7 +723,7 @@ const GenuinosLanding = () => {
                                     </p>
                                 </div>
                             </div>
-                            <div>
+                            <div className="mobile-img-top">
                                 <img 
                                     src="/Portada - Plan de Acción-1.jpg" 
                                     alt="Plan de acción personal" 
@@ -774,7 +774,7 @@ const GenuinosLanding = () => {
                     <div className="modalities-header">
                         <h2 className="al-hero-title" style={{ fontSize: 'clamp(32px, 6vw, 48px)' }}>
                             <span className="al-hero-title-top">Este taller es especialmente</span>
-                            <span className="al-gold-text">valioso para ti, sí:</span>
+                            <span className="al-gold-text">valioso para ti, sí eres:</span>
                         </h2>
 
                         <div className="target-audience-grid">
@@ -784,7 +784,7 @@ const GenuinosLanding = () => {
                                 'Líder de equipo',
                                 'Profesional con potencial de liderazgo',
                                 'Consultor, Mentor o Coach interesado en profundizar en el comportamiento humano.',
-                                'Te interesa el desarrollo personal, más allá de ideas superficiales.'
+                                'Una persona con interés en el desarrollo personal, más allá de ideas superficiales.'
                             ].map((item, i) => (
                                 <div key={i} className="target-item">
                                     <div className="target-dot"></div>
@@ -793,7 +793,7 @@ const GenuinosLanding = () => {
                             ))}
                         </div>
                         <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '100px', marginTop: '100px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '100px', alignItems: 'start' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '100px', alignItems: 'start' }}>
                         {/* Left Column */}
                         <div style={{ paddingRight: '20px' }}>
                             <h3 style={{ color: '#ddbe3d', fontSize: 'clamp(2.2rem, 5vw, 2.6rem)', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2', textAlign: 'left' }}>
@@ -1311,10 +1311,10 @@ const GenuinosLanding = () => {
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
                         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-                            <h2 style={{ fontSize: 'clamp(42px, 8vw, 68px)', fontWeight: '900', color: '#fff', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
+                            <h2 style={{ fontSize: 'clamp(55px, 12vw, 80px)', fontWeight: '900', color: '#fff', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
                                 Preguntas
                             </h2>
-                            <h2 style={{ fontSize: 'clamp(42px, 8vw, 68px)', fontWeight: '900', color: '#ddbe3d', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
+                            <h2 style={{ fontSize: 'clamp(55px, 12vw, 80px)', fontWeight: '900', color: '#ddbe3d', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
                                 frecuentes
                             </h2>
                         </div>
