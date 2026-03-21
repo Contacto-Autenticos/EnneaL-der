@@ -1311,12 +1311,17 @@ const GenuinosLanding = () => {
             <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '90px' }}>
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
-                        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-                            <h2 className="faq-header-text" style={{ fontWeight: '900', color: '#fff', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
-                                Preguntas
-                            </h2>
-                            <h2 className="faq-header-text" style={{ fontWeight: '900', color: '#ddbe3d', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
-                                frecuentes
+                        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                            <h2 style={{ 
+                                fontSize: 'clamp(2.5rem, 8vw, 4.8rem)', 
+                                fontWeight: '900', 
+                                marginBottom: '0', 
+                                letterSpacing: '-0.02em',
+                                lineHeight: '1.1',
+                                color: '#fff',
+                                textTransform: 'none'
+                            }}>
+                                Preguntas <span style={{ color: '#ddbe3d' }}>frecuentes</span>
                             </h2>
                         </div>
 
