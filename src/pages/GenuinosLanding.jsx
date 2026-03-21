@@ -437,7 +437,7 @@ const GenuinosLanding = () => {
                 <div className="al-section-content">
                     <div style={{ textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
                         <img 
-                            src="/Genuinos-programa-autenticos.png" 
+                            src="/Genuinos-programa-autenticos.png?v=2" 
                             alt="Genuinos Programa Auténticos" 
                             style={{ 
                                 width: '100%', 
