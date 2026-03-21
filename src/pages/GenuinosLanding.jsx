@@ -54,6 +54,11 @@ const ImageCarousel = ({ images }) => {
     const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
     const prev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
+    useEffect(() => {
+        const interval = setInterval(next, 3000);
+        return () => clearInterval(interval);
+    }, [images.length]);
+
     return (
         <div style={{ position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
             <img 
