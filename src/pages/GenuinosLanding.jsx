@@ -1179,7 +1179,7 @@ const GenuinosLanding = () => {
                                             width: '100%', 
                                             padding: '30px 40px', 
                                             display: 'flex', 
-                                            justify-content: 'space-between', 
+                                            justifyContent: 'space-between', 
                                             alignItems: 'center', 
                                             background: 'none', 
                                             border: 'none', 
