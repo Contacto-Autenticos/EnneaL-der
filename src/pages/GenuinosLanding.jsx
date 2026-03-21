@@ -725,14 +725,8 @@ const GenuinosLanding = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Results & Testimonials Section */}
-            <section className="course-results al-animate" style={{ padding: '120px 0', background: 'var(--al-blue-dark)', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                <div className="al-section-content" style={{ maxWidth: '1150px', margin: '0 auto' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '100px', alignItems: 'start' }}>
+                        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '100px', marginTop: '100px' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '100px', alignItems: 'start' }}>
                         {/* Left Column */}
                         <div style={{ paddingRight: '20px' }}>
                             <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
@@ -820,7 +814,9 @@ const GenuinosLanding = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
+    </section>
 
 
             {/* Step 3: Registration Modal */}
