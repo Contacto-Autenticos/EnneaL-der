@@ -243,7 +243,7 @@ const GenuinosLanding = () => {
                 </div>
 
                 <div className="al-hero-actions">
-                    <a href="#precios" className="al-btn-primary" style={{ padding: '20px 40px', fontSize: '1.1rem', fontWeight: '900' }}>
+                    <a href="#precios" className="al-btn-primary closing-cta" style={{ padding: '20px 40px', fontSize: '1.1rem', fontWeight: '900' }}>
                         QUIERO DESCUBRIR MI MAPA INTERIOR
                     </a>
                 </div>
