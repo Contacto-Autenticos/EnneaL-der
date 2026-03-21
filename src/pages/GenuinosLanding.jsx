@@ -823,16 +823,37 @@ const GenuinosLanding = () => {
                             borderRadius: '16px',
                             padding: '30px'
                         }}>
-                            <p style={{ fontSize: '1.3rem', color: '#fff', fontWeight: '700', margin: 0 }}>
-                                Por eso este programa no es solo información. <br/>
-                                <span style={{ color: '#ddbe3d', fontSize: '1.5rem', marginTop: '10px', display: 'block' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
-                            </p>
+                                <p style={{ fontSize: '1.3rem', color: '#fff', fontWeight: '700', margin: 0 }}>
+                                    Por eso este programa no es solo información. <br/>
+                                    <span style={{ color: '#ddbe3d', fontSize: '1.5rem', marginTop: '10px', display: 'block' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
+                                </p>
+                            </div>
+
+                            <div style={{ marginTop: '70px' }}>
+                                <p style={{ fontSize: '1.3rem', color: 'rgba(255,255,255,0.95)', marginBottom: '35px', fontWeight: '500', maxWidth: '600px', margin: '0 auto 40px' }}>
+                                    Empieza hoy a comprender el mapa desde el cual tomas decisiones y lideras.
+                                </p>
+                                <a href="#precios" className="al-btn-primary" style={{ 
+                                    display: 'inline-block',
+                                    backgroundColor: '#ddbe3d', 
+                                    color: '#002d44', 
+                                    fontWeight: '900', 
+                                    padding: '22px 45px',
+                                    borderRadius: '12px',
+                                    textDecoration: 'none',
+                                    fontSize: '1.1rem',
+                                    letterSpacing: '0.05em',
+                                    boxShadow: '0 15px 30px rgba(221, 190, 61, 0.2)',
+                                    transition: 'all 0.3s ease'
+                                }}>
+                                    COMENZAR MI PROCESO GENUINOS
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 
             {/* Step 3: Registration Modal */}
