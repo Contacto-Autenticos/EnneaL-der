@@ -730,13 +730,13 @@ const GenuinosLanding = () => {
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '100px', alignItems: 'start' }}>
                         {/* Left Column */}
                         <div style={{ paddingRight: '20px' }}>
-                            <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+                            <h3 style={{ color: '#ddbe3d', fontSize: 'clamp(2.2rem, 5vw, 2.6rem)', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2', textAlign: 'left' }}>
                                 RESULTADOS QUE PUEDES ESPERAR
                             </h3>
-                            <p style={{ fontSize: '1.15rem', marginBottom: '30px', color: '#fff', fontWeight: '500' }}>
+                            <p style={{ fontSize: '1.3rem', marginBottom: '30px', color: '#fff', fontWeight: '500', textAlign: 'left' }}>
                                 Las personas que realizan este proceso suelen experimentar:
                             </p>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 60px 0', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 60px 0', display: 'flex', flexDirection: 'column', gap: '22px' }}>
                                 {[
                                     'mayor claridad sobre su forma de pensar y reaccionar',
                                     'comprensión de patrones repetitivos en su vida',
@@ -744,9 +744,9 @@ const GenuinosLanding = () => {
                                     'decisiones más conscientes',
                                     'mayor coherencia entre lo que piensan, sienten y hacen'
                                 ].map((item, i) => (
-                                    <li key={i} style={{ display: 'flex', gap: '14px', color: 'rgba(255,255,255,0.9)', fontSize: '1.05rem', alignItems: 'center' }}>
-                                        <CheckCircle2 size={22} style={{ color: '#ddbe3d', flexShrink: 0 }} />
-                                        <span>{item}</span>
+                                    <li key={i} style={{ display: 'flex', gap: '16px', color: 'rgba(255,255,255,0.95)', fontSize: '1.25rem', alignItems: 'flex-start', textAlign: 'left' }}>
+                                        <CheckCircle2 size={24} style={{ color: '#ddbe3d', flexShrink: 0, marginTop: '2px' }} />
+                                        <span style={{ lineHeight: '1.4' }}>{item}</span>
                                     </li>
                                 ))}
                             </ul>
