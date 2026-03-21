@@ -785,6 +785,53 @@ const GenuinosLanding = () => {
                         </div>
                     </div>
 
+                    {/* NEW: Scarcity Banner Section */}
+                    <div style={{ 
+                        margin: '100px -5vw 0', 
+                        padding: '80px 20px',
+                        background: 'url("/Eneagrama_banner_05.png") center/cover no-repeat',
+                        textAlign: 'center',
+                        position: 'relative',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)'
+                    }}>
+                        <span style={{ 
+                            fontSize: '0.9rem', 
+                            fontWeight: '800', 
+                            letterSpacing: '0.3em', 
+                            textTransform: 'uppercase',
+                            marginBottom: '15px'
+                        }}>
+                            VENTA OFICIAL
+                        </span>
+                        <h2 style={{ 
+                            fontSize: 'clamp(32px, 6vw, 48px)', 
+                            fontWeight: '900', 
+                            marginBottom: '35px',
+                            lineHeight: '1.1'
+                        }}>
+                            ¡Últimos <span style={{ color: '#ff7e21' }}>cupos disponibles!</span>
+                        </h2>
+                        <a href="#precios" style={{ 
+                            display: 'inline-block',
+                            backgroundColor: '#fff', 
+                            color: '#000', 
+                            fontWeight: '800', 
+                            padding: '18px 40px',
+                            borderRadius: '50px',
+                            textDecoration: 'none',
+                            fontSize: '1.1rem',
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+                        }}>
+                            Asegura tu lugar VIP ahora
+                        </a>
+                    </div>
+
                     {/* Centered Value Proposition Block */}
                     <div style={{ 
                         maxWidth: '850px', 
