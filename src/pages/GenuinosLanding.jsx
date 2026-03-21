@@ -752,7 +752,6 @@ const GenuinosLanding = () => {
                                 ))}
                             </ul>
                         </div>
-
                         {/* Right Column */}
                         <div style={{ position: 'sticky', top: '120px' }}>
                             <TestimonialCarousel testimonials={[
@@ -783,64 +782,69 @@ const GenuinosLanding = () => {
                                 }
                             ]} />
                         </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    {/* NEW: Scarcity Banner Section (Full Width) */}
-                    <div style={{ 
-                        margin: '120px 0', 
-                        padding: '100px 20px',
-                        background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
-                        textAlign: 'center',
-                        position: 'relative',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#fff',
-                        boxShadow: 'inset 0 0 100px rgba(0,0,0,1)',
-                        width: '100vw',
-                        position: 'relative',
-                        left: '50%',
-                        right: '50%',
-                        marginLeft: '-50vw',
-                        marginRight: '-50vw'
-                    }}>
-                        <span style={{ 
-                            fontSize: '0.95rem', 
-                            fontWeight: '800', 
-                            letterSpacing: '0.4em', 
-                            textTransform: 'uppercase',
-                            marginBottom: '20px',
-                            color: 'rgba(255,255,255,0.8)'
-                        }}>
-                            VENTA OFICIAL
-                        </span>
-                        <h2 style={{ 
-                            fontSize: 'clamp(36px, 7vw, 56px)', 
-                            fontWeight: '900', 
-                            marginBottom: '40px',
-                            lineHeight: '1.2',
-                            maxWidth: '900px'
-                        }}>
-                            ¡Últimos <span style={{ color: '#ddbe3d' }}>cupos disponibles!</span>
-                        </h2>
-                        <a href="#precios" style={{ 
-                            display: 'inline-block',
-                            backgroundColor: '#fff', 
-                            color: '#000', 
-                            fontWeight: '900', 
-                            padding: '20px 50px',
-                            borderRadius: '50px',
-                            textDecoration: 'none',
-                            fontSize: '1.2rem',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 15px 30px rgba(0,0,0,0.4)'
-                        }}>
-                            Asegura tu lugar VIP ahora
-                        </a>
-                    </div>
+        {/* NEW: Scarcity Banner Section (Full Width) - Outside of original containers */}
+        <div style={{ 
+            margin: '120px 0', 
+            padding: '100px 20px',
+            background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
+            textAlign: 'center',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            boxShadow: 'inset 0 0 100px rgba(0,0,0,1)',
+            width: '100vw',
+            position: 'relative',
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw',
+            marginRight: '-50vw'
+        }}>
+            <span style={{ 
+                fontSize: '0.95rem', 
+                fontWeight: '800', 
+                letterSpacing: '0.4em', 
+                textTransform: 'uppercase',
+                marginBottom: '20px',
+                color: 'rgba(255,255,255,0.8)'
+            }}>
+                VENTA OFICIAL
+            </span>
+            <h2 style={{ 
+                fontSize: 'clamp(36px, 7vw, 56px)', 
+                fontWeight: '900', 
+                marginBottom: '40px',
+                lineHeight: '1.2',
+                maxWidth: '900px'
+            }}>
+                ¡Últimos <span style={{ color: '#ddbe3d' }}>cupos disponibles!</span>
+            </h2>
+            <a href="#precios" style={{ 
+                display: 'inline-block',
+                backgroundColor: '#fff', 
+                color: '#000', 
+                fontWeight: '900', 
+                padding: '20px 50px',
+                borderRadius: '50px',
+                textDecoration: 'none',
+                fontSize: '1.2rem',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 15px 30px rgba(0,0,0,0.4)'
+            }}>
+                Asegura tu lugar VIP ahora
+            </a>
+        </div>
 
-                    <div className="al-section-content">
+        <section className="course-modalities-extra al-animate" style={{ padding: '0' }}>
+            <div className="al-section-content">
 
                     {/* Centered Value Proposition Block */}
                     <div style={{ 
@@ -907,12 +911,10 @@ const GenuinosLanding = () => {
                                 }}>
                                     COMENZAR MI PROCESO GENUINOS
                                 </a>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
             {/* Step 3: Registration Modal */}
