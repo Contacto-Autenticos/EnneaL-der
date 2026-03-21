@@ -8,6 +8,7 @@
     --al-gold-light: #9e872d;
     --al-black: #000000;
     --al-white: #ffffff;
+    --al-header-font: clamp(3.2rem, 10vw, 5.2rem);
 
     min-height: 100vh;
     background: var(--al-blue-dark);
@@ -15,6 +16,13 @@
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
     position: relative;
+}
+
+.al-main-title, .al-impact-header {
+    font-size: clamp(3.5rem, 12vw, 5.5rem) !important;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
 }
 
 .course-intro-content {

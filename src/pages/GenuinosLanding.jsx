@@ -377,14 +377,12 @@ const GenuinosLanding = () => {
                     <Star size={14} /> PROGRAMA AVANZADO
                 </div>
 
-                <h1 className="al-hero-title">
-                    <span className="al-hero-title-top" style={{ fontSize: '0.8em', marginBottom: '30px' }}>
-                        Descubre cómo estás liderando realmente
-                    </span>
-                    <span className="al-gold-text" style={{ fontSize: '0.5em', lineHeight: '1.2' }}>
-                        Identifica la estructura desde la que tomas <br className="al-mobile-br" /> decisiones, reaccionas bajo presión <br className="al-mobile-br" /> y lideras a otros usando el Eneagrama <br className="al-mobile-br" /> aplicado al mundo empresarial.
-                    </span>
+                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px' }}>
+                    Descubre cómo estás liderando realmente
                 </h1>
+                <p className="al-gold-text" style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontWeight: '700', lineHeight: '1.4', maxWidth: '900px', margin: '0 auto 40px auto' }}>
+                    Identifica la estructura desde la que tomas decisiones, reaccionas bajo presión y lideras a otros usando el Eneagrama aplicado al mundo empresarial.
+                </p>
 
                 <div className="course-intro-content" style={{ marginTop: '30px' }}>
                     <div className="al-hero-bullets" style={{ 
@@ -796,8 +794,7 @@ const GenuinosLanding = () => {
                         <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '90px', marginTop: '90px' }}>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '100px', alignItems: 'start' }}>
                         {/* Left Column */}
-                        <div style={{ paddingRight: '20px' }}>
-                            <h3 style={{ color: '#ddbe3d', fontSize: 'clamp(2.5rem, 8vw, 3.8rem)', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.1', textAlign: 'left' }}>
+                            <h3 className="al-impact-header" style={{ color: '#ddbe3d', marginBottom: '35px', textAlign: 'left' }}>
                                 RESULTADOS QUE PUEDES ESPERAR
                             </h3>
                             <p style={{ fontSize: '1.3rem', marginBottom: '30px', color: '#fff', fontWeight: '500', textAlign: 'left' }}>
@@ -1312,15 +1309,7 @@ const GenuinosLanding = () => {
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
                         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                            <h2 style={{ 
-                                fontSize: 'clamp(2.5rem, 8vw, 4.8rem)', 
-                                fontWeight: '900', 
-                                marginBottom: '0', 
-                                letterSpacing: '-0.02em',
-                                lineHeight: '1.1',
-                                color: '#fff',
-                                textTransform: 'none'
-                            }}>
+                            <h2 className="al-impact-header" style={{ color: '#fff' }}>
                                 Preguntas <span style={{ color: '#ddbe3d' }}>frecuentes</span>
                             </h2>
                         </div>
