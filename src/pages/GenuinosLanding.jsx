@@ -785,11 +785,11 @@ const GenuinosLanding = () => {
                         </div>
                     </div>
 
-                    {/* NEW: Scarcity Banner Section */}
+                    {/* NEW: Scarcity Banner Section (Full Width) */}
                     <div style={{ 
-                        margin: '100px -5vw 0', 
-                        padding: '80px 20px',
-                        background: 'url("/Eneagrama_banner_05.png") center/cover no-repeat',
+                        margin: '120px 0', 
+                        padding: '100px 20px',
+                        background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
                         textAlign: 'center',
                         position: 'relative',
                         display: 'flex',
@@ -797,40 +797,50 @@ const GenuinosLanding = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: '#fff',
-                        boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)'
+                        boxShadow: 'inset 0 0 100px rgba(0,0,0,1)',
+                        width: '100vw',
+                        position: 'relative',
+                        left: '50%',
+                        right: '50%',
+                        marginLeft: '-50vw',
+                        marginRight: '-50vw'
                     }}>
                         <span style={{ 
-                            fontSize: '0.9rem', 
+                            fontSize: '0.95rem', 
                             fontWeight: '800', 
-                            letterSpacing: '0.3em', 
+                            letterSpacing: '0.4em', 
                             textTransform: 'uppercase',
-                            marginBottom: '15px'
+                            marginBottom: '20px',
+                            color: 'rgba(255,255,255,0.8)'
                         }}>
                             VENTA OFICIAL
                         </span>
                         <h2 style={{ 
-                            fontSize: 'clamp(32px, 6vw, 48px)', 
+                            fontSize: 'clamp(36px, 7vw, 56px)', 
                             fontWeight: '900', 
-                            marginBottom: '35px',
-                            lineHeight: '1.1'
+                            marginBottom: '40px',
+                            lineHeight: '1.2',
+                            maxWidth: '900px'
                         }}>
-                            ¡Últimos <span style={{ color: '#ff7e21' }}>cupos disponibles!</span>
+                            ¡Últimos <span style={{ color: '#ddbe3d' }}>cupos disponibles!</span>
                         </h2>
                         <a href="#precios" style={{ 
                             display: 'inline-block',
                             backgroundColor: '#fff', 
                             color: '#000', 
-                            fontWeight: '800', 
-                            padding: '18px 40px',
+                            fontWeight: '900', 
+                            padding: '20px 50px',
                             borderRadius: '50px',
                             textDecoration: 'none',
-                            fontSize: '1.1rem',
+                            fontSize: '1.2rem',
                             transition: 'all 0.3s ease',
-                            boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+                            boxShadow: '0 15px 30px rgba(0,0,0,0.4)'
                         }}>
                             Asegura tu lugar VIP ahora
                         </a>
                     </div>
+
+                    <div className="al-section-content">
 
                     {/* Centered Value Proposition Block */}
                     <div style={{ 
