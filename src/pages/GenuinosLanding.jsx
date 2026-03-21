@@ -1128,6 +1128,71 @@ const GenuinosLanding = () => {
                     </div>
                 </div>
             </section>
+
+            {/* NEW: FAQ Section */}
+            <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-dark) 0%, #001520 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '140px' }}>
+                <div className="al-section-content">
+                    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                        <h2 className="al-hero-title" style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '60px' }}>
+                            <span className="al-gold-text">PREGUNTAS FRECUENTES</span>
+                        </h2>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                            {[
+                                {
+                                    q: "¿Necesito conocimientos previos sobre Eneagrama?",
+                                    a: "No. El programa está diseñado para que cualquier persona pueda comprender el sistema desde cero."
+                                },
+                                {
+                                    q: "¿Cuánto tiempo toma completar el curso?",
+                                    a: "El curso puede completarse en aproximadamente 90 minutos, aunque muchas personas prefieren revisarlo con calma y aplicar los ejercicios."
+                                },
+                                {
+                                    q: "¿Este programa es solo teoría?",
+                                    a: "No. El proceso incluye ejercicios prácticos y un plan de acción personal para aplicar lo aprendido."
+                                }
+                            ].map((item, i) => (
+                                <div key={i} style={{ 
+                                    background: 'rgba(255, 255, 255, 0.02)', 
+                                    border: '1px solid rgba(255, 255, 255, 0.05)', 
+                                    borderRadius: '20px', 
+                                    padding: '35px',
+                                    transition: 'all 0.3s ease'
+                                }}>
+                                    <h4 style={{ color: '#ddbe3d', fontSize: '1.25rem', fontWeight: '800', marginBottom: '15px', letterSpacing: '-0.01em' }}>{item.q}</h4>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '1.1rem', lineHeight: '1.7', margin: 0 }}>{item.a}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div style={{ marginTop: '100px', textAlign: 'center' }}>
+                            <p style={{ fontSize: '1.5rem', color: '#fff', fontWeight: '600', marginBottom: '15px', lineHeight: '1.4' }}>
+                                Comprender cómo funcionas por dentro puede cambiar la forma en que lideras tu vida y tu trabajo.
+                            </p>
+                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '900', marginBottom: '45px' }}>
+                                Empieza hoy.
+                            </p>
+                            
+                            <a href="#precios" className="al-btn-primary" style={{ 
+                                display: 'inline-block',
+                                backgroundColor: '#ddbe3d', 
+                                color: '#002d44', 
+                                fontWeight: '900', 
+                                padding: '24px 50px',
+                                borderRadius: '12px',
+                                textDecoration: 'none',
+                                fontSize: '1.2rem',
+                                letterSpacing: '0.05em',
+                                boxShadow: '0 20px 40px rgba(221, 190, 61, 0.25)',
+                                transition: 'all 0.3s ease',
+                                textTransform: 'uppercase'
+                            }}>
+                                QUIERO DESCUBRIR MI MAPA PERSONAL
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
             {/* Mobile FAB */}
             <div className="al-mobile-fab">
                 <a href="#precios" className="al-btn-fab" style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>
