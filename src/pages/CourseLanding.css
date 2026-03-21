@@ -224,7 +224,7 @@
 .al-pricing-section {
     padding-top: 100px;
     padding-bottom: 120px;
-    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -459,7 +459,7 @@
 .course-instructor {
     padding: 120px 24px;
     position: relative;
-    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
