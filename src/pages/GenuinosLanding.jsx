@@ -171,6 +171,7 @@ const GenuinosLanding = () => {
     });
     const [regLoading, setRegLoading] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
+    const [activeInstructor, setActiveInstructor] = useState(0);
 
     const handleSelectPlan = (plan) => {
         setSelectedPlan(plan);
@@ -987,33 +988,85 @@ const GenuinosLanding = () => {
                 </div>
             )}
 
-            {/* NEW: Instructor Section */}
+            {/* NEW: Instructor Carousel Section */}
             <section className="course-instructor al-animate">
                 <div className="al-section-content">
-                    <div className="instructor-flex">
-                        <div className="instructor-image-container">
-                            <div className="instructor-image-glow"></div>
-                            <img src="/FB-Enesencia-2.png" alt="Felipe Beltrán" className="instructor-image" />
-                        </div>
+                    <div style={{ position: 'relative' }}>
+                        {[
+                            {
+                                firstName: "Felipe",
+                                lastName: "Beltran",
+                                image: "/FB-Enesencia-2.png",
+                                bio: [
+                                    "<strong>Conferencista internacional</strong> con más de 18 años de experiencia en liderazgo, innovación y desarrollo humano.",
+                                    "Ha acompañado procesos de formación en más de 30 ciudades y ha trabajado con miles de personas explorando cómo comprender mejor la naturaleza humana y el potencial personal."
+                                ],
+                                testimony: [
+                                    "\"A través del eneagrama empecé a comprender quién era, por qué pensaba, sentía y hacía las cosas de una determinada manera.",
+                                    "Entonces dejé de juzgarme y empecé a aceptarme. Concentré mi energía en potenciar mis talentos naturales para ponerlos al servicio mío y de los demás.\""
+                                ]
+                            },
+                            {
+                                firstName: "Julian",
+                                lastName: "Sierra",
+                                image: "/JS-Enesencia-2.png",
+                                bio: [
+                                    "Como <strong>conferencista y facilitador</strong>, me he especializado en el diseño y ejecución de proyectos que impulsan el crecimiento empresarial, la innovación y el desarrollo del emprendimiento.",
+                                    "Cuento con experiencia en metodologías de innovación y en gestión de proyectos (PMP). Mi propósito es potenciar el talento y la mentalidad de quienes lideran el cambio, combinando herramientas prácticas con una visión humana y estratégica."
+                                ],
+                                testimony: []
+                            }
+                        ].map((instructor, idx) => (
+                            <div key={idx} className="instructor-flex" style={{ 
+                                display: activeInstructor === idx ? 'flex' : 'none',
+                                animation: 'fadeIn 0.5s ease'
+                            }}>
+                                <div className="instructor-image-container">
+                                    <div className="instructor-image-glow"></div>
+                                    <img src={instructor.image} alt={`${instructor.firstName} ${instructor.lastName}`} className="instructor-image" />
+                                </div>
 
-                        <div className="instructor-info">
-                            <h2 className="instructor-name">
-                                <span className="name-white">Felipe</span>
-                                <span className="name-yellow">Beltran</span>
-                            </h2>
-                            <div className="instructor-divider"></div>
-                            <p className="instructor-bio">
-                                <strong>Conferencista internacional</strong> con más de 18 años de experiencia en liderazgo, innovación y desarrollo humano.
-                            </p>
-                            <p className="instructor-bio">
-                                Ha acompañado procesos de formación en más de 30 ciudades y ha trabajado con miles de personas explorando cómo comprender mejor la naturaleza humana y el potencial personal.
-                            </p>
-                            <p className="instructor-bio testimony">
-                                "A través del eneagrama empecé a comprender quién era, por qué pensaba, sentía y hacía las cosas de una determinada manera.
-                            </p>
-                            <p className="instructor-bio testimony">
-                                Entonces dejé de juzgarme y empecé a aceptarme. Concentré mi energía en potenciar mis talentos naturales para ponerlos al servicio mío y de los demás."
-                            </p>
+                                <div className="instructor-info">
+                                    <h2 className="instructor-name">
+                                        <span className="name-white">{instructor.firstName}</span>
+                                        <span className="name-yellow">{instructor.lastName}</span>
+                                    </h2>
+                                    <div className="instructor-divider"></div>
+                                    
+                                    {instructor.bio.map((paragraph, pIdx) => (
+                                        <p key={pIdx} className="instructor-bio" dangerouslySetInnerHTML={{ __html: paragraph }}></p>
+                                    ))}
+                                    
+                                    {instructor.testimony && instructor.testimony.map((line, lIdx) => (
+                                        <p key={lIdx} className="instructor-bio testimony">{line}</p>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+
+                        {/* Carousel Navigation */}
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            gap: '15px', 
+                            marginTop: '50px' 
+                        }}>
+                            {[0, 1].map((dotIdx) => (
+                                <button
+                                    key={dotIdx}
+                                    onClick={() => setActiveInstructor(dotIdx)}
+                                    style={{
+                                        width: '12px',
+                                        height: '12px',
+                                        borderRadius: '50%',
+                                        background: activeInstructor === dotIdx ? '#ddbe3d' : 'rgba(255,255,255,0.2)',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease',
+                                        boxShadow: activeInstructor === dotIdx ? '0 0 10px rgba(221, 190, 61, 0.5)' : 'none'
+                                    }}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
