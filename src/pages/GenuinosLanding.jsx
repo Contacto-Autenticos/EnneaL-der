@@ -149,14 +149,14 @@ const TestimonialCarousel = ({ testimonials }) => {
                         <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.8', marginBottom: '35px', position: 'relative', zIndex: 1, fontStyle: 'italic' }}>
                             {testimonial.text}
                         </p>
-                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '25px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' }}>
-                            <div style={{ paddingRight: '15px' }}>
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '25px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginTop: 'auto', textAlign: 'center' }}>
+                            <div style={{ width: '100%' }}>
                                 <h5 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: '4px', fontWeight: '800' }}>{testimonial.name}</h5>
                                 <p style={{ color: '#ddbe3d', fontSize: '0.85rem', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{testimonial.title}</p>
                             </div>
-                            <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
-                                <button onClick={prev} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronLeft size={18} /></button>
-                                <button onClick={next} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronRight size={18} /></button>
+                            <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+                                <button onClick={prev} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '45px', height: '45px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s' }}><ChevronLeft size={20} /></button>
+                                <button onClick={next} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '45px', height: '45px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s' }}><ChevronRight size={20} /></button>
                             </div>
                         </div>
                     </div>
@@ -797,7 +797,7 @@ const GenuinosLanding = () => {
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '100px', alignItems: 'start' }}>
                         {/* Left Column */}
                         <div style={{ paddingRight: '20px' }}>
-                            <h3 style={{ color: '#ddbe3d', fontSize: 'clamp(2.2rem, 5vw, 2.6rem)', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2', textAlign: 'left' }}>
+                            <h3 style={{ color: '#ddbe3d', fontSize: 'clamp(2.5rem, 8vw, 3.8rem)', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.1', textAlign: 'left' }}>
                                 RESULTADOS QUE PUEDES ESPERAR
                             </h3>
                             <p style={{ fontSize: '1.3rem', marginBottom: '30px', color: '#fff', fontWeight: '500', textAlign: 'left' }}>

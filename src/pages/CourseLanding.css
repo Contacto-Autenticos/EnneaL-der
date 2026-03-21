@@ -1125,6 +1125,6 @@
 
 @media (max-width: 768px) {
     .faq-header-text {
-        font-size: clamp(58px, 18vw, 90px);
+        font-size: clamp(80px, 20vw, 110px);
     }
 }
