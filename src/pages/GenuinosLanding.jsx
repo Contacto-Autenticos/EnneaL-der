@@ -22,7 +22,7 @@ const VideoLoopWithFlash = ({ src }) => {
     };
 
     return (
-        <div style={{ position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1.066', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
             <video 
                 ref={videoRef}
                 src={src}
@@ -30,7 +30,15 @@ const VideoLoopWithFlash = ({ src }) => {
                 muted 
                 playsInline
                 onEnded={handleVideoEnd}
-                style={{ width: '100%', display: 'block' }}
+                style={{ 
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block' 
+                }}
             />
             {showFlash && (
                 <div style={{ 
@@ -114,37 +122,61 @@ const TestimonialCarousel = ({ testimonials }) => {
     }, [testimonials.length]);
 
     return (
-        <div style={{ position: 'relative', width: '100%', minHeight: '380px' }}>
-            <div key={currentIndex} className="al-animate" style={{ 
-                background: 'rgba(255, 255, 255, 0.03)', 
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: '32px',
-                padding: '45px 40px',
-                position: 'relative',
-                boxShadow: '0 30px 60px rgba(0,0,0,0.4)',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-            }}>
-                <div style={{ color: '#ddbe3d', fontSize: '4rem', position: 'absolute', top: '15px', left: '25px', opacity: 0.2, lineHeight: '1', fontFamily: 'serif' }}>❝</div>
-                <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.8', marginBottom: '35px', position: 'relative', zIndex: 1, fontStyle: 'italic' }}>
-                    {testimonials[currentIndex].text}
-                </p>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '25px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                    <div>
-                        <h5 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: '4px', fontWeight: '800' }}>{testimonials[currentIndex].name}</h5>
-                        <p style={{ color: '#ddbe3d', fontSize: '0.85rem', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{testimonials[currentIndex].title}</p>
+        <div style={{ position: 'relative', width: '100%' }}>
+            <div style={{ display: 'grid', width: '100%' }}>
+                {testimonials.map((testimonial, i) => (
+                    <div 
+                        key={i} 
+                        style={{ 
+                            gridArea: '1 / 1',
+                            opacity: currentIndex === i ? 1 : 0,
+                            pointerEvents: currentIndex === i ? 'auto' : 'none',
+                            visibility: currentIndex === i ? 'visible' : 'hidden',
+                            transition: 'opacity 0.5s ease',
+                            background: 'rgba(255, 255, 255, 0.03)', 
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            borderRadius: '32px',
+                            padding: '45px 40px',
+                            position: 'relative',
+                            boxShadow: '0 30px 60px rgba(0,0,0,0.4)',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}
+                    >
+                        <div style={{ color: '#ddbe3d', fontSize: '4rem', position: 'absolute', top: '15px', left: '25px', opacity: 0.2, lineHeight: '1', fontFamily: 'serif' }}>❝</div>
+                        <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.8', marginBottom: '35px', position: 'relative', zIndex: 1, fontStyle: 'italic' }}>
+                            {testimonial.text}
+                        </p>
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '25px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' }}>
+                            <div style={{ paddingRight: '15px' }}>
+                                <h5 style={{ color: '#fff', fontSize: '1.15rem', marginBottom: '4px', fontWeight: '800' }}>{testimonial.name}</h5>
+                                <p style={{ color: '#ddbe3d', fontSize: '0.85rem', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{testimonial.title}</p>
+                            </div>
+                            <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
+                                <button onClick={prev} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronLeft size={18} /></button>
+                                <button onClick={next} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronRight size={18} /></button>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                        <button onClick={prev} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronLeft size={18} /></button>
-                        <button onClick={next} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><ChevronRight size={18} /></button>
-                    </div>
-                </div>
+                ))}
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '25px' }}>
                 {testimonials.map((_, i) => (
-                    <div key={i} style={{ width: i === currentIndex ? '20px' : '6px', height: '6px', borderRadius: '3px', background: i === currentIndex ? '#ddbe3d' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s' }} />
+                    <button 
+                        key={i} 
+                        onClick={() => setCurrentIndex(i)}
+                        style={{ 
+                            width: i === currentIndex ? '20px' : '6px', 
+                            height: '6px', 
+                            borderRadius: '3px', 
+                            background: i === currentIndex ? '#ddbe3d' : 'rgba(255,255,255,0.2)', 
+                            border: 'none',
+                            padding: 0,
+                            cursor: 'pointer',
+                            transition: 'all 0.3s' 
+                        }} 
+                    />
                 ))}
             </div>
         </div>
@@ -703,6 +735,39 @@ const GenuinosLanding = () => {
                 </div>
             </section>
 
+            {/* NEW: Organizaciones Carousel Section */}
+            <section className="al-orgs-section al-animate">
+                <div className="al-orgs-header">
+                    <span className="al-org-tag">Confianza y Trayectoria</span>
+                    <h2 className="al-orgs-title">Organizaciones que confían en nosotros</h2>
+                    <p className="al-orgs-subtitle">
+                        Más de 100 organizaciones públicas, privadas y educativas han confiado en nosotros.
+                    </p>
+                </div>
+
+                <div className="al-orgs-carousel-wrapper">
+                    <div className="al-orgs-carousel-overlay"></div>
+                    <div className="al-carousel-track-container">
+                        {/* Top Row: Scrolls Left */}
+                        <div className="al-carousel-track left">
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((num, idx) => (
+                                <div key={`top-${idx}`} className="al-org-logo-card">
+                                    <img src={`/Organizaciones/Cliente-${num}.png`} alt={`Organización ${num}`} className="al-org-logo" loading="lazy" />
+                                </div>
+                            ))}
+                        </div>
+                        {/* Bottom Row: Scrolls Right */}
+                        <div className="al-carousel-track right">
+                            {[12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map((num, idx) => (
+                                <div key={`bottom-${idx}`} className="al-org-logo-card">
+                                    <img src={`/Organizaciones/Cliente-${num}.png`} alt={`Organización ${num}`} className="al-org-logo" loading="lazy" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* NEW: Workshop Modalities Section */}
             <section className="course-modalities al-animate">
                 <div className="al-section-content">
@@ -790,7 +855,7 @@ const GenuinosLanding = () => {
 
         {/* NEW: Scarcity Banner Section (Full Width) - Outside of original containers */}
         <div style={{ 
-            margin: '120px 0', 
+            margin: '20px 0 120px 0', 
             padding: '100px 20px',
             background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
             textAlign: 'center',
@@ -823,23 +888,18 @@ const GenuinosLanding = () => {
                 fontWeight: '900', 
                 marginBottom: '40px',
                 lineHeight: '1.2',
-                maxWidth: '900px'
+                maxWidth: '900px',
+                color: '#ffffff'
             }}>
                 ¡Últimos <span style={{ color: '#ddbe3d' }}>cupos disponibles!</span>
             </h2>
-            <a href="#precios" style={{ 
-                display: 'inline-block',
-                backgroundColor: '#fff', 
-                color: '#000', 
-                fontWeight: '900', 
-                padding: '20px 50px',
-                borderRadius: '50px',
+            <a href="#precios" className="al-btn-main" style={{ 
                 textDecoration: 'none',
-                fontSize: '1.2rem',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 15px 30px rgba(0,0,0,0.4)'
+                display: 'inline-flex',
+                margin: '0 auto'
             }}>
-                Asegura tu lugar VIP ahora
+                ASEGURA TU LUGAR AHORA
+                <ArrowRight size={22} />
             </a>
         </div>
 
@@ -849,7 +909,7 @@ const GenuinosLanding = () => {
                     {/* Centered Value Proposition Block */}
                     <div style={{ 
                         maxWidth: '850px', 
-                        margin: '100px auto 0', 
+                        margin: '100px auto', 
                         textAlign: 'center',
                         padding: '60px 40px',
                         background: 'rgba(255, 255, 255, 0.02)',
@@ -1087,7 +1147,11 @@ const GenuinosLanding = () => {
 
                                 <div className="instructor-info">
                                     <h2 className="instructor-name">
-                                        <span className="name-white">{instructor.firstName}</span>
+                                        <span className="name-white" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                                            {instructor.firstName.split('').map((char, index) => (
+                                                <span key={index}>{char}</span>
+                                            ))}
+                                        </span>
                                         <span className="name-yellow">{instructor.lastName}</span>
                                     </h2>
                                     <div className="instructor-divider"></div>
