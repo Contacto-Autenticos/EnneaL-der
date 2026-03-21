@@ -170,6 +170,7 @@ const GenuinosLanding = () => {
         phone: ''
     });
     const [regLoading, setRegLoading] = useState(false);
+    const [openFaq, setOpenFaq] = useState(null);
 
     const handleSelectPlan = (plan) => {
         setSelectedPlan(plan);
@@ -1129,15 +1130,20 @@ const GenuinosLanding = () => {
                 </div>
             </section>
 
-            {/* NEW: FAQ Section */}
-            <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-dark) 0%, #001520 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '140px' }}>
+            {/* NEW: FAQ Section (Accordion Style) */}
+            <section className="course-faq al-section al-animate" style={{ background: '#000a12', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '140px' }}>
                 <div className="al-section-content">
-                    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                        <h2 className="al-hero-title" style={{ fontSize: '2.5rem', textAlign: 'center', marginBottom: '60px' }}>
-                            <span className="al-gold-text">PREGUNTAS FRECUENTES</span>
-                        </h2>
+                    <div style={{ maxWidth: '850px', margin: '0 auto' }}>
+                        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+                            <h2 style={{ fontSize: 'clamp(42px, 8vw, 68px)', fontWeight: '900', color: '#fff', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
+                                Preguntas
+                            </h2>
+                            <h2 style={{ fontSize: 'clamp(42px, 8vw, 68px)', fontWeight: '900', color: '#ddbe3d', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
+                                frecuentes
+                            </h2>
+                        </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                             {[
                                 {
                                     q: "¿Necesito conocimientos previos sobre Eneagrama?",
@@ -1150,26 +1156,63 @@ const GenuinosLanding = () => {
                                 {
                                     q: "¿Este programa es solo teoría?",
                                     a: "No. El proceso incluye ejercicios prácticos y un plan de acción personal para aplicar lo aprendido."
+                                },
+                                {
+                                    q: "¿Vale la pena si ya vi mis resultados?",
+                                    a: "Totalmente. Los resultados te dan el 'qué', pero el programa te da el 'cómo' aplicar ese conocimiento para transformar tu liderazgo y relaciones."
+                                },
+                                {
+                                    q: "¿Es realmente personalizado?",
+                                    a: "Sí. Aunque el contenido es estructurado, tu Plan de Acción se basa específicamente en tu eneatipo y tus desafíos actuales."
                                 }
                             ].map((item, i) => (
                                 <div key={i} style={{ 
-                                    background: 'rgba(255, 255, 255, 0.02)', 
-                                    border: '1px solid rgba(255, 255, 255, 0.05)', 
-                                    borderRadius: '20px', 
-                                    padding: '35px',
-                                    transition: 'all 0.3s ease'
+                                    background: 'rgba(255, 255, 255, 0.03)', 
+                                    border: '1px solid rgba(255, 255, 255, 0.08)', 
+                                    borderRadius: '24px', 
+                                    overflow: 'hidden',
+                                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                                 }}>
-                                    <h4 style={{ color: '#ddbe3d', fontSize: '1.25rem', fontWeight: '800', marginBottom: '15px', letterSpacing: '-0.01em' }}>{item.q}</h4>
-                                    <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '1.1rem', lineHeight: '1.7', margin: 0 }}>{item.a}</p>
+                                    <button 
+                                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                                        style={{ 
+                                            width: '100%', 
+                                            padding: '30px 40px', 
+                                            display: 'flex', 
+                                            justify-content: 'space-between', 
+                                            alignItems: 'center', 
+                                            background: 'none', 
+                                            border: 'none', 
+                                            cursor: 'pointer',
+                                            textAlign: 'left'
+                                        }}
+                                    >
+                                        <span style={{ color: '#fff', fontSize: '1.25rem', fontWeight: '700', letterSpacing: '-0.01em' }}>{item.q}</span>
+                                        <span style={{ color: '#ddbe3d', fontSize: '1.8rem', fontWeight: '300', transform: openFaq === i ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.4s ease' }}>
+                                            +
+                                        </span>
+                                    </button>
+                                    
+                                    <div style={{ 
+                                        padding: openFaq === i ? '0 40px 40px 40px' : '0 40px',
+                                        maxHeight: openFaq === i ? '500px' : '0',
+                                        opacity: openFaq === i ? 1 : 0,
+                                        overflow: 'hidden',
+                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                                    }}>
+                                        <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.15rem', lineHeight: '1.7', margin: 0 }}>
+                                            {item.a}
+                                        </p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
 
-                        <div style={{ marginTop: '100px', textAlign: 'center' }}>
-                            <p style={{ fontSize: '1.5rem', color: '#fff', fontWeight: '600', marginBottom: '15px', lineHeight: '1.4' }}>
+                        <div style={{ marginTop: '120px', textAlign: 'center' }}>
+                            <p style={{ fontSize: '1.55rem', color: '#fff', fontWeight: '600', marginBottom: '15px', lineHeight: '1.4', maxWidth: '700px', margin: '0 auto 20px' }}>
                                 Comprender cómo funcionas por dentro puede cambiar la forma en que lideras tu vida y tu trabajo.
                             </p>
-                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '900', marginBottom: '45px' }}>
+                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '900', marginBottom: '50px' }}>
                                 Empieza hoy.
                             </p>
                             
@@ -1178,10 +1221,10 @@ const GenuinosLanding = () => {
                                 backgroundColor: '#ddbe3d', 
                                 color: '#002d44', 
                                 fontWeight: '900', 
-                                padding: '24px 50px',
-                                borderRadius: '12px',
+                                padding: '24px 55px',
+                                borderRadius: '16px',
                                 textDecoration: 'none',
-                                fontSize: '1.2rem',
+                                fontSize: '1.25rem',
                                 letterSpacing: '0.05em',
                                 boxShadow: '0 20px 40px rgba(221, 190, 61, 0.25)',
                                 transition: 'all 0.3s ease',
