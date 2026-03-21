@@ -25,7 +25,6 @@ const VideoLoopWithFlash = ({ src }) => {
         <div style={{ 
             position: 'relative', 
             width: '100%', 
-            maxHeight: '520px', // Match text height approx
             borderRadius: '24px', 
             overflow: 'hidden', 
             boxShadow: '0 20px 40px rgba(0,0,0,0.4)', 
@@ -40,12 +39,20 @@ const VideoLoopWithFlash = ({ src }) => {
                 onEnded={handleVideoEnd}
                 style={{ 
                     width: '100%', 
-                    height: '105%', // Slightly taller to allow cropping bottom
-                    objectFit: 'cover',
-                    objectPosition: 'top', // Keep the top/center content visible
-                    display: 'block' 
+                    display: 'block',
+                    objectFit: 'cover'
                 }}
             />
+            {/* Mask for "Veo" logo at bottom right */}
+            <div style={{ 
+                position: 'absolute', 
+                bottom: 0, 
+                right: 0, 
+                width: '70px', 
+                height: '40px', 
+                background: '#0a161e', // Match the very dark background of the video corners
+                zIndex: 5 
+            }} />
             {showFlash && (
                 <div style={{ 
                     position: 'absolute', 
