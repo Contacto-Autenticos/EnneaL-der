@@ -705,7 +705,7 @@ const GenuinosLanding = () => {
             <section className="course-modalities al-animate">
                 <div className="al-section-content">
                     <div className="modalities-header">
-                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 42px)' }}>
+                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(32px, 6vw, 48px)' }}>
                             <span className="al-hero-title-top">Este taller es especialmente</span>
                             <span className="al-gold-text">valioso para ti, sí:</span>
                         </h2>
@@ -721,7 +721,7 @@ const GenuinosLanding = () => {
                             ].map((item, i) => (
                                 <div key={i} className="target-item">
                                     <div className="target-dot"></div>
-                                    <span>{item}</span>
+                                    <span style={{ fontSize: '1.25rem', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
                                 </div>
                             ))}
                         </div>
