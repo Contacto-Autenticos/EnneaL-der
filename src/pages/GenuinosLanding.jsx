@@ -249,61 +249,84 @@ const GenuinosLanding = () => {
                 </div>
             </section>
 
-            {/* NEW: Introspection Section */}
+            {/* NEW: Introspection Section - Leadership Focus */}
             <section className="course-introspection al-animate">
                 <div className="al-section-content">
-                    <div className="introspection-no-box">
-                        <h2 className="introspection-title" style={{ color: '#ddbe3d', fontSize: 'clamp(28px, 5vw, 42px)', marginBottom: '60px' }}>
-                            Tal vez te ha pasado que
-                        </h2>
+                    <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
+                        <p className="introspection-closing" style={{ fontSize: '1.4rem', marginBottom: '40px', textAlign: 'center' }}>
+                            Muchas personas con talento y potencial de liderazgo se encuentran con una realidad difícil de explicar.
+                        </p>
                         
-                        <div className="introspection-cards-grid">
-                            {[
-                                "A veces reaccionas de una manera que no entiendes del todo.",
-                                "Repites ciertos patrones en decisiones, relaciones o situaciones importantes, aunque sabes que quisieras hacerlo diferente.",
-                                "En algunos momentos sientes que actúas en automático. Como si una parte de ti tomara decisiones antes de que puedas detenerte a observarlas."
-                            ].map((text, i) => (
-                                <div key={i} className="introspection-card al-animate" style={{ animationDelay: `${i * 0.2}s` }}>
-                                    <p>{text}</p>
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            gap: '30px', 
+                            marginBottom: '60px',
+                            flexWrap: 'wrap'
+                        }}>
+                            {["Tienen experiencia.", "Tienen conocimiento.", "Tienen capacidad."].map((text, i) => (
+                                <div key={i} style={{ 
+                                    background: 'rgba(221, 190, 61, 0.1)', 
+                                    padding: '15px 25px', 
+                                    borderRadius: '12px',
+                                    border: '1px solid rgba(221, 190, 61, 0.3)',
+                                    color: '#ddbe3d',
+                                    fontWeight: '700',
+                                    fontSize: '1.1rem'
+                                }}>
+                                    {text}
                                 </div>
                             ))}
                         </div>
 
-                        <div className="introspection-divider" style={{ margin: '80px auto' }}></div>
-
-                        <div className="introspection-question-wrapper">
-                            <p className="introspection-transition" style={{ marginBottom: '40px', fontSize: '1.2rem' }}>
-                                Y aunque has leído, reflexionado o trabajado en ti mismo, aún hay preguntas que permanecen abiertas:
+                        <div className="introspection-card" style={{ background: 'transparent', border: 'none', textAlign: 'left', display: 'block', padding: '0' }}>
+                            <p className="introspection-transition" style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '30px', fontStyle: 'normal' }}>
+                                Y aun así aparecen situaciones que se repiten:
                             </p>
                             
-                            <div className="introspection-cards-grid questions">
+                            <ul style={{ 
+                                listStyle: 'none', 
+                                padding: '0', 
+                                margin: '0 0 50px 0',
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                                gap: '20px'
+                            }}>
                                 {[
-                                    "¿Por qué pienso de esta manera?",
-                                    "¿Por qué algunas situaciones me afectan tanto?",
-                                    "¿Por qué ciertas decisiones se vuelven tan difíciles?"
-                                ].map((q, i) => (
-                                    <div key={i} className="introspection-card question-card al-animate" style={{ animationDelay: `${(i + 3) * 0.2}s` }}>
-                                        <p style={{ color: '#ddbe3d', fontWeight: '700', margin: 0 }}>{q}</p>
-                                    </div>
+                                    "decisiones que generan tensión en el equipo",
+                                    "conflictos que escalan innecesariamente",
+                                    "presión que activa reacciones impulsivas",
+                                    "dificultad para delegar o confiar",
+                                    "patrones que vuelven a aparecer una y otra vez"
+                                ].map((item, idx) => (
+                                    <li key={idx} style={{ 
+                                        display: 'flex', 
+                                        alignItems: 'flex-start', 
+                                        gap: '12px',
+                                        fontSize: '1.1rem',
+                                        color: 'rgba(255,255,255,0.8)'
+                                    }}>
+                                        <span style={{ color: '#ddbe3d', fontSize: '1.5rem', lineHeight: '1' }}>•</span>
+                                        <span>{item}</span>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         </div>
 
-                        <div style={{ marginTop: '80px', textAlign: 'center' }}>
-                            <p className="introspection-closing" style={{ marginBottom: '20px' }}>
-                                Muchas personas pasan años intentando cambiar comportamientos sin comprender realmente qué los origina.
+                        <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.03)', padding: '50px', borderRadius: '30px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <p className="introspection-closing" style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#fff' }}>
+                                Y lo más importante… <span style={{ color: '#ddbe3d', fontWeight: '800' }}>No es falta de inteligencia.</span>
                             </p>
-                            <p className="introspection-closing" style={{ fontWeight: '700', marginBottom: '60px', fontSize: '1.4rem' }}>
-                                El autoconocimiento profundo comienza cuando empiezas a ver con claridad cómo funciona tu personalidad.
+                            
+                            <p className="introspection-closing" style={{ fontSize: '1.3rem', lineHeight: '1.6', opacity: '0.9', maxWidth: '700px', margin: '0 auto' }}>
+                                El problema es que la mayoría de las personas lidera desde una <strong style={{ color: '#fff' }}>estructura automática</strong> que nunca aprendió a reconocer.
                             </p>
 
-                            <a href="#precios" className="al-btn-primary closing-cta">
-                                Quiero conocer mi personalidad
-                            </a>
-
-                            <p className="introspection-transition" style={{ marginTop: '40px' }}>
-                                Aquí te compartimos un camino para comprenderte con mayor profundidad
-                            </p>
+                            <div style={{ marginTop: '50px' }}>
+                                <a href="#precios" className="al-btn-primary closing-cta">
+                                    COMENZAR MI TRANSFORMACIÓN
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
