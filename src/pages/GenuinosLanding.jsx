@@ -22,7 +22,15 @@ const VideoLoopWithFlash = ({ src }) => {
     };
 
     return (
-        <div style={{ position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ 
+            position: 'relative', 
+            width: '100%', 
+            maxHeight: '520px', // Match text height approx
+            borderRadius: '24px', 
+            overflow: 'hidden', 
+            boxShadow: '0 20px 40px rgba(0,0,0,0.4)', 
+            border: '1px solid rgba(255,255,255,0.1)' 
+        }}>
             <video 
                 ref={videoRef}
                 src={src}
@@ -30,7 +38,13 @@ const VideoLoopWithFlash = ({ src }) => {
                 muted 
                 playsInline
                 onEnded={handleVideoEnd}
-                style={{ width: '100%', display: 'block' }}
+                style={{ 
+                    width: '100%', 
+                    height: '105%', // Slightly taller to allow cropping bottom
+                    objectFit: 'cover',
+                    objectPosition: 'top', // Keep the top/center content visible
+                    display: 'block' 
+                }}
             />
             {showFlash && (
                 <div style={{ 
