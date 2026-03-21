@@ -562,7 +562,7 @@ const GenuinosLanding = () => {
                             </div>
                             <div style={{ position: 'relative' }}>
                                 <img 
-                                    src="/Portada-Analisis Avanzado-3.png" 
+                                    src="/Portada-Analisis Avanzado-3.png?v=2" 
                                     alt="Diagnóstico profundo" 
                                     style={{ width: '100%', borderRadius: '24px', boxShadow: '0 25px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }} 
                                 />
@@ -572,7 +572,7 @@ const GenuinosLanding = () => {
                         {/* 2. Curso */}
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
                             <div className="program-media-order-mobile" style={{ order: 1 }}>
-                                <ImageCarousel images={['/genuinos-presencial-1.JPG', '/genuinos-presencial-2.JPG', '/genuinos-presencial-3.JPG']} />
+                                <ImageCarousel images={['/genuinos-virtual-1.png', '/genuinos-presencial-1.JPG', '/genuinos-presencial-2.JPG', '/genuinos-presencial-3.JPG']} />
                             </div>
                             <div style={{ order: 2 }}>
                                 <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
