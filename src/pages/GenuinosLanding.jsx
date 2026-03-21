@@ -1025,25 +1025,6 @@ const GenuinosLanding = () => {
                 </div>
             </section>
 
-            {/* NEW: Closing Section */}
-            <section className="course-closing al-animate">
-                <div className="al-section-content">
-                    <div className="closing-box">
-                        <p className="closing-lead">
-                            Comprender cómo funciona tu personalidad puede cambiar la forma en que te relacionas contigo mismo y con los demás.
-                        </p>
-
-                        <div className="closing-statement">
-                            <p>El autoconocimiento no cambia tu vida por sí solo.</p>
-                            <p className="al-gold-text">Lo que la transforma es la claridad que aparece cuando comienzas a verte con mayor conciencia.</p>
-                        </div>
-
-                        <a href="#precios" className="al-btn-primary closing-cta">
-                            RESERVA TU LUGAR
-                        </a>
-                    </div>
-                </div>
-            </section>
 
             {/* Pricing Section */}
             <section id="precios" className="al-section al-pricing-section">
