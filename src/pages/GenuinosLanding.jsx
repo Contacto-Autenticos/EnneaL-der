@@ -272,7 +272,7 @@ const GenuinosLanding = () => {
                                     border: '1px solid rgba(221, 190, 61, 0.3)',
                                     color: '#ddbe3d',
                                     fontWeight: '700',
-                                    fontSize: '1.1rem'
+                                    fontSize: '1.25rem'
                                 }}>
                                     {text}
                                 </div>
@@ -280,7 +280,7 @@ const GenuinosLanding = () => {
                         </div>
 
                         <div style={{ textAlign: 'left', display: 'block', padding: '0' }}>
-                            <p className="introspection-transition" style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '30px', fontStyle: 'normal' }}>
+                            <p className="introspection-transition" style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '35px', fontStyle: 'normal', fontWeight: '500' }}>
                                 Y aun así aparecen situaciones que se repiten:
                             </p>
                             
@@ -303,8 +303,9 @@ const GenuinosLanding = () => {
                                         display: 'flex', 
                                         alignItems: 'flex-start', 
                                         gap: '12px',
-                                        fontSize: '1.1rem',
-                                        color: 'rgba(255,255,255,0.8)'
+                                        fontSize: '1.25rem',
+                                        color: 'rgba(255,255,255,0.9)',
+                                        lineHeight: '1.4'
                                     }}>
                                         <span style={{ color: '#ddbe3d', fontSize: '1.5rem', lineHeight: '1' }}>•</span>
                                         <span>{item}</span>
