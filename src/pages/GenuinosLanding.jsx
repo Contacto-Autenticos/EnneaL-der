@@ -313,12 +313,16 @@ const GenuinosLanding = () => {
                             </ul>
                         </div>
 
-                        <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                            <p className="introspection-closing" style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#fff' }}>
-                                Y lo más importante… <span style={{ color: '#ddbe3d', fontWeight: '800' }}>No es falta de inteligencia.</span>
+                        <div style={{ textAlign: 'center', padding: '40px 0', fontSize: '4rem' }}>
+                            <p className="introspection-closing" style={{ fontSize: '0.4em', marginBottom: '10px', color: '#fff' }}>
+                                Y lo más importante…
                             </p>
                             
-                            <p className="introspection-closing" style={{ fontSize: '1.3rem', lineHeight: '1.6', opacity: '0.9', maxWidth: '700px', margin: '0 auto' }}>
+                            <p className="introspection-closing" style={{ fontSize: '0.6em', fontWeight: '800', color: '#ddbe3d', marginBottom: '30px' }}>
+                                No es falta de inteligencia.
+                            </p>
+                            
+                            <p className="introspection-closing" style={{ fontSize: '0.35em', lineHeight: '1.6', opacity: '0.9', maxWidth: '700px', margin: '0 auto', color: 'rgba(255,255,255,0.8)' }}>
                                 El problema es que la mayoría de las personas lidera desde una <strong style={{ color: '#fff' }}>estructura automática</strong> que nunca aprendió a reconocer.
                             </p>
 
