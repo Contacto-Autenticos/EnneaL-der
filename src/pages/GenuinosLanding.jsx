@@ -323,7 +323,7 @@ const GenuinosLanding = () => {
                             </p>
                             
                             <p className="introspection-closing" style={{ fontSize: '0.35em', lineHeight: '1.6', opacity: '0.9', maxWidth: '700px', margin: '0 auto', color: 'rgba(255,255,255,0.8)' }}>
-                                El problema es que la mayoría de las personas lidera desde una <strong style={{ color: '#fff' }}>estructura automática</strong> que nunca aprendió a reconocer.
+                                El problema es que la mayoría de las personas lidera desde una <strong style={{ color: '#fff', fontSize: '1.3em' }}>estructura automática</strong> que nunca aprendió a reconocer.
                             </p>
 
                             <div style={{ marginTop: '50px' }}>
