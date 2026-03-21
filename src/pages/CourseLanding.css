@@ -79,7 +79,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 140px 24px 40px;
+    padding: 140px 24px 90px;
     background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
 }
 
@@ -735,7 +735,7 @@
 /* To ensure they work here, I'll include the essential ones */
 
 .al-section {
-    padding: 80px 0;
+    padding: 90px 0;
 }
 
 .al-section-content {
@@ -1001,7 +1001,7 @@
 
 /* Infinite Logos Carousel */
 .al-orgs-section {
-    padding: 80px 0 100px;
+    padding: 90px 0;
     background: #ffffff;
     position: relative;
     overflow: hidden;
@@ -1125,6 +1125,6 @@
 
 @media (max-width: 768px) {
     .faq-header-text {
-        font-size: clamp(50px, 16vw, 75px);
+        font-size: clamp(58px, 18vw, 90px);
     }
 }

@@ -425,7 +425,7 @@ const GenuinosLanding = () => {
             </section>
 
             {/* NEW: Introspection Section - Leadership Focus */}
-            <section className="course-introspection al-animate">
+            <section className="course-introspection al-section al-animate">
                 <div className="al-section-content">
                     <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
                         <p className="introspection-closing" style={{ fontSize: 'clamp(1.8rem, 6vw, 2.5rem)', marginBottom: '40px', textAlign: 'center', fontWeight: '800', lineHeight: '1.2' }}>
@@ -489,7 +489,7 @@ const GenuinosLanding = () => {
                             </ul>
                         </div>
 
-                        <div style={{ textAlign: 'center', padding: '40px 0', fontSize: '4rem' }}>
+                        <div style={{ textAlign: 'center', padding: '0', fontSize: '4rem' }}>
                             <p className="introspection-closing" style={{ fontSize: '0.4em', marginBottom: '10px', color: '#fff' }}>
                                 Y lo más importante…
                             </p>
@@ -501,9 +501,9 @@ const GenuinosLanding = () => {
                             <p className="introspection-closing" style={{ fontSize: '0.35em', lineHeight: '1.6', opacity: '0.9', maxWidth: '700px', margin: '0 auto', color: 'rgba(255,255,255,0.8)' }}>
                                 El problema es que la mayoría de las personas lidera desde una <strong style={{ color: '#fff', fontSize: '1.3em' }}>estructura automática</strong> que nunca aprendió a reconocer.
                             </p>
-
-                            <div style={{ marginTop: '50px' }}>
-                                <a href="#precios" className="al-btn-primary closing-cta">
+                            
+                            <div style={{ marginTop: '0' }}>
+                                <a href="#precios" className="al-btn-primary closing-cta" style={{ marginTop: '40px', display: 'inline-block' }}>
                                     COMENZAR MI TRANSFORMACIÓN
                                 </a>
                             </div>
@@ -513,7 +513,7 @@ const GenuinosLanding = () => {
             </section>
 
             {/* NEW: Map Section - Two Columns */}
-            <section className="course-map al-animate">
+            <section className="course-map al-section al-animate">
                 <div className="al-section-content">
                     <div style={{ 
                         display: 'grid', 
@@ -571,7 +571,7 @@ const GenuinosLanding = () => {
                 </div>
             </section>
             {/* NEW: Experience Section - Simplified with Image */}
-            <section className="course-experience al-animate">
+            <section className="course-experience al-section al-animate">
                 <div className="al-section-content">
                     <div style={{ textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
                         <img 
@@ -606,7 +606,7 @@ const GenuinosLanding = () => {
             </section>
 
             {/* NEW: Program Elements Section */}
-            <section className="course-program-elements al-animate" style={{ padding: '100px 0', background: 'rgba(10, 22, 30, 0.5)' }}>
+            <section className="course-program-elements al-animate" style={{ padding: '90px 0', background: 'rgba(10, 22, 30, 0.5)' }}>
                 <div className="al-section-content" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
                     <h3 style={{ 
                         fontSize: 'clamp(20px, 4vw, 24px)', 
@@ -661,7 +661,7 @@ const GenuinosLanding = () => {
                         {/* 2. Curso */}
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'center', gap: '60px' }}>
                             <div className="program-media-order-mobile" style={{ order: 1 }}>
-                                <ImageCarousel images={['/genuinos-virtual-1.png', '/genuinos-presencial-1.JPG', '/genuinos-presencial-2.JPG', '/genuinos-presencial-3.JPG']} />
+                                <ImageCarousel images={['/genuinos-virtual-1.png', '/genuinos-virtual-2.png', '/genuinos-presencial-1.JPG', '/genuinos-presencial-2.JPG', '/genuinos-presencial-3.JPG']} />
                             </div>
                             <div style={{ order: 2 }}>
                                 <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
@@ -793,7 +793,7 @@ const GenuinosLanding = () => {
                                 </div>
                             ))}
                         </div>
-                        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '100px', marginTop: '100px' }}>
+                        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '90px', marginTop: '90px' }}>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '100px', alignItems: 'start' }}>
                         {/* Left Column */}
                         <div style={{ paddingRight: '20px' }}>
@@ -856,8 +856,8 @@ const GenuinosLanding = () => {
 
         {/* NEW: Scarcity Banner Section (Full Width) - Outside of original containers */}
         <div style={{ 
-            margin: '20px 0 120px 0', 
-            padding: '100px 20px',
+            margin: '20px 0 90px 0', 
+            padding: '90px 20px',
             background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
             textAlign: 'center',
             position: 'relative',
@@ -910,9 +910,9 @@ const GenuinosLanding = () => {
                     {/* Centered Value Proposition Block */}
                     <div style={{ 
                         maxWidth: '850px', 
-                        margin: '100px auto', 
+                        margin: '90px auto', 
                         textAlign: 'center',
-                        padding: '60px 40px',
+                        padding: '90px 40px',
                         background: 'rgba(255, 255, 255, 0.02)',
                         borderRadius: '32px',
                         border: '1px solid rgba(255, 255, 255, 0.05)'
@@ -1109,7 +1109,7 @@ const GenuinosLanding = () => {
             )}
 
             {/* NEW: Instructor Carousel Section */}
-            <section className="course-instructor al-animate">
+            <section className="course-instructor al-section al-animate">
                 <div className="al-section-content">
                     <div style={{ position: 'relative' }}>
                         {[
@@ -1308,7 +1308,7 @@ const GenuinosLanding = () => {
             </section>
 
             {/* NEW: FAQ Section (Accordion Style) */}
-            <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '140px' }}>
+            <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '90px' }}>
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
                         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
@@ -1377,7 +1377,7 @@ const GenuinosLanding = () => {
                             ))}
                         </div>
 
-                        <div style={{ marginTop: '120px', textAlign: 'center' }}>
+                        <div style={{ marginTop: '90px', textAlign: 'center' }}>
                             <p style={{ fontSize: '1.55rem', color: '#fff', fontWeight: '600', marginBottom: '15px', lineHeight: '1.4', maxWidth: '700px', margin: '0 auto 20px' }}>
                                 Comprender cómo funcionas por dentro puede cambiar la forma en que lideras tu vida y tu trabajo.
                             </p>

@@ -978,7 +978,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                     <h4 style={{ color: '#ffffff', fontSize: '1.2rem', marginBottom: '10px', marginTop: '10px' }}>Transforma tu patrón de personalidad</h4>
                                     <p style={{ color: '#ffffff' }}>Aprende a utilizar tu eneatipo para mejorar tu toma de decisiones y liderar con propósito en este programa exclusivo.</p>
                                     <button
-                                        onClick={() => navigate('/programa')}
+                                        onClick={() => navigate('/programa-genuinos')}
                                         className="btn-advanced-finish btn-deepen-primary"
                                         style={{ width: '100%', maxWidth: '100%', marginTop: '15px' }}
                                     >
