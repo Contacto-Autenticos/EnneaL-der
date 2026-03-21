@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Play, ArrowLeft, Lock, Rocket } from 'lucide-react';
+import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Play, ArrowLeft, Lock, Rocket, ChevronLeft, ChevronRight } from 'lucide-react';
 import './CourseLanding.css';
 
 const VideoLoopWithFlash = ({ src }) => {
@@ -44,6 +44,55 @@ const VideoLoopWithFlash = ({ src }) => {
                     transition: 'opacity 0.2s ease-in-out'
                 }} />
             )}
+        </div>
+    );
+};
+
+const ImageCarousel = ({ images }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
+    const prev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+
+    return (
+        <div style={{ position: 'relative', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <img 
+                src={images[currentIndex]} 
+                alt={`Slide ${currentIndex}`} 
+                style={{ 
+                    width: '100%', 
+                    height: 'auto', 
+                    display: 'block', 
+                    aspectRatio: '16/10',
+                    objectFit: 'cover'
+                }} 
+            />
+            <button 
+                onClick={prev}
+                style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(10,22,30,0.7)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', width: '45px', height: '45px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10, transition: 'all 0.3s' }}
+            >
+                <ChevronLeft size={24} />
+            </button>
+            <button 
+                onClick={next}
+                style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(10,22,30,0.7)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', width: '45px', height: '45px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10, transition: 'all 0.3s' }}
+            >
+                <ChevronRight size={24} />
+            </button>
+            <div style={{ position: 'absolute', bottom: '20px', left: '0', right: '0', textAlign: 'center', display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                {images.map((_, i) => (
+                    <div 
+                        key={i} 
+                        style={{ 
+                            width: i === currentIndex ? '24px' : '8px', 
+                            height: '8px', 
+                            borderRadius: '4px', 
+                            background: i === currentIndex ? '#ddbe3d' : 'rgba(255,255,255,0.4)', 
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                        }} 
+                    />
+                ))}
+            </div>
         </div>
     );
 };
@@ -462,6 +511,137 @@ const GenuinosLanding = () => {
                             <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', maxWidth: '800px', margin: '0 auto' }}>
                                 Este sistema práctico para transformar cómo piensas, decides y actúas. Combina tres elementos fundamentales.
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* NEW: Program Elements Section */}
+            <section className="course-program-elements al-animate" style={{ padding: '100px 0', background: 'rgba(10, 22, 30, 0.5)' }}>
+                <div className="al-section-content" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
+                    <h3 style={{ 
+                        fontSize: 'clamp(20px, 4vw, 24px)', 
+                        color: '#fff', 
+                        textAlign: 'left', 
+                        marginBottom: '80px', 
+                        fontWeight: '700',
+                        paddingLeft: '20px',
+                        borderLeft: '4px solid #ddbe3d',
+                        lineHeight: '1.4'
+                    }}>
+                        Este programa combina tres elementos fundamentales.
+                    </h3>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '120px' }}>
+                        {/* 1. Diagnóstico */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
+                            <div>
+                                <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
+                                    1. Diagnóstico profundo de personalidad
+                                </h4>
+                                <p style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6', marginBottom: '25px' }}>
+                                    Comenzarás realizando un test estructural basado en el Eneagrama que te permitirá identificar:
+                                </p>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                    {[
+                                        'tu tipo de personalidad dominante',
+                                        'tu centro de inteligencia predominante',
+                                        'tus motivaciones profundas',
+                                        'tus reacciones automáticas bajo presión',
+                                        'tu estilo natural de liderazgo'
+                                    ].map((item, i) => (
+                                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem' }}>
+                                            <div style={{ width: '8px', height: '8px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0 }}></div>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p style={{ fontSize: '1.1rem', color: '#fff', fontWeight: '600', fontStyle: 'italic', background: 'rgba(221, 190, 61, 0.1)', padding: '15px 20px', borderRadius: '12px', borderLeft: '3px solid #ddbe3d' }}>
+                                    Este diagnóstico te permitirá ver con mayor claridad el mapa desde el cual estás operando hoy.
+                                </p>
+                            </div>
+                            <div style={{ position: 'relative' }}>
+                                <img 
+                                    src="/Portada-Analisis Avanzado-3.png" 
+                                    alt="Diagnóstico profundo" 
+                                    style={{ width: '100%', borderRadius: '24px', boxShadow: '0 25px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }} 
+                                />
+                            </div>
+                        </div>
+
+                        {/* 2. Curso */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
+                            <div className="program-media-order-mobile" style={{ order: 1 }}>
+                                <ImageCarousel images={['/genuinos-presencial-1.JPG', '/genuinos-presencial-2.JPG', '/genuinos-presencial-3.JPG']} />
+                            </div>
+                            <div style={{ order: 2 }}>
+                                <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
+                                    2. Curso online o presencial de comprensión estructural
+                                </h4>
+                                <p style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6', marginBottom: '25px' }}>
+                                    En el curso aprenderás de forma clara y práctica:
+                                </p>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                    {[
+                                        'cómo se forman los patrones de personalidad',
+                                        'las nueve estrategias principales del Eneagrama',
+                                        'cómo reaccionan las personas bajo presión',
+                                        'cómo influyen estas estructuras en el liderazgo',
+                                        'cómo interpretar tus propias motivaciones y emociones'
+                                    ].map((item, i) => (
+                                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem' }}>
+                                            <div style={{ width: '8px', height: '8px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0 }}></div>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <p style={{ fontSize: '1.1rem', color: '#fff', fontWeight: '600', fontStyle: 'italic', background: 'rgba(221, 190, 61, 0.1)', padding: '15px 20px', borderRadius: '12px', borderLeft: '3px solid #ddbe3d' }}>
+                                    Este conocimiento te permitirá comprender el mapa completo.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* 3. Plan de Acción */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', alignItems: 'center', gap: '60px' }}>
+                            <div>
+                                <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
+                                    3. Plan de acción personal
+                                </h4>
+                                <p style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6', marginBottom: '25px' }}>
+                                    Además del curso recibirás un plan de trabajo diseñado para aplicar lo aprendido en tu vida real.
+                                </p>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 35px 0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                    {[
+                                        'ejercicios de autoobservación',
+                                        'gestión de emociones dominantes',
+                                        'activación de tu centro menos desarrollado',
+                                        'recomendaciones para tomar decisiones más conscientes'
+                                    ].map((item, i) => (
+                                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem' }}>
+                                            <div style={{ width: '8px', height: '8px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0 }}></div>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <div style={{ 
+                                    background: 'linear-gradient(90deg, rgba(221, 190, 61, 0.1) 0%, rgba(221, 190, 61, 0.02) 100%)', 
+                                    padding: '25px', 
+                                    borderRadius: '16px',
+                                    border: '1px solid rgba(221, 190, 61, 0.2)'
+                                }}>
+                                    <p style={{ fontSize: '1.3rem', color: '#fff', fontWeight: '700', lineHeight: '1.4', margin: 0 }}>
+                                        La idea no es solo comprender tu personalidad. <br/>
+                                        <span style={{ color: '#ddbe3d', fontSize: '1.5rem', fontWeight: '900' }}>Es empezar a transformarla.</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                                <img 
+                                    src="/Portada - Plan de Acción-1.jpg" 
+                                    alt="Plan de acción personal" 
+                                    style={{ width: '100%', borderRadius: '24px', boxShadow: '0 25px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }} 
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
