@@ -663,12 +663,11 @@ const GenuinosLanding = () => {
 
                         <div className="target-audience-grid">
                             {[
-                                'Quieres comprenderte con mayor profundidad.',
-                                'Te interesa el desarrollo personal real, más allá de ideas superficiales.',
-                                'Deseas tomar decisiones con mayor claridad y conciencia.',
-                                'Buscas herramientas para liderar mejor tu vida personal o profesional.',
-                                'Quieres comprender mejor a las personas con las que trabajas o convives.',
-                                'Sientes que es momento de dar un paso profundo hacia tu autoconocimiento y transformación.'
+                                'Emprendedor',
+                                'Empresario',
+                                'Líder de equipo',
+                                'Profesional con potencial de liderazgo',
+                                'Te interesa el desarrollo personal, más allá de ideas superficiales.'
                             ].map((item, i) => (
                                 <div key={i} className="target-item">
                                     <div className="target-dot"></div>
