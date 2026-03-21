@@ -667,6 +667,7 @@ const GenuinosLanding = () => {
                                 'Empresario',
                                 'Líder de equipo',
                                 'Profesional con potencial de liderazgo',
+                                'Consultor, Mentor o Coach interesado en profundizar en el comportamiento humano.',
                                 'Te interesa el desarrollo personal, más allá de ideas superficiales.'
                             ].map((item, i) => (
                                 <div key={i} className="target-item">
