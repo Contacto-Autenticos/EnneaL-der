@@ -749,37 +749,6 @@ const GenuinosLanding = () => {
                                     </li>
                                 ))}
                             </ul>
-
-                            <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
-                                DIFERENCIA DE ESTE PROCESO
-                            </h3>
-                            <p style={{ fontSize: '1.15rem', lineHeight: '1.7', color: 'rgba(255,255,255,0.9)', marginBottom: '30px' }}>
-                                Muchos cursos de Eneagrama se enfocan en describir tipos de personalidad. <strong style={{color: '#fff'}}>GENUINOS</strong> se enfoca en algo distinto. No se trata solo de saber qué tipo eres, se trata de comprender:
-                            </p>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 45px 0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                                {[
-                                    'la estructura desde la cual interpretas el mundo',
-                                    'la emoción que guía tus reacciones',
-                                    'el patrón que aparece bajo presión',
-                                    'las posibilidades de desarrollo que tienes por delante'
-                                ].map((item, i) => (
-                                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem' }}>
-                                        <div style={{ width: '10px', height: '2px', background: '#ddbe3d', borderRadius: '2px' }}></div>
-                                        <span>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div style={{  
-                                borderLeft: '4px solid #ddbe3d', 
-                                padding: '10px 25px', 
-                                background: 'rgba(221, 190, 61, 0.05)',
-                                borderRadius: '0 12px 12px 0'
-                            }}>
-                                <p style={{ fontSize: '1.2rem', color: '#fff', fontWeight: '700', margin: 0 }}>
-                                    Por eso este programa no es solo información. <br/>
-                                    <span style={{ color: '#ddbe3d', fontSize: '1.3rem' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
-                                </p>
-                            </div>
                         </div>
 
                         {/* Right Column */}
@@ -811,6 +780,53 @@ const GenuinosLanding = () => {
                                     text: "Para mi los talleres de Auténticos, han significado un cambio fuertes para mi vida, he podido a través del eneagrama abrazar el autoconocimiento , darme cuenta de la estructura de mi personalidad y cómo me manejaba ante actitudes inconscientes o automáticas que debía traer a la luz y sanar. Me comencé a reconocer con todo mi potencial, cómo un diamante en bruto que decidí forjar y pulir."
                                 }
                             ]} />
+                        </div>
+                    </div>
+
+                    {/* Centered Value Proposition Block */}
+                    <div style={{ 
+                        maxWidth: '850px', 
+                        margin: '100px auto 0', 
+                        textAlign: 'center',
+                        padding: '60px 40px',
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        borderRadius: '32px',
+                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                    }}>
+                         <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+                            DIFERENCIA DE ESTE PROCESO
+                        </h3>
+                        <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '40px' }}>
+                            Muchos cursos de Eneagrama se enfocan en describir tipos de personalidad. <strong style={{color: '#fff'}}>GENUINOS</strong> se enfoca en algo distinto. No se trata solo de saber qué tipo eres, se trata de comprender:
+                        </p>
+                        
+                        <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: '50px' }}>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                {[
+                                    'la estructura desde la cual interpretas el mundo',
+                                    'la emoción que guía tus reacciones',
+                                    'el patrón que aparece bajo presión',
+                                    'las posibilidades de desarrollo que tienes por delante'
+                                ].map((item, i) => (
+                                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '16px', color: 'rgba(255,255,255,0.85)', fontSize: '1.1rem' }}>
+                                        <div style={{ width: '12px', height: '2px', background: '#ddbe3d', borderRadius: '2px' }}></div>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div style={{  
+                            borderTop: '4px solid #ddbe3d', 
+                            paddingTop: '30px', 
+                            background: 'rgba(221, 190, 61, 0.03)',
+                            borderRadius: '16px',
+                            padding: '30px'
+                        }}>
+                            <p style={{ fontSize: '1.3rem', color: '#fff', fontWeight: '700', margin: 0 }}>
+                                Por eso este programa no es solo información. <br/>
+                                <span style={{ color: '#ddbe3d', fontSize: '1.5rem', marginTop: '10px', display: 'block' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
