@@ -726,46 +726,6 @@ const GenuinosLanding = () => {
                             ))}
                         </div>
                     </div>
-
-                    <div className="modalities-choice-box">
-                        <p className="introspection-transition text-center" style={{ marginBottom: '40px', fontSize: '1.6rem', color: '#ddbe3d', fontWeight: '800', textAlign: 'center' }}>
-                            Comienza aquí, accede a este contenido de dos formas:
-                        </p>
-
-                        <div className="modality-cards">
-                            <div className="modality-card">
-                                <div className="modality-tag">EN LÍNEA</div>
-                                <h3 className="modality-title">Taller virtual en vivo</h3>
-                                <div className="modality-stats">
-                                    <span>4 sesiones</span>
-                                    <div className="stats-divider"></div>
-                                    <span>2 horas por sesión</span>
-                                </div>
-                                <div className="modality-date-info" style={{ marginTop: '10px', color: '#ddbe3d', fontWeight: '700', fontSize: '0.95rem' }}>
-                                    14, 15, 16, 17 de abril<br/>
-                                    7:00 PM a 9:00 PM (Hora Col)
-                                </div>
-                                <p style={{ marginTop: '15px' }}>Un espacio de aprendizaje progresivo donde exploraremos el sistema completo del Eneagrama.</p>
-                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handleSelectPlan('virtual')}>Seleccionar Virtual</button>
-                            </div>
-
-                            <div className="modality-card card-featured">
-                                <div className="modality-tag">Cali, Colombia</div>
-                                <h3 className="modality-title">Taller presencial</h3>
-                                <div className="modality-stats">
-                                    <span>Jornada Intensiva</span>
-                                    <div className="stats-divider"></div>
-                                    <span>8 horas</span>
-                                </div>
-                                <div className="modality-date-info" style={{ marginTop: '10px', color: '#ddbe3d', fontWeight: '700', fontSize: '0.95rem' }}>
-                                    11 de abril<br/>
-                                    9:00 AM a 5:00 PM
-                                </div>
-                                <p style={{ marginTop: '15px' }}>Donde vivirás una experiencia profunda de autoconocimiento y comprensión de los patrones humanos.</p>
-                                <button className="al-btn-primary" style={{ marginTop: '20px', backgroundColor: '#ddbe3d', color: '#002d44', fontWeight: '900', border: 'none', padding: '22px 30px', width: '100%' }} onClick={() => handleSelectPlan('presencial')}>Seleccionar Presencial</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
