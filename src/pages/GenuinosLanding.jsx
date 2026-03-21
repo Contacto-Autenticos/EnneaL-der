@@ -253,7 +253,7 @@ const GenuinosLanding = () => {
             <section className="course-introspection al-animate">
                 <div className="al-section-content">
                     <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                        <p className="introspection-closing" style={{ fontSize: '1.4rem', marginBottom: '40px', textAlign: 'center' }}>
+                        <p className="introspection-closing" style={{ fontSize: '2.5rem', marginBottom: '40px', textAlign: 'center', fontWeight: '800', lineHeight: '1.2' }}>
                             Muchas personas con talento y potencial de liderazgo se encuentran con una realidad difícil de explicar.
                         </p>
                         
@@ -279,7 +279,7 @@ const GenuinosLanding = () => {
                             ))}
                         </div>
 
-                        <div className="introspection-card" style={{ background: 'transparent', border: 'none', textAlign: 'left', display: 'block', padding: '0' }}>
+                        <div style={{ textAlign: 'left', display: 'block', padding: '0' }}>
                             <p className="introspection-transition" style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '30px', fontStyle: 'normal' }}>
                                 Y aun así aparecen situaciones que se repiten:
                             </p>
@@ -313,7 +313,7 @@ const GenuinosLanding = () => {
                             </ul>
                         </div>
 
-                        <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.03)', padding: '50px', borderRadius: '30px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ textAlign: 'center', padding: '40px 0' }}>
                             <p className="introspection-closing" style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#fff' }}>
                                 Y lo más importante… <span style={{ color: '#ddbe3d', fontWeight: '800' }}>No es falta de inteligencia.</span>
                             </p>
