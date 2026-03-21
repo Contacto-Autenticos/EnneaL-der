@@ -445,7 +445,8 @@ const GenuinosLanding = () => {
                                 height: 'auto', 
                                 borderRadius: '24px',
                                 marginBottom: '50px',
-                                boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                                boxShadow: '0 30px 60px rgba(0,0,0,0.6), 0 0 20px rgba(221, 190, 61, 0.1)',
+                                border: '1px solid rgba(255,255,255,0.05)'
                             }} 
                         />
                         
