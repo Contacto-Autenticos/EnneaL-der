@@ -136,12 +136,13 @@ const TestimonialCarousel = ({ testimonials }) => {
                             background: 'rgba(255, 255, 255, 0.03)', 
                             border: '1px solid rgba(255, 255, 255, 0.08)',
                             borderRadius: '32px',
-                            padding: '45px 40px',
+                            padding: 'clamp(30px, 6vw, 45px) clamp(20px, 5vw, 40px)',
                             position: 'relative',
                             boxShadow: '0 30px 60px rgba(0,0,0,0.4)',
                             height: '100%',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            boxSizing: 'border-box'
                         }}
                     >
                         <div style={{ color: '#ddbe3d', fontSize: '4rem', position: 'absolute', top: '15px', left: '25px', opacity: 0.2, lineHeight: '1', fontFamily: 'serif' }}>❝</div>
@@ -563,7 +564,7 @@ const GenuinosLanding = () => {
                         </div>
 
                         {/* Right Column: Video */}
-                        <div className="map-video-column">
+                        <div className="map-video-column mobile-img-top">
                             <VideoLoopWithFlash src="/Videos/Eneagrama-Autenticos.mp4" />
                         </div>
                     </div>
@@ -948,7 +949,7 @@ const GenuinosLanding = () => {
                         }}>
                                 <p style={{ fontSize: '1.3rem', color: '#fff', fontWeight: '700', margin: 0 }}>
                                     Por eso este programa no es solo información. <br/>
-                                    <span style={{ color: '#ddbe3d', fontSize: '1.5rem', marginTop: '10px', display: 'block' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
+                                    <span style={{ color: '#ddbe3d', fontSize: 'clamp(1.15rem, 5vw, 1.5rem)', marginTop: '10px', display: 'block' }}>Es un proceso de autoconocimiento aplicado a la vida real y al liderazgo.</span>
                                 </p>
                             </div>
 
@@ -1311,10 +1312,10 @@ const GenuinosLanding = () => {
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
                         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-                            <h2 style={{ fontSize: 'clamp(55px, 12vw, 80px)', fontWeight: '900', color: '#fff', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
+                            <h2 className="faq-header-text" style={{ fontWeight: '900', color: '#fff', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
                                 Preguntas
                             </h2>
-                            <h2 style={{ fontSize: 'clamp(55px, 12vw, 80px)', fontWeight: '900', color: '#ddbe3d', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
+                            <h2 className="faq-header-text" style={{ fontWeight: '900', color: '#ddbe3d', margin: 0, lineHeight: '0.9', letterSpacing: '-0.03em', textTransform: 'none' }}>
                                 frecuentes
                             </h2>
                         </div>

@@ -1118,3 +1118,13 @@
         order: -1 !important;
     }
 }
+
+.faq-header-text {
+    font-size: clamp(40px, 4vw, 48px);
+}
+
+@media (max-width: 768px) {
+    .faq-header-text {
+        font-size: clamp(50px, 16vw, 75px);
+    }
+}
