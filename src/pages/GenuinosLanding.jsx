@@ -265,7 +265,7 @@ const GenuinosLanding = () => {
             setPaymentLoading(true);
             setPaymentError(null);
 
-            const amountInCents = plan === 'virtual' ? 36000000 : 62500000;
+            const amountInCents = plan === 'virtual' ? 36500000 : 62500000;
             const reference = `gen-${plan}-${Date.now()}`; // Updated reference
 
             const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
