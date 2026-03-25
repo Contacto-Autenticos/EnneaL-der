@@ -1330,8 +1330,8 @@ const GenuinosLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">625.000</span>
-                                        <span className="al-currency">COP</span>
+                                        <span className="al-price-number">169</span>
+                                        <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
                                         11 de abril / Cali - Colombia <br/> 08:30 – 17:30
