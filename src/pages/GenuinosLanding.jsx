@@ -208,6 +208,7 @@ const GenuinosLanding = () => {
     const [regLoading, setRegLoading] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
     const [activeInstructor, setActiveInstructor] = useState(0);
+    const [showMobileFab, setShowMobileFab] = useState(false);
     const instructorsCount = 2;
 
     useEffect(() => {
@@ -379,9 +380,20 @@ const GenuinosLanding = () => {
         document.body.style.backgroundColor = '#002d44';
         document.body.style.color = '#ffffff';
 
+        const handleScroll = () => {
+            if (window.scrollY > 400) {
+                setShowMobileFab(true);
+            } else {
+                setShowMobileFab(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
         return () => {
             document.body.style.backgroundColor = '';
             document.body.style.color = '';
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
@@ -411,12 +423,12 @@ const GenuinosLanding = () => {
 
             {/* Hero / Intro Section */}
             <section className="al-hero al-animate">
-                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px', fontSize: '48px', lineHeight: '1.1' }}>
+                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px', lineHeight: '1.1' }}>
                     Transforma la forma en que <br />
                     piensas, decides y <br />
                     lideras tu vida
                 </h1>
-                <p className="al-gold-text" style={{ fontSize: 'clamp(1.15rem, 4vw, 1.25rem)', fontWeight: '700', lineHeight: '1.4', maxWidth: '900px', margin: '0 auto 40px auto' }}>
+                <p className="al-gold-text" style={{ fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', fontWeight: '700', lineHeight: '1.4', maxWidth: '900px', margin: '0 auto 40px auto' }}>
                     Identifica la estructura desde la que tomas decisiones, reaccionas bajo presión y lideras a otros usando el Eneagrama aplicado al mundo empresarial.
                 </p>
 
@@ -1575,11 +1587,13 @@ const GenuinosLanding = () => {
                 </div>
             </section>
             {/* Mobile FAB */}
-            <div className="al-mobile-fab">
-                <a href="#precios" className="al-btn-fab" style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>
-                    Asegurar mi cupo
-                </a>
-            </div>
+            {showMobileFab && (
+                <div className="al-mobile-fab">
+                    <a href="#precios" className="al-btn-fab" style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}>
+                        Asegurar mi cupo
+                    </a>
+                </div>
+            )}
         </div>
     );
 };
