@@ -1399,30 +1399,26 @@ const GenuinosLanding = () => {
                     </div>
 
                     {/* Pricing Comparison Footer */}
-                    <div style={{ marginTop: '80px', textAlign: 'center', paddingTop: '60px' }}>
-                        <p style={{ fontSize: '1.3rem', color: 'rgba(255,255,255,0.5)', marginBottom: '30px', fontStyle: 'italic' }}>
-                            Comparado con:
+                    <div style={{ marginTop: '80px', textAlign: 'center', paddingTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                        <p style={{ fontSize: '1.3rem', color: 'rgba(255,255,255,0.6)', marginBottom: '25px', fontStyle: 'italic' }}>
+                            Puedes seguir
                         </p>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', marginBottom: '50px' }}>
-                            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
-                                <span style={{ color: '#ddbe3d', marginRight: '10px' }}>✕</span> Años de prueba y error
-                            </div>
-                            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
-                                <span style={{ color: '#ddbe3d', marginRight: '10px' }}>✕</span> Decisiones mal tomadas
-                            </div>
-                            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
-                                <span style={{ color: '#ddbe3d', marginRight: '10px' }}>✕</span> Procesos de coaching 1 a 1
-                            </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '45px' }}>
+                            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1.2rem', margin: 0 }}>• Aprendiendo por año de tus errores</p>
+                            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1.2rem', margin: 0 }}>• Eligiendo sin saber por qué</p>
+                            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1.2rem', margin: 0 }}>• Asistiendo a muchas terapias</p>
                         </div>
                         <p style={{ 
-                            fontSize: 'clamp(1.5rem, 5vw, 2.2rem)', 
+                            fontSize: 'clamp(1.4rem, 5vw, 2.2rem)', 
                             fontWeight: '900', 
                             color: '#ddbe3d', 
-                            textTransform: 'uppercase', 
-                            letterSpacing: '0.15em',
-                            textShadow: '0 0 20px rgba(221, 190, 61, 0.3)'
+                            maxWidth: '900px',
+                            margin: '0 auto',
+                            lineHeight: '1.2',
+                            textTransform: 'none',
+                            textShadow: '0 0 20px rgba(221, 190, 61, 0.2)'
                         }}>
-                            esta inversión es mínima.
+                            O acelerar el proceso por una pequeña inversión
                         </p>
                     </div>
                 </div>
