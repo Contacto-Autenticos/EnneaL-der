@@ -597,7 +597,7 @@ const GenuinosLanding = () => {
 
                         {/* NEW: Transformation Journey Timeline */}
                         <div ref={timelineRef} className={`al-transformation-steps al-animate ${isTimelineVisible ? 'is-visible' : ''}`} style={{ textAlign: 'left', marginTop: '60px' }}>
-                            <h3 style={{ 
+                            <h3 id="al-transformation-title" style={{ 
                                 color: '#ddbe3d', 
                                 fontSize: 'clamp(2rem, 8vw, 2.8rem)', 
                                 fontWeight: '800', 
