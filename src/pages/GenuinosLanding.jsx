@@ -645,19 +645,9 @@ const GenuinosLanding = () => {
                                             </div>
 
                                             {/* Desktop Bottom Content Slot OR Mobile Content */}
-                                            <div className="al-step-content al-step-content-bottom al-step-content-mobile">
-                                                {!isTop ? (
-                                                    <>
-                                                        <h4>{step.title}</h4>
-                                                        <p>{step.desc}</p>
-                                                    </>
-                                                ) : (
-                                                    /* En móvil, mostramos el contenido aquí independientemente de si era top o bottom */
-                                                    <div className="mobile-only-content" style={{ display: 'none' }}>
-                                                        <h4>{step.title}</h4>
-                                                        <p>{step.desc}</p>
-                                                    </div>
-                                                )}
+                                            <div className={`al-step-content al-step-content-bottom al-step-content-mobile ${isTop ? 'mobile-only-step-content' : ''}`}>
+                                                <h4>{step.title}</h4>
+                                                <p>{step.desc}</p>
                                             </div>
                                         </div>
                                     );

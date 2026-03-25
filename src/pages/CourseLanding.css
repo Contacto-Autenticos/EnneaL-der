@@ -1399,5 +1399,13 @@
     .al-step-content-mobile {
         display: block !important;
     }
+
+    .mobile-only-step-content {
+        display: block !important;
+    }
+}
+
+.mobile-only-step-content {
+    display: none;
 }
 
