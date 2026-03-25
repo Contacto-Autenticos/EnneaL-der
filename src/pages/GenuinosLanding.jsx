@@ -438,16 +438,16 @@ const GenuinosLanding = () => {
             <section className="course-introspection al-section al-animate">
                 <div className="al-section-content">
                     <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                        <h2 className="introspection-closing" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', marginBottom: '50px', textAlign: 'center', fontWeight: '900', lineHeight: '1.2', color: '#fff' }}>
+                        <h2 className="introspection-closing" style={{ fontSize: 'clamp(2.2rem, 6vw, 2.5rem)', marginBottom: '50px', textAlign: 'center', fontWeight: '900', lineHeight: '1.1', color: '#fff' }}>
                             No estás bloqueado… <br/>
                             <span style={{ color: '#ddbe3d' }}>estás repitiendo patrones que no ves</span>
                         </h2>
                         
                         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                            <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.9)', marginBottom: '10px' }}>
+                            <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.9)', marginBottom: '10px' }}>
                                 Probablemente eres una persona capaz, inteligente y con potencial.
                             </p>
-                            <p style={{ fontSize: '1.6rem', color: '#ddbe3d', fontWeight: '800' }}>
+                            <p style={{ fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '800' }}>
                                 Pero aún así…
                             </p>
                         </div>
