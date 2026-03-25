@@ -19,10 +19,21 @@
 }
 
 .al-main-title, .al-impact-header {
-    font-size: clamp(2.5rem, 10vw, 4.5rem);
     font-weight: 900;
     line-height: 1.05;
     letter-spacing: -0.03em;
+}
+
+.al-outcomes-title {
+    font-size: 4.2rem;
+    line-height: 1.1 !important;
+}
+
+@media (max-width: 768px) {
+    .al-outcomes-title {
+        font-size: 3.5rem !important;
+        line-height: 1.1 !important;
+    }
 }
 
 .course-intro-content {
