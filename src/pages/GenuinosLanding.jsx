@@ -599,8 +599,8 @@ const GenuinosLanding = () => {
                         <div ref={timelineRef} className={`al-transformation-steps al-animate ${isTimelineVisible ? 'is-visible' : ''}`} style={{ textAlign: 'left', marginTop: '60px' }}>
                             <h3 style={{ 
                                 color: '#ddbe3d', 
-                                fontSize: '1.8rem', 
-                                fontWeight: '700', 
+                                fontSize: 'clamp(2rem, 8vw, 2.8rem)', 
+                                fontWeight: '800', 
                                 textAlign: 'center',
                                 marginBottom: '20px'
                             }}>
