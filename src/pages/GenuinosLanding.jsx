@@ -835,7 +835,7 @@ const GenuinosLanding = () => {
                                     <h3 className="al-impact-header" style={{ 
                                         color: '#ddbe3d', 
                                         marginBottom: '40px', 
-                                        fontSize: 'clamp(2.5rem, 6vw, 3.7rem)',
+                                        fontSize: 'clamp(3.2rem, 6vw, 3.7rem)',
                                         lineHeight: '0.9',
                                         fontWeight: '900',
                                         textTransform: 'uppercase'
