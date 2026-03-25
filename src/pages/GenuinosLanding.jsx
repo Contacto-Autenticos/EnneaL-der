@@ -423,7 +423,7 @@ const GenuinosLanding = () => {
                     No es teoría, es un proceso práctico de transformación personal y liderazgo consciente.
                 </p>
 
-                <div className="al-hero-actions" style={{ display: 'flex', flexDirection: 'row', gap: '20px', justifyContent: 'center', marginTop: '20px', alignItems: 'center' }}>
+                <div className="al-hero-actions">
                     <a href="#precios" className="al-btn-primary al-btn-glow" style={{ padding: '18px 35px', borderRadius: '100px', fontSize: '18px', fontWeight: '900', textDecoration: 'none', background: '#ddbe3d', color: '#002d44', whiteSpace: 'nowrap' }}>
                         QUIERO INICIAR MI PROCESO
                     </a>
