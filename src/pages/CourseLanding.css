@@ -30,6 +30,10 @@
     letter-spacing: -0.04em !important;
 }
 
+#al-introspection-main-title, .al-impact-header {
+    font-size: 48px !important;
+}
+
 @media (max-width: 768px) {
     #al-impact-outcomes-title {
         font-size: 1.5rem !important;
