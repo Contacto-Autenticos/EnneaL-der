@@ -439,7 +439,7 @@ const GenuinosLanding = () => {
             <section className="course-introspection al-section al-animate">
                 <div className="al-section-content">
                     <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                        <h2 className="introspection-closing" style={{ fontSize: 'clamp(2.2rem, 6vw, 2.5rem)', marginBottom: '50px', textAlign: 'center', fontWeight: '900', lineHeight: '1.1', color: '#fff' }}>
+                        <h2 className="introspection-closing" style={{ fontSize: '48px', marginBottom: '50px', textAlign: 'center', fontWeight: '900', lineHeight: '1.1', color: '#fff' }}>
                             No estás bloqueado… <br/>
                             <span style={{ color: '#ddbe3d' }}>estás repitiendo patrones que no ves</span>
                         </h2>
