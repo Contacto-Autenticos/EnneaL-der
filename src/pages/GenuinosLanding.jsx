@@ -475,12 +475,12 @@ const GenuinosLanding = () => {
                             </ul>
                         </div>
 
-                        <div style={{ textAlign: 'center', padding: '0', fontSize: '4rem' }}>
-                            <p className="introspection-closing" style={{ fontSize: '0.4em', marginBottom: '30px', color: '#fff', fontWeight: '700' }}>
+                        <div style={{ textAlign: 'center', padding: '0' }}>
+                            <p className="introspection-closing" style={{ fontSize: 'clamp(1.2rem, 4vw, 1.6rem)', marginBottom: '30px', color: '#fff', fontWeight: '700' }}>
                                 No es falta de capacidad.
                             </p>
                             
-                            <p className="introspection-closing" style={{ fontSize: '0.6em', fontWeight: '800', color: '#ddbe3d', marginBottom: '30px', lineHeight: '1.1' }}>
+                            <p className="introspection-closing" style={{ fontSize: 'clamp(1.6rem, 6vw, 2.4rem)', fontWeight: '800', color: '#ddbe3d', marginBottom: '30px', lineHeight: '1.1' }}>
                                 Es falta de claridad sobre cómo funcionas por dentro.
                             </p>
                             
