@@ -411,9 +411,10 @@ const GenuinosLanding = () => {
 
             {/* Hero / Intro Section */}
             <section className="al-hero al-animate">
-                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px', fontSize: '48px' }}>
-                    Transforma la forma en que piensas, <br />
-                    decides y lideras tu vida
+                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px', fontSize: '48px', lineHeight: '1.1' }}>
+                    Transforma la forma en que <br />
+                    piensas, decides y <br />
+                    lideras tu vida
                 </h1>
                 <p className="al-gold-text" style={{ fontSize: 'clamp(1.15rem, 4vw, 1.25rem)', fontWeight: '700', lineHeight: '1.4', maxWidth: '900px', margin: '0 auto 40px auto' }}>
                     Identifica la estructura desde la que tomas decisiones, reaccionas bajo presión y lideras a otros usando el Eneagrama aplicado al mundo empresarial.
