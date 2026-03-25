@@ -832,7 +832,7 @@ const GenuinosLanding = () => {
                             }}>
                                 {/* Left Column */}
                                 <div style={{ textAlign: 'left' }}>
-                                    <h3 className="al-impact-header al-outcomes-title" style={{ 
+                                    <h2 id="al-impact-outcomes-title" className="al-impact-header" style={{ 
                                         color: '#ddbe3d', 
                                         marginBottom: '40px', 
                                         fontWeight: '900',
@@ -841,7 +841,7 @@ const GenuinosLanding = () => {
                                         Lo que empieza<br/>
                                         a cambiar<br/>
                                         en ti.
-                                    </h3>
+                                    </h2>
                                     <p style={{ fontSize: '1.4rem', marginBottom: '35px', color: '#fff', fontWeight: '500', maxWidth: '500px' }}>
                                         A través de este proceso:
                                     </p>
