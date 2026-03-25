@@ -209,6 +209,8 @@ const GenuinosLanding = () => {
     const [openFaq, setOpenFaq] = useState(null);
     const [activeInstructor, setActiveInstructor] = useState(0);
     const [showMobileFab, setShowMobileFab] = useState(false);
+    const [showHeader, setShowHeader] = useState(true);
+    const lastScrollY = useRef(0);
     const instructorsCount = 2;
 
     useEffect(() => {
@@ -381,7 +383,18 @@ const GenuinosLanding = () => {
         document.body.style.color = '#ffffff';
 
         const handleScroll = () => {
-            if (window.scrollY > 400) {
+            const currentScrollY = window.scrollY;
+
+            // Header Visibility Logic (Headroom)
+            if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+                setShowHeader(false); // Scrolling down
+            } else {
+                setShowHeader(true); // Scrolling up or at top
+            }
+            lastScrollY.current = currentScrollY;
+
+            // Mobile FAB Logic
+            if (currentScrollY > 400) {
                 setShowMobileFab(true);
             } else {
                 setShowMobileFab(false);
@@ -402,7 +415,7 @@ const GenuinosLanding = () => {
             <div className="al-bg-glow"></div>
 
             {/* Navigation */}
-            <nav className="al-nav scrolled">
+            <nav className={`al-nav scrolled ${!showHeader ? 'nav-hidden' : ''}`}>
                 <div className="al-nav-content">
                     <div className="al-logo-wrapper">
                         <img src="/Logo-Blanco.png" alt="Auténticos Logo" className="al-logo" />
