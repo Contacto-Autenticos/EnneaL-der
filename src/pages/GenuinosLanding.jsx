@@ -442,7 +442,7 @@ const GenuinosLanding = () => {
                     lideras tu vida
                 </h1>
                 <p className="al-gold-text" style={{ fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', fontWeight: '700', lineHeight: '1.4', maxWidth: '900px', margin: '0 auto 40px auto' }}>
-                    Identifica la estructura desde la que tomas decisiones, reaccionas bajo presión y lideras a otros usando el Eneagrama aplicado al mundo empresarial.
+                    Identifica la estructura desde la que tomas decisiones, reaccionas bajo presión y lideras a otros usando el Eneagrama aplicado al mundo real.
                 </p>
 
                 <p style={{ color: '#fff', fontSize: 'clamp(1.15rem, 4vw, 1.25rem)', marginBottom: '40px', maxWidth: '1000px', margin: '0 auto 40px auto' }}>
