@@ -469,7 +469,7 @@ const GenuinosLanding = () => {
                                 ].map((item, idx) => (
                                     <li key={idx} className="al-introspection-card">
                                         <div style={{ width: '10px', height: '10px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0, boxShadow: '0 0 10px rgba(221, 190, 61, 0.5)' }}></div>
-                                        <span style={{ fontSize: '1.25rem', color: '#fff', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
+                                        <span style={{ fontSize: '1.15rem', color: '#fff', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
                                     </li>
                                 ))}
                             </ul>
