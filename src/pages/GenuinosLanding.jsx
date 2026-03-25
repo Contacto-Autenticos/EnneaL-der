@@ -474,7 +474,7 @@ const GenuinosLanding = () => {
                                 Probablemente eres una persona capaz, inteligente y con potencial.
                             </p>
                             <p style={{ fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '800' }}>
-                                Pero aún así…
+                                Aún así…
                             </p>
                         </div>
 
