@@ -1388,10 +1388,7 @@ const GenuinosLanding = () => {
                                     </button>
                                 </div>
 
-                                <p className="al-footer-desc" style={{ color: 'rgba(255,200,200,0.8)', marginTop: '0', fontWeight: 'bold' }}>
-                                    * NO INCLUYE COSTOS DE DESPLAZAMIENTO *
-                                </p>
-                                <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '5px' }}>
+                                <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '15px' }}>
                                     Cupos limitados • Pago seguro vía Wompi
                                 </p>
                             </div>
