@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Play, ArrowLeft, Lock, Rocket, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Check, Play, ArrowLeft, Lock, Rocket, ChevronLeft, ChevronRight, ClipboardList, UserSearch, RefreshCw, Instagram, Linkedin, Globe } from 'lucide-react';
 import './CourseLanding.css';
 
 const VideoLoopWithFlash = ({ src }) => {
@@ -45,7 +45,8 @@ const VideoLoopWithFlash = ({ src }) => {
                     position: 'absolute', 
                     top: 0, 
                     left: 0, 
-                    right: 0, 
+                    right: 0
+                    , 
                     bottom: 0, 
                     background: '#fff', 
                     zIndex: 10,
@@ -193,6 +194,8 @@ const GenuinosLanding = () => {
     const [signatureData, setSignatureData] = useState(null);
     const [selectedPlan, setSelectedPlan] = useState(null); // 'virtual' or 'presencial'
     const [paymentError, setPaymentError] = useState(null);
+    const [isTimelineVisible, setIsTimelineVisible] = useState(false);
+    const timelineRef = useRef(null);
 
     // Registration Form State
     const [showRegisterForm, setShowRegisterForm] = useState(false);
@@ -205,6 +208,14 @@ const GenuinosLanding = () => {
     const [regLoading, setRegLoading] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
     const [activeInstructor, setActiveInstructor] = useState(0);
+    const instructorsCount = 2;
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveInstructor((prev) => (prev + 1) % instructorsCount);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleSelectPlan = (plan) => {
         setSelectedPlan(plan);
@@ -342,6 +353,27 @@ const GenuinosLanding = () => {
     }, [signatureData, selectedPlan]);
 
     useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsTimelineVisible(true);
+                }
+            },
+            { threshold: 0.3 }
+        );
+
+        if (timelineRef.current) {
+            observer.observe(timelineRef.current);
+        }
+
+        return () => {
+            if (timelineRef.current) {
+                observer.unobserve(timelineRef.current);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
         window.scrollTo(0, 0);
         // Apply body classes for styling if needed, similar to AdvancedLanding
         document.body.style.backgroundColor = '#002d44';
@@ -363,145 +395,97 @@ const GenuinosLanding = () => {
                     <div className="al-logo-wrapper">
                         <img src="/Logo-Blanco.png" alt="Auténticos Logo" className="al-logo" />
                     </div>
-                    <div className="al-nav-links">
-                        <span onClick={() => window.history.back()} className="al-nav-back-arrow" title="Volver">
-                            <ArrowLeft size={16} />
-                        </span>
+                    <div className="al-nav-links" style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                        <a href="https://www.linkedin.com/company/autenticos" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.7)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = '#fff'} onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.7)'}>
+                            <Linkedin size={20} />
+                        </a>
+                        <a href="https://www.instagram.com/autenticos.co" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.7)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = '#fff'} onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.7)'}>
+                            <Instagram size={20} />
+                        </a>
+                        <a href="https://www.autenticos.co" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.7)', transition: 'color 0.3s' }} onMouseEnter={(e) => e.target.style.color = '#ddbe3d'} onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.7)'}>
+                            <Globe size={20} />
+                        </a>
                     </div>
                 </div>
             </nav>
 
             {/* Hero / Intro Section */}
             <section className="al-hero al-animate">
-                <div className="al-tag">
-                    <Star size={14} /> PROGRAMA AVANZADO
-                </div>
-
-                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px' }}>
-                    Descubre cómo estás liderando realmente
+                <h1 className="al-impact-header" style={{ color: '#fff', marginBottom: '30px', fontSize: '48px' }}>
+                    Transforma la forma en que piensas, <br />
+                    decides y lideras tu vida
                 </h1>
-                <p className="al-gold-text" style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontWeight: '700', lineHeight: '1.4', maxWidth: '900px', margin: '0 auto 40px auto' }}>
+                <p className="al-gold-text" style={{ fontSize: '34px', fontWeight: '700', lineHeight: '1.2', maxWidth: '900px', margin: '0 auto 40px auto' }}>
                     Identifica la estructura desde la que tomas decisiones, reaccionas bajo presión y lideras a otros usando el Eneagrama aplicado al mundo empresarial.
                 </p>
 
-                <div className="course-intro-content" style={{ marginTop: '30px' }}>
-                    <div className="al-hero-bullets" style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: '12px', 
-                        alignItems: 'center',
-                        marginBottom: '40px'
-                    }}>
-                        {[
-                            "Descubre tu tipo de liderazgo dominante",
-                            "Entiende por qué repites ciertos patrones",
-                            "Aprende cómo mejorar tu forma de decidir"
-                        ].map((bullet, idx) => (
-                            <div key={idx} style={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '10px',
-                                fontSize: '1.1rem',
-                                color: 'rgba(255,255,255,0.9)',
-                                background: 'rgba(255,255,255,0.05)',
-                                padding: '10px 20px',
-                                borderRadius: '50px',
-                                border: '1px solid rgba(255,255,255,0.1)'
-                            }}>
-                                <span style={{ color: '#ddbe3d' }}>✔</span>
-                                <span>{bullet}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <p style={{ color: '#fff', fontSize: '20px', marginBottom: '40px', maxWidth: '1000px', margin: '0 auto 40px auto' }}>
+                    No es teoría, es un proceso práctico de transformación personal y liderazgo consciente.
+                </p>
 
-                <div className="al-hero-actions">
-                    <a href="#precios" className="al-btn-primary closing-cta" style={{ padding: '20px 40px', fontSize: '1.1rem', fontWeight: '900' }}>
-                        QUIERO DESCUBRIR MI MAPA INTERIOR
+                <div className="al-hero-actions" style={{ display: 'flex', flexDirection: 'row', gap: '20px', justifyContent: 'center', marginTop: '20px', alignItems: 'center' }}>
+                    <a href="#precios" className="al-btn-primary al-btn-glow" style={{ padding: '18px 35px', borderRadius: '100px', fontSize: '18px', fontWeight: '900', textDecoration: 'none', background: '#ddbe3d', color: '#002d44', whiteSpace: 'nowrap' }}>
+                        QUIERO INICIAR MI PROCESO
+                    </a>
+                    <a href="#programa-elementos" className="al-btn-primary al-btn-glow" style={{ padding: '18px 35px', borderRadius: '100px', fontSize: '18px', fontWeight: '900', textDecoration: 'none', background: '#ddbe3d', color: '#002d44', whiteSpace: 'nowrap' }}>
+                        VER CÓMO FUNCIONA
                     </a>
                 </div>
+
             </section>
 
             {/* NEW: Introspection Section - Leadership Focus */}
             <section className="course-introspection al-section al-animate">
                 <div className="al-section-content">
                     <div className="introspection-no-box" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                        <p className="introspection-closing" style={{ fontSize: 'clamp(1.8rem, 6vw, 2.5rem)', marginBottom: '40px', textAlign: 'center', fontWeight: '800', lineHeight: '1.2' }}>
-                            Muchas personas con talento y potencial de liderazgo se encuentran con una realidad difícil de explicar.
-                        </p>
+                        <h2 className="introspection-closing" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', marginBottom: '50px', textAlign: 'center', fontWeight: '900', lineHeight: '1.2', color: '#fff' }}>
+                            No estás bloqueado… <br/>
+                            <span style={{ color: '#ddbe3d' }}>estás repitiendo patrones que no ves</span>
+                        </h2>
                         
-                        <div style={{ 
-                            display: 'flex', 
-                            justifyContent: 'center', 
-                            gap: '30px', 
-                            marginBottom: '60px',
-                            flexWrap: 'wrap'
-                        }}>
-                            {["Tienen experiencia.", "Tienen conocimiento.", "Tienen capacidad."].map((text, i) => (
-                                <div key={i} style={{ 
-                                    background: 'rgba(221, 190, 61, 0.1)', 
-                                    padding: '15px 25px', 
-                                    borderRadius: '12px',
-                                    border: '1px solid rgba(221, 190, 61, 0.3)',
-                                    color: '#ddbe3d',
-                                    fontWeight: '700',
-                                    fontSize: 'clamp(1rem, 4vw, 1.25rem)'
-                                }}>
-                                    {text}
-                                </div>
-                            ))}
+                        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                            <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.9)', marginBottom: '10px' }}>
+                                Probablemente eres una persona capaz, inteligente y con potencial.
+                            </p>
+                            <p style={{ fontSize: '1.6rem', color: '#ddbe3d', fontWeight: '800' }}>
+                                Pero aún así…
+                            </p>
                         </div>
 
-                        <div style={{ textAlign: 'left', display: 'block', padding: '0' }}>
-                            <p className="introspection-transition" style={{ fontSize: '1.5rem', color: '#fff', marginBottom: '35px', fontStyle: 'normal', fontWeight: '500' }}>
-                                Y aun así aparecen situaciones que se repiten:
-                            </p>
-                            
+                        <div style={{ textAlign: 'left', display: 'block', padding: '20px 0' }}>
                             <ul style={{ 
                                 listStyle: 'none', 
                                 padding: '0', 
                                 margin: '0 0 50px 0',
                                 display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-                                gap: '20px'
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
+                                gap: '30px'
                             }}>
                                 {[
-                                    "decisiones que generan tensión en el equipo",
-                                    "conflictos que escalan innecesariamente",
-                                    "presión que activa reacciones impulsivas",
-                                    "dificultad para delegar o confiar",
-                                    "patrones que vuelven a aparecer una y otra vez"
+                                    "Tomas decisiones con duda o miedo",
+                                    "Te exiges mucho, pero no avanzas como quisieras",
+                                    "Repites comportamientos que ya sabes que no te funcionan",
+                                    "Sientes que podrías dar más… pero algo te frena"
                                 ].map((item, idx) => (
-                                    <li key={idx} style={{ 
-                                        display: 'flex', 
-                                        alignItems: 'flex-start', 
-                                        gap: '12px',
-                                        fontSize: '1.25rem',
-                                        color: 'rgba(255,255,255,0.9)',
-                                        lineHeight: '1.4'
-                                    }}>
-                                        <span style={{ color: '#ddbe3d', fontSize: '1.5rem', lineHeight: '1' }}>•</span>
-                                        <span>{item}</span>
+                                    <li key={idx} className="al-introspection-card">
+                                        <div style={{ width: '10px', height: '10px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0, boxShadow: '0 0 10px rgba(221, 190, 61, 0.5)' }}></div>
+                                        <span style={{ fontSize: '1.25rem', color: '#fff', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
                         <div style={{ textAlign: 'center', padding: '0', fontSize: '4rem' }}>
-                            <p className="introspection-closing" style={{ fontSize: '0.4em', marginBottom: '10px', color: '#fff' }}>
-                                Y lo más importante…
+                            <p className="introspection-closing" style={{ fontSize: '0.4em', marginBottom: '30px', color: '#fff', fontWeight: '700' }}>
+                                No es falta de capacidad.
                             </p>
                             
-                            <p className="introspection-closing" style={{ fontSize: '0.6em', fontWeight: '800', color: '#ddbe3d', marginBottom: '30px' }}>
-                                No es falta de inteligencia.
-                            </p>
-                            
-                            <p className="introspection-closing" style={{ fontSize: '0.35em', lineHeight: '1.6', opacity: '0.9', maxWidth: '700px', margin: '0 auto', color: 'rgba(255,255,255,0.8)' }}>
-                                El problema es que la mayoría de las personas lidera desde una <strong style={{ color: '#fff', fontSize: '1.3em' }}>estructura automática</strong> que nunca aprendió a reconocer.
+                            <p className="introspection-closing" style={{ fontSize: '0.6em', fontWeight: '800', color: '#ddbe3d', marginBottom: '30px', lineHeight: '1.1' }}>
+                                Es falta de claridad sobre cómo funcionas por dentro.
                             </p>
                             
                             <div style={{ marginTop: '0' }}>
-                                <a href="#precios" className="al-btn-primary closing-cta" style={{ marginTop: '40px', display: 'inline-block' }}>
+                                <a href="#precios" className="al-btn-primary al-btn-glow closing-cta" style={{ marginTop: '40px', display: 'inline-block' }}>
                                     COMENZAR MI TRANSFORMACIÓN
                                 </a>
                             </div>
@@ -522,28 +506,28 @@ const GenuinosLanding = () => {
                     }}>
                         {/* Left Column: Text */}
                         <div className="map-text-column">
-                            <h2 style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', color: '#ddbe3d', marginBottom: '25px', lineHeight: '1.2' }}>
-                                Imagina que tu forma de pensar, sentir y actuar estuviera guiada por un mapa invisible.
+                            <h2 style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', color: '#002d44', marginBottom: '25px', lineHeight: '1.2' }}>
+                                El problema no es lo que haces… <br/>
+                                <span style={{ color: '#ddbe3d' }}>es desde dónde lo haces</span>
                             </h2>
-                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.85)', marginBottom: '35px', lineHeight: '1.6' }}>
-                                Un mapa que se formó a lo largo de tu vida para ayudarte a adaptarte al mundo.
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(0, 45, 68, 0.85)', marginBottom: '35px', lineHeight: '1.6' }}>
+                                La mayoría de las personas intenta cambiar sus resultados sin entender su estructura interna.
                             </p>
 
                             <div style={{ marginBottom: '40px' }}>
-                                <p style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '20px', fontWeight: '600' }}>Ese mapa determina:</p>
+                                <p style={{ fontSize: '1.3rem', color: '#002d44', marginBottom: '20px', fontWeight: '600' }}>Pero mientras no comprendas:</p>
                                 <ul style={{ listStyle: 'none', padding: 0 }}>
                                     {[
-                                        'cómo percibes las oportunidades',
-                                        'cómo interpretas el conflicto',
-                                        'cómo reaccionas bajo presión',
-                                        'cómo tomas decisiones importantes'
+                                        'cómo tomas decisiones',
+                                        'qué te mueve realmente',
+                                        'qué te limita sin darte cuenta'
                                     ].map((item, i) => (
                                         <li key={i} style={{ 
                                             display: 'flex', 
                                             alignItems: 'center', 
                                             gap: '12px', 
                                             fontSize: '1.2rem', 
-                                            color: 'rgba(255,255,255,0.8)',
+                                            color: 'rgba(0, 45, 68, 0.8)',
                                             marginBottom: '12px'
                                         }}>
                                             <div style={{ width: '6px', height: '6px', background: '#ddbe3d', borderRadius: '50%' }}></div>
@@ -551,13 +535,13 @@ const GenuinosLanding = () => {
                                         </li>
                                     ))}
                                 </ul>
+                                <p style={{ fontSize: '1.2rem', color: 'rgba(0, 45, 68, 0.85)', marginTop: '20px', lineHeight: '1.6' }}>
+                                    seguirás repitiendo los mismos resultados, incluso con más esfuerzo.
+                                </p>
                             </div>
 
-                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.9)', marginBottom: '20px', lineHeight: '1.6' }}>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(0, 45, 68, 0.9)', marginBottom: '20px', lineHeight: '1.6' }}>
                                 El Eneagrama es uno de los sistemas más profundos que existen para comprender ese mapa.
-                            </p>
-                            <p style={{ fontSize: '1.25rem', fontWeight: '700', color: '#fff', lineHeight: '1.6' }}>
-                                Cuando puedes verlo con claridad, empiezas a recuperar algo muy valioso: <span style={{ color: '#ddbe3d' }}>la capacidad de elegir cómo responder.</span>
                             </p>
                         </div>
 
@@ -573,38 +557,119 @@ const GenuinosLanding = () => {
                 <div className="al-section-content">
                     <div style={{ textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
                         <img 
-                            src="/Genuinos-programa-autenticos.png?v=2" 
+                            src="/Genuinos-programa-autenticos-2.png" 
                             alt="Genuinos Programa Auténticos" 
                             style={{ 
                                 width: '100%', 
                                 maxWidth: '800px', 
                                 height: 'auto', 
                                 borderRadius: '24px',
-                                marginBottom: '50px',
-                                boxShadow: '0 30px 60px rgba(0,0,0,0.6), 0 0 20px rgba(221, 190, 61, 0.1)',
-                                border: '1px solid rgba(255,255,255,0.05)'
+                                marginBottom: '50px'
                             }} 
                         />
                         
                         <div style={{ padding: '0 20px' }}>
                             <p style={{ fontSize: '1.6rem', color: '#fff', lineHeight: '1.5', marginBottom: '30px', fontWeight: '500' }}>
-                                Un proceso diseñado para ayudarte a comprender tu estructura interior y desarrollar una forma más consciente de liderar tu vida y tu trabajo.
+                                Un proceso para entenderte, desbloquearte y evolucionar
                             </p>
                             
                             <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '800', marginBottom: '30px' }}>
-                                No es teoría.
+                                No es teoría... No es un curso.
                             </p>
                             
                             <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', maxWidth: '800px', margin: '0 auto' }}>
-                                Este sistema práctico para transformar cómo piensas, decides y actúas. Combina tres elementos fundamentales.
+                                Es un proceso estructurado de autoconocimiento y transformación basado en el Eneagrama, diseñado para ayudarte a comprender tu forma de pensar, sentir y actuar… y a partir de ahí, cambiarla.
                             </p>
+                        </div>
+
+                        {/* NEW: Transformation Journey Timeline */}
+                        <div ref={timelineRef} className={`al-transformation-steps al-animate ${isTimelineVisible ? 'is-visible' : ''}`} style={{ textAlign: 'left', marginTop: '60px' }}>
+                            <h3 style={{ 
+                                color: '#ddbe3d', 
+                                fontSize: '1.8rem', 
+                                fontWeight: '700', 
+                                textAlign: 'center',
+                                marginBottom: '20px'
+                            }}>
+                                Así es como ocurre la transformación
+                            </h3>
+
+                            <div className="al-steps-timeline">
+                                <div className="al-timeline-line">
+                                    <div className="al-timeline-progress"></div>
+                                </div>
+
+                                {[
+                                    {
+                                        title: "Diagnóstico profundo",
+                                        desc: "Descubres tu tipo de personalidad con un test estructurado.",
+                                        icon: <ClipboardList size={32} />
+                                    },
+                                    {
+                                        title: "Comprensión de tu estructura interna",
+                                        desc: "Entiendes cómo piensas, decides y reaccionas.",
+                                        icon: <UserSearch size={32} />
+                                    },
+                                    {
+                                        title: "Identificación de patrones limitantes",
+                                        desc: "Reconoces los comportamientos que te frenan.",
+                                        icon: <Target size={32} />
+                                    },
+                                    {
+                                        title: "Intervención práctica",
+                                        desc: "Aprendes cómo cambiar esos patrones en tu vida real.",
+                                        icon: <RefreshCw size={32} />
+                                    },
+                                    {
+                                        title: "Integración consciente",
+                                        desc: "Llevas el conocimiento a decisiones, relaciones y liderazgo.",
+                                        icon: <CheckCircle2 size={32} />
+                                    }
+                                ].map((step, index) => {
+                                    const isTop = index === 1 || index === 3;
+                                    return (
+                                        <div key={index} className="al-step-item">
+                                            {/* Desktop Top Content Slot */}
+                                            <div className="al-step-content al-step-content-top">
+                                                {isTop && (
+                                                    <>
+                                                        <h4>{step.title}</h4>
+                                                        <p>{step.desc}</p>
+                                                    </>
+                                                )}
+                                            </div>
+
+                                            <div className="al-step-circle">
+                                                {step.icon}
+                                                <div className="al-step-number">{index + 1}</div>
+                                            </div>
+
+                                            {/* Desktop Bottom Content Slot OR Mobile Content */}
+                                            <div className="al-step-content al-step-content-bottom al-step-content-mobile">
+                                                {!isTop ? (
+                                                    <>
+                                                        <h4>{step.title}</h4>
+                                                        <p>{step.desc}</p>
+                                                    </>
+                                                ) : (
+                                                    /* En móvil, mostramos el contenido aquí independientemente de si era top o bottom */
+                                                    <div className="mobile-only-content" style={{ display: 'none' }}>
+                                                        <h4>{step.title}</h4>
+                                                        <p>{step.desc}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* NEW: Program Elements Section */}
-            <section className="course-program-elements al-animate" style={{ padding: '90px 0', background: 'rgba(10, 22, 30, 0.5)' }}>
+            <section className="course-program-elements al-animate" style={{ padding: '90px 0', background: 'linear-gradient(to bottom, #000a12 0%, #002d44 100%)' }}>
                 <div className="al-section-content" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 20px' }}>
                     <h3 style={{ 
                         fontSize: 'clamp(20px, 4vw, 24px)', 
@@ -737,7 +802,6 @@ const GenuinosLanding = () => {
             {/* NEW: Organizaciones Carousel Section */}
             <section className="al-orgs-section al-animate">
                 <div className="al-orgs-header">
-                    <span className="al-org-tag">Confianza y Trayectoria</span>
                     <h2 className="al-orgs-title">Organizaciones que confían en nosotros</h2>
                     <p className="al-orgs-subtitle">
                         Más de 100 organizaciones públicas, privadas y educativas han confiado en nosotros.
@@ -767,56 +831,56 @@ const GenuinosLanding = () => {
                 </div>
             </section>
 
-            {/* NEW: Workshop Modalities Section */}
-            <section className="course-modalities al-animate">
+            <section className="course-results al-animate">
                 <div className="al-section-content">
-                    <div className="modalities-header">
-                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(32px, 6vw, 48px)' }}>
-                            <span className="al-hero-title-top">Este taller es especialmente</span>
-                            <span className="al-gold-text">valioso para ti, sí eres:</span>
-                        </h2>
-
-                        <div className="target-audience-grid">
-                            {[
-                                'Emprendedor',
-                                'Empresario',
-                                'Líder de equipo',
-                                'Profesional con potencial de liderazgo',
-                                'Consultor, Mentor o Coach interesado en profundizar en el comportamiento humano.',
-                                'Una persona con interés en el desarrollo personal, más allá de ideas superficiales.'
-                            ].map((item, i) => (
-                                <div key={i} className="target-item">
-                                    <div className="target-dot"></div>
-                                    <span style={{ fontSize: '1.25rem', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
+                    <div>
+                            <div style={{ 
+                                display: 'grid', 
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 450px), 1fr))', 
+                                gap: '80px', 
+                                alignItems: 'center' 
+                            }}>
+                                {/* Left Column */}
+                                <div style={{ textAlign: 'left' }}>
+                                    <h3 className="al-impact-header" style={{ 
+                                        color: '#ddbe3d', 
+                                        marginBottom: '40px', 
+                                        fontSize: 'clamp(2.5rem, 6vw, 3.7rem)',
+                                        lineHeight: '0.9',
+                                        fontWeight: '900',
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        Lo que empieza<br/>
+                                        a cambiar<br/>
+                                        en ti.
+                                    </h3>
+                                    <p style={{ fontSize: '1.4rem', marginBottom: '35px', color: '#fff', fontWeight: '500', maxWidth: '500px' }}>
+                                        A través de este proceso:
+                                    </p>
+                                    <ul style={{ listStyle: 'none', padding: 0, margin: '0', display: 'flex', flexDirection: 'column', gap: '25px' }}>
+                                        {[
+                                            'Tomas decisiones con mayor claridad y seguridad',
+                                            'Reduces el autosabotaje',
+                                            'Comprendes tus emociones y las gestionas mejor',
+                                            'Mejoras tus relaciones personales y profesionales',
+                                            'Lideras con más conciencia y menos reactividad',
+                                            'Recuperas enfoque, energía y dirección'
+                                        ].map((item, i) => (
+                                            <li key={i} style={{ display: 'flex', gap: '18px', color: 'rgba(255,255,255,0.95)', fontSize: '1.3rem', alignItems: 'flex-start' }}>
+                                                <div style={{ background: '#ddbe3d', padding: '4px', borderRadius: '4px', flexShrink: 0, marginTop: '4px' }}>
+                                                    <CheckCircle2 size={16} color="#001a2c" strokeWidth={3} />
+                                                </div>
+                                                <span style={{ lineHeight: '1.3' }}>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                            ))}
-                        </div>
-                        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '90px', marginTop: '90px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '100px', alignItems: 'start' }}>
-                        {/* Left Column */}
-                            <h3 className="al-impact-header" style={{ color: '#ddbe3d', marginBottom: '35px', textAlign: 'left' }}>
-                                RESULTADOS QUE PUEDES ESPERAR
-                            </h3>
-                            <p style={{ fontSize: '1.3rem', marginBottom: '30px', color: '#fff', fontWeight: '500', textAlign: 'left' }}>
-                                Las personas que realizan este proceso suelen experimentar:
-                            </p>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 60px 0', display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                                {[
-                                    'mayor claridad sobre su forma de pensar y reaccionar',
-                                    'comprensión de patrones repetitivos en su vida',
-                                    'mejoras en comunicación y relaciones',
-                                    'decisiones más conscientes',
-                                    'mayor coherencia entre lo que piensan, sienten y hacen'
-                                ].map((item, i) => (
-                                    <li key={i} style={{ display: 'flex', gap: '16px', color: 'rgba(255,255,255,0.95)', fontSize: '1.25rem', alignItems: 'flex-start', textAlign: 'left' }}>
-                                        <CheckCircle2 size={24} style={{ color: '#ddbe3d', flexShrink: 0, marginTop: '2px' }} />
-                                        <span style={{ lineHeight: '1.4' }}>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {/* Right Column */}
-                        <div style={{ position: 'sticky', top: '120px' }}>
+                                {/* Right Column */}
+                                <div style={{ 
+                                    position: 'relative',
+                                    paddingLeft: '20px'
+                                }}>
+
                             <TestimonialCarousel testimonials={[
                                 {
                                     name: "Pilar Martínez",
@@ -845,77 +909,82 @@ const GenuinosLanding = () => {
                                 }
                             ]} />
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        {/* NEW: Scarcity Banner Section (Full Width) - Outside of original containers */}
-        <div style={{ 
-            margin: '20px 0 90px 0', 
-            padding: '90px 20px',
-            background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
-            textAlign: 'center',
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff',
-            boxShadow: 'inset 0 0 100px rgba(0,0,0,1)',
-            width: '100vw',
-            position: 'relative',
-            left: '50%',
-            right: '50%',
-            marginLeft: '-50vw',
-            marginRight: '-50vw'
-        }}>
-            <span style={{ 
-                fontSize: '0.95rem', 
-                fontWeight: '800', 
-                letterSpacing: '0.4em', 
-                textTransform: 'uppercase',
-                marginBottom: '20px',
-                color: 'rgba(255,255,255,0.8)'
-            }}>
-                VENTA OFICIAL
-            </span>
-            <h2 style={{ 
-                fontSize: 'clamp(36px, 7vw, 56px)', 
-                fontWeight: '900', 
-                marginBottom: '40px',
-                lineHeight: '1.2',
-                maxWidth: '900px',
-                color: '#ffffff'
-            }}>
-                ¡Últimos <span style={{ color: '#ddbe3d' }}>cupos disponibles!</span>
-            </h2>
-            <a href="#precios" className="al-btn-main" style={{ 
-                textDecoration: 'none',
-                display: 'inline-flex',
-                margin: '0 auto'
-            }}>
-                ASEGURA TU LUGAR AHORA
-                <ArrowRight size={22} />
-            </a>
-        </div>
+        {/* SECTION: Especially valuable for */}
+        <section className="course-modalities al-animate">
+                <div className="al-section-content">
+                    <div className="modalities-header">
+                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(32px, 6vw, 48px)', marginBottom: '40px' }}>
+                            <span className="al-hero-title-top">Este proceso es especialmente</span>
+                            <span className="al-gold-text">valioso para ti, si:</span>
+                        </h2>
 
-        <section className="course-modalities-extra al-animate" style={{ padding: '0' }}>
+                        <div className="target-audience-grid">
+                            {[
+                                'Eres emprendedor, empresario o lideras equipos',
+                                'Sientes que puedes dar más pero algo te frena',
+                                'Quieres entenderte a un nivel más profundo',
+                                'Estás en un momento de cambio o transición',
+                                'Buscas claridad para tomar mejores decisiones',
+                                'Estás cansado de repetir los mismos patrones'
+                            ].map((item, i) => (
+                                <div key={i} className="target-item">
+                                    <div className="target-dot"></div>
+                                    <span style={{ fontSize: '1.25rem', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Negative Audience Section */}
+                        <div style={{ marginTop: '100px', paddingTop: '60px' }}>
+                            <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 42px)', marginBottom: '40px', textAlign: 'center' }}>
+                                <span className="al-hero-title-top" style={{ color: '#fff' }}>Este programa</span>
+                                <span style={{ color: '#ff6b6b' }}>no es para ti, si:</span>
+                            </h2>
+
+                            <div className="target-audience-grid" style={{ marginTop: '20px' }}>
+                                {[
+                                    'Buscas respuestas rápidas sin trabajo personal',
+                                    'No estás dispuesto a cuestionarte',
+                                    'Prefieres seguir haciendo lo mismo esperando resultados distintos'
+                                ].map((item, i) => (
+                                    <div key={i} className="target-item" style={{ 
+                                        borderColor: 'rgba(255, 107, 107, 0.2)', 
+                                        background: 'rgba(255, 107, 107, 0.02)' 
+                                    }}>
+                                        <div className="target-dot" style={{ 
+                                            background: '#ff6b6b', 
+                                            boxShadow: '0 0 10px rgba(255, 107, 107, 0.4)' 
+                                        }}></div>
+                                        <span style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', fontWeight: '400' }}>{item}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        <section className="course-modalities-extra al-animate" style={{ padding: '90px 0', background: 'linear-gradient(to bottom, #000a12 0%, #002d44 100%)' }}>
             <div className="al-section-content">
 
                     {/* Centered Value Proposition Block */}
                     <div style={{ 
                         maxWidth: '850px', 
-                        margin: '90px auto', 
+                        margin: '0 auto', 
                         textAlign: 'center',
                         padding: '90px 40px',
                         background: 'rgba(255, 255, 255, 0.02)',
                         borderRadius: '32px',
                         border: '1px solid rgba(255, 255, 255, 0.05)'
                     }}>
-                         <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
-                            DIFERENCIA DE ESTE PROCESO
+                         <h3 style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '900', marginBottom: '35px', letterSpacing: '0.05em', lineHeight: '1.2' }}>
+                            DIFERENCIAS DE ESTE PROCESO
                         </h3>
                         <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '40px' }}>
                             Muchos cursos de Eneagrama se enfocan en describir tipos de personalidad. <strong style={{color: '#fff'}}>GENUINOS</strong> se enfoca en algo distinto. No se trata solo de saber qué tipo eres, se trata de comprender:
@@ -954,7 +1023,7 @@ const GenuinosLanding = () => {
                                 <p style={{ fontSize: '1.3rem', color: 'rgba(255,255,255,0.95)', marginBottom: '35px', fontWeight: '500', maxWidth: '600px', margin: '0 auto 40px' }}>
                                     Empieza hoy a comprender el mapa desde el cual tomas decisiones y lideras.
                                 </p>
-                                <a href="#precios" className="al-btn-primary" style={{ 
+                                <a href="#precios" className="al-btn-primary al-btn-glow" style={{ 
                                     display: 'inline-block',
                                     backgroundColor: '#ddbe3d', 
                                     color: '#002d44', 
@@ -988,32 +1057,30 @@ const GenuinosLanding = () => {
                             <div className="al-pricing-content" style={{ padding: '40px' }}>
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">{selectedPlan === 'virtual' ? '$360.000' : '$570.000'}</span>
-                                        <span className="al-currency">COP</span>
+                                        <span className="al-price-number">{selectedPlan === 'virtual' ? '99' : '169'}</span>
+                                        <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                                        {selectedPlan === 'virtual' ? '14, 15, 16, 17 de abril' : '11 de abril'}
+                                        {selectedPlan === 'virtual' ? '14, 15, 16, 17 de abril | 19:00 – 21:00 COT (UTC-5)' : '11 de abril / Cali - Colombia | 08:30 – 17:30'}
                                     </div>
                                 </div>
 
                                 <div className="al-pricing-grid" style={{ marginTop: '30px' }}>
                                     {(selectedPlan === 'virtual' ? [
                                         '4 Sesiones en vivo',
-                                        'Guías de ejercicios prácticos',
-                                        'Sesiones de Q&A grabadas',
-                                        'Comunidad exclusiva',
-                                        'Acceso de por vida a grabaciones',
-                                        'Certificado de finalización'
+                                        'Acceso a las grabaciones por 30 días',
+                                        'Test de personalidad',
+                                        'Plan de acción'
                                     ] : [
                                         'Jornada Intensiva (8 horas)',
                                         'Material físico de trabajo',
-                                        'Refrigerios incluidos',
-                                        'Comunidad presencial',
+                                        'Test de personalidad',
+                                        'Plan de acción',
                                         'Networking con asistentes',
-                                        'Certificado de finalización'
+                                        'Certificado de asistencia'
                                     ]).map((item, i) => (
-                                        <div key={i} className="al-pricing-item">
-                                            <CheckCircle2 size={16} /> {item}
+                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -1180,7 +1247,7 @@ const GenuinosLanding = () => {
                                         width: '12px',
                                         height: '12px',
                                         borderRadius: '50%',
-                                        background: activeInstructor === dotIdx ? '#ddbe3d' : 'rgba(255,255,255,0.2)',
+                                        background: activeInstructor === dotIdx ? '#ddbe3d' : 'rgba(0, 45, 68, 0.2)',
                                         border: 'none',
                                         cursor: 'pointer',
                                         transition: 'all 0.3s ease',
@@ -1197,6 +1264,24 @@ const GenuinosLanding = () => {
             {/* Pricing Section */}
             <section id="precios" className="al-section al-pricing-section">
                 <div className="al-section-content">
+                    <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+                        <h2 className="al-hero-title" style={{ fontSize: 'clamp(32px, 6vw, 48px)', marginBottom: '30px' }}>
+                            <span className="al-gold-text">Invertir en ti es cambiar el rumbo de tu vida</span>
+                        </h2>
+                        <div style={{ maxWidth: '850px', margin: '0 auto' }}>
+                            <p style={{ fontSize: '1.4rem', color: '#fff', fontWeight: '700', marginBottom: '20px' }}>
+                                Lo que está en juego no es un curso.
+                            </p>
+                            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.9)', lineHeight: '1.6', marginBottom: '25px' }}>
+                                Es la forma en que tomas decisiones, lideras y construyes tu vida.
+                            </p>
+                            <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', lineHeight: '1.6', fontStyle: 'italic' }}>
+                                Seguir sin claridad también tiene un costo:<br/>
+                                decisiones equivocadas, desgaste emocional, oportunidades perdidas.
+                            </p>
+                        </div>
+                    </div>
+
                     <div className="al-pricing-wrapper al-animate">
                         {/* Tarjeta Virtual */}
                         <div className={`al-pricing-card ${selectedPlan === 'virtual' ? 'card-featured' : ''}`}>
@@ -1208,25 +1293,23 @@ const GenuinosLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">$360.000</span>
-                                        <span className="al-currency">COP</span>
+                                        <span className="al-price-number">99</span>
+                                        <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                                        14, 15, 16, 17 de abril
+                                        14, 15, 16, 17 de abril <br/> 19:00 – 21:00 COT (UTC-5)
                                     </div>
                                 </div>
 
                                 <div className="al-pricing-grid">
                                     {[
                                         '4 Sesiones en vivo',
-                                        'Guías de ejercicios prácticos',
-                                        'Sesiones de Q&A grabadas',
-                                        'Comunidad exclusiva',
-                                        'Acceso de por vida a grabaciones',
-                                        'Certificado de finalización'
+                                        'Acceso a las grabaciones por 30 días',
+                                        'Test de personalidad',
+                                        'Plan de acción'
                                     ].map((item, i) => (
-                                        <div key={i} className="al-pricing-item">
-                                            <CheckCircle2 size={16} /> {item}
+                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -1251,17 +1334,17 @@ const GenuinosLanding = () => {
                         <div className={`al-pricing-card ${selectedPlan === 'presencial' ? 'card-featured' : ''}`}>
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header" style={{ background: '#002d44' }}>
-                                <h3 style={{ color: '#ddbe3d' }}>Programa Presencial</h3>
+                                <h2 style={{ fontSize: '18px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0, color: '#ddbe3d' }}>Programa Presencial</h2>
                             </div>
 
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">$570.000</span>
-                                        <span className="al-currency">COP</span>
+                                        <span className="al-price-number">169</span>
+                                        <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                                        11 de abril
+                                        11 de abril / Cali - Colombia <br/> 08:30 – 17:30
                                     </div>
                                 </div>
 
@@ -1269,13 +1352,13 @@ const GenuinosLanding = () => {
                                     {[
                                         'Jornada Intensiva (8 horas)',
                                         'Material físico de trabajo',
-                                        'Refrigerios incluidos',
-                                        'Comunidad presencial',
+                                        'Test de personalidad',
+                                        'Plan de acción',
                                         'Networking con asistentes',
-                                        'Certificado de finalización'
+                                        'Certificado de asistencia'
                                     ].map((item, i) => (
-                                        <div key={i} className="al-pricing-item">
-                                            <CheckCircle2 size={16} /> {item}
+                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -1299,17 +1382,94 @@ const GenuinosLanding = () => {
                                 </p>
                             </div>
                         </div>
+                    </div>
 
+                    {/* Pricing Comparison Footer */}
+                    <div style={{ marginTop: '80px', textAlign: 'center', paddingTop: '60px' }}>
+                        <p style={{ fontSize: '1.3rem', color: 'rgba(255,255,255,0.5)', marginBottom: '30px', fontStyle: 'italic' }}>
+                            Comparado con:
+                        </p>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px', marginBottom: '50px' }}>
+                            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
+                                <span style={{ color: '#ddbe3d', marginRight: '10px' }}>✕</span> Años de prueba y error
+                            </div>
+                            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
+                                <span style={{ color: '#ddbe3d', marginRight: '10px' }}>✕</span> Decisiones mal tomadas
+                            </div>
+                            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem' }}>
+                                <span style={{ color: '#ddbe3d', marginRight: '10px' }}>✕</span> Procesos de coaching 1 a 1
+                            </div>
+                        </div>
+                        <p style={{ 
+                            fontSize: 'clamp(1.5rem, 5vw, 2.2rem)', 
+                            fontWeight: '900', 
+                            color: '#ddbe3d', 
+                            textTransform: 'uppercase', 
+                            letterSpacing: '0.15em',
+                            textShadow: '0 0 20px rgba(221, 190, 61, 0.3)'
+                        }}>
+                            esta inversión es mínima.
+                        </p>
                     </div>
                 </div>
             </section>
 
+            {/* NEW: Scarcity Banner Section (Full Width) - Outside of original containers */}
+            <div style={{ 
+                margin: '120px 0 90px 0', 
+                padding: '90px 20px',
+                background: 'linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url("/Eneagrama_banner_05.png") center/cover no-repeat',
+                textAlign: 'center',
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+                boxShadow: 'inset 0 0 100px rgba(0,0,0,1)',
+                width: '100vw',
+                position: 'relative',
+                left: '50%',
+                right: '50%',
+                marginLeft: '-50vw',
+                marginRight: '-50vw'
+            }}>
+                <span style={{ 
+                    fontSize: '0.95rem', 
+                    fontWeight: '800', 
+                    letterSpacing: '0.4em', 
+                    textTransform: 'uppercase',
+                    marginBottom: '20px',
+                    color: 'rgba(255,255,255,0.8)'
+                }}>
+                    VENTA OFICIAL
+                </span>
+                <h2 style={{ 
+                    fontSize: 'clamp(36px, 7vw, 56px)', 
+                    fontWeight: '900', 
+                    marginBottom: '40px',
+                    lineHeight: '1.2',
+                    maxWidth: '900px',
+                    color: '#ffffff'
+                }}>
+                    ¡Últimos <span style={{ color: '#ddbe3d' }}>cupos disponibles!</span>
+                </h2>
+                <a href="#precios" className="al-btn-main" style={{ 
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    margin: '10px auto'
+                }}>
+                    ASEGURA TU LUGAR AHORA
+                    <ArrowRight size={22} />
+                </a>
+            </div>
+
             {/* NEW: FAQ Section (Accordion Style) */}
-            <section className="course-faq al-section al-animate" style={{ background: 'linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%)', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '90px' }}>
+            <section className="course-faq al-section al-animate" style={{ background: 'var(--al-blue-dark)', paddingBottom: '90px', marginTop: '-2px', position: 'relative', borderTop: '2px solid #000a12', borderBottom: '2px solid #000a12' }}>
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto' }}>
                         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                            <h2 className="al-impact-header" style={{ color: '#fff' }}>
+                            <h2 className="al-impact-header" style={{ color: '#fff', fontSize: 'clamp(2rem, 6vw, 3.2rem)' }}>
                                 Preguntas <span style={{ color: '#ddbe3d' }}>frecuentes</span>
                             </h2>
                         </div>
@@ -1322,7 +1482,7 @@ const GenuinosLanding = () => {
                                 },
                                 {
                                     q: "¿Cuánto tiempo toma completar el curso?",
-                                    a: "El curso puede completarse en aproximadamente 90 minutos, aunque muchas personas prefieren revisarlo con calma y aplicar los ejercicios."
+                                    a: "El curso tiene una intensidad total de 8 horas. En modalidad virtual, se desarrolla en 4 sesiones de 2 horas cada una. En modalidad presencial, se realiza en una única jornada de 8 horas."
                                 },
                                 {
                                     q: "¿Este programa es solo teoría?",
@@ -1371,31 +1531,57 @@ const GenuinosLanding = () => {
                             ))}
                         </div>
 
-                        <div style={{ marginTop: '90px', textAlign: 'center' }}>
-                            <p style={{ fontSize: '1.55rem', color: '#fff', fontWeight: '600', marginBottom: '15px', lineHeight: '1.4', maxWidth: '700px', margin: '0 auto 20px' }}>
-                                Comprender cómo funcionas por dentro puede cambiar la forma en que lideras tu vida y tu trabajo.
+                        <div style={{ marginTop: '60px', textAlign: 'center' }}>
+                            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '1rem' }}>
+                                ¿Aún tienes dudas? Escríbenos directamente y te ayudamos a decidir.
                             </p>
-                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '900', marginBottom: '50px' }}>
-                                Empieza hoy.
-                            </p>
-                            
-                            <a href="#precios" className="al-btn-primary" style={{ 
-                                display: 'inline-block',
-                                backgroundColor: '#ddbe3d', 
-                                color: '#002d44', 
-                                fontWeight: '900', 
-                                padding: '24px 55px',
-                                borderRadius: '16px',
-                                textDecoration: 'none',
-                                fontSize: '1.25rem',
-                                letterSpacing: '0.05em',
-                                boxShadow: '0 20px 40px rgba(221, 190, 61, 0.25)',
-                                transition: 'all 0.3s ease',
-                                textTransform: 'uppercase'
-                            }}>
-                                QUIERO DESCUBRIR MI MAPA PERSONAL
-                            </a>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* NEW: Final CTA Section (Breakthrough) */}
+            <section className="course-closing al-section al-animate" style={{ background: 'linear-gradient(to bottom, #000a12 0%, #002d44 100%)', padding: '140px 24px', marginTop: '-2px', position: 'relative', borderTop: '2px solid #000a12' }}>
+                <div className="al-section-content">
+                    <div style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
+                        <h2 className="al-impact-header" style={{ 
+                            fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', 
+                            color: '#fff', 
+                            lineHeight: '1.1', 
+                            marginBottom: '40px',
+                            fontWeight: '900',
+                            textTransform: 'none'
+                        }}>
+                            Este puede ser el <br/> 
+                            <span style={{ color: '#ddbe3d' }}>punto de quiebre</span> <br/>
+                            que estabas necesitando
+                        </h2>
+                        
+                        <div style={{ marginBottom: '60px' }}>
+                            <p style={{ fontSize: '1.6rem', color: 'rgba(255,255,255,0.95)', fontWeight: '600', marginBottom: '10px' }}>
+                                No necesitas más información.
+                            </p>
+                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '900' }}>
+                                Necesitas empezar.
+                            </p>
+                        </div>
+                        
+                        <a href="#precios" className="al-btn-primary al-btn-glow" style={{ 
+                            display: 'inline-flex',
+                            backgroundColor: '#ddbe3d', 
+                            color: '#002d44', 
+                            fontWeight: '900', 
+                            padding: '24px 60px',
+                            borderRadius: '16px',
+                            textDecoration: 'none',
+                            fontSize: '1.3rem',
+                            letterSpacing: '0.05em',
+                            boxShadow: '0 20px 40px rgba(221, 190, 61, 0.35)',
+                            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                            textTransform: 'uppercase'
+                        }}>
+                            Quiero iniciar mi proceso ahora
+                        </a>
                     </div>
                 </div>
             </section>

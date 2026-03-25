@@ -19,7 +19,7 @@
 }
 
 .al-main-title, .al-impact-header {
-    font-size: clamp(3.5rem, 12vw, 5.5rem) !important;
+    font-size: clamp(2.5rem, 10vw, 4.5rem);
     font-weight: 900;
     line-height: 1.05;
     letter-spacing: -0.03em;
@@ -88,7 +88,9 @@
     align-items: center;
     text-align: center;
     padding: 140px 24px 90px;
-    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
+    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
+    position: relative;
+    border-bottom: 2px solid var(--al-blue-dark);
 }
 
 .al-tag {
@@ -169,7 +171,8 @@
     padding: 120px 24px;
     position: relative;
     background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: -2px;
+    border-top: 2px solid var(--al-blue-dark);
 }
 
 .introspection-no-box {
@@ -233,15 +236,18 @@
     padding-top: 100px;
     padding-bottom: 120px;
     background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: -1px;
+    position: relative;
+    border-bottom: 2px solid var(--al-blue-dark);
 }
 
 /* Map Section */
 .course-map {
     padding: 120px 24px;
     position: relative;
-    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: #ffffff;
+    margin-top: -1px;
+    z-index: 4;
 }
 
 .course-map-header {
@@ -311,16 +317,18 @@
 .course-experience {
     padding: 120px 24px;
     position: relative;
-    background: linear-gradient(to bottom, var(--al-blue-dark) 0%, var(--al-blue-light) 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
+    margin-top: -1px;
+    z-index: 5;
 }
 
 /* Modalities Section */
 .course-modalities {
     padding: 120px 24px;
     position: relative;
-    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--al-blue-dark);
+    margin-top: -1px;
+    z-index: 6;
 }
 
 .modalities-header {
@@ -467,8 +475,9 @@
 .course-instructor {
     padding: 120px 24px;
     position: relative;
-    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: #ffffff;
+    margin-top: -1px;
+    z-index: 7;
 }
 
 .instructor-flex {
@@ -526,7 +535,7 @@
 }
 
 .name-white {
-    color: #ffffff;
+    color: var(--al-blue);
 }
 
 .name-yellow {
@@ -542,18 +551,18 @@
 .instructor-bio {
     font-size: 18px;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 45, 68, 0.85);
     margin-bottom: 20px;
 }
 
 .instructor-bio strong {
-    color: #ffffff;
+    color: var(--al-blue);
     font-weight: 700;
 }
 
 .instructor-bio.testimony {
     font-style: italic;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 45, 68, 0.75);
     margin-top: 20px;
     margin-bottom: 0px;
 }
@@ -1018,7 +1027,20 @@
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.course-results {
+    padding: 120px 24px;
+    position: relative;
+    background: linear-gradient(to bottom, var(--al-blue-light) 0%, var(--al-blue-dark) 100%);
+    margin-top: -1px;
+}
+
+.course-modalities {
+    padding: 120px 24px;
+    position: relative;
+    background: var(--al-blue-dark);
+    margin-top: -1px;
 }
 
 .al-orgs-header {
@@ -1135,4 +1157,220 @@
     .faq-header-text {
         font-size: clamp(80px, 20vw, 110px);
     }
-}
+}
+
+/* Dynamic Glow & Shine Buttons */
+.al-btn-glow {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;
+}
+
+.al-btn-glow:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(221, 190, 61, 0.5), 0 0 25px rgba(221, 190, 61, 0.3);
+    filter: brightness(1.1);
+}
+
+.al-btn-glow:active {
+    transform: translateY(0) scale(1);
+}
+
+/* Introspection Cards */
+.al-introspection-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 30px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    list-style: none; /* In case it's in a list */
+}
+
+.al-introspection-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(221, 190, 61, 0.5);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(221, 190, 61, 0.1);
+}
+
+.al-introspection-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #ddbe3d;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.al-introspection-card:hover::before {
+    opacity: 1;
+}
+
+/* Transformation Steps Timeline */
+.al-transformation-steps {
+    padding: 80px 0;
+    position: relative;
+}
+
+.al-steps-timeline {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 150px;
+    gap: 15px;
+}
+
+.al-timeline-line {
+    position: absolute;
+    top: 212px; /* Centrado exacto: 140px de contenido + 30px margen + 42px (mitad del circulo de 84px) */
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+}
+
+.al-timeline-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #ddbe3d;
+    box-shadow: 0 0 15px rgba(221, 190, 61, 0.6);
+    width: 0%; /* Empezar en 0 */
+}
+
+.al-transformation-steps.is-visible .al-timeline-progress {
+    animation: fillLine 3s ease-out forwards;
+}
+
+@keyframes fillLine {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.al-step-item {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.al-step-circle {
+    width: 84px;
+    height: 84px;
+    background: #002d44;
+    border: 2px solid #ddbe3d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddbe3d;
+    box-shadow: 0 0 20px rgba(221, 190, 61, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.al-step-content-top, .al-step-content-bottom {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.al-step-content-top {
+    justify-content: flex-end;
+    margin-bottom: 30px;
+}
+
+.al-step-content-bottom {
+    justify-content: flex-start;
+    margin-top: 30px;
+}
+
+.al-step-item:hover .al-step-circle {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(221, 190, 61, 0.4);
+}
+
+.al-step-number {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ddbe3d;
+    color: #002d44;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.al-step-content h4 {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.al-step-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 992px) {
+    .al-steps-timeline {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 40px;
+        gap: 40px;
+        margin-top: 60px;
+    }
+
+    .al-timeline-line {
+        left: 82px;
+        top: 0;
+        width: 3px;
+        height: 100%;
+    }
+
+    .al-step-item {
+        flex-direction: row !important;
+        text-align: left;
+        max-width: 100%;
+        gap: 25px;
+    }
+
+    .al-step-content-top, .al-step-content-bottom {
+        min-height: auto;
+        margin: 0;
+        display: none; 
+    }
+
+    .al-step-content-mobile {
+        display: block !important;
+    }
+}
+

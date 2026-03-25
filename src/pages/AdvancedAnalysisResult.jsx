@@ -368,8 +368,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
 
                     // Estilizar elementos internos
                     const clonedHero = clonedDoc.querySelector('.advanced-hero');
-                    const clonedDescription = clonedDoc.querySelector('.description-section');
-                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+                    const pdfClonedDescription = clonedDoc.querySelector('.description-section');
+                    const pdfClonedPhrase = clonedDoc.querySelector('.phrase-section');
                     const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
                     const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
                     const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
@@ -399,19 +399,19 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         el.style.setProperty('color', '#ffffff', 'important');
                     };
 
-                    if (clonedDescription) {
-                        cleanSectionStyles(clonedDescription);
-                        const text = clonedDescription.querySelector('.description-text');
+                    if (pdfClonedDescription) {
+                        cleanSectionStyles(pdfClonedDescription);
+                        const text = pdfClonedDescription.querySelector('.description-text');
                         if (text) text.style.setProperty('color', '#ffffff', 'important');
-                        const label = clonedDescription.querySelector('.description-label');
+                        const label = pdfClonedDescription.querySelector('.description-label');
                         if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
-                    if (clonedPhrase) {
-                        cleanSectionStyles(clonedPhrase);
-                        const text = clonedPhrase.querySelector('.phrase-text');
+                    if (pdfClonedPhrase) {
+                        cleanSectionStyles(pdfClonedPhrase);
+                        const text = pdfClonedPhrase.querySelector('.phrase-text');
                         if (text) text.style.setProperty('color', '#ffffff', 'important');
-                        const label = clonedPhrase.querySelector('strong');
+                        const label = pdfClonedPhrase.querySelector('strong');
                         if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
@@ -466,10 +466,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 scale: 3,
                 useCORS: true,
                 onclone: (clonedDoc) => {
-                    const clonedWrapper = clonedDoc.querySelector('.share-content-wrapper');
-                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
-                    const clonedDescription = clonedDoc.querySelector('.description-section');
-                    const clonedPhrase = clonedDoc.querySelector('.phrase-section');
+                    const shareClonedDescription = clonedDoc.querySelector('.description-section');
+                    const shareClonedPhrase = clonedDoc.querySelector('.phrase-section');
                     const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
 
                     if (clonedWrapper) {
@@ -496,39 +494,39 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                         }
                     }
 
-                    if (clonedDescription) {
-                        clonedDescription.style.setProperty('box-shadow', 'none', 'important');
-                        clonedDescription.style.setProperty('background', '#0d2535', 'important');
-                        clonedDescription.style.setProperty('background-color', '#0d2535', 'important');
-                        clonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
-                        clonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
-                        clonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
-                        clonedDescription.style.setProperty('animation', 'none', 'important');
-                        clonedDescription.style.setProperty('transition', 'none', 'important');
-                        clonedDescription.style.setProperty('color', '#ffffff', 'important');
+                    if (shareClonedDescription) {
+                        shareClonedDescription.style.setProperty('box-shadow', 'none', 'important');
+                        shareClonedDescription.style.setProperty('background', '#0d2535', 'important');
+                        shareClonedDescription.style.setProperty('background-color', '#0d2535', 'important');
+                        shareClonedDescription.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
+                        shareClonedDescription.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                        shareClonedDescription.style.setProperty('margin', '0 0 30px 0', 'important');
+                        shareClonedDescription.style.setProperty('animation', 'none', 'important');
+                        shareClonedDescription.style.setProperty('transition', 'none', 'important');
+                        shareClonedDescription.style.setProperty('color', '#ffffff', 'important');
 
-                        const text = clonedDescription.querySelector('.description-text');
+                        const text = shareClonedDescription.querySelector('.description-text');
                         if (text) text.style.setProperty('color', '#ffffff', 'important');
 
-                        const label = clonedDescription.querySelector('.description-label');
+                        const label = shareClonedDescription.querySelector('.description-label');
                         if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
-                    if (clonedPhrase) {
-                        clonedPhrase.style.setProperty('box-shadow', 'none', 'important');
-                        clonedPhrase.style.setProperty('background', '#0d2535', 'important');
-                        clonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
-                        clonedPhrase.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
-                        clonedPhrase.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
-                        clonedPhrase.style.setProperty('margin', '0 0 30px 0', 'important');
-                        clonedPhrase.style.setProperty('animation', 'none', 'important');
-                        clonedPhrase.style.setProperty('transition', 'none', 'important');
-                        clonedPhrase.style.setProperty('color', '#ffffff', 'important');
+                    if (shareClonedPhrase) {
+                        shareClonedPhrase.style.setProperty('box-shadow', 'none', 'important');
+                        shareClonedPhrase.style.setProperty('background', '#0d2535', 'important');
+                        shareClonedPhrase.style.setProperty('background-color', '#0d2535', 'important');
+                        shareClonedPhrase.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.2)', 'important');
+                        shareClonedPhrase.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
+                        shareClonedPhrase.style.setProperty('margin', '0 0 30px 0', 'important');
+                        shareClonedPhrase.style.setProperty('animation', 'none', 'important');
+                        shareClonedPhrase.style.setProperty('transition', 'none', 'important');
+                        shareClonedPhrase.style.setProperty('color', '#ffffff', 'important');
 
-                        const text = clonedPhrase.querySelector('.phrase-text');
+                        const text = shareClonedPhrase.querySelector('.phrase-text');
                         if (text) text.style.setProperty('color', '#ffffff', 'important');
 
-                        const label = clonedPhrase.querySelector('strong');
+                        const label = shareClonedPhrase.querySelector('strong');
                         if (label) label.style.setProperty('color', '#ddbe3d', 'important');
                     }
 
