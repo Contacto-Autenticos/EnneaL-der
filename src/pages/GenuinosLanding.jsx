@@ -620,7 +620,7 @@ const GenuinosLanding = () => {
                         {/* Text Column */}
                         <div style={{ flex: '1.2', minWidth: '320px' }}>
                             <p style={{ fontSize: '1.8rem', color: '#ddbe3d', marginBottom: '10px', fontWeight: '800', lineHeight: '1.2' }}>
-                                por eso desde <span style={{ color: '#002d44' }}>AUT</span><span style={{ color: '#ddbe3d', fontSize: '1.25em', verticalAlign: 'middle', display: 'inline-block', position: 'relative', top: '-0.01em' }}>é</span><span style={{ color: '#002d44' }}>NTICOS</span> hemos creado.....
+                                por eso desde <span style={{ color: '#002d44' }}>AUT</span><span style={{ color: '#ddbe3d', fontSize: '1.2em', verticalAlign: 'baseline', display: 'inline-block', position: 'relative', top: '0.22em' }}>é</span><span style={{ color: '#002d44' }}>NTICOS</span> hemos creado.....
                             </p>
                             <p style={{ fontSize: '1.6rem', color: '#002d44', lineHeight: '1.4', marginBottom: '20px', fontWeight: '500' }}>
                                 Un programa para entenderte, desbloquearte y evolucionar
