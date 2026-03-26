@@ -265,7 +265,7 @@ const GenuinosLanding = () => {
             setPaymentLoading(true);
             setPaymentError(null);
 
-            const amountInCents = plan === 'virtual' ? 36500000 : 62500000;
+            const amountInCents = plan === 'virtual' ? 36500000 : 87000000;
             const reference = `gen-${plan}-${Date.now()}`; // Updated reference
 
             const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
@@ -453,7 +453,7 @@ const GenuinosLanding = () => {
                     <a href="#precios" className="al-btn-primary al-btn-glow" style={{ padding: '18px 35px', borderRadius: '100px', fontSize: '18px', fontWeight: '900', textDecoration: 'none', background: '#ddbe3d', color: '#002d44', whiteSpace: 'nowrap' }}>
                         QUIERO INICIAR MI PROCESO
                     </a>
-                    <a href="#programa-elementos" className="al-btn-primary al-btn-glow" style={{ padding: '18px 35px', borderRadius: '100px', fontSize: '18px', fontWeight: '900', textDecoration: 'none', background: '#ddbe3d', color: '#002d44', whiteSpace: 'nowrap' }}>
+                    <a href="#programa-genuinos" className="al-btn-primary al-btn-glow" style={{ padding: '18px 35px', borderRadius: '100px', fontSize: '18px', fontWeight: '900', textDecoration: 'none', background: '#ddbe3d', color: '#002d44', whiteSpace: 'nowrap' }}>
                         VER CÓMO FUNCIONA
                     </a>
                 </div>
@@ -478,27 +478,38 @@ const GenuinosLanding = () => {
                             </p>
                         </div>
 
-                        <div style={{ textAlign: 'left', display: 'block', padding: '20px 0' }}>
-                            <ul style={{ 
-                                listStyle: 'none', 
-                                padding: '0', 
-                                margin: '0 0 50px 0',
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
-                                gap: '30px'
+                        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}>
+                            <div style={{ 
+                                background: 'rgba(255, 255, 255, 0.03)', 
+                                border: '1px solid rgba(255, 255, 255, 0.08)',
+                                borderRadius: '32px',
+                                padding: 'clamp(30px, 5vw, 50px)',
+                                maxWidth: '700px',
+                                width: '100%',
+                                boxShadow: '0 30px 60px rgba(0,0,0,0.4)',
+                                borderTop: '4px solid #ddbe3d'
                             }}>
-                                {[
-                                    "Tomas decisiones con duda o miedo",
-                                    "Te exiges mucho, pero no avanzas como quisieras",
-                                    "Repites comportamientos que ya sabes que no te funcionan",
-                                    "Sientes que podrías dar más… pero algo te frena"
-                                ].map((item, idx) => (
-                                    <li key={idx} className="al-introspection-card">
-                                        <div style={{ width: '10px', height: '10px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0, boxShadow: '0 0 10px rgba(221, 190, 61, 0.5)' }}></div>
-                                        <span style={{ fontSize: '1.15rem', color: '#fff', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                                <ul style={{ 
+                                    listStyle: 'none', 
+                                    padding: '0', 
+                                    margin: '0',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '24px'
+                                }}>
+                                    {[
+                                        "Tomas decisiones de manera reactiva",
+                                        "Te exiges mucho, pero no avanzas como quisieras",
+                                        "Repites comportamientos que ya sabes que no te funcionan",
+                                        "Sientes que podrías dar más… pero algo te frena"
+                                    ].map((item, idx) => (
+                                        <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                                            <div style={{ width: '10px', height: '10px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0, boxShadow: '0 0 10px rgba(221, 190, 61, 0.5)' }}></div>
+                                            <span style={{ fontSize: '1.25rem', color: '#fff', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
 
                         <div style={{ textAlign: 'center', padding: '0' }}>
@@ -579,43 +590,59 @@ const GenuinosLanding = () => {
                 </div>
             </section>
             {/* NEW: Experience Section - Simplified with Image */}
-            <section className="course-experience al-section al-animate">
+            <section id="programa-genuinos" className="course-experience al-section al-animate" style={{ background: '#fff', padding: '100px 0' }}>
                 <div className="al-section-content">
-                    <div style={{ textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
-                        <img 
-                            src="/Genuinos-programa-autenticos-2.png" 
-                            alt="Genuinos Programa Auténticos" 
-                            style={{ 
-                                width: '100%', 
-                                maxWidth: '800px', 
-                                height: 'auto', 
-                                borderRadius: '24px',
-                                marginBottom: '50px'
-                            }} 
-                        />
+                    <div style={{ 
+                        display: 'flex', 
+                        flexDirection: 'row', 
+                        flexWrap: 'wrap', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        gap: '60px',
+                        maxWidth: '1200px',
+                        margin: '0 auto',
+                        textAlign: 'left'
+                    }}>
+                        {/* Image Column */}
+                        <div style={{ flex: '1', minWidth: '320px', display: 'flex', justifyContent: 'center' }}>
+                            <img 
+                                src="/Genuinos-programa-autenticos-3.png" 
+                                alt="Genuinos Programa Auténticos" 
+                                style={{ 
+                                    width: '100%', 
+                                    maxWidth: '432px', 
+                                    height: 'auto', 
+                                    borderRadius: '24px'
+                                }} 
+                            />
+                        </div>
                         
-                        <div style={{ padding: '0 20px' }}>
-                            <p style={{ fontSize: '1.6rem', color: '#fff', lineHeight: '1.5', marginBottom: '30px', fontWeight: '500' }}>
-                                Un proceso para entenderte, desbloquearte y evolucionar
+                        {/* Text Column */}
+                        <div style={{ flex: '1.2', minWidth: '320px' }}>
+                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', marginBottom: '10px', fontWeight: '800', lineHeight: '1.2' }}>
+                                por eso desde <span style={{ color: '#002d44' }}>AUT</span><span style={{ color: '#ddbe3d', fontSize: '1.25em', verticalAlign: 'middle', display: 'inline-block', position: 'relative', top: '-0.01em' }}>é</span><span style={{ color: '#002d44' }}>NTICOS</span> hemos creado.....
+                            </p>
+                            <p style={{ fontSize: '1.6rem', color: '#002d44', lineHeight: '1.4', marginBottom: '20px', fontWeight: '500' }}>
+                                Un programa para entenderte, desbloquearte y evolucionar
                             </p>
                             
-                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '800', marginBottom: '30px' }}>
-                                No es teoría... No es un curso.
+                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '800', marginBottom: '30px', lineHeight: '1.2' }}>
+                                No es teoría... <br/> No es un curso.
                             </p>
                             
-                            <p style={{ fontSize: '1.4rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', maxWidth: '800px', margin: '0 auto' }}>
-                                Es un proceso estructurado de autoconocimiento y transformación basado en el Eneagrama, diseñado para ayudarte a comprender tu forma de pensar, sentir y actuar… y a partir de ahí, cambiarla.
+                            <p style={{ fontSize: '1.25rem', color: '#444', lineHeight: '1.7', margin: '0' }}>
+                                Es un proceso estructurado de autoconocimiento y transformación basado en el Eneagrama, diseñado para ayudarte a comprender tu forma de pensar, sentir y actuar… y a partir de ahí, desbloquear tu potencial.
                             </p>
                         </div>
-
+                    </div>
                         {/* NEW: Transformation Journey Timeline */}
-                        <div ref={timelineRef} className={`al-transformation-steps al-animate ${isTimelineVisible ? 'is-visible' : ''}`} style={{ textAlign: 'left', marginTop: '60px' }}>
+                        <div ref={timelineRef} className={`al-transformation-steps al-animate ${isTimelineVisible ? 'is-visible' : ''}`} style={{ textAlign: 'left', marginTop: '100px' }}>
                             <h3 id="al-transformation-title" style={{ 
-                                color: '#ddbe3d', 
+                                color: '#002d44', 
                                 fontSize: 'clamp(2rem, 8vw, 2.8rem)', 
                                 fontWeight: '800', 
                                 textAlign: 'center',
-                                marginBottom: '20px'
+                                marginBottom: '0'
                             }}>
                                 Así es como ocurre la transformación
                             </h3>
@@ -627,12 +654,12 @@ const GenuinosLanding = () => {
 
                                 {[
                                     {
-                                        title: "Diagnóstico profundo",
-                                        desc: "Descubres tu tipo de personalidad con un test estructurado.",
+                                        title: "Diagnóstico Inicial",
+                                        desc: "Descubres tu tipo de personalidad con poderoso test.",
                                         icon: <ClipboardList size={32} />
                                     },
                                     {
-                                        title: "Comprensión de tu estructura interna",
+                                        title: "Comprende cuál es tu modelo mental",
                                         desc: "Entiendes cómo piensas, decides y reaccionas.",
                                         icon: <UserSearch size={32} />
                                     },
@@ -647,8 +674,8 @@ const GenuinosLanding = () => {
                                         icon: <RefreshCw size={32} />
                                     },
                                     {
-                                        title: "Integración consciente",
-                                        desc: "Llevas el conocimiento a decisiones, relaciones y liderazgo.",
+                                        title: "Establece un plan de acción poderoso",
+                                        desc: "Llevas el conocimiento a la practica cotidiana.",
                                         icon: <CheckCircle2 size={32} />
                                     }
                                 ].map((step, index) => {
@@ -659,8 +686,8 @@ const GenuinosLanding = () => {
                                             <div className="al-step-content al-step-content-top">
                                                 {isTop && (
                                                     <>
-                                                        <h4>{step.title}</h4>
-                                                        <p>{step.desc}</p>
+                                                        <h4 style={{ color: '#002d44' }}>{step.title}</h4>
+                                                        <p style={{ color: '#666' }}>{step.desc}</p>
                                                     </>
                                                 )}
                                             </div>
@@ -672,8 +699,8 @@ const GenuinosLanding = () => {
 
                                             {/* Desktop Bottom Content Slot OR Mobile Content */}
                                             <div className={`al-step-content al-step-content-bottom al-step-content-mobile ${isTop ? 'mobile-only-step-content' : ''}`}>
-                                                <h4>{step.title}</h4>
-                                                <p>{step.desc}</p>
+                                                <h4 style={{ color: '#002d44' }}>{step.title}</h4>
+                                                <p style={{ color: '#666' }}>{step.desc}</p>
                                             </div>
                                         </div>
                                     );
@@ -681,8 +708,7 @@ const GenuinosLanding = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
             {/* NEW: Program Elements Section */}
             <section className="course-program-elements al-animate" style={{ padding: '90px 0', background: 'linear-gradient(to bottom, #000a12 0%, #002d44 100%)' }}>
@@ -744,18 +770,18 @@ const GenuinosLanding = () => {
                             </div>
                             <div style={{ order: 2 }}>
                                 <h4 style={{ color: '#ddbe3d', fontSize: '1.8rem', marginBottom: '25px', fontWeight: '800', lineHeight: '1.2' }}>
-                                    2. Curso online o presencial de comprensión estructural
+                                    2. Proceso de transformación basado en eneagrama.
                                 </h4>
                                 <p style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6', marginBottom: '25px' }}>
-                                    En el curso aprenderás de forma clara y práctica:
+                                    En este proceso aprenderás de forma clara y práctica:
                                 </p>
                                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 30px 0', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                                     {[
-                                        'cómo se forman los patrones de personalidad',
-                                        'las nueve estrategias principales del Eneagrama',
-                                        'cómo reaccionan las personas bajo presión',
-                                        'cómo influyen estas estructuras en el liderazgo',
-                                        'cómo interpretar tus propias motivaciones y emociones'
+                                        'Como se formó tu patrón de personalidad',
+                                        'Cual es tu estilo de liderazgo',
+                                        'Como reaccionas bajo presión',
+                                        'Como influye en tu liderazgo',
+                                        'Como interpretas y actúas tus propias motivaciones....'
                                     ].map((item, i) => (
                                         <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem' }}>
                                             <div style={{ width: '8px', height: '8px', background: '#ddbe3d', borderRadius: '50%', marginTop: '8px', flexShrink: 0 }}></div>
@@ -929,12 +955,12 @@ const GenuinosLanding = () => {
         </section>
 
         {/* SECTION: Especially valuable for */}
-        <section className="course-modalities al-animate">
+        <section className="course-modalities al-animate" style={{ background: '#fff', color: '#002d44', padding: '100px 0' }}>
                 <div className="al-section-content">
                     <div className="modalities-header">
                         <h2 className="al-hero-title" style={{ fontSize: 'clamp(32px, 6vw, 48px)', marginBottom: '40px' }}>
-                            <span className="al-hero-title-top">Este proceso es especialmente</span>
-                            <span className="al-gold-text">valioso para ti, si:</span>
+                            <span className="al-hero-title-top" style={{ color: '#002d44' }}>Este proceso es especialmente</span>
+                            <span className="al-gold-text" style={{ color: '#ddbe3d' }}>valioso para ti, si:</span>
                         </h2>
 
                         <div className="target-audience-grid">
@@ -946,9 +972,12 @@ const GenuinosLanding = () => {
                                 'Buscas claridad para tomar mejores decisiones',
                                 'Estás cansado de repetir los mismos patrones'
                             ].map((item, i) => (
-                                <div key={i} className="target-item">
-                                    <div className="target-dot"></div>
-                                    <span style={{ fontSize: '1.25rem', fontWeight: '500', lineHeight: '1.4' }}>{item}</span>
+                                <div key={i} className="target-item" style={{ 
+                                    background: 'rgba(0, 45, 68, 0.03)', 
+                                    border: '1px solid rgba(0, 45, 68, 0.1)' 
+                                }}>
+                                    <div className="target-dot" style={{ background: '#ddbe3d' }}></div>
+                                    <span style={{ fontSize: '1.25rem', fontWeight: '500', lineHeight: '1.4', color: '#444' }}>{item}</span>
                                 </div>
                             ))}
                         </div>
@@ -956,8 +985,8 @@ const GenuinosLanding = () => {
                         {/* Negative Audience Section */}
                         <div style={{ marginTop: '100px', paddingTop: '60px' }}>
                             <h2 className="al-hero-title" style={{ fontSize: 'clamp(28px, 5vw, 42px)', marginBottom: '40px', textAlign: 'center' }}>
-                                <span className="al-hero-title-top" style={{ color: '#fff' }}>Este programa</span>
-                                <span style={{ color: '#ff6b6b' }}>no es para ti, si:</span>
+                                <span className="al-hero-title-top" style={{ color: '#002d44' }}>Este programa</span>
+                                <span style={{ color: '#ef4444', fontWeight: '800' }}>no es para ti, si:</span>
                             </h2>
 
                             <div className="target-audience-grid" style={{ marginTop: '20px' }}>
@@ -967,14 +996,14 @@ const GenuinosLanding = () => {
                                     'Prefieres seguir haciendo lo mismo esperando resultados distintos'
                                 ].map((item, i) => (
                                     <div key={i} className="target-item" style={{ 
-                                        borderColor: 'rgba(255, 107, 107, 0.2)', 
-                                        background: 'rgba(255, 107, 107, 0.02)' 
+                                        borderColor: 'rgba(239, 68, 68, 0.2)', 
+                                        background: 'rgba(239, 68, 68, 0.05)' 
                                     }}>
                                         <div className="target-dot" style={{ 
-                                            background: '#ff6b6b', 
-                                            boxShadow: '0 0 10px rgba(255, 107, 107, 0.4)' 
+                                            background: '#ef4444', 
+                                            boxShadow: '0 0 10px rgba(239, 68, 68, 0.4)' 
                                         }}></div>
-                                        <span style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', fontWeight: '400' }}>{item}</span>
+                                        <span style={{ fontSize: '1.2rem', color: '#666', fontWeight: '500' }}>{item}</span>
                                     </div>
                                 ))}
                             </div>
@@ -1311,7 +1340,9 @@ const GenuinosLanding = () => {
                                         <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                                        14, 15, 16, 17 de abril <br/> 19:00 – 21:00 COT (UTC-5)
+                                        1° bloque: 14, 15 y 16 de abril <br/> 
+                                        2° bloque: 21, 22 y 23 de abril <br/>
+                                        19:00 – 21:00 COT (UTC-5)
                                     </div>
                                 </div>
 
@@ -1354,11 +1385,13 @@ const GenuinosLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">169</span>
+                                        <span className="al-price-number">236</span>
                                         <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
-                                        11 de abril / Cali - Colombia <br/> 08:30 – 17:30
+                                        1° Bloque: 25 de abril <br/>
+                                        2° Bloque: 02 de mayo <br/>
+                                        Cali - Colombia | 08:30 – 17:30
                                     </div>
                                 </div>
 
@@ -1548,13 +1581,13 @@ const GenuinosLanding = () => {
             </section>
 
             {/* NEW: Final CTA Section (Breakthrough) */}
-            <section className="course-closing al-section al-animate" style={{ background: 'linear-gradient(to bottom, #000a12 0%, #002d44 100%)', padding: '140px 24px', marginTop: '-2px', position: 'relative', borderTop: '2px solid #000a12' }}>
+            <section className="course-closing al-section al-animate" style={{ background: '#fff', padding: '140px 24px', position: 'relative' }}>
                 <div className="al-section-content">
                     <div style={{ maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
                         <h2 className="al-impact-header" style={{ 
-                            fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', 
-                            color: '#fff', 
-                            lineHeight: '1.1', 
+                            fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', 
+                            color: '#002d44', 
+                            lineHeight: '1.2', 
                             marginBottom: '40px',
                             fontWeight: '900',
                             textTransform: 'none'
@@ -1565,7 +1598,7 @@ const GenuinosLanding = () => {
                         </h2>
                         
                         <div style={{ marginBottom: '60px' }}>
-                            <p style={{ fontSize: '1.6rem', color: 'rgba(255,255,255,0.95)', fontWeight: '600', marginBottom: '10px' }}>
+                            <p style={{ fontSize: '1.6rem', color: '#444', fontWeight: '600', marginBottom: '10px' }}>
                                 No necesitas más información.
                             </p>
                             <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '900' }}>
