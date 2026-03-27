@@ -233,6 +233,7 @@ const GenuinosLanding = () => {
     const handleRegistration = async (e) => {
         e.preventDefault();
         setRegLoading(true);
+        setPaymentError(null);
         try {
             // 1. Save Lead to Supabase
             const { error: leadError } = await supabase
@@ -241,29 +242,26 @@ const GenuinosLanding = () => {
                     full_name: regData.full_name,
                     email: regData.email.trim().toLowerCase(),
                     phone: regData.phone,
-                    source: `genuinos_${selectedPlan}`, // Updated source for tracking
+                    source: `genuinos_${selectedPlan}`,
                     created_at: new Date().toISOString()
                 }]);
 
             if (leadError) console.error('Error saving lead:', leadError);
 
-            // 2. Proceed to Payment
+            // 2. Proceed to Payment (if successful, page redirects away - no need to close form)
             await initiatePayment(selectedPlan, regData.email, regData.full_name);
-            
-            setShowRegisterForm(false);
         } catch (err) {
             console.error('Registration error:', err);
-            setPaymentError('Error al registrar tus datos. Por favor intenta de nuevo.');
+            setPaymentError('Hubo un error al procesar el pago. Por favor intenta de nuevo.');
         } finally {
             setRegLoading(false);
         }
     };
 
     const initiatePayment = async (plan, customerEmail, customerName) => {
+        setPaymentLoading(true);
+        setPaymentError(null);
         try {
-            setPaymentLoading(true);
-            setPaymentError(null);
-
             const amount = MP_PRICES[plan];
             const reference = `gen-${plan}-${Date.now()}`;
 
@@ -291,8 +289,9 @@ const GenuinosLanding = () => {
             }
         } catch (err) {
             console.error('Error iniciando pago MP:', err);
-            setPaymentError(`Error al iniciar pago: ${err.message || 'Intenta de nuevo'}`);
+            setPaymentError(`Error al iniciar el pago: ${err.message || 'Intenta de nuevo'}`);
             setPaymentLoading(false);
+            throw err; // Re-lanzar para que handleRegistration no cierre el formulario
         }
     };
 
