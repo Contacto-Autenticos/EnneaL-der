@@ -1327,7 +1327,7 @@ const GenuinosLanding = () => {
 
                     <div className="al-pricing-wrapper al-animate">
                         {/* Tarjeta Virtual */}
-                        <div className={`al-pricing-card ${selectedPlan === 'virtual' ? 'card-featured' : ''}`}>
+                        <div className={`al-pricing-card ${selectedPlan === 'virtual' ? 'card-featured' : ''}`} style={{ background: '#ffffff' }}>
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header">
                                 <h3>Programa Virtual</h3>
@@ -1336,7 +1336,7 @@ const GenuinosLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">99</span>
+                                        <span className="al-price-number" style={{ color: '#002d44' }}>99</span>
                                         <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
@@ -1353,7 +1353,7 @@ const GenuinosLanding = () => {
                                         'Test de personalidad',
                                         'Plan de acción'
                                     ].map((item, i) => (
-                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#333' }}>
                                             <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
                                         </div>
                                     ))}
@@ -1369,14 +1369,14 @@ const GenuinosLanding = () => {
                                     </button>
                                 </div>
 
-                                <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0' }}>
+                                <p className="al-footer-desc" style={{ color: 'rgba(0,0,0,0.4)', marginTop: '0' }}>
                                     Acceso instantáneo • Pago seguro vía Wompi
                                 </p>
                             </div>
                         </div>
 
                         {/* Tarjeta Presencial */}
-                        <div className={`al-pricing-card ${selectedPlan === 'presencial' ? 'card-featured' : ''}`}>
+                        <div className={`al-pricing-card ${selectedPlan === 'presencial' ? 'card-featured' : ''}`} style={{ background: '#ffffff' }}>
                             <div className="al-pricing-glow"></div>
                             <div className="al-pricing-header" style={{ background: '#002d44' }}>
                                 <h2 style={{ fontSize: '18px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0, color: '#ddbe3d' }}>Programa Presencial</h2>
@@ -1385,7 +1385,7 @@ const GenuinosLanding = () => {
                             <div className="al-pricing-content">
                                 <div className="al-price-box">
                                     <div className="al-current-price">
-                                        <span className="al-price-number">236</span>
+                                        <span className="al-price-number" style={{ color: '#002d44' }}>236</span>
                                         <span className="al-currency">USD</span>
                                     </div>
                                     <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
@@ -1404,7 +1404,7 @@ const GenuinosLanding = () => {
                                         'Networking con asistentes',
                                         'Certificado de asistencia'
                                     ].map((item, i) => (
-                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#333' }}>
                                             <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
                                         </div>
                                     ))}
@@ -1421,7 +1421,7 @@ const GenuinosLanding = () => {
                                     </button>
                                 </div>
 
-                                <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '15px' }}>
+                                <p className="al-footer-desc" style={{ color: 'rgba(0,0,0,0.4)', marginTop: '15px' }}>
                                     Cupos limitados • Pago seguro vía Wompi
                                 </p>
                             </div>
