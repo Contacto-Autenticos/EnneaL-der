@@ -248,8 +248,13 @@ const GenuinosLanding = () => {
 
             if (leadError) console.error('Error saving lead:', leadError);
 
-            // 2. Proceed to Payment (if successful, page redirects away - no need to close form)
-            await initiatePayment(selectedPlan, regData.email, regData.full_name);
+            // 2. Proceed to Payment
+            const opened = await initiatePayment(selectedPlan, regData.email, regData.full_name);
+            
+            // If opened in new tab successfully, we can close the form
+            if (opened) {
+                setShowRegisterForm(false);
+            }
         } catch (err) {
             console.error('Registration error:', err);
             setPaymentError('Hubo un error al procesar el pago. Por favor intenta de nuevo.');
@@ -281,9 +286,18 @@ const GenuinosLanding = () => {
             if (error) throw error;
             if (data?.error) throw new Error(data.error);
 
-            // Redirigir al checkout de MercadoPago
+            // Intentar abrir en nueva pestaña
             if (data?.init_point) {
-                window.location.href = data.init_point;
+                const newWindow = window.open(data.init_point, '_blank');
+                
+                // Si el bloqueador de popups impidió abrirlo, redirigir en la misma pestaña
+                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                    window.location.href = data.init_point;
+                    return false; // Indicamos que no se abrió en nueva pestaña (se redirigió)
+                }
+                
+                setPaymentLoading(false);
+                return true; // Éxito abriendo nueva pestaña
             } else {
                 throw new Error('No se recibió el link de pago de MercadoPago');
             }
@@ -291,7 +305,7 @@ const GenuinosLanding = () => {
             console.error('Error iniciando pago MP:', err);
             setPaymentError(`Error al iniciar el pago: ${err.message || 'Intenta de nuevo'}`);
             setPaymentLoading(false);
-            throw err; // Re-lanzar para que handleRegistration no cierre el formulario
+            throw err;
         }
     };
 
