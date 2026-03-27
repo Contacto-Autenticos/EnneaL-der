@@ -1354,7 +1354,7 @@ const GenuinosLanding = () => {
                                         'Plan de acción'
                                     ].map((item, i) => (
                                         <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#333' }}>
-                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
+                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#a8900a' }} /> <span>{item}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -1405,7 +1405,7 @@ const GenuinosLanding = () => {
                                         'Certificado de asistencia'
                                     ].map((item, i) => (
                                         <div key={i} className="al-pricing-item" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#333' }}>
-                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#ddbe3d' }} /> <span>{item}</span>
+                                            <CheckCircle2 size={18} style={{ flexShrink: 0, color: '#a8900a' }} /> <span>{item}</span>
                                         </div>
                                     ))}
                                 </div>
