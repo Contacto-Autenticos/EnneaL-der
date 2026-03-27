@@ -1339,7 +1339,7 @@ const GenuinosLanding = () => {
                                         <span className="al-price-number" style={{ color: '#002d44' }}>99</span>
                                         <span className="al-currency">USD</span>
                                     </div>
-                                    <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+                                    <div style={{ color: '#a8900a', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
                                         1° bloque: 14, 15 y 16 de abril <br/> 
                                         2° bloque: 21, 22 y 23 de abril <br/>
                                         19:00 – 21:00 COT (UTC-5)
@@ -1388,7 +1388,7 @@ const GenuinosLanding = () => {
                                         <span className="al-price-number" style={{ color: '#002d44' }}>236</span>
                                         <span className="al-currency">USD</span>
                                     </div>
-                                    <div style={{ color: '#ddbe3d', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
+                                    <div style={{ color: '#a8900a', fontWeight: '700', textAlign: 'center', marginTop: '10px' }}>
                                         1° Bloque: 25 de abril <br/>
                                         2° Bloque: 02 de mayo <br/>
                                         Cali - Colombia | 08:30 – 17:30
