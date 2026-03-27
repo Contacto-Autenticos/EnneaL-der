@@ -237,23 +237,32 @@ const GenuinosLanding = () => {
         
         setCheckingDiscount(true);
         try {
-            // Buscamos transacciones aprobadas por $75.000 (7500000) o $90.000 (9000000)
-            // de la compra anterior del test avanzado / plan de acción
+            // Buscamos todas las transacciones aprobadas para este usuario
             const { data, error } = await supabase
                 .from('transactions')
-                .select('amount_in_cents')
+                .select('amount_in_cents, reference')
                 .eq('customer_email', email.trim().toLowerCase())
-                .in('status', ['APPROVED', 'approved'])
-                .in('amount_in_cents', [7500000, 9000000])
-                .order('created_at', { ascending: false })
-                .limit(1);
+                .in('status', ['APPROVED', 'approved']);
 
             if (error) throw error;
 
             if (data && data.length > 0) {
-                const discount = data[0].amount_in_cents / 100;
-                setPrevPurchaseDiscount(discount);
-                console.log('Descuento encontrado:', discount);
+                // Filtrar por referencias que empiecen con 'ref-' (Análisis Avanzado / Plan de Acción)
+                // y que NO sean de este mismo programa (que empiezan con 'gen-')
+                const qualifyingTransactions = data.filter(t => 
+                    t.reference && t.reference.toLowerCase().startsWith('ref-')
+                );
+
+                if (qualifyingTransactions.length > 0) {
+                    // Sumamos los montos de todas las compras previas calificadas
+                    const totalCents = qualifyingTransactions.reduce((sum, t) => sum + (t.amount_in_cents || 0), 0);
+                    const discount = totalCents / 100;
+                    
+                    setPrevPurchaseDiscount(discount);
+                    console.log('Descuento acumulado encontrado:', discount);
+                } else {
+                    setPrevPurchaseDiscount(0);
+                }
             } else {
                 setPrevPurchaseDiscount(0);
             }
