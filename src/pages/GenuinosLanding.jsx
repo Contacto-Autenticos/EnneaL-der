@@ -146,7 +146,7 @@ const TestimonialCarousel = ({ testimonials }) => {
                             boxSizing: 'border-box'
                         }}
                     >
-                        <div style={{ color: '#ddbe3d', fontSize: '5rem', position: 'absolute', top: '10px', left: '10px', opacity: 0.1, lineHeight: '1', fontFamily: 'serif', pointerEvents: 'none' }}>❝</div>
+                        <div style={{ color: '#ddbe3d', fontSize: '2.5rem', position: 'absolute', top: '10px', left: '10px', opacity: 0.1, lineHeight: '1', fontFamily: 'serif', pointerEvents: 'none' }}>❝</div>
                         <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.95)', lineHeight: '1.8', marginBottom: '35px', position: 'relative', zIndex: 1, fontStyle: 'italic' }}>
                             {testimonial.text}
                         </p>
