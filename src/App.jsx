@@ -33,6 +33,7 @@ import FascinantesTest from './pages/FascinantesTest';
 import FascinantesTransition from './pages/FascinantesTransition';
 import FascinantesResult from './pages/FascinantesResult';
 import GenuinosLanding from './pages/GenuinosLanding';
+import MpStatus from './pages/MpStatus';
 
 
 function App() {
@@ -242,6 +243,11 @@ function App() {
         <Route
           path="/payment-status"
           element={<PaymentStatus />}
+        />
+
+        <Route
+          path="/mp-status"
+          element={<MpStatus />}
         />
 
         <Route

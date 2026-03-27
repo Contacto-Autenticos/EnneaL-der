@@ -185,13 +185,12 @@ const TestimonialCarousel = ({ testimonials }) => {
     );
 };
 
-const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
-const WOMPI_CURRENCY = 'COP';
+// MercadoPago - precios en COP (no centavos)
+const MP_PRICES = { virtual: 365000, presencial: 870000 };
 
 const GenuinosLanding = () => {
     const navigate = useNavigate();
     const [paymentLoading, setPaymentLoading] = useState(false);
-    const [signatureData, setSignatureData] = useState(null);
     const [selectedPlan, setSelectedPlan] = useState(null); // 'virtual' or 'presencial'
     const [paymentError, setPaymentError] = useState(null);
     const [isTimelineVisible, setIsTimelineVisible] = useState(false);
@@ -248,8 +247,8 @@ const GenuinosLanding = () => {
 
             if (leadError) console.error('Error saving lead:', leadError);
 
-            // 2. Proceed to Payment Signature
-            await initiatePayment(selectedPlan, regData.email);
+            // 2. Proceed to Payment
+            await initiatePayment(selectedPlan, regData.email, regData.full_name);
             
             setShowRegisterForm(false);
         } catch (err) {
@@ -260,28 +259,38 @@ const GenuinosLanding = () => {
         }
     };
 
-    const initiatePayment = async (plan, customerEmail) => {
+    const initiatePayment = async (plan, customerEmail, customerName) => {
         try {
             setPaymentLoading(true);
             setPaymentError(null);
 
-            const amountInCents = plan === 'virtual' ? 36500000 : 87000000;
-            const reference = `gen-${plan}-${Date.now()}`; // Updated reference
+            const amount = MP_PRICES[plan];
+            const reference = `gen-${plan}-${Date.now()}`;
 
-            const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
-                body: { reference, amount: amountInCents, currency: WOMPI_CURRENCY }
+            // Guardar datos del comprador para la página de retorno
+            localStorage.setItem('genuinos_email', customerEmail);
+            localStorage.setItem('genuinos_name', customerName || 'Participante');
+
+            const { data, error } = await supabase.functions.invoke('create-mp-preference', {
+                body: {
+                    plan,
+                    amount,
+                    reference,
+                    back_url_base: window.location.origin,
+                }
             });
 
             if (error) throw error;
-            if (data.error) throw new Error(data.error);
+            if (data?.error) throw new Error(data.error);
 
-            setSignatureData({
-                ...data,
-                amountInCents,
-                customerEmail // Store for later if needed
-            });
+            // Redirigir al checkout de MercadoPago
+            if (data?.init_point) {
+                window.location.href = data.init_point;
+            } else {
+                throw new Error('No se recibió el link de pago de MercadoPago');
+            }
         } catch (err) {
-            console.error('Error fetching signature:', err);
+            console.error('Error iniciando pago MP:', err);
             setPaymentError(`Error al iniciar pago: ${err.message || 'Intenta de nuevo'}`);
             setPaymentLoading(false);
         }
@@ -292,68 +301,7 @@ const GenuinosLanding = () => {
         handleSelectPlan(plan);
     };
 
-    useEffect(() => {
-        if (signatureData && selectedPlan) {
-            const script = document.createElement('script');
-            script.src = 'https://checkout.wompi.co/widget.js';
-            script.setAttribute('data-render', 'button');
-            script.setAttribute('data-public-key', PUBLIC_KEY);
-            script.setAttribute('data-currency', WOMPI_CURRENCY);
-            script.setAttribute('data-amount-in-cents', signatureData.amountInCents);
-            script.setAttribute('data-reference', signatureData.reference);
-            script.setAttribute('data-signature:integrity', signatureData.signature);
-            script.setAttribute('data-redirect-url', `${window.location.origin}/payment-status`); 
-
-            const containerId = selectedPlan === 'virtual' ? 'wompi-container-virtual' : 'wompi-container-presencial';
-            const container = document.getElementById(containerId);
-            
-            if (container) {
-                container.innerHTML = ''; 
-                container.appendChild(script);
-
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        mutation.addedNodes.forEach((node) => {
-                            if (node.tagName === 'FORM' || node.tagName === 'BUTTON' || node.querySelector?.('button')) {
-                                const btn = node.tagName === 'BUTTON' ? node : node.querySelector('button');
-                                if (btn) {
-                                    // Forzar estilos premium
-                                    btn.style.setProperty('width', '100%', 'important');
-                                    btn.style.setProperty('border-radius', '100px', 'important');
-                                    btn.style.setProperty('background-color', selectedPlan === 'virtual' ? '#ddbe3d' : 'transparent', 'important');
-                                    btn.style.setProperty('border', selectedPlan === 'virtual' ? 'none' : '1px solid #ddbe3d', 'important');
-                                    btn.style.setProperty('color', selectedPlan === 'virtual' ? '#001a2c' : '#ddbe3d', 'important');
-                                    btn.style.setProperty('font-size', '18px', 'important');
-                                    btn.style.setProperty('font-weight', '900', 'important');
-                                    btn.style.setProperty('min-height', '70px', 'important');
-                                    btn.style.setProperty('letter-spacing', '0.1em', 'important');
-                                    btn.style.setProperty('text-transform', 'uppercase', 'important');
-                                    btn.style.setProperty('cursor', 'pointer', 'important');
-                                    btn.style.setProperty('transition', 'all 0.3s ease', 'important');
-                                    
-                                    // Forzar nuestro texto e icono para evitar que Wompi ponga "Paga con Wompi"
-                                    const planText = selectedPlan === 'virtual' ? 'INSCRIBIRME VIRTUAL' : 'INSCRIBIRME PRESENCIAL';
-                                    btn.innerHTML = `<span>${planText}</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock" style="margin-left: 10px; vertical-align: middle;"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
-                                    
-                                    setPaymentLoading(false);
-
-                                    // Intentar abrir automáticamente la pasarela para que el usuario no deba clickear 2 veces
-                                    setTimeout(() => {
-                                        if (btn && typeof btn.click === 'function') {
-                                            btn.click();
-                                        }
-                                    }, 100);
-                                }
-                            }
-                        });
-                    });
-                });
-                observer.observe(container, { childList: true, subtree: true });
-
-                return () => observer.disconnect();
-            }
-        }
-    }, [signatureData, selectedPlan]);
+    // MercadoPago: no se necesita useEffect para widget - el pago es por redirección
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -619,15 +567,15 @@ const GenuinosLanding = () => {
                         
                         {/* Text Column */}
                         <div style={{ flex: '1.2', minWidth: '320px' }}>
-                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', marginBottom: '10px', fontWeight: '800', lineHeight: '1.2' }}>
-                                por eso desde <span style={{ color: '#002d44' }}>AUT</span><span style={{ color: '#ddbe3d', fontSize: '1.25em' }}>é</span><span style={{ color: '#002d44' }}>NTICOS</span> hemos creado.....
+                            <p style={{ fontSize: '1.8rem', color: '#002d44', marginBottom: '10px', fontWeight: '400', lineHeight: '1.2' }}>
+                                Por eso desde <span style={{ color: '#002d44', fontWeight: '800' }}>AUT</span><span style={{ color: '#ddbe3d', fontSize: '1.25em', fontWeight: '800' }}>é</span><span style={{ color: '#002d44', fontWeight: '800' }}>NTICOS</span> hemos creado.....
                             </p>
-                            <p style={{ fontSize: '1.6rem', color: '#002d44', lineHeight: '1.4', marginBottom: '20px', fontWeight: '500' }}>
+                            <p style={{ fontSize: '1.6rem', color: '#ddbe3d', lineHeight: '1.4', marginBottom: '20px', fontWeight: '700' }}>
                                 Un programa para entenderte, desbloquearte y evolucionar
                             </p>
                             
-                            <p style={{ fontSize: '1.8rem', color: '#ddbe3d', fontWeight: '800', marginBottom: '30px', lineHeight: '1.2' }}>
-                                No es teoría... <br/> No es un curso.
+                            <p style={{ fontSize: '1.8rem', color: '#002d44', fontWeight: '800', marginBottom: '30px', lineHeight: '1.2' }}>
+                                No es teoría... No es un curso.
                             </p>
                             
                             <p style={{ fontSize: '1.25rem', color: '#444', lineHeight: '1.7', margin: '0' }}>
@@ -1358,8 +1306,7 @@ const GenuinosLanding = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <div id="wompi-container-virtual">
-                                    <button
+                                <button
                                         className="al-btn-buy"
                                         onClick={() => handleEnrollDirect('virtual')}
                                         disabled={paymentLoading && selectedPlan === 'virtual'}
@@ -1367,10 +1314,9 @@ const GenuinosLanding = () => {
                                     >
                                         {paymentLoading && selectedPlan === 'virtual' ? 'Iniciando...' : 'Inscribirme Virtual'} <Lock size={24} />
                                     </button>
-                                </div>
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(0,0,0,0.4)', marginTop: '0' }}>
-                                    Acceso instantáneo • Pago seguro vía Wompi
+                                    Acceso instantáneo • Pago seguro vía MercadoPago
                                 </p>
                             </div>
                         </div>
@@ -1410,8 +1356,7 @@ const GenuinosLanding = () => {
                                     ))}
                                 </div>
 
-                                <div id="wompi-container-presencial">
-                                    <button
+                                <button
                                         className="al-btn-buy"
                                         onClick={() => handleEnrollDirect('presencial')}
                                         disabled={paymentLoading && selectedPlan === 'presencial'}
@@ -1419,10 +1364,9 @@ const GenuinosLanding = () => {
                                     >
                                         {paymentLoading && selectedPlan === 'presencial' ? 'Iniciando...' : 'Inscribirme Presencial'} <Lock size={24} />
                                     </button>
-                                </div>
 
                                 <p className="al-footer-desc" style={{ color: 'rgba(0,0,0,0.4)', marginTop: '15px' }}>
-                                    Cupos limitados • Pago seguro vía Wompi
+                                    Cupos limitados • Pago seguro vía MercadoPago
                                 </p>
                             </div>
                         </div>

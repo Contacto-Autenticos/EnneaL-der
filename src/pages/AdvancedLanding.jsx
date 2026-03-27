@@ -195,16 +195,14 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     <strong>El informe avanzado revela la arquitectura interna que lo sostiene.</strong>
                 </p>
 
-                <div className="al-hero-actions">
+                <div className="al-hero-actions" style={{ flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                     <button onClick={() => navigate('/payment')} className="al-btn-main">
                         QUIERO MI ANÁLISIS AVANZADO
                         <ArrowRight size={22} />
                     </button>
 
-                    <div className="al-social-proof-small">
-                        <div className="al-author-role" style={{ marginTop: '20px', color: 'rgba(255,255,255,0.4)', fontSize: '15px', fontWeight: '400' }}>
-                            Entender el código es solo información, es poder.
-                        </div>
+                    <div className="al-author-role" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '15px', fontWeight: '400', textAlign: 'center' }}>
+                        Entender el código es solo información, es poder.
                     </div>
                 </div>
 
