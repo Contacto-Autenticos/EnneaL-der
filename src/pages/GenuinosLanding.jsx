@@ -209,6 +209,8 @@ const GenuinosLanding = () => {
     const [activeInstructor, setActiveInstructor] = useState(0);
     const [showMobileFab, setShowMobileFab] = useState(false);
     const [showHeader, setShowHeader] = useState(true);
+    const [prevPurchaseDiscount, setPrevPurchaseDiscount] = useState(0);
+    const [checkingDiscount, setCheckingDiscount] = useState(false);
     const lastScrollY = useRef(0);
     const instructorsCount = 2;
 
@@ -226,7 +228,40 @@ const GenuinosLanding = () => {
 
     const handleEnrollDirect = (plan) => {
         setSelectedPlan(plan);
+        setPrevPurchaseDiscount(0); // Reset discount
         setShowRegisterForm(true);
+    };
+
+    const checkPreviousPurchases = async (email) => {
+        if (!email || !email.includes('@')) return;
+        
+        setCheckingDiscount(true);
+        try {
+            // Buscamos transacciones aprobadas por $75.000 (7500000) o $90.000 (9000000)
+            // de la compra anterior del test avanzado / plan de acción
+            const { data, error } = await supabase
+                .from('transactions')
+                .select('amount_in_cents')
+                .eq('customer_email', email.trim().toLowerCase())
+                .in('status', ['APPROVED', 'approved'])
+                .in('amount_in_cents', [7500000, 9000000])
+                .order('created_at', { ascending: false })
+                .limit(1);
+
+            if (error) throw error;
+
+            if (data && data.length > 0) {
+                const discount = data[0].amount_in_cents / 100;
+                setPrevPurchaseDiscount(discount);
+                console.log('Descuento encontrado:', discount);
+            } else {
+                setPrevPurchaseDiscount(0);
+            }
+        } catch (err) {
+            console.error('Error checking purchases:', err);
+        } finally {
+            setCheckingDiscount(false);
+        }
     };
 
 
@@ -267,12 +302,15 @@ const GenuinosLanding = () => {
         setPaymentLoading(true);
         setPaymentError(null);
         try {
-            const amount = MP_PRICES[plan];
-            const reference = `gen-${plan}-${Date.now()}`;
+            // Aplicar descuento si existe
+            const baseAmount = MP_PRICES[plan];
+            const amount = baseAmount - prevPurchaseDiscount;
+            const reference = `gen-${plan}${prevPurchaseDiscount > 0 ? '-disc' : ''}-${Date.now()}`;
 
             // Guardar datos del comprador para la página de retorno
             localStorage.setItem('genuinos_email', customerEmail);
             localStorage.setItem('genuinos_name', customerName || 'Participante');
+            localStorage.setItem('genuinos_discount', prevPurchaseDiscount.toString());
 
             const { data, error } = await supabase.functions.invoke('create-mp-preference', {
                 body: {
@@ -1128,16 +1166,44 @@ const GenuinosLanding = () => {
                                     onChange={(e) => setRegData({...regData, full_name: e.target.value})}
                                 />
                             </div>
-                            <div className="form-group-adv">
+                             <div className="form-group-adv">
                                 <label>Correo Electrónico</label>
-                                <input 
-                                    type="email" 
-                                    required 
-                                    className="adv-input"
-                                    placeholder="Donde recibirás el acceso"
-                                    value={regData.email}
-                                    onChange={(e) => setRegData({...regData, email: e.target.value})}
-                                />
+                                <div style={{ position: 'relative' }}>
+                                    <input 
+                                        type="email" 
+                                        required 
+                                        className="adv-input"
+                                        placeholder="Donde recibirás el acceso"
+                                        value={regData.email}
+                                        onChange={(e) => setRegData({...regData, email: e.target.value})}
+                                        onBlur={(e) => checkPreviousPurchases(e.target.value)}
+                                        style={{ paddingRight: checkingDiscount ? '40px' : '10px' }}
+                                    />
+                                    {checkingDiscount && (
+                                        <div style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)' }}>
+                                            <div className="al-loading-spinner-small" style={{ width: '18px', height: '18px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#ddbe3d', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                                        </div>
+                                    )}
+                                </div>
+                                {prevPurchaseDiscount > 0 && (
+                                    <div style={{ 
+                                        marginTop: '10px', 
+                                        padding: '12px 15px', 
+                                        background: 'rgba(221, 190, 61, 0.1)', 
+                                        borderLeft: '4px solid #ddbe3d',
+                                        borderRadius: '8px',
+                                        color: '#ddbe3d',
+                                        fontSize: '0.9rem',
+                                        fontWeight: '600',
+                                        animation: 'fadeIn 0.5s ease'
+                                    }}>
+                                        ✨ ¡Detectamos tu compra anterior! Se ha aplicado un descuento de ${prevPurchaseDiscount.toLocaleString()}.
+                                        <div style={{ marginTop: '5px', color: '#fff' }}>
+                                            Precio final: <span style={{ textDecoration: 'line-through', opacity: 0.6 }}>${MP_PRICES[selectedPlan].toLocaleString()}</span> 
+                                            <span style={{ marginLeft: '10px', fontSize: '1.1rem', fontWeight: '800' }}>${(MP_PRICES[selectedPlan] - prevPurchaseDiscount).toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <div className="form-group-adv">
                                 <label>Número de Celular (WhatsApp)</label>
