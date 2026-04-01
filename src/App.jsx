@@ -34,6 +34,11 @@ import FascinantesTransition from './pages/FascinantesTransition';
 import FascinantesResult from './pages/FascinantesResult';
 import GenuinosLanding from './pages/GenuinosLanding';
 import MpStatus from './pages/MpStatus';
+import Extraordinarios from './pages/Extraordinarios';
+import Fascinantes from './pages/Fascinantes';
+import Trascendentes from './pages/Trascendentes';
+import Genuinos from './pages/Genuinos';
+import Conscientes from './pages/Conscientes';
 
 
 function App() {
@@ -201,6 +206,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/hub" element={<Hub />} />
         <Route path="/my-results" element={<MyResults />} />
+        <Route path="/Extraordinarios" element={<Extraordinarios />} />
+        <Route path="/Fascinantes" element={<Fascinantes />} />
+        <Route path="/Trascendentes" element={<Trascendentes />} />
+        <Route path="/Genuinos" element={<Genuinos />} />
+        <Route path="/Conscientes" element={<Conscientes />} />
         <Route path="/autodiag-intro" element={<FascinantesIntro />} />
         <Route path="/autodiag-test" element={<FascinantesTest />} />
         <Route path="/autodiag-transition" element={<FascinantesTransition />} />

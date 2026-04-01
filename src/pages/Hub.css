@@ -129,8 +129,9 @@
 }
 
 .btn-my-results {
-    background-color: var(--color-secondary);
-    color: white;
+    background-color: #ddbe3d;
+    color: #001f2e;
+    font-weight: 800;
     padding: 15px 30px;
     font-size: 1rem;
     border-radius: 50px;
@@ -144,8 +145,9 @@
 
 .btn-my-results:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 45, 68, 0.2);
-    background-color: #003a57;
+    box-shadow: 0 10px 20px rgba(221, 190, 61, 0.3);
+    background-color: #c9a930;
+    color: #001f2e;
 }
 
 .hub-sync-note {
@@ -252,4 +254,42 @@
     .program-square-card {
         width: 100%;
     }
+}
+
+.card-lock-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.7;
+}
+
+.opalizado {
+    opacity: 0.55;
+    background: #001f2e !important;
+    box-shadow: none !important;
+    border-color: rgba(221, 190, 61, 0.2) !important;
+}
+
+.opalizado:hover {
+    transform: none !important;
+    background: #001f2e !important;
+    box-shadow: none !important;
+    border-color: rgba(221, 190, 61, 0.2) !important;
+}
+
+.btn-back-hub {
+    background: none;
+    color: #ddbe3d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding: 0;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+.btn-back-hub:hover {
+    color: #c9a930;
 }
