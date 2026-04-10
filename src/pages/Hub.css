@@ -1,11 +1,12 @@
 .hub-container {
     padding: 20px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: transparent;
-    overflow: hidden; /* Evitar scroll si es posible */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .hub-content {
