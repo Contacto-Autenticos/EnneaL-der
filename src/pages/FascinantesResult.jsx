@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download, AlertCircle, MessageCircle, Twitter, Linkedin } from 'lucide-react';
+import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download, AlertCircle, MessageCircle, Twitter, Linkedin, Lock } from 'lucide-react';
 import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
 import FascinantesRadar from '../components/FascinantesRadar';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import FascinantesActionPlanTemplate from '../components/FascinantesActionPlanTemplate';
 import './FascinantesResult.css';
 
 const DOMAIN_STYLES = {
@@ -40,9 +41,11 @@ const FascinantesResult = () => {
     const [userAnswers, setUserAnswers] = useState({});
     const [isSharing, setIsSharing] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
+    const [isDownloadingActionPlan, setIsDownloadingActionPlan] = useState(false);
     const [showSocialOptions, setShowSocialOptions] = useState(false); // Senior: Better state management for fallback
     const radarRef = React.useRef(null);
     const reportRef = React.useRef(null);
+    const actionPlanRef = React.useRef(null);
 
     useEffect(() => {
         const storedAnswers = localStorage.getItem('fascinantesAnswers');
@@ -95,6 +98,103 @@ const FascinantesResult = () => {
             case 5: return 'Siempre';
             default: return '';
         }
+    };
+
+    const getExpertAnalysis = (scores) => {
+        if (!scores || scores.length === 0) return null;
+
+        const vals = scores.map(s => s.score);
+        const promedio = vals.reduce((a, b) => a + b, 0) / vals.length;
+        const max = Math.max(...vals);
+        const min = Math.min(...vals);
+        const diferencia = max - min;
+        const lowestDomain = scores.find(s => s.score === min)?.domain.replace('Dominio ', '') || '';
+
+        let profileKey = "";
+        
+        // Rules evaluation in order
+        if (promedio < 50) {
+            profileKey = "POTENCIAL_DORMIDO";
+        } else if (diferencia > 20) {
+            profileKey = "ESTRATEGA_BLOQUEADO";
+        } else if (promedio > 70) {
+            profileKey = "OPTIMIZADOR";
+        } else if (diferencia <= 10) {
+            profileKey = "EQUILIBRADOR";
+        } else {
+            profileKey = "CONSTANTE_SIN_DIRECCION";
+        }
+
+        const profiles = {
+            POTENCIAL_DORMIDO: {
+                name: "El potencial dormido",
+                insight: "Tienes una estructura interna con un potencial inmenso, pero actualmente estás operando en \"modo ahorro\" o supervivencia.",
+                critical: `Tu puntuación en el dominio ${lowestDomain} indica una fuga de energía masiva que drena tu capacidad de reacción en los demás dominios.`,
+                explanation: "El patrón muestra una falta de bases sólidas. No es falta de capacidad, sino de una estructura que sostenga tus ambiciones. Estás intentando correr sin haber consolidado el suelo que pisas.",
+                recommendations: [
+                    `Priorizar la recuperación de energía en el dominio ${lowestDomain}.`,
+                    "Establecer una rutina mínima viable de 15 minutos diarios.",
+                    "Eliminar un compromiso que te reste paz mental hoy mismo."
+                ],
+                bridge: "Ya identificamos exactamente qué está frenando tu crecimiento. El siguiente paso es trabajar un plan estructurado y personalizado para corregirlo."
+            },
+            ESTRATEGA_BLOQUEADO: {
+                name: "El estratega bloqueado",
+                insight: "Eres excelente en áreas específicas, pero un \"punto ciego\" severo está actuando como un ancla, impidiendo que tu éxito sea fluido.",
+                critical: `El desbalance en el dominio ${lowestDomain} crea una fricción invisible: cuanto más avanzas en tus fortalezas, más pesado se vuelve este bloqueo.`,
+                explanation: "Tienes la mentalidad de logro, pero descuidas el mantenimiento de tu ecosistema vital. Estás intentando ganar una carrera con un motor potente pero una rueda pinchada.",
+                recommendations: [
+                    "Delegar o sistematizar tareas en tus dominios más fuertes.",
+                    `Realizar una "auditoría de fugas" en el dominio ${lowestDomain}.`,
+                    "Integrar una pausa activa obligatoria para evaluar prioridades."
+                ],
+                bridge: "Tu éxito actual es solo una fracción de lo que podrías lograr. Vamos a liberar el ancla con un plan de acción equilibrado."
+            },
+            OPTIMIZADOR: {
+                name: "El optimizador",
+                insight: "Estás en el nivel de alto rendimiento, pero a estas alturas, las mejoras ya no son estructurales, sino de sintonía fina y ajustes de elite.",
+                critical: `Incluso tú tienes un dominio (${lowestDomain}) que, aunque aceptable, es el único límite entre tu estado actual y la maestría total.`,
+                explanation: "Has construido una vida sólida. Tu patrón indica que estás listo para pasar de \"estar bien\" a \"ser extraordinario\". El riesgo aquí es el estancamiento por comodidad.",
+                recommendations: [
+                    `Identificar el 1% de mejora incremental en el dominio ${lowestDomain}.`,
+                    "Buscar un mentor o entorno que desafíe tus estándares actuales.",
+                    "Documentar tus procesos para liberar espacio mental creativo."
+                ],
+                bridge: "Los resultados de elite requieren planes de elite. Vamos a diseñar esos ajustes milimétricos que te llevarán al siguiente nivel."
+            },
+            EQUILIBRADOR: {
+                name: "El equilibrador",
+                insight: "Tienes una estabilidad envidiable. Tu vida es armónica, pero es posible que te falte ese \"fuego\" o pico de intensidad necesario para un salto cuántico.",
+                critical: `El dominio ${lowestDomain} es tu punto más bajo, pero al ser estable, el riesgo es que pase desapercibido y se convierta en una mediocridad cómoda.`,
+                explanation: "El patrón muestra una gestión equilibrada del tiempo y la energía. Sin embargo, el exceso de equilibrio puede llevar a la falta de impacto o dirección clara.",
+                recommendations: [
+                    "Inyectar una meta ambiciosa y desafiante en tu dominio más fuerte.",
+                    `Fortalecer proactivamente el dominio ${lowestDomain} antes de que surja una crisis.`,
+                    "Explorar nuevas disciplinas fuera de tu zona de confort actual."
+                ],
+                bridge: "Tienes el barco estable y el mar en calma. Ahora es el momento de desplegar las velas hacia un destino más ambicioso."
+            },
+            CONSTANTE_SIN_DIRECCION: {
+                name: "El constante sin dirección",
+                insight: "Trabajas duro y te mantienes activo, pero sientes que avanzas mucho sin llegar realmente a ninguna parte significativa.",
+                critical: `El dominio ${lowestDomain} está absorbiendo recursos que deberían usarse para dar dirección y propósito a tu esfuerzo constante.`,
+                explanation: "Tu patrón es el del \"taller abierto\": muchas áreas en mantenimiento pero ninguna terminada de optimizar. Te falta un eje central que unifique tus esfuerzos.",
+                recommendations: [
+                    "Definir una \"Prioridad Maestra\" para los próximos 90 días.",
+                    "Limitar tus frentes de batalla: enfócate solo en 2 dominios clave.",
+                    `Establecer indicadores claros de éxito para el dominio ${lowestDomain}.`
+                ],
+                bridge: "No es falta de esfuerzo, es falta de estrategia. Vamos a canalizar toda esa energía en un plan de acción con una sola dirección: arriba."
+            }
+        };
+
+        return {
+            ...profiles[profileKey],
+            promedio: Math.round(promedio),
+            diferencia: Math.round(diferencia),
+            nivel: promedio < 50 ? "BAJO" : (promedio <= 70 ? "MEDIO" : "ALTO"),
+            balance: diferencia <= 10 ? "EQUILIBRADO" : (diferencia <= 20 ? "MODERADO" : "DESEQUILIBRADO")
+        };
     };
 
     const handleShare = async () => {
@@ -629,6 +729,55 @@ const FascinantesResult = () => {
         }
     };
 
+    const handleDownloadActionPlan = async () => {
+        if (!actionPlanRef.current || isDownloadingActionPlan) return;
+        setIsDownloadingActionPlan(true);
+
+        try {
+            const container = actionPlanRef.current;
+            const pages = container.querySelectorAll('.fascinantes-kit-page');
+            
+            if (pages.length === 0) {
+                throw new Error("No se encontraron páginas para el Plan de Acción.");
+            }
+
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                
+                // Capture each page individually
+                const canvas = await html2canvas(page, {
+                    backgroundColor: '#ffffff',
+                    scale: 3, // High resolution
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    width: page.offsetWidth,
+                    height: page.offsetHeight
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                
+                if (i > 0) {
+                    pdf.addPage();
+                }
+
+                // Add to PDF filling the entire A4 page
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            }
+
+            pdf.save('Plan-de-Accion-Fascinantes.pdf');
+        } catch (error) {
+            console.error('Error Action Plan PDF:', error);
+            alert('Hubo un error al generar el Plan de Acción.');
+        } finally {
+            setIsDownloadingActionPlan(false);
+        }
+    };
+
     if (loading) return <div className="loading-fascinantes">Procesando resultados...</div>;
 
     return (
@@ -647,41 +796,129 @@ const FascinantesResult = () => {
                     <FascinantesRadar data={domainScores} />
                 </div>
 
-                <div className="interpretations-grid">
-                    {domainScores.map((score) => (
-                        <div 
-                            key={score.id} 
-                            className={`domain-result-card glass clickable ${score.style.class}`}
-                            onClick={() => setSelectedDomain(score)}
-                        >
-                            <div className="domain-top">
-                                <div className="domain-info-header">
-                                    <span className="domain-result-icon" style={{ color: score.style.color }}>
-                                        {getDomainIcon(score.id)}
-                                    </span>
-                                    <h3>{score.domain}</h3>
+                {/* Expert System Analysis Section */}
+                {domainScores.length > 0 && (
+                    <div className="expert-analysis-container animate-fade-in" style={{ marginBottom: '40px' }}>
+                        {(() => {
+                            const analysis = getExpertAnalysis(domainScores);
+                            if (!analysis) return null;
+
+                            return (
+                                <div className="expert-card glass">
+                                    <div className="expert-header">
+                                        <div className="expert-profile-badge">
+                                            <Zap size={14} /> PERFIL
+                                        </div>
+                                        <h2 className="expert-profile-name">{analysis.name}</h2>
+                                    </div>
+
+                                    <div className="expert-section insight-section">
+                                        <p className="expert-insight-text">{analysis.insight}</p>
+                                    </div>
+
+                                    <div className="expert-grid">
+                                        <div className="expert-section critical-section">
+                                            <div className="expert-label">⚠️ PUNTO CRÍTICO</div>
+                                            <p className="expert-text">{analysis.critical}</p>
+                                        </div>
+
+                                        <div className="expert-section explanation-section">
+                                            <div className="expert-label">💡 EXPLICACIÓN BREVE</div>
+                                            <p className="expert-text">{analysis.explanation}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="expert-section recommendations-section">
+                                        <div className="expert-label">RECOMENDACIONES</div>
+                                        <ul className="expert-list">
+                                            {analysis.recommendations.map((rec, idx) => (
+                                                <li key={idx}>
+                                                    <span className="bullet-icon">•</span>
+                                                    {rec}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
-                                <span className={`result-tag ${score.interpretation.toLowerCase()}`}>
-                                    {score.interpretation}
-                                </span>
-                            </div>
-                            <div className="score-row">
-                                <div className="score-bar-bg">
-                                    <div 
-                                        className="score-bar-fill" 
-                                        style={{ 
-                                            width: `${score.score}%`,
-                                            '--domain-color': score.style.color 
-                                        }}
-                                    ></div>
-                                </div>
-                                <span className="score-num">{score.score} pts</span>
-                            </div>
-                            <p className="domain-definition">{score.definition}</p>
-                            <div className="card-footer-tip">Ver detalle <ArrowLeft size={14} style={{ transform: 'rotate(180deg)' }} /></div>
+                            );
+                        })()}
+                    </div>
+                )}
+
+                {/* Calculate extremes for highlighting */}
+                {(() => {
+                    if (domainScores.length === 0) return null;
+                    
+                    const minScore = Math.min(...domainScores.map(s => s.score));
+
+                    return (
+                        <div className="interpretations-grid">
+                            {[...domainScores]
+                                .sort((a, b) => a.score - b.score)
+                                .map((score) => {
+                                    const isMin = score.score === minScore;
+
+                                    return (
+                                        <div 
+                                            key={score.id} 
+                                            className={`domain-result-card glass clickable ${isMin ? 'neon-highest' : ''}`}
+                                            onClick={() => setSelectedDomain(score)}
+                                        >
+                                            <div className="domain-top" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '5px' }}>
+                                                {isMin && (
+                                                    <span style={{ 
+                                                        fontSize: '0.65rem', 
+                                                        fontWeight: '900', 
+                                                        color: '#ff3131', 
+                                                        background: 'rgba(255, 49, 49, 0.1)',
+                                                        padding: '2px 8px',
+                                                        borderRadius: '4px',
+                                                        marginBottom: '5px',
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        gap: '4px',
+                                                        border: '1px solid rgba(255, 49, 49, 0.2)'
+                                                    }}>
+                                                        ⚠️ DOMINIO CRÍTICO
+                                                    </span>
+                                                )}
+                                                <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <div className="domain-info-header">
+                                                        <span className="domain-result-icon" style={{ 
+                                                            color: isMin ? score.style.color : '#666',
+                                                            filter: isMin ? 'drop-shadow(0 0 5px currentColor)' : 'none'
+                                                        }}>
+                                                            {getDomainIcon(score.id)}
+                                                        </span>
+                                                        <h3 style={{ color: isMin ? score.style.color : '#888' }}>
+                                                            {score.domain}
+                                                        </h3>
+                                                    </div>
+                                                    <span className={`result-tag ${score.interpretation.toLowerCase()}`}>
+                                                        {score.interpretation}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="score-row">
+                                                <div className="score-bar-bg">
+                                                    <div 
+                                                        className="score-bar-fill" 
+                                                        style={{ 
+                                                            width: `${score.score}%`,
+                                                            '--domain-color': score.style.color 
+                                                        }}
+                                                    ></div>
+                                                </div>
+                                                <span className="score-num">{score.score} pts</span>
+                                            </div>
+                                            <p className="domain-definition">{score.definition}</p>
+                                            <div className="card-footer-tip">Ver detalle <ArrowLeft size={14} style={{ transform: 'rotate(180deg)' }} /></div>
+                                        </div>
+                                    );
+                                })}
                         </div>
-                    ))}
-                </div>
+                    );
+                })()}
 
                 <div className="important-note-card animate-fade-in">
                     <div className="note-icon">
@@ -692,7 +929,39 @@ const FascinantesResult = () => {
                     </p>
                 </div>
 
-                <div className="result-actions">
+                <div className="post-note-cta animate-fade-in" style={{ textAlign: 'center', marginTop: '30px', padding: '0 20px' }}>
+                    <p style={{ 
+                        color: '#fff', 
+                        fontSize: '1.2rem', 
+                        fontWeight: '600', 
+                        lineHeight: '1.4',
+                        maxWidth: '600px',
+                        margin: '0 auto'
+                    }}>
+                        Ya identificamos exactamente qué está frenando tu crecimiento. Vamos a liberar el ancla con un plan de acción equilibrado.
+                    </p>
+                </div>
+
+                <div className="primary-action-container animate-fade-in" style={{ marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
+                    <button 
+                        className="btn-action plan-accion" 
+                        onClick={handleDownloadActionPlan}
+                        disabled={isDownloadingActionPlan}
+                        style={{ 
+                            background: '#ddbe3d', 
+                            color: '#00121d', 
+                            width: '100%', 
+                            maxWidth: '430px', 
+                            justifyContent: 'center',
+                            fontSize: '1rem',
+                            padding: '16px 28px'
+                        }}
+                    >
+                        <Lock size={20} /> {isDownloadingActionPlan ? 'GENERANDO...' : 'VER MI PLAN DE ACCIÓN'}
+                    </button>
+                </div>
+
+                <div className="result-actions" style={{ marginTop: '15px' }}>
                     <button 
                         className="btn-action tertiary" 
                         onClick={() => navigate('/autodiag-intro')}
@@ -704,7 +973,7 @@ const FascinantesResult = () => {
                         onClick={handleDownloadPDF}
                         disabled={isDownloading}
                     >
-                        <Download size={18} /> {isDownloading ? '...' : 'PDF'}
+                        <Download size={18} /> {isDownloading ? '...' : 'REPORTE'}
                     </button>
                     <button 
                         className="btn-action primary" 
@@ -793,6 +1062,13 @@ const FascinantesResult = () => {
             
             <div className="result-footer-minimal">
                 <img src="/Logo-Blanco.png" alt="Auténticos" />
+            </div>
+
+            {/* Hidden template for PDF generation */}
+            <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+                <div ref={actionPlanRef}>
+                    <FascinantesActionPlanTemplate />
+                </div>
             </div>
         </div>
     );

@@ -71,6 +71,12 @@
 .domain-result-card.neon-espiritual { border-color: rgba(0, 229, 255, 0.2); box-shadow: 0 15px 35px rgba(0, 229, 255, 0.1); }
 .domain-result-card.neon-financiero { border-color: rgba(213, 0, 249, 0.2); box-shadow: 0 15px 35px rgba(213, 0, 249, 0.1); }
 
+/* Glow for highest scores - dark red */
+.domain-result-card.neon-highest { 
+    border-color: rgba(200, 0, 0, 0.3); 
+    box-shadow: 0 15px 35px rgba(150, 0, 0, 0.2); 
+}
+
 .domain-top {
     display: flex;
     justify-content: space-between;
@@ -542,11 +548,143 @@
     letter-spacing: 1px;
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.4s ease-out;
+/* Expert Analysis System Styles */
+.expert-analysis-container {
+    margin-top: 30px;
+    padding: 0 10px;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.expert-card {
+    padding: 40px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(13, 37, 53, 0.7) 0%, rgba(7, 15, 20, 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 6px solid #ddbe3d;
+    text-align: left;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+
+.expert-header {
+    margin-bottom: 30px;
+}
+
+.expert-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(221, 190, 61, 0.15);
+    color: #ddbe3d;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(221, 190, 61, 0.3);
+}
+
+.expert-profile-name {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #ddbe3d;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.expert-label {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ddbe3d;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.expert-section {
+    margin-bottom: 30px;
+}
+
+.expert-insight-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.expert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.expert-text {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.critical-section .expert-text {
+    color: #ffcccc;
+}
+
+.expert-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.expert-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: #eee;
+    line-height: 1.4;
+}
+
+.bullet-icon {
+    color: #ddbe3d;
+    font-weight: 900;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.conversion-section {
+    margin-bottom: 0;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.expert-conversion-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .expert-card {
+        padding: 30px 20px;
+    }
+    
+    .expert-profile-name {
+        font-size: 1.8rem;
+    }
+    
+    .expert-insight-text {
+        font-size: 1.1rem;
+    }
+    
+    .expert-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }

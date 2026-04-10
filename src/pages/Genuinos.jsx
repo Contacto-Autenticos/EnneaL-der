@@ -23,7 +23,7 @@ const Genuinos = () => {
     const analyses = [
         {
             id: 'enneagram',
-            title: 'Test de Eneagrama',
+            title: 'Test de Eneagrama Básico',
             description: 'Descubre tu esencia y patrones de comportamiento básicos.',
             path: '/test-intro',
             completed: results.enneagram,
@@ -31,7 +31,7 @@ const Genuinos = () => {
         },
         {
             id: 'leadership',
-            title: 'Liderazgo & Influencia',
+            title: 'Test de Eneagrama Avanzado',
             description: 'Analiza tu impacto como líder y cómo potenciar a tu equipo.',
             path: '/test-liderazgo',
             completed: results.advanced,

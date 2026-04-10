@@ -16,9 +16,15 @@ const PaymentPage = () => {
     const [signatureData, setSignatureData] = useState(null);
     const [error, setError] = useState(null);
 
+    // Mode detection
+    const queryParams = new URLSearchParams(window.location.search);
+    const isPlanOnly = queryParams.get('mode') === 'plan';
+    const PLAN_ONLY_PRICE = 1500000; // $15.000 COP
+    const BASE_PRICE = isPlanOnly ? PLAN_ONLY_PRICE : BASE_PRICE_IN_CENTS;
+
     // Coupon state
     const [couponCode, setCouponCode] = useState('');
-    const [amountInCents, setAmountInCents] = useState(BASE_PRICE_IN_CENTS);
+    const [amountInCents, setAmountInCents] = useState(isPlanOnly ? PLAN_ONLY_PRICE : BASE_PRICE_IN_CENTS);
     const [discountApplied, setDiscountApplied] = useState(false);
     const [message, setMessage] = useState(''); // For success or error messages
     const [showCouponInput, setShowCouponInput] = useState(false);
@@ -106,7 +112,7 @@ const PaymentPage = () => {
             if (coupon) {
                 console.log('Cupón encontrado:', coupon);
                 const discount = coupon.discount_percentage / 100;
-                const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
+                const newAmount = Math.floor(BASE_PRICE * (1 - discount));
                 setAmountInCents(newAmount);
                 setDiscountApplied(true);
                 setMessage(`¡Código aplicado! Descuento del ${coupon.discount_percentage}%`);
@@ -127,7 +133,7 @@ const PaymentPage = () => {
             if (affiliate) {
                 console.log('Afiliado encontrado:', affiliate);
                 const discount = affiliate.discount_percentage / 100;
-                const newAmount = Math.floor(BASE_PRICE_IN_CENTS * (1 - discount));
+                const newAmount = Math.floor(BASE_PRICE * (1 - discount));
                 setAmountInCents(newAmount);
                 setDiscountApplied(true);
                 setAmountInCents(newAmount);
@@ -142,7 +148,7 @@ const PaymentPage = () => {
                 if (affiliateError) console.error('Error en búsqueda de afiliado:', affiliateError);
                 setMessage('Código no válido o expirado');
                 setDiscountApplied(false);
-                setAmountInCents(BASE_PRICE_IN_CENTS);
+                setAmountInCents(BASE_PRICE);
                 localStorage.removeItem('activeCommercial');
             }
         } catch (err) {
@@ -216,7 +222,7 @@ const PaymentPage = () => {
     const currentPriceBaseCOP = amountInCents / 100;
     const bumpPriceCOP = BUMP_PRICE_IN_CENTS / 100;
     const totalAmountCOP = (getFinalAmount(amountInCents, bumpSelected)) / 100;
-    const originalPriceCOP = 150000;
+    const originalPriceCOP = isPlanOnly ? 30000 : 150000;
 
     const displayCurrentPrice = isInternational
         ? (totalAmountCOP * exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
@@ -232,11 +238,15 @@ const PaymentPage = () => {
         <div className="payment-page">
             <div className="payment-container">
                 <h1 className="payment-title">
-                    Informe avanzado
+                    {isPlanOnly ? 'Plan de Acción' : 'Informe avanzado'}
                 </h1>
                 <p className="payment-description">
-                    <strong style={{ color: '#ddbe3d' }}>Invertir en conocerte es un acto de liderazgo.</strong><br />
-                    Realiza ahora el análisis avanzado y obtén un resultado con mayor claridad.
+                    <strong style={{ color: '#ddbe3d' }}>
+                        {isPlanOnly ? 'Transforma tu conocimiento en resultados tangibles.' : 'Invertir en conocerte es un acto de liderazgo.'}
+                    </strong><br />
+                    {isPlanOnly 
+                        ? 'Obtén tu guía personalizada de implementación de 30 días.' 
+                        : 'Realiza ahora el análisis avanzado y obtén un resultado con mayor claridad.'}
                 </p>
                 <div className="payment-summary dark-theme">
                     <div className="discount-badge">
@@ -259,7 +269,7 @@ const PaymentPage = () => {
                             </p>
                         )}
                         <p className="payment-features-text" style={{ color: '#fff', opacity: 0.9 }}>
-                            {bumpSelected ? 'Análisis Avanzado + Plan de Acción' : 'Análisis Avanzado'} · Pago único
+                            {isPlanOnly ? 'Plan de Acción Estratégico' : (bumpSelected ? 'Análisis Avanzado + Plan de Acción' : 'Análisis Avanzado')} · Pago único
                         </p>
 
                         <div className="savings-text">
@@ -307,18 +317,34 @@ const PaymentPage = () => {
                 </div>
 
                 <ul className="features-list">
-                    <li><CheckCircle size={18} className="check-icon" /> Detalles de tu personalidad</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Reconoce tus miedos y deseos</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Dinámicas de crecimiento</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Formas de tomar decisiones</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Entiende cómo actúas bajo presión</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Consejos para aprovechar tu tipo</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Pasiones y virtudes</li>
-                    <li><CheckCircle size={18} className="check-icon" /> Y mucho más…</li>
+                    {isPlanOnly ? (
+                        <>
+                            <li><CheckCircle size={18} className="check-icon" /> Plan de 30 días</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Matriz de decisiones</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Protocolo bajo presión</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Guía de conversaciones</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Planificación estratégica</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Acciones por eneatipo</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Roadmap de crecimiento</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Y mucho más…</li>
+                        </>
+                    ) : (
+                        <>
+                            <li><CheckCircle size={18} className="check-icon" /> Detalles de tu personalidad</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Reconoce tus miedos y deseos</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Dinámicas de crecimiento</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Formas de tomar decisiones</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Entiende cómo actúas bajo presión</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Consejos para aprovechar tu tipo</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Pasiones y virtudes</li>
+                            <li><CheckCircle size={18} className="check-icon" /> Y mucho más…</li>
+                        </>
+                    )}
                 </ul>
 
-                {/* PREMIUM ORDER BUMP SECTION */}
-                <div className="order-bump-container">
+                {/* PREMIUM ORDER BUMP SECTION - Only show if not plan only */}
+                {!isPlanOnly && (
+                    <div className="order-bump-container">
                     <div className="order-bump-header-image">
                         <img src="/Portada - Plan de Acción-1.jpg" alt="Executive Kit Mockup" className="order-bump-full-image" />
                         <div className="order-bump-badge">OPCIONAL PLAN DE ACCIÓN</div>
@@ -368,6 +394,7 @@ const PaymentPage = () => {
                         </label>
                     </div>
                 </div>
+                )}
 
                 {loading && <p style={{ marginTop: '20px' }}>Cargando pasarela de pago...</p>}
                 {error && <p className="payment-error">{error}</p>}

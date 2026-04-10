@@ -986,6 +986,49 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             </div>
                         )}
 
+                        {/* Order Bump Section: Plan de Acción - Show if NOT paid */}
+                        {!hasPaidForKit && (
+                            <div className="order-bump-container" style={{ marginTop: '40px', background: '#002d44', borderRadius: '20px', overflow: 'hidden', border: '1px solid rgba(221, 190, 61, 0.4)', textAlign: 'left', width: '100%', maxWidth: '500px' }}>
+                                <div className="order-bump-header-image" style={{ width: '100%', position: 'relative' }}>
+                                    <img src="/Portada - Plan de Acción-1.jpg" alt="Plan de Acción" className="order-bump-full-image" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} />
+                                    <div className="order-bump-badge" style={{ position: 'absolute', top: '15px', left: '20px', background: '#ddbe3d', color: '#002d44', padding: '6px 16px', borderRadius: '50px', fontSize: '0.7rem', fontWeight: '900', letterSpacing: '1.5px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)' }}>OPCIONAL PLAN DE ACCIÓN</div>
+                                </div>
+
+                                <div className="order-bump-content" style={{ padding: '30px' }}>
+                                    <h2 className="order-bump-title" style={{ color: '#ffffff', fontSize: '1.45rem', fontWeight: '800', lineHeight: '1.3', marginBottom: '12px' }}>Convierte tu resultado en un Plan de Acción</h2>
+                                    <p className="order-bump-subtitle" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem', lineHeight: '1.4', marginBottom: '20px' }}>Aplica tu resultado en decisiones estratégicas concretas</p>
+
+                                    <div className="order-bump-divider" style={{ height: '1px', background: 'rgba(255, 255, 255, 0.15)', margin: '20px 0' }}></div>
+
+                                    <ul className="order-bump-benefits" style={{ listStyle: 'none', padding: 0, margin: '0 0 25px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ffffff', fontSize: '0.95rem', fontWeight: '500' }}><span style={{ color: '#ddbe3d', fontWeight: '900' }}>✔</span> Plan de implementación de 30 días</li>
+                                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ffffff', fontSize: '0.95rem', fontWeight: '500' }}><span style={{ color: '#ddbe3d', fontWeight: '900' }}>✔</span> Matriz de decisiones estratégicas</li>
+                                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ffffff', fontSize: '0.95rem', fontWeight: '500' }}><span style={{ color: '#ddbe3d', fontWeight: '900' }}>✔</span> Protocolo bajo presión</li>
+                                        <li style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#ffffff', fontSize: '0.95rem', fontWeight: '500' }}><span style={{ color: '#ddbe3d', fontWeight: '900' }}>✔</span> Guia para conversaciones difíciles</li>
+                                    </ul>
+
+                                    <div className="order-bump-pricing-area" style={{ marginTop: '25px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                        <span className="order-bump-old-price" style={{ color: 'rgba(255, 255, 255, 0.4)', textDecoration: 'line-through', fontSize: '1rem' }}>$30.000</span>
+                                        <div className="order-bump-current-price-row" style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                                            <span className="order-bump-new-price" style={{ color: '#ddbe3d', fontSize: '2.2rem', fontWeight: '800' }}>
+                                                $15.000
+                                            </span>
+                                            <span className="order-bump-currency-white" style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: '600', opacity: 0.9 }}>COP</span>
+                                        </div>
+                                    </div>
+                                    <p className="order-bump-price-bottom-note" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', marginTop: '5px', textTransform: 'uppercase', letterSpacing: '1px' }}>Pago único · Acceso inmediato</p>
+                                    
+                                    <button 
+                                        onClick={() => navigate('/payment?mode=plan')}
+                                        className="btn-advanced-finish btn-deepen-primary"
+                                        style={{ width: '100%', maxWidth: '100%', marginTop: '25px' }}
+                                    >
+                                        Adquirir mi Plan de Acción
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
                         {/* Brand footer */}
                         <div className="detailed-brand-footer">
                             <img

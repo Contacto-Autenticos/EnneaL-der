@@ -1,0 +1,341 @@
+/* ──────────────────────────────────────────
+   FASCINANTES ACTION PLAN PDF STYLES
+   Corporate, Balancing, Elegant
+   Colors: Deep Blue #002d44, Yellow #ddbe3d
+   ────────────────────────────────────────── */
+
+.fascinantes-kit-container {
+    font-family: 'Inter', 'Lato', sans-serif;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+    background: #fff;
+    width: 210mm;
+    margin: 0 auto;
+}
+
+/* Page Structure */
+.fascinantes-kit-page {
+    width: 210mm;
+    height: 297mm;
+    padding: 30mm 25mm;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    page-break-after: always;
+}
+
+.fascinantes-kit-header-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25mm;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.fascinantes-kit-header-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+/* Typography */
+.fascinantes-kit-section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #002d44;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #ddbe3d;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Page 1: Portada */
+.fascinantes-kit-page-cover {
+    background: #000000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 15mm 15mm;
+}
+
+.fascinantes-kit-cover-full-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 210mm;
+    height: 297mm;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.fascinantes-kit-cover-content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.fascinantes-kit-cover-header-group {
+    width: 100%;
+}
+
+.fascinantes-kit-serie-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ddbe3d;
+    letter-spacing: 5px;
+    margin-bottom: 5mm;
+    text-transform: uppercase;
+}
+
+.fascinantes-kit-gold-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #ddbe3d 50%, transparent 100%);
+    margin: 3px 0;
+}
+
+.fascinantes-kit-cover-pretitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-top: 5mm;
+    color: #fff;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.fascinantes-kit-cover-title-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.fascinantes-kit-cover-type {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.fascinantes-kit-cover-role {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #f2e6d0;
+    margin: 5px 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.fascinantes-kit-cover-tagline {
+    color: #ddbe3d;
+    font-size: 1.4rem;
+    margin: 10px 0;
+    font-weight: 600;
+    max-width: 80%;
+}
+
+.fascinantes-kit-cover-radar-wrapper {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fascinantes-kit-cover-radar-shadow {
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.8));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fascinantes-kit-cover-radar {
+    width: 450px;
+    height: 450px;
+    object-fit: contain;
+}
+
+.fascinantes-kit-cover-bottom-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fascinantes-kit-cover-manual {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.fascinantes-kit-manual-details {
+    font-size: 1rem;
+    opacity: 0.9;
+    color: #f2e6d0;
+    letter-spacing: 1px;
+}
+
+.fascinantes-kit-cover-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5mm 5mm 0;
+    margin-top: 10px;
+    position: relative;
+}
+
+.fascinantes-kit-cover-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #ddbe3d 50%, transparent 100%);
+}
+
+.fascinantes-kit-footer-left {
+    flex: 1;
+    color: #ddbe3d;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-align: left;
+}
+
+.fascinantes-kit-footer-center img {
+    height: 40px;
+}
+
+.fascinantes-kit-footer-right {
+    flex: 1;
+    text-align: right;
+    color: #ddbe3d;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-left: 1px solid #ddbe3d;
+    padding-left: 10px;
+}
+
+/* Content Pages */
+.fascinantes-kit-step-item {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.fascinantes-kit-step-number {
+    width: 45px;
+    height: 45px;
+    background: #002d44;
+    color: #ddbe3d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.fascinantes-kit-step-content {
+    flex: 1;
+}
+
+.fascinantes-kit-step-title {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: #002d44;
+    margin-bottom: 5px;
+}
+
+.fascinantes-kit-step-desc {
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.fascinantes-kit-expected-result {
+    margin-top: 8px;
+    padding: 8px 15px;
+    background: #fdfaf0;
+    border-left: 4px solid #ddbe3d;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #002d44;
+}
+
+/* Watermark & Footer */
+.fascinantes-kit-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120mm;
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.fascinantes-kit-watermark img {
+    width: 100%;
+}
+
+.fascinantes-kit-page-footer {
+    position: absolute;
+    bottom: 10mm;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fascinantes-kit-page-footer img {
+    height: 35px;
+}
+
+.fascinantes-kit-page-number {
+    position: absolute;
+    bottom: 10mm;
+    right: 15mm;
+    width: 28px;
+    height: 28px;
+    background: #ddbe3d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #002d44;
+    font-weight: 800;
+    font-size: 0.8rem;
+}

@@ -6,20 +6,27 @@ import './Hub.css';
 const Fascinantes = () => {
     const navigate = useNavigate();
     const [completed, setCompleted] = useState(false);
+    const [hasPaid, setHasPaid] = useState(false);
 
     useEffect(() => {
         const storedFascinantesResult = localStorage.getItem('fascinantesAnswers');
+        const storedHasPaid = localStorage.getItem('autodiagPaid');
+        
         setCompleted(!!storedFascinantesResult);
+        setHasPaid(!!storedHasPaid);
     }, []);
+
+    const targetPath = (completed || hasPaid) ? '/autodiag-intro' : '/autodiag-register';
 
     const analysis = {
         id: 'fascinantes',
-        title: 'Autodiagnóstico Fascinantes',
-        description: 'Explora tus 6 dominios vitales con una visión futurista 360°.',
-        path: '/autodiag-intro',
+        title: 'Autodiagnóstico - Rueda de la vida',
+        description: 'Explora tus 6 dominios vitales',
+        path: targetPath,
         completed: completed,
         icon: <ArrowRight size={20} />
     };
+
 
     return (
         <div className="hub-container animate-fade-in">

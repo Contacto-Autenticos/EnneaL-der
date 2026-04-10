@@ -39,7 +39,9 @@ import Fascinantes from './pages/Fascinantes';
 import Trascendentes from './pages/Trascendentes';
 import Genuinos from './pages/Genuinos';
 import Conscientes from './pages/Conscientes';
-
+import AutodiagRegister from './pages/AutodiagRegister';
+import AutodiagPayment from './pages/AutodiagPayment';
+import AutodiagPaymentStatus from './pages/AutodiagPaymentStatus';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -216,7 +218,9 @@ function App() {
         <Route path="/autodiag-transition" element={<FascinantesTransition />} />
         <Route path="/autodiag-result" element={<FascinantesResult />} />
 
-
+        <Route path="/autodiag-register" element={<AutodiagRegister />} />
+        <Route path="/autodiag-payment" element={<AutodiagPayment />} />
+        <Route path="/autodiag-payment-status" element={<AutodiagPaymentStatus />} />
 
         <Route
           path="/test-intro"
