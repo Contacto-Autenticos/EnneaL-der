@@ -19,8 +19,7 @@ const DOMAIN_STYLES = {
 
 
 const getDomainIcon = (domainId) => {
-    const style = DOMAIN_STYLES[domainId] || { color: '#ddbe3d', class: '' };
-    const props = { size: 22, stroke: style.color, strokeWidth: 1.5 };
+    const props = { size: 22, stroke: 'currentColor', strokeWidth: 1.5 };
     
     switch(domainId) {
         case 'corporal': return <User {...props} />;
@@ -127,10 +126,10 @@ const FascinantesResult = () => {
 
         const profiles = {
             POTENCIAL_DORMIDO: {
-                name: "El potencial dormido",
-                insight: "Tienes una estructura interna con un potencial inmenso, pero actualmente estás operando en \"modo ahorro\" o supervivencia.",
-                critical: `Tu puntuación en el dominio ${lowestDomain} indica una fuga de energía masiva que drena tu capacidad de reacción en los demás dominios.`,
-                explanation: "El patrón muestra una falta de bases sólidas. No es falta de capacidad, sino de una estructura que sostenga tus ambiciones. Estás intentando correr sin haber consolidado el suelo que pisas.",
+                name: "Energía en Reconstrucción",
+                insight: "No es falta de capacidad, es un momento de reconstrucción de bases. Actualmente tu energía no está disponible en su máximo nivel.",
+                critical: `Tu puntuación en el dominio ${lowestDomain} indica una fuga de energía significativa que afecta tu capacidad de respuesta global.`,
+                explanation: "Este perfil describe un momento de pausa necesaria. Estás ajustando tus cimientos antes de poder proyectarte con fuerza hacia tus mayores ambiciones.",
                 recommendations: [
                     `Priorizar la recuperación de energía en el dominio ${lowestDomain}.`,
                     "Establecer una rutina mínima viable de 15 minutos diarios.",
@@ -139,10 +138,10 @@ const FascinantesResult = () => {
                 bridge: "Ya identificamos exactamente qué está frenando tu crecimiento. El siguiente paso es trabajar un plan estructurado y personalizado para corregirlo."
             },
             ESTRATEGA_BLOQUEADO: {
-                name: "El estratega bloqueado",
-                insight: "Eres excelente en áreas específicas, pero un \"punto ciego\" severo está actuando como un ancla, impidiendo que tu éxito sea fluido.",
-                critical: `El desbalance en el dominio ${lowestDomain} crea una fricción invisible: cuanto más avanzas en tus fortalezas, más pesado se vuelve este bloqueo.`,
-                explanation: "Tienes la mentalidad de logro, pero descuidas el mantenimiento de tu ecosistema vital. Estás intentando ganar una carrera con un motor potente pero una rueda pinchada.",
+                name: "Desbalance en Expansión",
+                insight: "Refleja que hay crecimiento, pero no de forma integrada. Una parte de tu vida avanza mientras otra requiere atención inmediata.",
+                critical: `El desbalance en el dominio ${lowestDomain} crea una fricción invisible: mientras más creces en tus fortalezas, más se siente el peso de esta desconexión.`,
+                explanation: "Tienes la intención y la mentalidad de expansión, pero el ecosistema vital no está sincronizado. Es momento de unificar el ritmo de tus avances.",
                 recommendations: [
                     "Delegar o sistematizar tareas en tus dominios más fuertes.",
                     `Realizar una "auditoría de fugas" en el dominio ${lowestDomain}.`,
@@ -151,10 +150,10 @@ const FascinantesResult = () => {
                 bridge: "Tu éxito actual es solo una fracción de lo que podrías lograr. Vamos a liberar el ancla con un plan de acción equilibrado."
             },
             OPTIMIZADOR: {
-                name: "El optimizador",
-                insight: "Estás en el nivel de alto rendimiento, pero a estas alturas, las mejoras ya no son estructurales, sino de sintonía fina y ajustes de elite.",
-                critical: `Incluso tú tienes un dominio (${lowestDomain}) que, aunque aceptable, es el único límite entre tu estado actual y la maestría total.`,
-                explanation: "Has construido una vida sólida. Tu patrón indica que estás listo para pasar de \"estar bien\" a \"ser extraordinario\". El riesgo aquí es el estancamiento por comodidad.",
+                name: "Alto Nivel en Evolución",
+                insight: "Ya posees bases sólidas y una estructura coherente. Ahora entras en una etapa de refinamiento y mejora consciente de alto impacto.",
+                critical: `Incluso en este nivel de solidez, el dominio ${lowestDomain} es el punto de ajuste fino que te separa de tu siguiente salto evolutivo.`,
+                explanation: "Has construido una vida armónica y funcional. Tu patrón indica que estás listo para pasar de la eficiencia a la maestría total.",
                 recommendations: [
                     `Identificar el 1% de mejora incremental en el dominio ${lowestDomain}.`,
                     "Buscar un mentor o entorno que desafíe tus estándares actuales.",
@@ -163,10 +162,10 @@ const FascinantesResult = () => {
                 bridge: "Los resultados de elite requieren planes de elite. Vamos a diseñar esos ajustes milimétricos que te llevarán al siguiente nivel."
             },
             EQUILIBRADOR: {
-                name: "El equilibrador",
-                insight: "Tienes una estabilidad envidiable. Tu vida es armónica, pero es posible que te falte ese \"fuego\" o pico de intensidad necesario para un salto cuántico.",
-                critical: `El dominio ${lowestDomain} es tu punto más bajo, pero al ser estable, el riesgo es que pase desapercibido y se convierta en una mediocridad cómoda.`,
-                explanation: "El patrón muestra una gestión equilibrada del tiempo y la energía. Sin embargo, el exceso de equilibrio puede llevar a la falta de impacto o dirección clara.",
+                name: "Estabilidad Consciente",
+                insight: "Reconoce una base armónica y equilibrada. Tienes la estabilidad necesaria para decidir conscientemente hacia dónde deseas expandirte.",
+                critical: `Tu punto más bajo en ${lowestDomain} no es crítico, pero en un entorno de paz, es fácil ignorarlo hasta que se convierte en una limitación.`,
+                explanation: "El patrón muestra una gestión saludable de tu energía. El reto ahora es elegir un propósito mayor que rompa la inercia de la estabilidad.",
                 recommendations: [
                     "Inyectar una meta ambiciosa y desafiante en tu dominio más fuerte.",
                     `Fortalecer proactivamente el dominio ${lowestDomain} antes de que surja una crisis.`,
@@ -175,10 +174,10 @@ const FascinantesResult = () => {
                 bridge: "Tienes el barco estable y el mar en calma. Ahora es el momento de desplegar las velas hacia un destino más ambicioso."
             },
             CONSTANTE_SIN_DIRECCION: {
-                name: "El constante sin dirección",
-                insight: "Trabajas duro y te mantienes activo, pero sientes que avanzas mucho sin llegar realmente a ninguna parte significativa.",
-                critical: `El dominio ${lowestDomain} está absorbiendo recursos que deberían usarse para dar dirección y propósito a tu esfuerzo constante.`,
-                explanation: "Tu patrón es el del \"taller abierto\": muchas áreas en mantenimiento pero ninguna terminada de optimizar. Te falta un eje central que unifique tus esfuerzos.",
+                name: "Movimiento en Búsqueda",
+                insight: "Valoras la acción y el esfuerzo constante, pero tu patrón muestra que aún falta un eje claro que le dé dirección y propósito a todo ese movimiento.",
+                critical: `El dominio ${lowestDomain} está absorbiendo recursos que, si se canalizaran correctamente, darían sentido y dirección a tus esfuerzos.`,
+                explanation: "Eres una persona de acción, pero tu energía está dispersa en múltiples frentes. Necesitas unificar tu visión para que cada paso cuente.",
                 recommendations: [
                     "Definir una \"Prioridad Maestra\" para los próximos 90 días.",
                     "Limitar tus frentes de batalla: enfócate solo en 2 dominios clave.",
@@ -782,7 +781,7 @@ const FascinantesResult = () => {
 
     return (
         <div className="fascinantes-result-page">
-            <div className="futuristic-overlay"></div>
+            {/* Futuristic overlay removed for light theme */}
             
             <div className="result-content animate-fade-in" ref={reportRef}>
                 <header className="result-header">
@@ -806,9 +805,7 @@ const FascinantesResult = () => {
                             return (
                                 <div className="expert-card glass">
                                     <div className="expert-header">
-                                        <div className="expert-profile-badge">
-                                            <Zap size={14} /> PERFIL
-                                        </div>
+
                                         <h2 className="expert-profile-name">{analysis.name}</h2>
                                     </div>
 
@@ -818,7 +815,7 @@ const FascinantesResult = () => {
 
                                     <div className="expert-grid">
                                         <div className="expert-section critical-section">
-                                            <div className="expert-label">⚠️ PUNTO CRÍTICO</div>
+                                            <div className="expert-label">⚠️ REQUIERE ATENCIÓN</div>
                                             <p className="expert-text">{analysis.critical}</p>
                                         </div>
 
@@ -854,43 +851,40 @@ const FascinantesResult = () => {
                     return (
                         <div className="interpretations-grid">
                             {[...domainScores]
-                                .sort((a, b) => a.score - b.score)
+                                .sort((a, b) => b.score - a.score)
                                 .map((score) => {
                                     const isMin = score.score === minScore;
 
                                     return (
                                         <div 
                                             key={score.id} 
-                                            className={`domain-result-card glass clickable ${isMin ? 'neon-highest' : ''}`}
+                                            className={`domain-result-card glass clickable`}
                                             onClick={() => setSelectedDomain(score)}
                                         >
                                             <div className="domain-top" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '5px' }}>
                                                 {isMin && (
                                                     <span style={{ 
-                                                        fontSize: '0.65rem', 
-                                                        fontWeight: '900', 
-                                                        color: '#ff3131', 
-                                                        background: 'rgba(255, 49, 49, 0.1)',
-                                                        padding: '2px 8px',
-                                                        borderRadius: '4px',
+                                                        fontSize: '0.75rem', 
+                                                        fontWeight: '800', 
+                                                        color: '#ddbe3d', 
                                                         marginBottom: '5px',
-                                                        display: 'inline-flex',
+                                                        display: 'flex',
+                                                        width: '100%',
+                                                        justifyContent: 'flex-start',
                                                         alignItems: 'center',
-                                                        gap: '4px',
-                                                        border: '1px solid rgba(255, 49, 49, 0.2)'
+                                                        gap: '6px'
                                                     }}>
-                                                        ⚠️ DOMINIO CRÍTICO
+                                                        ⚠️ Atención
                                                     </span>
                                                 )}
                                                 <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
                                                     <div className="domain-info-header">
                                                         <span className="domain-result-icon" style={{ 
-                                                            color: isMin ? score.style.color : '#666',
-                                                            filter: isMin ? 'drop-shadow(0 0 5px currentColor)' : 'none'
+                                                            color: '#888'
                                                         }}>
                                                             {getDomainIcon(score.id)}
                                                         </span>
-                                                        <h3 style={{ color: isMin ? score.style.color : '#888' }}>
+                                                        <h3 style={{ color: '#888' }}>
                                                             {score.domain}
                                                         </h3>
                                                     </div>
@@ -931,7 +925,7 @@ const FascinantesResult = () => {
 
                 <div className="post-note-cta animate-fade-in" style={{ textAlign: 'center', marginTop: '30px', padding: '0 20px' }}>
                     <p style={{ 
-                        color: '#fff', 
+                        color: '#111827', 
                         fontSize: '1.2rem', 
                         fontWeight: '600', 
                         lineHeight: '1.4',
@@ -957,7 +951,7 @@ const FascinantesResult = () => {
                             padding: '16px 28px'
                         }}
                     >
-                        <Lock size={20} /> {isDownloadingActionPlan ? 'GENERANDO...' : 'VER MI PLAN DE ACCIÓN'}
+                        <Eye size={20} /> {isDownloadingActionPlan ? 'GENERANDO...' : 'VER MI PLAN DE ACCIÓN'}
                     </button>
                 </div>
 
@@ -1060,9 +1054,9 @@ const FascinantesResult = () => {
                 </div>
             )}
             
-            <div className="result-footer-minimal">
-                <img src="/Logo-Blanco.png" alt="Auténticos" />
-            </div>
+            <footer className="result-footer-minimal">
+                <img src="/logo-azul.png" alt="Auténticos" />
+            </footer>
 
             {/* Hidden template for PDF generation */}
             <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>

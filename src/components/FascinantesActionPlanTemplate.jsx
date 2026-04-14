@@ -72,7 +72,6 @@ const FascinantesActionPlanTemplate = () => {
 
                     <div className="fascinantes-kit-cover-title-group">
                         <h1 className="fascinantes-kit-cover-type">FASCINANTES</h1>
-                        <h2 className="fascinantes-kit-cover-role">Equilibrio & Vitalidad del Líder</h2>
                         <p className="fascinantes-kit-cover-tagline">
                             Asegurando el equilibrio integral para un liderazgo sostenible
                         </p>
@@ -92,14 +91,12 @@ const FascinantesActionPlanTemplate = () => {
                         </div>
                         
                         <div className="fascinantes-kit-cover-footer">
-                            <div className="fascinantes-kit-footer-left">
-                                DOCUMENTO ESTRATÉGICO
+                            <div className="fascinantes-kit-footer-info">
+                                <p>Documento estratégico</p>
+                                <p>Archivo confidencial</p>
                             </div>
                             <div className="fascinantes-kit-footer-center">
                                 <img src="/Logo-Blanco.png" alt="Logo Auténticos" />
-                            </div>
-                            <div className="fascinantes-kit-footer-right">
-                                ARCHIVO CONFIDENCIAL
                             </div>
                         </div>
                     </div>

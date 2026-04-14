@@ -15,42 +15,77 @@ const FascinantesTest = () => {
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [activeScreen, setActiveScreen] = useState(null);
 
+    // Keyboard Navigation
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            // Numeric keys 1-5 for answers (only when not on a transition screen)
+            if (!activeScreen && /^[1-5]$/.test(e.key)) {
+                handleAnswer(parseInt(e.key));
+                return;
+            }
+
+            // Enter key to advance
+            if (e.key === 'Enter') {
+                if (activeScreen) {
+                    goToNext();
+                } else if (answers[currentQuestion.id] && currentIndex < fascinantesQuestions.length - 1) {
+                    goToNext();
+                } else if (currentIndex === fascinantesQuestions.length - 1 && Object.keys(answers).length === fascinantesQuestions.length) {
+                    handleSubmit();
+                }
+                return;
+            }
+
+            // Arrow navigation
+            if (!activeScreen) {
+                if (e.key === 'ArrowRight' && answers[currentQuestion.id]) {
+                    goToNext();
+                } else if (e.key === 'ArrowLeft') {
+                    goToPrev();
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentIndex, answers, activeScreen]);
+
     const PROGRESS_SCREENS = {
         // Motivación cada 10 (10, 30, 50, 70, 90, 110)
         10: {
             type: 'motivation',
-            title: 'Estás dando el primer paso hacia un mayor nivel de conciencia.',
-            text: 'Cada respuesta revela patrones que normalmente pasan desapercibidos.',
+            title: 'Estás reconociendo algunos aspectos importantes de tu dominio corporal.',
+            text: 'Recuerda contestar de la forma más honesta posible.',
             button: 'Continuar'
         },
         30: {
             type: 'motivation',
-            title: 'No se trata de responder perfecto, sino de responder honesto.',
-            text: 'Ahí es donde comienza el verdadero cambio.',
+            title: 'El verdadero cambio comienza cuando somos capaces de observarnos de manera honesta.',
+            text: 'Continúa el ejercicio, consciente de que este resultado es el insumo que necesitas para evolucionar.',
             button: 'Seguir avanzando'
         },
         50: {
             type: 'motivation',
-            title: 'Ya has recorrido más de lo que la mayoría logra.',
-            text: 'Tu nivel de compromiso ya está marcando la diferencia.',
+            title: 'Has logrado avanzar muy bien.',
+            text: 'Continúa el proceso respondiendo de manera honesta.',
             button: 'Continuar el proceso'
         },
         70: {
             type: 'motivation',
-            title: 'Estás entrando en una zona más profunda de tu autoconocimiento.',
-            text: 'Mantente presente en cada respuesta.',
+            title: 'Las relaciones son una parte fundamental de la vida, y su calidad contribuirá a tu crecimiento personal y profesional.',
+            text: 'Continúa con la misma concentración.',
             button: 'Continuar'
         },
         90: {
             type: 'motivation',
-            title: 'Estás muy cerca de descubrir una visión más clara de ti mismo.',
-            text: 'Lo que sigue puede sorprenderte.',
+            title: '“Conocerte a ti mismo es, quizá, una de las estrategias más poderosas para el desarrollo personal, y eso es precisamente lo que estás haciendo aquí.',
+            text: 'Continua con por ese camino.',
             button: 'Seguir'
         },
         110: {
             type: 'motivation',
-            title: 'Último tramo.',
-            text: 'Aquí es donde todo comienza a tomar forma.',
+            title: 'Ya estás a pocas preguntas de terminar.',
+            text: 'Pronto tendrás un instrumento de autoevaluación muy poderoso.',
             button: 'Finalizar test'
         },
         // Descanso cada 20 (20, 40, 60, 80, 100)
@@ -59,7 +94,7 @@ const FascinantesTest = () => {
             title: 'Puedes tomar un momento para respirar.',
             text: 'Este proceso no es una carrera, es un espacio para ti.',
             instruction: '“Respira profundo 3 veces antes de continuar”',
-            subtext: 'Cuando estés listo, continuamos.',
+            subtext: 'Cuando estés listo, continuamos con el dominio mental.',
             button: 'Continuar'
         },
         40: {
@@ -67,7 +102,7 @@ const FascinantesTest = () => {
             title: 'Estás avanzando muy bien.',
             text: 'Detenerte unos segundos también hace parte del proceso.',
             instruction: '“Respira profundo 3 veces antes de continuar”',
-            subtext: 'Vuelve cuando te sientas enfocado.',
+            subtext: 'Vuelve cuando te sientas enfocado y pasamos al dominio emocional.',
             button: 'Seguir'
         },
         60: {
@@ -75,7 +110,7 @@ const FascinantesTest = () => {
             title: 'Has llegado a la mitad del camino.',
             text: 'Lo que has respondido ya contiene información valiosa sobre ti.',
             instruction: '“Respira profundo 3 veces antes de continuar”',
-            subtext: 'Lo que sigue te dará aún más claridad.',
+            subtext: ' Pasemos ahora al dominio social, el de las relaciones.',
             button: 'Continuar'
         },
         80: {
@@ -83,7 +118,7 @@ const FascinantesTest = () => {
             title: 'Estás sosteniendo el proceso con intención.',
             text: 'Eso ya habla de un nivel de conciencia superior.',
             instruction: '“Respira profundo 3 veces antes de continuar”',
-            subtext: 'Tómate un momento antes de continuar.',
+            subtext: 'Tómate un momento antes de continuar con el dominio espiritual.',
             button: 'Seguir'
         },
         100: {
@@ -91,7 +126,7 @@ const FascinantesTest = () => {
             title: 'Estás a punto de completar el proceso.',
             text: 'Lo que descubrirás integrará todo lo que has respondido.',
             instruction: '“Respira profundo 3 veces antes de continuar”',
-            subtext: 'Último esfuerzo.',
+            subtext: 'Pasaremos ahora al dominio financiero.',
             button: 'Continuar'
         }
     };

@@ -60,8 +60,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
 
     return (
         <g transform={`translate(${labelX},${labelY})`}>
-            {/* Subtle glow circle behind icon */}
-            <circle r="16" fill={style.color} fillOpacity="0.12" />
+
 
             {/* Pure SVG Icon container */}
             <g transform="translate(-15, -15)">
@@ -69,7 +68,6 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                     size={30} 
                     stroke={style.color} 
                     strokeWidth={2.2} 
-                    style={{ filter: `drop-shadow(0 0 5px ${style.color})` }} 
                 />
             </g>
 
@@ -87,7 +85,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                 <tspan 
                     x={textX} 
                     dy={domainId === 'social' ? '1.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
-                    fill="rgba(255,255,255,0.6)"
+                    fill="rgba(0,0,0,0.5)"
                     fontSize="13px"
                     fontWeight="700"
                     letterSpacing="1px"
@@ -97,7 +95,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                 <tspan 
                     x={textX} 
                     dy="1.2em"
-                    fill="#fff"
+                    fill="#003049"
                     fontSize="15px"
                     fontWeight="800"
                     letterSpacing="0.5px"
@@ -142,7 +140,7 @@ const FascinantesRadar = ({ data }) => {
     const radarRadius = isMobile ? "90%" : "70%";
 
     return (
-        <div className="fascinantes-radar-container" style={{ width: '100%', height: 720, background: 'rgba(0, 18, 29, 0.4)', borderRadius: '30px', padding: '40px', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 25px 50px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(20px)', position: 'relative' }}>
+        <div className="fascinantes-radar-container" style={{ width: '100%', height: 720, background: '#ffffff', borderRadius: '30px', padding: '40px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)', position: 'relative' }}>
             <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
                     <defs>
@@ -152,14 +150,14 @@ const FascinantesRadar = ({ data }) => {
                             <stop offset="100%" stopColor="#8a6d00" stopOpacity={0.5} />
                         </radialGradient>
                     </defs>
-                    <PolarGrid polarLines={false} stroke="rgba(255,255,255,0.1)" />
+                    <PolarGrid polarLines={false} stroke="rgba(0,0,0,0.1)" />
                     {/* Background depth levels - Tonal regions without outlines */}
                     {[100, 75, 50, 25].map((level, index) => (
                         <Radar
                             key={`bg-${level}`}
                             dataKey={() => level}
                             stroke="none"
-                            fill={`rgba(255,255,255,${0.02 + index * 0.02})`}
+                            fill={`rgba(0,0,0,${0.03 - index * 0.005})`}
                             fillOpacity={1}
                             isAnimationActive={false}
                             dot={false}

@@ -222,27 +222,26 @@
     background: linear-gradient(90deg, transparent 0%, #ddbe3d 50%, transparent 100%);
 }
 
-.fascinantes-kit-footer-left {
+.fascinantes-kit-footer-info {
     flex: 1;
-    color: #ddbe3d;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
     text-align: left;
+}
+
+.fascinantes-kit-footer-info p {
+    margin: 0;
+    color: #ddbe3d;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: none; /* Sentence case is handled in JSX */
 }
 
 .fascinantes-kit-footer-center img {
     height: 40px;
-}
-
-.fascinantes-kit-footer-right {
-    flex: 1;
-    text-align: right;
-    color: #ddbe3d;
-    font-size: 0.7rem;
-    font-weight: 700;
-    border-left: 1px solid #ddbe3d;
-    padding-left: 10px;
 }
 
 /* Content Pages */

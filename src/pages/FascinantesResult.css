@@ -1,7 +1,10 @@
 .fascinantes-result-page {
     min-height: 100vh;
-    background: #00121d;
-    color: white;
+    background-image: url("/Montañas 02.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #003049;
     padding: 15px 20px 40px;
     position: relative;
     overflow-x: hidden;
@@ -26,7 +29,7 @@
     font-size: 2.5rem;
     font-weight: 900;
     letter-spacing: 5px;
-    color: #ddbe3d;
+    color: #003049;
     margin: 10px 0 20px;
 }
 
@@ -52,9 +55,9 @@
 .domain-result-card {
     padding: 25px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 10, 0.05);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -95,7 +98,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: drop-shadow(0 0 5px currentColor);
 }
 
 .domain-top h3 {
@@ -116,9 +118,9 @@
     padding: 4px 12px;
     border-radius: 6px;
     text-transform: uppercase;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #6b7280;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
 }
 
@@ -146,12 +148,12 @@
 .score-num {
     font-size: 0.85rem;
     font-weight: 800;
-    color: #fff;
+    color: #003049;
 }
 
 .domain-definition {
     font-size: 0.85rem;
-    color: #aaa;
+    color: #4b5563;
     line-height: 1.5;
 }
 
@@ -179,9 +181,9 @@
 }
 
 .btn-action.tertiary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: white;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #003049;
 }
 
 .btn-action.secondary {
@@ -191,9 +193,9 @@
 }
 
 .btn-action.primary {
-    background: white;
-    color: #00121d;
-    border: none;
+    background: #ffffff;
+    color: #003049;
+    border: 1px solid #00121d;
 }
 
 .btn-action:hover {
@@ -265,8 +267,8 @@
     width: 100%;
     max-width: 700px;
     max-height: 85vh;
-    background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 24px;
     display: flex;
     flex-direction: column;
@@ -306,7 +308,7 @@
 .btn-close-modal {
     background: rgba(255, 255, 255, 0.05);
     border: none;
-    color: white;
+    color: #003049;
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -376,7 +378,7 @@
 
 .q-text {
     font-size: 0.95rem;
-    color: #eee;
+    color: #003049;
     line-height: 1.5;
     margin: 0;
 }
@@ -399,7 +401,7 @@
     justify-content: center;
     font-weight: 900;
     font-size: 1.1rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: #f9fafb;
 }
 
 .answer-label-text {
@@ -441,9 +443,9 @@
 }
 
 .important-note-card {
-    background: linear-gradient(135deg, #0d2535 0%, #070f14 100%);
+    background: #f8fafc;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     border-left: 8px solid #ddbe3d;
     padding: 25px 30px;
     margin-top: 0;
@@ -451,7 +453,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .note-icon {
@@ -465,12 +467,12 @@
 .note-text {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #fff;
+    color: #4b5563;
     margin: 0;
 }
 
 .note-text strong {
-    color: #ddbe3d;
+    color: #c29d0b;
     text-transform: uppercase;
     font-weight: 800;
 }
@@ -557,11 +559,11 @@
 .expert-card {
     padding: 40px;
     border-radius: 30px;
-    background: linear-gradient(135deg, rgba(13, 37, 53, 0.7) 0%, rgba(7, 15, 20, 0.8) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     border-left: 6px solid #ddbe3d;
     text-align: left;
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
 }
 
 .expert-header {
@@ -609,7 +611,7 @@
 .expert-insight-text {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #fff;
+    color: #003049;
     line-height: 1.4;
     margin: 0;
 }
@@ -622,13 +624,13 @@
 
 .expert-text {
     font-size: 0.95rem;
-    color: #ccc;
+    color: #4b5563;
     line-height: 1.6;
     margin: 0;
 }
 
 .critical-section .expert-text {
-    color: #ffcccc;
+    color: #4b5563;
 }
 
 .expert-list {
@@ -645,7 +647,7 @@
     align-items: flex-start;
     gap: 12px;
     font-size: 0.95rem;
-    color: #eee;
+    color: #4b5563;
     line-height: 1.4;
 }
 
@@ -665,7 +667,7 @@
 .expert-conversion-text {
     font-size: 1rem;
     font-weight: 600;
-    color: #fff;
+    color: #003049;
     line-height: 1.5;
     font-style: italic;
 }
