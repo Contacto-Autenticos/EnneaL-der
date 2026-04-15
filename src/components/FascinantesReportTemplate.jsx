@@ -38,8 +38,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis }, ref) =
                 </header>
 
                 <div className="pdf-radar-container">
-                    <div style={{ width: '600px', height: '500px' }}>
-                        <FascinantesRadar data={domainScores} height={500} radius="50%" />
+                    <div style={{ width: '800px', height: '500px' }}>
+                        <FascinantesRadar data={domainScores} height={500} radius="60%" isPDF={true} />
                     </div>
                 </div>
 

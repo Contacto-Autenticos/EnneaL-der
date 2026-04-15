@@ -425,9 +425,6 @@
         height: 480px !important;
         padding: 20px !important;
     }
-    .radar-label-text {
-        display: none !important;
-    }
     .modal-header { padding: 20px; }
     .modal-body { padding: 15px 20px; }
     .modal-header h2 { font-size: 1.2rem; }

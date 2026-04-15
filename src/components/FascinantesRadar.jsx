@@ -15,7 +15,7 @@ const DOMAIN_STYLES = {
     financiero: { color: '#d500f9', Icon: TrendingUp }
 };
 
-const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
+const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
     const domainId = payload.value.toLowerCase().replace('dominio ', '');
     const style = DOMAIN_STYLES[domainId] || { color: '#ddbe3d', Icon: Zap };
     const { Icon } = style;
@@ -27,7 +27,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
 
     // Calculate angle from center to push labels OUTSIDE the radar
     const angle = Math.atan2(y - cy, x - cx);
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+    const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
     
     // Adjusted repulsion for better mobile view
     const repulsion = isMobile ? 17 : 30; 
@@ -71,38 +71,41 @@ const CustomTick = ({ payload, x, y, cx, cy, index, ...props }) => {
                 />
             </g>
 
-            {/* Two-line label text */}
-            <text 
-                x={textX} 
-                y={textY} 
-                textAnchor={anchor}
-                className="radar-label-text"
-                style={{ 
-                    fontFamily: 'Inter, sans-serif',
-                    pointerEvents: 'none'
-                }}
-            >
-                <tspan 
+            {/* Two-line label text - Only show on desktop or when forced (PDF) */}
+            {(!isMobile || isPDF) && (
+                <text 
                     x={textX} 
-                    dy={domainId === 'social' ? '1.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
-                    fill="rgba(0,0,0,0.5)"
-                    fontSize="13px"
-                    fontWeight="700"
-                    letterSpacing="1px"
+                    y={textY} 
+                    textAnchor={anchor}
+                    className={isPDF ? "pdf-label-visible" : "radar-label-text"}
+                    style={{ 
+                        fontFamily: 'Inter, sans-serif',
+                        pointerEvents: 'none',
+                        display: 'block'
+                    }}
                 >
-                    {line1}
-                </tspan>
-                <tspan 
-                    x={textX} 
-                    dy="1.2em"
-                    fill="#003049"
-                    fontSize="15px"
-                    fontWeight="800"
-                    letterSpacing="0.5px"
-                >
-                    {line2}
-                </tspan>
-            </text>
+                    <tspan 
+                        x={textX} 
+                        dy={domainId === 'social' ? '1.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
+                        fill={isPDF ? "#6b7280" : "rgba(0,0,0,0.5)"}
+                        fontSize="13px"
+                        fontWeight="700"
+                        letterSpacing="1px"
+                    >
+                        {line1}
+                    </tspan>
+                    <tspan 
+                        x={textX} 
+                        dy="1.2em"
+                        fill="#003049"
+                        fontSize="15px"
+                        fontWeight="800"
+                        letterSpacing="0.5px"
+                    >
+                        {line2}
+                    </tspan>
+                </text>
+            )}
         </g>
     );
 };
@@ -135,8 +138,8 @@ const CustomLabel = ({ x, y, value }) => {
     );
 };
 
-const FascinantesRadar = ({ data, height = 720, radius }) => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
+    const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
     const radarRadius = radius || (isMobile ? "90%" : "70%");
 
     return (
@@ -176,7 +179,7 @@ const FascinantesRadar = ({ data, height = 720, radius }) => {
 
                     <PolarAngleAxis 
                         dataKey="domain" 
-                        tick={<CustomTick />}
+                        tick={<CustomTick isPDF={isPDF} />}
                     />
                     <PolarRadiusAxis 
                         angle={30} 

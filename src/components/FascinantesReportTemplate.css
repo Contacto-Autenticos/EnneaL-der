@@ -232,3 +232,15 @@
 .pdf-footer img {
     height: 60px;
 }
+
+/* Force visibility of radar labels in PDF even on mobile devices */
+.fascinantes-pdf-template .radar-label-text,
+.fascinantes-pdf-template .pdf-label-visible {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.pdf-radar-container svg {
+    overflow: visible !important;
+}
