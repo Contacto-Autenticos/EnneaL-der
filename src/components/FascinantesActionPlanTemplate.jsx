@@ -91,12 +91,14 @@ const FascinantesActionPlanTemplate = () => {
                         </div>
                         
                         <div className="fascinantes-kit-cover-footer">
-                            <div className="fascinantes-kit-footer-info">
+                            <div className="fascinantes-kit-footer-left">
                                 <p>Documento estratégico</p>
-                                <p>Archivo confidencial</p>
                             </div>
                             <div className="fascinantes-kit-footer-center">
                                 <img src="/Logo-Blanco.png" alt="Logo Auténticos" />
+                            </div>
+                            <div className="fascinantes-kit-footer-right">
+                                <p>Archivo confidencial</p>
                             </div>
                         </div>
                     </div>
@@ -145,7 +147,7 @@ const FascinantesActionPlanTemplate = () => {
                     ))}
                 </div>
 
-                <div className="fascinantes-kit-page-integration" style={{ marginTop: 'auto', paddingBottom: '30mm' }}>
+                <div className="fascinantes-kit-page-integration" style={{ marginTop: 'auto', paddingBottom: '15mm' }}>
                     <p style={{ fontStyle: 'italic', textAlign: 'center', color: '#002d44', lineHeight: '1.6' }}>
                         "El autoconocimiento no cambia tu vida.<br />
                         Las decisiones que tomas a partir de él, sí."

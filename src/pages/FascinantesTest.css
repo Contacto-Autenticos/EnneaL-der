@@ -392,12 +392,12 @@
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 10px;
-    box-shadow: 0 10px 25px rgba(221, 190, 61, 0.3);
+    box-shadow: none;
 }
 
 .screen-continue-btn:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(221, 190, 61, 0.4);
+    box-shadow: none;
 }
 .intro-footer-small {
     margin-top: 40px;

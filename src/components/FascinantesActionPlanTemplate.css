@@ -18,7 +18,7 @@
 .fascinantes-kit-page {
     width: 210mm;
     height: 297mm;
-    padding: 30mm 25mm;
+    padding: 25mm 25mm;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
@@ -49,10 +49,10 @@
 .fascinantes-kit-section-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 1.8rem;
+    font-size: 1.55rem;
     color: #002d44;
     text-transform: uppercase;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     border-bottom: 2px solid #ddbe3d;
     padding-bottom: 10px;
     display: inline-block;
@@ -222,22 +222,36 @@
     background: linear-gradient(90deg, transparent 0%, #ddbe3d 50%, transparent 100%);
 }
 
-.fascinantes-kit-footer-info {
+.fascinantes-kit-footer-left,
+.fascinantes-kit-footer-right {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 4px;
+}
+
+.fascinantes-kit-footer-left {
     text-align: left;
 }
 
-.fascinantes-kit-footer-info p {
+.fascinantes-kit-footer-right {
+    text-align: right;
+}
+
+.fascinantes-kit-footer-left p,
+.fascinantes-kit-footer-right p {
     margin: 0;
     color: #ddbe3d;
     font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: none; /* Sentence case is handled in JSX */
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.fascinantes-kit-footer-center {
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 0 20px;
 }
 
 .fascinantes-kit-footer-center img {
@@ -246,15 +260,15 @@
 
 /* Content Pages */
 .fascinantes-kit-step-item {
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     display: flex;
     gap: 20px;
     align-items: flex-start;
 }
 
 .fascinantes-kit-step-number {
-    width: 45px;
-    height: 45px;
+    width: 38px;
+    height: 38px;
     background: #002d44;
     color: #ddbe3d;
     border-radius: 50%;
@@ -262,7 +276,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     flex-shrink: 0;
     margin-top: 5px;
 }
@@ -273,22 +287,22 @@
 
 .fascinantes-kit-step-title {
     font-weight: 800;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     color: #002d44;
     margin-bottom: 5px;
 }
 
 .fascinantes-kit-step-desc {
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     color: #444;
 }
 
 .fascinantes-kit-expected-result {
     margin-top: 8px;
-    padding: 8px 15px;
+    padding: 6px 15px;
     background: #fdfaf0;
     border-left: 4px solid #ddbe3d;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #002d44;
 }

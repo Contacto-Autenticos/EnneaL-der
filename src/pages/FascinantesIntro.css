@@ -38,7 +38,7 @@
 .fascinantes-logo-img {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 0 8px rgba(221, 190, 61, 0.2));
+    filter: none;
 }
 
 .fascinantes-main-title {
@@ -123,14 +123,14 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 0 20px rgba(221, 190, 61, 0.4);
+    box-shadow: none;
     transition: all 0.3s;
     margin: 0 auto 20px;
 }
 
 .btn-start-fascinantes:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 40px rgba(221, 190, 61, 0.6);
+    box-shadow: none;
 }
 
 

@@ -135,12 +135,21 @@ const CustomLabel = ({ x, y, value }) => {
     );
 };
 
-const FascinantesRadar = ({ data }) => {
+const FascinantesRadar = ({ data, height = 720, radius }) => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = isMobile ? "90%" : "70%";
+    const radarRadius = radius || (isMobile ? "90%" : "70%");
 
     return (
-        <div className="fascinantes-radar-container" style={{ width: '100%', height: 720, background: '#ffffff', borderRadius: '30px', padding: '40px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)', position: 'relative' }}>
+        <div className="fascinantes-radar-container" style={{ 
+            width: '100%', 
+            height: height, 
+            background: '#ffffff', 
+            borderRadius: '30px', 
+            padding: '20px', 
+            border: '1px solid rgba(0,0,0,0.05)', 
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)', 
+            position: 'relative' 
+        }}>
             <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
                     <defs>

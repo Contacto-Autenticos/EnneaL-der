@@ -6,6 +6,7 @@ import FascinantesRadar from '../components/FascinantesRadar';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import FascinantesActionPlanTemplate from '../components/FascinantesActionPlanTemplate';
+import FascinantesReportTemplate from '../components/FascinantesReportTemplate';
 import './FascinantesResult.css';
 
 const DOMAIN_STYLES = {
@@ -45,6 +46,7 @@ const FascinantesResult = () => {
     const radarRef = React.useRef(null);
     const reportRef = React.useRef(null);
     const actionPlanRef = React.useRef(null);
+    const reportTemplateRef = React.useRef(null);
 
     useEffect(() => {
         const storedAnswers = localStorage.getItem('fascinantesAnswers');
@@ -457,272 +459,55 @@ const FascinantesResult = () => {
     };
 
     const handleDownloadPDF = async () => {
-        if (!reportRef.current || isDownloading) return;
+        if (!reportTemplateRef.current || isDownloading) return;
         setIsDownloading(true);
 
-        // Map real SVG physical dimensions to the viewBox inside the clone
-        const liveSvg = reportRef.current.querySelector('.fascinantes-radar-container svg');
-        let realSvgW = 800; let realSvgH = 720;
-        if (liveSvg) {
-            const rect = liveSvg.getBoundingClientRect();
-            realSvgW = rect.width;
-            realSvgH = rect.height;
-        }
+        const bgColor = '#ffffff';
 
         try {
-            const element = reportRef.current;
-            const captureWidth = 1000;
-            // Get actual height to ensure the canvas is large enough
-            const captureHeight = element.scrollHeight + 100;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = 210;
+            const pdfHeight = 297;
+            const template = reportTemplateRef.current;
+            
+            // Temporary show template for capture (it's at left -9999px anyway)
+            template.style.left = '0';
+            template.style.opacity = '1';
 
-            const canvas = await html2canvas(element, {
-                backgroundColor: '#00121d',
-                scale: 2.5, // slightly lower for better memory stability on mobile
+            // --- PAGE 1 ---
+            const page1 = template.querySelector('#pdf-page-1');
+            const canvas1 = await html2canvas(page1, {
+                backgroundColor: bgColor,
+                scale: 3.5, // High Resolution
                 useCORS: true,
-                imageTimeout: 15000, // wait up to 15s for resources
-                windowWidth: captureWidth,
-                width: captureWidth,
-                height: captureHeight,
-                scrollX: 0,
-                scrollY: 0,
-                x: 0,
-                y: 0,
-                onclone: (clonedDoc) => {
-                    const clonedContent = clonedDoc.querySelector('.result-content');
-                    if (clonedContent) {
-                        const themeBlue = '#00121d'; // App's Dark Blue for thematic consistency
-                        const themeGold = '#ffd700'; // Vibrant Gold
-                        const bgColor = '#00121d'; 
-                        
-                        // Force rigid width that matches the capture viewport
-                        clonedContent.style.setProperty('width', '1000px', 'important');
-                        clonedContent.style.setProperty('min-width', '1000px', 'important');
-                        clonedContent.style.setProperty('margin', '0', 'important');
-                        clonedContent.style.setProperty('padding', '50px', 'important'); // Balanced padding
-                        clonedContent.style.setProperty('box-sizing', 'border-box', 'important');
-                        clonedContent.style.setProperty('background', '#00121d', 'important');
-                        clonedContent.style.setProperty('display', 'block', 'important');
-                        clonedContent.style.setProperty('color-scheme', 'dark', 'important');
-                        clonedContent.style.setProperty('filter', 'none', 'important');
-                        clonedContent.style.setProperty('box-shadow', 'none', 'important');
-                        clonedContent.style.setProperty('overflow', 'visible', 'important');
-
-                        const title = clonedContent.querySelector('h1');
-                        if (title) {
-                            title.style.setProperty('color', '#ffd700', 'important'); // Vibrant gold for better contrast on blue
-                            title.style.setProperty('text-align', 'center', 'important');
-                            title.style.setProperty('width', '100%', 'important');
-                            title.style.setProperty('margin-bottom', '30px', 'important');
-                        }
-
-                        const radarSection = clonedContent.querySelector('.radar-section');
-                        if (radarSection) {
-                            // Use theme blue instead of black
-                            radarSection.style.setProperty('background', '#00121d', 'important'); 
-                            radarSection.style.setProperty('background-color', '#00121d', 'important');
-                            radarSection.style.setProperty('border-left', `12px solid ${themeGold}`, 'important');
-                            radarSection.style.setProperty('backdrop-filter', 'none', 'important');
-                            radarSection.style.setProperty('box-shadow', 'none', 'important');
-                            radarSection.style.setProperty('overflow', 'visible', 'important');
-                            radarSection.style.setProperty('margin-bottom', '100px', 'important'); // Separate cards from radar
-
-                            
-                            const radarContainer = radarSection.querySelector('.fascinantes-radar-container');
-                            if (radarContainer) {
-                                radarContainer.style.setProperty('background', 'transparent', 'important');
-                                radarContainer.style.setProperty('box-shadow', 'none', 'important');
-                                radarContainer.style.setProperty('border', 'none', 'important');
-                                radarContainer.style.setProperty('transform', 'none', 'important'); // Remove any historical offset
-                                
-                                // FORCE height and centered layout for PDF capture context
-                                radarContainer.style.setProperty('height', '750px', 'important');
-                                radarContainer.style.setProperty('width', '100%', 'important');
-                                radarContainer.style.setProperty('display', 'flex', 'important');
-                                radarContainer.style.setProperty('justify-content', 'center', 'important');
-                                radarContainer.style.setProperty('overflow', 'visible', 'important');
-                                
-                                const svg = radarContainer.querySelector('svg');
-                                if (svg) {
-                                    // CRITICAL: Force physical width/height so Recharts doesn't render 0x0 in clone
-                                    // Increased width to 950 to avoid label clipping
-                                    svg.setAttribute('width', '950');
-                                    svg.setAttribute('height', '750');
-                                    svg.style.setProperty('width', '950px', 'important');
-                                    svg.style.setProperty('height', '750px', 'important');
-                                    svg.style.setProperty('margin', '0 auto', 'important');
-                                    svg.style.setProperty('display', 'block', 'important');
-                                    svg.style.setProperty('overflow', 'visible', 'important');
-                                    
-                                    // SURGICAL LABEL POSITIONING (Logic from Share feature)
-                                    const textBlocks = svg.querySelectorAll('text');
-                                    textBlocks.forEach(textBlock => {
-                                        Object.assign(textBlock.style, {
-                                            fill: '#ffffff',
-                                            opacity: '1',
-                                            visibility: 'visible',
-                                            display: 'block',
-                                            overflow: 'visible'
-                                        });
-                                        textBlock.setAttribute('overflow', 'visible');
-
-                                        const textContent = textBlock.textContent.trim().toUpperCase();
-                                        const isNumeric = /^\d+$/.test(textContent);
-                                        
-                                        if (isNumeric) {
-                                            textBlock.style.fontWeight = 'bold';
-                                            textBlock.style.fontSize = '12px';
-                                            return; 
-                                        }
-
-                                        const isDomainLabel = textContent.includes('DOMINIO') || 
-                                            ['CORPORAL', 'MENTAL', 'EMOCIONAL', 'SOCIAL', 'ESPIRITUAL', 'FINANCIERO'].some(d => textContent.includes(d));
-
-                                        if (isDomainLabel) {
-                                            Object.assign(textBlock.style, {
-                                                fontWeight: '800',
-                                                fontSize: '10px', 
-                                                textTransform: 'uppercase',
-                                                textAnchor: 'middle'
-                                            });
-                                            const tspans = textBlock.querySelectorAll('tspan');
-                                            
-                                            const isFinanciero = textContent.includes('FINANCIERO');
-                                            const isEspiritual = textContent.includes('ESPIRITUAL');
-                                            const isMental = textContent.includes('MENTAL');
-                                            const isEmocional = textContent.includes('EMOCIONAL');
-                                            const isSocial = textContent.includes('SOCIAL');
-                                            const isCorporal = textContent.includes('CORPORAL');
-
-                                            if (isCorporal) {
-                                                textBlock.setAttribute('x', '0');
-                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '-1.5em'); 
-                                                if (tspans.length === 0) textBlock.setAttribute('dy', '-1.5em');
-                                            } else if (isSocial) {
-                                                textBlock.setAttribute('x', '0');
-                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '1.5em'); 
-                                                if (tspans.length === 0) textBlock.setAttribute('dy', '1.5em');
-                                            } else if (isFinanciero || isEspiritual) {
-                                                textBlock.setAttribute('x', '-80');
-                                                textBlock.style.textAnchor = 'start';
-                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em');
-                                                if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
-                                            } else if (isMental || isEmocional) {
-                                                textBlock.setAttribute('x', '80');
-                                                textBlock.style.textAnchor = 'end';
-                                                if (tspans.length > 0) tspans[0].setAttribute('dy', '3.5em');
-                                                if (tspans.length === 0) textBlock.setAttribute('dy', '3.5em');
-                                            }
-
-                                            tspans.forEach(ts => {
-                                                ts.setAttribute('x', textBlock.getAttribute('x'));
-                                                ts.style.fill = '#ffffff';
-                                                ts.style.fontSize = '12px';
-                                                ts.style.fontWeight = '800';
-                                            });
-                                        }
-                                    });
-
-                                    // Ensure icons are centered and visible
-                                    svg.querySelectorAll('svg').forEach(icon => {
-                                        icon.style.setProperty('filter', 'none', 'important');
-                                        icon.style.setProperty('opacity', '1', 'important');
-                                        icon.style.setProperty('display', 'block', 'important');
-                                    });
-                                }
-                            }
-                        }
-
-                        // Remove explicit grid forced columns so it respects original layout naturally
-                        const cards = clonedContent.querySelectorAll('.domain-result-card');
-                        cards.forEach(card => {
-                            // Use theme blue instead of black
-                            card.style.setProperty('background', '#00121d', 'important'); 
-                            card.style.setProperty('background-color', '#00121d', 'important');
-                            card.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.4)`, 'important');
-                            card.style.setProperty('padding', '30px', 'important');
-                            card.style.setProperty('border-radius', '20px', 'important');
-                            card.style.setProperty('break-inside', 'avoid', 'important');
-                            card.style.setProperty('width', '100%', 'important');
-                            card.style.setProperty('box-shadow', 'none', 'important');
-                            card.style.setProperty('filter', 'none', 'important');
-                            card.style.setProperty('backdrop-filter', 'none', 'important');
-
-                            
-                            const domainId = card.className.match(/neon-(\w+)/);
-                            if (domainId && domainId[1]) {
-                                const color = DOMAIN_STYLES[domainId[1]]?.color || themeGold;
-                                card.style.setProperty('border-left', `10px solid ${color}`, 'important');
-                            }
-
-                            const header = card.querySelector('h3');
-                            if (header) {
-                                header.style.setProperty('color', themeGold, 'important');
-                                header.style.setProperty('font-size', '1.6rem', 'important');
-                                header.style.setProperty('margin-bottom', '10px', 'important');
-                            }
-
-                            const definition = card.querySelector('.domain-definition');
-                            if (definition) {
-                                definition.style.setProperty('color', '#ffffff', 'important');
-                                definition.style.setProperty('opacity', '1', 'important');
-                                definition.style.setProperty('font-size', '1.1rem', 'important');
-                            }
-
-                            const tag = card.querySelector('.result-tag');
-                            if (tag) {
-                                tag.style.setProperty('background', 'rgba(0, 0, 0, 0.4)', 'important');
-                                tag.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.2)', 'important');
-                                tag.style.setProperty('color', '#ffffff', 'important');
-                            }
-                            
-                            const score = card.querySelector('.score-num');
-                            if (score) score.style.setProperty('color', '#ffffff', 'important');
-                        });
-
-                        const importantNote = clonedContent.querySelector('.important-note-card');
-                        if (importantNote) {
-                            importantNote.style.setProperty('background', '#00121d', 'important');
-                            importantNote.style.setProperty('background-color', '#00121d', 'important');
-                            importantNote.style.setProperty('border', `1px solid rgba(255, 255, 255, 0.3)`, 'important');
-                            importantNote.style.setProperty('border-left', `10px solid ${themeGold}`, 'important');
-                            importantNote.style.setProperty('filter', 'none', 'important');
-                            importantNote.style.setProperty('backdrop-filter', 'none', 'important');
-                            importantNote.style.setProperty('box-shadow', 'none', 'important');
-                            importantNote.style.setProperty('opacity', '1', 'important');
-                            
-                            const noteText = importantNote.querySelector('.note-text');
-                            if (noteText) noteText.style.setProperty('color', '#ffffff', 'important');
-                            
-                            const noteIcon = importantNote.querySelector('.note-icon');
-                            if (noteIcon) noteIcon.style.setProperty('color', themeGold, 'important');
-                        }
-
-                        const actions = clonedContent.querySelector('.result-actions');
-                        if (actions) actions.style.setProperty('display', 'none', 'important');
-
-                        const footer = clonedContent.querySelector('.result-footer-minimal');
-                        if (footer) {
-                            footer.style.setProperty('margin-top', '50px', 'important');
-                            footer.style.setProperty('display', 'flex', 'important');
-                            footer.style.setProperty('justify-content', 'center', 'important');
-                            const img = footer.querySelector('img');
-                            if (img) img.style.setProperty('max-height', '70px', 'important');
-                        }
-                    }
-                }
+                width: 800,
+                height: 1131
             });
 
-            const imgData = canvas.toDataURL('image/png');
-            const pdfWidth = 210; // mm
-            const imgProps = canvas.width / canvas.height;
-            const pdfHeight = pdfWidth / imgProps;
-            
-            const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('Reporte-Autodiagnostico.pdf');
+            const imgData1 = canvas1.toDataURL('image/png');
+            pdf.addImage(imgData1, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+            // --- PAGE 2 ---
+            pdf.addPage();
+            const page2 = template.querySelector('#pdf-page-2');
+            const canvas2 = await html2canvas(page2, {
+                backgroundColor: bgColor,
+                scale: 3.5,
+                useCORS: true,
+                width: 800,
+                height: 1131
+            });
+
+            const imgData2 = canvas2.toDataURL('image/png');
+            pdf.addImage(imgData2, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+            // Hide back
+            template.style.left = '-9999px';
+
+            pdf.save('Reporte-Personalizado-Fascinantes.pdf');
         } catch (error) {
-            console.error('Error PDF:', error);
-            alert('Hubo un error al generar el PDF.');
+            console.error('Error generating PDF:', error);
+            alert('Hubo un error al generar el reporte PDF.');
         } finally {
             setIsDownloading(false);
         }
@@ -1058,10 +843,20 @@ const FascinantesResult = () => {
                 <img src="/logo-azul.png" alt="Auténticos" />
             </footer>
 
-            {/* Hidden template for PDF generation */}
+            {/* Hidden Templates for PDF Generation */}
             <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+                <FascinantesReportTemplate 
+                    ref={reportTemplateRef} 
+                    domainScores={domainScores} 
+                    analysis={getExpertAnalysis(domainScores)} 
+                />
+                
                 <div ref={actionPlanRef}>
-                    <FascinantesActionPlanTemplate />
+                    <FascinantesActionPlanTemplate 
+                        domainScores={domainScores} 
+                        userAnswers={userAnswers}
+                        analysis={getExpertAnalysis(domainScores)}
+                    />
                 </div>
             </div>
         </div>
