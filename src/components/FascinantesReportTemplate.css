@@ -48,15 +48,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
-    height: 600px;
+    margin-bottom: 10px;
+    height: 550px;
 }
 
 .pdf-expert-card {
     background: var(--pdf-card-bg);
     border: 2px solid var(--pdf-border);
     border-radius: 20px;
-    padding: 30px;
+    padding: 25px;
 }
 
 .pdf-critical-badge {
