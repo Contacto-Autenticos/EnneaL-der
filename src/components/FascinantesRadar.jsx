@@ -154,7 +154,7 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
             position: 'relative' 
         }}>
             <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
+                <RadarChart cx="50%" cy={isPDF ? "55%" : "50%"} outerRadius={radarRadius} data={data}>
                     <defs>
                         <radialGradient id="radarRadialGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                             <stop offset="0%" stopColor="#ffee00" stopOpacity={0.5} />
