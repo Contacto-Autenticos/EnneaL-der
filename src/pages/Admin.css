@@ -1185,11 +1185,53 @@
 
 /* ── NAV ── */
 .admin-sidebar-nav {
+    padding: 0 5px;
+    flex: 1;
+}
+
+.admin-nav-program {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: none;
+    color: #ddbe3d;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-nav-program:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-nav-program.active {
+    background: rgba(221, 190, 61, 0.1);
+    color: #ffffff;
+}
+
+.admin-nav-program-content {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 0 10px;
-    flex: 1;
+    gap: 1px;
+    padding: 5px 0 10px 8px; /* Indent level 2 items */
+    border-left: 1px solid rgba(221, 190, 61, 0.2);
+    margin-left: 15px;
+    margin-top: 2px;
+}
+
+.admin-nav-program-content.placeholder {
+    padding: 10px 15px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+    font-style: italic;
 }
 
 .admin-nav-item {
@@ -1202,8 +1244,8 @@
     color: rgba(255, 255, 255, 0.75);
     font-size: 0.88rem;
     font-weight: 500;
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
     cursor: pointer;
     text-align: left;
     transition: background 0.18s, color 0.18s;

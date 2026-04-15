@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -25,6 +25,7 @@ const Admin = () => {
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
     const [preguntasOpen, setPreguntasOpen] = useState(false);
     const [respuestasOpen, setRespuestasOpen] = useState(false);
+    const [expandedProgram, setExpandedProgram] = useState('genuinos');
     const [codes, setCodes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
@@ -53,6 +54,12 @@ const Admin = () => {
     const [coupons, setCoupons] = useState([]);
     const [loadingCoupons, setLoadingCoupons] = useState(false);
     const [generatingCoupon, setGeneratingCoupon] = useState(false);
+
+    // Fascinantes Results State
+    const [fascinantesResults, setFascinantesResults] = useState([]);
+    const [loadingFascinantes, setLoadingFascinantes] = useState(false);
+    const [fascinantesDateFrom, setFascinantesDateFrom] = useState('');
+    const [fascinantesDateTo, setFascinantesDateTo] = useState('');
 
     // Helper to generate a random string for coupons
     const generateRandomCoupon = () => {
@@ -127,9 +134,39 @@ const Admin = () => {
             fetchTransactions();
             fetchCoupons();
             fetchAffiliates();
-            fetchWorkshopRegistrations();
+            if (activeSection === 'inscripciones') {
+                fetchWorkshopRegistrations();
+            }
+            if (activeSection === 'fascinantes-anonimos' || activeSection === 'fascinantes-registrados') {
+                fetchFascinantesResults();
+            }
         }
-    }, [isAuthenticated]);
+    }, [activeSection, isAuthenticated]);
+
+    const fetchFascinantesResults = async () => {
+        setLoadingFascinantes(true);
+        try {
+            let query = supabase
+                .from('fascinantes_results')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (fascinantesDateFrom) {
+                query = query.gte('created_at', `${fascinantesDateFrom}T00:00:00`);
+            }
+            if (fascinantesDateTo) {
+                query = query.lte('created_at', `${fascinantesDateTo}T23:59:59`);
+            }
+
+            const { data, error } = await query;
+            if (error) throw error;
+            setFascinantesResults(data || []);
+        } catch (error) {
+            console.error('Error fetching fascinantes results:', error);
+        } finally {
+            setLoadingFascinantes(false);
+        }
+    };
 
     // Build chart data from testResponses whenever period changes
     useEffect(() => {
@@ -706,6 +743,57 @@ const Admin = () => {
         URL.revokeObjectURL(url);
     };
 
+    const handleDownloadFascinantesExcel = (data, filename) => {
+        const e = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+        
+        // Headers
+        const isAnon = filename.includes('Anonimos');
+        const headers = isAnon 
+            ? [e('Numero de usuario'), e('Fecha'), e('Perfil obtenido'), e('Corporal'), e('Mental'), e('Emocional'), e('Social'), e('Espiritual'), e('Financiero')]
+            : [e('Nombre'), e('F. Nacimiento'), e('Email'), e('Fecha Realización'), e('Perfil obtenido'), e('Corporal'), e('Mental'), e('Emocional'), e('Social'), e('Espiritual'), e('Financiero')];
+
+        const rows = data.map(r => {
+            const dateStr = new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            if (isAnon) {
+                return [
+                    e(`#${r.id}`),
+                    e(dateStr),
+                    e(r.profile_name),
+                    r.score_corporal,
+                    r.score_mental,
+                    r.score_emocional,
+                    r.score_social,
+                    r.score_espiritual,
+                    r.score_financiero
+                ];
+            } else {
+                return [
+                    e(r.full_name),
+                    e(r.birth_date),
+                    e(r.email),
+                    e(dateStr),
+                    e(r.profile_name),
+                    r.score_corporal,
+                    r.score_mental,
+                    r.score_emocional,
+                    r.score_social,
+                    r.score_espiritual,
+                    r.score_financiero
+                ];
+            }
+        });
+
+        const allRows = [headers, ...rows];
+        const csvContent = '\uFEFF' + allRows.map(r => r.join(';')).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${filename}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+    };
+
     const handleDownloadAllInitialExcel = async () => {
         try {
             let allData = [];
@@ -891,81 +979,153 @@ const Admin = () => {
             <aside className={`admin-sidebar ${isMobileSidebarOpen ? 'open' : ''}`}>
                 <div className="admin-sidebar-brand">
                     <img src="/Circulo_Eneagrama_Autenticos_01.jpg" alt="Logo" className="admin-sidebar-logo" />
-                    <span className="admin-sidebar-brand-name">Enesencia</span>
+                    <span className="admin-sidebar-brand-name">Enesencia Admin</span>
                 </div>
 
                 <nav className="admin-sidebar-nav">
-                    <button className={`admin-nav-item ${activeSection === 'codigos' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('codigos'); setIsMobileSidebarOpen(false); }}>
-                        <Key size={17} /> Códigos de acceso
+                    <button 
+                        className={`admin-nav-program ${expandedProgram === 'genuinos' ? 'active' : ''}`}
+                        onClick={() => setExpandedProgram(expandedProgram === 'genuinos' ? null : 'genuinos')}
+                    >
+                        GENUINOS
+                        <ChevronDown size={14} style={{ transform: expandedProgram === 'genuinos' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
-                    <button className={`admin-nav-item ${activeSection === 'cupones' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('cupones'); setIsMobileSidebarOpen(false); }}>
-                        <Ticket size={17} /> Descuentos
-                    </button>
-                    <button className={`admin-nav-item ${activeSection === 'afiliados' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('afiliados'); setIsMobileSidebarOpen(false); }}>
-                        <Plus size={17} /> Afiliados
-                    </button>
-                    <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('compartir'); setIsMobileSidebarOpen(false); }}>
-                        <Link size={17} /> Compartir
-                    </button>
-                    <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('plan'); setIsMobileSidebarOpen(false); }}>
-                        <Download size={17} /> Plan de acción
-                    </button>
-
-                    <button
-                        className={`admin-nav-item ${activeSection === 'preguntas-inicial' || activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
-                        onClick={() => setPreguntasOpen(o => !o)}>
-                        <HelpCircle size={17} /> Preguntas
-                        <ChevronDown size={17} style={{ transform: preguntasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
-                    </button>
-                    {preguntasOpen && (
-                        <div className="admin-nav-subitems">
-                            <button className={`admin-nav-subitem ${activeSection === 'preguntas-inicial' ? 'active' : ''}`}
-                                onClick={() => { setActiveSection('preguntas-inicial'); setIsMobileSidebarOpen(false); }}>
-                                Test inicial
+                    
+                    {expandedProgram === 'genuinos' && (
+                        <div className="admin-nav-program-content">
+                            <button className={`admin-nav-item ${activeSection === 'codigos' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('codigos'); setIsMobileSidebarOpen(false); }}>
+                                <Key size={17} /> Códigos de acceso
                             </button>
-                            <button className={`admin-nav-subitem ${activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
-                                onClick={() => { setActiveSection('preguntas-avanzado'); setIsMobileSidebarOpen(false); }}>
-                                Test avanzado
+                            <button className={`admin-nav-item ${activeSection === 'cupones' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('cupones'); setIsMobileSidebarOpen(false); }}>
+                                <Ticket size={17} /> Descuentos
+                            </button>
+                            <button className={`admin-nav-item ${activeSection === 'afiliados' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('afiliados'); setIsMobileSidebarOpen(false); }}>
+                                <Plus size={17} /> Afiliados
+                            </button>
+                            <button className={`admin-nav-item ${activeSection === 'compartir' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('compartir'); setIsMobileSidebarOpen(false); }}>
+                                <Link size={17} /> Compartir
+                            </button>
+                            <button className={`admin-nav-item ${activeSection === 'plan' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('plan'); setIsMobileSidebarOpen(false); }}>
+                                <Download size={17} /> Plan de acción
+                            </button>
+
+                            <button
+                                className={`admin-nav-item ${activeSection === 'preguntas-inicial' || activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
+                                onClick={() => setPreguntasOpen(o => !o)}>
+                                <HelpCircle size={17} /> Preguntas
+                                <ChevronDown size={17} style={{ transform: preguntasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
+                            </button>
+                            {preguntasOpen && (
+                                <div className="admin-nav-subitems">
+                                    <button className={`admin-nav-subitem ${activeSection === 'preguntas-inicial' ? 'active' : ''}`}
+                                        onClick={() => { setActiveSection('preguntas-inicial'); setIsMobileSidebarOpen(false); }}>
+                                        Test inicial
+                                    </button>
+                                    <button className={`admin-nav-subitem ${activeSection === 'preguntas-avanzado' ? 'active' : ''}`}
+                                        onClick={() => { setActiveSection('preguntas-avanzado'); setIsMobileSidebarOpen(false); }}>
+                                        Test avanzado
+                                    </button>
+                                </div>
+                            )}
+
+                            <button
+                                className={`admin-nav-item ${activeSection === 'respuestas-inicial' || activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
+                                onClick={() => setRespuestasOpen(o => !o)}>
+                                <Lightbulb size={17} /> Respuestas
+                                <ChevronDown size={17} style={{ transform: respuestasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
+                            </button>
+                            {respuestasOpen && (
+                                <div className="admin-nav-subitems">
+                                    <button className={`admin-nav-subitem ${activeSection === 'respuestas-inicial' ? 'active' : ''}`}
+                                        onClick={() => { setActiveSection('respuestas-inicial'); setIsMobileSidebarOpen(false); }}>
+                                        Test inicial
+                                    </button>
+                                    <button className={`admin-nav-subitem ${activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
+                                        onClick={() => { setActiveSection('respuestas-avanzado'); setIsMobileSidebarOpen(false); }}>
+                                        Test avanzado
+                                    </button>
+                                </div>
+                            )}
+
+                            <button className={`admin-nav-item ${activeSection === 'graficas' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('graficas'); setIsMobileSidebarOpen(false); }}>
+                                <BarChart2 size={17} /> Gráficas
+                            </button>
+                            <button className={`admin-nav-item ${activeSection === 'transacciones' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('transacciones'); setIsMobileSidebarOpen(false); }}>
+                                <CreditCard size={17} /> Transacciones
+                            </button>
+                            <button className={`admin-nav-item ${activeSection === 'inscripciones' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('inscripciones'); setIsMobileSidebarOpen(false); }}>
+                                <Calendar size={17} /> Inscripciones
                             </button>
                         </div>
                     )}
 
-                    <button
-                        className={`admin-nav-item ${activeSection === 'respuestas-inicial' || activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
-                        onClick={() => setRespuestasOpen(o => !o)}>
-                        <Lightbulb size={17} /> Respuestas
-                        <ChevronDown size={17} style={{ transform: respuestasOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
+                    {/* --- OTHER PROGRAMS (Placeholders) --- */}
+                    <button 
+                        className={`admin-nav-program ${expandedProgram === 'fascinantes' ? 'active' : ''}`}
+                        onClick={() => setExpandedProgram(expandedProgram === 'fascinantes' ? null : 'fascinantes')}
+                    >
+                        FASCINANTES
+                        <ChevronDown size={14} style={{ transform: expandedProgram === 'fascinantes' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
-                    {respuestasOpen && (
-                        <div className="admin-nav-subitems">
-                            <button className={`admin-nav-subitem ${activeSection === 'respuestas-inicial' ? 'active' : ''}`}
-                                onClick={() => { setActiveSection('respuestas-inicial'); setIsMobileSidebarOpen(false); }}>
-                                Test inicial
+                    {expandedProgram === 'fascinantes' && (
+                        <div className="admin-nav-program-content">
+                            <button className={`admin-nav-item ${activeSection === 'fascinantes-anonimos' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('fascinantes-anonimos'); setIsMobileSidebarOpen(false); }}>
+                                Usuarios Anónimos
                             </button>
-                            <button className={`admin-nav-subitem ${activeSection === 'respuestas-avanzado' ? 'active' : ''}`}
-                                onClick={() => { setActiveSection('respuestas-avanzado'); setIsMobileSidebarOpen(false); }}>
-                                Test avanzado
+                            <button className={`admin-nav-item ${activeSection === 'fascinantes-registrados' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('fascinantes-registrados'); setIsMobileSidebarOpen(false); }}>
+                                Usuarios Registrados
                             </button>
                         </div>
                     )}
 
-                    <button className={`admin-nav-item ${activeSection === 'graficas' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('graficas'); setIsMobileSidebarOpen(false); }}>
-                        <BarChart2 size={17} /> Gráficas
+                    <button 
+                        className={`admin-nav-program ${expandedProgram === 'extraordinarios' ? 'active' : ''}`}
+                        onClick={() => setExpandedProgram(expandedProgram === 'extraordinarios' ? null : 'extraordinarios')}
+                    >
+                        EXTRAORDINARIOS
+                        <ChevronDown size={14} style={{ transform: expandedProgram === 'extraordinarios' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
-                    <button className={`admin-nav-item ${activeSection === 'transacciones' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('transacciones'); setIsMobileSidebarOpen(false); }}>
-                        <CreditCard size={17} /> Transacciones
+                    {expandedProgram === 'extraordinarios' && (
+                        <div className="admin-nav-program-content placeholder">
+                            <span>Próximamente...</span>
+                        </div>
+                    )}
+
+                    <button 
+                        className={`admin-nav-program ${expandedProgram === 'trascendentes' ? 'active' : ''}`}
+                        onClick={() => setExpandedProgram(expandedProgram === 'trascendentes' ? null : 'trascendentes')}
+                    >
+                        TRASCENDENTES
+                        <ChevronDown size={14} style={{ transform: expandedProgram === 'trascendentes' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
-                    <button className={`admin-nav-item ${activeSection === 'inscripciones' ? 'active' : ''}`}
-                        onClick={() => { setActiveSection('inscripciones'); setIsMobileSidebarOpen(false); }}>
-                        <Calendar size={17} /> Inscripciones
+                    {expandedProgram === 'trascendentes' && (
+                        <div className="admin-nav-program-content placeholder">
+                            <span>Próximamente...</span>
+                        </div>
+                    )}
+
+                    <button 
+                        className={`admin-nav-program ${expandedProgram === 'conscientes' ? 'active' : ''}`}
+                        onClick={() => setExpandedProgram(expandedProgram === 'conscientes' ? null : 'conscientes')}
+                    >
+                        CONSCIENTES
+                        <ChevronDown size={14} style={{ transform: expandedProgram === 'conscientes' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
+                    {expandedProgram === 'conscientes' && (
+                        <div className="admin-nav-program-content placeholder">
+                            <span>Próximamente...</span>
+                        </div>
+                    )}
                 </nav>
 
                 <div className="admin-sidebar-user-info" style={{
@@ -2282,6 +2442,166 @@ const Admin = () => {
                                                             {new Date(tr.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true })}
                                                         </div>
                                                     </td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* ── SECTION: Fascinantes Resultados Anónimos ── */}
+                {
+                    activeSection === 'fascinantes-anonimos' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header responses-header-flex">
+                                <h2><User size={20} /> Usuarios anónimos - Autodiagnóstico</h2>
+                                <div className="header-actions-group">
+                                    <div className="transaction-filters" style={{ marginRight: '15px', border: 'none', padding: 0, background: 'none' }}>
+                                        <div className="filter-group">
+                                            <input type="date" value={fascinantesDateFrom} onChange={(e) => setFascinantesDateFrom(e.target.value)} />
+                                        </div>
+                                        <div className="filter-group">
+                                            <input type="date" value={fascinantesDateTo} onChange={(e) => setFascinantesDateTo(e.target.value)} />
+                                        </div>
+                                        <button onClick={fetchFascinantesResults} className="btn-refresh-boxed" style={{ height: '38px' }} title="Aplicar filtros">
+                                            <Filter size={16} />
+                                        </button>
+                                        <button onClick={() => { setFascinantesDateFrom(''); setFascinantesDateTo(''); fetchFascinantesResults(); }} className="btn-refresh-boxed" style={{ height: '38px' }} title="Limpiar filtros">
+                                            <RefreshCw size={16} className={loadingFascinantes ? 'spinning' : ''} />
+                                        </button>
+                                        <button 
+                                            onClick={() => handleDownloadFascinantesExcel(fascinantesResults.filter(r => r.is_anonymous), 'Reporte_Fascinantes_Anonimos')} 
+                                            className="btn-ver-respuestas" 
+                                            style={{ height: '38px', display: 'flex', alignItems: 'center', gap: '8px' }}
+                                        >
+                                            <Download size={16} /> Excel
+                                        </button>
+                                    </div>
+                                    <span className="registros-badge">
+                                        {fascinantesResults.filter(r => r.is_anonymous).length} registros
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th># Usuario</th>
+                                            <th>Fecha</th>
+                                            <th>Perfil Obtenido</th>
+                                            <th style={{ textAlign: 'center' }}>C.</th>
+                                            <th style={{ textAlign: 'center' }}>M.</th>
+                                            <th style={{ textAlign: 'center' }}>E.</th>
+                                            <th style={{ textAlign: 'center' }}>S.</th>
+                                            <th style={{ textAlign: 'center' }}>Es.</th>
+                                            <th style={{ textAlign: 'center' }}>F.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loadingFascinantes ? (
+                                            <tr><td colSpan="9" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
+                                        ) : fascinantesResults.filter(r => r.is_anonymous).length === 0 ? (
+                                            <tr><td colSpan="9" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
+                                        ) : (
+                                            fascinantesResults.filter(r => r.is_anonymous).map(r => (
+                                                <tr key={r.id}>
+                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{r.id}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>
+                                                        {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                    </td>
+                                                    <td style={{ fontWeight: '600', color: '#b89b2d' }}>{r.profile_name}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_corporal}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_mental}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_emocional}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_social}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_espiritual}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_financiero}</td>
+                                                </tr>
+                                            ))
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )
+                }
+
+                {/* ── SECTION: Fascinantes Resultados Registrados ── */}
+                {
+                    activeSection === 'fascinantes-registrados' && (
+                        <div className="admin-card">
+                            <div className="admin-card-header responses-header-flex">
+                                <h2><User size={20} /> Usuarios registrados - Autodiagnóstico</h2>
+                                <div className="header-actions-group">
+                                    <div className="transaction-filters" style={{ marginRight: '15px', border: 'none', padding: 0, background: 'none' }}>
+                                        <div className="filter-group">
+                                            <input type="date" value={fascinantesDateFrom} onChange={(e) => setFascinantesDateFrom(e.target.value)} />
+                                        </div>
+                                        <div className="filter-group">
+                                            <input type="date" value={fascinantesDateTo} onChange={(e) => setFascinantesDateTo(e.target.value)} />
+                                        </div>
+                                        <button onClick={fetchFascinantesResults} className="btn-refresh-boxed" style={{ height: '38px' }} title="Aplicar filtros">
+                                            <Filter size={16} />
+                                        </button>
+                                        <button onClick={() => { setFascinantesDateFrom(''); setFascinantesDateTo(''); fetchFascinantesResults(); }} className="btn-refresh-boxed" style={{ height: '38px' }} title="Limpiar filtros">
+                                            <RefreshCw size={16} className={loadingFascinantes ? 'spinning' : ''} />
+                                        </button>
+                                        <button 
+                                            onClick={() => handleDownloadFascinantesExcel(fascinantesResults.filter(r => !r.is_anonymous), 'Reporte_Fascinantes_Registrados')} 
+                                            className="btn-ver-respuestas" 
+                                            style={{ height: '38px', display: 'flex', alignItems: 'center', gap: '8px' }}
+                                        >
+                                            <Download size={16} /> Excel
+                                        </button>
+                                    </div>
+                                    <span className="registros-badge">
+                                        {fascinantesResults.filter(r => !r.is_anonymous).length} registros
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                                <table className="codes-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>F. Nacimiento</th>
+                                            <th>Email</th>
+                                            <th>Fecha Realización</th>
+                                            <th>Perfil Obtenido</th>
+                                            <th style={{ textAlign: 'center' }}>C.</th>
+                                            <th style={{ textAlign: 'center' }}>M.</th>
+                                            <th style={{ textAlign: 'center' }}>E.</th>
+                                            <th style={{ textAlign: 'center' }}>S.</th>
+                                            <th style={{ textAlign: 'center' }}>Es.</th>
+                                            <th style={{ textAlign: 'center' }}>F.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {loadingFascinantes ? (
+                                            <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
+                                        ) : fascinantesResults.filter(r => !r.is_anonymous).length === 0 ? (
+                                            <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
+                                        ) : (
+                                            fascinantesResults.filter(r => !r.is_anonymous).map(r => (
+                                                <tr key={r.id}>
+                                                    <td style={{ fontWeight: '500' }}>{r.full_name}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>{r.birth_date}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>{r.email}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>
+                                                        {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                    </td>
+                                                    <td style={{ fontWeight: '600', color: '#b89b2d' }}>{r.profile_name}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_corporal}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_mental}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_emocional}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_social}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_espiritual}</td>
+                                                    <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_financiero}</td>
                                                 </tr>
                                             ))
                                         )}

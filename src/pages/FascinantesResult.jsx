@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import { ArrowLeft, Share2, Info, User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, Download, AlertCircle, MessageCircle, Twitter, Linkedin, Lock } from 'lucide-react';
 import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
 import FascinantesRadar from '../components/FascinantesRadar';
@@ -78,6 +79,45 @@ const FascinantesResult = () => {
             navigate('/autodiag-intro');
         }
     }, [navigate]);
+
+    // Save result to database once calculated
+    useEffect(() => {
+        const saveResult = async () => {
+            if (domainScores.length === 0 || sessionStorage.getItem('autodiag_saved')) return;
+
+            const analysis = getExpertAnalysis(domainScores);
+            const tempUserStr = localStorage.getItem('tempAutodiagUser');
+            let userData = null;
+            if (tempUserStr) {
+                try { userData = JSON.parse(tempUserStr); } catch (e) {}
+            }
+
+            try {
+                const { error } = await supabase.from('fascinantes_results').insert([{
+                    is_anonymous: !userData,
+                    full_name: userData?.name || null,
+                    email: userData?.email || null,
+                    birth_date: userData?.birth_date || null,
+                    profile_name: analysis?.name || 'Indefinido',
+                    score_corporal: domainScores.find(s => s.id === 'corporal')?.score || 0,
+                    score_mental: domainScores.find(s => s.id === 'mental')?.score || 0,
+                    score_emocional: domainScores.find(s => s.id === 'emocional')?.score || 0,
+                    score_social: domainScores.find(s => s.id === 'social')?.score || 0,
+                    score_espiritual: domainScores.find(s => s.id === 'espiritual')?.score || 0,
+                    score_financiero: domainScores.find(s => s.id === 'financiero')?.score || 0
+                }]);
+
+                if (error) throw error;
+                sessionStorage.setItem('autodiag_saved', 'true');
+            } catch (err) {
+                console.error('Error saving fascinantes result:', err);
+            }
+        };
+
+        if (domainScores.length > 0) {
+            saveResult();
+        }
+    }, [domainScores]);
 
     const getAnswerColor = (val) => {
         switch(val) {
