@@ -104,7 +104,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis }, ref) =
                                         <div className="pdf-score-bar-bg">
                                             <div 
                                                 className="pdf-score-bar-fill" 
-                                                style={{ width: `${score.score}%`, background: style.color }}
+                                                style={{ width: `${(score.score / 70) * 100}%`, background: style.color }}
                                             />
                                         </div>
                                         <span className="pdf-score-text">{score.score} pts</span>

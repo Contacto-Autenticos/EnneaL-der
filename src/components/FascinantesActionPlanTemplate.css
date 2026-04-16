@@ -259,6 +259,36 @@
 }
 
 /* Content Pages */
+.fascinantes-kit-page-intro {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40mm 30mm;
+}
+
+.fascinantes-kit-intro-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: #002d44;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.fascinantes-kit-intro-subtitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ddbe3d;
+    margin-bottom: 40px;
+}
+
+.fascinantes-kit-intro-text {
+    font-size: 1.25rem;
+    color: #444;
+    line-height: 1.8;
+    max-width: 90%;
+}
+
 .fascinantes-kit-step-item {
     margin-bottom: 18px;
     display: flex;

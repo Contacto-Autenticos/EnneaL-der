@@ -69,7 +69,7 @@ const FascinantesResult = () => {
                     score: totalScore,
                     interpretation: interpretation.name,
                     definition: interpretation.definition,
-                    full: 100,
+                    full: 70,
                     style: DOMAIN_STYLES[domain.id] || { color: '#ddbe3d', class: '' }
                 };
             });
@@ -153,14 +153,14 @@ const FascinantesResult = () => {
 
         let profileKey = "";
         
-        // Rules evaluation in order
-        if (promedio < 50) {
+        // Rules evaluation in order (scaled to 70-point base)
+        if (promedio < 35) {
             profileKey = "POTENCIAL_DORMIDO";
-        } else if (diferencia > 20) {
+        } else if (diferencia > 14) {
             profileKey = "ESTRATEGA_BLOQUEADO";
-        } else if (promedio > 70) {
+        } else if (promedio > 49) {
             profileKey = "OPTIMIZADOR";
-        } else if (diferencia <= 10) {
+        } else if (diferencia <= 7) {
             profileKey = "EQUILIBRADOR";
         } else {
             profileKey = "CONSTANTE_SIN_DIRECCION";
@@ -233,8 +233,8 @@ const FascinantesResult = () => {
             ...profiles[profileKey],
             promedio: Math.round(promedio),
             diferencia: Math.round(diferencia),
-            nivel: promedio < 50 ? "BAJO" : (promedio <= 70 ? "MEDIO" : "ALTO"),
-            balance: diferencia <= 10 ? "EQUILIBRADO" : (diferencia <= 20 ? "MODERADO" : "DESEQUILIBRADO")
+            nivel: promedio < 35 ? "BAJO" : (promedio <= 49 ? "MEDIO" : "ALTO"),
+            balance: diferencia <= 7 ? "EQUILIBRADO" : (diferencia <= 14 ? "MODERADO" : "DESEQUILIBRADO")
         };
     };
 
@@ -723,7 +723,7 @@ const FascinantesResult = () => {
                                                     <div 
                                                         className="score-bar-fill" 
                                                         style={{ 
-                                                            width: `${score.score}%`,
+                                                            width: `${(score.score / 70) * 100}%`,
                                                             '--domain-color': score.style.color 
                                                         }}
                                                     ></div>

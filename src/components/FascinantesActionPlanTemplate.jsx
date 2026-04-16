@@ -4,44 +4,44 @@ import './FascinantesActionPlanTemplate.css';
 const FascinantesActionPlanTemplate = () => {
     const steps = [
         {
-            title: "1. Aterriza el mapa (sin juicio)",
-            desc: "Mira tus puntajes por dominio (Corporal, Mental, Emocional, Social, Espiritual, Financiero). Recuerda: esto no es un veredicto; es una fotografía de los últimos 90 días.",
-            result: "Resultado esperado: claridad sin culpa."
+            title: "1. Documenta tu estado actual",
+            desc: "Analiza tus resultados en los seis dominios: Corporal, Mental, Emocional, Social, Espiritual y Financiero. Considera estos datos como una fotografía técnica de tus últimos 90 días, no como un juicio de valor.",
+            result: "Resultado esperado: La claridad de los datos elimina el peso de la culpa y permite la acción."
         },
         {
-            title: "2. Identifica “la fuga principal”",
-            desc: "Elige solo 1 dominio como prioridad. El más bajo suele ser la fuga, pero si hay uno “medio” que te está costando mucho emocionalmente, ese puede ser la fuga real.",
-            result: "Resultado esperado: un foco, no seis frentes."
+            title: "2. Identifica tu fuga de energía",
+            desc: "Elige un solo dominio como prioridad absoluta. El enfoque es tu recurso más escaso; busca aquel punto que, aunque no tenga el puntaje más bajo, hoy te genera el mayor desgaste emocional.",
+            result: "Resultado esperado: Resolver una sola fuga es más efectivo que intentar sostener seis frentes simultáneos."
         },
         {
-            title: "3. Define el objetivo mínimo (7 días)",
-            desc: "Pon un objetivo de una semana que sea pequeño, medible, realista y repetible. No busques la perfección, busca la constancia.",
-            result: "Resultado esperado: éxito temprano y momentum."
+            title: "3. Establece el objetivo mínimo (7 días)",
+            desc: "Define una acción para esta semana que sea pequeña, medible y, sobre todo, repetible. La prioridad aquí no es la intensidad, sino consolidar el hábito.",
+            result: "Resultado esperado: El éxito temprano genera el impulso necesario para los cambios de largo plazo."
         },
         {
-            title: "4. Crea fricción o facilita",
-            desc: "Diseña tu entorno: si quieres dejar un hábito alimenticio, aleja la tentación (fricción). Si quieres empezar a hacer ejercicio, deja la ropa lista (facilidad).",
-            result: "Resultado esperado: diseño de comportamiento efectivo."
+            title: "4. Ajusta las condiciones de tu entorno",
+            desc: "Modifica tu espacio para que la disciplina sea sencilla. Crea obstáculos para los hábitos que quieres dejar y facilita el acceso a las acciones que quieres integrar.",
+            result: "Resultado esperado: Un entorno bien diseñado reduce la dependencia de la fuerza de voluntad."
         },
         {
-            title: "5. Notifica",
-            desc: "Cuéntale a alguien que respetes lo que vas a hacer. El compromiso social aumenta drásticamente la probabilidad de que cumplas tu palabra.",
-            result: "Resultado esperado: compromiso real y externo."
+            title: "5. Establece un compromiso externo",
+            desc: "Comunica tu objetivo a una persona cuya opinión respetes. El compromiso público aumenta la probabilidad de cumplimiento y rompe el aislamiento del líder.",
+            result: "Resultado esperado: La transparencia con terceros refuerza la integridad personal."
         },
         {
-            title: "6. Mide diariamente",
-            desc: "Lleva una bitácora de 30 segundos: ¿Cumplí mi objetivo ayer? ¿Cómo está mi energía hoy (1–5)? ¿Cómo está mi paz mental (1–5)?",
-            result: "Resultado esperado: evidencia basada en datos, no en opiniones."
+            title: "6. Ejecuta una medición diaria",
+            desc: "Lleva un registro rápido de 30 segundos cada noche. Evalúa si cumpliste tu objetivo y califica tu nivel de energía y paz mental en una escala de 1 a 5.",
+            result: "Resultado esperado: Gestionar con datos evita que las opiniones o el cansancio distorsionen tu progreso."
         },
         {
-            title: "7. Revisión semanal (15 min)",
-            desc: "Tres preguntas clave: 1. ¿Qué funcionó? 2. ¿Qué fue difícil y por qué? 3. ¿Qué ajusto para la próxima semana?",
-            result: "Resultado esperado: mejora continua sin dramatismo."
+            title: "7. Realiza una auditoría semanal",
+            desc: "Dedica 15 minutos a revisar tres puntos: qué funcionó, qué dificultades surgieron y qué ajustes aplicarás la próxima semana.",
+            result: "Resultado esperado: La mejora continua se basa en ajustes tácticos constantes, no en cambios drásticos."
         },
         {
-            title: "8. Repite el autodiagnóstico",
-            desc: "Vuelve a realizar este test cada 3 meses. No es para perseguir la perfección, sino para observar la tendencia de tu crecimiento integral.",
-            result: "Resultado esperado: crecimiento medible y consciente."
+            title: "8. Evalúa la tendencia de crecimiento",
+            desc: "Repite el autodiagnóstico integral cada tres meses. El propósito es observar la trayectoria de tus indicadores y recalibrar tu estrategia de vida.",
+            result: "Resultado esperado: El crecimiento consciente requiere una revisión periódica del rumbo."
         }
     ];
 
@@ -105,10 +105,25 @@ const FascinantesActionPlanTemplate = () => {
                 </div>
             </div>
 
+            {/* 2. INTRODUCCIÓN */}
+            <div className="fascinantes-kit-page fascinantes-kit-page-intro">
+                <Watermark />
+                <h1 className="fascinantes-kit-intro-title">TU MAPA DE TRANSFORMACIÓN</h1>
+                <p className="fascinantes-kit-intro-subtitle">Guía práctica para un liderazgo en equilibrio integral</p>
+                <div className="fascinantes-kit-gold-line" style={{ width: '100px', margin: '30px auto' }}></div>
+                <p className="fascinantes-kit-intro-text">
+                    Este documento es más que una lista de tareas, tienes en tus manos una hoja de ruta para integrar tus seis dominios vitales. El objetivo es simple pero ambicioso: implementar cambios sostenibles que protejan tu bienestar mientras escalas tu impacto profesional.
+                </p>
+                <div className="fascinantes-kit-page-footer">
+                    <img src="/logo-azul.png" alt="Logo Auténticos" />
+                </div>
+                <PageNumber num={2} />
+            </div>
+
             {/* 2. PASOS 1-4 */}
             <div className="fascinantes-kit-page">
                 <Watermark />
-                <h2 className="fascinantes-kit-section-title">Tu Hoja de Ruta (Pasos 1 a 4)</h2>
+                <h2 className="fascinantes-kit-section-title">FASE I: ANÁLISIS Y FOCO ESTRATÉGICO</h2>
                 
                 <div className="fascinantes-kit-steps-grid">
                     {steps.slice(0, 4).map((step, idx) => (
@@ -126,13 +141,13 @@ const FascinantesActionPlanTemplate = () => {
                 <div className="fascinantes-kit-page-footer">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
-                <PageNumber num={2} />
+                <PageNumber num={3} />
             </div>
 
             {/* 3. PASOS 5-8 */}
             <div className="fascinantes-kit-page">
                 <Watermark />
-                <h2 className="fascinantes-kit-section-title">Tu Hoja de Ruta (Pasos 5 a 8)</h2>
+                <h2 className="fascinantes-kit-section-title">FASE II: SOSTENIBILIDAD Y AJUSTE</h2>
                 
                 <div className="fascinantes-kit-steps-grid">
                     {steps.slice(4, 8).map((step, idx) => (
@@ -157,7 +172,7 @@ const FascinantesActionPlanTemplate = () => {
                 <div className="fascinantes-kit-page-footer">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
-                <PageNumber num={3} />
+                <PageNumber num={4} />
             </div>
         </div>
     );

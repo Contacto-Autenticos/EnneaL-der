@@ -51,45 +51,45 @@ const FascinantesTest = () => {
     }, [currentIndex, answers, activeScreen]);
 
     const PROGRESS_SCREENS = {
-        // Motivación cada 10 (10, 30, 50, 70, 90, 110)
-        10: {
+        // Motivación cada 14 preguntas (punto medio de cada dominio: 7, 21, 35, 49, 63, 77)
+        7: {
             type: 'motivation',
             title: 'Estás reconociendo algunos aspectos importantes de tu dominio corporal.',
             text: 'Recuerda contestar de la forma más honesta posible.',
             button: 'Continuar'
         },
-        30: {
+        21: {
             type: 'motivation',
             title: 'El verdadero cambio comienza cuando somos capaces de observarnos de manera honesta.',
             text: 'Continúa el ejercicio, consciente de que este resultado es el insumo que necesitas para evolucionar.',
             button: 'Seguir avanzando'
         },
-        50: {
+        35: {
             type: 'motivation',
             title: 'Has logrado avanzar muy bien.',
             text: 'Continúa el proceso respondiendo de manera honesta.',
             button: 'Continuar el proceso'
         },
-        70: {
+        49: {
             type: 'motivation',
             title: 'Las relaciones son una parte fundamental de la vida, y su calidad contribuirá a tu crecimiento personal y profesional.',
             text: 'Continúa con la misma concentración.',
             button: 'Continuar'
         },
-        90: {
+        63: {
             type: 'motivation',
             title: '“Conocerte a ti mismo es, quizá, una de las estrategias más poderosas para el desarrollo personal, y eso es precisamente lo que estás haciendo aquí.',
-            text: 'Continua con por ese camino.',
+            text: 'Continúa por ese camino.',
             button: 'Seguir'
         },
-        110: {
+        77: {
             type: 'motivation',
             title: 'Ya estás a pocas preguntas de terminar.',
             text: 'Pronto tendrás un instrumento de autoevaluación muy poderoso.',
             button: 'Finalizar test'
         },
-        // Descanso cada 20 (20, 40, 60, 80, 100)
-        20: {
+        // Descanso cada 14 preguntas (al finalizar cada dominio: 14, 28, 42, 56, 70)
+        14: {
             type: 'rest',
             title: 'Puedes tomar un momento para respirar.',
             text: 'Este proceso no es una carrera, es un espacio para ti.',
@@ -97,7 +97,7 @@ const FascinantesTest = () => {
             subtext: 'Cuando estés listo, continuamos con el dominio mental.',
             button: 'Continuar'
         },
-        40: {
+        28: {
             type: 'rest',
             title: 'Estás avanzando muy bien.',
             text: 'Detenerte unos segundos también hace parte del proceso.',
@@ -105,7 +105,7 @@ const FascinantesTest = () => {
             subtext: 'Vuelve cuando te sientas enfocado y pasamos al dominio emocional.',
             button: 'Seguir'
         },
-        60: {
+        42: {
             type: 'rest',
             title: 'Has llegado a la mitad del camino.',
             text: 'Lo que has respondido ya contiene información valiosa sobre ti.',
@@ -113,7 +113,7 @@ const FascinantesTest = () => {
             subtext: ' Pasemos ahora al dominio social, el de las relaciones.',
             button: 'Continuar'
         },
-        80: {
+        56: {
             type: 'rest',
             title: 'Estás sosteniendo el proceso con intención.',
             text: 'Eso ya habla de un nivel de conciencia superior.',
@@ -121,7 +121,7 @@ const FascinantesTest = () => {
             subtext: 'Tómate un momento antes de continuar con el dominio espiritual.',
             button: 'Seguir'
         },
-        100: {
+        70: {
             type: 'rest',
             title: 'Estás a punto de completar el proceso.',
             text: 'Lo que descubrirás integrará todo lo que has respondido.',

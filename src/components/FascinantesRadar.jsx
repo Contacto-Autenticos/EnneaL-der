@@ -163,8 +163,8 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
                         </radialGradient>
                     </defs>
                     <PolarGrid polarLines={false} stroke="rgba(0,0,0,0.1)" />
-                    {/* Background depth levels - Tonal regions without outlines */}
-                    {[100, 75, 50, 25].map((level, index) => (
+                    {/* Background depth levels - Tonal regions without outlines scaled to 70 */}
+                    {[70, 52.5, 35, 17.5].map((level, index) => (
                         <Radar
                             key={`bg-${level}`}
                             dataKey={() => level}
@@ -183,7 +183,7 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
                     />
                     <PolarRadiusAxis 
                         angle={30} 
-                        domain={[0, 100]} 
+                        domain={[0, 70]} 
                         tick={false} 
                         axisLine={false}
                     />
