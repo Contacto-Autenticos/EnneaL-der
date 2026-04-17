@@ -510,15 +510,32 @@ const FascinantesResult = () => {
             const pdfHeight = 297;
             const template = reportTemplateRef.current;
             
-            // Temporary show template for capture (it's at left -9999px anyway)
+            // Mostrar temporalmente para poder capturarlo (está en left -9999px)
             template.style.left = '0';
             template.style.opacity = '1';
+
+            const addLinksToPDF = (pageElement) => {
+                const pageRect = pageElement.getBoundingClientRect();
+                const scaleX = pdfWidth / pageRect.width;
+                const scaleY = pdfHeight / pageRect.height;
+                const links = pageElement.querySelectorAll('[data-pdf-link]');
+                links.forEach(link => {
+                    const rect = link.getBoundingClientRect();
+                    pdf.link(
+                        (rect.left - pageRect.left) * scaleX,
+                        (rect.top - pageRect.top) * scaleY,
+                        rect.width * scaleX,
+                        rect.height * scaleY,
+                        { url: link.getAttribute('data-pdf-link') }
+                    );
+                });
+            };
 
             // --- PAGE 1 ---
             const page1 = template.querySelector('#pdf-page-1');
             const canvas1 = await html2canvas(page1, {
                 backgroundColor: bgColor,
-                scale: 3.5, // High Resolution
+                scale: 3.5, // Alta resolución para textos y radar
                 useCORS: true,
                 width: 800,
                 height: 1131
@@ -526,6 +543,7 @@ const FascinantesResult = () => {
 
             const imgData1 = canvas1.toDataURL('image/png');
             pdf.addImage(imgData1, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            addLinksToPDF(page1);
 
             // --- PAGE 2 ---
             pdf.addPage();
@@ -540,11 +558,12 @@ const FascinantesResult = () => {
 
             const imgData2 = canvas2.toDataURL('image/png');
             pdf.addImage(imgData2, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            addLinksToPDF(page2);
 
-            // Hide back
+            // Ocultar de nuevo
             template.style.left = '-9999px';
 
-            pdf.save('Reporte-Personalizado-Fascinantes.pdf');
+            pdf.save('Reporte-Autodiagnostico.pdf');
         } catch (error) {
             console.error('Error generating PDF:', error);
             alert('Hubo un error al generar el reporte PDF.');
@@ -629,8 +648,10 @@ const FascinantesResult = () => {
 
                             return (
                                 <div className="expert-card glass">
+                                    <div style={{ fontSize: '0.85rem', fontWeight: '800', color: '#4b5563', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '10px' }}>
+                                        TU ESTADO ACTUAL ES DE:
+                                    </div>
                                     <div className="expert-header">
-
                                         <h2 className="expert-profile-name">{analysis.name}</h2>
                                     </div>
 
@@ -639,14 +660,18 @@ const FascinantesResult = () => {
                                     </div>
 
                                     <div className="expert-grid">
-                                        <div className="expert-section critical-section">
-                                            <div className="expert-label">⚠️ REQUIERE ATENCIÓN</div>
-                                            <p className="expert-text">{analysis.critical}</p>
+                                        <div className="expert-section explanation-section">
+                                            <div className="expert-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <Zap size={18} /> EXPLICACIÓN BREVE
+                                            </div>
+                                            <p className="expert-text">{analysis.explanation}</p>
                                         </div>
 
-                                        <div className="expert-section explanation-section">
-                                            <div className="expert-label">💡 EXPLICACIÓN BREVE</div>
-                                            <p className="expert-text">{analysis.explanation}</p>
+                                        <div className="expert-section critical-section">
+                                            <div className="expert-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <AlertCircle size={18} /> REQUIERE ATENCIÓN
+                                            </div>
+                                            <p className="expert-text">{analysis.critical}</p>
                                         </div>
                                     </div>
 

@@ -38,45 +38,68 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis }, ref) =
                 </header>
 
                 <div className="pdf-radar-container">
-                    <div style={{ width: '800px', height: '550px' }}>
-                        <FascinantesRadar data={domainScores} height={550} radius="50%" isPDF={true} />
+                    <div style={{ width: '700px', height: '430px' }}>
+                        <FascinantesRadar data={domainScores} height={430} radius="55%" isPDF={true} />
                     </div>
                 </div>
 
                 <div className="pdf-expert-card">
-                    <h2 className="pdf-expert-name">{analysis.name}</h2>
-                    <p className="pdf-expert-insight">{analysis.insight}</p>
+                    <div style={{ fontSize: '13px', fontWeight: '800', color: '#4b5563', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                        TU ESTADO ACTUAL ES DE:
+                    </div>
+                    <h2 className="pdf-expert-name" style={{ color: '#f2b705', fontSize: '28px', marginTop: '0', paddingTop: '0' }}>{analysis.name}</h2>
+                    <p className="pdf-expert-insight" style={{ color: '#00121d', fontWeight: '800', fontSize: '15px' }}>{analysis.insight}</p>
                     
                     <div className="pdf-expert-grid">
                         <div className="pdf-expert-section">
-                            <div className="pdf-expert-section-title">
-                                <AlertCircle size={14} /> REQUIERE ATENCIÓN
-                            </div>
-                            <p className="pdf-expert-text">{analysis.critical}</p>
-                        </div>
-                        <div className="pdf-expert-section">
-                            <div className="pdf-expert-section-title">
-                                <Zap size={14} /> EXPLICACIÓN BREVE
+                            <div className="pdf-expert-section-title" style={{ color: '#f2b705', fontSize: '14px' }}>
+                                <Zap size={15} /> EXPLICACIÓN BREVE
                             </div>
                             <p className="pdf-expert-text">{analysis.explanation}</p>
                         </div>
+                        <div className="pdf-expert-section">
+                            <div className="pdf-expert-section-title" style={{ color: '#f2b705', fontSize: '14px' }}>
+                                <AlertCircle size={15} /> REQUIERE ATENCIÓN
+                            </div>
+                            <p className="pdf-expert-text">{analysis.critical}</p>
+                        </div>
                     </div>
 
-                    <div style={{ marginTop: '20px' }}>
-                        <div className="pdf-expert-section-title">RECOMENDACIONES</div>
+                    <div style={{ marginTop: '25px' }}>
+                        <div className="pdf-expert-section-title" style={{ color: '#f2b705', fontSize: '14px', marginBottom: '12px' }}>RECOMENDACIONES</div>
                         <ul className="pdf-expert-list">
                             {analysis.recommendations.map((rec, idx) => (
-                                <li key={idx}>
-                                    <span className="pdf-bullet">•</span> {rec}
+                                <li key={idx} style={{ marginBottom: '10px' }}>
+                                    <span style={{ color: '#f2b705', fontWeight: 'bold', marginRight: '8px', fontSize: '18px', lineHeight: '10px' }}>•</span> 
+                                    <span style={{ fontSize: '14px', color: '#00121d' }}>{rec}</span>
                                 </li>
                             ))}
                         </ul>
                     </div>
                 </div>
+
+                <footer className="pdf-footer" data-pdf-link="https://www.autenticos.co/">
+                    <img src="/logo-azul.png" alt="Logo" />
+                </footer>
             </div>
 
             {/* PAGE 2: DOMAIN CARDS */}
             <div className="pdf-page" id="pdf-page-2">
+                <div style={{ marginBottom: '25px' }}>
+                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#f2b705', textTransform: 'uppercase', marginBottom: '12px', marginTop: '0' }}>
+                        RESULTADOS POR CADA DOMINIO
+                    </h2>
+                    <p style={{ fontSize: '14px', lineHeight: '1.5', color: '#4b5563', marginBottom: '10px', marginTop: '0' }}>
+                        Estos resultados muestran cómo has venido gestionando tu energía, atención y decisiones en cada área de tu vida durante los últimos meses.
+                    </p>
+                    <p style={{ fontSize: '14px', lineHeight: '1.5', color: '#4b5563', marginBottom: '10px', marginTop: '0' }}>
+                        No es una evaluación de quién eres, sino una fotografía de lo que hoy estás sosteniendo. Más allá del puntaje, lo importante es entender qué hábitos, prioridades y dinámicas están detrás de cada resultado.
+                    </p>
+                    <p style={{ fontSize: '14px', lineHeight: '1.5', color: '#4b5563', marginBottom: '0', marginTop: '0' }}>
+                        Obsérvalo con honestidad. Ahí encontrarás con claridad dónde mantener, dónde ajustar y dónde empezar a actuar con mayor intención.
+                    </p>
+                </div>
+
                 <div className="pdf-domains-grid">
                     {[...domainScores]
                         .sort((a, b) => b.score - a.score)
@@ -123,7 +146,11 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis }, ref) =
                     </div>
                 </div>
 
-                <footer className="pdf-footer">
+                <div style={{ textAlign: 'center', marginTop: '25px', fontSize: '14px', color: '#4b5563', lineHeight: '1.6' }}>
+                    Si quieres más información o acompañamiento ingresa a <span data-pdf-link="https://www.autenticos.co/" style={{ fontWeight: 'bold', color: '#00121d' }}>www.autenticos.co</span> o escríbenos a <span data-pdf-link="mailto:contacto@autenticos.co" style={{ fontWeight: 'bold', color: '#00121d' }}>contacto@autenticos.co</span>
+                </div>
+
+                <footer className="pdf-footer" data-pdf-link="https://www.autenticos.co/">
                     <img src="/logo-azul.png" alt="Logo" />
                 </footer>
             </div>

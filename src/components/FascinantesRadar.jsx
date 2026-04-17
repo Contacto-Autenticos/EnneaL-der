@@ -148,13 +148,13 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
             height: height, 
             background: '#ffffff', 
             borderRadius: '30px', 
-            padding: '20px', 
+            padding: '10px', /* Ajustado para equilibrar el espacio con el borde */
             border: '1px solid rgba(0,0,0,0.05)', 
             boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)', 
             position: 'relative' 
         }}>
-            <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy={isPDF ? "55%" : "50%"} outerRadius={radarRadius} data={data}>
+            <ResponsiveContainer width={isPDF ? "100%" : "100%"} height="100%">
+                <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
                     <defs>
                         <radialGradient id="radarRadialGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                             <stop offset="0%" stopColor="#ffee00" stopOpacity={0.5} />
@@ -194,6 +194,7 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
                         strokeWidth={2}
                         fill="url(#radarRadialGradient)"
                         fillOpacity={1}
+                        isAnimationActive={!isPDF}
                         animationDuration={1500}
                         dot={{ r: 4, fill: '#fff', stroke: '#ddbe3d', strokeWidth: 2 }}
                         label={<CustomLabel cx="50%" cy="50%" />}
