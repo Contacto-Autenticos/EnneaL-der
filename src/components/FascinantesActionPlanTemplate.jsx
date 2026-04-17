@@ -6,42 +6,42 @@ const FascinantesActionPlanTemplate = () => {
         {
             title: "1. Documenta tu estado actual",
             desc: "Analiza tus resultados en los seis dominios: Corporal, Mental, Emocional, Social, Espiritual y Financiero. Considera estos datos como una fotografía técnica de tus últimos 90 días, no como un juicio de valor.",
-            result: "Resultado esperado: La claridad de los datos elimina el peso de la culpa y permite la acción."
+            result: "La claridad de los datos elimina el peso de la culpa y permite la acción."
         },
         {
             title: "2. Identifica tu fuga de energía",
             desc: "Elige un solo dominio como prioridad absoluta. El enfoque es tu recurso más escaso; busca aquel punto que, aunque no tenga el puntaje más bajo, hoy te genera el mayor desgaste emocional.",
-            result: "Resultado esperado: Resolver una sola fuga es más efectivo que intentar sostener seis frentes simultáneos."
+            result: "Resolver una sola fuga es más efectivo que intentar sostener seis frentes simultáneos."
         },
         {
             title: "3. Establece el objetivo mínimo (7 días)",
             desc: "Define una acción para esta semana que sea pequeña, medible y, sobre todo, repetible. La prioridad aquí no es la intensidad, sino consolidar el hábito.",
-            result: "Resultado esperado: El éxito temprano genera el impulso necesario para los cambios de largo plazo."
+            result: "El éxito temprano genera el impulso necesario para los cambios de largo plazo."
         },
         {
             title: "4. Ajusta las condiciones de tu entorno",
             desc: "Modifica tu espacio para que la disciplina sea sencilla. Crea obstáculos para los hábitos que quieres dejar y facilita el acceso a las acciones que quieres integrar.",
-            result: "Resultado esperado: Un entorno bien diseñado reduce la dependencia de la fuerza de voluntad."
+            result: "Un entorno bien diseñado reduce la dependencia de la fuerza de voluntad."
         },
         {
             title: "5. Establece un compromiso externo",
             desc: "Comunica tu objetivo a una persona cuya opinión respetes. El compromiso público aumenta la probabilidad de cumplimiento y rompe el aislamiento del líder.",
-            result: "Resultado esperado: La transparencia con terceros refuerza la integridad personal."
+            result: "La transparencia con terceros refuerza la integridad personal."
         },
         {
             title: "6. Ejecuta una medición diaria",
             desc: "Lleva un registro rápido de 30 segundos cada noche. Evalúa si cumpliste tu objetivo y califica tu nivel de energía y paz mental en una escala de 1 a 5.",
-            result: "Resultado esperado: Gestionar con datos evita que las opiniones o el cansancio distorsionen tu progreso."
+            result: "Gestionar con datos evita que las opiniones o el cansancio distorsionen tu progreso."
         },
         {
             title: "7. Realiza una auditoría semanal",
             desc: "Dedica 15 minutos a revisar tres puntos: qué funcionó, qué dificultades surgieron y qué ajustes aplicarás la próxima semana.",
-            result: "Resultado esperado: La mejora continua se basa en ajustes tácticos constantes, no en cambios drásticos."
+            result: "La mejora continua se basa en ajustes tácticos constantes, no en cambios drásticos."
         },
         {
             title: "8. Evalúa la tendencia de crecimiento",
             desc: "Repite el autodiagnóstico integral cada tres meses. El propósito es observar la trayectoria de tus indicadores y recalibrar tu estrategia de vida.",
-            result: "Resultado esperado: El crecimiento consciente requiere una revisión periódica del rumbo."
+            result: "El crecimiento consciente requiere una revisión periódica del rumbo."
         }
     ];
 
@@ -65,15 +65,15 @@ const FascinantesActionPlanTemplate = () => {
                 ></div>
                 <div className="fascinantes-kit-cover-content">
                     <div className="fascinantes-kit-cover-header-group">
-                        <p className="fascinantes-kit-serie-title">PROGRAMA DE EQUILIBRIO INTEGRAL</p>
+                        <p className="fascinantes-kit-serie-title">DESARROLLO INTEGRAL</p>
                         <div className="fascinantes-kit-gold-line"></div>
-                        <p className="fascinantes-kit-cover-pretitle">PLAN DE ACCIÓN</p>
+                        <p className="fascinantes-kit-cover-pretitle">RESULTADOS Y PLAN DE ACCIÓN</p>
                     </div>
 
                     <div className="fascinantes-kit-cover-title-group">
-                        <h1 className="fascinantes-kit-cover-type">FASCINANTES</h1>
+                        <h1 className="fascinantes-kit-cover-type">PROGRAMA FASCINANTES</h1>
                         <p className="fascinantes-kit-cover-tagline">
-                            Asegurando el equilibrio integral para un liderazgo sostenible
+                            El liderazgo consciente no elimina el desequilibrio. Te entrena para responder mejor cuando aparece.
                         </p>
                     </div>
 
@@ -84,10 +84,10 @@ const FascinantesActionPlanTemplate = () => {
                     </div>
 
                     <div className="fascinantes-kit-cover-bottom-group">
-                        <p className="fascinantes-kit-cover-manual">Manual estratégico de implementación</p>
+                        <p className="fascinantes-kit-cover-manual">Manual de implementación paso a paso</p>
                         <div className="fascinantes-kit-manual-details">
-                            <p>Modelo: 6 Dominios Vitales</p>
-                            <p>Implementación: Paso a Paso</p>
+                            <p>Modelo Dominios Fundamentales</p>
+                            <p>Basado en la metodología MLT</p>
                         </div>
                         
                         <div className="fascinantes-kit-cover-footer">
@@ -111,9 +111,13 @@ const FascinantesActionPlanTemplate = () => {
                 <h1 className="fascinantes-kit-intro-title">TU MAPA DE TRANSFORMACIÓN</h1>
                 <p className="fascinantes-kit-intro-subtitle">Guía práctica para un liderazgo en equilibrio integral</p>
                 <div className="fascinantes-kit-gold-line" style={{ width: '100px', margin: '30px auto' }}></div>
-                <p className="fascinantes-kit-intro-text">
-                    Este documento es más que una lista de tareas, tienes en tus manos una hoja de ruta para integrar tus seis dominios vitales. El objetivo es simple pero ambicioso: implementar cambios sostenibles que protejan tu bienestar mientras escalas tu impacto profesional.
-                </p>
+                <div className="fascinantes-kit-intro-text">
+                    <p style={{ marginBottom: '15px' }}>Este documento no es para hacer más cosas, es para mirar con más claridad cómo estás viviendo.</p>
+                    <p style={{ marginBottom: '15px' }}>Lo que viste en tu diagnóstico no es casualidad. Es el resultado de decisiones, hábitos y prioridades que, con el tiempo, han ido moldeando tu forma de actuar, de relacionarte y de liderar.</p>
+                    <p style={{ marginBottom: '15px' }}>Aquí no se trata de alcanzar un equilibrio perfecto. Se trata de desarrollar la capacidad de darte cuenta cuándo te estás desviando y hacer los ajustes necesarios a tiempo.</p>
+                    <p style={{ marginBottom: '15px' }}>A partir de ahora el reto no es hacerlo mejor por impulso, sino hacerlo consciente. Elegir dónde enfocarte, qué sostener y qué cambiar, entendiendo que cada decisión impacta directamente la vida que estás construyendo.</p>
+                    <p>Si te involucras de verdad en este proceso, no solo vas a generar cambios puntuales. Vas a empezar a dirigir con mayor intención la forma en la que vives y lideras.</p>
+                </div>
                 <div className="fascinantes-kit-page-footer">
                     <img src="/logo-azul.png" alt="Logo Auténticos" />
                 </div>
@@ -123,7 +127,10 @@ const FascinantesActionPlanTemplate = () => {
             {/* 2. PASOS 1-4 */}
             <div className="fascinantes-kit-page">
                 <Watermark />
-                <h2 className="fascinantes-kit-section-title">FASE I: ANÁLISIS Y FOCO ESTRATÉGICO</h2>
+                <h2 className="fascinantes-kit-section-title" style={{ borderBottom: 'none', paddingBottom: '0', display: 'block' }}>
+                    <span style={{ display: 'block', paddingBottom: '10px', marginBottom: '15px', borderBottom: '2px solid #ddbe3d' }}>FASE I:</span>
+                    <span style={{ display: 'block', textTransform: 'none' }}>Análisis y foco estratégico</span>
+                </h2>
                 
                 <div className="fascinantes-kit-steps-grid">
                     {steps.slice(0, 4).map((step, idx) => (
@@ -147,7 +154,10 @@ const FascinantesActionPlanTemplate = () => {
             {/* 3. PASOS 5-8 */}
             <div className="fascinantes-kit-page">
                 <Watermark />
-                <h2 className="fascinantes-kit-section-title">FASE II: SOSTENIBILIDAD Y AJUSTE</h2>
+                <h2 className="fascinantes-kit-section-title" style={{ borderBottom: 'none', paddingBottom: '0', display: 'block' }}>
+                    <span style={{ display: 'block', paddingBottom: '10px', marginBottom: '15px', borderBottom: '2px solid #ddbe3d' }}>FASE II:</span>
+                    <span style={{ display: 'block', textTransform: 'none' }}>Sostenibilidad y ajuste</span>
+                </h2>
                 
                 <div className="fascinantes-kit-steps-grid">
                     {steps.slice(4, 8).map((step, idx) => (
@@ -164,8 +174,8 @@ const FascinantesActionPlanTemplate = () => {
 
                 <div className="fascinantes-kit-page-integration" style={{ marginTop: 'auto', paddingBottom: '15mm' }}>
                     <p style={{ fontStyle: 'italic', textAlign: 'center', color: '#002d44', lineHeight: '1.6' }}>
-                        "El autoconocimiento no cambia tu vida.<br />
-                        Las decisiones que tomas a partir de él, sí."
+                        "No se trata de saber más, sino de actuar mejor.<br />
+                        Pequeñas decisiones, bien sostenidas, terminan cambiando el rumbo de tu vida."
                     </p>
                 </div>
 
