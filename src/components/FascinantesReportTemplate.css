@@ -50,7 +50,7 @@
     align-items: center;
     margin-top: 0px; 
     margin-bottom: 25px; /* Equal spacing 25px */
-    height: 430px; /* Reduced to give more space for the expert card */
+    width: 100%;
 }
 
 .pdf-expert-card {
@@ -251,4 +251,226 @@
 
 .pdf-radar-container svg {
     overflow: visible !important;
+}
+
+/* Tables Section */
+.pdf-tables-section {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 0; /* Removed padding to stretch to margins */
+}
+
+.pdf-table-container {
+    width: 100%;
+    border: 1px solid #d1d5db; /* Light gray border */
+    border-radius: 12px;
+    overflow: hidden; /* For rounded corners to work */
+    margin-bottom: 15px;
+    background: #ffffff;
+}
+
+.pdf-score-table, .pdf-scale-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    background: #ffffff;
+    color: #111827;
+}
+
+.pdf-score-table th, .pdf-score-table td,
+.pdf-scale-table th, .pdf-scale-table td {
+    border: 1px solid #e2e8f0;
+    padding: 8px 10px;
+}
+
+.pdf-score-table tr:last-child td,
+.pdf-scale-table tr:last-child td {
+    border-bottom: none;
+}
+.pdf-score-table tr td:first-child,
+.pdf-score-table tr th:first-child,
+.pdf-scale-table tr td:first-child,
+.pdf-scale-table tr th:first-child {
+    border-left: none;
+}
+.pdf-score-table tr td:last-child,
+.pdf-score-table tr th:last-child,
+.pdf-scale-table tr td:last-child,
+.pdf-scale-table tr th:last-child {
+    border-right: none;
+}
+.pdf-score-table tr:first-child th,
+.pdf-scale-table tr:first-child th {
+    border-top: none;
+}
+
+
+.pdf-score-table th, .pdf-scale-table th {
+    font-weight: 800;
+    text-align: center;
+    background: #f8fafc;
+    color: #111827;
+    font-size: 12px;
+}
+
+.pdf-score-table td {
+    text-align: center;
+    font-weight: 600;
+}
+
+.pdf-table-desc {
+    font-size: 13px;
+    color: #4b5563;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-weight: normal;
+    padding: 0 10px;
+}
+
+.pdf-luz-circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid rgba(0,0,0,0.1); /* Subtle dark border */
+}
+
+.active-level-row {
+    background: #fef9c3; /* Soft yellow highlight */
+}
+
+.active-level-row td {
+    border-top: 2px solid var(--pdf-gold) !important;
+    border-bottom: 2px solid var(--pdf-gold) !important;
+    font-weight: 800;
+}
+
+.active-level-row td:first-child {
+    border-left: 2px solid var(--pdf-gold) !important;
+}
+
+.active-level-row td:last-child {
+    border-right: 2px solid var(--pdf-gold) !important;
+}
+
+/* Page Numbers */
+.pdf-page-number {
+    position: absolute;
+    bottom: 35px;
+    right: 50px;
+    font-size: 14px;
+    font-weight: 900;
+    color: #111827;
+}
+
+/* Reflection Page (Page 2) */
+.pdf-reflection-title {
+    color: var(--pdf-gold);
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-top: 50px;
+    margin-bottom: 12px;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.pdf-reflection-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #111827;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+/* QA Tables */
+.pdf-qa-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.pdf-qa-table th {
+    background-color: #f8fafc;
+    color: #1f2937;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.pdf-qa-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4b5563;
+}
+
+.pdf-qa-table tr:last-child td {
+    border-bottom: none;
+}
+
+.pdf-qa-number-cell {
+    text-align: center !important;
+    width: 90px;
+    font-weight: 800;
+    color: #111827;
+}
+
+/* Action Plan Elements */
+.pdf-action-block {
+    display: flex;
+    margin-bottom: 25px;
+    align-items: flex-start;
+}
+
+.pdf-circle-num {
+    background-color: #00121d;
+    color: #f2b705;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-right: 15px;
+    margin-top: 2px;
+}
+
+.pdf-action-content {
+    flex: 1;
+}
+
+.pdf-action-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #00121d;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.pdf-action-text {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.pdf-insight-box {
+    background-color: #fdfaf2;
+    border-left: 4px solid #f2b705;
+    padding: 12px 15px;
+}
+
+.pdf-insight-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #00121d;
+    font-weight: bold;
 }

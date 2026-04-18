@@ -521,17 +521,38 @@ const FascinantesResult = () => {
                 const links = pageElement.querySelectorAll('[data-pdf-link]');
                 links.forEach(link => {
                     const rect = link.getBoundingClientRect();
-                    pdf.link(
-                        (rect.left - pageRect.left) * scaleX,
-                        (rect.top - pageRect.top) * scaleY,
-                        rect.width * scaleX,
-                        rect.height * scaleY,
-                        { url: link.getAttribute('data-pdf-link') }
-                    );
+                    
+                    const percentX = (rect.left - pageRect.left) / pageRect.width;
+                    const percentY = (rect.top - pageRect.top) / pageRect.height;
+                    const percentW = rect.width / pageRect.width;
+                    const percentH = rect.height / pageRect.height;
+
+                    const finalX = percentX * pdfWidth;
+                    const finalY = percentY * pdfHeight;
+                    const finalW = percentW * pdfWidth;
+                    const finalH = percentH * pdfHeight;
+
+                    pdf.link(finalX, finalY, finalW, finalH, { url: link.getAttribute('data-pdf-link') });
                 });
             };
 
+            // --- PAGE 0 (COVER) ---
+            const page0 = template.querySelector('#pdf-page-0');
+            if (page0) {
+                const canvas0 = await html2canvas(page0, {
+                    backgroundColor: bgColor,
+                    scale: 3.5,
+                    useCORS: true,
+                    width: 800,
+                    height: 1131
+                });
+                const imgData0 = canvas0.toDataURL('image/png');
+                pdf.addImage(imgData0, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                addLinksToPDF(page0);
+            }
+
             // --- PAGE 1 ---
+            pdf.addPage();
             const page1 = template.querySelector('#pdf-page-1');
             const canvas1 = await html2canvas(page1, {
                 backgroundColor: bgColor,
@@ -559,6 +580,88 @@ const FascinantesResult = () => {
             const imgData2 = canvas2.toDataURL('image/png');
             pdf.addImage(imgData2, 'PNG', 0, 0, pdfWidth, pdfHeight);
             addLinksToPDF(page2);
+
+            // --- PAGE 3 ---
+            pdf.addPage();
+            const page3 = template.querySelector('#pdf-page-3');
+            const canvas3 = await html2canvas(page3, {
+                backgroundColor: bgColor,
+                scale: 3.5,
+                useCORS: true,
+                width: 800,
+                height: 1131
+            });
+
+            const imgData3 = canvas3.toDataURL('image/png');
+            pdf.addImage(imgData3, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            addLinksToPDF(page3);
+
+            // --- PAGE 4 ---
+            pdf.addPage();
+            const page4 = template.querySelector('#pdf-page-4');
+            const canvas4 = await html2canvas(page4, {
+                backgroundColor: bgColor,
+                scale: 3.5,
+                useCORS: true,
+                width: 800,
+                height: 1131
+            });
+
+            const imgData4 = canvas4.toDataURL('image/png');
+            pdf.addImage(imgData4, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            addLinksToPDF(page4);
+
+            // --- PAGES 5 TO 10 (QA Tables) ---
+            for (let i = 5; i <= 10; i++) {
+                const qaPage = template.querySelector(`#pdf-page-${i}`);
+                if (qaPage) {
+                    pdf.addPage();
+                    const canvasQA = await html2canvas(qaPage, {
+                        backgroundColor: bgColor,
+                        scale: 3.5,
+                        useCORS: true,
+                        width: 800,
+                        height: 1131
+                    });
+                    const imgDataQA = canvasQA.toDataURL('image/png');
+                    pdf.addImage(imgDataQA, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    addLinksToPDF(qaPage);
+                }
+            }
+
+            // --- PAGE 11 ---
+            const page11 = template.querySelector('#pdf-page-11');
+            if (page11) {
+                pdf.addPage();
+                const canvas11 = await html2canvas(page11, {
+                    backgroundColor: bgColor,
+                    scale: 3.5,
+                    useCORS: true,
+                    width: 800,
+                    height: 1131
+                });
+                const imgData11 = canvas11.toDataURL('image/png');
+                pdf.addImage(imgData11, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                addLinksToPDF(page11);
+            }
+
+            // --- PAGE 12 & 13 ---
+            for (let i = 12; i <= 13; i++) {
+                const actionPage = template.querySelector(`#pdf-page-${i}`);
+                if (actionPage) {
+                    pdf.addPage();
+                    const canvasAction = await html2canvas(actionPage, {
+                        backgroundColor: bgColor,
+                        scale: 3.5,
+                        useCORS: true,
+                        width: 800,
+                        height: 1131
+                    });
+                    const imgDataAction = canvasAction.toDataURL('image/png');
+                    pdf.addImage(imgDataAction, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    addLinksToPDF(actionPage);
+                }
+            }
 
             // Ocultar de nuevo
             template.style.left = '-9999px';
@@ -789,8 +892,8 @@ const FascinantesResult = () => {
                 <div className="primary-action-container animate-fade-in" style={{ marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
                     <button 
                         className="btn-action plan-accion" 
-                        onClick={handleDownloadActionPlan}
-                        disabled={isDownloadingActionPlan}
+                        onClick={handleDownloadPDF}
+                        disabled={isDownloading}
                         style={{ 
                             background: '#ddbe3d', 
                             color: '#00121d', 
@@ -801,7 +904,7 @@ const FascinantesResult = () => {
                             padding: '16px 28px'
                         }}
                     >
-                        <Eye size={20} /> {isDownloadingActionPlan ? 'GENERANDO...' : 'VER MI PLAN DE ACCIÓN'}
+                        <Download size={20} /> {isDownloading ? 'GENERANDO...' : 'DESCARGAR REPORTE COMPLETO'}
                     </button>
                 </div>
 
@@ -811,13 +914,6 @@ const FascinantesResult = () => {
                         onClick={() => navigate('/autodiag-intro')}
                     >
                         <ArrowLeft size={18} /> REGRESAR
-                    </button>
-                    <button 
-                        className="btn-action secondary" 
-                        onClick={handleDownloadPDF}
-                        disabled={isDownloading}
-                    >
-                        <Download size={18} /> {isDownloading ? '...' : 'REPORTE'}
                     </button>
                     <button 
                         className="btn-action primary" 
@@ -914,6 +1010,7 @@ const FascinantesResult = () => {
                     ref={reportTemplateRef} 
                     domainScores={domainScores} 
                     analysis={getExpertAnalysis(domainScores)} 
+                    userAnswers={userAnswers}
                 />
                 
                 <div ref={actionPlanRef}>
