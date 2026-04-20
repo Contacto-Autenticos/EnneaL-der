@@ -1379,9 +1379,10 @@ const Admin = () => {
                                                             fontSize: '0.75rem', 
                                                             padding: '2px 8px', 
                                                             borderRadius: '10px',
-                                                            background: item.is_multi_use ? 'rgba(59, 130, 246, 0.2)' : 'rgba(148, 163, 184, 0.2)',
-                                                            color: item.is_multi_use ? '#60a5fa' : '#94a3b8',
-                                                            border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid rgba(148, 163, 184, 0.3)'
+                                                            background: item.is_multi_use ? 'rgba(59, 130, 246, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+                                                            color: item.is_multi_use ? '#1e40af' : '#334155', // Darker blue and slate
+                                                            border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(148, 163, 184, 0.4)',
+                                                            fontWeight: '600'
                                                         }}>
                                                             {item.is_multi_use ? 'Multiuso' : 'Único'}
                                                         </span>
@@ -1420,8 +1421,8 @@ const Admin = () => {
                                                             )}
                                                         </div>
                                                     </td>
-                                                    <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
-                                                    <td style={{ fontSize: '0.8rem' }}>
+                                                    <td style={{ fontSize: '0.8rem', color: '#111827', fontWeight: item.used_by ? '500' : '400' }}>{item.used_by || '-'}</td>
+                                                    <td style={{ fontSize: '0.8rem', color: '#111827', fontWeight: item.used_at ? '500' : '400' }}>
                                                         {item.used_at ? new Date(item.used_at).toLocaleString('es-CO', {
                                                             day: '2-digit',
                                                             month: '2-digit',

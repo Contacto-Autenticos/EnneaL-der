@@ -56,10 +56,10 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
 
         const normalizedEmail = email.trim().toLowerCase();
 
-        // Validate access code if required
-        if (requireAccessCode) {
+        // Validate access code if provided (forced or optional)
+        if (requireAccessCode || accessCode.trim()) {
             try {
-                const cleanCode = accessCode.trim();
+                const cleanCode = accessCode.trim().toUpperCase();
                 const { data: codeData, error: fetchError } = await supabase
                     .from('access_codes')
                     .select('*')
