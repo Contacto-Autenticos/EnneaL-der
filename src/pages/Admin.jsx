@@ -243,7 +243,7 @@ const Admin = () => {
                 pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
             }
 
-            const fileName = `Reporte_Fascinantes_${(r.full_name || 'Anonimo').replace(/\s+/g, '_')}_${r.id}.pdf`;
+            const fileName = `Reporte_Fascinantes_${(r.full_name?.trim() || 'Anonimo').replace(/\s+/g, '_')}.pdf`;
             pdf.save(fileName);
 
         } catch (error) {
