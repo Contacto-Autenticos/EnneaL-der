@@ -2782,6 +2782,7 @@ const Admin = () => {
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Nombre</th>
                                             <th>F. Nacimiento</th>
                                             <th>Email</th>
