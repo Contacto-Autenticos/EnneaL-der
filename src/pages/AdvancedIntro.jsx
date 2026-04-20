@@ -72,7 +72,17 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                     return;
                 }
 
-                if (codeData.is_used) {
+                const now = new Date();
+
+                // Validación de expiración
+                if (codeData.expires_at && new Date(codeData.expires_at) < now) {
+                    setCodeError({ type: 'invalid', message: 'El código de acceso ha expirado.' });
+                    setLoading(false);
+                    return;
+                }
+
+                // Validación de uso (solo para códigos de un solo uso)
+                if (!codeData.is_multi_use && codeData.is_used) {
                     setCodeError({
                         type: 'used',
                         message: 'Este código de acceso ya fue utilizado. Puedes adquirir un nuevo acceso aquí.'
@@ -81,20 +91,19 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                     return;
                 }
 
-                // If valid, mark as used
+                // Registrar uso (para ambos tipos)
                 const { error: updateError } = await supabase
                     .from('access_codes')
                     .update({
                         is_used: true,
                         used_by: normalizedEmail,
-                        used_at: new Date().toISOString(),
+                        used_at: now.toISOString(),
                         used_in_program: 'Genuinos'
                     })
                     .eq('code', cleanCode);
 
                 if (updateError) {
                     console.error('Error updating access code:', updateError);
-                    // Decide whether to fail hard or soft. Failing hard for security.
                     setCodeError({ type: 'invalid', message: 'Error procesando el código. Intenta nuevamente.' });
                     setLoading(false);
                     return;

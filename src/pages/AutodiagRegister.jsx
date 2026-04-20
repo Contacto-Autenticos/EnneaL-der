@@ -61,28 +61,22 @@ const AutodiagRegister = () => {
                 }
 
                 // Validación de uso
-                if (codeData.is_multi_use) {
-                    // Es un código de evento (multiuso) -> Pasa directo
-                    console.log('Código de evento válido detectado');
-                } else {
-                    // Es un código estándar (un sólo uso)
-                    if (codeData.is_used) {
-                        throw new Error('El código ya ha sido utilizado.');
-                    }
-                    
-                    // Marcar como usado
-                    const { error: updateError } = await supabase
-                        .from('access_codes')
-                        .update({ 
-                            is_used: true, 
-                            used_by: userData.email,
-                            used_at: now.toISOString(),
-                            used_in_program: 'Fascinantes'
-                        })
-                        .eq('code', cleanCode);
-
-                    if (updateError) throw new Error('Error al procesar el código. Intenta de nuevo.');
+                if (!codeData.is_multi_use && codeData.is_used) {
+                    throw new Error('El código ya ha sido utilizado.');
                 }
+                
+                // Actualizar registro de uso (para ambos tipos)
+                const { error: updateError } = await supabase
+                    .from('access_codes')
+                    .update({ 
+                        is_used: true, 
+                        used_by: userData.email,
+                        used_at: now.toISOString(),
+                        used_in_program: 'Fascinantes'
+                    })
+                    .eq('code', cleanCode);
+
+                if (updateError) throw new Error('Error al procesar el código. Intenta de nuevo.');
 
                 // Registrar al usuario en leads
                 await supabase.from('user_leads').insert([{

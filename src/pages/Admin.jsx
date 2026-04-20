@@ -1396,9 +1396,21 @@ const Admin = () => {
                                                     </td>
                                                     <td>
                                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                                            <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
-                                                                {item.is_used ? 'Usado' : 'Disponible'}
-                                                            </span>
+                                                            {(() => {
+                                                                const isExpired = item.expires_at && new Date(item.expires_at) < new Date();
+                                                                if (item.is_multi_use) {
+                                                                    return (
+                                                                        <span className={`status-badge ${isExpired ? 'used' : 'unused'}`}>
+                                                                            {isExpired ? 'Expirado' : 'Disponible'}
+                                                                        </span>
+                                                                    );
+                                                                }
+                                                                return (
+                                                                    <span className={`status-badge ${item.is_used || isExpired ? 'used' : 'unused'}`}>
+                                                                        {item.is_used ? 'Usado' : (isExpired ? 'Expirado' : 'Disponible')}
+                                                                    </span>
+                                                                );
+                                                            })()}
                                                             {item.expires_at && (
                                                                 <span style={{ fontSize: '0.7rem', color: new Date(item.expires_at) < new Date() ? '#ef4444' : '#94a3b8' }}>
                                                                     Exp: {new Date(item.expires_at).toLocaleDateString()}
