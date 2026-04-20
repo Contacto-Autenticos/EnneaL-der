@@ -225,23 +225,37 @@ const Admin = () => {
             const kitRoot = fascinantesTemplateRef.current;
             if (!kitRoot) throw new Error('Template ref not found');
 
+            // --- SINCRONIZACIÓN CON FascinantesResult.jsx ---
+            // Mostrar temporalmente para que html2canvas capture los estilos y layouts correctamente
+            kitRoot.style.left = '0';
+            kitRoot.style.opacity = '1';
+            kitRoot.style.zIndex = '9999';
+
+            // Pequeña espera para asegurar que el navegador haya procesado el cambio de posicion
+            await new Promise(resolve => setTimeout(resolve, 300));
+
             const pages = kitRoot.querySelectorAll('.pdf-page');
             const pdf = new jsPDF('p', 'mm', 'a4');
 
             for (let i = 0; i < pages.length; i++) {
                 const canvas = await html2canvas(pages[i], {
-                    scale: 3,
+                    scale: 3.5, // Aumentado para paridad con Resultados
                     useCORS: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    width: 794,
-                    height: 1123
+                    width: 800, // Coincidir con el CSS del template (800px)
+                    height: 1131 // Coincidir con el CSS del template
                 });
 
                 const imgData = canvas.toDataURL('image/png');
                 if (i > 0) pdf.addPage();
                 pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
             }
+
+            // Ocultar de nuevo el template
+            kitRoot.style.left = '-9999px';
+            kitRoot.style.opacity = '0';
+
 
             const fileName = `Reporte_Fascinantes_${(r.full_name?.trim() || 'Anonimo').replace(/\s+/g, '_')}.pdf`;
             pdf.save(fileName);
@@ -3058,7 +3072,7 @@ const Admin = () => {
             {pdfReportUser && (
                 <div 
                     ref={fascinantesTemplateRef}
-                    style={{ position: 'absolute', left: '-9999px', top: 0, width: '210mm', background: 'white' }}
+                    style={{ position: 'fixed', left: '-9999px', top: 0, width: '800px', background: 'white', zIndex: -1, opacity: 0 }}
                 >
                     <FascinantesReportTemplate 
                         userAnswers={pdfReportUser.userAnswers}
