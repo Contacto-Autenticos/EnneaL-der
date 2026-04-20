@@ -26,7 +26,7 @@ const getDomainIcon = (domainId) => {
     }
 };
 
-const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnswers = {} }, ref) => {
+const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnswers = {}, hideQAPages = false }, ref) => {
     if (!domainScores || domainScores.length === 0 || !analysis) return null;
     const minScore = Math.min(...domainScores.map(s => s.score));
     const lowestDomainObj = domainScores.find(s => s.score === minScore) || domainScores[0];
@@ -44,9 +44,9 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
     const levelData = [
         { level: 1, color: '#cc0000', range: '84 a 151', status: 'Supervivencia: Alto riesgo de agotamiento o crisis en múltiples áreas. Urge intervención.' },
         { level: 2, color: '#ff9100', range: '152 a 218', status: 'Inestabilidad: Se vive de forma reactiva. Hay esfuerzos aislados, pero falta estructura.' },
-        { level: 3, color: '#ffee00', range: '219 a 285', status: 'Funcionalidad: La vida "funciona", pero hay áreas grises que frenan el potencial real.' },
+        { level: 3, color: '#ffee00', range: '219 a 285', status: 'Funcional: La vida "funciona", pero hay áreas grises que frenan el potencial real.' },
         { level: 4, color: '#00ff00', range: '286 a 352', status: 'Desarrollo: Existe equilibrio y consciencia. El usuario tiene el control de su crecimiento.' },
-        { level: 5, color: '#00121d', range: '353 a 420', status: 'Plenitud: Alta coherencia y maestría personal. Los dominios se potencian entre sí.' }
+        { level: 5, color: '#3b82f6', range: '353 a 420', status: 'Plenitud: Alta coherencia y maestría personal. Los dominios se potencian entre sí.' }
     ];
 
     const getScoreByDomain = (domainId) => {
@@ -56,7 +56,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
     const LEVEL_READINGS = {
         1: {
-            title: "Nivel 1: Supervivencia (Luz Roja)",
+            title: "Nivel 1: Supervivencia",
             color: "#cc0000",
             subtitle: '"Es momento de parar y respirar"',
             paragraphs: [
@@ -67,7 +67,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             step: "Tu siguiente paso: Agenda una sesión de priorización inmediata con un profesional que pueda acompañarte en el proceso. El objetivo es estabilizar las fugas de energía antes de intentar avanzar."
         },
         2: {
-            title: "Nivel 2: Inestabilidad (Luz Naranja)",
+            title: "Nivel 2: Inestabilidad",
             color: "#ff9100",
             subtitle: '"Salir del modo reactivo"',
             paragraphs: [
@@ -77,18 +77,18 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             step: 'Tu siguiente paso: Define tu "Pilar Maestro". Elige un solo dominio para estructurar esta semana y deja que el resto se apoyen en él.'
         },
         3: {
-            title: "Nivel 3: Funcionalidad (Luz Amarilla)",
-            color: "#f2b705",
+            title: "Nivel 3: Funcional",
+            color: "#ffee00",
             subtitle: '"Que lo bueno no sea enemigo de lo extraordinario"',
             paragraphs: [
                 'Este es un nivel engañoso porque la vida "funciona". Cumples, produces, los resultados están ahí, pero en el fondo sabes que hay áreas grises que están frenando tu potencial real. Estás operando en automático.',
-                'En Auténticos creemos que la funcionalidad es una zona de confort que puede volverse peligrosa si te acomodas en ella. El reto aquí es identificar qué te falta para dar el salto de "estar bien" a "estar pleno".'
+                'En Auténticos creemos que el estado funcional es una zona de confort que puede volverse peligrosa si te acomodas en ella. El reto aquí es identificar qué te falta para dar el salto de "estar bien" a "estar pleno".'
             ],
             step: 'Tu siguiente paso: Auditoría de "Áreas Grises". Vamos a identificar ese 20% de ajustes que liberará el 80% de tu potencial oculto.'
         },
         4: {
-            title: "Nivel 4: Desarrollo (Luz Verde)",
-            color: "#00cc00",
+            title: "Nivel 4: Desarrollo",
+            color: "#00ff00",
             subtitle: '"Dueño de tu propio crecimiento"',
             paragraphs: [
                 "Aquí es donde la consciencia se vuelve una herramienta de gestión diaria. Tienes equilibrio, ves con claridad cómo tus decisiones afectan tus resultados y, lo más importante, sientes que tienes el control. Estás en un proceso de expansión constante.",
@@ -97,8 +97,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             step: "Tu siguiente paso: Escalamiento. Es momento de sistematizar tus hábitos para que este bienestar sea automático y no dependa solo de tu fuerza de voluntad."
         },
         5: {
-            title: "Nivel 5: Plenitud (Luz Azul)",
-            color: "#00121d",
+            title: "Nivel 5: Plenitud",
+            color: "#3b82f6",
             subtitle: '"La maestría de la coherencia"',
             paragraphs: [
                 "Llegar aquí no significa que tu vida sea perfecta, sino que has alcanzado una alta coherencia entre lo que eres, lo que piensas y lo que haces. Es la maestría personal en su máxima expresión: tus dominios no solo están en equilibrio, sino que se potencian entre sí.",
@@ -125,18 +125,12 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             }}>
                 <div style={{ marginTop: '20px' }}>
                     <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#f2b705', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '15px' }}>
-                        DESARROLLO INTEGRAL
-                    </p>
-                    <div style={{ width: '80%', height: '1px', backgroundColor: '#f2b705', margin: '0 auto 25px auto', opacity: 0.5 }}></div>
-                    <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#00121d', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
                         RESULTADOS Y PLAN DE ACCIÓN
                     </p>
+                    <div style={{ width: '80%', height: '1px', backgroundColor: '#f2b705', margin: '0 auto 25px auto', opacity: 0.5 }}></div>
                     <h1 style={{ fontSize: '56px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', lineHeight: '1', margin: '0' }}>
                         PROGRAMA<br />FASCINANTES
                     </h1>
-                    <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#f2b705', marginTop: '30px', marginBottom: '0' }}>
-                        El liderazgo consciente no elimina el desequilibrio.<br />Te entrena para responder mejor cuando aparece.
-                    </p>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '40px 0' }}>
@@ -155,10 +149,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     </p>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', fontSize: '12px', fontWeight: 'bold', color: '#00121d' }}>
-                    <span style={{ letterSpacing: '1px' }}>DOCUMENTO ESTRATÉGICO</span>
-                    <img src="/logo-azul.png" alt="Auténticos" style={{ height: '30px' }} />
-                    <span style={{ letterSpacing: '1px' }}>ARCHIVO CONFIDENCIAL</span>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    <img src="/logo-azul.png" alt="Auténticos" style={{ height: '38px' }} />
                 </div>
             </div>
 
@@ -175,17 +167,21 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 </div>
 
                 <div className="pdf-tables-section">
+                    <div className="pdf-table-desc" style={{ marginBottom: '15px' }}>
+                        En la siguiente tabla encontraras tu resultado y la escala en que se encuentra para que desde allí puedas iniciar tu proceso de crecimiento personal y profesional.
+                    </div>
+
                     <div className="pdf-table-container">
-                        <table className="pdf-score-table">
+                        <table className="pdf-score-table" style={{ tableLayout: 'fixed', width: '100%' }}>
                             <thead>
                                 <tr>
-                                    <th>Corporal</th>
-                                    <th>Mental</th>
-                                    <th>Emocional</th>
-                                    <th>Social</th>
-                                    <th>Espiritual</th>
-                                    <th>Financiero</th>
-                                    <th>Total</th>
+                                    <th style={{ width: '15%' }}>Corporal</th>
+                                    <th style={{ width: '15%' }}>Mental</th>
+                                    <th style={{ width: '15%' }}>Emocional</th>
+                                    <th style={{ width: '15%' }}>Social</th>
+                                    <th style={{ width: '15%' }}>Espiritual</th>
+                                    <th style={{ width: '15%' }}>Financiero</th>
+                                    <th style={{ width: '10%' }}>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -200,10 +196,6 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <div className="pdf-table-desc">
-                        En la siguiente tabla encontraras tu resultado y la escala en que se encuentra para que desde allí puedas iniciar tu proceso de crecimiento personal y profesional.
                     </div>
 
                     <div className="pdf-table-container">
@@ -243,16 +235,16 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <h2 className="pdf-reflection-title">RADAR DE VIDA: UNA HERRAMIENTA PARA LA EVOLUCIÓN</h2>
                 
                 <p className="pdf-reflection-text">
-                    <strong>Usuario</strong>, acabas de ver una fotografía de tu vida actual. ¿Cómo te sientes?
+                    <strong>Usuario</strong>, acabas de ver una fotografía de tu equilibrio actual. ¿Cómo te sientes?
                 </p>
                 <p className="pdf-reflection-text">
-                    A veces no resulta sencillo reconocer cómo se está distribuyendo tu energía, pero ten en cuenta que esto es solo un pantallazo de hoy, no un juicio.
+                    A veces no resulta sencillo reconocer cómo se está distribuyendo tu energía, pero ten en cuenta que esto es solo un pantallazo de hoy, no un juicio sobre tu valor.
                 </p>
                 <p className="pdf-reflection-text">
                     Míralo como una referencia personal para este momento de tu vida.
                 </p>
                 <p className="pdf-reflection-text">
-                    Un radar que integra seis dominios que consideramos los pilares de todo: el <strong>corporal, mental, emocional, social, espiritual y financiero.</strong> Sabemos que juntos forman esa base sólida donde se apoya tu bienestar, tus decisiones y, por supuesto, tus resultados.
+                    Un radar que integra seis dominios que consideramos los pilares de todo: <strong>Corporal, mental, emocional, social, espiritual y financiero.</strong> Sabemos que juntos forman esa base sólida donde se apoya tu bienestar, tus decisiones y, por supuesto, tus resultados.
                 </p>
                 <p className="pdf-reflection-text">
                     En <strong>Auténticos</strong> tenemos claro que esto no define quién eres en esencia, ni le pone techo a lo que eres capaz de lograr. Como cualquier foto, solo captura un segundo, no la película completa, porque entendemos que tu vida no es algo estático; es puro movimiento, es <strong>dinámica</strong>. Cambia con cada decisión que tomas y con lo que eliges transformar.
@@ -280,9 +272,25 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             <div className="pdf-page" id="pdf-page-3">
                 <h2 className="pdf-reflection-title" style={{ marginBottom: '30px' }}>LECTURA DEL RESULTADO</h2>
                 
-                <h3 style={{ color: currentReading.color, fontSize: '24px', fontWeight: '900', marginBottom: '10px', marginTop: '0' }}>
-                    {currentReading.title}
-                </h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px', marginTop: '0' }}>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        {levelData.map(l => (
+                            <div 
+                                key={l.level} 
+                                style={{ 
+                                    width: '18px', 
+                                    height: '18px', 
+                                    borderRadius: '50%', 
+                                    backgroundColor: userLevel === l.level ? l.color : '#e2e8f0',
+                                    border: '1px solid rgba(0,0,0,0.1)'
+                                }} 
+                            />
+                        ))}
+                    </div>
+                    <h3 style={{ color: '#ddbe3d', fontSize: '24px', fontWeight: '900', margin: 0 }}>
+                        {currentReading.title}
+                    </h3>
+                </div>
                 
                 <h4 style={{ fontSize: '18px', fontWeight: 'bold', color: '#4b5563', marginBottom: '25px', marginTop: '0', fontStyle: 'italic' }}>
                     {currentReading.subtitle}
@@ -303,17 +311,14 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 </div>
 
                 <div style={{ marginTop: '40px', marginBottom: '25px' }}>
-                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#f2b705', textTransform: 'uppercase', marginBottom: '12px', marginTop: '0' }}>
+                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '12px', marginTop: '0' }}>
                         RESULTADOS POR CADA DOMINIO
                     </h2>
                     <p className="pdf-reflection-text" style={{ marginBottom: '15px' }}>
-                        Este es el resultado de cómo has venido gestionando tu energía, atención y decisiones en cada área de tu vida durante los últimos meses. Más allá del puntaje, lo importante es entender qué hábitos, prioridades y dinámicas están detrás de cada resultado. 
-                    </p>
-                    <p className="pdf-reflection-text" style={{ marginBottom: '15px' }}>
-                        Obsérvalo con honestidad. Ahí encontrarás con claridad dónde mantener, ajustar y empezar a actuar con mayor intención. A partir de esta observación, surgen las acciones que debes iniciar con cada dominio.
+                        Aquí verás el balance de tu atención y energía reciente. Estos números son una invitación a entender las dinámicas detrás de tu día a día. 
                     </p>
                     <p className="pdf-reflection-text" style={{ marginBottom: '0' }}>
-                        Empieza por el dominio que requiere atención. Por ejemplo: <strong>{lowestDomainObj.domain.includes('Dominio') ? lowestDomainObj.domain : `Dominio ${lowestDomainObj.domain}`}</strong>
+                        Obsérvalos con apertura para descubrir dónde actuar con mayor intención. El cambio empieza por reconocer nuestras bases; te recomendamos priorizar el área señalada con "Bajo" o "Requiere Atención".
                     </p>
                 </div>
 
@@ -366,7 +371,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
                 <div className="pdf-important-note">
                     <div className="pdf-note-text">
-                        <strong>NOTA IMPORTANTE:</strong> Este autodiagnóstico es una herramienta de reflexión inicial. 
+                        <strong>NOTA IMPORTANTE:</strong> Este autodiagnóstico es una herramienta de reflexión personal. 
                         Los resultados reflejan tu percepción actual en cada dominio y sirven como base para tu Plan de Acción personalizado.
                     </div>
                 </div>
@@ -381,7 +386,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 </footer>
             </div>
             {/* PAGES 5 TO 10: QA TABLES */}
-            {fascinantesDomains.map((domain, index) => {
+            {!hideQAPages && fascinantesDomains.map((domain, index) => {
                 const pageIndex = index + 5;
                 const questions = fascinantesQuestions.filter(q => q.domain === domain.id);
 
@@ -510,7 +515,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     </div>
                 </div>
 
-                <div className="pdf-page-number" style={{ background: '#f2b705', padding: '8px 12px', borderRadius: '50%', right: '40px', bottom: '30px' }}>12</div>
+                <div className="pdf-page-number">12</div>
                 <footer className="pdf-footer" data-pdf-link="https://www.autenticos.co/">
                     <img src="/logo-azul.png" alt="Logo" style={{ filter: 'brightness(0) saturate(100%) invert(8%) sepia(87%) saturate(5412%) hue-rotate(205deg) brightness(85%) contrast(100%)' }} />
                 </footer>
@@ -578,7 +583,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     </p>
                 </div>
 
-                <div className="pdf-page-number" style={{ background: '#f2b705', padding: '8px 12px', borderRadius: '50%', right: '40px', bottom: '30px' }}>13</div>
+                <div className="pdf-page-number">13</div>
                 <footer className="pdf-footer" data-pdf-link="https://www.autenticos.co/">
                     <img src="/logo-azul.png" alt="Logo" style={{ filter: 'brightness(0) saturate(100%) invert(8%) sepia(87%) saturate(5412%) hue-rotate(205deg) brightness(85%) contrast(100%)' }} />
                 </footer>

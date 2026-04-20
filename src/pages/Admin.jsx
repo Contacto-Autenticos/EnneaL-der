@@ -5,11 +5,14 @@ import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, L
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
+import FascinantesReportTemplate from '../components/FascinantesReportTemplate';
 import {
     ResponsiveContainer, BarChart, Bar, LineChart, Line,
     XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
 import { questions as staticQuestions } from '../data/questions';
+import { fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
+import { calculateDomainScores, getExpertAnalysis, DOMAIN_STYLES } from '../utils/fascinantesUtils';
 import './Admin.css';
 
 const Admin = () => {
@@ -61,6 +64,11 @@ const Admin = () => {
     const [fascinantesDateFrom, setFascinantesDateFrom] = useState('');
     const [fascinantesDateTo, setFascinantesDateTo] = useState('');
 
+    // Fascinantes PDF Report State
+    const [pdfReportUser, setPdfReportUser] = useState(null);
+    const [isGeneratingFascinantesPdf, setIsGeneratingFascinantesPdf] = useState(null);
+    const fascinantesTemplateRef = React.useRef(null);
+
     // Helper to generate a random string for coupons
     const generateRandomCoupon = () => {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -96,7 +104,8 @@ const Admin = () => {
     const [filterOrg, setFilterOrg] = useState('');
     const [filterEneatype, setFilterEneatype] = useState('');
     const [filterTestType, setFilterTestType] = useState('');
-    const [filterCommercial, setFilterCommercial] = useState('');
+    const [isMultiUse, setIsMultiUse] = useState(false);
+    const [expirationDate, setExpirationDate] = useState('');
 
     // Transactions State
     const [transactions, setTransactions] = useState([]);
@@ -165,6 +174,82 @@ const Admin = () => {
             console.error('Error fetching fascinantes results:', error);
         } finally {
             setLoadingFascinantes(false);
+        }
+    };
+
+    const handleDownloadFascinantesPdf = async (r) => {
+        if (isGeneratingFascinantesPdf) return;
+
+        try {
+            setIsGeneratingFascinantesPdf(r.id);
+            
+            // Reconstruct the data needed for the template
+            let domainScores = [];
+            let analysis = null;
+            let userAnswers = r.user_answers || {};
+
+            // If we have user_answers, calculate everything from them for accuracy
+            if (Object.keys(userAnswers).length > 0) {
+                domainScores = calculateDomainScores(userAnswers);
+                analysis = getExpertAnalysis(domainScores);
+            } else {
+                // Fallback for old records without user_answers
+                domainScores = [
+                    { id: 'corporal', score: r.score_corporal, style: DOMAIN_STYLES.corporal, domain: 'Dominio Corporal' },
+                    { id: 'mental', score: r.score_mental, style: DOMAIN_STYLES.mental, domain: 'Dominio Mental' },
+                    { id: 'emocional', score: r.score_emocional, style: DOMAIN_STYLES.emocional, domain: 'Dominio Emocional' },
+                    { id: 'social', score: r.score_social, style: DOMAIN_STYLES.social, domain: 'Dominio Social' },
+                    { id: 'espiritual', score: r.score_espiritual, style: DOMAIN_STYLES.espiritual, domain: 'Dominio Espiritual' },
+                    { id: 'financiero', score: r.score_financiero, style: DOMAIN_STYLES.financiero, domain: 'Dominio Financiero' }
+                ].map(s => {
+                    const interpretation = fascinantesInterpretations.find(interp => 
+                        s.score >= interp.range[0] && s.score <= interp.range[1]
+                    ) || fascinantesInterpretations[0];
+                    return { ...s, interpretation: interpretation.name, definition: interpretation.definition, full: 70 };
+                });
+                analysis = getExpertAnalysis(domainScores);
+            }
+
+            // Set the state to render the hidden template
+            setPdfReportUser({
+                name: r.full_name || 'Usuario Anónimo',
+                date: new Date(r.created_at).toLocaleDateString(),
+                domainScores,
+                analysis,
+                userAnswers
+            });
+
+            // Wait for React to render the template
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            const kitRoot = fascinantesTemplateRef.current;
+            if (!kitRoot) throw new Error('Template ref not found');
+
+            const pages = kitRoot.querySelectorAll('.report-page');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            for (let i = 0; i < pages.length; i++) {
+                const canvas = await html2canvas(pages[i], {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+            }
+
+            const fileName = `Reporte_Fascinantes_${(r.full_name || 'Anonimo').replace(/\s+/g, '_')}_${r.id}.pdf`;
+            pdf.save(fileName);
+
+        } catch (error) {
+            console.error('Error generating Fascinantes PDF:', error);
+            alert('Error al generar el PDF. Revisa la consola.');
+        } finally {
+            setIsGeneratingFascinantesPdf(null);
+            setPdfReportUser(null);
         }
     };
 
@@ -573,9 +658,17 @@ const Admin = () => {
         const newCode = generateRandomCode();
 
         try {
+            const insertData = { code: newCode };
+            if (isMultiUse) {
+                insertData.is_multi_use = true;
+            }
+            if (expirationDate) {
+                insertData.expires_at = new Date(expirationDate).toISOString();
+            }
+
             const { error } = await supabase
                 .from('access_codes')
-                .insert([{ code: newCode }]);
+                .insert([insertData]);
 
             if (error) {
                 console.error('Error insertando código:', error);
@@ -743,14 +836,27 @@ const Admin = () => {
         URL.revokeObjectURL(url);
     };
 
+    const calculateFascinantesLevel = (r) => {
+        const total = (r.score_corporal || 0) + (r.score_mental || 0) + (r.score_emocional || 0) + 
+                      (r.score_social || 0) + (r.score_espiritual || 0) + (r.score_financiero || 0);
+        
+        if (total >= 353) return "Nivel 5 Plenitud";
+        if (total >= 286) return "Nivel 4 Desarrollo";
+        if (total >= 219) return "Nivel 3 Funcional";
+        if (total >= 152) return "Nivel 2 Inestabilidad";
+        return "Nivel 1 Supervivencia";
+    };
+
     const handleDownloadFascinantesExcel = (data, filename) => {
+
         const e = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
         
         // Headers
         const isAnon = filename.includes('Anonimos');
         const headers = isAnon 
-            ? [e('Numero de usuario'), e('Fecha'), e('Perfil obtenido'), e('Corporal'), e('Mental'), e('Emocional'), e('Social'), e('Espiritual'), e('Financiero')]
-            : [e('Nombre'), e('F. Nacimiento'), e('Email'), e('Fecha Realización'), e('Perfil obtenido'), e('Corporal'), e('Mental'), e('Emocional'), e('Social'), e('Espiritual'), e('Financiero')];
+            ? [e('Numero de usuario'), e('Fecha'), e('Nivel obtenido'), e('Corporal'), e('Mental'), e('Emocional'), e('Social'), e('Espiritual'), e('Financiero')]
+            : [e('Nombre'), e('F. Nacimiento'), e('Email'), e('Fecha Realización'), e('Nivel obtenido'), e('Corporal'), e('Mental'), e('Emocional'), e('Social'), e('Espiritual'), e('Financiero')];
+
 
         const rows = data.map(r => {
             const dateStr = new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -758,7 +864,8 @@ const Admin = () => {
                 return [
                     e(`#${r.id}`),
                     e(dateStr),
-                    e(r.profile_name),
+                    e(calculateFascinantesLevel(r)),
+
                     r.score_corporal,
                     r.score_mental,
                     r.score_emocional,
@@ -772,7 +879,8 @@ const Admin = () => {
                     e(r.birth_date),
                     e(r.email),
                     e(dateStr),
-                    e(r.profile_name),
+                    e(calculateFascinantesLevel(r)),
+
                     r.score_corporal,
                     r.score_mental,
                     r.score_emocional,
@@ -1077,6 +1185,10 @@ const Admin = () => {
                     </button>
                     {expandedProgram === 'fascinantes' && (
                         <div className="admin-nav-program-content">
+                            <button className={`admin-nav-item ${activeSection === 'codigos' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('codigos'); setIsMobileSidebarOpen(false); }}>
+                                <Key size={17} /> Códigos de acceso
+                            </button>
                             <button className={`admin-nav-item ${activeSection === 'fascinantes-anonimos' ? 'active' : ''}`}
                                 onClick={() => { setActiveSection('fascinantes-anonimos'); setIsMobileSidebarOpen(false); }}>
                                 Usuarios Anónimos
@@ -1171,8 +1283,48 @@ const Admin = () => {
                         <div className="admin-card-header">
                             <h2><Key size={20} /> Códigos de acceso</h2>
                         </div>
-                        <div className="code-generator-section">
-                            <button onClick={handleGenerateCode} disabled={generating} className="btn-generate">
+                        <div className="code-generator-section" style={{ 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            gap: '15px', 
+                            background: 'rgba(0, 40, 85, 0.05)', 
+                            padding: '20px', 
+                            borderRadius: '12px', 
+                            marginBottom: '20px', 
+                            border: '1px solid rgba(0, 40, 85, 0.1)' 
+                        }}>
+                            <div style={{ display: 'flex', gap: '30px', alignItems: 'center', flexWrap: 'wrap' }}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', color: '#002855', fontWeight: '600' }}>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={isMultiUse} 
+                                        onChange={(e) => setIsMultiUse(e.target.checked)}
+                                        style={{ width: '20px', height: '20px', accentColor: '#b89b2d' }}
+                                    />
+                                    <span>Código Multiuso (Evento)</span>
+                                </label>
+
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <span style={{ color: '#002855', fontSize: '0.95rem', fontWeight: '600' }}>Fecha de caducidad (Opcional):</span>
+                                    <input 
+                                        type="datetime-local" 
+                                        value={expirationDate}
+                                        onChange={(e) => setExpirationDate(e.target.value)}
+                                        className="select-admin"
+                                        style={{ 
+                                            background: '#ffffff', 
+                                            color: '#002855', 
+                                            border: '1px solid rgba(0, 40, 85, 0.2)', 
+                                            padding: '8px 12px', 
+                                            borderRadius: '8px',
+                                            outline: 'none',
+                                            fontWeight: '500'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            <button onClick={handleGenerateCode} disabled={generating} className="btn-generate" style={{ alignSelf: 'flex-start' }}>
                                 <Plus size={22} />
                                 {generating ? 'Generando...' : 'Nuevo código de acceso'}
                             </button>
@@ -1190,9 +1342,11 @@ const Admin = () => {
                                         <tr>
                                             <th>Código</th>
                                             <th style={{ textAlign: 'center' }}>Copiar</th>
-                                            <th>Estado</th>
-                                            <th>Correo</th>
-                                            <th>Fecha</th>
+                                            <th>Tipo</th>
+                                            <th>Programa</th>
+                                            <th>Estado / Expiración</th>
+                                            <th>Uso / Correo</th>
+                                            <th>Fecha Uso</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1219,9 +1373,38 @@ const Admin = () => {
                                                         </button>
                                                     </td>
                                                     <td>
-                                                        <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
-                                                            {item.is_used ? 'Usado' : 'Disponible'}
+                                                        <span style={{ 
+                                                            fontSize: '0.75rem', 
+                                                            padding: '2px 8px', 
+                                                            borderRadius: '10px',
+                                                            background: item.is_multi_use ? 'rgba(59, 130, 246, 0.2)' : 'rgba(148, 163, 184, 0.2)',
+                                                            color: item.is_multi_use ? '#60a5fa' : '#94a3b8',
+                                                            border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid rgba(148, 163, 184, 0.3)'
+                                                        }}>
+                                                            {item.is_multi_use ? 'Multiuso' : 'Único'}
                                                         </span>
+                                                    </td>
+                                                    <td>
+                                                        <span style={{ 
+                                                            fontSize: '0.8rem',
+                                                            color: item.used_in_program === 'Fascinantes' ? '#60a5fa' : 
+                                                                   item.used_in_program === 'Genuinos' ? '#ddbe3d' : '#94a3b8',
+                                                            fontWeight: item.used_in_program ? '600' : '400'
+                                                        }}>
+                                                            {item.used_in_program || '-'}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                                            <span className={`status-badge ${item.is_used ? 'used' : 'unused'}`}>
+                                                                {item.is_used ? 'Usado' : 'Disponible'}
+                                                            </span>
+                                                            {item.expires_at && (
+                                                                <span style={{ fontSize: '0.7rem', color: new Date(item.expires_at) < new Date() ? '#ef4444' : '#94a3b8' }}>
+                                                                    Exp: {new Date(item.expires_at).toLocaleDateString()}
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </td>
                                                     <td style={{ fontSize: '0.8rem' }}>{item.used_by || '-'}</td>
                                                     <td style={{ fontSize: '0.8rem' }}>
@@ -2492,13 +2675,15 @@ const Admin = () => {
                                         <tr>
                                             <th># Usuario</th>
                                             <th>Fecha</th>
-                                            <th>Perfil Obtenido</th>
+                                            <th>Nivel Obtenido</th>
+
                                             <th style={{ textAlign: 'center' }}>C.</th>
                                             <th style={{ textAlign: 'center' }}>M.</th>
                                             <th style={{ textAlign: 'center' }}>E.</th>
                                             <th style={{ textAlign: 'center' }}>S.</th>
                                             <th style={{ textAlign: 'center' }}>Es.</th>
                                             <th style={{ textAlign: 'center' }}>F.</th>
+                                            <th style={{ textAlign: 'center' }}>Reporte</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2506,23 +2691,40 @@ const Admin = () => {
                                             <tr><td colSpan="9" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
                                         ) : fascinantesResults.filter(r => r.is_anonymous).length === 0 ? (
                                             <tr><td colSpan="9" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
-                                        ) : (
-                                            fascinantesResults.filter(r => r.is_anonymous).map(r => (
+                                        ) : (() => {
+                                            const anonData = fascinantesResults.filter(r => r.is_anonymous);
+                                            return anonData.map((r, index) => (
                                                 <tr key={r.id}>
-                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{r.id}</td>
+                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{anonData.length - index}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>
                                                         {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                     </td>
-                                                    <td style={{ fontWeight: '600', color: '#b89b2d' }}>{r.profile_name}</td>
+                                                    <td style={{ fontWeight: '600', color: '#b89b2d' }}>{calculateFascinantesLevel(r)}</td>
+
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_corporal}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_mental}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_emocional}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_social}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_espiritual}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_financiero}</td>
+                                                     <td style={{ textAlign: 'center' }}>
+                                                         <button 
+                                                             className="btn-ver-respuestas" 
+                                                             style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}
+                                                             onClick={() => handleDownloadFascinantesPdf(r)}
+                                                             disabled={isGeneratingFascinantesPdf === r.id}
+                                                         >
+                                                             {isGeneratingFascinantesPdf === r.id ? (
+                                                                 <RefreshCw size={14} className="spinning" />
+                                                             ) : (
+                                                                 <><Download size={14} /> PDF</>
+                                                             )}
+                                                         </button>
+                                                     </td>
+
                                                 </tr>
-                                            ))
-                                        )}
+                                            ));
+                                        })()}
                                     </tbody>
                                 </table>
                             </div>
@@ -2572,13 +2774,15 @@ const Admin = () => {
                                             <th>F. Nacimiento</th>
                                             <th>Email</th>
                                             <th>Fecha Realización</th>
-                                            <th>Perfil Obtenido</th>
+                                            <th>Nivel Obtenido</th>
+
                                             <th style={{ textAlign: 'center' }}>C.</th>
                                             <th style={{ textAlign: 'center' }}>M.</th>
                                             <th style={{ textAlign: 'center' }}>E.</th>
                                             <th style={{ textAlign: 'center' }}>S.</th>
                                             <th style={{ textAlign: 'center' }}>Es.</th>
                                             <th style={{ textAlign: 'center' }}>F.</th>
+                                            <th style={{ textAlign: 'center' }}>Reporte</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2586,32 +2790,50 @@ const Admin = () => {
                                             <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
                                         ) : fascinantesResults.filter(r => !r.is_anonymous).length === 0 ? (
                                             <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
-                                        ) : (
-                                            fascinantesResults.filter(r => !r.is_anonymous).map(r => (
+                                        ) : (() => {
+                                            const regData = fascinantesResults.filter(r => !r.is_anonymous);
+                                            return regData.map((r, index) => (
                                                 <tr key={r.id}>
+                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{regData.length - index}</td>
                                                     <td style={{ fontWeight: '500' }}>{r.full_name}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>{r.birth_date}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>{r.email}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>
                                                         {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                     </td>
-                                                    <td style={{ fontWeight: '600', color: '#b89b2d' }}>{r.profile_name}</td>
+                                                    <td style={{ fontWeight: '600', color: '#b89b2d' }}>{calculateFascinantesLevel(r)}</td>
+
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_corporal}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_mental}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_emocional}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_social}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_espiritual}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_financiero}</td>
+                                                     <td style={{ textAlign: 'center' }}>
+                                                         <button 
+                                                             className="btn-ver-respuestas" 
+                                                             style={{ padding: '4px 8px', fontSize: '0.75rem', height: 'auto' }}
+                                                             onClick={() => handleDownloadFascinantesPdf(r)}
+                                                             disabled={isGeneratingFascinantesPdf === r.id}
+                                                         >
+                                                             {isGeneratingFascinantesPdf === r.id ? (
+                                                                 <RefreshCw size={14} className="spinning" />
+                                                             ) : (
+                                                                 <><Download size={14} /> PDF</>
+                                                             )}
+                                                         </button>
+                                                     </td>
+
                                                 </tr>
-                                            ))
-                                        )}
+                                            ));
+                                        })()}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     )
                 }
-            </main >
+            </main>
 
             {/* ── MODAL: Ver respuestas ── */}
             {
@@ -2807,7 +3029,8 @@ const Admin = () => {
                 )
             }
 
-            {/* Hidden wrapper for PDF Generator */}
+
+            {/* Hidden wrapper for PDF Generators */}
             <div id="admin-hidden-kit-printable" style={{ display: 'none' }}>
                 <ExecutiveKitTemplate
                     data={executiveKitData[selectedType]}
@@ -2815,7 +3038,23 @@ const Admin = () => {
                     name="Líder"
                 />
             </div>
-        </div >
+
+            {pdfReportUser && (
+                <div 
+                    ref={fascinantesTemplateRef}
+                    style={{ position: 'absolute', left: '-9999px', top: 0, width: '210mm', background: 'white' }}
+                >
+                    <FascinantesReportTemplate 
+                        userAnswers={pdfReportUser.userAnswers}
+                        domainScores={pdfReportUser.domainScores}
+                        analysis={pdfReportUser.analysis}
+                        userName={pdfReportUser.name}
+                        date={pdfReportUser.date}
+                        hideQAPages={Object.keys(pdfReportUser.userAnswers).length === 0}
+                    />
+                </div>
+            )}
+        </div>
     );
 };
 

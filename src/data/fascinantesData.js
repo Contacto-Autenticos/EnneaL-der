@@ -34,7 +34,8 @@ export const fascinantesQuestions = [
     { id: 21, domain: 'mental', text: 'Mi diálogo interno suele ser respetuoso, constructivo y me impulsa a mejorar.' },
     { id: 22, domain: 'mental', text: 'Analizo mis errores para extraer aprendizajes concretos sin caer en el autocastigo.' },
     { id: 23, domain: 'mental', text: 'Mantengo una actitud de curiosidad y busco profundizar en temas que no conozco.' },
-    { id: 24, domain: 'mental', text: 'Formo sus propias opiniones basándome en análisis personal y no solo en lo que otros dicen.' },
+    { id: 24, domain: 'mental', text: 'Formo mis propias opiniones basándome en análisis personal y no solo en lo que otros dicen.' },
+
     { id: 25, domain: 'mental', text: 'Sé distinguir con claridad entre lo que está bajo mi control y lo que no, soltando lo que no puedo cambiar.' },
     { id: 26, domain: 'mental', text: 'Tengo la flexibilidad mental para cambiar de opinión o estrategia cuando recibo nueva información válida.' },
     { id: 27, domain: 'mental', text: 'Genero espacios de desconexión digital para bajar la saturación de estímulos y ruidos externos.' },
@@ -109,26 +110,26 @@ export const fascinantesInterpretations = [
     {
         range: [14, 25],
         name: 'Crítico',
-        definition: 'Requiere atención inmediata. Los hábitos actuales bloquean el desarrollo en este dominio.'
+        definition: 'Requiere atención inmediata. Los hábitos actuales bloquean el desarrollo en este dominio y podrían afectar muy pronto otros.'
     },
     {
         range: [26, 36],
         name: 'Bajo',
-        definition: 'Existen bases mínimas, pero hay inconsistencia o falta de herramientas para avanzar.'
+        definition: 'Es muy posible que te falten de herramientas para avanzar. Te invitamos a investigar y profundizar en este dominio. Busca apoyo.'
     },
     {
         range: [37, 47],
         name: 'Medio',
-        definition: 'Estado de estabilidad básica. Se cumplen funciones esenciales pero falta propósito o mejora continua.'
+        definition: 'Estado de estabilidad. Puedes cumplir con las funciones esenciales, aun así, tienes una gran oportunidad para mejorar.'
     },
     {
         range: [48, 58],
         name: 'Alto',
-        definition: 'Dominio saludable. Hay consciencia y acciones proactivas que generan resultados positivos.'
+        definition: 'Dominio saludable. Hay consciencia y acciones proactivas que generan resultados positivos, cultívalo.'
     },
     {
         range: [59, 70],
         name: 'Óptimo',
-        definition: 'Estado de maestría y coherencia. El dominio es un motor de bienestar y crecimiento.'
+        definition: 'Estado de maestría y coherencia. El dominio es un motor de bienestar y crecimiento personal, consérvalo.'
     }
 ];

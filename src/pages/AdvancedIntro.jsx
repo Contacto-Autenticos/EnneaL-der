@@ -87,7 +87,8 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                     .update({
                         is_used: true,
                         used_by: normalizedEmail,
-                        used_at: new Date().toISOString()
+                        used_at: new Date().toISOString(),
+                        used_in_program: 'Genuinos'
                     })
                     .eq('code', cleanCode);
 

@@ -357,16 +357,25 @@
 /* Page Numbers */
 .pdf-page-number {
     position: absolute;
-    bottom: 35px;
-    right: 50px;
+    bottom: 30px;
+    right: 40px;
     font-size: 14px;
     font-weight: 900;
-    color: #111827;
+    color: #00121d;
+    background-color: #f2b705;
+    padding: 8px 12px;
+    border-radius: 50%;
+    min-width: 20px;
+    text-align: center;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Reflection Page (Page 2) */
 .pdf-reflection-title {
-    color: var(--pdf-gold);
+    color: var(--pdf-blue);
     font-size: 18px;
     font-weight: 900;
     text-transform: uppercase;
