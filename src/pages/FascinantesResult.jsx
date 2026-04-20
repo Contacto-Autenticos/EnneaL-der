@@ -432,13 +432,13 @@ const FascinantesResult = () => {
             if (page0) {
                 const canvas0 = await html2canvas(page0, {
                     backgroundColor: bgColor,
-                    scale: 3.5,
+                    scale: 2.5, // Optimizado: balance nitidez/velocidad
                     useCORS: true,
                     width: 800,
                     height: 1131
                 });
-                const imgData0 = canvas0.toDataURL('image/png');
-                pdf.addImage(imgData0, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                const imgData0 = canvas0.toDataURL('image/jpeg', 0.92);
+                pdf.addImage(imgData0, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
                 addLinksToPDF(page0);
             }
 
@@ -447,14 +447,14 @@ const FascinantesResult = () => {
             const page1 = template.querySelector('#pdf-page-1');
             const canvas1 = await html2canvas(page1, {
                 backgroundColor: bgColor,
-                scale: 3.5, // Alta resolución para textos y radar
+                scale: 2.5,
                 useCORS: true,
                 width: 800,
                 height: 1131
             });
 
-            const imgData1 = canvas1.toDataURL('image/png');
-            pdf.addImage(imgData1, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const imgData1 = canvas1.toDataURL('image/jpeg', 0.92);
+            pdf.addImage(imgData1, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
             addLinksToPDF(page1);
 
             // --- PAGE 2 ---
@@ -462,14 +462,14 @@ const FascinantesResult = () => {
             const page2 = template.querySelector('#pdf-page-2');
             const canvas2 = await html2canvas(page2, {
                 backgroundColor: bgColor,
-                scale: 3.5,
+                scale: 2.5,
                 useCORS: true,
                 width: 800,
                 height: 1131
             });
 
-            const imgData2 = canvas2.toDataURL('image/png');
-            pdf.addImage(imgData2, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const imgData2 = canvas2.toDataURL('image/jpeg', 0.92);
+            pdf.addImage(imgData2, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
             addLinksToPDF(page2);
 
             // --- PAGE 3 ---
@@ -477,14 +477,14 @@ const FascinantesResult = () => {
             const page3 = template.querySelector('#pdf-page-3');
             const canvas3 = await html2canvas(page3, {
                 backgroundColor: bgColor,
-                scale: 3.5,
+                scale: 2.5,
                 useCORS: true,
                 width: 800,
                 height: 1131
             });
 
-            const imgData3 = canvas3.toDataURL('image/png');
-            pdf.addImage(imgData3, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const imgData3 = canvas3.toDataURL('image/jpeg', 0.92);
+            pdf.addImage(imgData3, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
             addLinksToPDF(page3);
 
             // --- PAGE 4 ---
@@ -492,14 +492,14 @@ const FascinantesResult = () => {
             const page4 = template.querySelector('#pdf-page-4');
             const canvas4 = await html2canvas(page4, {
                 backgroundColor: bgColor,
-                scale: 3.5,
+                scale: 2.5,
                 useCORS: true,
                 width: 800,
                 height: 1131
             });
 
-            const imgData4 = canvas4.toDataURL('image/png');
-            pdf.addImage(imgData4, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            const imgData4 = canvas4.toDataURL('image/jpeg', 0.92);
+            pdf.addImage(imgData4, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
             addLinksToPDF(page4);
 
             // --- PAGES 5 TO 10 (QA Tables) ---
@@ -509,13 +509,13 @@ const FascinantesResult = () => {
                     pdf.addPage();
                     const canvasQA = await html2canvas(qaPage, {
                         backgroundColor: bgColor,
-                        scale: 3.5,
+                        scale: 2.5,
                         useCORS: true,
                         width: 800,
                         height: 1131
                     });
-                    const imgDataQA = canvasQA.toDataURL('image/png');
-                    pdf.addImage(imgDataQA, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    const imgDataQA = canvasQA.toDataURL('image/jpeg', 0.92);
+                    pdf.addImage(imgDataQA, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
                     addLinksToPDF(qaPage);
                 }
             }
@@ -526,13 +526,13 @@ const FascinantesResult = () => {
                 pdf.addPage();
                 const canvas11 = await html2canvas(page11, {
                     backgroundColor: bgColor,
-                    scale: 3.5,
+                    scale: 2.5,
                     useCORS: true,
                     width: 800,
                     height: 1131
                 });
-                const imgData11 = canvas11.toDataURL('image/png');
-                pdf.addImage(imgData11, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                const imgData11 = canvas11.toDataURL('image/jpeg', 0.92);
+                pdf.addImage(imgData11, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
                 addLinksToPDF(page11);
             }
 
@@ -543,13 +543,13 @@ const FascinantesResult = () => {
                     pdf.addPage();
                     const canvasAction = await html2canvas(actionPage, {
                         backgroundColor: bgColor,
-                        scale: 3.5,
+                        scale: 2.5,
                         useCORS: true,
                         width: 800,
                         height: 1131
                     });
-                    const imgDataAction = canvasAction.toDataURL('image/png');
-                    pdf.addImage(imgDataAction, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    const imgDataAction = canvasAction.toDataURL('image/jpeg', 0.92);
+                    pdf.addImage(imgDataAction, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
                     addLinksToPDF(actionPage);
                 }
             }
@@ -588,7 +588,7 @@ const FascinantesResult = () => {
                 // Capture each page individually
                 const canvas = await html2canvas(page, {
                     backgroundColor: '#ffffff',
-                    scale: 3, // High resolution
+                    scale: 2.2, // Optimizado para velocidad
                     useCORS: true,
                     allowTaint: true,
                     logging: false,
@@ -596,14 +596,14 @@ const FascinantesResult = () => {
                     height: page.offsetHeight
                 });
 
-                const imgData = canvas.toDataURL('image/png');
+                const imgData = canvas.toDataURL('image/jpeg', 0.92);
                 
                 if (i > 0) {
                     pdf.addPage();
                 }
 
                 // Add to PDF filling the entire A4 page
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
             }
 
             pdf.save('Plan-de-Accion-Fascinantes.pdf');

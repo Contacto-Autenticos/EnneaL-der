@@ -239,17 +239,17 @@ const Admin = () => {
 
             for (let i = 0; i < pages.length; i++) {
                 const canvas = await html2canvas(pages[i], {
-                    scale: 3.5, // Aumentado para paridad con Resultados
+                    scale: 2.5, // Optimizado para velocidad
                     useCORS: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    width: 800, // Coincidir con el CSS del template (800px)
-                    height: 1131 // Coincidir con el CSS del template
+                    width: 800, 
+                    height: 1131 
                 });
 
-                const imgData = canvas.toDataURL('image/png');
+                const imgData = canvas.toDataURL('image/jpeg', 0.92);
                 if (i > 0) pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+                pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
             }
 
             // Ocultar de nuevo el template
