@@ -28,7 +28,7 @@ const Admin = () => {
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
     const [preguntasOpen, setPreguntasOpen] = useState(false);
     const [respuestasOpen, setRespuestasOpen] = useState(false);
-    const [expandedProgram, setExpandedProgram] = useState('genuinos');
+    const [expandedProgram, setExpandedProgram] = useState(null);
     const [codes, setCodes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);

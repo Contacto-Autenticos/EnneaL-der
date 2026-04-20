@@ -92,6 +92,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                 }
 
                 // Registrar uso (para ambos tipos)
+                console.log('Registrando uso del código:', { cleanCode, email: normalizedEmail });
                 const { error: updateError } = await supabase
                     .from('access_codes')
                     .update({
@@ -101,6 +102,12 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                         used_in_program: 'Genuinos'
                     })
                     .eq('code', cleanCode);
+                
+                if (!updateError) {
+                    console.log('Uso registrado exitosamente en Supabase');
+                } else {
+                    console.error('Error al actualizar uso del código:', updateError);
+                }
 
                 if (updateError) {
                     console.error('Error updating access code:', updateError);

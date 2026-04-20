@@ -66,6 +66,7 @@ const AutodiagRegister = () => {
                 }
                 
                 // Actualizar registro de uso (para ambos tipos)
+                console.log('Registrando uso del código (Fascinantes):', { cleanCode, email: userData.email });
                 const { error: updateError } = await supabase
                     .from('access_codes')
                     .update({ 
@@ -75,6 +76,12 @@ const AutodiagRegister = () => {
                         used_in_program: 'Fascinantes'
                     })
                     .eq('code', cleanCode);
+
+                if (!updateError) {
+                    console.log('Uso registrado exitosamente en Supabase (Fascinantes)');
+                } else {
+                    console.error('Error al actualizar uso en Supabase:', updateError);
+                }
 
                 if (updateError) throw new Error('Error al procesar el código. Intenta de nuevo.');
 
