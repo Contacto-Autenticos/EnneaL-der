@@ -246,7 +246,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <h2 className="pdf-reflection-title">RADAR DE VIDA: UNA HERRAMIENTA PARA LA EVOLUCIÓN</h2>
                 
                 <p className="pdf-reflection-text">
-                    <strong>Usuario</strong>, acabas de ver una fotografía de tu equilibrio actual. ¿Cómo te sientes?
+                    <strong>{userName || 'Usuario'}</strong>, acabas de ver una fotografía de tu equilibrio actual. ¿Cómo te sientes?
                 </p>
                 <p className="pdf-reflection-text">
                     A veces no resulta sencillo reconocer cómo se está distribuyendo tu energía, pero ten en cuenta que esto es solo un pantallazo de hoy, no un juicio sobre tu valor.
