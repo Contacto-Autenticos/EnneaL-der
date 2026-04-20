@@ -483,3 +483,52 @@
     color: #00121d;
     font-weight: bold;
 }
+
+/* Domain Interpretation Box for QA Pages */
+.pdf-interpretation-box {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left-width: 6px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    border-radius: 0 10px 10px 0;
+}
+
+.pdf-interpretation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pdf-interpretation-level {
+    font-size: 14px;
+    font-weight: 900;
+    color: #00121d;
+    text-transform: uppercase;
+}
+
+.pdf-interpretation-range {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.pdf-interpretation-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #334155;
+    margin: 0 0 10px 0;
+    font-style: italic;
+}
+
+.pdf-interpretation-score-info {
+    font-size: 12px;
+    color: #1e293b;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+}
+

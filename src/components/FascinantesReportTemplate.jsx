@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { User, Brain, HeartPulse, Handshake, Eye, TrendingUp, Zap, AlertCircle } from 'lucide-react';
 import FascinantesRadar from './FascinantesRadar';
-import { fascinantesQuestions, fascinantesDomains } from '../data/fascinantesData';
+import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } from '../data/fascinantesData';
 import './FascinantesReportTemplate.css';
 
 const DOMAIN_STYLES = {
@@ -400,10 +400,15 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             {!hideQAPages && fascinantesDomains.map((domain, index) => {
                 const pageIndex = index + 5;
                 const questions = fascinantesQuestions.filter(q => q.domain === domain.id);
+                const scoreData = domainScores.find(s => s.id === domain.id);
+                
+                // Buscar el rango de interpretación específico para este puntaje
+                const scoreValue = scoreData?.score || 0;
+                const interp = fascinantesInterpretations.find(i => scoreValue >= i.range[0] && scoreValue <= i.range[1]);
 
                 return (
                     <div key={domain.id} className="pdf-page" id={`pdf-page-${pageIndex}`}>
-                        <div style={{ marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <div style={{ color: DOMAIN_STYLES[domain.id]?.color || '#000' }}>
                                 {getDomainIcon(domain.id)}
                             </div>
@@ -411,8 +416,22 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                                 {domain.name}
                             </h2>
                         </div>
+
+                        {interp && (
+                            <div className="pdf-interpretation-box" style={{ borderLeftColor: DOMAIN_STYLES[domain.id]?.color || '#f2b705' }}>
+                                <div className="pdf-interpretation-header">
+                                    <span className="pdf-interpretation-level">Interpretación Sugerida: {interp.name}</span>
+                                    <span className="pdf-interpretation-range">Rango: {interp.range[0]} a {interp.range[1]} pts</span>
+                                </div>
+                                <p className="pdf-interpretation-text">{interp.definition}</p>
+                                <div className="pdf-interpretation-score-info">
+                                    Tu puntaje en este dominio: <strong>{scoreValue} pts</strong>
+                                </div>
+                            </div>
+                        )}
                         
                         <table className="pdf-qa-table">
+
                             <thead>
                                 <tr>
                                     <th>Pregunta</th>
