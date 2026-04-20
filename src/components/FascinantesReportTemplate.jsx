@@ -26,7 +26,7 @@ const getDomainIcon = (domainId) => {
     }
 };
 
-const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnswers = {}, hideQAPages = false }, ref) => {
+const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnswers = {}, hideQAPages = false, userName = '', date = '' }, ref) => {
     if (!domainScores || domainScores.length === 0 || !analysis) return null;
     const minScore = Math.min(...domainScores.map(s => s.score));
     const lowestDomainObj = domainScores.find(s => s.score === minScore) || domainScores[0];
@@ -148,6 +148,14 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                         Basado en la metodología MLT
                     </p>
                 </div>
+
+                {/* USER INFO SECTION */}
+                {(userName || date) && (
+                    <div style={{ marginBottom: '30px', padding: '15px', borderTop: '1px solid rgba(0,18,29,0.1)', display: 'inline-block', margin: '0 auto' }}>
+                        {userName && <p style={{ fontSize: '18px', fontWeight: '800', color: '#00121d', margin: '0', textTransform: 'uppercase' }}>{userName}</p>}
+                        {date && <p style={{ fontSize: '13px', color: '#00121d', margin: '4px 0 0 0', opacity: 0.7, fontWeight: '500' }}>{date}</p>}
+                    </div>
+                )}
 
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                     <img src="/logo-azul.png" alt="Auténticos" style={{ height: '38px' }} />

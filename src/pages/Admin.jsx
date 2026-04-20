@@ -225,15 +225,17 @@ const Admin = () => {
             const kitRoot = fascinantesTemplateRef.current;
             if (!kitRoot) throw new Error('Template ref not found');
 
-            const pages = kitRoot.querySelectorAll('.report-page');
+            const pages = kitRoot.querySelectorAll('.pdf-page');
             const pdf = new jsPDF('p', 'mm', 'a4');
 
             for (let i = 0; i < pages.length; i++) {
                 const canvas = await html2canvas(pages[i], {
-                    scale: 2,
+                    scale: 3,
                     useCORS: true,
                     backgroundColor: '#ffffff',
-                    logging: false
+                    logging: false,
+                    width: 794,
+                    height: 1123
                 });
 
                 const imgData = canvas.toDataURL('image/png');

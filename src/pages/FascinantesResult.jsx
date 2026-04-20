@@ -38,6 +38,7 @@ const FascinantesResult = () => {
     const [isSharing, setIsSharing] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
     const [isDownloadingActionPlan, setIsDownloadingActionPlan] = useState(false);
+    const [userData, setUserData] = useState(null);
     const [showSocialOptions, setShowSocialOptions] = useState(false); // Senior: Better state management for fallback
     const radarRef = React.useRef(null);
     const reportRef = React.useRef(null);
@@ -46,6 +47,12 @@ const FascinantesResult = () => {
 
     useEffect(() => {
         const storedAnswers = localStorage.getItem('fascinantesAnswers');
+        const tempUserStr = localStorage.getItem('tempAutodiagUser');
+        
+        if (tempUserStr) {
+            try { setUserData(JSON.parse(tempUserStr)); } catch (e) {}
+        }
+        
         if (storedAnswers) {
             const answers = JSON.parse(storedAnswers);
             setUserAnswers(answers);
@@ -895,6 +902,8 @@ const FascinantesResult = () => {
                     domainScores={domainScores} 
                     analysis={getExpertAnalysis(domainScores)} 
                     userAnswers={userAnswers}
+                    userName={userData?.name}
+                    date={new Date().toLocaleDateString()}
                 />
                 
                 <div ref={actionPlanRef}>
