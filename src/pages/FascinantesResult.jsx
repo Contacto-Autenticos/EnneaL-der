@@ -763,7 +763,7 @@ const FascinantesResult = () => {
                         <AlertCircle size={28} />
                     </div>
                     <p className="note-text">
-                        <strong>Nota Importante:</strong> si alguien está en crisis intensa o con síntomas severos, esto no reemplaza acompañamiento profesional. Pide ayuda.
+                        <strong>Nota Importante:</strong> si estás en crisis intensa o con síntomas severos, esto no reemplaza acompañamiento profesional. Pide ayuda.
                     </p>
                 </div>
 
