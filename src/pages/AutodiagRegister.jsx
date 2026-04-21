@@ -97,7 +97,7 @@ const AutodiagRegister = () => {
                 localStorage.setItem('tempAutodiagUser', JSON.stringify(userData));
                 localStorage.setItem('autodiagPaid', 'true');
                 
-                navigate('/autodiag-intro');
+                navigate('/dominios-intro');
                 return;
 
             } catch (err) {
@@ -109,7 +109,7 @@ const AutodiagRegister = () => {
 
         // Si NO hay código, proceder al pago normalmente
         localStorage.setItem('tempAutodiagUser', JSON.stringify(userData));
-        navigate('/autodiag-payment');
+        navigate('/dominios-payment');
     };
 
     return (

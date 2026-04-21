@@ -217,7 +217,7 @@ const FascinantesTest = () => {
 
     const handleSubmit = (finalAnswers = answers) => {
         localStorage.setItem('fascinantesAnswers', JSON.stringify(finalAnswers));
-        navigate('/autodiag-transition');
+        navigate('/dominios-transition');
     };
 
     return (

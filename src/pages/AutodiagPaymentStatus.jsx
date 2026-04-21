@@ -52,7 +52,7 @@ const AutodiagPaymentStatus = () => {
                     // Limpiamos la temporal de registro si queremos, o la dejamos por si la usamos en AutodiagIntro
                     
                     setTimeout(() => {
-                        navigate('/autodiag-intro');
+                        navigate('/dominios-intro');
                     }, 2000);
                 } else if (transactionStatus === 'DECLINED') {
                     setStatus('DECLINED');
@@ -96,7 +96,7 @@ const AutodiagPaymentStatus = () => {
 
                         localStorage.setItem('autodiagPaid', 'true');
 
-                        setTimeout(() => navigate('/autodiag-intro'), 2000);
+                        setTimeout(() => navigate('/dominios-intro'), 2000);
                         return;
                     }
                 } catch (e) {
@@ -125,7 +125,7 @@ const AutodiagPaymentStatus = () => {
 
                 {(status === 'DECLINED' || status === 'ERROR') && (
                     <div style={{ marginTop: '30px' }}>
-                        <button onClick={() => navigate('/autodiag-payment')} className="btn-retry">
+                        <button onClick={() => navigate('/dominios-payment')} className="btn-retry">
                             Intentar de nuevo
                         </button>
                         <br />

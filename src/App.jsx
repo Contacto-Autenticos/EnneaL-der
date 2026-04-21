@@ -213,14 +213,14 @@ function App() {
         <Route path="/Trascendentes" element={<Trascendentes />} />
         <Route path="/Genuinos" element={<Genuinos />} />
         <Route path="/Conscientes" element={<Conscientes />} />
-        <Route path="/autodiag-intro" element={<FascinantesIntro />} />
-        <Route path="/autodiag-test" element={<FascinantesTest />} />
-        <Route path="/autodiag-transition" element={<FascinantesTransition />} />
-        <Route path="/autodiag-result" element={<FascinantesResult />} />
+        <Route path="/dominios-intro" element={<FascinantesIntro />} />
+        <Route path="/dominios-test" element={<FascinantesTest />} />
+        <Route path="/dominios-transition" element={<FascinantesTransition />} />
+        <Route path="/dominios-result" element={<FascinantesResult />} />
 
-        <Route path="/autodiag-register" element={<AutodiagRegister />} />
-        <Route path="/autodiag-payment" element={<AutodiagPayment />} />
-        <Route path="/autodiag-payment-status" element={<AutodiagPaymentStatus />} />
+        <Route path="/dominios" element={<AutodiagRegister />} />
+        <Route path="/dominios-payment" element={<AutodiagPayment />} />
+        <Route path="/dominios-payment-status" element={<AutodiagPaymentStatus />} />
 
         <Route
           path="/test-intro"

@@ -60,7 +60,7 @@ const FascinantesResult = () => {
             setDomainScores(scores);
             setLoading(false);
         } else {
-            navigate('/autodiag-intro');
+            navigate('/dominios-intro');
         }
     }, [navigate]);
 
@@ -802,7 +802,7 @@ const FascinantesResult = () => {
                 <div className="result-actions" style={{ marginTop: '15px' }}>
                     <button 
                         className="btn-action tertiary" 
-                        onClick={() => navigate('/autodiag-intro')}
+                        onClick={() => navigate('/dominios-intro')}
                     >
                         <ArrowLeft size={18} /> REGRESAR
                     </button>

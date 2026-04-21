@@ -37,7 +37,7 @@ const FascinantesIntro = () => {
                 <div className="intro-actions animate-fade-in" style={{ animationDelay: '0.4s' }}>
                     <button 
                         className="btn-start-fascinantes"
-                        onClick={() => navigate('/autodiag-test')}
+                        onClick={() => navigate('/dominios-test')}
                     >
                         COMENZAR <ArrowRight size={20} />
                     </button>

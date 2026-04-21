@@ -56,7 +56,7 @@ const FascinantesTransition = () => {
 
         // Final transition
         const finalTimer = setTimeout(() => {
-            navigate('/autodiag-result');
+            navigate('/dominios-result');
         }, totalTime);
 
         return () => {

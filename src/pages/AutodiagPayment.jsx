@@ -52,7 +52,7 @@ const AutodiagPayment = () => {
             script.setAttribute('data-amount-in-cents', BASE_PRICE_IN_CENTS);
             script.setAttribute('data-reference', signatureData.reference);
             script.setAttribute('data-signature:integrity', signatureData.signature);
-            script.setAttribute('data-redirect-url', `${window.location.origin}/autodiag-payment-status`);
+            script.setAttribute('data-redirect-url', `${window.location.origin}/dominios-payment-status`);
 
             const container = document.getElementById('wompi-container');
             if (container) {

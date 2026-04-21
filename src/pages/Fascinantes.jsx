@@ -16,7 +16,7 @@ const Fascinantes = () => {
         setHasPaid(!!storedHasPaid);
     }, []);
 
-    const targetPath = (completed || hasPaid) ? '/autodiag-intro' : '/autodiag-register';
+    const targetPath = (completed || hasPaid) ? '/dominios-intro' : '/dominios';
 
     const analysis = {
         id: 'fascinantes',
