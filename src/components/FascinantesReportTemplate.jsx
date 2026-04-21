@@ -149,8 +149,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 )}
 
                 <div style={{ marginBottom: '40px' }}>
-                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: '#00121d', marginBottom: '10px', marginTop: '0' }}>
-                        Modelo de dominios fundamentales basado en la metodología MLT
+                    <p style={{ fontSize: '20px', fontWeight: 'bold', color: '#00121d', marginBottom: '10px', marginTop: '0', lineHeight: '1.4' }}>
+                        Modelo de dominios fundamentales<br />basado en la metodología MLT
                     </p>
                 </div>
 
