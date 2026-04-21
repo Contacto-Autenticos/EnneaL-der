@@ -2904,7 +2904,7 @@ const Admin = () => {
                         </div>
                     )
                 }
-            </main>
+
 
             {/* ── MODAL: Ver respuestas ── */}
             {
