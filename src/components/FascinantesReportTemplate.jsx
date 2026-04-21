@@ -397,20 +397,21 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
                 return (
                     <div key={domain.id} className="pdf-page" id={`pdf-page-${pageIndex}`}>
-                        <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <div style={{ color: DOMAIN_STYLES[domain.id]?.color || '#000' }}>
+                        <div style={{ marginBottom: '25px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                            <div style={{ color: DOMAIN_STYLES[domain.id]?.color || '#000', marginTop: '3px' }}>
                                 {getDomainIcon(domain.id)}
                             </div>
-                            <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', margin: '0' }}>
-                                {domain.name}
-                            </h2>
+                            <div>
+                                <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', margin: '0' }}>
+                                    {domain.name}
+                                </h2>
+                                {interp && (
+                                    <p style={{ fontSize: '15px', color: '#1f2937', margin: '4px 0 0 0', fontWeight: '400' }}>
+                                        Tu puntaje en este dominio: <strong>{scoreValue} puntos</strong>
+                                    </p>
+                                )}
+                            </div>
                         </div>
-
-                        {interp && (
-                            <p style={{ fontSize: '14px', color: '#1f2937', margin: '20px 0 10px 0' }}>
-                                Tu puntaje en este dominio: <strong>{scoreValue} puntos</strong>
-                            </p>
-                        )}
                         
                         <table className="pdf-qa-table">
 
