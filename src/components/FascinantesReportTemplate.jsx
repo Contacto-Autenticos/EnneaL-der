@@ -150,13 +150,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
                 <div style={{ marginBottom: '40px' }}>
                     <p style={{ fontSize: '20px', fontWeight: 'bold', color: '#00121d', marginBottom: '10px', marginTop: '0' }}>
-                        Manual de implementación paso a paso
-                    </p>
-                    <p style={{ fontSize: '14px', color: '#00121d', margin: '5px 0' }}>
-                        Modelo Dominios Fundamentales
-                    </p>
-                    <p style={{ fontSize: '14px', color: '#00121d', margin: '0' }}>
-                        Basado en la metodología MLT
+                        Modelo de dominios fundamentales basado en la metodología MLT
                     </p>
                 </div>
 
@@ -258,7 +252,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     Un radar que integra seis dominios que consideramos los pilares de todo: <strong>Corporal, mental, emocional, social, espiritual y financiero.</strong> Sabemos que juntos forman esa base sólida donde se apoya tu bienestar, tus decisiones y, por supuesto, tus resultados.
                 </p>
                 <p className="pdf-reflection-text">
-                    En <strong>Auténticos</strong> tenemos claro que esto no define quién eres en esencia, ni le pone techo a lo que eres capaz de lograr. Como cualquier foto, solo captura un segundo, no la película completa, porque entendemos que tu vida no es algo estático; es puro movimiento, es <strong>dinámica</strong>. Cambia con cada decisión que tomas y con lo que eliges transformar.
+                    En <strong>Auténticos</strong> tenemos claro que esto no define quién eres en esencia, ni le pone techo a lo que eres capaz de lograr. Como cualquier foto, solo captura un segundo, no la película completa, porque entendemos que tu vida es <strong>dinámica</strong>. Cambia con cada decisión que tomas y con lo que eliges transformar.
                 </p>
                 <p className="pdf-reflection-text">
                     Por eso, no te pedimos que busques un "equilibrio perfecto". En nuestra experiencia, no existe tal equilibrio. Siempre habrá momentos donde un área te va a exigir más que otra; siempre habrá tensiones y prioridades que inclinen la balanza.
@@ -284,23 +278,16 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <h2 className="pdf-reflection-title" style={{ marginBottom: '30px' }}>LECTURA DEL RESULTADO</h2>
                 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px', marginTop: '0' }}>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                        {levelData.map(l => (
-                            <div 
-                                key={l.level} 
-                                style={{ 
-                                    width: '18px', 
-                                    height: '18px', 
-                                    borderRadius: '50%', 
-                                    backgroundColor: userLevel === l.level ? l.color : '#e2e8f0',
-                                    border: '1px solid rgba(0,0,0,0.1)'
-                                }} 
-                            />
-                        ))}
-                    </div>
-                    <h3 style={{ color: '#ddbe3d', fontSize: '24px', fontWeight: '900', margin: 0 }}>
+                    <h3 style={{ color: currentReading.color, fontSize: '24px', fontWeight: '900', margin: 0 }}>
                         {currentReading.title}
                     </h3>
+                    <div style={{ 
+                        width: '20px', 
+                        height: '20px', 
+                        borderRadius: '50%', 
+                        backgroundColor: currentReading.color,
+                        border: '1px solid rgba(0,0,0,0.1)'
+                    }} />
                 </div>
                 
                 <h4 style={{ fontSize: '18px', fontWeight: 'bold', color: '#4b5563', marginBottom: '25px', marginTop: '0', fontStyle: 'italic' }}>
@@ -321,17 +308,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     </p>
                 </div>
 
-                <div style={{ marginTop: '40px', marginBottom: '25px' }}>
-                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '12px', marginTop: '0' }}>
-                        RESULTADOS POR CADA DOMINIO
-                    </h2>
-                    <p className="pdf-reflection-text" style={{ marginBottom: '15px' }}>
-                        Aquí verás el balance de tu atención y energía reciente. Estos números son una invitación a entender las dinámicas detrás de tu día a día. 
-                    </p>
-                    <p className="pdf-reflection-text" style={{ marginBottom: '0' }}>
-                        Obsérvalos con apertura para descubrir dónde actuar con mayor intención. El cambio empieza por reconocer nuestras bases; te recomendamos priorizar el área señalada con "Bajo" o "Requiere Atención".
-                    </p>
-                </div>
+
 
                 <div className="pdf-page-number">3</div>
                 <footer className="pdf-footer" data-pdf-link="https://www.autenticos.co/">
@@ -341,7 +318,19 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 4: DOMAIN CARDS */}
             <div className="pdf-page" id="pdf-page-4">
-                <div className="pdf-domains-grid" style={{ marginTop: '40px' }}>
+                <div style={{ marginTop: '40px', marginBottom: '0' }}>
+                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '12px', marginTop: '0' }}>
+                        RESULTADOS POR CADA DOMINIO
+                    </h2>
+                    <p className="pdf-reflection-text" style={{ marginBottom: '15px' }}>
+                        Aquí verás el balance de tu atención y energía reciente. Estos números son una invitación a entender las dinámicas detrás de tu día a día. 
+                    </p>
+                    <p className="pdf-reflection-text" style={{ marginBottom: '25px' }}>
+                        Obsérvalos con apertura para descubrir dónde actuar con mayor intención. El cambio empieza por reconocer nuestras bases; te recomendamos priorizar el área señalada con "Bajo" o "Requiere Atención".
+                    </p>
+                </div>
+
+                <div className="pdf-domains-grid" style={{ marginTop: '0' }}>
                     {[...domainScores]
                         .sort((a, b) => b.score - a.score)
                         .map((score) => {
@@ -418,13 +407,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                         </div>
 
                         {interp && (
-                            <div className="pdf-interpretation-box" style={{ borderLeftColor: DOMAIN_STYLES[domain.id]?.color || '#f2b705' }}>
-                                <div className="pdf-interpretation-header">
-                                    <span className="pdf-interpretation-level">Interpretación Sugerida: {interp.name}</span>
-                                    <span className="pdf-interpretation-range">Rango: {interp.range[0]} a {interp.range[1]} pts</span>
-                                </div>
-                                <p className="pdf-interpretation-text">{interp.definition}</p>
-                                <div className="pdf-interpretation-score-info">
+                            <div className="pdf-interpretation-box" style={{ borderLeftColor: DOMAIN_STYLES[domain.id]?.color || '#f2b705', padding: '15px' }}>
+                                <div className="pdf-interpretation-score-info" style={{ margin: 0 }}>
                                     Tu puntaje en este dominio: <strong>{scoreValue} pts</strong>
                                 </div>
                             </div>
