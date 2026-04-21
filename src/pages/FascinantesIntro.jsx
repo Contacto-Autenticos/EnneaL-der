@@ -15,7 +15,7 @@ const FascinantesIntro = () => {
                     <div className="title-image-wrapper">
                         <img src="/Radar-2.png" alt="Fascinantes" className="fascinantes-logo-img" />
                     </div>
-                    <h1 className="fascinantes-main-title"><b>Autodiagnóstico <br /> de 6 Dominios</b></h1>
+                    <h1 className="fascinantes-main-title"><b>6 Dominios <br /> fundamentales</b></h1>
                     <p className="methodology-tag-header">Basado en la metodología Master Live Training (MLT)</p>
                 </header>
 
@@ -24,8 +24,9 @@ const FascinantesIntro = () => {
                         <h3>Instrucciones para obtener un resultado más preciso</h3>
                     </div>
                     <div className="instructions-body">
-                        <p>Este autodiagnóstico no es un examen; es una pausa para observar con honestidad cómo estás hoy en los seis dominios fundamentales de tu vida.</p>
-                        <p style={{ marginTop: '15px' }}>Responde pensando en los últimos 90 días, no en tu mejor versión ni en cómo te gustaría estar. Para cada afirmación, elige un número del 1 al 5 según tu experiencia real.</p>
+                        <p>Antes de comenzar, queremos que sepas que esto no es un examen, es un momento contigo.</p>
+                        <p style={{ marginTop: '15px' }}>Responde desde lo que ha sido real en los últimos 90 días, no desde tu mejor versión ni desde lo que te gustaría que fuera.</p>
+                        <p style={{ marginTop: '15px' }}>Elige un número del 1 al 5 en cada afirmación según tu experiencia. No lo pienses demasiado, responde con honestidad. Al final no verás una calificación, verás un reflejo. Tómate este espacio sin afán.</p>
                     </div>
                     
                     <div className="instructions-divider"></div>
@@ -37,7 +38,7 @@ const FascinantesIntro = () => {
                         className="btn-start-fascinantes"
                         onClick={() => navigate('/autodiag-test')}
                     >
-                        INICIAR SECUENCIA <ArrowRight size={20} />
+                        COMENZAR <ArrowRight size={20} />
                     </button>
                 </div>
             </div>
