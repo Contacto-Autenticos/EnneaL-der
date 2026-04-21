@@ -113,7 +113,7 @@ const Admin = () => {
     const [dateFrom, setDateFrom] = useState('');
     const [dateTo, setDateTo] = useState('');
     const [allCodeUsages, setAllCodeUsages] = useState([]);
-    const [expandedCodeId, setExpandedCodeId] = useState(null);
+    const [selectedCodeForUsages, setSelectedCodeForUsages] = useState(null);
 
 
 
@@ -1379,171 +1379,113 @@ const Admin = () => {
                                     </thead>
                                     <tbody>
                                         {codes.length === 0 ? (
-                                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '10px' }}>
+                                            <tr><td colSpan="7" style={{ textAlign: 'center', padding: '10px' }}>
                                                 {loading ? 'Cargando...' : 'No hay códigos.'}
                                             </td></tr>
                                         ) : (
                                             codes.slice(0, 50).map((item) => {
                                                 const usages = allCodeUsages.filter(u => u.code === item.code);
-                                                const isExpanded = expandedCodeId === item.code;
-                                                const hasMultipleUsages = item.is_multi_use && usages.length > 0;
 
                                                 return (
-                                                    <React.Fragment key={item.code}>
-                                                        <tr 
-                                                            onClick={item.is_multi_use ? () => setExpandedCodeId(isExpanded ? null : item.code) : undefined}
-                                                            style={{ cursor: item.is_multi_use ? 'pointer' : 'default' }}
-                                                            className={isExpanded ? 'row-expanded-header' : ''}
-                                                        >
-                                                            <td className="code-cell">
-                                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                    {item.is_multi_use && (
-                                                                        isExpanded ? <ChevronUp size={14} color="#b89b2d" /> : <ChevronDown size={14} color="#b89b2d" />
-                                                                    )}
-                                                                    {item.code}
-                                                                </div>
-                                                            </td>
-                                                            <td style={{ textAlign: 'center' }}>
-                                                                <button
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        navigator.clipboard.writeText(item.code);
-                                                                        setCopySuccess(item.code);
-                                                                        setTimeout(() => setCopySuccess(''), 2000);
-                                                                    }}
-                                                                    className="btn-action-admin"
-                                                                    title="Copiar código"
-                                                                    style={{ color: copySuccess === item.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
-                                                                >
-                                                                    {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
-                                                                </button>
-                                                            </td>
-                                                            <td>
-                                                                <span style={{ 
-                                                                    fontSize: '0.75rem', 
-                                                                    padding: '2px 8px', 
-                                                                    borderRadius: '10px',
-                                                                    background: item.is_multi_use ? 'rgba(59, 130, 246, 0.15)' : 'rgba(148, 163, 184, 0.15)',
-                                                                    color: item.is_multi_use ? '#1e40af' : '#334155',
-                                                                    border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(148, 163, 184, 0.4)',
-                                                                    fontWeight: '600'
-                                                                }}>
-                                                                    {item.is_multi_use ? 'Multiuso' : 'Único'}
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <span style={{ 
-                                                                    fontSize: '0.8rem',
-                                                                    color: item.used_in_program === 'Fascinantes' ? '#60a5fa' : 
-                                                                           item.used_in_program === 'Genuinos' ? '#ddbe3d' : '#94a3b8',
+                                                    <tr key={item.code}>
+                                                        <td className="code-cell">{item.code}</td>
+                                                        <td style={{ textAlign: 'center' }}>
+                                                            <button
+                                                                onClick={() => {
+                                                                    navigator.clipboard.writeText(item.code);
+                                                                    setCopySuccess(item.code);
+                                                                    setTimeout(() => setCopySuccess(''), 2000);
+                                                                }}
+                                                                className="btn-action-admin"
+                                                                title="Copiar código"
+                                                                style={{ color: copySuccess === item.code ? '#4ade80' : '#b89b2d', margin: '0 auto' }}
+                                                            >
+                                                                {copySuccess === item.code ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <span style={{ 
+                                                                fontSize: '0.75rem', 
+                                                                padding: '2px 8px', 
+                                                                borderRadius: '10px',
+                                                                background: item.is_multi_use ? 'rgba(59, 130, 246, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+                                                                color: item.is_multi_use ? '#1e40af' : '#334155',
+                                                                border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(148, 163, 184, 0.4)',
+                                                                fontWeight: '600'
+                                                            }}>
+                                                                {item.is_multi_use ? 'Multiuso' : 'Único'}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span style={{ 
+                                                                fontSize: '0.8rem',
+                                                                color: item.used_in_program === 'Fascinantes' ? '#60a5fa' : 
+                                                                       item.used_in_program === 'Genuinos' ? '#ddbe3d' : '#94a3b8',
                                                                     fontWeight: item.used_in_program ? '600' : '400'
-                                                                }}>
-                                                                    {item.used_in_program || '-'}
-                                                                </span>
-                                                            </td>
-                                                            <td>
-                                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                                                    {(() => {
-                                                                        const isExpired = item.expires_at && new Date(item.expires_at) < new Date();
-                                                                        if (item.is_multi_use) {
-                                                                            return (
-                                                                                <span className={`status-badge ${isExpired ? 'used' : 'unused'}`}>
-                                                                                    {isExpired ? 'Expirado' : 'Disponible'}
-                                                                                </span>
-                                                                            );
-                                                                        }
+                                                            }}>
+                                                                {item.used_in_program || '-'}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                                                {(() => {
+                                                                    const isExpired = item.expires_at && new Date(item.expires_at) < new Date();
+                                                                    if (item.is_multi_use) {
                                                                         return (
-                                                                            <span className={`status-badge ${item.is_used || isExpired ? 'used' : 'unused'}`}>
-                                                                                {item.is_used ? 'Usado' : (isExpired ? 'Expirado' : 'Disponible')}
+                                                                            <span className={`status-badge ${isExpired ? 'used' : 'unused'}`}>
+                                                                                {isExpired ? 'Expirado' : 'Disponible'}
                                                                             </span>
                                                                         );
-                                                                    })()}
-                                                                    {item.expires_at && (
-                                                                        <span style={{ fontSize: '0.7rem', color: new Date(item.expires_at) < new Date() ? '#ef4444' : '#94a3b8' }}>
-                                                                            Exp: {new Date(item.expires_at).toLocaleDateString()}
+                                                                    }
+                                                                    return (
+                                                                        <span className={`status-badge ${item.is_used || isExpired ? 'used' : 'unused'}`}>
+                                                                            {item.is_used ? 'Usado' : (isExpired ? 'Expirado' : 'Disponible')}
                                                                         </span>
-                                                                    )}
-                                                                </div>
-                                                            </td>
-                                                            <td style={{ fontSize: '0.8rem', color: '#111827', fontWeight: item.used_by ? '500' : '400' }}>
-                                                                {item.is_multi_use ? (
-                                                                    <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                                                        <User size={14} color="#6b7280" />
-                                                                        {usages.length} {usages.length === 1 ? 'persona' : 'personas'}
+                                                                    );
+                                                                })()}
+                                                                {item.expires_at && (
+                                                                    <span style={{ fontSize: '0.7rem', color: new Date(item.expires_at) < new Date() ? '#ef4444' : '#94a3b8' }}>
+                                                                        Exp: {new Date(item.expires_at).toLocaleDateString()}
                                                                     </span>
-                                                                ) : (
-                                                                    item.used_by || '-'
                                                                 )}
-                                                            </td>
-                                                            <td style={{ fontSize: '0.8rem', color: '#111827', fontWeight: item.used_at ? '500' : '400' }}>
-                                                                {item.used_at ? new Date(item.used_at).toLocaleString('es-CO', {
-                                                                    day: '2-digit',
-                                                                    month: '2-digit',
-                                                                    year: 'numeric',
-                                                                    hour: '2-digit',
-                                                                    minute: '2-digit'
-                                                                }) : '-'}
-                                                            </td>
-                                                        </tr>
-                                                        {isExpanded && (
-                                                            <tr className="row-usage-details">
-                                                                <td colSpan="8" style={{ padding: '0' }}>
-                                                                    <div className="usage-details-container animate-fade-in" style={{ 
-                                                                        backgroundColor: '#f8fafc',
-                                                                        padding: '15px 25px',
-                                                                        borderBottom: '2px solid #e2e8f0',
-                                                                        boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)'
-                                                                    }}>
-                                                                        <h4 style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                                                            <RefreshCw size={14} /> Historial de usos para {item.code}
-                                                                        </h4>
-                                                                        {usages.length === 0 ? (
-                                                                            <p style={{ fontSize: '0.8rem', color: '#94a3b8', fontStyle: 'italic' }}>No hay registros de uso detallados aún.</p>
-                                                                        ) : (
-                                                                            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
-                                                                                <thead>
-                                                                                    <tr style={{ borderBottom: '1px solid #cbd5e1' }}>
-                                                                                        <th style={{ textAlign: 'left', padding: '6px 0', color: '#475569' }}>Correo electrónico</th>
-                                                                                        <th style={{ textAlign: 'left', padding: '6px 0', color: '#475569' }}>Programa</th>
-                                                                                        <th style={{ textAlign: 'right', padding: '6px 0', color: '#475569' }}>Fecha y hora</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    {usages.map((u, idx) => (
-                                                                                        <tr key={u.id || idx} style={{ borderBottom: idx === usages.length - 1 ? 'none' : '1px solid #e2e8f0' }}>
-                                                                                            <td style={{ padding: '8px 0', color: '#1e293b', fontWeight: '500' }}>{u.user_email}</td>
-                                                                                            <td style={{ padding: '8px 0' }}>
-                                                                                                <span style={{ 
-                                                                                                    fontSize: '0.7rem',
-                                                                                                    padding: '1px 6px',
-                                                                                                    borderRadius: '4px',
-                                                                                                    background: u.program === 'Fascinantes' ? '#dbeafe' : 
-                                                                                                               u.program === 'Genuinos' ? '#fef3c7' : '#f1f5f9',
-                                                                                                    color: u.program === 'Fascinantes' ? '#1e40af' : 
-                                                                                                           u.program === 'Genuinos' ? '#92400e' : '#475569'
-                                                                                                }}>
-                                                                                                    {u.program}
-                                                                                                </span>
-                                                                                            </td>
-                                                                                            <td style={{ padding: '8px 0', textAlign: 'right', color: '#64748b' }}>
-                                                                                                {new Date(u.used_at).toLocaleString('es-CO', {
-                                                                                                    day: '2-digit',
-                                                                                                    month: '2-digit',
-                                                                                                    year: 'numeric',
-                                                                                                    hour: '2-digit',
-                                                                                                    minute: '2-digit'
-                                                                                                })}
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    ))}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        )}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        )}
-                                                    </React.Fragment>
+                                                            </div>
+                                                        </td>
+                                                        <td style={{ fontSize: '0.8rem', color: '#111827', fontWeight: '500' }}>
+                                                            {item.is_multi_use ? (
+                                                                <button 
+                                                                    onClick={() => setSelectedCodeForUsages(item)}
+                                                                    className="btn-view-usages"
+                                                                    style={{ 
+                                                                        display: 'flex', 
+                                                                        alignItems: 'center', 
+                                                                        gap: '5px',
+                                                                        background: 'none',
+                                                                        border: 'none',
+                                                                        color: '#1e40af',
+                                                                        cursor: 'pointer',
+                                                                        padding: '4px 8px',
+                                                                        borderRadius: '4px',
+                                                                        transition: 'background 0.2s',
+                                                                        fontWeight: '600'
+                                                                    }}
+                                                                >
+                                                                    <User size={14} color="#1e40af" />
+                                                                    {usages.length} {usages.length === 1 ? 'persona' : 'personas'}
+                                                                </button>
+                                                            ) : (
+                                                                item.used_by || '-'
+                                                            )}
+                                                        </td>
+                                                        <td style={{ fontSize: '0.8rem', color: '#111827', fontWeight: item.used_at ? '500' : '400' }}>
+                                                            {item.used_at ? new Date(item.used_at).toLocaleString('es-CO', {
+                                                                day: '2-digit',
+                                                                month: '2-digit',
+                                                                year: 'numeric',
+                                                                hour: '2-digit',
+                                                                minute: '2-digit'
+                                                            }) : '-'}
+                                                        </td>
+                                                    </tr>
                                                 );
                                             })
                                         )}
@@ -3181,6 +3123,66 @@ const Admin = () => {
                         date={pdfReportUser.date}
                         hideQAPages={Object.keys(pdfReportUser.userAnswers).length === 0}
                     />
+                </div>
+            )}
+            </main>
+            
+            {/* ── MODAL: Historial de usos ── */}
+            {selectedCodeForUsages && (
+                <div className="modal-overlay animate-fade-in" onClick={() => setSelectedCodeForUsages(null)}>
+                    <div className="modal-content animate-slide-up" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3><RefreshCw size={18} /> Historial de usos: {selectedCodeForUsages.code}</h3>
+                            <button className="btn-close-modal" onClick={() => setSelectedCodeForUsages(null)}><X size={20} /></button>
+                        </div>
+                        <div className="modal-body">
+                            {(() => {
+                                const usages = allCodeUsages.filter(u => u.code === selectedCodeForUsages.code);
+                                if (usages.length === 0) {
+                                    return <p className="no-usages-msg">No hay registros de uso detallados aún para este código.</p>;
+                                }
+                                return (
+                                    <div className="usage-history-table-wrapper">
+                                        <table className="usage-history-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Correo electrónico</th>
+                                                    <th>Programa</th>
+                                                    <th style={{ textAlign: 'right' }}>Fecha y hora</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {usages.map((u, idx) => (
+                                                    <tr key={u.id || idx}>
+                                                        <td>{u.user_email}</td>
+                                                        <td>
+                                                            <span className={`program-badge ${u.program.toLowerCase()}`}>
+                                                                {u.program}
+                                                            </span>
+                                                        </td>
+                                                        <td style={{ textAlign: 'right', color: '#64748b' }}>
+                                                            {new Date(u.used_at).toLocaleString('es-CO', {
+                                                                day: '2-digit',
+                                                                month: '2-digit',
+                                                                year: 'numeric',
+                                                                hour: '2-digit',
+                                                                minute: '2-digit'
+                                                            })}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                );
+                            })()}
+                        </div>
+                        <div className="modal-footer">
+                            <button className="admin-btn-login" style={{ padding: '10px 20px', width: 'auto', margin: '0' }} onClick={() => setSelectedCodeForUsages(null)}>
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
