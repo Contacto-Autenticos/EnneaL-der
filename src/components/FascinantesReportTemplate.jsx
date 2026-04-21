@@ -407,11 +407,9 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                         </div>
 
                         {interp && (
-                            <div className="pdf-interpretation-box" style={{ borderLeftColor: DOMAIN_STYLES[domain.id]?.color || '#f2b705', padding: '15px' }}>
-                                <div className="pdf-interpretation-score-info" style={{ margin: 0 }}>
-                                    Tu puntaje en este dominio: <strong>{scoreValue} pts</strong>
-                                </div>
-                            </div>
+                            <p style={{ fontSize: '14px', color: '#1f2937', margin: '20px 0 10px 0' }}>
+                                Tu puntaje en este dominio: <strong>{scoreValue} puntos</strong>
+                            </p>
                         )}
                         
                         <table className="pdf-qa-table">

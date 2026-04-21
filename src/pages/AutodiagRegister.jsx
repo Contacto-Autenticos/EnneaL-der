@@ -124,11 +124,12 @@ const AutodiagRegister = () => {
                         />
                     </div>
 
-                    <h1 className="home-title">
-                        Registro de Autodiagnóstico
+                    <h1 className="home-title" style={{ lineHeight: '1.1', textTransform: 'none' }}>
+                        Autodiagnóstico<br />
+                        <span style={{ fontSize: '0.85em', fontWeight: 'normal' }}>dominios fundamentales</span>
                     </h1>
                     <p className="home-description">
-                        Por favor completa estos datos para generar tu perfil antes de continuar.
+                        Completa los siguientes datos para crear tu reporte
                     </p>
 
                     <div className="advanced-form-section">
@@ -201,7 +202,7 @@ const AutodiagRegister = () => {
                             </div>
 
                             <p className="privacy-note">
-                                🔒 Tus datos están protegidos y no serán compartidos con terceros.
+                                🔒 Tus datos están protegidos y no serán compartidos con terceros. Sin tu autorización
                             </p>
 
                             <button type="submit" className="btn-start-adv" disabled={isValidating}>
@@ -209,9 +210,9 @@ const AutodiagRegister = () => {
                                     'Validando...'
                                 ) : (
                                     accessCode.trim() ? (
-                                        <>Comenzar autodiagnóstico <ArrowRight size={19} /></>
+                                        <>Guardar <ArrowRight size={19} /></>
                                     ) : (
-                                        <>Continuar al pago <ArrowRight size={19} /></>
+                                        <>Guardar <ArrowRight size={19} /></>
                                     )
                                 )}
                             </button>
