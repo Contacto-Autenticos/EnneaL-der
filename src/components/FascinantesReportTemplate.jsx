@@ -407,7 +407,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                                 </h2>
                                 {interp && (
                                     <p style={{ fontSize: '15px', color: '#1f2937', margin: '4px 0 0 0', fontWeight: '400' }}>
-                                        Tu puntaje en este dominio: <strong>{scoreValue} puntos</strong>
+                                        Tu puntaje en este dominio: <strong>{scoreValue}/70 puntos</strong>
                                     </p>
                                 )}
                             </div>
