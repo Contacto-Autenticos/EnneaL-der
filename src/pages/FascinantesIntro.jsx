@@ -26,7 +26,8 @@ const FascinantesIntro = () => {
                     <div className="instructions-body">
                         <p>Antes de comenzar, queremos que sepas que esto no es un examen, es un momento contigo.</p>
                         <p style={{ marginTop: '15px' }}>Responde desde lo que ha sido real en los últimos 90 días, no desde tu mejor versión ni desde lo que te gustaría que fuera.</p>
-                        <p style={{ marginTop: '15px' }}>Elige un número del 1 al 5 en cada afirmación según tu experiencia. No lo pienses demasiado, responde con honestidad. Al final no verás una calificación, verás un reflejo. Tómate este espacio sin afán.</p>
+                        <p style={{ marginTop: '15px' }}>Elige un número del 1 al 5 en cada afirmación según tu experiencia. No lo pienses demasiado, responde con honestidad. Al final no verás una calificación, verás un reflejo.</p>
+                        <p style={{ marginTop: '15px' }}>Tómate este espacio sin afán.</p>
                     </div>
                     
                     <div className="instructions-divider"></div>
