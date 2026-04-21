@@ -1822,3 +1822,23 @@
         justify-content: center;
     }
 }
+/* Expandable row styles for Access Codes */
+.row-expanded-header {
+    background-color: #fefce8 !important;
+    border-left: 4px solid #ddbe3d;
+}
+.row-usage-details td {
+    border-top: none !important;
+}
+.usage-details-container {
+    border-left: 4px solid #ddbe3d;
+    margin-left: 0;
+    transition: all 0.3s ease;
+}
+.animate-fade-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -79,6 +79,12 @@ const AutodiagRegister = () => {
 
                 if (!updateError) {
                     console.log('Uso registrado exitosamente en Supabase (Fascinantes)');
+                    // NUEVO: Registrar en el historial de usos
+                    await supabase.from('access_code_usages').insert([{
+                        code: cleanCode,
+                        user_email: userData.email,
+                        program: 'Fascinantes'
+                    }]);
                 } else {
                     console.error('Error al actualizar uso en Supabase:', updateError);
                 }

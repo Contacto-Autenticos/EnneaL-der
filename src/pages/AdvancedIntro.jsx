@@ -105,6 +105,12 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                 
                 if (!updateError) {
                     console.log('Uso registrado exitosamente en Supabase');
+                    // NUEVO: Registrar en el historial de usos
+                    await supabase.from('access_code_usages').insert([{
+                        code: cleanCode,
+                        user_email: normalizedEmail,
+                        program: 'Genuinos'
+                    }]);
                 } else {
                     console.error('Error al actualizar uso del código:', updateError);
                 }
