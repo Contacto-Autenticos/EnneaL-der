@@ -186,16 +186,17 @@
     line-height: 1;
 }
 .val-desc { 
-    font-size: 0.6rem; 
+    font-size: 0.7rem; 
     font-weight: 700; 
     text-transform: uppercase; 
     margin-top: 5px; 
-    height: 2.2em; /* Fixed height for 2 lines */
+    height: 2.5em; 
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 2px;
+    padding: 0 4px;
+    line-height: 1.1;
 }
 
 .test-navigation {
@@ -265,7 +266,7 @@
     .options-grid { gap: 8px; }
     .option-btn { border-radius: 10px; }
     .val-num { font-size: 1.3rem; }
-    .val-desc { font-size: 0.55rem; height: 2.4em; }
+    .val-desc { font-size: 0.65rem; height: 2.8em; }
 }
 
 @media (max-width: 360px) {

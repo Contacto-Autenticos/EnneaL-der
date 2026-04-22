@@ -208,7 +208,7 @@ const AutodiagRegister = () => {
                             </div>
 
                             <p className="privacy-note">
-                                🔒 Tus datos están protegidos y no serán compartidos con terceros. Sin tu autorización
+                                🔒 Tus datos están protegidos y no serán compartidos con terceros sin tu autorización.
                             </p>
 
                             <button type="submit" className="btn-start-adv" disabled={isValidating}>

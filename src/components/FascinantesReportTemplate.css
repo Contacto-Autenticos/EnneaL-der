@@ -1,6 +1,6 @@
 :root {
     --pdf-blue: #00121d;
-    --pdf-gold: #f2b705;
+    --pdf-gold: #ddbe3d;
     --pdf-bg: #ffffff;
     --pdf-card-bg: #f8fafc;
     --pdf-border: #e2e8f0;
@@ -333,7 +333,6 @@
     border-radius: 50%;
     display: inline-block;
     vertical-align: middle;
-    border: 1px solid rgba(0,0,0,0.1); /* Subtle dark border */
 }
 
 .active-level-row {
@@ -362,7 +361,7 @@
     font-size: 14px;
     font-weight: 900;
     color: #00121d;
-    background-color: #f2b705;
+    background-color: var(--pdf-gold);
     padding: 8px 12px;
     border-radius: 50%;
     min-width: 20px;
@@ -437,7 +436,7 @@
 
 .pdf-circle-num {
     background-color: #00121d;
-    color: #f2b705;
+    color: var(--pdf-gold);
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -473,7 +472,7 @@
 
 .pdf-insight-box {
     background-color: #fdfaf2;
-    border-left: 4px solid #f2b705;
+    border-left: 4px solid var(--pdf-gold);
     padding: 12px 15px;
 }
 

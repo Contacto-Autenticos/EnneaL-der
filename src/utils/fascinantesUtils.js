@@ -3,7 +3,7 @@ import { fascinantesQuestions, fascinantesDomains, fascinantesInterpretations } 
 export const DOMAIN_STYLES = {
     corporal: { color: '#cc0000', class: 'neon-corporal' },
     mental: { color: '#ff9100', class: 'neon-mental' },
-    emocional: { color: '#ffee00', class: 'neon-emocional' },
+    emocional: { color: '#DDBE3D', class: 'neon-emocional' },
     social: { color: '#00ff00', class: 'neon-social' },
     espiritual: { color: '#00e5ff', class: 'neon-espiritual' },
     financiero: { color: '#d500f9', class: 'neon-financiero' }

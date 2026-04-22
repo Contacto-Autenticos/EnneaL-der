@@ -108,7 +108,7 @@ const FascinantesResult = () => {
         switch(val) {
             case 1: return '#cc0000'; // Rojo
             case 2: return '#ff9100'; // Naranja
-            case 3: return '#ffee00'; // Amarillo
+            case 3: return '#DDBE3D'; // Amarillo
             case 4: return '#00e5ff'; // Azul claro
             case 5: return '#00ff00'; // Verde
             default: return '#fff';
@@ -117,11 +117,11 @@ const FascinantesResult = () => {
 
     const getAnswerLabel = (val) => {
         switch(val) {
-            case 1: return 'Nunca';
-            case 2: return 'Rara vez';
+            case 1: return 'Casi nunca';
+            case 2: return 'Pocas veces';
             case 3: return 'A veces';
-            case 4: return 'Casi siempre';
-            case 5: return 'Siempre';
+            case 4: return 'Con frecuencia';
+            case 5: return 'Casi siempre';
             default: return '';
         }
     };

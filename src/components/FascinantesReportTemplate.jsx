@@ -7,7 +7,7 @@ import './FascinantesReportTemplate.css';
 const DOMAIN_STYLES = {
     corporal: { color: '#cc0000', class: 'neon-corporal' },
     mental: { color: '#ff9100', class: 'neon-mental' },
-    emocional: { color: '#ffee00', class: 'neon-emocional' },
+    emocional: { color: '#DDBE3D', class: 'neon-emocional' },
     social: { color: '#00ff00', class: 'neon-social' },
     espiritual: { color: '#00e5ff', class: 'neon-espiritual' },
     financiero: { color: '#d500f9', class: 'neon-financiero' }
@@ -44,7 +44,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
     const levelData = [
         { level: 1, color: '#cc0000', range: '84 a 151', status: 'Supervivencia: Alto riesgo de agotamiento o crisis en múltiples áreas. Urge intervención.' },
         { level: 2, color: '#ff9100', range: '152 a 218', status: 'Inestabilidad: Se vive de forma reactiva. Hay esfuerzos aislados, pero falta estructura.' },
-        { level: 3, color: '#ffee00', range: '219 a 285', status: 'Funcional: La vida "funciona", pero hay áreas grises que frenan el potencial real.' },
+        { level: 3, color: '#DDBE3D', range: '219 a 285', status: 'Funcional: La vida "funciona", pero hay áreas grises que frenan el potencial real.' },
         { level: 4, color: '#00ff00', range: '286 a 352', status: 'Desarrollo: Existe equilibrio y consciencia. El usuario tiene el control de su crecimiento.' },
         { level: 5, color: '#3b82f6', range: '353 a 420', status: 'Plenitud: Alta coherencia y maestría personal. Los dominios se potencian entre sí.' }
     ];
@@ -60,9 +60,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             color: "#cc0000",
             subtitle: '"Es momento de parar y respirar"',
             paragraphs: [
-                "Estar aquí significa que el sistema está al límite. Sentimos que estamos apagando incendios todo el día y que nuestra energía se drena más rápido de lo que podemos recuperarla.",
-                "En Auténticos sabemos que este nivel de agotamiento no es sostenible y que la crisis es un grito de auxilio de tu propio bienestar. No busques grandes transformaciones hoy; busca intervención.",
-                "Necesitas identificar ese dominio que está drenando a los demás y ponerle un límite antes de que el motor se detenga."
+                "Hay momentos en los que uno siente que no está avanzando, sino tratando de sostener todo al mismo tiempo.",
+                "Cuando miras este resultado desde ese lugar, empieza a tener sentido. No es que no puedas, es que vienes cargando más de lo que tu estructura hoy alcanza a sostener. Se acumulan cosas, se aplazan decisiones, se responde a lo urgente y poco a poco lo importante va quedando en segundo plano.",
+                "Eso, con el tiempo, pasa factura. No siempre de golpe, a veces de forma silenciosa. Menos energía, menos claridad, más ruido interno.",
+                "Y ahí suele aparecer una trampa: intentar resolverlo haciendo más. Pero en este punto, hacer más de lo mismo no cambia nada. Lo que cambia las cosas es detenerte lo suficiente para entender qué estás sosteniendo y por qué lo sigues sosteniendo así."
             ],
             step: "Tu siguiente paso: Agenda una sesión de priorización inmediata con un profesional que pueda acompañarte en el proceso. El objetivo es estabilizar las fugas de energía antes de intentar avanzar."
         },
@@ -71,18 +72,26 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             color: "#ff9100",
             subtitle: '"Salir del modo reactivo"',
             paragraphs: [
-                "Vivir aquí es como pedalear con fuerza, pero sin una cadena bien ajustada: haces esfuerzos aislados, tienes chispazos de orden, pero te falta una estructura que te sostenga. Sientes que la vida te sucede y tú solo reaccionas a ella.",
-                "Para nosotros, la inestabilidad es una señal de que necesitas método. El objetivo aquí no es hacer más cosas, sino empezar a ponerles un orden coherente. Deja de moverte por urgencia y empieza a moverte por intención."
+                "Seguramente no estás quieto. Haces cosas, te mueves, intentas avanzar.",
+                "El tema es que cuando miras con un poco más de calma, notas que ese avance no siempre se sostiene. Hay días en los que todo fluye y otros en los que parece que empiezas de nuevo. Como si algo se desordenara en el camino.",
+                "No es falta de ganas. Tampoco de capacidad.",
+                "Tiene más que ver con cómo estás organizando lo que haces y desde dónde lo estás haciendo. Sin una estructura clara, la energía se dispersa, las decisiones pierden fuerza y lo que comienzas no termina de consolidarse.",
+                "Por eso la sensación se repite: mucho esfuerzo, poco resultado acumulado.",
+                "Aquí el punto no es acelerar. Es ordenar. Porque cuando eso pasa, lo que hoy se diluye empieza a tomar forma."
             ],
             step: 'Tu siguiente paso: Define tu "Pilar Maestro". Elige un solo dominio para estructurar esta semana y deja que el resto se apoyen en él.'
         },
         3: {
             title: "Nivel 3: Funcional",
-            color: "#ffee00",
+            color: "#DDBE3D",
             subtitle: '"Que lo bueno no sea enemigo de lo extraordinario"',
             paragraphs: [
-                'Este es un nivel engañoso porque la vida "funciona". Cumples, produces, los resultados están ahí, pero en el fondo sabes que hay áreas grises que están frenando tu potencial real. Estás operando en automático.',
-                'En Auténticos creemos que el estado funcional es una zona de confort que puede volverse peligrosa si te acomodas en ella. El reto aquí es identificar qué te falta para dar el salto de "estar bien" a "estar pleno".'
+                "Hay una forma de vivir en la que todo parece estar bien.",
+                "Cumples, respondes, avanzas. Las cosas funcionan y, si alguien lo mira desde afuera, probablemente diría que vas bien. Y justamente ahí está lo interesante de este resultado.",
+                "Cuando todo funciona, no hay urgencia de cambiar.",
+                "Pero si te miras un poco más de cerca, empiezas a notar ciertos espacios que no estás atendiendo. Decisiones que vienes dejando para después, conversaciones que sabes que deberías tener, aspectos de tu vida que sostienes en automático porque ya aprendiste a hacerlo así.",
+                "No incomoda lo suficiente como para obligarte a moverte, pero sí limita lo suficiente como para que no crezcas.",
+                "Y sin darte cuenta, te acostumbras a una versión de tu vida que funciona… pero no necesariamente te representa por completo."
             ],
             step: 'Tu siguiente paso: Auditoría de "Áreas Grises". Vamos a identificar ese 20% de ajustes que liberará el 80% de tu potencial oculto.'
         },
@@ -91,8 +100,11 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             color: "#00ff00",
             subtitle: '"Dueño de tu propio crecimiento"',
             paragraphs: [
-                "Aquí es donde la consciencia se vuelve una herramienta de gestión diaria. Tienes equilibrio, ves con claridad cómo tus decisiones afectan tus resultados y, lo más importante, sientes que tienes el control. Estás en un proceso de expansión constante.",
-                "Para nosotros, este es el punto donde dejas de ser una víctima de las circunstancias y te conviertes en el arquitecto de tu realidad."
+                "Aquí ya hay algo distinto en la forma en la que te estás relacionando contigo mismo.",
+                "No porque todo esté resuelto, sino porque hay más conciencia. Empiezas a ver con mayor claridad lo que te pasa, cómo respondes frente a eso y qué efecto tiene en lo que estás construyendo. Eso cambia la calidad de tus decisiones.",
+                "Cuando una persona entra en este punto, deja de moverse solo por reacción y empieza a hacerlo con intención. Se equivoca, ajusta, vuelve a intentar… pero ya no desde el mismo lugar.",
+                "Eso genera algo importante: sensación de dirección.",
+                "El reto aquí no es llegar a un punto ideal. Es no soltar esa capacidad de observarte y ajustar, incluso cuando las cosas van bien."
             ],
             step: "Tu siguiente paso: Escalamiento. Es momento de sistematizar tus hábitos para que este bienestar sea automático y no dependa solo de tu fuerza de voluntad."
         },
@@ -101,8 +113,12 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             color: "#3b82f6",
             subtitle: '"La maestría de la coherencia"',
             paragraphs: [
-                "Llegar aquí no significa que tu vida sea perfecta, sino que has alcanzado una alta coherencia entre lo que eres, lo que piensas y lo que haces. Es la maestría personal en su máxima expresión: tus dominios no solo están en equilibrio, sino que se potencian entre sí.",
-                "En Auténticos celebramos este estado porque es desde aquí donde se construye un legado."
+                "A veces uno piensa que esto se trata de llegar a un punto en el que todo está resuelto.",
+                "Pero cuando miras este resultado con calma, lo que aparece no es perfección, es coherencia.",
+                "Hay una relación más clara entre lo que piensas, lo que haces y lo que estás construyendo. Las decisiones no salen solo desde la presión o la reacción, sino desde un lugar más consciente. Y eso se empieza a notar en todo: en cómo trabajas, en cómo te relacionas, en cómo eliges.",
+                "Eso no elimina los retos, pero sí cambia la forma en que los enfrentas.",
+                "Más que un resultado, esto habla de una forma de estar. De no perderte en medio de lo que pasa, de poder volver a ti incluso cuando las cosas se mueven.",
+                "Y sostener eso, en el tiempo, también es parte del camino."
             ],
             step: "Tu siguiente paso: Trascendencia. ¿Cómo vas a usar esta claridad para potenciar a tu equipo o a tu entorno? Tu siguiente nivel es el liderazgo multiplicador."
         }
@@ -124,10 +140,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 textAlign: 'center'
             }}>
                 <div style={{ marginTop: '20px' }}>
-                    <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#f2b705', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '15px' }}>
+                    <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#ddbe3d', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '15px' }}>
                         RESULTADOS Y PLAN DE ACCIÓN
                     </p>
-                    <div style={{ width: '80%', height: '1px', backgroundColor: '#f2b705', margin: '0 auto 25px auto', opacity: 0.5 }}></div>
+                    <div style={{ width: '80%', height: '1px', backgroundColor: '#ddbe3d', margin: '0 auto 25px auto', opacity: 0.5 }}></div>
                     <h1 style={{ fontSize: '56px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', lineHeight: '1', margin: '0' }}>
                         PROGRAMA<br />FASCINANTES
                     </h1>
@@ -144,7 +160,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                         {date && <p style={{ fontSize: '15px', color: '#00121d', margin: '8px 0 0 0', opacity: 0.8, fontWeight: '600' }}>{date}</p>}
                         
                         {/* GOLDEN DIVIDER */}
-                        <div style={{ width: '60px', height: '2px', backgroundColor: '#f2b705', margin: '25px auto', opacity: 0.8 }}></div>
+                        <div style={{ width: '60px', height: '2px', backgroundColor: '#ddbe3d', margin: '25px auto', opacity: 0.8 }}></div>
                     </div>
                 )}
 
@@ -237,34 +253,22 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 2: REFLECTION TEXT */}
             <div className="pdf-page" id="pdf-page-2">
-                <h2 className="pdf-reflection-title">RADAR DE VIDA: UNA HERRAMIENTA PARA LA EVOLUCIÓN</h2>
+                <h2 className="pdf-reflection-title">LO QUE ESTÁS VIENDO</h2>
                 
                 <p className="pdf-reflection-text">
-                    <strong>{userName || 'Usuario'}</strong>, acabas de ver una fotografía de tu equilibrio actual. ¿Cómo te sientes?
+                    <strong>{userName || 'Usuario'}</strong>, lo que aparece aquí no es una verdad absoluta, pero tampoco es casualidad.
                 </p>
+                
                 <p className="pdf-reflection-text">
-                    A veces no resulta sencillo reconocer cómo se está distribuyendo tu energía, pero ten en cuenta que esto es solo un pantallazo de hoy, no un juicio sobre tu valor.
+                    Es una fotografía de cómo has estado funcionando en los últimos meses. De las decisiones que has tomado, de lo que has sostenido… y también de lo que has evitado. Cuando uno mira esto con atención, empieza a notar algo importante: los resultados que tiene hoy no son un accidente, son la consecuencia de una forma de pensar, de actuar y, sobre todo, de observarse.
                 </p>
+
                 <p className="pdf-reflection-text">
-                    Míralo como una referencia personal para este momento de tu vida.
+                    Puede que haya partes de este resultado que te resulten cómodas… y otras que no tanto. Es normal. Nadie está completamente equilibrado, y el objetivo tampoco es estarlo. El valor de esto no está en el número, ni en la gráfica, está en lo que eres capaz de reconocer a partir de lo que estás viendo.
                 </p>
+
                 <p className="pdf-reflection-text">
-                    Un radar que integra seis dominios que consideramos los pilares de todo: <strong>Corporal, mental, emocional, social, espiritual y financiero.</strong> Sabemos que juntos forman esa base sólida donde se apoya tu bienestar, tus decisiones y, por supuesto, tus resultados.
-                </p>
-                <p className="pdf-reflection-text">
-                    En <strong>Auténticos</strong> tenemos claro que esto no define quién eres en esencia, ni le pone techo a lo que eres capaz de lograr. Como cualquier foto, solo captura un segundo, no la película completa, porque entendemos que tu vida es <strong>dinámica</strong>. Cambia con cada decisión que tomas y con lo que eliges transformar.
-                </p>
-                <p className="pdf-reflection-text">
-                    Por eso, no te pedimos que busques un "equilibrio perfecto". En nuestra experiencia, no existe tal equilibrio. Siempre habrá momentos donde un área te va a exigir más que otra; siempre habrá tensiones y prioridades que inclinen la balanza.
-                </p>
-                <p className="pdf-reflection-text">
-                    Nuestro propósito con este radar no es que todas las líneas midan lo mismo, sino que seas <strong>consciente</strong> de cómo están.
-                </p>
-                <p className="pdf-reflection-text">
-                    Queremos que puedas observar con total claridad dónde estás invirtiendo tu vida y dónde te está costando. Porque estamos convencidos de que solo cuando ves las cosas como son, puedes decidir con intención.
-                </p>
-                <p className="pdf-reflection-text">
-                    <strong>Si sabes quién eres y cómo estás, puedes elegir hacia dónde vas.</strong>
+                    Porque cuando logras ver con claridad, aparece una posibilidad distinta: dejar de reaccionar en automático y empezar a decidir con más conciencia. La pregunta no es si el resultado es bueno o malo, la verdadera pregunta es ¿qué estás dispuesto a hacer con esto?
                 </p>
 
                 <div className="pdf-page-number">2</div>
@@ -277,17 +281,27 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             <div className="pdf-page" id="pdf-page-3">
                 <h2 className="pdf-reflection-title" style={{ marginBottom: '30px' }}>LECTURA DEL RESULTADO</h2>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px', marginTop: '0' }}>
-                    <h3 style={{ color: currentReading.color, fontSize: '24px', fontWeight: '900', margin: 0 }}>
+                <div style={{ marginBottom: '15px', marginTop: '0' }}>
+                    <h3 style={{ 
+                        color: currentReading.color, 
+                        fontSize: '24px', 
+                        fontWeight: '900', 
+                        margin: 0, 
+                        lineHeight: '1.2',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px'
+                    }}>
                         {currentReading.title}
+                        <div style={{ 
+                            width: '22px', 
+                            height: '22px', 
+                            borderRadius: '50%', 
+                            backgroundColor: currentReading.color,
+                            flexShrink: 0,
+                            transform: 'translateY(-4px)'
+                        }} />
                     </h3>
-                    <div style={{ 
-                        width: '20px', 
-                        height: '20px', 
-                        borderRadius: '50%', 
-                        backgroundColor: currentReading.color,
-                        border: '1px solid rgba(0,0,0,0.1)'
-                    }} />
                 </div>
                 
                 <h4 style={{ fontSize: '18px', fontWeight: 'bold', color: '#4b5563', marginBottom: '25px', marginTop: '0', fontStyle: 'italic' }}>
@@ -446,7 +460,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 11: FINAL REFLECTION */}
             <div className="pdf-page" id="pdf-page-11" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 60px', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#f2b705', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
+                <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
                     TU MAPA DE TRANSFORMACIÓN
                 </h1>
                 
@@ -475,8 +489,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 12: ACCION FASE 1 */}
             <div className="pdf-page" id="pdf-page-12">
-                <div style={{ borderBottom: '2px solid #f2b705', paddingBottom: '15px', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
+                <div style={{ borderBottom: '2px solid #ddbe3d', paddingBottom: '15px', marginBottom: '30px' }}>
+                    <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
                         FASE I:
                     </h2>
                     <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#00121d', marginTop: '0', marginBottom: '0' }}>
@@ -536,8 +550,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 13: ACCION FASE 2 */}
             <div className="pdf-page" id="pdf-page-13">
-                <div style={{ borderBottom: '2px solid #f2b705', paddingBottom: '15px', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
+                <div style={{ borderBottom: '2px solid #ddbe3d', paddingBottom: '15px', marginBottom: '30px' }}>
+                    <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
                         FASE II:
                     </h2>
                     <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#00121d', marginTop: '0', marginBottom: '0' }}>
