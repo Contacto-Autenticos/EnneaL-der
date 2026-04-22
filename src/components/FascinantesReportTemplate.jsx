@@ -460,25 +460,18 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 11: FINAL REFLECTION */}
             <div className="pdf-page" id="pdf-page-11" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 60px', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
-                    TU MAPA DE TRANSFORMACIÓN
+                <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '40px', marginTop: '0' }}>
+                    ¿Qué haces con esto?
                 </h1>
                 
-                <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#4b5563', marginBottom: '40px', marginTop: '0' }}>
-                    Guía práctica para un liderazgo integral en equilibrio
-                </h2>
-
-                <p style={{ fontSize: '16px', lineHeight: '1.7', color: '#111827', marginBottom: '20px' }}>
-                    Lo que viste en tu diagnóstico no es casualidad. Es el resultado de decisiones, hábitos y prioridades que, con el tiempo, han ido moldeando tu forma de actuar, de relacionarte y de liderar.
+                <p style={{ fontSize: '15px', lineHeight: '1.7', color: '#111827', marginBottom: '25px', textAlign: 'justify' }}>
+                    Hasta aquí, lo que tienes es claridad. Que sirve, pero no es suficiente. Entender lo que te pasa no cambia nada por sí solo. Todos, en algún momento, hemos visto con claridad lo que deberíamos ajustar… y aun así seguimos haciendo lo mismo.
                 </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.7', color: '#111827', marginBottom: '20px' }}>
-                    Aquí no se trata de alcanzar un equilibrio perfecto. Se trata de desarrollar la capacidad de darte cuenta cuándo te estás desviando y hacer los ajustes necesarios a tiempo.
+                <p style={{ fontSize: '15px', lineHeight: '1.7', color: '#111827', marginBottom: '25px', textAlign: 'justify' }}>
+                    Créeme que no es por falta de intención. Cambiar implica algo más incómodo: dejar de justificar lo que ya sabes que no te está funcionando. Si te detienes un momento en tu resultado, es probable que ya estés viendo por dónde empieza ese ajuste. No suele ser algo completamente nuevo, es eso que has venido postergando, esa decisión que sabes que tienes que tomar o ese comportamiento que has normalizado.
                 </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.7', color: '#111827', marginBottom: '20px' }}>
-                    A partir de ahora el reto no es hacerlo mejor, sino hacerlo conscientemente. Elegir dónde enfocarte, qué sostener y qué cambiar, entendiendo que cada decisión impacta directamente la vida que estás construyendo.
-                </p>
-                <p style={{ fontSize: '16px', lineHeight: '1.7', color: '#111827', marginBottom: '0' }}>
-                    Si te involucras de verdad en este proceso, no solo vas a generar cambios puntuales. Vas a empezar a dirigir con mayor intención la forma en la que vives y lideras.
+                <p style={{ fontSize: '15px', lineHeight: '1.7', color: '#111827', marginBottom: '0', textAlign: 'justify' }}>
+                    El plan de acción no viene a darte respuestas mágicas. Viene a ponerte frente a algo más simple y retador: empezar a actuar distinto en aquello que ya lograste ver. No necesitas cambiar todo al mismo tiempo, solo debes dejar de mirar hacia otro lado en lo que hoy ya es evidente. Al final, no se trata de tener un buen diagnóstico. Aquí vinimos a elegir a qué quieres darle prioridad, y eso solo depende de ti.
                 </p>
 
                 <div className="pdf-page-number">11</div>
