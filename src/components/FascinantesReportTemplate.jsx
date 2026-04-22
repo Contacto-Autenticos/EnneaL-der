@@ -316,12 +316,6 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     </p>
                 ))}
 
-                <div style={{ marginTop: '35px', padding: '20px', backgroundColor: '#f8fafc', borderLeft: `6px solid ${currentReading.color}`, borderRadius: '0 8px 8px 0' }}>
-                    <p style={{ margin: 0, fontSize: '16px', lineHeight: '1.6', color: '#111827' }}>
-                        <strong>{currentReading.step.split(':')[0]}:</strong>{currentReading.step.substring(currentReading.step.indexOf(':') + 1)}
-                    </p>
-                </div>
-
 
 
                 <div className="pdf-page-number">3</div>
@@ -479,12 +473,9 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             {/* PAGE 12: ACCION FASE 1 */}
             <div className="pdf-page" id="pdf-page-12">
                 <div style={{ borderBottom: '2px solid #ddbe3d', paddingBottom: '15px', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
-                        FASE I:
+                    <h2 style={{ fontSize: '28px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '0', marginTop: '0' }}>
+                        PLAN DE ACCIÓN
                     </h2>
-                    <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#00121d', marginTop: '0', marginBottom: '0' }}>
-                        Análisis y foco estratégico
-                    </h3>
                 </div>
 
                 <div className="pdf-action-block">
@@ -539,14 +530,6 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 13: ACCION FASE 2 */}
             <div className="pdf-page" id="pdf-page-13">
-                <div style={{ borderBottom: '2px solid #ddbe3d', paddingBottom: '15px', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '10px', marginTop: '0' }}>
-                        FASE II:
-                    </h2>
-                    <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#00121d', marginTop: '0', marginBottom: '0' }}>
-                        Sostenibilidad y ajuste
-                    </h3>
-                </div>
 
                 <div className="pdf-action-block">
                     <div className="pdf-circle-num">5</div>
