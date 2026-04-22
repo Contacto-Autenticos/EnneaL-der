@@ -281,8 +281,8 @@
     .option-btn { 
         border-radius: 10px; 
         grid-column: span 2;
-        padding: 8px 4px;
-        min-height: 85px; /* Altura controlada para evitar que crezcan de más */
+        padding: 6px 4px;
+        min-height: 75px; /* Más compacto aún */
     }
     /* Los dos últimos botones (4 y 5) en la segunda fila centrados */
     .option-btn:nth-child(4) {
@@ -292,8 +292,8 @@
         grid-column: 4 / span 2;
     }
     
-    .val-num { font-size: 1.3rem; }
-    .val-desc { font-size: 0.65rem; height: 3em; }
+    .val-num { font-size: 1.1rem; }
+    .val-desc { font-size: 0.6rem; height: 2.8em; }
 }
 
 @media (max-width: 360px) {
