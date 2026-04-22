@@ -181,16 +181,16 @@
 }
 
 .val-num { 
-    font-size: 1.5rem; 
+    font-size: 1.8rem; 
     font-weight: 800; 
     line-height: 1;
 }
 .val-desc { 
-    font-size: 0.7rem; 
+    font-size: 0.85rem; 
     font-weight: 700; 
     text-transform: uppercase; 
     margin-top: 5px; 
-    height: 2.5em; 
+    height: 3.2em; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -263,10 +263,25 @@
     /* Mueve la sección interactiva (velocímetro, texto y botones) 50px hacia arriba forzadamente usando transform para evitar colapsos de flexbox */
     .interaction-area { transform: translateY(-50px); }
     
-    .options-grid { gap: 8px; }
-    .option-btn { border-radius: 10px; }
-    .val-num { font-size: 1.3rem; }
-    .val-desc { font-size: 0.65rem; height: 2.8em; }
+    .options-grid { 
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px; 
+    }
+    .option-btn { 
+        border-radius: 10px; 
+        grid-column: span 2; /* Cada botón ocupa 2 de las 6 columnas */
+    }
+    /* Los dos últimos botones (4 y 5) en la segunda fila centrados */
+    .option-btn:nth-child(4) {
+        grid-column: 2 / span 2;
+    }
+    .option-btn:nth-child(5) {
+        grid-column: 4 / span 2;
+    }
+    
+    .val-num { font-size: 1.5rem; }
+    .val-desc { font-size: 0.75rem; height: 3.5em; }
 }
 
 @media (max-width: 360px) {

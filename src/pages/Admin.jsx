@@ -104,6 +104,7 @@ const Admin = () => {
     const [filterOrg, setFilterOrg] = useState('');
     const [filterEneatype, setFilterEneatype] = useState('');
     const [filterTestType, setFilterTestType] = useState('');
+    const [filterCommercial, setFilterCommercial] = useState('');
     const [isMultiUse, setIsMultiUse] = useState(false);
     const [expirationDate, setExpirationDate] = useState('');
 
@@ -2253,7 +2254,8 @@ const Admin = () => {
                                                     const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
                                                     const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
                                                     const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
-                                                    return nameMatch && orgMatch && eneatypeMatch && testTypeMatch;
+                                                    const commercialMatch = !filterCommercial || (r.commercial_name || '').toLowerCase().includes(filterCommercial.toLowerCase());
+                                                    return nameMatch && orgMatch && eneatypeMatch && testTypeMatch && commercialMatch;
                                                 })
                                                 .map(r => (
                                                     <tr key={r.id}>

@@ -299,7 +299,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                             borderRadius: '50%', 
                             backgroundColor: currentReading.color,
                             flexShrink: 0,
-                            transform: 'translateY(-4px)'
+                            transform: 'translateY(-5px)'
                         }} />
                     </h3>
                 </div>
