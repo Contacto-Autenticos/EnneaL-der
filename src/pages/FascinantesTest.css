@@ -260,17 +260,29 @@
     .question-text-container { margin-bottom: 10px; }
     .question-text { font-size: 1.3rem; }
     
-    /* Mueve la sección interactiva (velocímetro, texto y botones) 50px hacia arriba forzadamente usando transform para evitar colapsos de flexbox */
-    .interaction-area { transform: translateY(-50px); }
+    /* Eliminamos el transform negativo que causaba superposición */
+    .interaction-area { 
+        gap: 15px; 
+        margin-top: 10px;
+    }
     
+    /* Reducimos el tamaño del velocímetro en móviles */
+    .speedometer-container {
+        transform: scale(0.8);
+        margin: -20px 0; /* Compensa el espacio del escalado */
+    }
+
     .options-grid { 
         display: grid;
         grid-template-columns: repeat(6, 1fr);
-        gap: 12px; 
+        gap: 10px; 
+        padding: 0 5px;
     }
     .option-btn { 
         border-radius: 10px; 
-        grid-column: span 2; /* Cada botón ocupa 2 de las 6 columnas */
+        grid-column: span 2;
+        padding: 8px 4px;
+        min-height: 85px; /* Altura controlada para evitar que crezcan de más */
     }
     /* Los dos últimos botones (4 y 5) en la segunda fila centrados */
     .option-btn:nth-child(4) {
@@ -280,8 +292,8 @@
         grid-column: 4 / span 2;
     }
     
-    .val-num { font-size: 1.5rem; }
-    .val-desc { font-size: 0.75rem; height: 3.5em; }
+    .val-num { font-size: 1.3rem; }
+    .val-desc { font-size: 0.65rem; height: 3em; }
 }
 
 @media (max-width: 360px) {
