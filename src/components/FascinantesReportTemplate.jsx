@@ -390,10 +390,6 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     </div>
                 </div>
 
-                <div style={{ textAlign: 'center', marginTop: '25px', fontSize: '14px', color: '#4b5563', lineHeight: '1.6' }}>
-                    Si quieres más información o acompañamiento ingresa a <span data-pdf-link="https://www.autenticos.co/" style={{ fontWeight: 'bold', color: '#00121d' }}>www.autenticos.co</span> o escríbenos a <span data-pdf-link="mailto:contacto@autenticos.co" style={{ fontWeight: 'bold', color: '#00121d' }}>contacto@autenticos.co</span>
-                </div>
-
                 <div className="pdf-page-number">4</div>
                 <footer className="pdf-footer" data-pdf-link="https://www.autenticos.co/">
                     <img src="/logo-azul.png" alt="Logo" />
@@ -495,9 +491,9 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     <div className="pdf-circle-num">1</div>
                     <div className="pdf-action-content">
                         <h4 className="pdf-action-title">1. Documenta tu estado actual</h4>
-                        <p className="pdf-action-text">Analiza tus resultados en los seis dominios: Corporal, Mental, Emocional, Social, Espiritual y Financiero. Considera estos datos como una fotografía técnica de tus últimos 90 días, no como un juicio de valor.</p>
+                        <p className="pdf-action-text">No lo dejes en una impresión general, baja lo que viste a algo concreto. Mira tus resultados y nombra qué está pasando en cada dominio. Dónde estás bien, dónde no y qué se repite. Escríbelo sin adornarlo y sin suavizarlo.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>La claridad de los datos elimina el peso de la culpa y permite la acción.</strong></p>
+                            <p><strong>Cuando lo pones en claro, deja de ser una sensación… y se convierte en algo con lo que puedes trabajar.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -506,9 +502,9 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     <div className="pdf-circle-num">2</div>
                     <div className="pdf-action-content">
                         <h4 className="pdf-action-title">2. Identifica tu fuga de energía</h4>
-                        <p className="pdf-action-text">Elige un solo dominio como prioridad absoluta. El enfoque es tu recurso más escaso; busca aquel punto que, aunque no tenga el puntaje más bajo, hoy te genera el mayor desgaste emocional.</p>
+                        <p className="pdf-action-text">No intentes abarcar todo. Elige un solo punto en el que quieras y necesites trabajar. Ese que más se repite, que más te desgasta o que vienes evitando. No tiene que ser el más grave, pero sí el que hoy más impacto está teniendo en tu vida.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>Resolver una sola fuga es más efectivo que intentar sostener seis frentes simultáneos.</strong></p>
+                            <p><strong>Mientras eso siga ahí, todo lo demás se vuelve más difícil de sostener.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -516,10 +512,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <div className="pdf-action-block">
                     <div className="pdf-circle-num">3</div>
                     <div className="pdf-action-content">
-                        <h4 className="pdf-action-title">3. Establece el objetivo mínimo (7 días)</h4>
-                        <p className="pdf-action-text">Define una acción para esta semana que sea pequeña, medible y, sobre todo, repetible. La prioridad aquí no es la intensidad, sino consolidar el hábito.</p>
+                        <h4 className="pdf-action-title">3. Define el objetivo mínimo (7 días)</h4>
+                        <p className="pdf-action-text">Aterriza ese punto en una acción concreta. Algo específico, medible y que realmente puedas cumplir durante los próximos siete días. No busques hacerlo perfecto, busca poder repetirlo consistentemente.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>El éxito temprano genera el impulso necesario para los cambios de largo plazo.</strong></p>
+                            <p><strong>Si no puedes sostenerlo en un mal día, es demasiado grande.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -527,10 +523,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <div className="pdf-action-block" style={{ marginBottom: 0 }}>
                     <div className="pdf-circle-num">4</div>
                     <div className="pdf-action-content">
-                        <h4 className="pdf-action-title">4. Ajusta las condiciones de tu entorno</h4>
-                        <p className="pdf-action-text">Modifica tu espacio para que la disciplina sea sencilla. Crea obstáculos para los hábitos que quieres dejar y facilita el acceso a las acciones que quieres integrar.</p>
+                        <h4 className="pdf-action-title">4. Ajusta tu entorno</h4>
+                        <p className="pdf-action-text">Mira qué está jugando a favor y qué está jugando en contra. Organiza tu espacio, tu tiempo o tus herramientas para que la acción que definiste sea más fácil de ejecutar. Quita fricciones innecesarias y evita depender solo de la fuerza de voluntad.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>Un entorno bien diseñado reduce la dependencia de la fuerza de voluntad.</strong></p>
+                            <p><strong>Cuando el entorno acompaña, sostener el cambio deja de ser una lucha constante.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -555,10 +551,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <div className="pdf-action-block">
                     <div className="pdf-circle-num">5</div>
                     <div className="pdf-action-content">
-                        <h4 className="pdf-action-title">5. Establece un compromiso externo</h4>
-                        <p className="pdf-action-text">Comunica tu objetivo a una persona cuya opinión respetes. El compromiso público aumenta la probabilidad de cumplimiento y rompe el aislamiento del líder.</p>
+                        <h4 className="pdf-action-title">5. Hazlo visible para alguien más</h4>
+                        <p className="pdf-action-text">Elige a una persona y cuéntale lo que te propusiste. No para que te controle, sino para que exista fuera de tu cabeza. Cuando lo pones en palabras, cambia la forma en la que te comprometes.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>La transparencia con terceros refuerza la integridad personal.</strong></p>
+                            <p><strong>Asegúrate de que sea alguien que no te deje soltarlo tan fácil.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -566,10 +562,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <div className="pdf-action-block">
                     <div className="pdf-circle-num">6</div>
                     <div className="pdf-action-content">
-                        <h4 className="pdf-action-title">6. Ejecuta una medición diaria</h4>
-                        <p className="pdf-action-text">Lleva un registro rápido de 30 segundos cada noche. Evalúa si cumpliste tu objetivo y califica tu nivel de energía y paz mental en una escala de 1 a 5.</p>
+                        <h4 className="pdf-action-title">6. Mide lo que haces cada día</h4>
+                        <p className="pdf-action-text">Al final del día, revisa si cumpliste, nada explicaciones largas, solo escribe si cumplí o no cumplí. Si quieres, califica cómo estuvo tu energía y tu enfoque ese día.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>Gestionar con datos evita que las opiniones o el cansancio distorsionen tu progreso.</strong></p>
+                            <p><strong>No se trata de hacerlo perfecto. La tarea es no perderte en el proceso.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -577,10 +573,10 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <div className="pdf-action-block">
                     <div className="pdf-circle-num">7</div>
                     <div className="pdf-action-content">
-                        <h4 className="pdf-action-title">7. Realiza una auditoría semanal</h4>
-                        <p className="pdf-action-text">Dedica 15 minutos a revisar tres puntos: qué funcionó, qué dificultades surgieron y qué ajustes aplicarás la próxima semana.</p>
+                        <h4 className="pdf-action-title">7. Revisa tu semana</h4>
+                        <p className="pdf-action-text">Antes de empezar una nueva semana, detente unos minutos. Mira qué funcionó, qué no y qué necesitas ajustar. No cambies todo, ajusta lo necesario para sostener lo que ya empezaste.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>La mejora continua se basa en ajustes tácticos constantes, no en cambios drásticos.</strong></p>
+                            <p><strong>El avance no viene de hacerlo distinto cada vez, sino de mejorar sobre lo que ya estás haciendo.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -588,18 +584,31 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                 <div className="pdf-action-block" style={{ marginBottom: '40px' }}>
                     <div className="pdf-circle-num">8</div>
                     <div className="pdf-action-content">
-                        <h4 className="pdf-action-title">8. Evalúa la tendencia de crecimiento</h4>
-                        <p className="pdf-action-text">Repite el autodiagnóstico integral cada tres meses. El propósito es observar la trayectoria de tus indicadores y recalibrar tu estrategia de vida.</p>
+                        <h4 className="pdf-action-title">8. Vuelve a medirte</h4>
+                        <p className="pdf-action-text">En unas semanas, revisa el diagnóstico y establece si hay mejoria. Ahí es donde empiezas a notar si lo que estás haciendo realmente está moviendo algo o no.</p>
                         <div className="pdf-insight-box">
-                            <p><strong>El crecimiento consciente requiere una revisión periódica del rumbo.</strong></p>
+                            <p><strong>El cambio no siempre se siente en el día a día… pero sí se hace evidente cuando lo comparas.</strong></p>
                         </div>
                     </div>
                 </div>
 
-                <div style={{ textAlign: 'center', marginTop: 'auto', marginBottom: '50px' }}>
+                <div style={{ textAlign: 'center', marginTop: 'auto', marginBottom: '30px' }}>
                     <p style={{ fontSize: '18px', fontStyle: 'italic', color: '#00121d', lineHeight: '1.6', margin: '0' }}>
                         "No se trata de saber más, sino de actuar mejor.<br/>
                         Pequeñas decisiones, bien sostenidas, terminan cambiando el rumbo de tu vida."
+                    </p>
+                </div>
+
+                <div className="pdf-contact-card" style={{ 
+                    backgroundColor: '#f8fafc', 
+                    padding: '20px', 
+                    borderRadius: '15px', 
+                    border: '1px solid rgba(221, 190, 61, 0.2)',
+                    textAlign: 'center',
+                    marginBottom: '40px'
+                }}>
+                    <p style={{ fontSize: '14px', color: '#4b5563', margin: 0, lineHeight: '1.6' }}>
+                        Si necesitas más información, acompañamiento o un proceso personalizado, no dudes en escribirnos a <strong>contacto@autenticos.co</strong> o ingresa a <span data-pdf-link="https://www.autenticos.co/" style={{ fontWeight: 'bold', color: '#00121d', textDecoration: 'underline' }}>www.autenticos.co</span>
                     </p>
                 </div>
 
