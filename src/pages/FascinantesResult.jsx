@@ -67,7 +67,14 @@ const FascinantesResult = () => {
     // Save result to database once calculated
     useEffect(() => {
         const saveResult = async () => {
-            if (domainScores.length === 0 || sessionStorage.getItem('autodiag_saved')) return;
+            // Check if we need to save (set in FascinantesTest.jsx)
+            const needsSave = localStorage.getItem('fascinantes_needs_save');
+            
+            if (domainScores.length === 0 || needsSave !== 'true') return;
+            
+            // Temporary block to prevent multiple simultaneous requests
+            if (sessionStorage.getItem('autodiag_saving_lock')) return;
+            sessionStorage.setItem('autodiag_saving_lock', 'true');
 
             const analysis = getExpertAnalysis(domainScores);
             const tempUserStr = localStorage.getItem('tempAutodiagUser');
@@ -93,16 +100,21 @@ const FascinantesResult = () => {
                 }]);
 
                 if (error) throw error;
+                
+                // Clear the needs_save flag so it doesn't save again on refresh
+                localStorage.removeItem('fascinantes_needs_save');
                 sessionStorage.setItem('autodiag_saved', 'true');
             } catch (err) {
                 console.error('Error saving fascinantes result:', err);
+            } finally {
+                sessionStorage.removeItem('autodiag_saving_lock');
             }
         };
 
         if (domainScores.length > 0) {
             saveResult();
         }
-    }, [domainScores]);
+    }, [domainScores, userAnswers]);
 
     const getAnswerColor = (val) => {
         switch(val) {

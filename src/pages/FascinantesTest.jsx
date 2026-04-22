@@ -217,6 +217,7 @@ const FascinantesTest = () => {
 
     const handleSubmit = (finalAnswers = answers) => {
         localStorage.setItem('fascinantesAnswers', JSON.stringify(finalAnswers));
+        localStorage.setItem('fascinantes_needs_save', 'true');
         navigate('/dominios-transition');
     };
 
