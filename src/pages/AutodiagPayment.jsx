@@ -6,7 +6,7 @@ import './PaymentStyles.css';
 
 const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
 const WOMPI_CURRENCY = 'COP';
-const BASE_PRICE_IN_CENTS = 6000000; // $60.000 COP
+const BASE_PRICE_IN_CENTS = 7500000; // $75.000 COP
 
 const AutodiagPayment = () => {
     const navigate = useNavigate();
@@ -15,6 +15,54 @@ const AutodiagPayment = () => {
     const [error, setError] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState('wompi');
     const [loadingMP, setLoadingMP] = useState(false);
+    
+    // Currency Conversion State
+    const [localCurrency, setLocalCurrency] = useState({ code: 'COP', symbol: '$', rate: 1, country: '' });
+    const [isConverting, setIsConverting] = useState(false);
+
+    useEffect(() => {
+        const fetchLocalCurrency = async () => {
+            try {
+                setIsConverting(true);
+                // 1. Obtener moneda por IP
+                const geoRes = await fetch('https://ipapi.co/json/');
+                const geoData = await geoRes.json();
+                const userCurrency = geoData.currency || 'COP';
+                const userCountry = geoData.country_name || '';
+
+                if (userCurrency === 'COP') {
+                    setIsConverting(false);
+                    return;
+                }
+
+                // 2. Obtener tasa de cambio desde COP
+                const rateRes = await fetch(`https://api.exchangerate-api.com/v4/latest/COP`);
+                const rateData = await rateRes.json();
+                const rate = rateData.rates[userCurrency];
+
+                if (rate) {
+                    // Obtener símbolo de moneda
+                    const symbol = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: userCurrency,
+                    }).format(0).replace(/\d/g, '').replace(/[.,]/g, '').trim();
+
+                    setLocalCurrency({
+                        code: userCurrency,
+                        symbol: symbol || '$',
+                        rate: rate,
+                        country: userCountry
+                    });
+                }
+            } catch (err) {
+                console.error('Error fetching currency:', err);
+            } finally {
+                setIsConverting(false);
+            }
+        };
+
+        fetchLocalCurrency();
+    }, []);
 
     const fetchSignature = async () => {
         try {
@@ -86,7 +134,7 @@ const AutodiagPayment = () => {
             const reference = `ref-mp-autodiag-${Date.now()}`;
             const userEmail = localStorage.getItem('autodiag_user_email') || 'usuario@ejemplo.com';
             const { data, error } = await supabase.functions.invoke('create-mp-preference', {
-                body: { reference, unit_price: 60000, title: "Autodiagnóstico Dominios Fundamentales", user_email: userEmail }
+                body: { reference, unit_price: 75000, title: "Autodiagnóstico Dominios Fundamentales", user_email: userEmail }
             });
             if (error) throw error;
             if (data?.init_point) window.location.href = data.init_point;
@@ -158,12 +206,20 @@ const AutodiagPayment = () => {
 
                     <div className="payment-row centered-price-column" style={{ padding: '25px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '160px' }}>
                         <div className="price-stack" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', width: '100%' }}>
-                            <span style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '1.1rem', color: '#fff', letterSpacing: '1px' }}>Antes $120.000</span>
+                            <span style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '1.1rem', color: '#fff', letterSpacing: '1px' }}>
+                                Antes {localCurrency.code === 'COP' ? '$150.000' : `${localCurrency.symbol}${Math.round(150000 * localCurrency.rate).toLocaleString()}`}
+                            </span>
                             <div className="payment-current-row" style={{ margin: '2px 0' }}>
                                 <span className="payment-amount" style={{ color: '#ddbe3d', fontSize: '4.0rem', fontWeight: '900', lineHeight: '1', display: 'flex', alignItems: 'baseline', gap: '10px' }}>
-                                    $60.000 <span className="currency-label" style={{ color: '#fff', fontSize: '1.3rem', opacity: 0.9, fontWeight: 'bold' }}>COP</span>
+                                    {localCurrency.code === 'COP' ? '$75.000' : `${localCurrency.symbol}${Math.round(75000 * localCurrency.rate).toLocaleString()}`} 
+                                    <span className="currency-label" style={{ color: '#fff', fontSize: '1.3rem', opacity: 0.9, fontWeight: 'bold' }}>{localCurrency.code}</span>
                                 </span>
                             </div>
+                            {localCurrency.code !== 'COP' && (
+                                <p style={{ margin: '-5px 0 10px 0', fontSize: '0.9rem', color: '#ddbe3d', fontWeight: '600' }}>
+                                    Valor aproximado · Cobro final en $75.000 COP
+                                </p>
+                            )}
                             <p style={{ margin: '5px 0 0 0', fontSize: '1.0rem', opacity: 0.9, color: '#fff', fontWeight: '500' }}>Análisis Avanzado · Pago único</p>
                             <p style={{ margin: 0, fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '900', textTransform: 'none', letterSpacing: '0.5px' }}>Precio de lanzamiento</p>
                         </div>
@@ -207,9 +263,16 @@ const AutodiagPayment = () => {
                     </div>
                 )}
 
-                <div className="security-bar" style={{ marginTop: '25px' }}>
-                    <ShieldCheck size={18} style={{ marginRight: '8px' }} />
-                    Pago seguro procesado por Wompi / Mercado Pago
+                <div className="security-bar" style={{ marginTop: '25px', flexDirection: 'column', gap: '5px', textAlign: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <ShieldCheck size={18} style={{ marginRight: '8px' }} />
+                        Pago seguro procesado por Wompi / Mercado Pago
+                    </div>
+                    {localCurrency.code !== 'COP' && (
+                        <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
+                            * La transacción final se realizará en Pesos Colombianos (COP) por el valor de $75.000.
+                        </span>
+                    )}
                 </div>
 
                 <button onClick={() => navigate('/hub')} className="btn-cancel" style={{ marginTop: '15px', opacity: 0.6 }}>
