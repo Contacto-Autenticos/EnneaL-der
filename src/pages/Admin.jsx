@@ -172,7 +172,26 @@ const Admin = () => {
 
             const { data, error } = await query;
             if (error) throw error;
-            setFascinantesResults(data || []);
+
+            const uniqueResults = [];
+            const seenEmails = new Set();
+            
+            if (data) {
+                data.forEach(result => {
+                    const userEmail = result.email?.toLowerCase().trim();
+                    if (userEmail) {
+                        if (!seenEmails.has(userEmail)) {
+                            seenEmails.add(userEmail);
+                            uniqueResults.push(result);
+                        }
+                    } else {
+                        // For anonymous users (no email), keep all entries
+                        uniqueResults.push(result);
+                    }
+                });
+            }
+            
+            setFascinantesResults(uniqueResults);
         } catch (error) {
             console.error('Error fetching fascinantes results:', error);
         } finally {
@@ -2765,9 +2784,18 @@ const Admin = () => {
                                             <tr><td colSpan="9" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
                                         ) : (() => {
                                             const anonData = fascinantesResults.filter(r => r.is_anonymous);
-                                            return anonData.map((r, index) => (
+                                            // Ensure unique by ID or email for safety
+                                            const uniqueAnon = [];
+                                            const seenAnon = new Set();
+                                            anonData.forEach(r => {
+                                                if (!seenAnon.has(r.id)) {
+                                                    seenAnon.add(r.id);
+                                                    uniqueAnon.push(r);
+                                                }
+                                            });
+                                            return uniqueAnon.map((r, index) => (
                                                 <tr key={r.id}>
-                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{anonData.length - index}</td>
+                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{uniqueAnon.length - index}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>
                                                         {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                     </td>
@@ -2865,9 +2893,25 @@ const Admin = () => {
                                             <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
                                         ) : (() => {
                                             const regData = fascinantesResults.filter(r => !r.is_anonymous);
-                                            return regData.map((r, index) => (
+                                            // FORCED DE-DUPLICATION BY EMAIL
+                                            const uniqueReg = [];
+                                            const seenRegEmails = new Set();
+                                            
+                                            regData.forEach(r => {
+                                                const email = r.email?.toLowerCase().trim();
+                                                if (email) {
+                                                    if (!seenRegEmails.has(email)) {
+                                                        seenRegEmails.add(email);
+                                                        uniqueReg.push(r);
+                                                    }
+                                                } else {
+                                                    uniqueReg.push(r);
+                                                }
+                                            });
+
+                                            return uniqueReg.map((r, index) => (
                                                 <tr key={r.id}>
-                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{regData.length - index}</td>
+                                                    <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{uniqueReg.length - index}</td>
                                                     <td style={{ fontWeight: '500' }}>{r.full_name}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>{r.birth_date}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>{r.email}</td>

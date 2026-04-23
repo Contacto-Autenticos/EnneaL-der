@@ -141,7 +141,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             }}>
                 <div style={{ marginTop: '20px' }}>
                     <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#ddbe3d', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '15px' }}>
-                        RESULTADOS Y PLAN DE ACCIÓN
+                        RESULTADOS Y PASOS A SEGUIR
                     </p>
                     <div style={{ width: '80%', height: '1px', backgroundColor: '#ddbe3d', margin: '0 auto 25px auto', opacity: 0.5 }}></div>
                     <h1 style={{ fontSize: '56px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', lineHeight: '1', margin: '0' }}>
@@ -411,7 +411,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                                 </h2>
                                 {interp && (
                                     <p style={{ fontSize: '15px', color: '#1f2937', margin: '4px 0 0 0', fontWeight: '400' }}>
-                                        Tu puntaje en este dominio: <strong>{scoreValue}/70 puntos</strong>
+                                        Tu puntaje en este dominio: <strong style={{ color: '#ddbe3d' }}>{scoreValue}/70 puntos</strong>
                                     </p>
                                 )}
                             </div>
@@ -473,8 +473,8 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
             {/* PAGE 12: ACCION FASE 1 */}
             <div className="pdf-page" id="pdf-page-12">
                 <div style={{ borderBottom: '2px solid #ddbe3d', paddingBottom: '15px', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '28px', fontWeight: '900', color: '#ddbe3d', textTransform: 'uppercase', marginBottom: '0', marginTop: '0' }}>
-                        PLAN DE ACCIÓN
+                    <h2 style={{ fontSize: '28px', fontWeight: '900', color: '#ddbe3d', textTransform: 'none !important', marginBottom: '0', marginTop: '0' }}>
+                        Lo que sigue después de verlo
                     </h2>
                 </div>
 
