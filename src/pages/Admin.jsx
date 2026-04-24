@@ -121,7 +121,6 @@ const Admin = () => {
     // Workshop registrations State
     const [workshopRegistrations, setWorkshopRegistrations] = useState([]);
     const [loadingWorkshop, setLoadingWorkshop] = useState(false);
-    const [filterWorkshopType, setFilterWorkshopType] = useState('');
 
     // Chart State
     const [chartPeriod, setChartPeriod] = useState('days7'); // 'days7' | 'week' | 'month' | 'year'
@@ -489,41 +488,14 @@ const Admin = () => {
     const fetchWorkshopRegistrations = async () => {
         setLoadingWorkshop(true);
         try {
-            // Fetch workshop leads
-            const { data: leads, error: leadsError } = await supabase
-                .from('user_leads')
+            // Fetch workshop registrations from the specialized table
+            const { data: registrations, error: registrationsError } = await supabase
+                .from('workshop_registrations')
                 .select('*')
-                .or('source.eq.workshop_virtual,source.eq.workshop_presencial')
                 .order('created_at', { ascending: false });
 
-            if (leadsError) throw leadsError;
-
-            // Fetch successful transactions related to workshops
-            const { data: trans, error: transError } = await supabase
-                .from('transactions')
-                .select('*')
-                .ilike('reference', 'prog-%')
-                .eq('status', 'APPROVED');
-
-            if (transError) throw transError;
-
-            // Map transactions to leads by email and time proximity or reference
-            const combined = leads.map(lead => {
-                const workshopType = lead.source === 'workshop_virtual' ? 'Virtual' : 'Presencial';
-                const paidTrans = trans.find(t => 
-                    t.customer_email.toLowerCase() === lead.email.toLowerCase() &&
-                    t.reference.includes(lead.source.split('_')[1])
-                );
-
-                return {
-                    ...lead,
-                    workshopType,
-                    paymentStatus: paidTrans ? 'APPROVED' : 'PENDING/FAILED',
-                    paidAt: paidTrans ? paidTrans.created_at : lead.created_at
-                };
-            });
-
-            setWorkshopRegistrations(combined);
+            if (registrationsError) throw registrationsError;
+            setWorkshopRegistrations(registrations || []);
         } catch (error) {
             console.error('Error fetching workshop registrations:', error);
         } finally {
@@ -1216,10 +1188,6 @@ const Admin = () => {
                                 onClick={() => { setActiveSection('transacciones'); setIsMobileSidebarOpen(false); }}>
                                 <CreditCard size={17} /> Transacciones
                             </button>
-                            <button className={`admin-nav-item ${activeSection === 'inscripciones' ? 'active' : ''}`}
-                                onClick={() => { setActiveSection('inscripciones'); setIsMobileSidebarOpen(false); }}>
-                                <Calendar size={17} /> Inscripciones
-                            </button>
                         </div>
                     )}
 
@@ -1286,6 +1254,13 @@ const Admin = () => {
                             <span>Próximamente...</span>
                         </div>
                     )}
+
+                    <div style={{ marginTop: '10px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}>
+                        <button className={`admin-nav-item ${activeSection === 'inscripciones' ? 'active' : ''}`}
+                            onClick={() => { setActiveSection('inscripciones'); setIsMobileSidebarOpen(false); }}>
+                            <Calendar size={17} /> Inscripciones Taller
+                        </button>
+                    </div>
                 </nav>
 
                 <div className="admin-sidebar-user-info" style={{
@@ -2388,7 +2363,7 @@ const Admin = () => {
                             <h2><Calendar size={20} /> Inscripciones al taller</h2>
                             <div className="header-actions-group">
                                 <span className="registros-badge">
-                                    {workshopRegistrations.filter(r => !filterWorkshopType || r.workshopType === filterWorkshopType).length} registros
+                                    {workshopRegistrations.length} registros
                                 </span>
                                 <div className="header-buttons-wrapper">
                                     <button onClick={fetchWorkshopRegistrations} className="btn-refresh-boxed" disabled={loadingWorkshop} title="Actualizar">
@@ -2396,23 +2371,6 @@ const Admin = () => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="resp-filters" style={{ justifyContent: 'flex-end' }}>
-                            <select
-                                className="resp-filter-select"
-                                value={filterWorkshopType}
-                                onChange={e => setFilterWorkshopType(e.target.value)}
-                            >
-                                <option value="">Todos los talleres</option>
-                                <option value="Virtual">Virtual</option>
-                                <option value="Presencial">Presencial</option>
-                            </select>
-                            {filterWorkshopType && (
-                                <button className="resp-filter-clear" onClick={() => setFilterWorkshopType('')}>
-                                    ✕ Limpiar
-                                </button>
-                            )}
                         </div>
 
                         <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
@@ -2423,7 +2381,8 @@ const Admin = () => {
                                         <th>Nombre</th>
                                         <th>Correo</th>
                                         <th>Celular</th>
-                                        <th>Fecha Pago/Registro</th>
+                                        <th>Ciudad</th>
+                                        <th>Fecha Registro</th>
                                         <th>Estado</th>
                                     </tr>
                                 </thead>
@@ -2434,26 +2393,22 @@ const Admin = () => {
                                         <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>No hay inscripciones registradas aún.</td></tr>
                                     ) : (
                                         workshopRegistrations
-                                            .filter(r => !filterWorkshopType || r.workshopType === filterWorkshopType)
                                             .map(r => (
                                                 <tr key={r.id}>
-                                                    <td>
-                                                        <span className={`status-badge ${r.workshopType === 'Virtual' ? 'unused' : 'used'}`}>
-                                                            {r.workshopType}
-                                                        </span>
-                                                    </td>
+                                                    <td style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--color-primary)' }}>{r.workshop_name || 'Taller Eneagrama'}</td>
                                                     <td style={{ fontWeight: '500' }}>{r.full_name || '-'}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>{r.email || '-'}</td>
                                                     <td style={{ fontSize: '0.85rem' }}>{r.phone || '-'}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>{r.city || '-'}</td>
                                                     <td style={{ fontSize: '0.8rem' }}>
-                                                        {new Date(r.paidAt).toLocaleString('es-CO', { 
+                                                        {new Date(r.created_at).toLocaleString('es-CO', { 
                                                             day: '2-digit', month: '2-digit', year: 'numeric', 
                                                             hour: '2-digit', minute: '2-digit' 
                                                         })}
                                                     </td>
                                                     <td>
-                                                        <span className={`status-badge ${r.paymentStatus === 'APPROVED' ? 'unused' : 'used'}`} style={{ fontSize: '0.7rem' }}>
-                                                            {r.paymentStatus === 'APPROVED' ? 'PAGADO' : 'PENDIENTE'}
+                                                        <span className={`status-badge ${r.payment_status === 'APPROVED' ? 'unused' : 'used'}`} style={{ fontSize: '0.7rem' }}>
+                                                            {r.payment_status === 'APPROVED' ? 'PAGADO' : 'PENDIENTE'}
                                                         </span>
                                                     </td>
                                                 </tr>
