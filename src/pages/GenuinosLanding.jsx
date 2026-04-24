@@ -323,10 +323,12 @@ const GenuinosLanding = () => {
 
             const { data, error } = await supabase.functions.invoke('create-mp-preference', {
                 body: {
-                    plan,
-                    amount,
                     reference,
-                    back_url_base: window.location.origin,
+                    unit_price: amount,
+                    title: `Inscripción Programa Genuinos - Plan ${plan === 'virtual' ? 'Virtual' : 'Presencial'}`,
+                    user_email: customerEmail,
+                    plan: plan, // Keep plan for the return URL logic
+                    back_url_custom: `${window.location.origin}/mp-status?plan=${plan}`
                 }
             });
 

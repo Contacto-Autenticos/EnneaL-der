@@ -13,7 +13,11 @@ serve(async (req) => {
   }
 
   try {
-    const { title, unit_price, user_email, reference } = await req.json();
+    const { title, unit_price, user_email, reference, back_url_custom } = await req.json();
+
+    const origin = req.headers.get("origin") || "https://enesencia.autenticos.co";
+    const defaultBackUrl = `${origin}/dominios-payment-status`;
+    const finalBackUrl = back_url_custom || defaultBackUrl;
 
     const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
@@ -33,9 +37,9 @@ serve(async (req) => {
         ],
         external_reference: reference,
         back_urls: {
-          success: `${req.headers.get("origin")}/dominios-payment-status?status=approved`,
-          failure: `${req.headers.get("origin")}/dominios-payment-status?status=failure`,
-          pending: `${req.headers.get("origin")}/dominios-payment-status?status=pending`,
+          success: `${finalBackUrl}?status=approved`,
+          failure: `${finalBackUrl}?status=failure`,
+          pending: `${finalBackUrl}?status=pending`,
         },
         auto_return: "approved",
         payer: {
