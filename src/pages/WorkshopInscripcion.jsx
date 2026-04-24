@@ -113,17 +113,6 @@ const WorkshopInscripcion = () => {
                         <li>Materializa tu mejor versión</li>
                     </ul>
 
-                    <div className="workshop-radar-box">
-                        <div className="radar-icon-container">
-                            <Target className="radar-icon-pulsing" size={32} />
-                        </div>
-                        <div className="radar-text">
-                            <span className="radar-header">Una experiencia presencial</span>
-                            <h3 className="radar-main">DE <span className="text-yellow">4 HORAS</span></h3>
-                        </div>
-                    </div>
-
-                    <p className="workshop-signal-text">La señal que estabas esperando</p>
                 </div>
             </section>
 
