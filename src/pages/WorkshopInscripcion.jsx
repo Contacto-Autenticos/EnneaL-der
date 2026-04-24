@@ -108,9 +108,9 @@ const WorkshopInscripcion = () => {
                     </h1>
                     
                     <ul className="workshop-feature-list">
-                        <li>Identifica el punto de partida</li>
-                        <li>Define tu acción mínima poderosa</li>
-                        <li>Materializa tu mejor versión</li>
+                        <li><strong>Identifica</strong> tu estado de bienestar</li>
+                        <li><strong>Aprende</strong> como elevarlo</li>
+                        <li><strong>Diseña</strong> un plan de acción</li>
                     </ul>
 
                     <p className="workshop-signal-text">La señal que estabas esperando</p>
