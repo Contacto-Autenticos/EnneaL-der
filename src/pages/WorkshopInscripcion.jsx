@@ -113,6 +113,8 @@ const WorkshopInscripcion = () => {
                         <li>Materializa tu mejor versión</li>
                     </ul>
 
+                    <p className="workshop-signal-text">La señal que estabas esperando</p>
+
                 </div>
             </section>
 

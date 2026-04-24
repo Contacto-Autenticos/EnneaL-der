@@ -122,9 +122,10 @@
 .workshop-signal-text {
   font-size: clamp(1.2rem, 3vw, 2.2rem);
   font-weight: 800;
-  color: #fff;
+  color: #002d44;
   margin-top: 20px;
   letter-spacing: -0.5px;
+  text-align: center;
 }
 
 @keyframes pulse {
