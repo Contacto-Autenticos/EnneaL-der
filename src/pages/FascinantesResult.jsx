@@ -46,11 +46,17 @@ const FascinantesResult = () => {
     const reportTemplateRef = React.useRef(null);
 
     useEffect(() => {
+        const isPaid = localStorage.getItem('autodiagPaid') === 'true';
+        const hasUser = localStorage.getItem('tempAutodiagUser');
         const storedAnswers = localStorage.getItem('fascinantesAnswers');
-        const tempUserStr = localStorage.getItem('tempAutodiagUser');
+
+        if (!isPaid || !hasUser) {
+            navigate('/dominios');
+            return;
+        }
         
-        if (tempUserStr) {
-            try { setUserData(JSON.parse(tempUserStr)); } catch (e) {}
+        if (hasUser) {
+            try { setUserData(JSON.parse(hasUser)); } catch (e) {}
         }
         
         if (storedAnswers) {

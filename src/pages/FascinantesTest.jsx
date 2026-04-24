@@ -15,6 +15,15 @@ const FascinantesTest = () => {
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [activeScreen, setActiveScreen] = useState(null);
 
+    // Protection Logic
+    useEffect(() => {
+        const isPaid = localStorage.getItem('autodiagPaid') === 'true';
+        const hasUser = localStorage.getItem('tempAutodiagUser');
+        if (!isPaid || !hasUser) {
+            navigate('/dominios');
+        }
+    }, [navigate]);
+
     // Keyboard Navigation
     useEffect(() => {
         const handleKeyDown = (e) => {

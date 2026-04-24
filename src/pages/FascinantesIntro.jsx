@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Zap, Target, Globe } from 'lucide-react';
 import './FascinantesIntro.css';
 
 const FascinantesIntro = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const isPaid = localStorage.getItem('autodiagPaid') === 'true';
+        const hasUser = localStorage.getItem('tempAutodiagUser');
+        if (!isPaid || !hasUser) {
+            navigate('/dominios');
+        }
+    }, [navigate]);
 
     return (
         <div className="fascinantes-intro-page">
