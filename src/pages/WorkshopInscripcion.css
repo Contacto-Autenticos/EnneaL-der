@@ -416,13 +416,16 @@
   }
 
   .workshop-main-title {
-    font-size: clamp(1.8rem, 10vw, 3.5rem); /* Dynamic sizing to fit any phone width */
+    font-size: 3.8rem; /* Significantly larger */
     margin-bottom: 20px;
-    line-height: 1;
+    line-height: 0.95;
+    letter-spacing: -1px; /* Tighter to fit more in 3 lines */
+    width: 100%;
   }
 
   .workshop-main-title span {
     white-space: nowrap;
+    display: block;
   }
 
   .workshop-feature-list li {
