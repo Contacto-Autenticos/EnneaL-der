@@ -16,18 +16,18 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  text-align: left;
-  padding: 20px 10%;
-  background-image: url('/Montañas%2004.png');
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-image: url('/Montañas%2002.jpg');
   background-size: cover;
-  background-position: right center;
-  background-attachment: scroll; /* Changed from fixed to allow better positioning */
+  background-position: center;
+  background-attachment: fixed;
 }
 
 
 .workshop-hero-content {
-  max-width: 600px; /* Reduced width to clear the right side */
+  max-width: 900px;
   z-index: 2;
   animation: fadeInUp 1s ease-out;
 }
@@ -49,7 +49,9 @@
 .workshop-feature-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 40px 0;
+  margin: 0 auto 40px;
+  display: inline-block;
+  text-align: left;
 }
 
 .workshop-feature-list li {
@@ -401,6 +403,24 @@
 }
 
 @media (max-width: 768px) {
+  .workshop-hero {
+    height: auto;
+    min-height: 60vh; /* Reduced from 100vh */
+    padding: 60px 20px; /* Tighter padding */
+    background-attachment: scroll; /* Better performance on mobile */
+  }
+
+  .workshop-main-title {
+    font-size: 2.8rem; /* Larger than before */
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .workshop-feature-list li {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
   .workshop-experience-box {
     flex-direction: column;
     padding: 30px 20px;
