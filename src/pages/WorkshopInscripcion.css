@@ -416,11 +416,12 @@
   }
 
   .workshop-main-title {
-    font-size: 3.8rem; /* Significantly larger */
-    margin-bottom: 20px;
-    line-height: 0.95;
-    letter-spacing: -1px; /* Tighter to fit more in 3 lines */
-    width: 100%;
+    font-size: 4.5rem !important; /* Forced massive size */
+    margin-bottom: 25px;
+    line-height: 0.9;
+    letter-spacing: -2px !important;
+    width: 100% !important;
+    display: block !important;
   }
 
   .workshop-main-title span {
