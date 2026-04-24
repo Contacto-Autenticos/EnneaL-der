@@ -131,16 +131,28 @@ const AutodiagPayment = () => {
     const handleMercadoPago = async () => {
         try {
             setLoadingMP(true);
+            setError(null);
             const reference = `ref-mp-autodiag-${Date.now()}`;
             const userEmail = localStorage.getItem('autodiag_user_email') || 'usuario@ejemplo.com';
-            const { data, error } = await supabase.functions.invoke('create-mp-preference', {
+            
+            const { data, error: invokeError } = await supabase.functions.invoke('create-mp-preference', {
                 body: { reference, unit_price: 75000, title: "Autodiagnóstico Dominios Fundamentales", user_email: userEmail }
             });
-            if (error) throw error;
-            if (data?.init_point) window.location.href = data.init_point;
+
+            if (invokeError) throw invokeError;
+            if (data?.error) {
+                console.error('Error detallado de Mercado Pago:', data);
+                throw new Error(data.error);
+            }
+
+            if (data?.init_point) {
+                window.location.href = data.init_point;
+            } else {
+                throw new Error("No se recibió el enlace de pago de Mercado Pago.");
+            }
         } catch (err) {
             console.error('Error con Mercado Pago:', err);
-            setError(`Error al conectar con Mercado Pago: ${err.message}`);
+            setError(`Error con Mercado Pago: ${err.message}`);
         } finally {
             setLoadingMP(false);
         }
@@ -238,6 +250,22 @@ const AutodiagPayment = () => {
                         Mercado Pago
                     </button>
                 </div>
+
+                {error && (
+                    <div className="payment-error-alert" style={{ 
+                        background: '#fee2e2', 
+                        color: '#b91c1c', 
+                        padding: '12px', 
+                        borderRadius: '6px', 
+                        marginBottom: '20px', 
+                        fontSize: '0.9rem',
+                        border: '1px solid #fecaca',
+                        textAlign: 'center',
+                        width: '100%'
+                    }}>
+                        {error}
+                    </div>
+                )}
 
                 {paymentMethod === 'wompi' ? (
                     <div className="wompi-section fade-in" style={{ width: '100%' }}>

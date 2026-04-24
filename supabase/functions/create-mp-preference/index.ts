@@ -46,12 +46,21 @@ serve(async (req) => {
 
     const data = await response.json();
 
+    if (!response.ok) {
+      console.error("Error de Mercado Pago:", data);
+      return new Response(JSON.stringify({ error: data.message || "Error en Mercado Pago", detail: data }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: response.status,
+      });
+    }
+
     return new Response(JSON.stringify({ id: data.id, init_point: data.init_point }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
 
   } catch (error) {
+    console.error("Error en la función create-mp-preference:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
