@@ -21,7 +21,7 @@ const WorkshopInscripcion = () => {
         subtitle: "Por debajo de nuestras posibilidades.",
         price: 360000,
         date: "1 DE MAYO",
-        location: "CAFE DEL RIO",
+        location: "CAFE DEL RIO - CALI COLOMBIA",
         time: "9:00AM - 1:00PM",
         name: "Workshop Presencial Fascinantes"
     };
