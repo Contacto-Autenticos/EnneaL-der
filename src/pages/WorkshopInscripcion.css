@@ -16,13 +16,24 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
+  align-items: flex-start;
+  text-align: left;
+  padding: 20px 10%;
   background-image: url('/Montañas 02.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+}
+
+.workshop-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  z-index: 1;
 }
 
 .workshop-hero-content {
@@ -31,22 +42,103 @@
   animation: fadeInUp 1s ease-out;
 }
 
-.workshop-title {
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
+.workshop-main-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 900;
   line-height: 1;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   letter-spacing: -2px;
-  color: #002d44;
+  color: #fff;
+  text-transform: uppercase;
 }
 
-.workshop-subtitle-yellow {
+.text-yellow {
   color: #ddbe3d;
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
+}
+
+.workshop-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+.workshop-feature-list li {
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.workshop-feature-list li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #ddbe3d;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.workshop-radar-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 15px 25px;
+  border: 1px solid rgba(221, 190, 61, 0.4);
+  border-radius: 16px;
+  margin-bottom: 30px;
+  max-width: fit-content;
+}
+
+.radar-icon-container {
+  background: rgba(221, 190, 61, 0.15);
+  padding: 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-icon-pulsing {
+  color: #ddbe3d;
+  animation: pulse 2s infinite;
+}
+
+.radar-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.radar-header {
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.radar-main {
+  font-size: 1.8rem;
   font-weight: 900;
-  line-height: 1;
-  margin-bottom: 40px;
-  display: block;
+  margin: 0;
+  color: #fff;
+}
+
+.workshop-signal-text {
+  font-size: clamp(1.2rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  margin-top: 20px;
+  letter-spacing: -0.5px;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .workshop-divider {

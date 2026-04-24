@@ -47,6 +47,8 @@ const WorkshopPaymentStatus = () => {
                                 workshop_date: '1 de Mayo',
                                 workshop_time: '9:00 AM - 1:00 PM',
                                 workshop_location: 'https://maps.app.goo.gl/R64NW2y99LhatQA37',
+                                workshop_location_name: 'CAFE DEL RIO',
+                                workshop_location_url: 'https://maps.app.goo.gl/R64NW2y99LhatQA37',
                             };
 
                             // Cola de correos a enviar/programar

@@ -101,13 +101,29 @@ const WorkshopInscripcion = () => {
         <div className="workshop-inscripcion">
             <section className="workshop-hero">
                 <div className="workshop-hero-content">
-                    <h1 className="workshop-title">{workshopConfig.title}</h1>
-                    <span className="workshop-subtitle-yellow">{workshopConfig.subtitle}</span>
-                    <div className="workshop-divider"></div>
-                    <p className="workshop-hero-desc">
-                        Reconoce dónde estás. <br />
-                        Define el plan para <span className="workshop-highlight-yellow">vivir desde tu potencial.</span>
-                    </p>
+                    <h1 className="workshop-main-title">
+                        ¡ESTÁS VIVIENDO <br />
+                        POR DEBAJO DE <br />
+                        <span className="text-yellow">TUS POSIBILIDADES!</span>
+                    </h1>
+                    
+                    <ul className="workshop-feature-list">
+                        <li>Identifica el punto de partida</li>
+                        <li>Define tu acción mínima poderosa</li>
+                        <li>Materializa tu mejor versión</li>
+                    </ul>
+
+                    <div className="workshop-radar-box">
+                        <div className="radar-icon-container">
+                            <Target className="radar-icon-pulsing" size={32} />
+                        </div>
+                        <div className="radar-text">
+                            <span className="radar-header">Una experiencia presencial</span>
+                            <h3 className="radar-main">DE <span className="text-yellow">4 HORAS</span></h3>
+                        </div>
+                    </div>
+
+                    <p className="workshop-signal-text">La señal que estabas esperando</p>
                 </div>
             </section>
 

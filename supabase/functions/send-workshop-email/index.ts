@@ -15,7 +15,7 @@ serve(async (req) => {
   }
 
   try {
-    const { email, name, workshop_type, workshop_date, workshop_time, workshop_location, templateId, scheduledAt } = await req.json()
+    const { email, name, workshop_type, workshop_date, workshop_time, workshop_location, workshop_location_name, workshop_location_url, templateId, scheduledAt } = await req.json()
 
     if (!email || !name || !workshop_type) {
       throw new Error('Faltan datos obligatorios (email, name, workshop_type)')
@@ -54,7 +54,13 @@ serve(async (req) => {
         
         workshop_location: workshop_location,
         lugar: workshop_location,
-        LOCATION: workshop_location
+        LOCATION: workshop_location,
+        
+        workshop_location_name: workshop_location_name,
+        lugar_nombre: workshop_location_name,
+        
+        workshop_location_url: workshop_location_url,
+        lugar_link: workshop_location_url
       }
     };
 
