@@ -49,6 +49,12 @@ const WorkshopPaymentStatus = () => {
                                 workshop_location: 'https://maps.app.goo.gl/R64NW2y99LhatQA37',
                                 workshop_location_name: 'CAFE DEL RIO - CALI COLOMBIA',
                                 workshop_location_url: 'https://maps.app.goo.gl/R64NW2y99LhatQA37',
+                                workshop_name: 'Workshop Presencial Fascinantes',
+                                lugar_nombre: 'CAFE DEL RIO - CALI COLOMBIA',
+                                start_datetime: '20260501T140000Z', // UTC 9:00 AM COT
+                                end_datetime: '20260501T180000Z',   // UTC 1:00 PM COT
+                                start_iso: '2026-05-01T09:00:00',
+                                end_iso: '2026-05-01T13:00:00',
                             };
 
                             // Cola de correos a enviar/programar
