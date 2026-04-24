@@ -82,14 +82,13 @@ const WorkshopPaymentStatus = () => {
                         localStorage.removeItem('workshop_email');
                         localStorage.removeItem('workshop_name');
                         localStorage.removeItem('workshop_reg_id');
+                        // 3. Actualizar mensaje final
+                        setMessage('¡Inscripción confirmada! Revisa tu correo electrónico para ver todos los detalles y los próximos pasos.');
                     }
                 } catch (err) {
                     console.error('Error procesando el estado del pago:', err);
+                    setMessage('Tu pago fue aprobado, pero hubo un error al enviar la confirmación. Por favor contáctanos.');
                 }
-
-                setTimeout(() => {
-                    navigate('/payment-success');
-                }, 3000);
 
             } else if (status === 'failure') {
                 setUiStatus('DECLINED');
@@ -125,6 +124,14 @@ const WorkshopPaymentStatus = () => {
                     <div style={{ marginTop: '30px' }}>
                         <button onClick={() => navigate('/inscripcion')} className="btn-retry">
                             Intentar de nuevo
+                        </button>
+                    </div>
+                )}
+
+                {uiStatus === 'APPROVED' && (
+                    <div style={{ marginTop: '30px' }}>
+                        <button onClick={() => navigate('/')} className="btn-retry" style={{ backgroundColor: '#002d44' }}>
+                            Volver al inicio
                         </button>
                     </div>
                 )}
