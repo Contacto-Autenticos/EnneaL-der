@@ -21,13 +21,13 @@
   padding: 20px 10%;
   background-image: url('/Montañas%2004.png');
   background-size: cover;
-  background-position: 85% center;
-  background-attachment: fixed;
+  background-position: right center;
+  background-attachment: scroll; /* Changed from fixed to allow better positioning */
 }
 
 
 .workshop-hero-content {
-  max-width: 900px;
+  max-width: 600px; /* Reduced width to clear the right side */
   z-index: 2;
   animation: fadeInUp 1s ease-out;
 }
