@@ -23,7 +23,7 @@ const WorkshopInscripcion = () => {
         date: "1 DE MAYO",
         location: "CAFE DEL RIO",
         time: "9:00AM - 1:00PM",
-        name: "Workshop Presencial de Eneagrama"
+        name: "Workshop Presencial Fascinantes"
     };
 
     useEffect(() => {
