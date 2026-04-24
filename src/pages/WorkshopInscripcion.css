@@ -19,9 +19,9 @@
   align-items: flex-start;
   text-align: left;
   padding: 20px 10%;
-  background-image: url('/Montañas 04.jpg');
+  background-image: url('/Montañas%2004.png');
   background-size: cover;
-  background-position: center right; /* Woman on the right */
+  background-position: 85% center;
   background-attachment: fixed;
 }
 
@@ -38,7 +38,7 @@
   line-height: 1;
   margin-bottom: 30px;
   letter-spacing: -2px;
-  color: #fff;
+  color: #002d44; /* Dark blue for visibility */
   text-transform: uppercase;
 }
 
@@ -54,7 +54,7 @@
 
 .workshop-feature-list li {
   font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-  color: #fff;
+  color: #002d44;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
