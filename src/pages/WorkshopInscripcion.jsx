@@ -102,8 +102,8 @@ const WorkshopInscripcion = () => {
             <section className="workshop-hero">
                 <div className="workshop-hero-content">
                     <h1 className="workshop-main-title">
-                        ¡ESTÁS VIVIENDO <br />
-                        POR DEBAJO DE <br />
+                        <span>¡ESTÁS VIVIENDO</span>
+                        <span>POR DEBAJO DE</span>
                         <span className="text-yellow">TUS POSIBILIDADES!</span>
                     </h1>
                     

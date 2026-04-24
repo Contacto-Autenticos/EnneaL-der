@@ -42,6 +42,10 @@
   text-transform: uppercase;
 }
 
+.workshop-main-title span {
+  display: block;
+}
+
 .text-yellow {
   color: #ddbe3d;
 }
@@ -412,9 +416,13 @@
   }
 
   .workshop-main-title {
-    font-size: 2.8rem; /* Larger than before */
+    font-size: clamp(1.8rem, 10vw, 3.5rem); /* Dynamic sizing to fit any phone width */
     margin-bottom: 20px;
-    line-height: 1.1;
+    line-height: 1;
+  }
+
+  .workshop-main-title span {
+    white-space: nowrap;
   }
 
   .workshop-feature-list li {
