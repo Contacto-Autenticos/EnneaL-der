@@ -61,7 +61,7 @@
 .workshop-feature-list li {
   font-size: clamp(1.1rem, 2.5vw, 1.6rem);
   color: #002d44;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -431,7 +431,7 @@
 
   .workshop-feature-list li {
     font-size: 1.2rem;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
 
   .workshop-experience-box {
