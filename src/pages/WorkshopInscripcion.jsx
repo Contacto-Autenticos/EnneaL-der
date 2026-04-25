@@ -19,7 +19,7 @@ const WorkshopInscripcion = () => {
     const workshopConfig = {
         title: "Todos los seres humanos estamos viviendo",
         subtitle: "Por debajo de nuestras posibilidades.",
-        price: 360000,
+        price: 396000,
         date: "1 DE MAYO",
         location: "CAFE DEL RIO - CALI COLOMBIA",
         time: "9:00AM - 1:00PM",
