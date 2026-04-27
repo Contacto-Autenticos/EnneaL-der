@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { Calendar, MapPin, Clock, Tag, Target, Users, Loader2, Globe, Instagram, Linkedin, Youtube } from 'lucide-react';
@@ -8,6 +8,7 @@ const WorkshopInscripcion = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const videoRef = useRef(null);
     
     const [formData, setFormData] = useState({
         full_name: '',
@@ -29,6 +30,13 @@ const WorkshopInscripcion = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         document.title = "Inscripción Taller Presencial | Auténticos";
+        
+        // Intentar reproducir el video automáticamente al cargar
+        if (videoRef.current) {
+            videoRef.current.play().catch(err => {
+                console.log("Auto-play prevented by browser policy, but ready to play on interaction.", err);
+            });
+        }
     }, []);
 
     const handleChange = (e) => {
@@ -117,7 +125,11 @@ const WorkshopInscripcion = () => {
                         <div className="video-inner">
                             {/* Reemplaza 'workshop-promo.mp4' con el nombre real de tu archivo */}
                             <video 
+                                ref={videoRef}
                                 className="workshop-native-video"
+                                autoPlay
+                                muted
+                                loop
                                 controls 
                                 playsInline
                                 poster="/poster-video.png"
