@@ -115,16 +115,13 @@ const WorkshopInscripcion = () => {
 
                     <div className="workshop-video-wrapper">
                         <div className="video-inner">
-                            {/* Reemplaza 'workshop-promo.mp4' con el nombre real de tu archivo */}
-                            <video 
-                                className="workshop-native-video"
-                                controls 
-                                playsInline
-                                poster="/poster-video.png"
-                            >
-                                <source src="/Videos/FB_video_fascinantes_1.mp4" type="video/mp4" />
-                                Tu navegador no soporta la reproducción de video.
-                            </video>
+                            <iframe 
+                                src="https://www.youtube.com/embed/dHo8-vmv6D8" 
+                                title="Video Promocional Auténticos"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            ></iframe>
                         </div>
                     </div>
 
