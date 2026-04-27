@@ -113,6 +113,21 @@ const WorkshopInscripcion = () => {
                         <li><strong>Diseña</strong> un plan de acción</li>
                     </ul>
 
+                    <div className="workshop-video-wrapper">
+                        <div className="video-inner">
+                            {/* Reemplaza 'workshop-promo.mp4' con el nombre real de tu archivo */}
+                            <video 
+                                className="workshop-native-video"
+                                controls 
+                                playsInline
+                                poster="/poster-video.png"
+                            >
+                                <source src="/workshop-promo.mp4" type="video/mp4" />
+                                Tu navegador no soporta la reproducción de video.
+                            </video>
+                        </div>
+                    </div>
+
                     <p className="workshop-signal-text">La señal que estabas esperando</p>
 
                 </div>
