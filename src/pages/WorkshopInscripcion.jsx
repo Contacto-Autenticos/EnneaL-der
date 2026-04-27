@@ -122,7 +122,7 @@ const WorkshopInscripcion = () => {
                                 playsInline
                                 poster="/poster-video.png"
                             >
-                                <source src="/workshop-promo.mp4" type="video/mp4" />
+                                <source src="/FB_video_fascinantes_1.mp4" type="video/mp4" />
                                 Tu navegador no soporta la reproducción de video.
                             </video>
                         </div>
