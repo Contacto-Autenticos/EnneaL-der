@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { Calendar, MapPin, Clock, Tag, Target, Users, Loader2 } from 'lucide-react';
+import { Calendar, MapPin, Clock, Tag, Target, Users, Loader2, Globe, Instagram, Linkedin, Youtube } from 'lucide-react';
 import './WorkshopInscripcion.css';
 
 const WorkshopInscripcion = () => {
@@ -225,10 +225,26 @@ const WorkshopInscripcion = () => {
                     </form>
                 </div>
 
-                <div className="workshop-footer-logo">
-                    <img src="/logo-azul.png" alt="Auténticos" />
-                </div>
             </section>
+            <footer className="workshop-social-footer">
+                <div className="footer-content">
+                    <img src="/Logo-Blanco.png" alt="Auténticos" className="footer-logo-white" />
+                    <div className="footer-social-links">
+                        <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer" title="Web">
+                            <Globe size={24} />
+                        </a>
+                        <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" title="Instagram">
+                            <Instagram size={24} />
+                        </a>
+                        <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                            <Linkedin size={24} />
+                        </a>
+                        <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" title="YouTube">
+                            <Youtube size={24} />
+                        </a>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 };
