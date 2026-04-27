@@ -1306,18 +1306,9 @@ const Admin = () => {
                         <div className="admin-card-header">
                             <h2><Key size={20} /> Códigos de acceso</h2>
                         </div>
-                        <div className="code-generator-section" style={{ 
-                            display: 'flex', 
-                            flexDirection: 'column', 
-                            gap: '15px', 
-                            background: 'rgba(0, 40, 85, 0.05)', 
-                            padding: '20px', 
-                            borderRadius: '12px', 
-                            marginBottom: '20px', 
-                            border: '1px solid rgba(0, 40, 85, 0.1)' 
-                        }}>
-                            <div style={{ display: 'flex', gap: '30px', alignItems: 'center', flexWrap: 'wrap' }}>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', color: '#002855', fontWeight: '600' }}>
+                        <div className="code-generator-section">
+                            <div className="code-gen-row">
+                                <label className="code-gen-label">
                                     <input 
                                         type="checkbox" 
                                         checked={isMultiUse} 
@@ -1327,22 +1318,13 @@ const Admin = () => {
                                     <span>Código Multiuso (Evento)</span>
                                 </label>
 
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <div className="code-gen-expiry">
                                     <span style={{ color: '#002855', fontSize: '0.95rem', fontWeight: '600' }}>Fecha de caducidad (Opcional):</span>
                                     <input 
                                         type="datetime-local" 
                                         value={expirationDate}
                                         onChange={(e) => setExpirationDate(e.target.value)}
-                                        className="select-admin"
-                                        style={{ 
-                                            background: '#ffffff', 
-                                            color: '#002855', 
-                                            border: '1px solid rgba(0, 40, 85, 0.2)', 
-                                            padding: '8px 12px', 
-                                            borderRadius: '8px',
-                                            outline: 'none',
-                                            fontWeight: '500'
-                                        }}
+                                        className="select-admin code-gen-date-input"
                                     />
                                 </div>
                             </div>
@@ -1352,6 +1334,7 @@ const Admin = () => {
                                 {generating ? 'Generando...' : 'Nuevo código de acceso'}
                             </button>
                         </div>
+
                         <div className="codes-list-container">
                             <div className="codes-list-header">
                                 <h3>Últimos códigos</h3>

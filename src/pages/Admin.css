@@ -1980,3 +1980,68 @@
     background-color: rgba(30, 64, 175, 0.05) !important;
     text-decoration: underline;
 }
+
+/* -- Code Generator Responsive -- */
+.code-generator-section {
+    background: rgba(0, 40, 85, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 40, 85, 0.1);
+}
+
+.code-gen-row {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.code-gen-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #002855;
+    font-weight: 600;
+}
+
+.code-gen-expiry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.code-gen-date-input {
+    background: #ffffff !important;
+    color: #002855 !important;
+    border: 1px solid rgba(0, 40, 85, 0.2) !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    outline: none;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .code-gen-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .code-gen-expiry {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .code-gen-date-input {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .code-generator-section {
+        padding: 15px;
+    }
+}
