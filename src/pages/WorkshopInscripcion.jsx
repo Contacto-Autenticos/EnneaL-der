@@ -249,7 +249,7 @@ const WorkshopInscripcion = () => {
 
             {/* WhatsApp Floating Button */}
             <a
-                href="https://wa.me/573164287586?text=Hola%2C%20quiero%20información%20sobre%20la%20experiencia%20de%20transformación%20Fascinantes"
+                href="https://wa.me/573164287586?text=Hola%2C%20quiero%20mayor%20información%20sobre%20la%20experiencia%20de%20transformación%20Fascinantes"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whatsapp-float"
