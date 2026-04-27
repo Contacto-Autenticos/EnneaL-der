@@ -10,10 +10,42 @@ import './FascinantesTest.css';
 
 const FascinantesTest = () => {
     const navigate = useNavigate();
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [answers, setAnswers] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(() => {
+        const saved = localStorage.getItem('fascinantesProgress');
+        if (saved) {
+            try {
+                const { index } = JSON.parse(saved);
+                return index || 0;
+            } catch { return 0; }
+        }
+        return 0;
+    });
+    const [answers, setAnswers] = useState(() => {
+        const saved = localStorage.getItem('fascinantesProgress');
+        if (saved) {
+            try {
+                const { answers: savedAnswers } = JSON.parse(saved);
+                return savedAnswers || {};
+            } catch { return {}; }
+        }
+        return {};
+    });
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [activeScreen, setActiveScreen] = useState(null);
+    const [showResumeModal, setShowResumeModal] = useState(false);
+
+    // Check for saved progress on mount
+    useEffect(() => {
+        const saved = localStorage.getItem('fascinantesProgress');
+        if (saved) {
+            try {
+                const { index, answers: savedAnswers } = JSON.parse(saved);
+                if (index > 0 && savedAnswers && Object.keys(savedAnswers).length > 0) {
+                    setShowResumeModal(true);
+                }
+            } catch { /* ignore */ }
+        }
+    }, []);
 
     // Protection Logic
     useEffect(() => {
@@ -180,7 +212,15 @@ const FascinantesTest = () => {
     const progress = ((currentIndex + 1) / fascinantesQuestions.length) * 100;
 
     const handleAnswer = (value) => {
-        setAnswers({ ...answers, [currentQuestion.id]: value });
+        const updatedAnswers = { ...answers, [currentQuestion.id]: value };
+        setAnswers(updatedAnswers);
+
+        // Save progress to localStorage
+        localStorage.setItem('fascinantesProgress', JSON.stringify({
+            index: currentIndex,
+            answers: updatedAnswers,
+            timestamp: Date.now()
+        }));
         
         // Auto advance after longer delay to allow speedometer animation
         if (currentIndex < fascinantesQuestions.length - 1) {
@@ -190,7 +230,7 @@ const FascinantesTest = () => {
         } else {
             // Automatic submission on last question
             setTimeout(() => {
-                handleSubmit({ ...answers, [currentQuestion.id]: value });
+                handleSubmit(updatedAnswers);
             }, 1000);
         }
     };
@@ -227,12 +267,45 @@ const FascinantesTest = () => {
     const handleSubmit = (finalAnswers = answers) => {
         localStorage.setItem('fascinantesAnswers', JSON.stringify(finalAnswers));
         localStorage.setItem('fascinantes_needs_save', 'true');
+        // Clear partial progress since test is complete
+        localStorage.removeItem('fascinantesProgress');
         navigate('/dominios-transition');
+    };
+
+    const handleRestart = () => {
+        localStorage.removeItem('fascinantesProgress');
+        setCurrentIndex(0);
+        setAnswers({});
+        setShowResumeModal(false);
+    };
+
+    const handleResume = () => {
+        setShowResumeModal(false);
     };
 
     return (
         <div className="fascinantes-test-page">
             <div className="futuristic-overlay"></div>
+
+            {/* Resume Progress Modal */}
+            {showResumeModal && (
+                <div className="resume-modal-overlay">
+                    <div className="resume-modal">
+                        <div className="resume-modal-icon">⏸️</div>
+                        <h2>¡Tienes progreso guardado!</h2>
+                        <p>Respondiste <strong>{Object.keys(answers).length}</strong> de <strong>{fascinantesQuestions.length}</strong> preguntas.</p>
+                        <p className="resume-modal-sub">¿Deseas continuar donde te quedaste?</p>
+                        <div className="resume-modal-buttons">
+                            <button className="resume-btn-continue" onClick={handleResume}>
+                                Continuar donde me quedé
+                            </button>
+                            <button className="resume-btn-restart" onClick={handleRestart}>
+                                Empezar desde cero
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             
             {activeScreen ? (
                 <div className="progress-screen-overlay fade-in">
