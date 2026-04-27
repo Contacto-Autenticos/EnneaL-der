@@ -243,6 +243,7 @@ const WorkshopInscripcion = () => {
                             <Youtube size={24} />
                         </a>
                     </div>
+                    <p className="footer-social-text">Para mayor información síguenos en nuestras redes sociales</p>
                 </div>
             </footer>
         </div>
