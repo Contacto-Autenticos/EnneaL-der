@@ -116,7 +116,7 @@ const WorkshopInscripcion = () => {
                     <div className="workshop-video-wrapper">
                         <div className="video-inner">
                             <iframe 
-                                src="https://www.youtube.com/embed/dHo8-vmv6D8" 
+                                src="https://www.youtube.com/embed/GB-4uvPXKzw" 
                                 title="Video Promocional Auténticos"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
