@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Key } from 'lucide-react';
 import { supabase } from '../supabaseClient';
@@ -14,6 +14,35 @@ const AutodiagRegister = () => {
     const [accessCode, setAccessCode] = useState('');
     const [codeError, setCodeError] = useState('');
     const [isValidating, setIsValidating] = useState(false);
+    const [showResumeModal, setShowResumeModal] = useState(false);
+    const [savedCount, setSavedCount] = useState(0);
+    const [totalQuestions, setTotalQuestions] = useState(84);
+
+    // Check for saved progress on mount
+    useEffect(() => {
+        const isPaid = localStorage.getItem('autodiagPaid') === 'true';
+        const hasUser = localStorage.getItem('tempAutodiagUser');
+        const saved = localStorage.getItem('fascinantesProgress');
+        
+        if (isPaid && hasUser && saved) {
+            try {
+                const { index, answers } = JSON.parse(saved);
+                if (index > 0 && answers && Object.keys(answers).length > 0) {
+                    setSavedCount(Object.keys(answers).length);
+                    setShowResumeModal(true);
+                }
+            } catch { /* ignore */ }
+        }
+    }, []);
+
+    const handleResumeTest = () => {
+        navigate('/dominios-test');
+    };
+
+    const handleRestartTest = () => {
+        localStorage.removeItem('fascinantesProgress');
+        navigate('/dominios-intro');
+    };
 
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const months = [
@@ -120,6 +149,45 @@ const AutodiagRegister = () => {
 
     return (
         <div className="advanced-intro-page">
+            {/* Resume Progress Modal */}
+            {showResumeModal && (
+                <div className="resume-modal-overlay" style={{
+                    position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    zIndex: 9999, padding: '20px', backdropFilter: 'blur(8px)'
+                }}>
+                    <div style={{
+                        background: 'linear-gradient(145deg, #0a1628 0%, #0d2137 100%)',
+                        border: '1px solid rgba(221, 190, 61, 0.3)',
+                        borderRadius: '20px', padding: '40px 35px',
+                        maxWidth: '460px', width: '100%', textAlign: 'center',
+                        boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                        animation: 'slideUp 0.4s ease'
+                    }}>
+                        <div style={{ fontSize: '3rem', marginBottom: '15px' }}>⏸️</div>
+                        <h2 style={{ color: '#ddbe3d', fontSize: '1.5rem', margin: '0 0 12px', fontWeight: 800 }}>¡Tienes progreso guardado!</h2>
+                        <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem', margin: '0 0 8px', lineHeight: 1.5 }}>
+                            Respondiste <strong>{savedCount}</strong> de <strong>{totalQuestions}</strong> preguntas.
+                        </p>
+                        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', marginBottom: '25px' }}>¿Deseas continuar donde te quedaste?</p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <button onClick={handleResumeTest} style={{
+                                background: 'linear-gradient(135deg, #ddbe3d 0%, #b89b2d 100%)',
+                                color: '#0a1628', border: 'none', padding: '14px 28px',
+                                borderRadius: '12px', fontSize: '1.05rem', fontWeight: 700,
+                                cursor: 'pointer', transition: 'all 0.3s ease'
+                            }}>Continuar donde me quedé</button>
+                            <button onClick={handleRestartTest} style={{
+                                background: 'transparent', color: 'rgba(255,255,255,0.6)',
+                                border: '1px solid rgba(255,255,255,0.15)', padding: '12px 28px',
+                                borderRadius: '12px', fontSize: '0.95rem', fontWeight: 500,
+                                cursor: 'pointer', transition: 'all 0.3s ease'
+                            }}>Empezar desde cero</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="advanced-intro">
                 <div className="adv-content-wrapper">
                     <div className="home-logo-container">
