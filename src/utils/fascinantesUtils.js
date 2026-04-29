@@ -41,8 +41,11 @@ export const getExpertAnalysis = (scores) => {
     const lowestDomain = scores.find(s => s.score === min)?.domain.replace('Dominio ', '') || '';
 
     let profileKey = "";
+    const allHighOrOptimal = vals.every(v => v >= 48);
     
-    if (promedio < 35) {
+    if (allHighOrOptimal) {
+        profileKey = "TODOS_ALTO_OPTIMO";
+    } else if (promedio < 35) {
         profileKey = "POTENCIAL_DORMIDO";
     } else if (diferencia > 14) {
         profileKey = "ESTRATEGA_BLOQUEADO";
@@ -55,6 +58,16 @@ export const getExpertAnalysis = (scores) => {
     }
 
     const profiles = {
+        TODOS_ALTO_OPTIMO: {
+            name: "Alto Nivel Integral",
+            insight: "Tus 6 dominios se encuentran en un nivel alto u óptimo. Esto refleja coherencia, consciencia y un trabajo sostenido en todas las áreas fundamentales de tu vida.",
+            critical: "Por ahora ningún aspecto requiere atención.",
+            explanation: "Has logrado construir una base sólida y equilibrada en todos tus dominios. Tu patrón refleja una gestión integral de tu bienestar que pocas personas alcanzan.",
+            recommendations: [
+                "Sostén las prácticas que te llevaron hasta donde estás en este momento y retate a evaluar nuevos aspectos relevantes."
+            ],
+            bridge: "Tu nivel actual es excepcional. El siguiente paso es consolidar y expandir tu impacto hacia quienes te rodean."
+        },
         POTENCIAL_DORMIDO: {
             name: "Energía en Reconstrucción",
             insight: "No es falta de capacidad, es un momento de reconstrucción de bases. Actualmente tu energía no está disponible en su máximo nivel.",

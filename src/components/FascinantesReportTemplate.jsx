@@ -343,7 +343,7 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                         .sort((a, b) => b.score - a.score)
                         .map((score) => {
                             const style = DOMAIN_STYLES[score.id] || { color: '#ddbe3d' };
-                            const isCritical = score.score === minScore;
+                            const isCritical = score.score <= 36;
 
                             return (
                                 <div key={score.id} className="pdf-domain-card" style={{ borderLeft: `8px solid #d1d5db` }}>

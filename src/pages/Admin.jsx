@@ -3121,7 +3121,17 @@ const Admin = () => {
                         </div>
                         <div className="modal-body">
                             {(() => {
-                                const usages = allCodeUsages.filter(u => u.code === selectedCodeForUsages.code);
+                                const rawUsages = allCodeUsages.filter(u => u.code === selectedCodeForUsages.code);
+                                // Deduplicate by email: keep only the most recent usage per email
+                                const sortedUsages = [...rawUsages].sort((a, b) => new Date(b.used_at) - new Date(a.used_at));
+                                const seenEmails = new Map();
+                                sortedUsages.forEach(u => {
+                                    const key = (u.user_email || '').toLowerCase().trim();
+                                    if (!seenEmails.has(key)) {
+                                        seenEmails.set(key, u);
+                                    }
+                                });
+                                const usages = Array.from(seenEmails.values());
                                 if (usages.length === 0) {
                                     return <p className="no-usages-msg">No hay registros de uso detallados aún para este código.</p>;
                                 }

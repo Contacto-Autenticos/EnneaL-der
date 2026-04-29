@@ -257,7 +257,7 @@ const FascinantesResult = () => {
                                 });
 
                                 const textContent = textBlock.textContent.trim().toUpperCase();
-                                const isNumeric = /^\d+$/.test(textContent);
+                                const isNumeric = /^\d+%?$/.test(textContent);
                                 
                                 if (isNumeric) {
                                     textBlock.style.fontWeight = 'bold';
@@ -709,13 +709,14 @@ const FascinantesResult = () => {
                     if (domainScores.length === 0) return null;
                     
                     const minScore = Math.min(...domainScores.map(s => s.score));
+                    const maxScore = Math.max(...domainScores.map(s => s.score));
 
                     return (
                         <div className="interpretations-grid">
                             {[...domainScores]
                                 .sort((a, b) => b.score - a.score)
                                 .map((score) => {
-                                    const isMin = score.score === minScore;
+                                    const isMin = minScore < maxScore && score.score === minScore;
 
                                     return (
                                         <div 

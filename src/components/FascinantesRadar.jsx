@@ -111,12 +111,14 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
 };
 
 const CustomLabel = ({ x, y, value }) => {
+    const percentage = Math.round((value / 70) * 100);
+    const displayText = `${percentage}%`;
     return (
         <g>
             <rect 
-                x={x - 15.5} 
+                x={x - 18} 
                 y={y - 10} 
-                width="31" 
+                width="36" 
                 height="20" 
                 rx="4" 
                 fill="rgba(45, 55, 72, 0.95)" 
@@ -132,7 +134,7 @@ const CustomLabel = ({ x, y, value }) => {
                 fontWeight="900"
                 style={{ fontFamily: 'Inter, sans-serif' }}
             >
-                {value}
+                {displayText}
             </text>
         </g>
     );
