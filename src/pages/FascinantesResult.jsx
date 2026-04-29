@@ -128,13 +128,9 @@ const FascinantesResult = () => {
         const generateAndSendPDFSilently = async () => {
             // Validar que tengamos datos
             if (domainScores.length === 0 || !userData?.email) return;
-            
-            // TEMPORAL: Removido el bloqueo de sessionStorage para pruebas libres
-            // if (sessionStorage.getItem('fascinantes_pdf_auto_sent')) return;
-            // sessionStorage.setItem('fascinantes_pdf_auto_sent', 'true');
 
             try {
-                // Esperar un momento para que los gráficos terminen de renderizarse (especialmente recharts)
+                // Esperar un momento para que los gráficos terminen de renderizarse y el usuario asimile la vista
                 await new Promise(resolve => setTimeout(resolve, 2500));
                 
                 const pdf = await buildPdfDocument(1.0);
@@ -153,25 +149,22 @@ const FascinantesResult = () => {
                 });
 
                 if (error) {
-                    console.error('Error invoking edge function:', error);
-                    alert('Error en Supabase: ' + error.message);
                     throw error;
                 }
                 
                 setIsPdfSent(true);
-                alert('¡Éxito! El sistema intentó enviar el PDF a: ' + userData.email + '. Si no llega, revisa Spam o es un bloqueo de Brevo.');
-                console.log('PDF enviado automáticamente con éxito', data);
                 // Evitamos multiples envios en la misma sesión si tuvo exito
                 sessionStorage.setItem('fascinantes_pdf_auto_sent', 'true');
                 
             } catch (err) {
                 console.error('Error enviando PDF silenciosamente:', err);
-                alert('Error al enviar correo: ' + err.message);
             }
         };
 
-        // Para las pruebas: siempre ejecutar al refrescar la página
-        generateAndSendPDFSilently();
+        // Solo ejecutar si no se ha enviado en esta sesión
+        if (!sessionStorage.getItem('fascinantes_pdf_auto_sent')) {
+            generateAndSendPDFSilently();
+        }
     }, [domainScores, userData]);
 
     const getAnswerColor = (val) => {
