@@ -122,6 +122,58 @@ const FascinantesResult = () => {
         }
     }, [domainScores, userAnswers]);
 
+    // Generación y envío automático del PDF por email
+    const [isPdfSent, setIsPdfSent] = useState(false);
+    useEffect(() => {
+        const generateAndSendPDFSilently = async () => {
+            // Validar que tengamos datos
+            if (domainScores.length === 0 || !userData?.email) return;
+            
+            // TEMPORAL: Removido el bloqueo de sessionStorage para pruebas libres
+            // if (sessionStorage.getItem('fascinantes_pdf_auto_sent')) return;
+            // sessionStorage.setItem('fascinantes_pdf_auto_sent', 'true');
+
+            try {
+                // Esperar un momento para que los gráficos terminen de renderizarse (especialmente recharts)
+                await new Promise(resolve => setTimeout(resolve, 2500));
+                
+                const pdf = await buildPdfDocument(1.0);
+                if (!pdf) return;
+                
+                // Extraer el base64 sin el prefijo "data:application/pdf;base64,"
+                const pdfDataUri = pdf.output('datauristring');
+                const pdfBase64 = pdfDataUri.split(',')[1];
+
+                const { data, error } = await supabase.functions.invoke('send-fascinantes-report', {
+                    body: { 
+                        email: userData.email, 
+                        name: userData.name || 'Usuario',
+                        pdfBase64: pdfBase64 
+                    }
+                });
+
+                if (error) {
+                    console.error('Error invoking edge function:', error);
+                    alert('Error en Supabase: ' + error.message);
+                    throw error;
+                }
+                
+                setIsPdfSent(true);
+                alert('¡Éxito! El sistema intentó enviar el PDF a: ' + userData.email + '. Si no llega, revisa Spam o es un bloqueo de Brevo.');
+                console.log('PDF enviado automáticamente con éxito', data);
+                // Evitamos multiples envios en la misma sesión si tuvo exito
+                sessionStorage.setItem('fascinantes_pdf_auto_sent', 'true');
+                
+            } catch (err) {
+                console.error('Error enviando PDF silenciosamente:', err);
+                alert('Error al enviar correo: ' + err.message);
+            }
+        };
+
+        // Para las pruebas: siempre ejecutar al refrescar la página
+        generateAndSendPDFSilently();
+    }, [domainScores, userData]);
+
     const getAnswerColor = (val) => {
         switch(val) {
             case 1: return '#cc0000'; // Rojo
@@ -407,21 +459,25 @@ const FascinantesResult = () => {
         }
     };
 
-    const handleDownloadPDF = async () => {
-        if (!reportTemplateRef.current || isDownloading) return;
-        setIsDownloading(true);
-
+    const buildPdfDocument = async (customScale = 2.5) => {
         const bgColor = '#ffffff';
-
-        try {
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pdfWidth = 210;
-            const pdfHeight = 297;
-            const template = reportTemplateRef.current;
-            
-            // Mostrar temporalmente para poder capturarlo (está en left -9999px)
-            template.style.left = '0';
-            template.style.opacity = '1';
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const template = reportTemplateRef.current;
+        if (!template) return null;
+        
+        // Mostrar temporalmente para poder capturarlo (está en left -9999px)
+        template.style.left = '0';
+        template.style.opacity = '1';
+        
+        // Esperar un ciclo de renderizado del navegador para asegurar que los estilos aplican y no capture en blanco
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        // Preservar el scroll actual
+        const originalScrollY = window.scrollY;
+        // Mover arriba temporalmente para evitar bugs de html2canvas con absolute positioning
+        window.scrollTo(0, 0);
 
             const addLinksToPDF = (pageElement) => {
                 const pageRect = pageElement.getBoundingClientRect();
@@ -450,7 +506,7 @@ const FascinantesResult = () => {
             if (page0) {
                 const canvas0 = await html2canvas(page0, {
                     backgroundColor: bgColor,
-                    scale: 2.5, // Optimizado: balance nitidez/velocidad
+                    scale: customScale, // Optimizado: balance nitidez/velocidad
                     useCORS: true,
                     width: 800,
                     height: 1131
@@ -465,7 +521,7 @@ const FascinantesResult = () => {
             const page1 = template.querySelector('#pdf-page-1');
             const canvas1 = await html2canvas(page1, {
                 backgroundColor: bgColor,
-                scale: 2.5,
+                scale: customScale,
                 useCORS: true,
                 width: 800,
                 height: 1131
@@ -480,7 +536,7 @@ const FascinantesResult = () => {
             const page2 = template.querySelector('#pdf-page-2');
             const canvas2 = await html2canvas(page2, {
                 backgroundColor: bgColor,
-                scale: 2.5,
+                scale: customScale,
                 useCORS: true,
                 width: 800,
                 height: 1131
@@ -495,7 +551,7 @@ const FascinantesResult = () => {
             const page3 = template.querySelector('#pdf-page-3');
             const canvas3 = await html2canvas(page3, {
                 backgroundColor: bgColor,
-                scale: 2.5,
+                scale: customScale,
                 useCORS: true,
                 width: 800,
                 height: 1131
@@ -510,7 +566,7 @@ const FascinantesResult = () => {
             const page4 = template.querySelector('#pdf-page-4');
             const canvas4 = await html2canvas(page4, {
                 backgroundColor: bgColor,
-                scale: 2.5,
+                scale: customScale,
                 useCORS: true,
                 width: 800,
                 height: 1131
@@ -527,7 +583,7 @@ const FascinantesResult = () => {
                     pdf.addPage();
                     const canvasQA = await html2canvas(qaPage, {
                         backgroundColor: bgColor,
-                        scale: 2.5,
+                        scale: customScale,
                         useCORS: true,
                         width: 800,
                         height: 1131
@@ -544,7 +600,7 @@ const FascinantesResult = () => {
                 pdf.addPage();
                 const canvas11 = await html2canvas(page11, {
                     backgroundColor: bgColor,
-                    scale: 2.5,
+                    scale: customScale,
                     useCORS: true,
                     width: 800,
                     height: 1131
@@ -561,7 +617,7 @@ const FascinantesResult = () => {
                     pdf.addPage();
                     const canvasAction = await html2canvas(actionPage, {
                         backgroundColor: bgColor,
-                        scale: 2.5,
+                        scale: customScale,
                         useCORS: true,
                         width: 800,
                         height: 1131
@@ -574,8 +630,22 @@ const FascinantesResult = () => {
 
             // Ocultar de nuevo
             template.style.left = '-9999px';
+            
+            // Restaurar scroll
+            window.scrollTo(0, originalScrollY);
+            
+            return pdf;
+    };
 
-            pdf.save('Reporte-Autodiagnostico.pdf');
+    const handleDownloadPDF = async () => {
+        if (!reportTemplateRef.current || isDownloading) return;
+        setIsDownloading(true);
+
+        try {
+            const pdf = await buildPdfDocument();
+            if (pdf) {
+                pdf.save('Reporte-Autodiagnostico.pdf');
+            }
         } catch (error) {
             console.error('Error generating PDF:', error);
             alert('Hubo un error al generar el reporte PDF.');
@@ -799,7 +869,7 @@ const FascinantesResult = () => {
                     </p>
                 </div>
 
-                <div className="primary-action-container animate-fade-in" style={{ marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
+                <div className="primary-action-container animate-fade-in" style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <button 
                         className="btn-action plan-accion" 
                         onClick={handleDownloadPDF}
@@ -816,6 +886,11 @@ const FascinantesResult = () => {
                     >
                         <Download size={20} /> {isDownloading ? 'GENERANDO...' : 'DESCARGAR REPORTE COMPLETO'}
                     </button>
+                    {isPdfSent && (
+                        <p style={{ marginTop: '12px', fontSize: '0.85rem', color: '#4b5563', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span style={{ color: '#10b981' }}>✓</span> Reporte enviado a tu correo electrónico
+                        </p>
+                    )}
                 </div>
 
                 <div className="result-actions" style={{ marginTop: '15px' }}>
