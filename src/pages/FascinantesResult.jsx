@@ -469,8 +469,8 @@ const FascinantesResult = () => {
         
         // Preservar el scroll actual
         const originalScrollY = window.scrollY;
-        // Mover arriba temporalmente para evitar bugs de html2canvas con absolute positioning
-        window.scrollTo(0, 0);
+        // Mover arriba temporalmente para evitar bugs de html2canvas con absolute positioning y smooth scrolling
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
             const addLinksToPDF = (pageElement) => {
                 const pageRect = pageElement.getBoundingClientRect();
@@ -625,7 +625,7 @@ const FascinantesResult = () => {
             template.style.left = '-9999px';
             
             // Restaurar scroll
-            window.scrollTo(0, originalScrollY);
+            window.scrollTo({ top: originalScrollY, left: 0, behavior: 'instant' });
             
             return pdf;
     };

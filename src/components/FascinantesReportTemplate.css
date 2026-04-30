@@ -145,7 +145,13 @@
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px; 
+}
+
+.pdf-domain-card > * {
+    margin-bottom: 6px;
+}
+.pdf-domain-card > *:last-child {
+    margin-bottom: 0;
 }
 
 .pdf-domain-header {
@@ -157,9 +163,12 @@
 .pdf-domain-title {
     display: flex;
     align-items: center;
-    gap: 10px;
     font-weight: 900;
     font-size: 14px;
+}
+
+.pdf-domain-title svg {
+    margin-right: 10px;
 }
 
 .pdf-domain-tag {
@@ -174,7 +183,6 @@
 .pdf-domain-score-row {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .pdf-score-bar-bg {
@@ -183,6 +191,7 @@
     background: #e2e8f0;
     border-radius: 3px;
     overflow: hidden;
+    margin-right: 10px;
 }
 
 .pdf-score-bar-fill {
