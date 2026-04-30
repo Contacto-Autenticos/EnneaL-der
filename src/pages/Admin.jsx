@@ -495,7 +495,26 @@ const Admin = () => {
                 .order('created_at', { ascending: false });
 
             if (registrationsError) throw registrationsError;
-            setWorkshopRegistrations(registrations || []);
+            
+            // Deduplicate: Keep only the most recent record per email
+            const uniqueRegistrations = [];
+            const seenEmails = new Set();
+            
+            if (registrations) {
+                registrations.forEach(reg => {
+                    const email = reg.email?.toLowerCase().trim();
+                    if (email) {
+                        if (!seenEmails.has(email)) {
+                            seenEmails.add(email);
+                            uniqueRegistrations.push(reg);
+                        }
+                    } else {
+                        uniqueRegistrations.push(reg);
+                    }
+                });
+            }
+            
+            setWorkshopRegistrations(uniqueRegistrations);
         } catch (error) {
             console.error('Error fetching workshop registrations:', error);
         } finally {
