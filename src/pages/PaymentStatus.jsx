@@ -47,6 +47,21 @@ const PaymentStatus = () => {
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
 
+                    // --- META PIXEL TRACKING ---
+                    const reference = data.data.reference || '';
+                    const isWorkshop = reference.startsWith('prog-');
+                    const contentName = isWorkshop ? 'Taller / Programa' : 'Test Avanzado de Eneagrama';
+                    const amountInCop = data.data.amount_in_cents / 100;
+                    
+                    if (window.fbq) {
+                        window.fbq('track', 'Purchase', {
+                            currency: 'COP',
+                            value: amountInCop,
+                            content_name: contentName
+                        });
+                    }
+                    // ----------------------------
+
                     // --- NEW: Send Confirmation and Scheduled Reminders ---
                     const sendWorkshopEmail = async () => {
                         const reference = data.data.reference || '';

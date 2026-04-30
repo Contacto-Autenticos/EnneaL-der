@@ -30,6 +30,17 @@ const AutodiagPaymentStatus = () => {
                     setStatus('APPROVED');
                     setMessage('¡Pago exitoso! Redirigiendo...');
 
+                    // --- META PIXEL TRACKING ---
+                    const amountInCop = data.data.amount_in_cents / 100;
+                    if (window.fbq) {
+                        window.fbq('track', 'Purchase', {
+                            currency: 'COP',
+                            value: amountInCop,
+                            content_name: 'Autodiagnóstico de Dominios'
+                        });
+                    }
+                    // ----------------------------
+
                     // Guardar en la base de datos si existe data temporal
                     const tempUserStr = localStorage.getItem('tempAutodiagUser');
                     if (tempUserStr) {
