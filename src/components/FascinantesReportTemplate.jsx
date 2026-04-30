@@ -181,9 +181,9 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
                     <h1>RESULTADO<br/>AUTODIAGNÓSTICO</h1>
                 </header>
 
-                <div className="pdf-radar-container" style={{ width: '100%', height: '480px' }}>
+                <div className="pdf-radar-container" style={{ width: '100%', height: '380px' }}>
                     <div style={{ width: '100%', height: '100%' }}>
-                        <FascinantesRadar data={domainScores} height={480} radius="60%" isPDF={true} />
+                        <FascinantesRadar data={domainScores} height={380} radius="60%" isPDF={true} />
                     </div>
                 </div>
 
@@ -326,19 +326,19 @@ const FascinantesReportTemplate = forwardRef(({ domainScores, analysis, userAnsw
 
             {/* PAGE 4: DOMAIN CARDS */}
             <div className="pdf-page" id="pdf-page-4">
-                <div style={{ marginTop: '40px', marginBottom: '0' }}>
-                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '12px', marginTop: '0' }}>
+                <div style={{ marginTop: '30px', marginBottom: '0' }}>
+                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#00121d', textTransform: 'uppercase', marginBottom: '8px', marginTop: '0' }}>
                         RESULTADOS POR CADA DOMINIO
                     </h2>
-                    <p className="pdf-reflection-text" style={{ marginBottom: '15px' }}>
+                    <p className="pdf-reflection-text" style={{ marginBottom: '10px' }}>
                         Aquí verás el balance de tu atención y energía reciente. Estos números son una invitación a entender las dinámicas detrás de tu día a día. 
                     </p>
-                    <p className="pdf-reflection-text" style={{ marginBottom: '25px' }}>
+                    <p className="pdf-reflection-text" style={{ marginBottom: '15px' }}>
                         Obsérvalos con apertura para descubrir dónde actuar con mayor intención. El cambio empieza por reconocer nuestras bases; te recomendamos priorizar el área señalada con "Bajo" o "Requiere Atención".
                     </p>
                 </div>
 
-                <div className="pdf-domains-grid" style={{ marginTop: '0' }}>
+                <div className="pdf-domains-grid" style={{ marginTop: '0', marginBottom: '10px' }}>
                     {[...domainScores]
                         .sort((a, b) => b.score - a.score)
                         .map((score) => {

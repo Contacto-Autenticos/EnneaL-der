@@ -134,18 +134,18 @@
 .pdf-domains-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px; /* Reduced from 20px */
-    margin-bottom: 20px; /* Reduced from 40px */
+    gap: 12px; /* Reducido para ahorrar espacio */
+    margin-bottom: 15px;
 }
 
 .pdf-domain-card {
-    padding: 15px 18px; /* Reduced vertical padding */
+    padding: 12px 15px; /* Reducido para ahorrar espacio */
     background: var(--pdf-bg);
     border: 2px solid var(--pdf-border);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Reduced gap from 10px */
+    gap: 6px; 
 }
 
 .pdf-domain-header {
@@ -206,10 +206,10 @@
     border: 2px solid #fee2e2;
     border-left: 10px solid #ef4444;
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px; /* Reducido para ahorrar espacio */
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px; /* Reducido para ahorrar espacio */
     margin-top: auto;
 }
 
