@@ -2833,6 +2833,7 @@ const Admin = () => {
                                             <th>Email</th>
                                             <th>Fecha Realización</th>
                                             <th>Nivel Obtenido</th>
+                                            <th style={{ textAlign: 'center' }}>Acceso</th>
 
                                             <th style={{ textAlign: 'center' }}>C.</th>
                                             <th style={{ textAlign: 'center' }}>M.</th>
@@ -2845,9 +2846,9 @@ const Admin = () => {
                                     </thead>
                                     <tbody>
                                         {loadingFascinantes ? (
-                                            <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
+                                            <tr><td colSpan="12" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
                                         ) : fascinantesResults.filter(r => !r.is_anonymous).length === 0 ? (
-                                            <tr><td colSpan="11" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
+                                            <tr><td colSpan="12" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
                                         ) : (() => {
                                             const regData = fascinantesResults.filter(r => !r.is_anonymous);
                                             // FORCED DE-DUPLICATION BY EMAIL
@@ -2866,7 +2867,14 @@ const Admin = () => {
                                                 }
                                             });
 
-                                            return uniqueReg.map((r, index) => (
+                                            return uniqueReg.map((r, index) => {
+                                                // Find if they used an access code
+                                                const usage = allCodeUsages.find(u => 
+                                                    u.user_email?.toLowerCase() === r.email?.toLowerCase() &&
+                                                    (u.program === 'Fascinantes' || !u.program) // fallback to any if program not set historically
+                                                );
+
+                                                return (
                                                 <tr key={r.id}>
                                                     <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{uniqueReg.length - index}</td>
                                                     <td style={{ fontWeight: '500' }}>{r.full_name}</td>
@@ -2876,6 +2884,18 @@ const Admin = () => {
                                                         {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                     </td>
                                                     <td style={{ fontWeight: '600', color: '#b89b2d' }}>{calculateFascinantesLevel(r)}</td>
+
+                                                    <td style={{ textAlign: 'center', fontSize: '0.85rem' }}>
+                                                        {usage ? (
+                                                            <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#b89b2d' }} title="Ingreso con código">
+                                                                {usage.code}
+                                                            </span>
+                                                        ) : (
+                                                            <span style={{ color: '#2ecc71', fontWeight: 500 }} title="Ingreso con pago">
+                                                                Pagado
+                                                            </span>
+                                                        )}
+                                                    </td>
 
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_corporal}</td>
                                                     <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_mental}</td>
@@ -2899,7 +2919,7 @@ const Admin = () => {
                                                      </td>
 
                                                 </tr>
-                                            ));
+                                            });
                                         })()}
                                     </tbody>
                                 </table>
