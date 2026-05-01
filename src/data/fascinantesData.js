@@ -74,7 +74,7 @@ export const fascinantesQuestions = [
     { id: 56, domain: 'social', text: 'Gestiono mi disponibilidad digital (mensajes y redes) para que no interfiera con mi paz ni con mis momentos de conexión real.' },
 
     // Dominio Espiritual (57-70)
-    { id: 57, domain: 'espiritual', text: 'Tengo identificados los valores fundamentales que sirven como brújula para mis acciones diarias.' },
+    { id: 57, domain: 'espiritual', text: 'Sé cuáles son los principios esenciales que dirigen mi forma de actuar cada día.' },
     { id: 58, domain: 'espiritual', text: 'Siento que mi vida tiene un sentido o propósito general, incluso si este sigue evolucionando con el tiempo.' },
     { id: 59, domain: 'espiritual', text: 'Reservo espacios de silencio o reflexión profunda para conectar con mi estado interno.' },
     { id: 60, domain: 'espiritual', text: 'Experimento una conexión con algo más grande que yo (la vida, la naturaleza, el servicio, Dios o la humanidad).' },
