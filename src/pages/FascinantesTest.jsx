@@ -372,7 +372,7 @@ const FascinantesTest = () => {
                             <div className="options-grid">
                                 {[1, 2, 3, 4, 5].map((val) => (
                                     <button
-                                        key={val}
+                                        key={`${currentQuestion.id}-${val}`}
                                         className={`option-btn ${answers[currentQuestion.id] === val ? 'selected' : ''}`}
                                         onClick={() => handleAnswer(val)}
                                     >

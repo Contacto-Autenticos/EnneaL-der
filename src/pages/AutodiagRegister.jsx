@@ -284,9 +284,9 @@ const AutodiagRegister = () => {
                                     'Validando...'
                                 ) : (
                                     accessCode.trim() ? (
-                                        <>Guardar <ArrowRight size={19} /></>
+                                        <>Continuar <ArrowRight size={19} /></>
                                     ) : (
-                                        <>Guardar <ArrowRight size={19} /></>
+                                        <>Continuar <ArrowRight size={19} /></>
                                     )
                                 )}
                             </button>

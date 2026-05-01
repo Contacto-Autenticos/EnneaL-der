@@ -722,6 +722,22 @@ const Admin = () => {
         }
     };
 
+    const handleToggleMultiUseCode = async (code, currentlyActive) => {
+        try {
+            const newExpiresAt = currentlyActive ? '2020-01-01T00:00:00.000Z' : null;
+            const { error } = await supabase
+                .from('access_codes')
+                .update({ expires_at: newExpiresAt })
+                .eq('code', code);
+            
+            if (error) throw error;
+            fetchCodes();
+        } catch (error) {
+            console.error('Error toggling code:', error);
+            alert('Error al cambiar el estado del código.');
+        }
+    };
+
     const toggleGroup = (enneatype) => {
         if (expandedGroup === enneatype) {
             setExpandedGroup(null);
@@ -1372,6 +1388,7 @@ const Admin = () => {
                                             <th>Estado / Expiración</th>
                                             <th>Uso / Correo</th>
                                             <th>Fecha Uso</th>
+                                            <th style={{ textAlign: 'center' }}>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1426,21 +1443,22 @@ const Admin = () => {
                                                         <td>
                                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                                                 {(() => {
-                                                                    const isExpired = item.expires_at && new Date(item.expires_at) < new Date();
+                                                                    const isDeactivated = item.expires_at && item.expires_at.startsWith('2020-01-01');
+                                                                    const isExpired = item.expires_at && new Date(item.expires_at) < new Date() && !isDeactivated;
                                                                     if (item.is_multi_use) {
                                                                         return (
-                                                                            <span className={`status-badge ${isExpired ? 'used' : 'unused'}`}>
-                                                                                {isExpired ? 'Expirado' : 'Disponible'}
+                                                                            <span className={`status-badge ${isExpired || isDeactivated ? 'used' : 'unused'}`}>
+                                                                                {isDeactivated ? 'Inactivo' : (isExpired ? 'Expirado' : 'Disponible')}
                                                                             </span>
                                                                         );
                                                                     }
                                                                     return (
-                                                                        <span className={`status-badge ${item.is_used || isExpired ? 'used' : 'unused'}`}>
-                                                                            {item.is_used ? 'Usado' : (isExpired ? 'Expirado' : 'Disponible')}
+                                                                        <span className={`status-badge ${item.is_used || isExpired || isDeactivated ? 'used' : 'unused'}`}>
+                                                                            {item.is_used ? 'Usado' : (isDeactivated ? 'Inactivo' : (isExpired ? 'Expirado' : 'Disponible'))}
                                                                         </span>
                                                                     );
                                                                 })()}
-                                                                {item.expires_at && (
+                                                                {item.expires_at && !item.expires_at.startsWith('2020-01-01') && (
                                                                     <span style={{ fontSize: '0.7rem', color: new Date(item.expires_at) < new Date() ? '#ef4444' : '#94a3b8' }}>
                                                                         Exp: {new Date(item.expires_at).toLocaleDateString()}
                                                                     </span>
@@ -1481,6 +1499,30 @@ const Admin = () => {
                                                                 hour: '2-digit',
                                                                 minute: '2-digit'
                                                             }) : '-'}
+                                                        </td>
+                                                        <td style={{ textAlign: 'center' }}>
+                                                            {item.is_multi_use && (!item.expires_at || item.expires_at.startsWith('2020-01-01')) ? (
+                                                                <button
+                                                                    onClick={() => handleToggleMultiUseCode(item.code, !item.expires_at)}
+                                                                    className={`btn-action-admin`}
+                                                                    title={!item.expires_at ? 'Desactivar código' : 'Activar código'}
+                                                                    style={{ 
+                                                                        margin: '0 auto',
+                                                                        color: !item.expires_at ? '#ef4444' : '#10b981',
+                                                                        background: !item.expires_at ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+                                                                        padding: '6px',
+                                                                        borderRadius: '50%',
+                                                                        border: 'none',
+                                                                        cursor: 'pointer',
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        transition: 'all 0.2s'
+                                                                    }}
+                                                                >
+                                                                    {!item.expires_at ? <EyeOff size={16} /> : <Eye size={16} />}
+                                                                </button>
+                                                            ) : '-'}
                                                         </td>
                                                     </tr>
                                                 );
