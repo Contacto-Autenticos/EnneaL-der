@@ -101,7 +101,7 @@ export const fascinantesQuestions = [
     { id: 79, domain: 'financiero', text: 'Tengo metas financieras definidas por escrito para el corto, mediano y largo plazo.' },
     { id: 80, domain: 'financiero', text: 'Identifico y reduzco gastos innecesarios que no aportan valor real a mi calidad de vida.' },
     { id: 81, domain: 'financiero', text: 'Puedo hablar de dinero y negociar mis intereses financieros con seguridad, sin culpa ni vergüenza.' },
-    { id: 82, domain: 'financiero', text: 'Realizo acciones concretas para fortalecer, diversificar o hacer más eficientes sus fuentes de ingresos.' },
+    { id: 82, domain: 'financiero', text: 'Realizo acciones concretas para fortalecer, diversificar o hacer más eficientes mis fuentes de ingresos.' },
     { id: 83, domain: 'financiero', text: 'Reviso mis estados de cuenta y saldos al menos una vez por semana para mantener el control.' },
     { id: 84, domain: 'financiero', text: 'Mi manejo del dinero es coherente con mis valores personales y con el estilo de vida que deseo construir.' }
 ];
