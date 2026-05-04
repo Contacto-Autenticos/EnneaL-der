@@ -14,6 +14,7 @@ const AutodiagRegister = () => {
     const [accessCode, setAccessCode] = useState('');
     const [codeError, setCodeError] = useState('');
     const [isValidating, setIsValidating] = useState(false);
+    const [showAccessCode, setShowAccessCode] = useState(false);
     const [showResumeModal, setShowResumeModal] = useState(false);
     const [savedCount, setSavedCount] = useState(0);
     const [totalQuestions, setTotalQuestions] = useState(84);
@@ -251,27 +252,49 @@ const AutodiagRegister = () => {
                             </div>
 
                             <div className="form-group-adv">
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <Key size={16} /> Código de acceso (Opcional)
-                                </label>
-                                <input
-                                    type="text"
-                                    value={accessCode}
-                                    onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
-                                    placeholder="EJ: LIDER-XXXXXX"
-                                    className={`adv-input ${codeError ? 'input-error' : ''}`}
-                                    style={{ border: accessCode.trim() ? '2px solid #ddbe3d' : '' }}
-                                />
-                                {codeError && <p className="code-error-msg" style={{ 
-                                    color: '#ff4d4d', 
-                                    fontSize: '0.85rem', 
-                                    marginTop: '5px',
-                                    fontWeight: '500'
-                                }}>{codeError}</p>}
-                                {accessCode.trim() && !codeError && (
-                                    <p style={{ color: '#ddbe3d', fontSize: '0.8rem', marginTop: '5px' }}>
-                                        ✓ Se usará este código para saltar el pago.
-                                    </p>
+                                {!showAccessCode ? (
+                                    <div 
+                                        onClick={() => setShowAccessCode(true)}
+                                        style={{ 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            gap: '8px', 
+                                            cursor: 'pointer', 
+                                            color: '#ddbe3d', 
+                                            fontSize: '0.9rem', 
+                                            fontWeight: '600',
+                                            marginTop: '5px',
+                                            padding: '8px 0'
+                                        }}
+                                    >
+                                        <Key size={16} /> <span style={{ textDecoration: 'underline' }}>Tengo un código de acceso</span>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <Key size={16} /> Código de acceso
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={accessCode}
+                                            onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
+                                            placeholder="EJ: LIDER-XXXXXX"
+                                            className={`adv-input ${codeError ? 'input-error' : ''}`}
+                                            style={{ border: accessCode.trim() ? '2px solid #ddbe3d' : '' }}
+                                            autoFocus
+                                        />
+                                        {codeError && <p className="code-error-msg" style={{ 
+                                            color: '#ff4d4d', 
+                                            fontSize: '0.85rem', 
+                                            marginTop: '5px',
+                                            fontWeight: '500'
+                                        }}>{codeError}</p>}
+                                        {accessCode.trim() && !codeError && (
+                                            <p style={{ color: '#ddbe3d', fontSize: '0.8rem', marginTop: '5px' }}>
+                                                ✓ Se usará este código para saltar el pago.
+                                            </p>
+                                        )}
+                                    </>
                                 )}
                             </div>
 
