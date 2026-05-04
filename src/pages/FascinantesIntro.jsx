@@ -39,7 +39,7 @@ const FascinantesIntro = () => {
                     </div>
                     
                     <div className="instructions-divider"></div>
-                    <p className="duration-tip-inside">Duración estimada: 15-20 minutos</p>
+                    <p className="duration-tip-inside">Completar el autodiagnóstico suele tomar entre 30 y 45 minutos, pero no hay ninguna prisa. Lo más importante es que avances a tu propio ritmo y te tomes el tiempo que necesites.</p>
                 </div>
 
                 <div className="intro-actions animate-fade-in" style={{ animationDelay: '0.4s' }}>
