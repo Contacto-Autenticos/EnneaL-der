@@ -29,8 +29,8 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
     const angle = Math.atan2(y - cy, x - cx);
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
     
-    // Adjusted repulsion for better mobile view
-    const repulsion = isMobile ? 17 : 30; 
+    // Adjusted repulsion for better desktop/mobile view
+    const repulsion = isMobile ? 12 : 15; 
     const labelX = x + Math.cos(angle) * repulsion;
     const labelY = y + Math.sin(angle) * repulsion;
 
@@ -142,7 +142,7 @@ const CustomLabel = ({ x, y, value }) => {
 
 const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = radius || (isMobile ? "90%" : "62%");
+    const radarRadius = radius || (isMobile ? "90%" : "50%");
 
     return (
         <div className="fascinantes-radar-container" style={{ 
@@ -150,10 +150,11 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = fal
             height: height, 
             background: transparent ? 'transparent' : '#ffffff', 
             borderRadius: '30px', 
-            padding: '30px',
+            padding: '40px',
             border: transparent ? 'none' : '1px solid rgba(0,0,0,0.05)', 
             boxShadow: transparent ? 'none' : '0 10px 40px rgba(0, 0, 0, 0.05)', 
-            position: 'relative' 
+            position: 'relative',
+            overflow: 'visible' 
         }}>
             <ResponsiveContainer width={isPDF ? "100%" : "100%"} height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius={radarRadius} data={data}>
