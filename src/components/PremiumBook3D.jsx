@@ -1,84 +1,43 @@
-import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { 
-    PerspectiveCamera, 
-    Environment, 
-    Float, 
-    ContactShadows, 
-    useTexture,
-    OrbitControls
-} from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useState, useRef, useEffect } from 'react';
+import HTMLFlipBook from 'react-pageflip';
 import gsap from 'gsap';
 
-// Constants for proportions
-const PAGE_WIDTH = 4.2;
-const PAGE_HEIGHT = 6;
-const PAGE_SEGMENTS = 32;
-
-const SinglePage = ({ index, textureUrl, isOpen, totalPages }) => {
-    const groupRef = useRef();
-    const meshRef = useRef();
-    
-    // Load texture with fallback
-    const texture = useTexture(textureUrl);
-    if (texture) {
-        texture.anisotropy = 16;
-        texture.encoding = THREE.sRGBEncoding;
-    }
-
-    useEffect(() => {
-        // Closed: Stacked with very slight spread
-        // Open: Flipped to the left (-180 deg)
-        const targetRotation = isOpen ? -Math.PI + (index * 0.005) : (index * -0.005);
-        gsap.to(groupRef.current.rotation, {
-            y: targetRotation,
-            duration: 1.8,
-            ease: "power2.inOut",
-            delay: isOpen ? index * 0.05 : (totalPages - index) * 0.05
-        });
-    }, [isOpen, index, totalPages]);
-
-    useFrame(() => {
-        if (!meshRef.current) return;
-        
-        // Simpler curvature for better performance and stability
-        const currentRot = groupRef.current.rotation.y;
-        const targetRot = isOpen ? -Math.PI : 0;
-        const diff = Math.abs(currentRot - targetRot);
-        const bendStrength = Math.sin(diff) * 0.4;
-        
-        const pos = meshRef.current.geometry.attributes.position;
-        for (let i = 0; i < pos.count; i++) {
-            const x = pos.getX(i);
-            const distFromHinge = x + PAGE_WIDTH / 2;
-            const z = bendStrength * (distFromHinge / PAGE_WIDTH);
-            pos.setZ(i, z);
-        }
-        pos.needsUpdate = true;
-    });
-
+const Page = React.forwardRef((props, ref) => {
     return (
-        <group ref={groupRef} position={[PAGE_WIDTH / 2, 0, index * 0.01]}>
-            <group position={[-PAGE_WIDTH / 2, 0, 0]}>
-                <mesh ref={meshRef} castShadow receiveShadow>
-                    <planeGeometry args={[PAGE_WIDTH, PAGE_HEIGHT, PAGE_SEGMENTS, 2]} />
-                    <meshStandardMaterial 
-                        map={texture} 
-                        side={THREE.DoubleSide} 
-                        roughness={0.8}
-                        metalness={0.1}
-                    />
-                </mesh>
-            </group>
-        </group>
+        <div className="page" ref={ref} style={{ 
+            backgroundColor: '#fff', 
+            overflow: 'hidden',
+            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.1)',
+            ...props.style 
+        }}>
+            <div className="page-content" style={{ width: '100%', height: '100%', position: 'relative' }}>
+                <img 
+                    src={props.image} 
+                    alt={`Página ${props.number}`} 
+                    style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover'
+                    }} 
+                />
+                {/* Overlay for paper texture */}
+                <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to right, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.05) 100%)',
+                    pointerEvents: 'none'
+                }} />
+            </div>
+        </div>
     );
-};
+});
 
-const BookScene = ({ isOpen }) => {
-    const bookGroup = useRef();
+const PremiumBook3D = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const bookRef = useRef();
+    const containerRef = useRef();
 
-    const textures = [
+    const pages = [
         '/portada-autodiagnostico.png',
         '/Reporte_Fascinantes_page-0001.jpg',
         '/Reporte_Fascinantes_page-0002.jpg',
@@ -88,133 +47,165 @@ const BookScene = ({ isOpen }) => {
 
     useEffect(() => {
         if (isOpen) {
-            // Central and larger when open
-            gsap.to(bookGroup.current.position, { x: 0, y: 0.2, z: 1, duration: 2, ease: "power3.inOut" });
-            gsap.to(bookGroup.current.rotation, { x: 0.1, y: 0, z: 0, duration: 2, ease: "power3.inOut" });
+            gsap.to(containerRef.current, {
+                scale: 1,
+                opacity: 1,
+                duration: 1.2,
+                ease: "power3.out"
+            });
         } else {
-            // Tilted and inviting when closed
-            gsap.to(bookGroup.current.position, { x: 0, y: -0.2, z: 0, duration: 1.5, ease: "power2.inOut" });
-            gsap.to(bookGroup.current.rotation, { x: -0.1, y: -0.4, z: 0.05, duration: 1.5, ease: "power2.inOut" });
+            gsap.set(containerRef.current, {
+                scale: 0.8,
+                opacity: 0.5
+            });
         }
     }, [isOpen]);
-
-    return (
-        <group ref={bookGroup}>
-            <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
-                <Suspense fallback={<mesh><boxGeometry args={[PAGE_WIDTH, PAGE_HEIGHT, 0.1]} /><meshStandardMaterial color="#222" /></mesh>}>
-                    {textures.map((url, i) => (
-                        <SinglePage 
-                            key={i} 
-                            index={i} 
-                            textureUrl={url} 
-                            isOpen={isOpen} 
-                            totalPages={textures.length}
-                        />
-                    ))}
-                </Suspense>
-                
-                {/* Lomo (Spine) */}
-                <mesh position={[0, 0, 0]} castShadow>
-                    <boxGeometry args={[0.2, PAGE_HEIGHT, 0.1]} />
-                    <meshStandardMaterial color="#0a0a0a" roughness={0.3} metalness={0.8} />
-                </mesh>
-            </Float>
-        </group>
-    );
-};
-
-const PremiumBook3D = () => {
-    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <section className="premium-book-section" style={{ 
             height: '100vh', 
             width: '100%', 
-            background: '#050505',
+            background: '#0a0a0a',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontFamily: 'Inter, sans-serif'
         }}>
-            <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 12], fov: 35 }}>
-                <ambientLight intensity={0.8} />
-                <spotLight 
-                    position={[15, 20, 15]} 
-                    angle={0.3} 
-                    penumbra={1} 
-                    intensity={3} 
-                    castShadow 
-                />
-                <pointLight position={[-10, 5, 10]} color="#ddbe3d" intensity={1} />
-                
-                <BookScene isOpen={isOpen} />
-
-                <ContactShadows 
-                    position={[0, -4, 0]} 
-                    opacity={0.7} 
-                    scale={20} 
-                    blur={3} 
-                    far={5} 
-                />
-                
-                <Environment preset="night" />
-                <OrbitControls 
-                    enableZoom={false} 
-                    enablePan={false}
-                    maxPolarAngle={Math.PI / 1.5}
-                    minPolarAngle={Math.PI / 2.5}
-                />
-            </Canvas>
-
-            <div style={{
+            {/* Cinematic background effects */}
+            <div className="ambient-glow" style={{
                 position: 'absolute',
-                bottom: '80px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 100,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '20px'
-            }}>
-                {!isOpen ? (
+                width: '150%',
+                height: '150%',
+                background: 'radial-gradient(circle at center, rgba(221, 190, 61, 0.08) 0%, transparent 60%)',
+                zIndex: 1,
+                pointerEvents: 'none'
+            }} />
+            
+            <div className="particles-overlay" style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 2,
+                opacity: 0.3,
+                background: 'url("https://www.transparenttextures.com/patterns/dust.png")',
+                pointerEvents: 'none'
+            }} />
+
+            {!isOpen ? (
+                <div className="book-teaser" style={{ zIndex: 10, textAlign: 'center' }}>
+                    <div 
+                        className="teaser-cover" 
+                        onClick={() => setIsOpen(true)}
+                        style={{
+                            width: '320px',
+                            height: '450px',
+                            cursor: 'pointer',
+                            position: 'relative',
+                            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                            filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.8))',
+                            borderRadius: '10px 24px 24px 10px',
+                            overflow: 'hidden',
+                            border: '1px solid rgba(221, 190, 61, 0.2)',
+                            transform: 'rotateY(-20deg) rotateX(10deg)'
+                        }}
+                        onMouseOver={(e) => {
+                            e.currentTarget.style.transform = 'rotateY(-10deg) rotateX(5deg) translateY(-20px) scale(1.05)';
+                            e.currentTarget.style.filter = 'drop-shadow(0 50px 80px rgba(0,0,0,0.9))';
+                        }}
+                        onMouseOut={(e) => {
+                            e.currentTarget.style.transform = 'rotateY(-20deg) rotateX(10deg)';
+                            e.currentTarget.style.filter = 'drop-shadow(0 30px 60px rgba(0,0,0,0.8))';
+                        }}
+                    >
+                        <img src="/portada-autodiagnostico.png" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.3) 100%)'
+                        }} />
+                    </div>
                     <button 
                         onClick={() => setIsOpen(true)}
                         style={{
+                            marginTop: '60px',
                             background: '#ddbe3d',
                             color: '#000',
-                            padding: '18px 45px',
+                            border: 'none',
+                            padding: '18px 50px',
                             borderRadius: '50px',
                             fontSize: '14px',
                             fontWeight: '900',
-                            letterSpacing: '3px',
-                            border: 'none',
+                            letterSpacing: '4px',
                             cursor: 'pointer',
-                            boxShadow: '0 10px 40px rgba(221, 190, 61, 0.4)',
+                            boxShadow: '0 10px 40px rgba(221, 190, 61, 0.3)',
                             transition: 'all 0.3s ease'
                         }}
-                        onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-                        onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
                     >
                         EXPLORAR REPORTE
                     </button>
-                ) : (
-                    <button 
-                        onClick={() => setIsOpen(false)}
-                        style={{
-                            background: 'rgba(255,255,255,0.1)',
-                            color: '#fff',
-                            padding: '12px 30px',
-                            borderRadius: '50px',
-                            fontSize: '12px',
-                            fontWeight: '700',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            cursor: 'pointer',
-                            backdropFilter: 'blur(10px)'
-                        }}
+                </div>
+            ) : (
+                <div ref={containerRef} className="book-active-container" style={{ zIndex: 10, position: 'relative' }}>
+                    <HTMLFlipBook 
+                        width={450} 
+                        height={650} 
+                        size="stretch"
+                        minWidth={315}
+                        maxWidth={1000}
+                        minHeight={420}
+                        maxHeight={1350}
+                        maxShadowOpacity={0.5}
+                        showCover={true}
+                        mobileScrollSupport={true}
+                        className="flipbook-canvas"
                     >
-                        CERRAR LIBRO
-                    </button>
-                )}
-            </div>
+                        {pages.map((img, i) => (
+                            <Page key={i} image={img} number={i + 1} />
+                        ))}
+                    </HTMLFlipBook>
+                    
+                    <div className="book-controls" style={{
+                        position: 'absolute',
+                        bottom: '-80px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        display: 'flex',
+                        gap: '20px'
+                    }}>
+                        <button 
+                            onClick={() => setIsOpen(false)}
+                            style={{
+                                background: 'rgba(255,255,255,0.05)',
+                                color: '#fff',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                padding: '12px 30px',
+                                borderRadius: '50px',
+                                fontSize: '12px',
+                                cursor: 'pointer',
+                                backdropFilter: 'blur(10px)'
+                            }}
+                        >
+                            Cerrar y volver
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            <style>{`
+                .flipbook-canvas {
+                    box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+                }
+                .page {
+                    background-color: #fdfdfd;
+                }
+                @media (max-width: 768px) {
+                    .teaser-cover {
+                        width: 260px !important;
+                        height: 380px !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 };
