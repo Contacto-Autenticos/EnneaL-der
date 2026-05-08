@@ -30,7 +30,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
     
     // Adjusted repulsion for better mobile view
-    const repulsion = isMobile ? 8 : 30; 
+    const repulsion = isMobile ? 14 : 30; 
     const labelX = x + Math.cos(angle) * repulsion;
     const labelY = y + Math.sin(angle) * repulsion;
 
@@ -142,7 +142,7 @@ const CustomLabel = ({ x, y, value }) => {
 
 const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = radius || (isMobile ? "135%" : "50%");
+    const radarRadius = radius || (isMobile ? "90%" : "50%");
 
     return (
         <div className="fascinantes-radar-container" style={{ 
