@@ -142,7 +142,7 @@ const CustomLabel = ({ x, y, value }) => {
 
 const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = radius || (isMobile ? "90%" : "70%");
+    const radarRadius = radius || (isMobile ? "90%" : "62%");
 
     return (
         <div className="fascinantes-radar-container" style={{ 
@@ -150,7 +150,7 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = fal
             height: height, 
             background: transparent ? 'transparent' : '#ffffff', 
             borderRadius: '30px', 
-            padding: '10px',
+            padding: '30px',
             border: transparent ? 'none' : '1px solid rgba(0,0,0,0.05)', 
             boxShadow: transparent ? 'none' : '0 10px 40px rgba(0, 0, 0, 0.05)', 
             position: 'relative' 
