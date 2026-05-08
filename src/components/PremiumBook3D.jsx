@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import gsap from 'gsap';
-import { MousePointerClick } from 'lucide-react';
+import { MousePointerClick, ChevronRight } from 'lucide-react';
 
 const Page = React.forwardRef((props, ref) => {
     return (
@@ -37,11 +37,24 @@ const Page = React.forwardRef((props, ref) => {
 const PremiumBook3D = () => {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef();
+    const flipBook = useRef();
 
     const pages = Array.from({ length: 14 }, (_, i) => {
         const pageNum = (i + 1).toString().padStart(4, '0');
         return `/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-${pageNum}.jpg`;
     });
+
+    // Handle auto-flip on open
+    useEffect(() => {
+        if (isOpen && flipBook.current) {
+            // Wait a bit for the entrance animation to finish, then flip to page 1
+            setTimeout(() => {
+                if (flipBook.current && flipBook.current.pageFlip) {
+                    flipBook.current.pageFlip().flip(1);
+                }
+            }, 800);
+        }
+    }, [isOpen]);
 
     useEffect(() => {
         if (isOpen) {
@@ -117,41 +130,82 @@ const PremiumBook3D = () => {
                 </div>
             ) : (
                 <div ref={containerRef} className="book-active-mini" style={{ width: '100%', position: 'relative' }}>
-                    <HTMLFlipBook 
-                        width={500} 
-                        height={700} 
-                        size="stretch"
-                        minWidth={280}
-                        maxWidth={600}
-                        minHeight={400}
-                        maxHeight={850}
-                        maxShadowOpacity={0.4}
-                        showCover={true}
-                        display="single"
-                        mobileScrollSupport={true}
-                        className="flipbook-canvas-mini"
-                    >
-                        {pages.map((img, i) => (
-                            <Page key={i} image={img} number={i + 1} />
-                        ))}
-                    </HTMLFlipBook>
+                    <div style={{ position: 'relative' }}>
+                        <HTMLFlipBook 
+                            ref={flipBook}
+                            width={500} 
+                            height={700} 
+                            size="stretch"
+                            minWidth={280}
+                            maxWidth={600}
+                            minHeight={400}
+                            maxHeight={850}
+                            maxShadowOpacity={0.4}
+                            showCover={true}
+                            display="single"
+                            mobileScrollSupport={true}
+                            className="flipbook-canvas-mini"
+                        >
+                            {pages.map((img, i) => (
+                                <Page key={i} image={img} number={i + 1} />
+                            ))}
+                        </HTMLFlipBook>
+
+                        {/* Navigation Indicator Icon - Bottom Right */}
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '20px',
+                            right: '20px',
+                            zIndex: 100,
+                            pointerEvents: 'none',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '4px'
+                        }}>
+                            <span style={{ fontSize: '9px', color: '#ddbe3d', letterSpacing: '1px', fontWeight: 'bold', opacity: 0.8 }}>CONTINUAR</span>
+                            <div style={{
+                                background: 'rgba(221, 190, 61, 0.9)',
+                                color: '#002d44',
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                                animation: 'dl-bounce-x 1.5s infinite'
+                            }}>
+                                <ChevronRight size={20} />
+                            </div>
+                        </div>
+                    </div>
                     
                     <button 
                         onClick={() => setIsOpen(false)}
                         style={{
-                            marginTop: '20px',
+                            marginTop: '30px',
                             background: 'rgba(255,255,255,0.05)',
                             color: '#fff',
                             border: '1px solid rgba(255,255,255,0.1)',
-                            padding: '8px 20px',
+                            padding: '10px 24px',
                             borderRadius: '20px',
                             fontSize: '11px',
                             cursor: 'pointer',
                             backdropFilter: 'blur(10px)',
-                            width: 'fit-content'
+                            width: 'fit-content',
+                            transition: 'all 0.3s ease'
+                        }}
+                        onMouseOver={(e) => {
+                            e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
                         }}
                     >
-                        Cerrar vista
+                        Cerrar vista previa
                     </button>
                 </div>
             )}
@@ -167,6 +221,10 @@ const PremiumBook3D = () => {
                     0% { transform: scale(1); opacity: 0.8; }
                     50% { transform: scale(1.2); opacity: 1; }
                     100% { transform: scale(1); opacity: 0.8; }
+                }
+                @keyframes dl-bounce-x {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(8px); }
                 }
             `}</style>
         </div>
