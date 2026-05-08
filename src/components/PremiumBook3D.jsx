@@ -164,7 +164,6 @@ const PremiumBook3D = () => {
                             alignItems: 'center',
                             gap: '8px'
                         }}>
-                            <span style={{ fontSize: '9px', color: '#ddbe3d', letterSpacing: '1.5px', fontWeight: 'bold', opacity: 0.9, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>SIGUIENTE</span>
                             <div style={{
                                 background: 'rgba(221, 190, 61, 0.95)',
                                 color: '#002d44',
