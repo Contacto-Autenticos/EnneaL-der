@@ -194,8 +194,8 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             <div className="dl-radar-wrapper" style={{ marginTop: '-40px' }}>
                                 <FascinantesRadar 
                                     data={radarData} 
-                                    height={700} 
-                                    radius="50%" 
+                                    height={window.innerWidth < 600 ? 480 : 700} 
+                                    radius={window.innerWidth < 600 ? "135%" : "50%"} 
                                     transparent={true}
                                     isDark={true}
                                 />
