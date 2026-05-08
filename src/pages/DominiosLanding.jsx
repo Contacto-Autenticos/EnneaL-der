@@ -28,7 +28,8 @@ import {
     Linkedin,
     UserPlus,
     PlayCircle,
-    Mail
+    Mail,
+    Globe
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
 import FascinantesRadar from '../components/FascinantesRadar';
@@ -160,9 +161,6 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <div className="dl-nav-links">
-                        <span onClick={() => navigate('/hub')} className="dl-nav-back-arrow" title="Volver al Hub">
-                            <ArrowLeft size={16} />
-                        </span>
                         <a href="#inicio" className="dl-nav-link">Inicio</a>
                         <a href="#dominios" className="dl-nav-link">Dominios</a>
                         <a href="#preguntas" className="dl-nav-link">Preguntas</a>
@@ -173,60 +171,26 @@ const DominiosLanding = ({ result, setTestResult }) => {
 
             {/* 2. Hero Section */}
             <section className="dl-hero dl-animate">
-                <div className="dl-section-content" style={{ 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '40px',
-                    width: '100%'
-                }}>
-                    <div style={{ 
-                        display: 'flex', 
-                        flexDirection: 'row', 
-                        flexWrap: 'wrap',
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        gap: '60px',
-                        width: '100%'
-                    }}>
-                        {/* Left Column: Text */}
-                        <div style={{ flex: '1', minWidth: '320px', textAlign: 'left' }}>
-                            <h1 className="dl-hero-title" style={{ textAlign: 'left', margin: 0 }}>
+                <div className="dl-section-content dl-hero-container">
+                    <div className="dl-hero-inner">
+                        {/* 1. Text Column */}
+                        <div className="dl-hero-text">
+                            <h1 className="dl-hero-title">
                                 <span className="dl-hero-title-top">Puedes seguir funcionando…</span>
                                 <span className="dl-gold-text">y aun así sentirte completamente perdido por dentro.</span>
                             </h1>
 
-                            <p className="dl-hero-subtitle" style={{ textAlign: 'left', margin: '30px 0', maxWidth: '800px' }}>
+                            <p className="dl-hero-subtitle">
                                 Descubre qué áreas de tu vida están <br />
                                 drenando tu energía, bloqueando <br />
                                 tu claridad y alejándote de la persona <br />
                                 que realmente quieres ser.
                             </p>
-
-                            <div className="dl-hero-actions" style={{ alignItems: 'flex-start', width: '100%' }}>
-                                <button onClick={handleAction} className="dl-btn-main">
-                                    QUIERO MI MAPA DE CLARIDAD
-                                    <ArrowRight size={22} />
-                                </button>
-                            </div>
                         </div>
 
-                        {/* Right Column: Radar Chart */}
-                        <div style={{ 
-                            flex: '1', 
-                            minWidth: '320px', 
-                            maxWidth: '750px',
-                            animation: 'dlFadeIn 1.5s ease-out',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            padding: '0'
-                        }}>
-                            <div style={{ 
-                                background: 'transparent',
-                                transform: 'scale(1.2)',
-                                filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))',
-                                width: '100%'
-                            }}>
+                        {/* 2. Radar Chart Column */}
+                        <div className="dl-hero-chart">
+                            <div className="dl-radar-wrapper">
                                 <FascinantesRadar 
                                     data={radarData} 
                                     height={550} 
@@ -235,6 +199,14 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     isDark={true}
                                 />
                             </div>
+                        </div>
+
+                        {/* 3. Actions Column (Now separate to control order) */}
+                        <div className="dl-hero-actions">
+                            <button onClick={handleAction} className="dl-btn-main">
+                                QUIERO MI MAPA DE CLARIDAD
+                                <ArrowRight size={22} />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -248,7 +220,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             <section className="dl-section dl-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
                 <div className="dl-section-content" style={{ maxWidth: '800px' }}>
                     <h2 style={{ 
-                        fontSize: 'clamp(28px, 5vw, 42px)', 
+                        fontSize: 'clamp(30px, 5vw, 42px)', 
                         fontWeight: '900', 
                         textAlign: 'center', 
                         marginBottom: '60px',
@@ -329,7 +301,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                         margin: '0 auto'
                     }}>
                         {[
-                            { icon: <Brain size={32} />, t: "Mental", d: "Ponle nombre a tus pensamientos, saturación y falta de enfoque.", color: "#ff9100" },
+                            { icon: <Brain size={32} />, t: "Mental", d: "Identifica tus pensamientos, saturación y falta de enfoque.", color: "#ff9100" },
                             { icon: <HeartPulse size={32} />, t: "Emocional", d: "Entiende tu regulación emocional y el origen de tu agotamiento.", color: "#ffee00" },
                             { icon: <User size={32} />, t: "Corporal", d: "Identifica tu nivel real de energía y la relación con tu descanso.", color: "#cc0000" },
                             { icon: <Handshake size={32} />, t: "Social", d: "Analiza tus vínculos y dónde estás perdiendo tu autenticidad.", color: "#00ff00" },
@@ -380,9 +352,9 @@ const DominiosLanding = ({ result, setTestResult }) => {
             <section className="dl-section dl-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
                 <div className="dl-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
                     <p style={{ 
-                        fontSize: 'clamp(20px, 3vw, 28px)', 
-                        lineHeight: '1.6', 
-                        fontWeight: '300',
+                        fontSize: 'clamp(24px, 3vw, 28px)', 
+                        lineHeight: '1.4', 
+                        fontWeight: '400',
                         marginBottom: '60px',
                         color: 'rgba(0, 45, 68, 0.7)'
                     }}>
@@ -407,7 +379,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                 minWidth: '160px'
                             }}>
                                 <p style={{ 
-                                    fontSize: 'clamp(20px, 3vw, 28px)', 
+                                    fontSize: 'clamp(24px, 3vw, 28px)', 
                                     fontWeight: '900', 
                                     margin: 0,
                                     letterSpacing: '-0.01em',
@@ -420,8 +392,8 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <p style={{ 
-                        fontSize: 'clamp(20px, 3vw, 28px)', 
-                        lineHeight: '1.6', 
+                        fontSize: 'clamp(30px, 3vw, 32px)', 
+                        lineHeight: '1.2', 
                         fontWeight: '700',
                         color: '#ddbe3d'
                     }}>
@@ -712,12 +684,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     <img 
                         src="/Garantia Autodiagnostico.png" 
                         alt="Garantía Auténticos" 
-                        style={{ 
-                            width: '320px', 
-                            height: 'auto', 
-                            marginBottom: '40px',
-                            filter: 'brightness(0) saturate(100%) invert(78%) sepia(48%) saturate(541%) hue-rotate(3deg) brightness(95%) contrast(88%) drop-shadow(0 15px 30px rgba(0,0,0,0.1))'
-                        }} 
+                        className="dl-guarantee-img"
                     />
                     <h2 className="dl-section-title" style={{ color: '#002d44', marginBottom: '30px' }}>
                         Nuestra <span style={{ color: '#ddbe3d' }}>Garantía</span>
@@ -805,6 +772,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                         gap: '24px',
                         marginBottom: '30px'
                     }}>
+                        <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Globe size={24} /></a>
                         <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Instagram size={24} /></a>
                         <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Facebook size={24} /></a>
                         <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Youtube size={24} /></a>
@@ -834,22 +802,6 @@ const DominiosLanding = ({ result, setTestResult }) => {
                 href="https://wa.me/573164287586?text=Hola,%20quiero%20mayor%20informaci%C3%B3n%20sobre%20el%20autodiagn%C3%B3stico%20de%20los%206%20dominios"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                    position: 'fixed',
-                    bottom: '30px',
-                    right: '30px',
-                    width: '60px',
-                    height: '60px',
-                    background: '#25D366',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15), 0 0 20px rgba(37, 211, 102, 0.4)',
-                    zIndex: 9999,
-                    transition: 'all 0.3s ease'
-                }}
                 className="dl-whatsapp-float"
             >
                 <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">

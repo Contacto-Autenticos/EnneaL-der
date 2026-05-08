@@ -154,7 +154,7 @@ html {
 }
 
 .dl-hero-title {
-    font-size: clamp(26px, 5.5vw, 46px);
+    font-size: clamp(32px, 6.5vw, 48px);
     font-weight: 900;
     line-height: 1.15;
     letter-spacing: -0.01em;
@@ -163,6 +163,7 @@ html {
     color: var(--dl-white);
     padding: 10px;
     overflow: visible;
+    text-align: left;
 }
 
 .dl-hero-title-top {
@@ -186,10 +187,11 @@ html {
 .dl-hero-subtitle {
     font-size: clamp(16px, 1.8vw, 20px);
     color: rgba(255, 255, 255, 0.6) !important;
-    max-width: 1000px;
+    max-width: 800px;
     line-height: 1.8;
     font-weight: 300 !important;
-    margin-bottom: 50px;
+    margin: 30px 0 50px 0;
+    text-align: left;
 }
 
 .dl-hero-subtitle strong {
@@ -207,12 +209,75 @@ html {
     }
 }
 
+.dl-hero-container {
+    width: 100%;
+}
+
+.dl-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "text chart"
+        "actions chart";
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+}
+
+.dl-hero-text {
+    grid-area: text;
+    text-align: left;
+}
+
+.dl-hero-chart {
+    grid-area: chart;
+    display: flex;
+    justify-content: center;
+    animation: dlFadeIn 1.5s ease-out;
+}
+
+.dl-radar-wrapper {
+    background: transparent;
+    transform: scale(1.2);
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+    width: 100%;
+}
+
 .dl-hero-actions {
+    grid-area: actions;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     gap: 20px;
+}
+
+@media (max-width: 1023px) {
+    .dl-hero-inner {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "text"
+            "chart"
+            "actions";
+        gap: 40px;
+    }
+
+    .dl-hero-text, .dl-hero-actions {
+        text-align: center;
+        align-items: center;
+    }
+
+    .dl-hero-title {
+        text-align: center;
+    }
+
+    .dl-hero-subtitle {
+        margin: 30px auto;
+    }
+
+    .dl-radar-wrapper {
+        transform: scale(1.1);
+    }
 }
 
 .dl-btn-main {
@@ -299,7 +364,7 @@ html {
 }
 
 .dl-section-title {
-    font-size: clamp(26px, 5.5vw, 46px);
+    font-size: clamp(30px, 5.5vw, 46px);
     font-weight: 900;
     margin-bottom: 20px;
     line-height: 1.1;
@@ -631,6 +696,7 @@ html {
 
 /* Mobile FAB */
 .dl-mobile-fab {
+    display: none;
     position: fixed;
     bottom: 24px;
     left: 24px;
@@ -638,9 +704,13 @@ html {
     z-index: 500;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .dl-mobile-fab {
-        display: none;
+        display: block;
+        left: auto;
+        right: 20px;
+        bottom: 20px;
+        width: auto;
     }
 }
 
@@ -654,6 +724,64 @@ html {
     text-transform: uppercase;
     border: none;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .dl-btn-fab {
+        width: auto;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-size: 14px;
+    }
+}
+
+/* Botón Flotante WhatsApp */
+.dl-whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 20px rgba(37, 211, 102, 0.4);
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.dl-whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2), 0 0 30px rgba(37, 211, 102, 0.6);
+}
+
+@media (max-width: 768px) {
+    .dl-whatsapp-float {
+        left: 20px;
+        right: auto;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Garantía Image */
+.dl-guarantee-img {
+    width: 320px;
+    height: auto;
+    margin: 0 auto 40px;
+    display: block;
+    filter: brightness(0) saturate(100%) invert(78%) sepia(48%) saturate(541%) hue-rotate(3deg) brightness(95%) contrast(88%) drop-shadow(0 15px 30px rgba(0,0,0,0.1));
+}
+
+@media (max-width: 768px) {
+    .dl-guarantee-img {
+        width: 180px;
+        margin-bottom: 30px;
+    }
 }
 
 /* Testimonials Carousel */

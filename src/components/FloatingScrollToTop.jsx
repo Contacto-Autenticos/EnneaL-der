@@ -5,6 +5,11 @@ import './FloatingScrollToTop.css';
 const FloatingScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 
+    // Hide on specific pages where it overlaps with other buttons
+    if (window.location.pathname === '/dominios-landing') {
+        return null;
+    }
+
     // Show button when page is scrolled down
     const checkScroll = () => {
         const scrollY = window.scrollY || (document.documentElement && document.documentElement.scrollTop) || 0;
