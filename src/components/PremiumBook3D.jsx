@@ -38,13 +38,10 @@ const PremiumBook3D = () => {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef();
 
-    const pages = [
-        '/Reporte_Fascinantes_page-0000.jpg',
-        '/Reporte_Fascinantes_page-0001.jpg',
-        '/Reporte_Fascinantes_page-0002.jpg',
-        '/Reporte_Fascinantes_page-0003.jpg',
-        '/Reporte_Fascinantes_page-0004.jpg',
-    ];
+    const pages = Array.from({ length: 14 }, (_, i) => {
+        const pageNum = (i + 1).toString().padStart(4, '0');
+        return `/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-${pageNum}.jpg`;
+    });
 
     useEffect(() => {
         if (isOpen) {
@@ -89,7 +86,7 @@ const PremiumBook3D = () => {
                             e.currentTarget.style.filter = 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))';
                         }}
                     >
-                        <img src="/Reporte_Fascinantes_page-0000.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src="/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0001.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         <div style={{
                             position: 'absolute',
                             inset: 0,
