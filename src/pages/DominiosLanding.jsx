@@ -614,10 +614,10 @@ const DominiosLanding = ({ result, setTestResult }) => {
 
                     {/* Secuencia "Cómo funciona" */}
                     <div style={{ marginTop: '100px' }}>
-                        <h3 style={{ 
+                        <h3 className="dl-section-title" style={{ 
                             textAlign: 'center', 
                             color: '#ffffff', 
-                            fontSize: '24px', 
+                            fontSize: 'clamp(30px, 5vw, 36px)', 
                             fontWeight: '800',
                             marginBottom: '60px',
                             letterSpacing: '0.05em'
@@ -714,7 +714,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             }}>
                 <div className="dl-section-content">
                     <h2 className="dl-section-title" style={{ textAlign: 'center', marginBottom: '60px', color: '#ffffff' }}>
-                        Preguntas <span style={{ color: '#ddbe3d' }}>frecuentes</span>
+                        Preguntas <br className="dl-mobile-br" /> <span style={{ color: '#ddbe3d' }}>frecuentes</span>
                     </h2>
 
                     <div className="dl-faq-container">

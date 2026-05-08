@@ -377,6 +377,14 @@ html {
     .dl-section-title {
         font-size: 30px !important;
     }
+
+    .dl-mobile-br {
+        display: block !important;
+    }
+}
+
+.dl-mobile-br {
+    display: none;
 }
 
 .dl-section-title-top {
