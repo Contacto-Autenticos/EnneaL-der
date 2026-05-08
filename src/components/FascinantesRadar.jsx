@@ -63,9 +63,9 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
 
 
             {/* Pure SVG Icon container */}
-            <g transform="translate(-15, -15)">
+            <g transform={`translate(${isMobile ? -12 : -15}, ${isMobile ? -12 : -15})`}>
                 <Icon 
-                    size={30} 
+                    size={isMobile ? 24 : 30} 
                     stroke={style.color} 
                     strokeWidth={2.2} 
                 />
