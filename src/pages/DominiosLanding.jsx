@@ -351,10 +351,10 @@ const DominiosLanding = ({ result, setTestResult }) => {
             <section className="dl-section dl-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
                 <div className="dl-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
                     <p style={{ 
-                        fontSize: 'clamp(24px, 3vw, 28px)', 
-                        lineHeight: '1.4', 
+                        fontSize: 'clamp(18px, 2.5vw, 22px)', 
+                        lineHeight: '1.6', 
                         fontWeight: '400',
-                        marginBottom: '60px',
+                        marginBottom: '40px',
                         color: 'rgba(0, 45, 68, 0.7)'
                     }}>
                         Muchas personas aprenden a seguir adelante <br />
@@ -378,7 +378,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                 minWidth: '160px'
                             }}>
                                 <p style={{ 
-                                    fontSize: 'clamp(24px, 3vw, 28px)', 
+                                    fontSize: 'clamp(18px, 2.5vw, 22px)', 
                                     fontWeight: '900', 
                                     margin: 0,
                                     letterSpacing: '-0.01em',
@@ -391,7 +391,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <p style={{ 
-                        fontSize: 'clamp(30px, 3vw, 32px)', 
+                        fontSize: 'clamp(24px, 3vw, 28px)', 
                         lineHeight: '1.2', 
                         fontWeight: '700',
                         color: '#ddbe3d'
