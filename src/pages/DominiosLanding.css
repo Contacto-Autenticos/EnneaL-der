@@ -259,7 +259,7 @@ html {
             "text"
             "chart"
             "actions";
-        gap: 40px;
+        gap: 15px;
     }
 
     .dl-hero-text, .dl-hero-actions {
@@ -269,10 +269,11 @@ html {
 
     .dl-hero-title {
         text-align: center;
+        margin-bottom: 15px;
     }
 
     .dl-hero-subtitle {
-        margin: 30px auto;
+        margin: 15px auto 0 auto;
     }
 
     .dl-radar-wrapper {
