@@ -142,7 +142,7 @@ const CustomLabel = ({ x, y, value }) => {
 
 const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = radius || (isMobile ? "90%" : "60%");
+    const radarRadius = radius || (isMobile ? "90%" : "45%");
 
     return (
         <div className="fascinantes-radar-container" style={{ 
