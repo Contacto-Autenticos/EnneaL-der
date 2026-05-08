@@ -41,19 +41,19 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
 
     switch(domainId) {
         case 'corporal': // Top: Text ABOVE icon
-            textY = -28;
+            textY = -24;
             break;
         case 'mental': // Top-Right: Icon LEFT, text RIGHT
         case 'emocional': // Bottom-Right: Icon LEFT, text RIGHT
-            textX = 26;
+            textX = 22;
             anchor = "start";
             break;
         case 'social': // Bottom: Text BELOW icon
-            textY = 18; // Reduce separation
+            textY = 16; 
             break;
         case 'espiritual': // Bottom-Left: Text LEFT, icon RIGHT
         case 'financiero': // Top-Left: Text LEFT, icon RIGHT
-            textX = -26;
+            textX = -22;
             anchor = "end";
             break;
     }
@@ -63,9 +63,9 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
 
 
             {/* Pure SVG Icon container */}
-            <g transform="translate(-15, -15)">
+            <g transform="translate(-11, -11)">
                 <Icon 
-                    size={30} 
+                    size={22} 
                     stroke={style.color} 
                     strokeWidth={2.2} 
                 />
@@ -142,7 +142,7 @@ const CustomLabel = ({ x, y, value }) => {
 
 const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = radius || (isMobile ? "90%" : "45%");
+    const radarRadius = radius || (isMobile ? "90%" : "50%");
 
     return (
         <div className="fascinantes-radar-container" style={{ 

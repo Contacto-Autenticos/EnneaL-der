@@ -195,7 +195,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                 <FascinantesRadar 
                                     data={radarData} 
                                     height={700} 
-                                    radius="35%" 
+                                    radius="50%" 
                                     transparent={true}
                                     isDark={true}
                                 />
