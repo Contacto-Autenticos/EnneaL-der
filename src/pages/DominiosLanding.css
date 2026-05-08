@@ -215,12 +215,12 @@ html {
 
 .dl-hero-inner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.8fr 1.2fr;
     grid-template-areas: 
         "text chart"
         "actions chart";
     align-items: center;
-    gap: 60px;
+    gap: 40px;
     width: 100%;
 }
 
