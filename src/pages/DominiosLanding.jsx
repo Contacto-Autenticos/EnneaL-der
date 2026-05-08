@@ -41,7 +41,6 @@ const DominiosLanding = ({ result, setTestResult }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [navHidden, setNavHidden] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
-    const [activeProductImg, setActiveProductImg] = useState(0); // 0: Portada, 1: Contenido
 
     const radarData = [
         { domain: 'Dominio Corporal', score: 49 }, // 70%
@@ -143,14 +142,6 @@ const DominiosLanding = ({ result, setTestResult }) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
-
-    // Auto-swap product images
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveProductImg(prev => (prev === 0 ? 1 : 0));
-        }, 5000);
-        return () => clearInterval(interval);
     }, []);
 
     const handleAction = () => {
@@ -426,27 +417,13 @@ const DominiosLanding = ({ result, setTestResult }) => {
 
                     <div className="dl-product-flex">
                         {/* 1. Image now on the LEFT (Desktop) */}
-                        <div className="dl-product-img-container" onClick={() => setActiveProductImg(activeProductImg === 0 ? 1 : 0)}>
+                        <div className="dl-product-img-container">
                             <div className="dl-img-glow"></div>
-                            <div className="dl-img-stack">
-                                <div className={`dl-stack-item ${activeProductImg === 1 ? 'active' : 'back'}`}>
-                                    <img 
-                                        src="/contenido-autodiagnostico.png" 
-                                        alt="Contenido Informe de Dominios" 
-                                        className="dl-product-img"
-                                    />
-                                    <div className="dl-img-label">Contenido Interno</div>
-                                </div>
-                                <div className={`dl-stack-item ${activeProductImg === 0 ? 'active' : 'back'}`}>
-                                    <img 
-                                        src="/portada-autodiagnostico.png" 
-                                        alt="Portada Informe de Dominios" 
-                                        className="dl-product-img"
-                                    />
-                                    <div className="dl-img-label">Portada Premium</div>
-                                </div>
-                            </div>
-                            <div className="dl-stack-hint">Haz clic para cambiar vista</div>
+                            <img 
+                                src="/portada-autodiagnostico.png" 
+                                alt="Portada Informe de Dominios" 
+                                className="dl-product-img"
+                            />
                         </div>
 
                         {/* 2. Text now on the RIGHT (Desktop) */}
