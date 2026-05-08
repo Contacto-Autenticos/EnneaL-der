@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import gsap from 'gsap';
+import { MousePointerClick } from 'lucide-react';
 
 const Page = React.forwardRef((props, ref) => {
     return (
@@ -95,16 +96,27 @@ const PremiumBook3D = () => {
                             background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
                         }} />
                     </div>
-                    <p style={{ 
-                        marginTop: '20px', 
-                        color: '#ddbe3d', 
-                        fontSize: '12px', 
-                        letterSpacing: '2px', 
-                        fontWeight: '700',
-                        opacity: 0.8
-                    }}>
-                        HAZ CLIC PARA ABRIR Y EXPLORAR
-                    </p>
+                    <div 
+                        onClick={() => setIsOpen(true)}
+                        style={{ 
+                            marginTop: '24px', 
+                            color: '#ddbe3d', 
+                            fontSize: '11px', 
+                            letterSpacing: '2px', 
+                            fontWeight: '700',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease'
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+                        onMouseOut={(e) => e.currentTarget.style.opacity = '0.8'}
+                    >
+                        <MousePointerClick size={18} className="dl-pulse-icon" />
+                        <span>HAZ CLIC PARA ABRIR Y EXPLORAR ALGO DEL CONTENIDO</span>
+                    </div>
                 </div>
             ) : (
                 <div ref={containerRef} className="book-active-mini" style={{ width: '100%', position: 'relative' }}>
@@ -150,6 +162,14 @@ const PremiumBook3D = () => {
             <style>{`
                 .flipbook-canvas-mini {
                     box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+                }
+                .dl-pulse-icon {
+                    animation: dl-pulse 1.5s infinite;
+                }
+                @keyframes dl-pulse {
+                    0% { transform: scale(1); opacity: 0.8; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 0.8; }
                 }
             `}</style>
         </div>
