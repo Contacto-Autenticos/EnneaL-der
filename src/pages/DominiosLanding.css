@@ -468,7 +468,13 @@ html {
     }
     
     .dl-product-text {
-        text-align: center;
+        text-align: left;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .dl-product-item {
+        justify-content: flex-start;
     }
 }
 
