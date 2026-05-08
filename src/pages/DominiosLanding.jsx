@@ -419,11 +419,18 @@ const DominiosLanding = ({ result, setTestResult }) => {
                         {/* 1. Image now on the LEFT (Desktop) */}
                         <div className="dl-product-img-container">
                             <div className="dl-img-glow"></div>
-                            <img 
-                                src="/Portada resultado autodiagnostico.png" 
-                                alt="Portada Informe de Dominios" 
-                                className="dl-product-img"
-                            />
+                            <div className="dl-img-stack">
+                                <img 
+                                    src="/Portada resultado autodiagnostico - Contenido.png" 
+                                    alt="Contenido Informe de Dominios" 
+                                    className="dl-product-img dl-img-secondary"
+                                />
+                                <img 
+                                    src="/Portada resultado autodiagnostico.png" 
+                                    alt="Portada Informe de Dominios" 
+                                    className="dl-product-img dl-img-primary"
+                                />
+                            </div>
                         </div>
 
                         {/* 2. Text now on the RIGHT (Desktop) */}
