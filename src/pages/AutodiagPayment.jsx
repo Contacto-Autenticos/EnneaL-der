@@ -234,8 +234,40 @@ const AutodiagPayment = () => {
                             )}
                             <p style={{ margin: '5px 0 0 0', fontSize: '1.0rem', opacity: 0.9, color: '#fff', fontWeight: '500' }}>Análisis Avanzado · Pago único</p>
                             <p style={{ margin: 0, fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '900', textTransform: 'none', letterSpacing: '0.5px' }}>Precio de lanzamiento</p>
-                        </div>
-                    </div>
+
+                             {/* Lista de beneficios integrada */}
+                             <div style={{ 
+                                 display: 'grid', 
+                                 gridTemplateColumns: 'repeat(2, 1fr)', 
+                                 gap: '12px', 
+                                 width: '100%', 
+                                 marginTop: '25px',
+                                 paddingTop: '20px',
+                                 borderTop: '1px solid rgba(255,255,255,0.1)',
+                                 textAlign: 'left'
+                             }}>
+                                 {[
+                                     'Análisis profundo de 6 Dimensiones',
+                                     'Identificación de áreas críticas',
+                                     'Mapa de ecosistema personalizado',
+                                     'Hoja de Ruta de 8 Pasos',
+                                     'Acceso inmediato e ilimitado',
+                                     'Reporte descargable en PDF'
+                                 ].map((item, i) => (
+                                     <div key={i} style={{ 
+                                         display: 'flex', 
+                                         alignItems: 'center', 
+                                         gap: '8px',
+                                         fontSize: '0.8rem',
+                                         color: 'rgba(255,255,255,0.9)',
+                                         fontWeight: '500'
+                                     }}>
+                                         <CheckCircle size={14} color="#ddbe3d" /> {item}
+                                     </div>
+                                 ))}
+                             </div>
+                         </div>
+                     </div>
                 </div>
 
                 <div className="method-selector" style={{ display: 'flex', gap: '10px', margin: '20px 0', width: '100%' }}>

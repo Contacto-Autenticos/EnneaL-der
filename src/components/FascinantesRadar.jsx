@@ -87,8 +87,8 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
                     <tspan 
                         x={textX} 
                         dy={domainId === 'social' ? '1.2em' : domainId === 'corporal' ? '-1.3em' : '0.15em'}
-                        fill={isPDF ? "#6b7280" : "rgba(0,0,0,0.5)"}
-                        fontSize="13px"
+                        fill={isPDF ? "#6b7280" : (props.isDark ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.5)")}
+                        fontSize="10px"
                         fontWeight="700"
                         letterSpacing="1px"
                     >
@@ -97,8 +97,8 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
                     <tspan 
                         x={textX} 
                         dy="1.2em"
-                        fill="#003049"
-                        fontSize="15px"
+                        fill={props.isDark ? "#ffffff" : "#003049"}
+                        fontSize="12px"
                         fontWeight="800"
                         letterSpacing="0.5px"
                     >
@@ -140,7 +140,7 @@ const CustomLabel = ({ x, y, value }) => {
     );
 };
 
-const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
+const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
     const radarRadius = radius || (isMobile ? "90%" : "70%");
 
@@ -148,11 +148,11 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
         <div className="fascinantes-radar-container" style={{ 
             width: '100%', 
             height: height, 
-            background: '#ffffff', 
+            background: transparent ? 'transparent' : '#ffffff', 
             borderRadius: '30px', 
-            padding: '10px', /* Ajustado para equilibrar el espacio con el borde */
-            border: '1px solid rgba(0,0,0,0.05)', 
-            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.05)', 
+            padding: '10px',
+            border: transparent ? 'none' : '1px solid rgba(0,0,0,0.05)', 
+            boxShadow: transparent ? 'none' : '0 10px 40px rgba(0, 0, 0, 0.05)', 
             position: 'relative' 
         }}>
             <ResponsiveContainer width={isPDF ? "100%" : "100%"} height="100%">
@@ -164,14 +164,14 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
                             <stop offset="100%" stopColor="#8a6d00" stopOpacity={0.5} />
                         </radialGradient>
                     </defs>
-                    <PolarGrid polarLines={false} stroke="rgba(0,0,0,0.1)" />
-                    {/* Background depth levels - Tonal regions without outlines scaled to 70 */}
+                    <PolarGrid polarLines={false} stroke={isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"} />
+                    {/* Background depth levels */}
                     {[70, 52.5, 35, 17.5].map((level, index) => (
                         <Radar
                             key={`bg-${level}`}
                             dataKey={() => level}
                             stroke="none"
-                            fill={`rgba(0,0,0,${0.03 - index * 0.005})`}
+                            fill={isDark ? `rgba(255,255,255,${0.03 - index * 0.005})` : `rgba(0,0,0,${0.03 - index * 0.005})`}
                             fillOpacity={1}
                             isAnimationActive={false}
                             dot={false}
@@ -181,7 +181,7 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF }) => {
 
                     <PolarAngleAxis 
                         dataKey="domain" 
-                        tick={<CustomTick isPDF={isPDF} />}
+                        tick={<CustomTick isPDF={isPDF} isDark={isDark} />}
                     />
                     <PolarRadiusAxis 
                         angle={30} 

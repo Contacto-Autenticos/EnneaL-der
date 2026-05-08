@@ -44,6 +44,7 @@ import AutodiagPayment from './pages/AutodiagPayment';
 import AutodiagPaymentStatus from './pages/AutodiagPaymentStatus';
 import WorkshopInscripcion from './pages/WorkshopInscripcion';
 import WorkshopPaymentStatus from './pages/WorkshopPaymentStatus';
+import DominiosLanding from './pages/DominiosLanding';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -223,6 +224,8 @@ function App() {
         <Route path="/dominios" element={<AutodiagRegister />} />
         <Route path="/dominios-payment" element={<AutodiagPayment />} />
         <Route path="/dominios-payment-status" element={<AutodiagPaymentStatus />} />
+
+        <Route path="/dominios-landing" element={<DominiosLanding result={testResult} setTestResult={setTestResult} />} />
 
         <Route path="/inscripcion" element={<WorkshopInscripcion />} />
         <Route path="/inscripcion-status" element={<WorkshopPaymentStatus />} />
