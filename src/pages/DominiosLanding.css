@@ -215,7 +215,7 @@ html {
 
 .dl-hero-inner {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: 0.7fr 1.3fr;
     grid-template-areas: 
         "text chart"
         "actions chart";
@@ -227,12 +227,13 @@ html {
 .dl-hero-text {
     grid-area: text;
     text-align: left;
+    padding-right: 40px;
 }
 
 .dl-hero-chart {
     grid-area: chart;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     animation: dlFadeIn 1.5s ease-out;
 }
 
