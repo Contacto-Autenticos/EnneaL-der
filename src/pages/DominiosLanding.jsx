@@ -219,8 +219,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             {/* 3. Empathy Section */}
             <section className="dl-section dl-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
                 <div className="dl-section-content" style={{ maxWidth: '800px' }}>
-                    <h2 style={{ 
-                        fontSize: 'clamp(30px, 5vw, 42px)', 
+                    <h2 className="dl-section-title" style={{ 
                         fontWeight: '900', 
                         textAlign: 'center', 
                         marginBottom: '60px',
