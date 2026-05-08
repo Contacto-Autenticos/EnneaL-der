@@ -30,7 +30,7 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
     
     // Adjusted repulsion for better mobile view
-    const repulsion = isMobile ? 17 : 30; 
+    const repulsion = isMobile ? 12 : 30; 
     const labelX = x + Math.cos(angle) * repulsion;
     const labelY = y + Math.sin(angle) * repulsion;
 
@@ -41,19 +41,19 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
 
     switch(domainId) {
         case 'corporal': // Top: Text ABOVE icon
-            textY = -24;
+            textY = isMobile ? -18 : -24;
             break;
         case 'mental': // Top-Right: Icon LEFT, text RIGHT
         case 'emocional': // Bottom-Right: Icon LEFT, text RIGHT
-            textX = 22;
+            textX = isMobile ? 16 : 22;
             anchor = "start";
             break;
         case 'social': // Bottom: Text BELOW icon
-            textY = 16; 
+            textY = isMobile ? 12 : 16; 
             break;
         case 'espiritual': // Bottom-Left: Text LEFT, icon RIGHT
         case 'financiero': // Top-Left: Text LEFT, icon RIGHT
-            textX = -22;
+            textX = isMobile ? -16 : -22;
             anchor = "end";
             break;
     }
@@ -63,9 +63,9 @@ const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
 
 
             {/* Pure SVG Icon container */}
-            <g transform="translate(-11, -11)">
+            <g transform={isMobile ? "translate(-8, -8)" : "translate(-11, -11)"}>
                 <Icon 
-                    size={22} 
+                    size={isMobile ? 16 : 22} 
                     stroke={style.color} 
                     strokeWidth={2.2} 
                 />
@@ -142,7 +142,7 @@ const CustomLabel = ({ x, y, value }) => {
 
 const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = false, isDark = false }) => {
     const isMobile = !isPDF && typeof window !== 'undefined' && window.innerWidth < 600;
-    const radarRadius = radius || (isMobile ? "90%" : "50%");
+    const radarRadius = radius || (isMobile ? "110%" : "50%");
 
     return (
         <div className="fascinantes-radar-container" style={{ 
