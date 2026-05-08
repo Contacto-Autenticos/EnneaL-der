@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
 import FascinantesRadar from '../components/FascinantesRadar';
+import PremiumBook3D from '../components/PremiumBook3D';
 import './DominiosLanding.css';
 
 const DominiosLanding = ({ result, setTestResult }) => {
@@ -409,23 +410,17 @@ const DominiosLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6. Información del Producto */}
-            <section id="dominios" className="dl-section">
+            <section id="dominios" className="dl-product-section">
                 <div className="dl-section-content">
-                    <h2 className="dl-section-title" style={{ textAlign: 'center', marginBottom: '80px' }}>
+                    <h2 className="dl-section-title dl-reveal" style={{ textAlign: 'center', marginBottom: '80px' }}>
                         Al finalizar el <span className="dl-gold-text" style={{ display: 'inline' }}>autodiagnóstico recibirás:</span>
                     </h2>
 
-                    <div className="dl-product-flex">
-                        {/* 1. Image now on the LEFT (Desktop) */}
-                        <div className="dl-product-img-container">
-                            <div className="dl-img-glow"></div>
-                            <img 
-                                src="/portada-autodiagnostico.png" 
-                                alt="Portada Informe de Dominios" 
-                                className="dl-product-img"
-                            />
-                        </div>
+                    <div className="dl-premium-book-wrapper">
+                        <PremiumBook3D />
+                    </div>
 
+                    <div className="dl-product-flex" style={{ marginTop: '60px' }}>
                         {/* 2. Text now on the RIGHT (Desktop) */}
                         <div className="dl-product-text">
                             <ul className="dl-product-list">
@@ -435,7 +430,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     { t: "Reporte Personalizado", d: "Un documento visual, detallado y 100% único con el mapa de tu ecosistema de vida y rutas de mejora." },
                                     { t: "Hoja de Ruta de 8 Pasos", d: "Un plan de acción estructurado paso a paso para elevar específicamente aquellos dominios que hoy se encuentran en niveles bajos." }
                                 ].map((item, i) => (
-                                    <li key={i} className="dl-product-item">
+                                    <li key={i} className="dl-product-item dl-reveal">
                                         <div className="dl-item-bullet">
                                             <CheckCircle2 size={24} color="#ddbe3d" />
                                         </div>
