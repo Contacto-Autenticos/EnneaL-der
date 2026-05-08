@@ -7,7 +7,7 @@ const Page = React.forwardRef((props, ref) => {
         <div className="page" ref={ref} style={{ 
             backgroundColor: '#fff', 
             overflow: 'hidden',
-            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.1)',
+            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.05)',
             ...props.style 
         }}>
             <div className="page-content" style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -21,11 +21,11 @@ const Page = React.forwardRef((props, ref) => {
                         backgroundColor: '#fff'
                     }} 
                 />
-                {/* Overlay for paper texture */}
+                {/* Paper effect overlay */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to right, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.05) 100%)',
+                    background: 'linear-gradient(to right, rgba(0,0,0,0.02) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.02) 100%)',
                     pointerEvents: 'none'
                 }} />
             </div>
@@ -35,7 +35,6 @@ const Page = React.forwardRef((props, ref) => {
 
 const PremiumBook3D = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const bookRef = useRef();
     const containerRef = useRef();
 
     const pages = [
@@ -48,165 +47,112 @@ const PremiumBook3D = () => {
 
     useEffect(() => {
         if (isOpen) {
-            gsap.to(containerRef.current, {
-                scale: 1,
-                opacity: 1,
-                duration: 1.2,
-                ease: "power3.out"
-            });
-        } else {
-            gsap.set(containerRef.current, {
-                scale: 0.7,
-                opacity: 0
-            });
+            gsap.fromTo(containerRef.current, 
+                { scale: 0.9, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
+            );
         }
     }, [isOpen]);
 
     return (
-        <section className="premium-book-section" style={{ 
-            height: '100vh', 
+        <div className="premium-book-integration" style={{ 
             width: '100%', 
-            background: '#0a0a0a',
+            maxWidth: '500px',
             position: 'relative',
-            overflow: 'hidden',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontFamily: 'Inter, sans-serif'
+            flexDirection: 'column',
+            alignItems: 'center'
         }}>
-            {/* Cinematic background effects */}
-            <div className="ambient-glow" style={{
-                position: 'absolute',
-                width: '150%',
-                height: '150%',
-                background: 'radial-gradient(circle at center, rgba(221, 190, 61, 0.12) 0%, transparent 70%)',
-                zIndex: 1,
-                pointerEvents: 'none'
-            }} />
-            
             {!isOpen ? (
-                <div className="book-teaser" style={{ zIndex: 10, textAlign: 'center' }}>
+                <div className="book-teaser-mini" style={{ width: '100%', textAlign: 'center' }}>
                     <div 
-                        className="teaser-cover" 
+                        className="teaser-cover-mini" 
                         onClick={() => setIsOpen(true)}
                         style={{
-                            width: '350px',
-                            height: '500px',
+                            width: '100%',
+                            aspectRatio: '1 / 1.41',
                             cursor: 'pointer',
                             position: 'relative',
-                            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                            filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.8))',
-                            borderRadius: '4px 20px 20px 4px',
+                            transition: 'all 0.5s ease',
+                            filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))',
+                            borderRadius: '4px 16px 16px 4px',
                             overflow: 'hidden',
-                            border: '1px solid rgba(221, 190, 61, 0.3)',
-                            transform: 'rotateY(-15deg) rotateX(5deg)'
+                            border: '1px solid rgba(221, 190, 61, 0.2)'
                         }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.transform = 'rotateY(-5deg) rotateX(2deg) translateY(-20px) scale(1.05)';
-                            e.currentTarget.style.filter = 'drop-shadow(0 50px 80px rgba(0,0,0,0.9))';
+                            e.currentTarget.style.transform = 'translateY(-10px) rotateY(-5deg)';
+                            e.currentTarget.style.filter = 'drop-shadow(0 30px 50px rgba(0,0,0,0.6))';
                         }}
                         onMouseOut={(e) => {
-                            e.currentTarget.style.transform = 'rotateY(-15deg) rotateX(5deg)';
-                            e.currentTarget.style.filter = 'drop-shadow(0 30px 60px rgba(0,0,0,0.8))';
+                            e.currentTarget.style.transform = 'none';
+                            e.currentTarget.style.filter = 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))';
                         }}
                     >
                         <img src="/Reporte_Fascinantes_page-0000.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         <div style={{
                             position: 'absolute',
                             inset: 0,
-                            background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.3) 100%)'
+                            background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
                         }} />
                     </div>
-                    <button 
-                        onClick={() => setIsOpen(true)}
-                        style={{
-                            marginTop: '50px',
-                            background: '#ddbe3d',
-                            color: '#000',
-                            border: 'none',
-                            padding: '18px 60px',
-                            borderRadius: '50px',
-                            fontSize: '15px',
-                            fontWeight: '900',
-                            letterSpacing: '5px',
-                            cursor: 'pointer',
-                            boxShadow: '0 10px 50px rgba(221, 190, 61, 0.4)',
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        EXPLORAR REPORTE
-                    </button>
+                    <p style={{ 
+                        marginTop: '20px', 
+                        color: '#ddbe3d', 
+                        fontSize: '12px', 
+                        letterSpacing: '2px', 
+                        fontWeight: '700',
+                        opacity: 0.8
+                    }}>
+                        HAZ CLIC PARA ABRIR Y EXPLORAR
+                    </p>
                 </div>
             ) : (
-                <div ref={containerRef} className="book-active-container" style={{ 
-                    zIndex: 10, 
-                    position: 'relative',
-                    width: '90vw',
-                    height: '85vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
+                <div ref={containerRef} className="book-active-mini" style={{ width: '100%', position: 'relative' }}>
                     <HTMLFlipBook 
-                        width={550} 
-                        height={780} 
+                        width={500} 
+                        height={700} 
                         size="stretch"
-                        minWidth={315}
-                        maxWidth={1200}
-                        minHeight={420}
-                        maxHeight={1600}
-                        maxShadowOpacity={0.6}
+                        minWidth={280}
+                        maxWidth={600}
+                        minHeight={400}
+                        maxHeight={850}
+                        maxShadowOpacity={0.4}
                         showCover={true}
+                        display="single"
                         mobileScrollSupport={true}
-                        className="flipbook-canvas"
+                        className="flipbook-canvas-mini"
                     >
                         {pages.map((img, i) => (
                             <Page key={i} image={img} number={i + 1} />
                         ))}
                     </HTMLFlipBook>
                     
-                    <div className="book-controls" style={{
-                        position: 'absolute',
-                        bottom: '-80px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        display: 'flex',
-                        gap: '20px'
-                    }}>
-                        <button 
-                            onClick={() => setIsOpen(false)}
-                            style={{
-                                background: 'rgba(255,255,255,0.05)',
-                                color: '#fff',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                padding: '12px 30px',
-                                borderRadius: '50px',
-                                fontSize: '12px',
-                                cursor: 'pointer',
-                                backdropFilter: 'blur(10px)'
-                            }}
-                        >
-                            Cerrar y volver
-                        </button>
-                    </div>
+                    <button 
+                        onClick={() => setIsOpen(false)}
+                        style={{
+                            marginTop: '20px',
+                            background: 'rgba(255,255,255,0.05)',
+                            color: '#fff',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            padding: '8px 20px',
+                            borderRadius: '20px',
+                            fontSize: '11px',
+                            cursor: 'pointer',
+                            backdropFilter: 'blur(10px)',
+                            width: 'fit-content'
+                        }}
+                    >
+                        Cerrar vista
+                    </button>
                 </div>
             )}
 
             <style>{`
-                .flipbook-canvas {
-                    box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-                }
-                .page {
-                    background-color: #fdfdfd;
-                }
-                @media (max-width: 768px) {
-                    .teaser-cover {
-                        width: 260px !important;
-                        height: 380px !important;
-                    }
+                .flipbook-canvas-mini {
+                    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
                 }
             `}</style>
-        </section>
+        </div>
     );
 };
 

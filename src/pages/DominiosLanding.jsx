@@ -416,12 +416,13 @@ const DominiosLanding = ({ result, setTestResult }) => {
                         Al finalizar el <span className="dl-gold-text" style={{ display: 'inline' }}>autodiagnóstico recibirás:</span>
                     </h2>
 
-                    <div className="dl-premium-book-wrapper">
-                        <PremiumBook3D />
-                    </div>
+                    <div className="dl-product-flex">
+                        {/* 1. Book on the LEFT */}
+                        <div className="dl-product-img-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <PremiumBook3D />
+                        </div>
 
-                    <div className="dl-product-flex" style={{ marginTop: '60px' }}>
-                        {/* 2. Text now on the RIGHT (Desktop) */}
+                        {/* 2. Text on the RIGHT */}
                         <div className="dl-product-text">
                             <ul className="dl-product-list">
                                 {[
