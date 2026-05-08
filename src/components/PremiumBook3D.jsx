@@ -17,7 +17,8 @@ const Page = React.forwardRef((props, ref) => {
                     style={{ 
                         width: '100%', 
                         height: '100%', 
-                        objectFit: 'cover'
+                        objectFit: 'contain',
+                        backgroundColor: '#fff'
                     }} 
                 />
                 {/* Overlay for paper texture */}
@@ -148,7 +149,7 @@ const PremiumBook3D = () => {
                 }}>
                     <HTMLFlipBook 
                         width={550} 
-                        height={750} 
+                        height={780} 
                         size="stretch"
                         minWidth={315}
                         maxWidth={1200}
