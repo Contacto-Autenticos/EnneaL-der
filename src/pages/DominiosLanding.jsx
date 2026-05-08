@@ -421,12 +421,12 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             <div className="dl-img-glow"></div>
                             <div className="dl-img-stack">
                                 <img 
-                                    src="/Portada resultado autodiagnostico - Contenido.png" 
+                                    src="/contenido-autodiagnostico.png" 
                                     alt="Contenido Informe de Dominios" 
                                     className="dl-product-img dl-img-secondary"
                                 />
                                 <img 
-                                    src="/Portada resultado autodiagnostico.png" 
+                                    src="/portada-autodiagnostico.png" 
                                     alt="Portada Informe de Dominios" 
                                     className="dl-product-img dl-img-primary"
                                 />
