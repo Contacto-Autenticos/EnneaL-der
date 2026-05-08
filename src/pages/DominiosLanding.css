@@ -154,11 +154,11 @@ html {
 }
 
 .dl-hero-title {
-    font-size: clamp(28px, 3.8vw, 52px);
+    font-size: clamp(26px, 3vw, 42px);
     font-weight: 900;
     line-height: 1.15;
     letter-spacing: -0.01em;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     max-width: 1100px;
     color: var(--dl-white);
     padding: 10px;
