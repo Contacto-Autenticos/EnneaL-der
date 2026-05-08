@@ -191,11 +191,11 @@ const DominiosLanding = ({ result, setTestResult }) => {
 
                         {/* 2. Radar Chart Column */}
                         <div className="dl-hero-chart">
-                            <div className="dl-radar-wrapper" style={{ marginTop: '-80px' }}>
+                            <div className="dl-radar-wrapper" style={{ marginTop: '-40px' }}>
                                 <FascinantesRadar 
                                     data={radarData} 
-                                    height={780} 
-                                    radius="45%" 
+                                    height={700} 
+                                    radius="35%" 
                                     transparent={true}
                                     isDark={true}
                                 />
