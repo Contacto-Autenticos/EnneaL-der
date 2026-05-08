@@ -684,13 +684,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     <h2 className="dl-section-title" style={{ color: '#002d44', marginBottom: '30px' }}>
                         Nuestra <span style={{ color: '#ddbe3d' }}>Garantía</span>
                     </h2>
-                    <p style={{ 
-                        fontSize: '20px', 
-                        lineHeight: '1.8', 
-                        fontWeight: '500',
-                        color: 'rgba(0, 45, 68, 0.8)',
-                        margin: '0 auto 40px'
-                    }}>
+                    <p className="dl-guarantee-text">
                         Si al finalizar el análisis sientes que no te aportó claridad o reflexión real sobre tu situación actual, puedes solicitar la devolución de tu dinero dentro de las primeras 24 horas.
                     </p>
 
