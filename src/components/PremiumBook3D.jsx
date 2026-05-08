@@ -151,32 +151,33 @@ const PremiumBook3D = () => {
                             ))}
                         </HTMLFlipBook>
 
-                        {/* Navigation Indicator Icon - Bottom Right */}
+                        {/* Navigation Indicator Icon - Vertical Center Right */}
                         <div style={{
                             position: 'absolute',
-                            bottom: '20px',
+                            top: '50%',
                             right: '20px',
+                            transform: 'translateY(-50%)',
                             zIndex: 100,
                             pointerEvents: 'none',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: '4px'
+                            gap: '8px'
                         }}>
-                            <span style={{ fontSize: '9px', color: '#ddbe3d', letterSpacing: '1px', fontWeight: 'bold', opacity: 0.8 }}>CONTINUAR</span>
+                            <span style={{ fontSize: '9px', color: '#ddbe3d', letterSpacing: '1.5px', fontWeight: 'bold', opacity: 0.9, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>SIGUIENTE</span>
                             <div style={{
-                                background: 'rgba(221, 190, 61, 0.9)',
+                                background: 'rgba(221, 190, 61, 0.95)',
                                 color: '#002d44',
-                                width: '32px',
-                                height: '32px',
+                                width: '40px',
+                                height: '40px',
                                 borderRadius: '50%',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                                boxShadow: '0 8px 25px rgba(0,0,0,0.4)',
                                 animation: 'dl-bounce-x 1.5s infinite'
                             }}>
-                                <ChevronRight size={20} />
+                                <ChevronRight size={24} />
                             </div>
                         </div>
                     </div>
