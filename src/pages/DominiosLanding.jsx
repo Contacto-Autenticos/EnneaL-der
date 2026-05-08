@@ -622,7 +622,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             marginBottom: '60px',
                             letterSpacing: '0.05em'
                         }}>
-                            ¿CÓMO <span style={{ color: '#ddbe3d' }}>FUNCIONA?</span>
+                            ¿Cómo <span style={{ color: '#ddbe3d' }}>funciona?</span>
                         </h3>
 
                         <div style={{ 
