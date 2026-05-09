@@ -866,9 +866,9 @@ html {
 .dl-testimonial-card {
     min-width: 350px;
     max-width: 350px;
-    min-height: 440px; /* Uniform height to align names */
+    min-height: 380px; /* More compact but still aligned */
     background: #f8f9fa;
-    padding: 40px;
+    padding: 30px;
     border-radius: 24px;
     border: 1px solid rgba(0,0,0,0.05);
     display: flex;
