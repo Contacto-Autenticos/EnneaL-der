@@ -513,7 +513,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                 <div key={i} className="dl-testimonial-card" style={t.video ? { padding: '0', overflow: 'hidden' } : {}}>
                                     {t.video ? (
                                         <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                                            <div style={{ width: '100%', height: '180px', background: '#000' }}>
+                                            <div style={{ width: '100%', height: '240px', background: '#000' }}>
                                                 <video 
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                     controls
@@ -524,7 +524,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                                     Tu navegador no soporta la reproducción de video.
                                                 </video>
                                             </div>
-                                            <div className="dl-testimonial-footer" style={{ padding: '15px 25px', borderTop: 'none', background: '#f8f9fa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                            <div className="dl-testimonial-footer" style={{ padding: '10px 25px 20px', borderTop: 'none', background: '#f8f9fa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                                 <div className="dl-stars">
                                                     {[...Array(t.stars)].map((_, si) => (
                                                         <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
