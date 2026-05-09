@@ -274,7 +274,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 4. 6 Pilares Section */}
-            <section className="dl-section dl-animate">
+            <section id="dominios" className="dl-section dl-animate">
                 <div className="dl-section-content">
                     <h2 className="dl-section-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
                         Tu vida <span className="dl-gold-text" style={{ display: 'inline' }}>no se rompe en un solo lugar</span>
@@ -410,7 +410,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6. Información del Producto */}
-            <section id="dominios" className="dl-product-section">
+            <section id="detalles-producto" className="dl-product-section">
                 <div className="dl-section-content">
                     <h2 className="dl-section-title dl-reveal" style={{ textAlign: 'center', marginBottom: '80px' }}>
                         Al finalizar el <span className="dl-gold-text" style={{ display: 'inline' }}>autodiagnóstico recibirás:</span>
