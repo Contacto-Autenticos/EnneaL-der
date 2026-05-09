@@ -107,7 +107,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
         },
         {
             q: "¿Cuánto tiempo toma completarlo?",
-            a: "La experiencia completa toma aproximadamente entre 15 y 25 minutos, dependiendo del ritmo con el que respondas."
+            a: "La experiencia completa toma aproximadamente entre 30 y 45 minutos, dependiendo del ritmo con el que respondas."
         },
         {
             q: "¿Cómo recibo mis resultados?",
@@ -124,6 +124,10 @@ const DominiosLanding = ({ result, setTestResult }) => {
         {
             q: "¿Este análisis realmente puede ayudarme?",
             a: "No puede resolver tu vida por ti. Pero sí puede ayudarte a ver con más claridad patrones que quizá llevas demasiado tiempo ignorando. Y muchas veces, la claridad cambia más de lo que imaginamos."
+        },
+        {
+            q: "¿Qué pasa si no hago el análisis ahora?",
+            a: "Seguirás operando con el mismo nivel de energía y los mismos 'puntos ciegos' que tienes hoy. Este mapa es la inversión más pequeña de tiempo y dinero que puedes hacer para ganar años de claridad y equilibrio en tu vida personal y profesional."
         }
     ];
 
@@ -474,6 +478,14 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     <div className="dl-testimonials-container">
                         <div className="dl-testimonials-track">
                             {[
+                                { 
+                                    q: "¿Este análisis realmente puede ayudarme?", 
+                                    a: "Absolutamente. No es un test de personalidad genérico, es una herramienta de diagnóstico de energía y enfoque. Si sientes que estás trabajando duro pero no avanzas, o que el agotamiento te está ganando la partida, este mapa te dará el lenguaje y la ruta exacta para recuperar el control." 
+                                },
+                                { 
+                                    q: "¿Qué pasa si no hago el análisis ahora?", 
+                                    a: "Seguirás operando con el mismo nivel de energía y los mismos 'puntos ciegos' que tienes hoy. Este mapa es la inversión más pequeña de tiempo y dinero que puedes hacer para ganar años de claridad y equilibrio en tu vida personal y profesional." 
+                                },
                                 { 
                                     text: "Increíble la precisión del reporte. Me ayudó a ponerle palabras a cosas que sentía pero no sabía explicar. Ahora tengo un mapa claro de por dónde empezar.",
                                     author: "Liliana García",
