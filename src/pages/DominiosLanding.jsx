@@ -480,7 +480,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 1.2.mp4#t=1.5",
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 1.2.mp4#t=0.001",
                                     author: "T.M.",
                                     stars: 5
                                 },
@@ -490,7 +490,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 2.2.mp4#t=1.5",
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 2.2.mp4#t=0.001",
                                     author: "R.F.",
                                     stars: 5
                                 },
