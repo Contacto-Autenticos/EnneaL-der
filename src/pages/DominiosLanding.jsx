@@ -480,7 +480,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 1.2.mp4#t=0.001",
+                                    video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%201.2.mp4#t=0.001",
                                     author: "T.M.",
                                     stars: 5
                                 },
@@ -490,7 +490,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 2.2.mp4#t=0.001",
+                                    video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%202.2.mp4#t=0.001",
                                     author: "R.F.",
                                     stars: 5
                                 },
@@ -500,7 +500,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 3.2.mp4#t=1.5",
+                                    video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%203.2.mp4#t=1.5",
                                     author: "K.L.",
                                     stars: 5
                                 },
@@ -515,11 +515,14 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                         <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
                                             <div style={{ width: '100%', height: '240px', background: '#000' }}>
                                                 <video 
-                                                    src={t.video} 
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                     controls
-                                                    preload="metadata"
-                                                />
+                                                    preload="auto"
+                                                    playsInline
+                                                >
+                                                    <source src={t.video} type="video/mp4" />
+                                                    Tu navegador no soporta la reproducción de video.
+                                                </video>
                                             </div>
                                             <div className="dl-testimonial-footer" style={{ padding: '20px 30px', borderTop: 'none', background: '#f8f9fa' }}>
                                                 <div className="dl-stars">
