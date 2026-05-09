@@ -604,7 +604,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     {[
                                         'Análisis profundo de 6 Dimensiones',
                                         'Identificación de áreas críticas',
-                                        'Mapa de ecosistema personalizado',
+                                        'Tiempo estimado de duración entre 30 y 45 minutos',
                                         'Hoja de Ruta de 8 Pasos',
                                         'Acceso inmediato e ilimitado',
                                         'Reporte descargable en PDF'
@@ -662,7 +662,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             {[
                                 { icon: <CreditCard size={32} />, title: "1. Compra segura", desc: "Realizas el pago de forma segura a través de nuestra plataforma." },
                                 { icon: <UserPlus size={32} />, title: "2. Registro rápido", desc: "Creas tu perfil básico para que podamos personalizar tus resultados." },
-                                { icon: <PlayCircle size={32} />, title: "3. Autodiagnóstico", desc: "Inicias la experiencia de reflexión profunda (toma 20 min)." },
+                                { icon: <PlayCircle size={32} />, title: "3. Autodiagnóstico", desc: "Inicias la experiencia de reflexión profunda (toma 30-45 min)." },
                                 { icon: <Mail size={32} />, title: "4. Reporte al instante", desc: "Recibes tu análisis por correo o lo descargas en el momento." }
                             ].map((step, i) => (
                                     <div key={i} style={{ 
