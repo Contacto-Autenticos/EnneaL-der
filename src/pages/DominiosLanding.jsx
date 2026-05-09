@@ -476,37 +476,37 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             {[
                                 { 
                                     text: "Increíble la precisión del reporte. Me ayudó a ponerle palabras a cosas que sentía pero no sabía explicar. Ahora tengo un mapa claro de por dónde empezar.",
-                                    author: "L.G.",
+                                    author: "Liliana García",
                                     stars: 5
                                 },
                                 { 
                                     video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%201.2.mp4#t=0.001",
-                                    author: "T.M.",
+                                    author: "Viviana Colorado",
                                     stars: 5
                                 },
                                 { 
                                     text: "Por fin entiendo por qué me sentía tan agotada a pesar de que todo 'parecía estar bien'. El autodiagnóstico me dio el lenguaje que me faltaba.",
-                                    author: "P.S.",
+                                    author: "Paula Sánchez",
                                     stars: 5
                                 },
                                 { 
                                     video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%202.2.mp4#t=0.001",
-                                    author: "R.F.",
+                                    author: "María Fernanda Carvajal",
                                     stars: 5
                                 },
                                 { 
                                     text: "Es una conversación honesta con uno mismo. Sin etiquetas, solo claridad pura sobre lo que hoy está influyendo en mi vida personal y profesional.",
-                                    author: "M.R.",
+                                    author: "Mateo Rodríguez",
                                     stars: 5
                                 },
                                 { 
                                     video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%203.2.mp4#t=1.5",
-                                    author: "K.L.",
+                                    author: "Alex Cerón",
                                     stars: 5
                                 },
                                 { 
                                     text: "Pensaba que solo era estrés laboral, pero el reporte me mostró que el desequilibrio venía de mi área espiritual. Esa claridad cambió mi enfoque por completo.",
-                                    author: "J.C.",
+                                    author: "Juan Carlos Ruiz",
                                     stars: 5
                                 }
                             ].map((t, i) => (
