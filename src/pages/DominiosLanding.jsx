@@ -122,10 +122,6 @@ const DominiosLanding = ({ result, setTestResult }) => {
             a: "Sí. Muchas personas vuelven a realizarlo después de un tiempo para observar cambios en su proceso personal."
         },
         {
-            q: "¿Este análisis realmente puede ayudarme?",
-            a: "No puede resolver tu vida por ti. Pero sí puede ayudarte a ver con más claridad patrones que quizá llevas demasiado tiempo ignorando. Y muchas veces, la claridad cambia más de lo que imaginamos."
-        },
-        {
             q: "¿Qué pasa si no hago el análisis ahora?",
             a: "Seguirás operando con el mismo nivel de energía y los mismos 'puntos ciegos' que tienes hoy. Este mapa es la inversión más pequeña de tiempo y dinero que puedes hacer para ganar años de claridad y equilibrio en tu vida personal y profesional."
         }
