@@ -524,7 +524,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                                     Tu navegador no soporta la reproducción de video.
                                                 </video>
                                             </div>
-                                            <div className="dl-testimonial-footer" style={{ padding: '20px 30px', borderTop: 'none', background: '#f8f9fa', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
+                                            <div className="dl-testimonial-footer" style={{ padding: '20px 30px', borderTop: 'none', background: '#f8f9fa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                                 <div className="dl-stars">
                                                     {[...Array(t.stars)].map((_, si) => (
                                                         <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />

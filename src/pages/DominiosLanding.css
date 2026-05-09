@@ -895,9 +895,9 @@ html {
 
 .dl-testimonial-footer {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: flex-start;
-    gap: 12px;
+    gap: 15px;
     border-top: 1px solid rgba(0,0,0,0.05);
     padding-top: 20px;
 }
@@ -905,11 +905,16 @@ html {
 .dl-stars {
     display: flex;
     gap: 4px;
+    flex-shrink: 0;
+    margin-top: 5px;
 }
 
 .dl-testimonial-author {
     font-weight: 700;
     color: #002d44;
+    text-align: right;
+    max-width: 180px;
+    line-height: 1.3;
 }
 
 @media (max-width: 768px) {
