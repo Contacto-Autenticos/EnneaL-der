@@ -480,8 +480,18 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 1.2.mp4",
+                                    author: "T.M.",
+                                    stars: 5
+                                },
+                                { 
                                     text: "Por fin entiendo por qué me sentía tan agotada a pesar de que todo 'parecía estar bien'. El autodiagnóstico me dio el lenguaje que me faltaba.",
                                     author: "P.S.",
+                                    stars: 5
+                                },
+                                { 
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 2.2.mp4",
+                                    author: "R.F.",
                                     stars: 5
                                 },
                                 { 
@@ -490,34 +500,52 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 3.2.mp4",
+                                    author: "K.L.",
+                                    stars: 5
+                                },
+                                { 
                                     text: "Pensaba que solo era estrés laboral, pero el reporte me mostró que el desequilibrio venía de mi área espiritual. Esa claridad cambió mi enfoque por completo.",
                                     author: "J.C.",
                                     stars: 5
-                                },
-                                { 
-                                    text: "Lo que más me gustó es que no intenta venderte una solución mágica. Te da los datos y el mapa para que tú mismo tomes el control de tu energía.",
-                                    author: "A.V.",
-                                    stars: 5
-                                },
-                                { 
-                                    text: "Me sentía culpable por estar cansada. Ahora entiendo que mis dominios emocional y social estaban saturados. Ponerle nombre a eso fue un gran alivio.",
-                                    author: "S.T.",
-                                    stars: 5
                                 }
                             ].map((t, i) => (
-                                <div key={i} className="dl-testimonial-card">
-                                    <div>
-                                        <span className="dl-quote-icon">“</span>
-                                        <p className="dl-testimonial-text">{t.text}</p>
-                                    </div>
-                                    <div className="dl-testimonial-footer">
-                                        <div className="dl-stars">
-                                            {[...Array(t.stars)].map((_, si) => (
-                                                <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
-                                            ))}
+                                <div key={i} className="dl-testimonial-card" style={t.video ? { padding: '0', overflow: 'hidden' } : {}}>
+                                    {t.video ? (
+                                        <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                                            <div style={{ width: '100%', height: '240px', background: '#000' }}>
+                                                <video 
+                                                    src={t.video} 
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                    controls
+                                                    poster="/Videos/poster-placeholder.png"
+                                                />
+                                            </div>
+                                            <div className="dl-testimonial-footer" style={{ padding: '20px 30px', borderTop: 'none', background: '#f8f9fa' }}>
+                                                <div className="dl-stars">
+                                                    {[...Array(t.stars)].map((_, si) => (
+                                                        <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
+                                                    ))}
+                                                </div>
+                                                <span className="dl-testimonial-author">- {t.author}</span>
+                                            </div>
                                         </div>
-                                        <span className="dl-testimonial-author">- {t.author}</span>
-                                    </div>
+                                    ) : (
+                                        <>
+                                            <div>
+                                                <span className="dl-quote-icon">“</span>
+                                                <p className="dl-testimonial-text">{t.text}</p>
+                                            </div>
+                                            <div className="dl-testimonial-footer">
+                                                <div className="dl-stars">
+                                                    {[...Array(t.stars)].map((_, si) => (
+                                                        <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
+                                                    ))}
+                                                </div>
+                                                <span className="dl-testimonial-author">- {t.author}</span>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             ))}
                         </div>
