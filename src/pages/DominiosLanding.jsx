@@ -480,7 +480,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 1.2.mp4",
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 1.2.mp4#t=0.001",
                                     author: "T.M.",
                                     stars: 5
                                 },
@@ -490,7 +490,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 2.2.mp4",
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 2.2.mp4#t=0.001",
                                     author: "R.F.",
                                     stars: 5
                                 },
@@ -500,7 +500,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     stars: 5
                                 },
                                 { 
-                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 3.2.mp4",
+                                    video: "/Videos Autodiagnostico/Testimonio Autodiagnostico 6 dominios - 3.2.mp4#t=0.001",
                                     author: "K.L.",
                                     stars: 5
                                 },
@@ -518,7 +518,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                                     src={t.video} 
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                     controls
-                                                    poster="/Videos/poster-placeholder.png"
+                                                    preload="metadata"
                                                 />
                                             </div>
                                             <div className="dl-testimonial-footer" style={{ padding: '20px 30px', borderTop: 'none', background: '#f8f9fa' }}>
