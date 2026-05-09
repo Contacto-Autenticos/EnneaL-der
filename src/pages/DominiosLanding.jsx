@@ -612,7 +612,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     {[
                                         'Análisis profundo de 6 Dimensiones',
                                         'Identificación de áreas críticas',
-                                        'Tiempo estimado de duración entre 30 y 45 minutos',
+                                        <span>Tiempo estimado de duración <br /> entre 30 y 45 minutos</span>,
                                         'Hoja de Ruta de 8 Pasos',
                                         'Acceso inmediato e ilimitado',
                                         'Reporte descargable en PDF'
