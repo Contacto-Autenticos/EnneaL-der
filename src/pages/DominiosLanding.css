@@ -930,3 +930,72 @@ html {
         padding: 30px;
     }
 }
+
+/* Empathy Section Grid */
+.dl-empathy-container {
+    max-width: 800px;
+    margin: 0 auto;
+    transition: max-width 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+    .dl-empathy-container {
+        max-width: 1100px;
+    }
+}
+
+.dl-empathy-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@media (min-width: 1024px) {
+    .dl-empathy-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.dl-empathy-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(0, 45, 68, 0.03);
+    border-radius: 12px;
+    border-left: 4px solid #ddbe3d;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.dl-empathy-item:hover {
+    transform: translateY(-2px);
+    background: rgba(0, 45, 68, 0.05);
+}
+
+.dl-empathy-bullet {
+    width: 8px;
+    height: 8px;
+    background: #ddbe3d;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dl-empathy-text {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 500;
+    color: #003a59;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .dl-empathy-text {
+        font-size: 16px;
+    }
+    
+    .dl-empathy-item {
+        padding: 15px;
+    }
+}
+

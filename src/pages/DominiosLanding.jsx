@@ -127,6 +127,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
         }
     ];
 
+
     useEffect(() => {
         let lastScrollY = window.scrollY;
         const handleScroll = () => {
@@ -219,7 +220,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
 
             {/* 3. Empathy Section */}
             <section className="dl-section dl-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
-                <div className="dl-section-content" style={{ maxWidth: '800px' }}>
+                <div className="dl-section-content dl-empathy-container">
                     <h2 className="dl-section-title" style={{ 
                         fontWeight: '900', 
                         textAlign: 'center', 
@@ -229,7 +230,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                         ¿Te has sentido <span style={{ color: '#ddbe3d' }}>así últimamente?</span>
                     </h2>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    <div className="dl-empathy-grid">
                         {[
                             "Sabes que algo no está bien, pero no logras explicar qué es exactamente.",
                             "Te sientes agotado físicamente, pero intuyes que el cansancio es más profundo.",
@@ -238,28 +239,9 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             "Te cuesta identificar qué emoción está dominando tus decisiones hoy.",
                             "Buscas avanzar, pero sientes que hay un freno invisible que no sabes nombrar."
                         ].map((text, i) => (
-                            <div key={i} style={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '15px',
-                                padding: '20px',
-                                background: 'rgba(0, 45, 68, 0.03)',
-                                borderRadius: '12px',
-                                borderLeft: '4px solid #ddbe3d'
-                            }}>
-                                <div style={{ 
-                                    width: '8px', 
-                                    height: '8px', 
-                                    background: '#ddbe3d', 
-                                    borderRadius: '50%',
-                                    flexShrink: 0
-                                }}></div>
-                                <p style={{ 
-                                    fontSize: '18px', 
-                                    margin: 0, 
-                                    fontWeight: '500',
-                                    color: '#003a59'
-                                }}>{text}</p>
+                            <div key={i} className="dl-empathy-item">
+                                <div className="dl-empathy-bullet"></div>
+                                <p className="dl-empathy-text">{text}</p>
                             </div>
                         ))}
                     </div>
