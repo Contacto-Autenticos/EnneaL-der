@@ -857,11 +857,6 @@ html {
     display: flex;
     gap: 30px;
     width: max-content;
-    animation: dl-scroll-left 40s linear infinite;
-}
-
-.dl-testimonials-track:hover {
-    animation-play-state: paused;
 }
 
 @keyframes dl-scroll-left {
@@ -922,6 +917,54 @@ html {
     text-align: right;
     max-width: 180px;
     line-height: 1.3;
+}
+
+/* Controls Styles */
+.dl-testimonials-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 50px;
+}
+
+.dl-testimonial-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 45, 68, 0.1);
+    background: #ffffff;
+    color: #002d44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.dl-testimonial-btn:hover {
+    background: #f8f9fa;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: var(--dl-gold);
+    color: var(--dl-gold);
+}
+
+.dl-testimonial-btn:active {
+    transform: scale(0.95);
+}
+
+.dl-play-pause {
+    width: 64px;
+    height: 64px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 45, 68, 0.08);
+}
+
+.dl-play-pause:hover {
+    background: #ffffff;
+    border-color: var(--dl-gold);
 }
 
 @media (max-width: 768px) {

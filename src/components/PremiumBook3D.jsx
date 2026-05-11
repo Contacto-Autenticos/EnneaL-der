@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import gsap from 'gsap';
-import { MousePointerClick, ChevronRight } from 'lucide-react';
+import { MousePointerClick, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const Page = React.forwardRef((props, ref) => {
     return (
@@ -64,6 +64,18 @@ const PremiumBook3D = () => {
             );
         }
     }, [isOpen]);
+
+    const flipNext = () => {
+        if (flipBook.current && flipBook.current.pageFlip) {
+            flipBook.current.pageFlip().flipNext();
+        }
+    };
+
+    const flipPrev = () => {
+        if (flipBook.current && flipBook.current.pageFlip) {
+            flipBook.current.pageFlip().flipPrev();
+        }
+    };
 
     return (
         <div className="premium-book-integration" style={{ 
@@ -151,19 +163,61 @@ const PremiumBook3D = () => {
                             ))}
                         </HTMLFlipBook>
 
-                        {/* Navigation Indicator Icon - Vertical Center Right */}
-                        <div style={{
-                            position: 'absolute',
-                            top: '50%',
-                            right: '20px',
-                            transform: 'translateY(-50%)',
-                            zIndex: 100,
-                            pointerEvents: 'none',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: '8px'
-                        }}>
+                        {/* Navigation Controls */}
+                        {/* Left Arrow */}
+                        <div 
+                            onClick={flipPrev}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '20px',
+                                transform: 'translateY(-50%)',
+                                zIndex: 100,
+                                cursor: 'pointer',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: '8px',
+                                transition: 'all 0.3s ease'
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'}
+                            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(-50%) scale(1)'}
+                        >
+                            <div style={{
+                                background: 'rgba(221, 190, 61, 0.95)',
+                                color: '#002d44',
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 8px 25px rgba(0,0,0,0.4)',
+                                animation: 'dl-bounce-x-left 1.5s infinite'
+                            }}>
+                                <ChevronLeft size={24} />
+                            </div>
+                        </div>
+
+                        {/* Right Arrow */}
+                        <div 
+                            onClick={flipNext}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                right: '20px',
+                                transform: 'translateY(-50%)',
+                                zIndex: 100,
+                                cursor: 'pointer',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: '8px',
+                                transition: 'all 0.3s ease'
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)'}
+                            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(-50%) scale(1)'}
+                        >
                             <div style={{
                                 background: 'rgba(221, 190, 61, 0.95)',
                                 color: '#002d44',
@@ -225,6 +279,10 @@ const PremiumBook3D = () => {
                 @keyframes dl-bounce-x {
                     0%, 100% { transform: translateX(0); }
                     50% { transform: translateX(8px); }
+                }
+                @keyframes dl-bounce-x-left {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(-8px); }
                 }
             `}</style>
         </div>

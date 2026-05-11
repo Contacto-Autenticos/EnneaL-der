@@ -28,6 +28,7 @@ import {
     Linkedin,
     UserPlus,
     PlayCircle,
+    Pause,
     Mail,
     Globe
 } from 'lucide-react';
@@ -42,6 +43,101 @@ const DominiosLanding = ({ result, setTestResult }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [navHidden, setNavHidden] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
+    const [testimonialIndex, setTestimonialIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [transitionEnabled, setTransitionEnabled] = useState(true);
+
+    const testimonials = [
+        { 
+            text: "Increíble la precisión del reporte. Me ayudó a ponerle palabras a cosas que sentía pero no sabía explicar. Ahora tengo un mapa claro de por dónde empezar.",
+            author: "Liliana García",
+            stars: 5
+        },
+        { 
+            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%201.2.mp4#t=0.001",
+            author: "Viviana Colorado",
+            stars: 5
+        },
+        { 
+            text: "Por fin entiendo por qué me sentía tan agotada a pesar de que todo 'parecía estar bien'. El autodiagnóstico me dio el lenguaje que me faltaba.",
+            author: "Paula Sánchez",
+            stars: 5
+        },
+        { 
+            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%202.2.mp4#t=0.001",
+            author: "María Fernanda Carvajal",
+            stars: 5
+        },
+        { 
+            text: "Es una conversación honesta con uno mismo. Sin etiquetas, solo claridad pura sobre lo que hoy está influyendo en mi vida personal y profesional.",
+            author: "Mateo Rodríguez",
+            stars: 5
+        },
+        { 
+            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%203.2.mp4#t=1.5",
+            author: "Alex Cerón",
+            stars: 5
+        },
+        { 
+            text: "Pensaba que solo era estrés laboral, pero el reporte me mostró que el desequilibrio venía de mi área espiritual. Esa claridad cambió mi enfoque por completo.",
+            author: "Juan Carlos Ruiz",
+            stars: 5
+        }
+    ];
+
+    // Carousel Logic
+    useEffect(() => {
+        let interval;
+        if (isPlaying) {
+            // Smooth linear movement: move one card every 5 seconds
+            interval = setInterval(() => {
+                handleNext();
+            }, 5000);
+        }
+        return () => clearInterval(interval);
+    }, [isPlaying, testimonialIndex]);
+
+    const handlePrev = () => {
+        setIsPlaying(false); // Stop auto-play on manual interaction
+        if (testimonialIndex === 0) {
+            setTransitionEnabled(false);
+            setTestimonialIndex(testimonials.length);
+            setTimeout(() => {
+                setTransitionEnabled(true);
+                setTestimonialIndex(testimonials.length - 1);
+            }, 20);
+        } else {
+            setTransitionEnabled(true);
+            setTestimonialIndex((prev) => prev - 1);
+        }
+    };
+
+    const handleNext = (isManual = false) => {
+        if (isManual) setIsPlaying(false);
+
+        if (testimonialIndex === testimonials.length) {
+            setTransitionEnabled(false);
+            setTestimonialIndex(0);
+            setTimeout(() => {
+                setTransitionEnabled(true);
+                setTestimonialIndex(1);
+            }, 20);
+        } else if (testimonialIndex === testimonials.length - 1) {
+            setTestimonialIndex(testimonials.length);
+            setTimeout(() => {
+                setTransitionEnabled(false);
+                setTestimonialIndex(0);
+                setTimeout(() => setTransitionEnabled(true), 20);
+            }, isPlaying ? 5000 : 600); // Wait for current transition to finish
+        } else {
+            setTransitionEnabled(true);
+            setTestimonialIndex((prev) => prev + 1);
+        }
+    };
+
+    const togglePlay = () => {
+        setIsPlaying(!isPlaying);
+    };
 
     const radarData = [
         { domain: 'Dominio Corporal', score: 49 }, // 70%
@@ -454,44 +550,17 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     </p>
 
                     <div className="dl-testimonials-container">
-                        <div className="dl-testimonials-track">
-                            {[
-                                { 
-                                    text: "Increíble la precisión del reporte. Me ayudó a ponerle palabras a cosas que sentía pero no sabía explicar. Ahora tengo un mapa claro de por dónde empezar.",
-                                    author: "Liliana García",
-                                    stars: 5
-                                },
-                                { 
-                                    video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%201.2.mp4#t=0.001",
-                                    author: "Viviana Colorado",
-                                    stars: 5
-                                },
-                                { 
-                                    text: "Por fin entiendo por qué me sentía tan agotada a pesar de que todo 'parecía estar bien'. El autodiagnóstico me dio el lenguaje que me faltaba.",
-                                    author: "Paula Sánchez",
-                                    stars: 5
-                                },
-                                { 
-                                    video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%202.2.mp4#t=0.001",
-                                    author: "María Fernanda Carvajal",
-                                    stars: 5
-                                },
-                                { 
-                                    text: "Es una conversación honesta con uno mismo. Sin etiquetas, solo claridad pura sobre lo que hoy está influyendo en mi vida personal y profesional.",
-                                    author: "Mateo Rodríguez",
-                                    stars: 5
-                                },
-                                { 
-                                    video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%203.2.mp4#t=1.5",
-                                    author: "Alex Cerón",
-                                    stars: 5
-                                },
-                                { 
-                                    text: "Pensaba que solo era estrés laboral, pero el reporte me mostró que el desequilibrio venía de mi área espiritual. Esa claridad cambió mi enfoque por completo.",
-                                    author: "Juan Carlos Ruiz",
-                                    stars: 5
-                                }
-                            ].map((t, i) => (
+                        <div 
+                            className="dl-testimonials-track"
+                            style={{ 
+                                transform: `translateX(calc(-${testimonialIndex * 380}px))`,
+                                transition: transitionEnabled 
+                                    ? (isPlaying ? 'transform 5s linear' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)') 
+                                    : 'none',
+                                animation: 'none'
+                            }}
+                        >
+                            {[...testimonials, ...testimonials.slice(0, 5)].map((t, i) => (
                                 <div key={i} className="dl-testimonial-card" style={t.video ? { padding: '0', overflow: 'hidden' } : {}}>
                                     {t.video ? (
                                         <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -534,6 +603,19 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                 </div>
                             ))}
                         </div>
+                    </div>
+
+                    {/* Testimonials Controls */}
+                    <div className="dl-testimonials-controls">
+                        <button onClick={handlePrev} className="dl-testimonial-btn" aria-label="Anterior">
+                            <ArrowLeft size={24} />
+                        </button>
+                        <button onClick={togglePlay} className="dl-testimonial-btn dl-play-pause" aria-label={isPlaying ? 'Pausar' : 'Reproducir'}>
+                            {isPlaying ? <Pause size={24} /> : <PlayCircle size={24} />}
+                        </button>
+                        <button onClick={() => handleNext(true)} className="dl-testimonial-btn" aria-label="Siguiente">
+                            <ArrowRight size={24} />
+                        </button>
                     </div>
 
                     <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', width: '100%' }}>
