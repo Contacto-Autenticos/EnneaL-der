@@ -61,19 +61,33 @@ serve(async (req) => {
     // Calendar to use
     const calendarId = operatorEmail || Deno.env.get('GOOGLE_CALENDAR_ID') || 'primary';
 
-    // Simplified event body for diagnostic
+    // Re-enable Google Meet but keep attendees empty to avoid 403 error
     const eventBody = {
       summary: `Reserva: ${name}`,
-      description: `Cliente: ${name}\nEmail: ${email}\nTel: ${phone}\nServicio: ${serviceRequired}`,
+      description: `
+        CLIENTE: ${name}
+        EMAIL: ${email}
+        TELÉFONO: ${phone}
+        SERVICIO: ${serviceRequired}
+      `.trim(),
       start: {
         dateTime: startTime,
       },
       end: {
         dateTime: endTime,
+      },
+      conferenceData: {
+        createRequest: {
+          requestId: crypto.randomUUID(),
+          conferenceSolutionKey: {
+            type: "hangoutsMeet"
+          }
+        }
       }
     };
 
-    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events`, {
+    // Use conferenceDataVersion=1 to enable Meet link generation
+    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -85,21 +99,31 @@ serve(async (req) => {
     const eventData = await calendarResponse.json();
 
     if (!calendarResponse.ok) {
+      console.error('Google API Error:', eventData);
       return new Response(
-        JSON.stringify({ 
-          error: "Error de Google Calendar", 
-          googleError: eventData,
-          payloadSent: eventBody 
-        }),
+        JSON.stringify({ error: "Error al crear evento con Meet", details: eventData }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
       );
     }
 
+    // Extract Meet link from response
+    const meetLink = eventData.conferenceData?.entryPoints?.find((ep: any) => ep.entryPointType === 'video')?.uri || eventData.hangoutLink;
+
+    console.log('Evento creado con éxito. Link de Meet:', meetLink);
+
+    // TODO: Aquí integraremos el envío de correo por Brevo
+    // para notificar a Felipe y al cliente, ya que Google no lo hará automáticamente.
+
     return new Response(
-      JSON.stringify({ success: true, event: eventData }),
+      JSON.stringify({ 
+        success: true, 
+        event: eventData,
+        meetLink: meetLink
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    console.error('Edge Function Error:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
