@@ -46,6 +46,7 @@ import AutodiagPaymentStatus from './pages/AutodiagPaymentStatus';
 import WorkshopInscripcion from './pages/WorkshopInscripcion';
 import WorkshopPaymentStatus from './pages/WorkshopPaymentStatus';
 import DominiosLanding from './pages/DominiosLanding';
+import EneagramaLanding from './pages/EneagramaLanding';
 import Agenda from './pages/Agenda';
 
 function App() {
@@ -229,6 +230,7 @@ function App() {
         <Route path="/dominios-payment-status" element={<AutodiagPaymentStatus />} />
 
         <Route path="/dominios-landing" element={<DominiosLanding result={testResult} setTestResult={setTestResult} />} />
+        <Route path="/eneagrama-landing" element={<EneagramaLanding result={testResult} setTestResult={setTestResult} />} />
 
         <Route path="/inscripcion" element={<WorkshopInscripcion />} />
         <Route path="/inscripcion-status" element={<WorkshopPaymentStatus />} />
