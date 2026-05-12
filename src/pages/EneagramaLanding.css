@@ -241,7 +241,7 @@ html {
 
 .el-video-square-wrapper {
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     aspect-ratio: 1 / 1;
     position: relative;
     border-radius: 30px;
