@@ -20,8 +20,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 45, 68, 0.65); /* Auténticos deep blue tint */
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.2); /* Sutil oscurecimiento para legibilidad sin tinte azul */
+  backdrop-filter: blur(1px);
   z-index: 1;
 }
 
