@@ -33,7 +33,6 @@ import {
     Globe
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
-import FascinantesRadar from '../components/FascinantesRadar';
 import PremiumBook3D from '../components/PremiumBook3D';
 import './EneagramaLanding.css';
 
@@ -138,15 +137,6 @@ const EneagramaLanding = ({ result, setTestResult }) => {
     const togglePlay = () => {
         setIsPlaying(!isPlaying);
     };
-
-    const radarData = [
-        { domain: 'Dominio Corporal', score: 49 }, // 70%
-        { domain: 'Dominio Mental', score: 57.4 }, // 82%
-        { domain: 'Dominio Emocional', score: 44.1 }, // 63%
-        { domain: 'Dominio Social', score: 38.5 }, // 55%
-        { domain: 'Dominio Espiritual', score: 54.6 }, // 78%
-        { domain: 'Dominio Financiero', score: 35 }, // 50%
-    ];
 
     // Deep Linking: Recover state from URL if missing
     useEffect(() => {
@@ -287,15 +277,17 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                         </div>
 
                         {/* 2. Radar Chart Column */}
-                        <div className="el-hero-chart">
-                            <div className="el-radar-wrapper" style={{ marginTop: '-40px' }}>
-                                <FascinantesRadar 
-                                    data={radarData} 
-                                    height={window.innerWidth < 600 ? 450 : 700} 
-                                    radius={window.innerWidth < 600 ? "90%" : "50%"} 
-                                    transparent={true}
-                                    isDark={true}
+                        <div className="el-hero-video-section">
+                            <div className="el-video-square-wrapper">
+                                <video 
+                                    src="/Videos/Eneagrama-Autenticos-landing.mp4" 
+                                    className="el-hero-video"
+                                    autoPlay 
+                                    loop 
+                                    muted 
+                                    playsInline
                                 />
+                                <div className="el-video-overlay-glow"></div>
                             </div>
                         </div>
 

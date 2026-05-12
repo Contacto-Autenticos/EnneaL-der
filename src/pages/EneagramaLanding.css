@@ -230,18 +230,48 @@ html {
     padding-right: 40px;
 }
 
-.el-hero-chart {
+.el-hero-video-section {
     grid-area: chart;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    width: 100%;
     animation: dlFadeIn 1.5s ease-out;
 }
 
-.el-radar-wrapper {
-    background: transparent;
-    transform: scale(1.2);
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+.el-video-square-wrapper {
     width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(221, 190, 61, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(221, 190, 61, 0.1);
+}
+
+.el-hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.el-video-overlay-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0, 45, 68, 0.4) 100%);
+    pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+    .el-hero-video-section {
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .el-video-square-wrapper {
+        max-width: 90vw;
+    }
 }
 
 .el-hero-actions {
