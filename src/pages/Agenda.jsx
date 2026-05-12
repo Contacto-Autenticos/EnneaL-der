@@ -97,23 +97,30 @@ const Agenda = () => {
         const timeStr = `${displayHours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')} ${ampm}`;
         
         let isOverlapping = false;
+        let isPast = false;
+        
         if (selectedDate) {
           const slotStart = new Date(selectedDate);
           slotStart.setHours(hours, mins, 0, 0);
           const slotEnd = new Date(slotStart.getTime() + duration * 60000);
 
-          for (const busy of busySlots) {
-            const busyStart = new Date(busy.start);
-            const busyEnd = new Date(busy.end);
-            
-            if (slotStart < busyEnd && slotEnd > busyStart) {
-              isOverlapping = true;
-              break;
+          // Filtrar horarios que ya pasaron
+          if (slotStart < new Date()) {
+            isPast = true;
+          } else {
+            for (const busy of busySlots) {
+              const busyStart = new Date(busy.start);
+              const busyEnd = new Date(busy.end);
+              
+              if (slotStart < busyEnd && slotEnd > busyStart) {
+                isOverlapping = true;
+                break;
+              }
             }
           }
         }
 
-        if (!isOverlapping) {
+        if (!isOverlapping && !isPast) {
           slots.push(timeStr);
         }
         currentMinutes += duration;
