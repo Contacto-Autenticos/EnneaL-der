@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/eneagrama(.*)",
+            "destination": "/eneagrama.html"
+        },
+        {
             "source": "/dominios(.*)",
             "destination": "/dominios.html"
         },
