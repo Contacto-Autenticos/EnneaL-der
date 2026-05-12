@@ -26,6 +26,7 @@ import ScrollToTop from './components/ScrollToTop';
 import FloatingScrollToTop from './components/FloatingScrollToTop';
 import BasicTestIntro from './pages/BasicTestIntro';
 import Analytics from './components/Analytics';
+import Gateway from './pages/Gateway';
 import Hub from './pages/Hub';
 import MyResults from './pages/MyResults';
 import FascinantesIntro from './pages/FascinantesIntro';
@@ -210,7 +211,8 @@ function App() {
       <FloatingScrollToTop />
       <Routes>
         <Route path="/eneagrama" element={<Home />} />
-        <Route path="/" element={<Hub />} />
+        <Route path="/" element={<Gateway />} />
+        <Route path="/hub" element={<Hub />} />
         <Route path="/my-results" element={<MyResults />} />
         <Route path="/Extraordinarios" element={<Extraordinarios />} />
         <Route path="/Fascinantes" element={<Fascinantes />} />

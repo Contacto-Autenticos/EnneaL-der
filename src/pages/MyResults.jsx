@@ -26,7 +26,7 @@ const MyResults = () => {
         <div className="hub-container my-results-container animate-fade-in">
             <div className="hub-content">
                 <header className="hub-header">
-                    <button onClick={() => navigate('/')} className="btn-back-hub">
+                    <button onClick={() => navigate('/hub')} className="btn-back-hub">
                         <ArrowLeft size={18} /> Volver al Hub
                     </button>
                     <h1 className="hub-title">Mis Resultados</h1>
@@ -39,7 +39,7 @@ const MyResults = () => {
                 {!hasAnyResult ? (
                     <div className="empty-results">
                         <p>Aún no has completado ningún análisis.</p>
-                        <button onClick={() => navigate('/')} className="btn-start">
+                        <button onClick={() => navigate('/hub')} className="btn-start">
                             Comenzar ahora
                         </button>
                     </div>

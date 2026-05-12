@@ -335,7 +335,7 @@ const AutodiagPayment = () => {
                     )}
                 </div>
 
-                <button onClick={() => navigate('/')} className="btn-cancel" style={{ marginTop: '15px', opacity: 0.6 }}>
+                <button onClick={() => navigate('/hub')} className="btn-cancel" style={{ marginTop: '15px', opacity: 0.6 }}>
                     Volver
                 </button>
             </div>

@@ -1,0 +1,125 @@
+.gateway-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-image: url('/Montañas 02.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.gateway-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 45, 68, 0.65); /* Auténticos deep blue tint */
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.gateway-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  max-width: 600px;
+  width: 100%;
+  animation: fadeUpIn 1.2s ease-out;
+}
+
+.gateway-logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.gateway-logo {
+  max-width: 250px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+  transition: transform 0.4s ease;
+}
+
+.gateway-logo:hover {
+  transform: scale(1.03);
+}
+
+.gateway-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.gateway-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #002d44;
+  background-color: #ddbe3d;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.gateway-btn:hover {
+  transform: translateY(-3px);
+  background-color: #c9ab33;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Secondary style variant just in case they want a distinct color for 6 Dominios */
+.gateway-btn.secondary {
+  background-color: transparent;
+  color: #ddbe3d;
+  border-color: #ddbe3d;
+}
+
+.gateway-btn.secondary:hover {
+  background-color: rgba(221, 190, 61, 0.1);
+}
+
+@keyframes fadeUpIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .gateway-logo {
+    max-width: 200px;
+  }
+  .gateway-buttons {
+    gap: 1.2rem;
+  }
+  .gateway-btn {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
