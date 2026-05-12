@@ -106,22 +106,18 @@ serve(async (req) => {
     const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
     if (BREVO_API_KEY) {
       try {
-        // Prepare the list of recipients including guests
-        const recipients = [{ email: email, name: name }];
-        
+        // 1. Send confirmation to Client and Guests
+        const clientRecipients = [{ email: email, name: name }];
         if (guests) {
           const guestList = guests.split(',').map((g: string) => g.trim()).filter((g: string) => g);
           guestList.forEach((guestEmail: string) => {
-            recipients.push({ email: guestEmail, name: "Invitado" });
+            clientRecipients.push({ email: guestEmail, name: "Invitado" });
           });
         }
 
-        // Also notify Felipe
-        recipients.push({ email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" });
-
-        const emailPayload = {
+        const clientEmailPayload = {
           sender: { name: "Auténticos", email: "contacto@autenticos.co" },
-          to: recipients,
+          to: clientRecipients,
           subject: `Confirmación de Cita: ${serviceRequired}`,
           htmlContent: `
             <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
@@ -140,15 +136,45 @@ serve(async (req) => {
           `
         };
 
-        await fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'api-key': BREVO_API_KEY
-          },
-          body: JSON.stringify(emailPayload)
-        });
+        // 2. Send personalized notification to Felipe
+        const adminEmailPayload = {
+          sender: { name: "Auténticos Notifications", email: "contacto@autenticos.co" },
+          to: [{ email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" }],
+          subject: `NUEVA RESERVA: ${name} - ${serviceRequired}`,
+          htmlContent: `
+            <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px; background-color: #fff;">
+              <h2 style="color: #2b6cb0;">Nueva Reserva Recibida</h2>
+              <p>Hola <strong>Felipe</strong>,</p>
+              <p>Tienes un nuevo agendamiento para una sesión de <strong>${serviceRequired}</strong> por parte de <strong>${name}</strong>.</p>
+              
+              <div style="background: #ebf8ff; border-left: 4px solid #3182ce; padding: 15px; margin: 20px 0;">
+                <p style="margin: 5px 0;"><strong>👤 Cliente:</strong> ${name}</p>
+                <p style="margin: 5px 0;"><strong>📧 Email:</strong> ${email}</p>
+                <p style="margin: 5px 0;"><strong>📞 Teléfono:</strong> ${phone}</p>
+                <p style="margin: 5px 0;"><strong>📅 Fecha:</strong> ${new Date(startTime).toLocaleString('es-ES', { timeZone: 'America/Bogota' })}</p>
+                <p style="margin: 5px 0;"><strong>💻 Link Meet:</strong> <a href="${meetLink}">${meetLink}</a></p>
+              </div>
+              
+              ${guests ? `<p><strong>👥 Invitados adicionales:</strong> ${guests}</p>` : ''}
+              
+              <p style="font-size: 0.85em; color: #718096;">Este es un mensaje automático del sistema de reservas de Auténticos.</p>
+            </div>
+          `
+        };
+
+        // Execute both sends
+        await Promise.all([
+          fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
+            body: JSON.stringify(clientEmailPayload)
+          }),
+          fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
+            body: JSON.stringify(adminEmailPayload)
+          })
+        ]);
       } catch (emailError) {
         console.error('Error enviando correos:', emailError);
       }
