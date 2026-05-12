@@ -34,7 +34,8 @@ const Agenda = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showGuests, setShowGuests] = useState(false);
-  
+  const [busySlots, setBusySlots] = useState([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -94,7 +95,27 @@ const Agenda = () => {
         const ampm = hours >= 12 ? 'PM' : 'AM';
         const displayHours = hours > 12 ? hours - 12 : (hours === 0 ? 12 : hours);
         const timeStr = `${displayHours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')} ${ampm}`;
-        slots.push(timeStr);
+        
+        let isOverlapping = false;
+        if (selectedDate) {
+          const slotStart = new Date(selectedDate);
+          slotStart.setHours(hours, mins, 0, 0);
+          const slotEnd = new Date(slotStart.getTime() + duration * 60000);
+
+          for (const busy of busySlots) {
+            const busyStart = new Date(busy.start);
+            const busyEnd = new Date(busy.end);
+            
+            if (slotStart < busyEnd && slotEnd > busyStart) {
+              isOverlapping = true;
+              break;
+            }
+          }
+        }
+
+        if (!isOverlapping) {
+          slots.push(timeStr);
+        }
         currentMinutes += duration;
       }
     });
@@ -102,6 +123,42 @@ const Agenda = () => {
   };
 
   const availableSlots = selectedService ? generateSlots(selectedService.duration) : [];
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      if (!selectedDate) {
+        setBusySlots([]);
+        return;
+      }
+
+      setIsLoadingSlots(true);
+      try {
+        const payload = { 
+          date: selectedDate.toISOString(), 
+          operatorEmail: 'felipebeltranh@gmail.com' 
+        };
+        
+        const { data, error } = await supabase.functions.invoke('check-calendar-availability', {
+          body: payload
+        });
+
+        if (error) throw error;
+        
+        if (data && data.busy) {
+          setBusySlots(data.busy);
+        } else {
+          setBusySlots([]);
+        }
+      } catch (error) {
+        console.error("Error fetching calendar availability:", error);
+        setBusySlots([]);
+      } finally {
+        setIsLoadingSlots(false);
+      }
+    };
+
+    fetchAvailability();
+  }, [selectedDate]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -200,7 +257,7 @@ const Agenda = () => {
         guests: formData.guests,
         startTime: startDateTime.toISOString(),
         endTime: endDateTime.toISOString(),
-        operatorEmail: 'contacto@autenticos.co'
+        operatorEmail: 'felipebeltranh@gmail.com'
       };
 
       const { data, error } = await supabase.functions.invoke('create-calendar-event', {
@@ -356,17 +413,30 @@ const Agenda = () => {
                     <p className="selected-date-text">
                       Para el {selectedDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}
                     </p>
-                    <div className="slots-grid">
-                      {availableSlots.map(slot => (
-                      <button 
-                        key={slot}
-                        className={`slot-btn ${selectedSlot === slot ? 'selected' : ''}`}
-                        onClick={() => setSelectedSlot(slot)}
-                      >
-                        {slot}
-                      </button>
-                    ))}
-                  </div>
+                    {isLoadingSlots ? (
+                      <div className="flex flex-col items-center justify-center py-8">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold mb-4" style={{borderTopColor: 'transparent'}}></div>
+                        <p className="text-gray-500 text-sm">Buscando horarios disponibles...</p>
+                      </div>
+                    ) : availableSlots.length > 0 ? (
+                      <div className="slots-grid">
+                        {availableSlots.map(slot => (
+                          <button 
+                            key={slot}
+                            className={`slot-btn ${selectedSlot === slot ? 'selected' : ''}`}
+                            onClick={() => setSelectedSlot(slot)}
+                          >
+                            {slot}
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-8 text-center bg-gray-50 rounded-lg">
+                        <CalendarIcon size={32} className="text-gray-400 mb-3 opacity-50" />
+                        <p className="text-gray-600 font-medium">No hay horarios disponibles</p>
+                        <p className="text-gray-400 text-sm mt-1">Todos los espacios para este día están ocupados. Por favor, selecciona otra fecha.</p>
+                      </div>
+                    )}
                     
                     {selectedSlot && (
                       <button 
@@ -532,23 +602,40 @@ const Agenda = () => {
         </div>
       )}
 
-      <footer className="agenda-footer">
-        <div className="footer-content">
+      <footer style={{ 
+        padding: '50px 24px', 
+        background: '#ffffff', 
+        textAlign: 'center',
+        borderTop: '1px solid rgba(0, 45, 68, 0.05)',
+        width: '100%',
+        marginTop: 'auto'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <img 
             src="/logo-azul.png" 
             alt="Auténticos" 
-            className="footer-logo" 
+            style={{ 
+              height: '38px', 
+              marginBottom: '25px',
+              opacity: '1'
+            }} 
           />
           
-          <div className="footer-socials">
-            <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer" className="social-link"><Globe size={28} /></a>
-            <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" className="social-link"><Instagram size={28} /></a>
-            <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer" className="social-link"><Facebook size={28} /></a>
-            <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" className="social-link"><Youtube size={28} /></a>
-            <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="social-link"><Linkedin size={28} /></a>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            gap: '24px',
+            marginBottom: '0px'
+          }}>
+            <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Globe size={24} /></a>
+            <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Instagram size={24} /></a>
+            <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Facebook size={24} /></a>
+            <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Youtube size={24} /></a>
+            <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Linkedin size={24} /></a>
           </div>
         </div>
       </footer>
+
     </div>
   );
 };
