@@ -61,34 +61,19 @@ serve(async (req) => {
     // Calendar to use
     const calendarId = operatorEmail || Deno.env.get('GOOGLE_CALENDAR_ID') || 'primary';
 
-    // Prepare the event body without attendees to avoid 403 Forbidden error for service accounts
-    // on personal gmail accounts. We put client info in description instead.
+    // Simplified event body for diagnostic
     const eventBody = {
-      summary: `Cita: ${name} - ${serviceRequired}`,
-      description: `
-        CLIENTE: ${name}
-        EMAIL: ${email}
-        TELÉFONO: ${phone}
-        SERVICIO: ${serviceRequired}
-        ${guests ? `INVITADOS: ${guests}` : ''}
-      `.trim(),
+      summary: `Reserva: ${name}`,
+      description: `Cliente: ${name}\nEmail: ${email}\nTel: ${phone}\nServicio: ${serviceRequired}`,
       start: {
         dateTime: startTime,
       },
       end: {
         dateTime: endTime,
-      },
-      conferenceData: {
-        createRequest: {
-          requestId: crypto.randomUUID(),
-          conferenceSolutionKey: {
-            type: "hangoutsMeet"
-          }
-        }
       }
     };
 
-    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`, {
+    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -100,23 +85,21 @@ serve(async (req) => {
     const eventData = await calendarResponse.json();
 
     if (!calendarResponse.ok) {
-      console.error('Google API Error:', eventData);
       return new Response(
-        JSON.stringify({ error: "Error al crear el evento en Google", details: eventData }),
+        JSON.stringify({ 
+          error: "Error de Google Calendar", 
+          googleError: eventData,
+          payloadSent: eventBody 
+        }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
       );
     }
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        event: eventData, 
-        meetLink: eventData.conferenceData?.entryPoints?.find((ep: any) => ep.entryPointType === 'video')?.uri || eventData.hangoutLink 
-      }),
+      JSON.stringify({ success: true, event: eventData }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Edge Function Error:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
