@@ -230,11 +230,7 @@ const Agenda = () => {
         {view === 'services' ? (
           <div className="services-view">
             <div className="services-view-header">
-              <h1 className="services-title">Elija su cita</h1>
-              <div className="services-search">
-                <Search size={18} className="text-gray-400" />
-                <input type="text" placeholder="Buscar..." />
-              </div>
+              <h1 className="services-title">Elija el espacio que desea reservar</h1>
             </div>
 
             <div className="services-grid">
