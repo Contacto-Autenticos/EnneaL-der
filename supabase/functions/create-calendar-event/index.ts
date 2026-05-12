@@ -61,33 +61,27 @@ serve(async (req) => {
     // Calendar to use
     const calendarId = operatorEmail || Deno.env.get('GOOGLE_CALENDAR_ID') || 'primary';
 
-    // Re-enable Google Meet but keep attendees empty to avoid 403 error
+    // Use the permanent Meet link provided by the user
+    const meetLink = "https://meet.google.com/ofb-gcng-fvb";
+
     const eventBody = {
-      summary: `Reserva: ${name}`,
+      summary: `Reserva: ${name} - ${serviceRequired}`,
       description: `
         CLIENTE: ${name}
         EMAIL: ${email}
         TELÉFONO: ${phone}
         SERVICIO: ${serviceRequired}
+        LINK REUNIÓN: ${meetLink}
       `.trim(),
       start: {
         dateTime: startTime,
       },
       end: {
         dateTime: endTime,
-      },
-      conferenceData: {
-        createRequest: {
-          requestId: crypto.randomUUID(),
-          conferenceSolutionKey: {
-            type: "hangoutsMeet"
-          }
-        }
       }
     };
 
-    // Use conferenceDataVersion=1 to enable Meet link generation
-    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`, {
+    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -101,15 +95,12 @@ serve(async (req) => {
     if (!calendarResponse.ok) {
       console.error('Google API Error:', eventData);
       return new Response(
-        JSON.stringify({ error: "Error al crear evento con Meet", details: eventData }),
+        JSON.stringify({ error: "Error al crear el evento en Google Calendar", details: eventData }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
       );
     }
 
-    // Extract Meet link from response
-    const meetLink = eventData.conferenceData?.entryPoints?.find((ep: any) => ep.entryPointType === 'video')?.uri || eventData.hangoutLink;
-
-    console.log('Evento creado con éxito. Link de Meet:', meetLink);
+    console.log('Evento creado con éxito. Usando link fijo:', meetLink);
 
     // Send confirmation emails via Brevo
     const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
@@ -118,30 +109,28 @@ serve(async (req) => {
         const emailPayload = {
           sender: { name: "Auténticos", email: "hola@autenticos.co" },
           to: [
-            { email: email, name: name }, // Al cliente
-            { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" } // A Felipe
+            { email: email, name: name }, // To client
+            { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" } // To Felipe
           ],
           subject: `Confirmación de Cita: ${serviceRequired}`,
           htmlContent: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px;">
-              <h2 style="color: #333;">¡Cita Agendada con Éxito!</h2>
+            <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+              <h2 style="color: #2D3748; text-align: center;">¡Cita Confirmada!</h2>
               <p>Hola <strong>${name}</strong>,</p>
-              <p>Tu cita para <strong>${serviceRequired}</strong> ha sido confirmada.</p>
-              <hr style="border: 0; border-top: 1px solid #eee;" />
-              <p><strong>Detalles de la reunión:</strong></p>
-              <ul>
-                <li><strong>Fecha:</strong> ${new Date(startTime).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</li>
-                <li><strong>Hora:</strong> ${new Date(startTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} (Hora Colombia)</li>
-                <li><strong>Link de Google Meet:</strong> <a href="${meetLink}">${meetLink}</a></li>
-              </ul>
-              <p>Si tienes alguna duda, puedes contactarnos respondiendo a este correo.</p>
-              <br />
-              <p>Saludos,<br /><strong>Equipo Auténticos</strong></p>
+              <p>Tu sesión de <strong>${serviceRequired}</strong> ha sido agendada correctamente.</p>
+              <div style="background: #F7FAFC; border-radius: 8px; padding: 15px; margin: 20px 0;">
+                <p style="margin: 5px 0;"><strong>📅 Fecha:</strong> ${new Date(startTime).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p style="margin: 5px 0;"><strong>⏰ Hora:</strong> ${new Date(startTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} (Hora Colombia)</p>
+                <p style="margin: 5px 0;"><strong>💻 Reunión (Google Meet):</strong> <a href="${meetLink}" style="color: #3182CE;">Entrar a la sesión</a></p>
+              </div>
+              <p style="font-size: 0.9em; color: #718096; text-align: center;">Te recomendamos conectarte 5 minutos antes de la hora acordada.</p>
+              <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
+              <p style="text-align: center;">Saludos,<br /><strong>Equipo Auténticos</strong></p>
             </div>
           `
         };
 
-        const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+        await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -150,18 +139,9 @@ serve(async (req) => {
           },
           body: JSON.stringify(emailPayload)
         });
-
-        if (brevoResponse.ok) {
-          console.log('Correos de confirmación enviados correctamente');
-        } else {
-          const brevoError = await brevoResponse.json();
-          console.error('Error al enviar correos por Brevo:', brevoError);
-        }
       } catch (emailError) {
-        console.error('Error en el proceso de envío de correos:', emailError);
+        console.error('Error enviando correos:', emailError);
       }
-    } else {
-      console.warn('BREVO_API_KEY no configurada. No se enviaron correos.');
     }
 
     return new Response(
