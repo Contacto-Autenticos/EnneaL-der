@@ -107,7 +107,7 @@ serve(async (req) => {
     if (BREVO_API_KEY) {
       try {
         const emailPayload = {
-          sender: { name: "Auténticos", email: "hola@autenticos.co" },
+          sender: { name: "Auténticos", email: "contacto@autenticos.co" },
           to: [
             { email: email, name: name }, // To client
             { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" } // To Felipe
