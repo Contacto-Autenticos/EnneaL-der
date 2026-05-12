@@ -491,8 +491,8 @@ const Agenda = () => {
 
                 <form className="booking-form" onSubmit={handleBooking}>
                   <div className="form-group">
-                    <label className="text-sm font-semibold text-gray-600 flex items-center gap-2 mb-2">
-                      <User size={16} className="text-gray-400" />
+                    <label className="text-sm font-semibold text-gray-600 flex items-center mb-2">
+                      <User size={16} className="text-gray-400 mr-2" />
                       Nombre Completo
                     </label>
                     <input 
@@ -506,8 +506,8 @@ const Agenda = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="text-sm font-semibold text-gray-600 flex items-center gap-2 mb-2">
-                      <Mail size={16} className="text-gray-400" />
+                    <label className="text-sm font-semibold text-gray-600 flex items-center mb-2">
+                      <Mail size={16} className="text-gray-400 mr-2" />
                       Correo Electrónico
                     </label>
                     <input 
@@ -521,8 +521,8 @@ const Agenda = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="text-sm font-semibold text-gray-600 flex items-center gap-2 mb-2">
-                      <Phone size={16} className="text-gray-400" />
+                    <label className="text-sm font-semibold text-gray-600 flex items-center mb-2">
+                      <Phone size={16} className="text-gray-400 mr-2" />
                       Teléfono
                     </label>
                     <input 
@@ -536,8 +536,8 @@ const Agenda = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="text-sm font-semibold text-gray-600 flex items-center gap-2 mb-2">
-                      <HelpCircle size={16} className="text-gray-400" />
+                    <label className="text-sm font-semibold text-gray-600 flex items-center mb-2">
+                      <HelpCircle size={16} className="text-gray-400 mr-2" />
                       ¿Qué servicio requiere?
                     </label>
                     <input 
