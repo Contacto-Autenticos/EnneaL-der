@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/dominios",
+            "destination": "/dominios.html"
+        },
+        {
             "source": "/agenda",
             "destination": "/agenda.html"
         },

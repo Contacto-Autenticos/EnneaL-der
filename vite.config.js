@@ -10,7 +10,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        agenda: resolve(__dirname, 'agenda.html')
+        agenda: resolve(__dirname, 'agenda.html'),
+        dominios: resolve(__dirname, 'dominios.html')
       }
     }
   }
