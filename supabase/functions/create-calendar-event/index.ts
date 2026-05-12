@@ -111,8 +111,58 @@ serve(async (req) => {
 
     console.log('Evento creado con éxito. Link de Meet:', meetLink);
 
-    // TODO: Aquí integraremos el envío de correo por Brevo
-    // para notificar a Felipe y al cliente, ya que Google no lo hará automáticamente.
+    // Send confirmation emails via Brevo
+    const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
+    if (BREVO_API_KEY) {
+      try {
+        const emailPayload = {
+          sender: { name: "Auténticos", email: "hola@autenticos.co" },
+          to: [
+            { email: email, name: name }, // Al cliente
+            { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" } // A Felipe
+          ],
+          subject: `Confirmación de Cita: ${serviceRequired}`,
+          htmlContent: `
+            <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px;">
+              <h2 style="color: #333;">¡Cita Agendada con Éxito!</h2>
+              <p>Hola <strong>${name}</strong>,</p>
+              <p>Tu cita para <strong>${serviceRequired}</strong> ha sido confirmada.</p>
+              <hr style="border: 0; border-top: 1px solid #eee;" />
+              <p><strong>Detalles de la reunión:</strong></p>
+              <ul>
+                <li><strong>Fecha:</strong> ${new Date(startTime).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</li>
+                <li><strong>Hora:</strong> ${new Date(startTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} (Hora Colombia)</li>
+                <li><strong>Link de Google Meet:</strong> <a href="${meetLink}">${meetLink}</a></li>
+              </ul>
+              <p>Si tienes alguna duda, puedes contactarnos respondiendo a este correo.</p>
+              <br />
+              <p>Saludos,<br /><strong>Equipo Auténticos</strong></p>
+            </div>
+          `
+        };
+
+        const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'api-key': BREVO_API_KEY
+          },
+          body: JSON.stringify(emailPayload)
+        });
+
+        if (brevoResponse.ok) {
+          console.log('Correos de confirmación enviados correctamente');
+        } else {
+          const brevoError = await brevoResponse.json();
+          console.error('Error al enviar correos por Brevo:', brevoError);
+        }
+      } catch (emailError) {
+        console.error('Error en el proceso de envío de correos:', emailError);
+      }
+    } else {
+      console.warn('BREVO_API_KEY no configurada. No se enviaron correos.');
+    }
 
     return new Response(
       JSON.stringify({ 
