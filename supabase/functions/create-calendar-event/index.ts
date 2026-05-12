@@ -106,12 +106,22 @@ serve(async (req) => {
     const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY");
     if (BREVO_API_KEY) {
       try {
+        // Prepare the list of recipients including guests
+        const recipients = [{ email: email, name: name }];
+        
+        if (guests) {
+          const guestList = guests.split(',').map((g: string) => g.trim()).filter((g: string) => g);
+          guestList.forEach((guestEmail: string) => {
+            recipients.push({ email: guestEmail, name: "Invitado" });
+          });
+        }
+
+        // Also notify Felipe
+        recipients.push({ email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" });
+
         const emailPayload = {
           sender: { name: "Auténticos", email: "contacto@autenticos.co" },
-          to: [
-            { email: email, name: name }, // To client
-            { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" } // To Felipe
-          ],
+          to: recipients,
           subject: `Confirmación de Cita: ${serviceRequired}`,
           htmlContent: `
             <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
