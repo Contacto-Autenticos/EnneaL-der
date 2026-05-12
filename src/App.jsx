@@ -45,6 +45,7 @@ import AutodiagPaymentStatus from './pages/AutodiagPaymentStatus';
 import WorkshopInscripcion from './pages/WorkshopInscripcion';
 import WorkshopPaymentStatus from './pages/WorkshopPaymentStatus';
 import DominiosLanding from './pages/DominiosLanding';
+import Agenda from './pages/Agenda';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -352,6 +353,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/programa" element={<CourseLanding />} />
         <Route path="/programa-genuinos" element={<GenuinosLanding />} />
+        <Route path="/agenda" element={<Agenda />} />
         <Route
           path="/test-liderazgo"
           element={
