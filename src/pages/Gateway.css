@@ -89,17 +89,6 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Secondary style variant just in case they want a distinct color for 6 Dominios */
-.gateway-btn.secondary {
-  background-color: transparent;
-  color: #ddbe3d;
-  border-color: #ddbe3d;
-}
-
-.gateway-btn.secondary:hover {
-  background-color: rgba(221, 190, 61, 0.1);
-}
-
 @keyframes fadeUpIn {
   0% {
     opacity: 0;

@@ -27,7 +27,7 @@ const Gateway = () => {
                     </button>
                     
                     <button 
-                        className="gateway-btn secondary"
+                        className="gateway-btn"
                         onClick={() => navigate("/dominios-landing")}
                     >
                         6 Dominios
