@@ -78,15 +78,47 @@
   border: 2px solid transparent;
   border-radius: 50px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.gateway-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -150%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: buttonShine 5s infinite;
 }
 
 .gateway-btn:hover {
-  transform: translateY(-3px);
-  background-color: #c9ab33;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  background-color: #f1d45e; /* Color más claro para iluminar */
+  box-shadow: 0 10px 30px rgba(221, 190, 61, 0.5); /* Glow dorado */
+  color: #001a29;
+}
+
+@keyframes buttonShine {
+  0% {
+    left: -150%;
+  }
+  20% {
+    left: 150%;
+  }
+  100% {
+    left: 150%;
+  }
 }
 
 @keyframes fadeUpIn {
