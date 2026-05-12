@@ -103,8 +103,8 @@ serve(async (req) => {
     const eventData = await calendarResponse.json();
 
     if (!calendarResponse.ok) {
-      console.error('Calendar Error:', eventData);
-      throw new Error(`Failed to create calendar event: ${eventData.error?.message || 'Unknown error'}`);
+      console.error('Google Calendar API Error:', JSON.stringify(eventData, null, 2));
+      throw new Error(`Google API Error: ${eventData.error?.message || JSON.stringify(eventData)}`);
     }
 
     return new Response(
@@ -112,9 +112,12 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error(error);
+    console.error('Edge Function Catch Block:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: error instanceof Error ? error.stack : String(error)
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
     );
   }
