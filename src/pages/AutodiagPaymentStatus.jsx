@@ -140,7 +140,7 @@ const AutodiagPaymentStatus = () => {
                             Intentar de nuevo
                         </button>
                         <br />
-                        <button onClick={() => navigate('/hub')} className="btn-cancel">
+                        <button onClick={() => navigate('/')} className="btn-cancel">
                             Volver al Centro de Análisis
                         </button>
                     </div>

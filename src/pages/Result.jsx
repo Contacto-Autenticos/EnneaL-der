@@ -192,7 +192,7 @@ const Result = ({ result, user, onReset }) => {
             <div style={{ padding: '2rem', textAlign: 'center' }}>
                 No hay resultados disponibles.
                 <button
-                    onClick={() => window.location.href = '/test'}
+                    onClick={() => window.location.href = '/eneagrama-test'}
                     style={{
                         marginTop: '1rem',
                         padding: '0.5rem 1rem',
@@ -242,11 +242,11 @@ const Result = ({ result, user, onReset }) => {
     }, [enneatypeScores, enneatypes]);
 
     const handleChartClick = () => {
-        navigate('/detailed-result');
+        navigate('/eneagrama-detailed-result');
     };
 
     const handleDetailedAnalysis = () => {
-        navigate('/initial-analysis');
+        navigate('/eneagrama-initial-analysis');
     };
 
     return (

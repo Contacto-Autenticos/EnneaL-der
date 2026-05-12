@@ -18,7 +18,7 @@ const SingleEnneatypeResult = () => {
         return (
             <div style={{ padding: '2rem', textAlign: 'center' }}>
                 <p>Eneatipo no encontrado.</p>
-                <button onClick={() => navigate('/result')} style={{ padding: '10px 20px', marginTop: '10px' }}>
+                <button onClick={() => navigate('/eneagrama-result')} style={{ padding: '10px 20px', marginTop: '10px' }}>
                     Volver
                 </button>
             </div>
@@ -132,7 +132,7 @@ const SingleEnneatypeResult = () => {
             <div className="footer-buttons">
                 {/* Back Button */}
                 <button
-                    onClick={() => navigate('/result')}
+                    onClick={() => navigate('/eneagrama-result')}
                     className="footer-btn btn-back"
                 >
                     <ArrowLeft size={18} />

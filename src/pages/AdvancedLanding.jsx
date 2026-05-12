@@ -166,7 +166,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <div className="al-nav-links">
-                        <span onClick={() => navigate('/result')} className="al-nav-back-arrow" title="Volver al resultado">
+                        <span onClick={() => navigate('/eneagrama-result')} className="al-nav-back-arrow" title="Volver al resultado">
                             <ArrowLeft size={16} />
                         </span>
                         <a href="#inicio" className="al-nav-link">Inicio</a>
@@ -196,7 +196,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </p>
 
                 <div className="al-hero-actions" style={{ flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                    <button onClick={() => navigate('/payment')} className="al-btn-main">
+                    <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-main">
                         QUIERO MI ANÁLISIS AVANZADO
                         <ArrowRight size={22} />
                     </button>
@@ -338,7 +338,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                     ))}
                                 </div>
 
-                                <button onClick={() => navigate('/payment')} className="al-btn-buy">
+                                <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-buy">
                                     Desbloquear análisis completo <Lock size={24} />
                                 </button>
 
@@ -376,7 +376,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                             <div className="al-gold-text">Lo que comprendes, se convierte en liderazgo.</div>
                         </h2>
 
-                        <button onClick={() => navigate('/payment')} className="al-btn-shimmer" style={{ margin: '0 auto' }}>
+                        <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-shimmer" style={{ margin: '0 auto' }}>
                             <span className="al-btn-label">
                                 ACCEDER AHORA A MI ANÁLISIS AVANZADO
                             </span>
@@ -389,7 +389,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
             {/* Mobile FAB */}
             <div className="al-mobile-fab">
-                <button onClick={() => navigate('/payment')} className="al-btn-fab">
+                <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-fab">
                     Desbloquear Análisis Ahora
                 </button>
             </div>

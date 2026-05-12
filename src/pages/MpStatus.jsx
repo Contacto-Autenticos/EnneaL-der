@@ -76,7 +76,7 @@ const MpStatus = () => {
                 }
 
                 setTimeout(() => {
-                    navigate('/payment-success');
+                    navigate('/eneagrama-payment-success');
                 }, 2000);
 
             } else if (status === 'failure') {

@@ -123,7 +123,7 @@ const InitialTransition = ({ result }) => {
 
                     <button
                         className="it-btn-main"
-                        onClick={() => navigate('/advanced-landing')}
+                        onClick={() => navigate('/eneagrama-advanced-test-landing')}
                     >
                         <span>Descubrir mi análisis completo</span>
                         <ArrowRight size={22} />

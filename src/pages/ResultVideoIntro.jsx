@@ -22,14 +22,14 @@ const ResultVideoIntro = ({ type }) => {
         setIsFading(true);
         // Wait for CSS transition (0.8s) before navigating
         setTimeout(() => {
-            navigate('/advanced-analysis-result');
+            navigate('/eneagrama-advanced-analysis-result');
         }, 800);
     };
 
     const handleSkip = () => {
         setIsFading(true);
         setTimeout(() => {
-            navigate('/advanced-analysis-result');
+            navigate('/eneagrama-advanced-analysis-result');
         }, 400); // Shorter fade for skip
     };
 

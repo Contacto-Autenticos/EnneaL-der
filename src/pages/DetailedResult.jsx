@@ -126,7 +126,7 @@ const DetailedResult = ({ result }) => {
         return (
             <div style={{ padding: '2rem', textAlign: 'center' }}>
                 No hay resultados disponibles.{' '}
-                <button onClick={() => navigate('/test')}>Realizar Test</button>
+                <button onClick={() => navigate('/eneagrama-test')}>Realizar Test</button>
             </div>
         );
     }
@@ -215,7 +215,7 @@ const DetailedResult = ({ result }) => {
                 {/* Actions */}
                 <div className="result-actions">
                     <button
-                        onClick={() => navigate('/result')}
+                        onClick={() => navigate('/eneagrama-result')}
                         className="btn-action btn-secondary-transparent"
                     >
                         <ArrowLeft size={18} /> Regresar

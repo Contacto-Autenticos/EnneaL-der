@@ -249,7 +249,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 <div className="advanced-result-container no-data-view">
                     <h2>No se encontraron resultados</h2>
                     <p>Por favor, realiza el análisis avanzado primero.</p>
-                    <button onClick={() => navigate('/')} className="btn-advanced-finish btn-deepen-primary">
+                    <button onClick={() => navigate('/eneagrama')} className="btn-advanced-finish btn-deepen-primary">
                         Ir al inicio
                     </button>
                 </div>
@@ -918,7 +918,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
 
                         <div className="footer-bottom-row">
                             <button
-                                onClick={() => navigate('/')}
+                                onClick={() => navigate('/eneagrama')}
                                 className="btn-advanced-finish btn-back-alt"
                             >
                                 <ArrowLeft size={18} /> Regresar

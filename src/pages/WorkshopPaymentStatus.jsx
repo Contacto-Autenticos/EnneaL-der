@@ -138,7 +138,7 @@ const WorkshopPaymentStatus = () => {
 
                 {uiStatus === 'APPROVED' && (
                     <div style={{ marginTop: '30px' }}>
-                        <button onClick={() => navigate('/')} className="btn-retry" style={{ backgroundColor: '#002d44' }}>
+                        <button onClick={() => navigate('/eneagrama')} className="btn-retry" style={{ backgroundColor: '#002d44' }}>
                             Volver al inicio
                         </button>
                     </div>

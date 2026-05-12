@@ -156,7 +156,7 @@ const PaymentStatus = () => {
                     }
 
                     setTimeout(() => {
-                        navigate('/payment-success', { state: { automatedCode } });
+                        navigate('/eneagrama-payment-success', { state: { automatedCode } });
                     }, 2000);
                 } else if (transactionStatus === 'DECLINED') {
                     setStatus('DECLINED');
@@ -207,7 +207,7 @@ const PaymentStatus = () => {
                             console.error('Error fetching generated code:', err);
                         }
 
-                        setTimeout(() => navigate('/payment-success', { state: { automatedCode } }), 2000);
+                        setTimeout(() => navigate('/eneagrama-payment-success', { state: { automatedCode } }), 2000);
                         return;
                     }
                 } catch (e) {
@@ -245,11 +245,11 @@ const PaymentStatus = () => {
 
                 {(status === 'DECLINED' || status === 'ERROR') && (
                     <div style={{ marginTop: '30px' }}>
-                        <button onClick={() => navigate('/payment')} className="btn-retry">
+                        <button onClick={() => navigate('/eneagrama-payment')} className="btn-retry">
                             Intentar de nuevo
                         </button>
                         <br />
-                        <button onClick={() => navigate('/result')} className="btn-cancel">
+                        <button onClick={() => navigate('/eneagrama-result')} className="btn-cancel">
                             Volver a mis resultados
                         </button>
                     </div>

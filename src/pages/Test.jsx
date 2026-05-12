@@ -122,7 +122,7 @@ const Test = ({ onComplete }) => {
                 isSavingRef.current = true;
                 await saveAnonymousResponses(newAnswers, shuffledQuestions);
                 onComplete(newAnswers, shuffledQuestions);
-                navigate('/result');
+                navigate('/eneagrama-result');
             }
         }, 150);
     };
@@ -149,7 +149,7 @@ const Test = ({ onComplete }) => {
                 isSavingRef.current = true;
                 await saveAnonymousResponses(answers, shuffledQuestions);
                 onComplete(answers, shuffledQuestions);
-                navigate('/result');
+                navigate('/eneagrama-result');
             }
         }
     };

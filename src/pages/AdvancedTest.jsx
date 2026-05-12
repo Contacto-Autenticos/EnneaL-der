@@ -86,7 +86,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                 setCurrentQuestionIndex(prev => prev + 1);
             } else {
                 onComplete(newAnswers, filteredQuestions);
-                navigate('/advanced-transition');
+                navigate('/eneagrama-advanced-transition');
             }
         }, 150);
     };
@@ -105,7 +105,7 @@ const AdvancedTest = ({ topTypes, onComplete, fullTest = false }) => {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
                 onComplete(answers, filteredQuestions);
-                navigate('/advanced-transition');
+                navigate('/eneagrama-advanced-transition');
             }
         }
     };

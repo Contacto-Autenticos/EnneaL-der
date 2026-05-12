@@ -26,7 +26,7 @@ const MyResults = () => {
         <div className="hub-container my-results-container animate-fade-in">
             <div className="hub-content">
                 <header className="hub-header">
-                    <button onClick={() => navigate('/hub')} className="btn-back-hub">
+                    <button onClick={() => navigate('/')} className="btn-back-hub">
                         <ArrowLeft size={18} /> Volver al Hub
                     </button>
                     <h1 className="hub-title">Mis Resultados</h1>
@@ -39,14 +39,14 @@ const MyResults = () => {
                 {!hasAnyResult ? (
                     <div className="empty-results">
                         <p>Aún no has completado ningún análisis.</p>
-                        <button onClick={() => navigate('/hub')} className="btn-start">
+                        <button onClick={() => navigate('/')} className="btn-start">
                             Comenzar ahora
                         </button>
                     </div>
                 ) : (
                     <div className="results-stack">
                         {testResult && (
-                            <div className="result-item-card" onClick={() => navigate('/result')}>
+                            <div className="result-item-card" onClick={() => navigate('/eneagrama-result')}>
                                 <div className="result-item-badge">Eneagrama</div>
                                 <div className="result-item-content">
                                     <h3>Eneatipo {testResult.enneatype}</h3>
@@ -57,7 +57,7 @@ const MyResults = () => {
                         )}
 
                         {advancedTestResult && (
-                            <div className="result-item-card" onClick={() => navigate('/advanced-analysis-result')}>
+                            <div className="result-item-card" onClick={() => navigate('/eneagrama-advanced-analysis-result')}>
                                 <div className="result-item-badge">Liderazgo</div>
                                 <div className="result-item-content">
                                     <h3>Perfil {advancedTestResult.confirmedType}</h3>
@@ -78,7 +78,7 @@ const MyResults = () => {
                         </div>
                         <button 
                             className="btn-sync-action"
-                            onClick={() => navigate('/advanced-intro')}
+                            onClick={() => navigate('/eneagrama-advanced-register')}
                         >
                             Vincular con mi Email
                         </button>

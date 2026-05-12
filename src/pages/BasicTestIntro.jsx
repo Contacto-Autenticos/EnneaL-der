@@ -37,7 +37,7 @@ const BasicTestIntro = () => {
                 </div>
 
                 <button
-                    onClick={() => navigate('/test')}
+                    onClick={() => navigate('/eneagrama-test')}
                     className="btn-continue"
                 >
                     Continuar <ArrowRight size={20} />

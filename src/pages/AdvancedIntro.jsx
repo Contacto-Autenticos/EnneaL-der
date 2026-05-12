@@ -279,7 +279,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                                                 <button
                                                     type="button"
                                                     className="btn-buy-access"
-                                                    onClick={() => navigate('/payment')}
+                                                    onClick={() => navigate('/eneagrama-payment')}
                                                 >
                                                     Adquirir nuevo acceso
                                                 </button>

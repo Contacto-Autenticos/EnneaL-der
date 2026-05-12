@@ -43,7 +43,7 @@ const Genuinos = () => {
         <div className="hub-container animate-fade-in">
             <div className="hub-content">
                 <header className="hub-header">
-                    <button onClick={() => navigate('/hub')} className="btn-back-hub">
+                    <button onClick={() => navigate('/')} className="btn-back-hub">
                         <ArrowLeft size={18} /> Volver al Hub
                     </button>
                     <h1 className="hub-title" style={{ color: '#ddbe3d' }}>GENUINOS</h1>

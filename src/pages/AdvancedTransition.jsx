@@ -56,7 +56,7 @@ const AdvancedTransition = () => {
 
         // Final transition
         const finalTimer = setTimeout(() => {
-            navigate('/result-intro');
+            navigate('/eneagrama-result-intro');
         }, totalTime);
 
         return () => {

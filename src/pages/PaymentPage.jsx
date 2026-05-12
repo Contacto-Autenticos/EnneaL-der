@@ -409,7 +409,7 @@ const PaymentPage = () => {
                     Compra 100% segura
                 </div>
 
-                <button onClick={() => navigate('/result')} className="btn-cancel">
+                <button onClick={() => navigate('/eneagrama-result')} className="btn-cancel">
                     Cancelar
                 </button>
             </div>

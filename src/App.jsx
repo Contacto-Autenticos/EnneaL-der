@@ -198,7 +198,7 @@ function App() {
     setTestResult(null);
     localStorage.removeItem('enneagramUser');
     localStorage.removeItem('enneagramResult');
-    window.location.href = "/";
+    window.location.href = "/eneagrama";
   };
 
   if (loading) return <div>Cargando...</div>;
@@ -209,8 +209,8 @@ function App() {
       <ScrollToTop />
       <FloatingScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/hub" element={<Hub />} />
+        <Route path="/eneagrama" element={<Home />} />
+        <Route path="/" element={<Hub />} />
         <Route path="/my-results" element={<MyResults />} />
         <Route path="/Extraordinarios" element={<Extraordinarios />} />
         <Route path="/Fascinantes" element={<Fascinantes />} />
@@ -232,70 +232,70 @@ function App() {
         <Route path="/inscripcion-status" element={<WorkshopPaymentStatus />} />
 
         <Route
-          path="/test-intro"
+          path="/eneagrama-test-intro"
           element={<BasicTestIntro />}
         />
 
         <Route
-          path="/test"
+          path="/eneagrama-test"
           element={<Test onComplete={handleTestComplete} />}
         />
 
         <Route
-          path="/result"
+          path="/eneagrama-result"
           element={
             testResult ? (
               <Result result={testResult} user={user} onReset={handleReset} />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/eneagrama" replace />
             )
           }
         />
 
 
         <Route
-          path="/payment"
+          path="/eneagrama-payment"
           element={<PaymentPage />}
         />
 
         <Route
-          path="/advanced-landing"
+          path="/eneagrama-advanced-test-landing"
           element={<AdvancedLanding result={testResult} setTestResult={setTestResult} />}
         />
 
         <Route
-          path="/payment-status"
+          path="/eneagrama-payment-status"
           element={<PaymentStatus />}
         />
 
         <Route
-          path="/mp-status"
+          path="/eneagrama-mp-status"
           element={<MpStatus />}
         />
 
         <Route
-          path="/payment-success"
+          path="/eneagrama-payment-success"
           element={<PaymentSuccess />}
         />
 
         <Route
-          path="/detailed-result"
+          path="/eneagrama-detailed-result"
           element={
             testResult ? (
               <DetailedResult result={testResult} />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/eneagrama" replace />
             )
           }
         />
 
         <Route
-          path="/advanced-intro"
+          path="/eneagrama-advanced-register"
           element={<AdvancedIntro onRegister={handleRegister} user={user} initialEnneatype={testResult?.enneatype} />}
         />
 
         <Route
-          path="/advanced-test"
+          path="/eneagrama-advanced-test"
           element={
             testResult ? (
               <AdvancedTest
@@ -303,50 +303,50 @@ function App() {
                 onComplete={handleAdvancedTestComplete}
               />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/eneagrama" replace />
             )
           }
         />
 
         <Route
-          path="/advanced-transition"
+          path="/eneagrama-advanced-transition"
           element={<AdvancedTransition />}
         />
 
         <Route
-          path="/result-intro"
+          path="/eneagrama-result-intro"
           element={
             advancedTestResult ? (
               <ResultVideoIntro type={advancedTestResult.confirmedType} />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/eneagrama" replace />
             )
           }
         />
 
         <Route
-          path="/initial-analysis"
+          path="/eneagrama-initial-analysis"
           element={<InitialTransition result={testResult} />}
         />
 
         <Route
-          path="/advanced-analysis-result"
+          path="/eneagrama-advanced-analysis-result"
           element={
             advancedTestResult ? (
               <AdvancedAnalysisResult result={advancedTestResult} user={user} />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/eneagrama" replace />
             )
           }
         />
 
         <Route
-          path="/advanced-analysis-result/:type"
+          path="/eneagrama-advanced-analysis-result/:type"
           element={<AdvancedAnalysisResult />}
         />
 
         <Route
-          path="/result/:type"
+          path="/eneagrama-result/:type"
           element={<SingleEnneatypeResult />}
         />
 
@@ -355,12 +355,12 @@ function App() {
         <Route path="/programa-genuinos" element={<GenuinosLanding />} />
         <Route path="/agenda" element={<Agenda />} />
         <Route
-          path="/test-liderazgo"
+          path="/eneagrama-empresas"
           element={
             <AdvancedIntro
               onRegister={handleRegister}
               user={user}
-              targetRoute="/advanced-test-full"
+              targetRoute="/eneagrama-advanced-test-full"
               showOrganization={true}
               requireAccessCode={true}
               initialEnneatype={testResult?.enneatype}
@@ -369,7 +369,7 @@ function App() {
         />
 
         <Route
-          path="/advanced-test-full"
+          path="/eneagrama-advanced-test-full"
           element={
             <AdvancedTest
               fullTest={true}
@@ -379,7 +379,7 @@ function App() {
         />
 
         {/* Redirect any other route to home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/eneagrama" replace />} />
       </Routes>
     </Router>
   );
