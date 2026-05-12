@@ -11,11 +11,13 @@ const Gateway = () => {
             
             <div className="gateway-content">
                 <div className="gateway-logo-container">
-                    <img 
-                        src="/logo-moneda.png" 
-                        alt="Auténticos Logo" 
-                        className="gateway-logo"
-                    />
+                    <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer">
+                        <img 
+                            src="/logo-moneda.png" 
+                            alt="Auténticos Logo" 
+                            className="gateway-logo"
+                        />
+                    </a>
                 </div>
 
                 <div className="gateway-buttons">
