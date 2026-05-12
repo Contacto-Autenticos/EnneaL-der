@@ -58,29 +58,26 @@ serve(async (req) => {
 
     const accessToken = tokenData.access_token;
 
-    // Prepare attendees
-    const attendees = [{ email: email }];
-    if (guests) {
-      const guestList = guests.split(',').map((g: string) => g.trim()).filter((g: string) => g);
-      guestList.forEach((g: string) => attendees.push({ email: g }));
-    }
-
     // Calendar to use
     const calendarId = operatorEmail || Deno.env.get('GOOGLE_CALENDAR_ID') || 'primary';
 
-    // Create Calendar Event
+    // Prepare the event body without attendees to avoid 403 Forbidden error for service accounts
+    // on personal gmail accounts. We put client info in description instead.
     const eventBody = {
-      summary: `Reserva: ${serviceRequired} - ${name}`,
-      description: `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone}\nServicio: ${serviceRequired}`,
+      summary: `Cita: ${name} - ${serviceRequired}`,
+      description: `
+        CLIENTE: ${name}
+        EMAIL: ${email}
+        TELÉFONO: ${phone}
+        SERVICIO: ${serviceRequired}
+        ${guests ? `INVITADOS: ${guests}` : ''}
+      `.trim(),
       start: {
         dateTime: startTime,
-        timeZone: 'America/Bogota', // Zona horaria de Colombia
       },
       end: {
         dateTime: endTime,
-        timeZone: 'America/Bogota', // Zona horaria de Colombia
       },
-      attendees: attendees,
       conferenceData: {
         createRequest: {
           requestId: crypto.randomUUID(),
@@ -91,7 +88,7 @@ serve(async (req) => {
       }
     };
 
-    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1&sendUpdates=all`, {
+    const calendarResponse = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?conferenceDataVersion=1`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -103,21 +100,25 @@ serve(async (req) => {
     const eventData = await calendarResponse.json();
 
     if (!calendarResponse.ok) {
-      console.error('Google Calendar API Error:', JSON.stringify(eventData, null, 2));
-      throw new Error(`Google API Error: ${eventData.error?.message || JSON.stringify(eventData)}`);
+      console.error('Google API Error:', eventData);
+      return new Response(
+        JSON.stringify({ error: "Error al crear el evento en Google", details: eventData }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
     }
 
     return new Response(
-      JSON.stringify({ success: true, event: eventData, meetLink: eventData.hangoutLink }),
+      JSON.stringify({ 
+        success: true, 
+        event: eventData, 
+        meetLink: eventData.conferenceData?.entryPoints?.find((ep: any) => ep.entryPointType === 'video')?.uri || eventData.hangoutLink 
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Edge Function Catch Block:', error);
+    console.error('Edge Function Error:', error);
     return new Response(
-      JSON.stringify({ 
-        error: error.message,
-        details: error instanceof Error ? error.stack : String(error)
-      }),
+      JSON.stringify({ error: error.message }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
     );
   }
