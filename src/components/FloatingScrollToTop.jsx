@@ -6,7 +6,8 @@ const FloatingScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     // Hide on specific pages where it overlaps with other buttons
-    if (window.location.pathname === '/dominios-landing') {
+    const excludedPages = ['/dominios-landing', '/eneagrama-landing'];
+    if (excludedPages.includes(window.location.pathname)) {
         return null;
     }
 

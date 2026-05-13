@@ -638,7 +638,7 @@ const Agenda = () => {
             <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Instagram size={24} /></a>
             <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Facebook size={24} /></a>
             <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Youtube size={24} /></a>
-            <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Linkedin size={24} /></a>
+            <a href="https://www.linkedin.com/in/felipebeltranh/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Linkedin size={24} /></a>
           </div>
         </div>
       </footer>
