@@ -47,7 +47,10 @@ import WorkshopInscripcion from './pages/WorkshopInscripcion';
 import WorkshopPaymentStatus from './pages/WorkshopPaymentStatus';
 import DominiosLanding from './pages/DominiosLanding';
 import EneagramaLanding from './pages/EneagramaLanding';
+import LiderazgoTest from './pages/LiderazgoTest';
+import LiderazgoResults from './pages/LiderazgoResults';
 import Agenda from './pages/Agenda';
+import LiderazgoTestIntro from './pages/LiderazgoTestIntro';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -253,6 +256,9 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/dominios-test" element={<FascinantesTest />} />
         <Route path="/dominios-transition" element={<FascinantesTransition />} />
         <Route path="/dominios-result" element={<FascinantesResult />} />
+        <Route path="/liderazgo-test-intro" element={<LiderazgoTestIntro />} />
+        <Route path="/liderazgo-test" element={<LiderazgoTest />} />
+        <Route path="/liderazgo-results" element={<LiderazgoResults />} />
 
         <Route path="/dominios" element={<AutodiagRegister />} />
         <Route path="/dominios-payment" element={<AutodiagPayment />} />

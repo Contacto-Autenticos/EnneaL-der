@@ -1,0 +1,210 @@
+.lr-radar-section {
+    width: 100%;
+}
+
+.lr-radar-layout {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.lr-radar-chart-container {
+    flex: 0 0 440px;
+    max-width: 440px;
+    position: relative;
+}
+
+.lr-radar-svg {
+    width: 100%;
+    height: auto;
+}
+
+/* Slice hover effect */
+.lr-polar-slice {
+    transition: fill-opacity 0.2s ease, transform 0.2s ease;
+    cursor: none;
+}
+
+.lr-polar-slice:hover {
+    fill-opacity: 0.95 !important;
+    filter: brightness(1.1);
+}
+
+/* Tooltip - Glassmorphism */
+.lr-chart-tooltip {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+    background: rgba(0, 30, 48, 0.85); /* Darker and more opaque for text clarity */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Subtle shadow for extra sharpness */
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    animation: lr-tooltip-in 0.15s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: left 0.1s ease-out, top 0.1s ease-out; /* Smooth following */
+}
+
+@keyframes lr-tooltip-in {
+    0% { opacity: 0; transform: translateX(-50%) translateY(5px); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.lr-tooltip-color {
+    width: 5px;
+    min-height: 36px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.lr-tooltip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lr-tooltip-name {
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.lr-tooltip-score {
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #ddbe3d;
+}
+
+.lr-tooltip-interp {
+    font-size: 0.7rem;
+    font-weight: 600;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+}
+
+/* Slice animation: scale from center */
+.lr-polar-slice {
+    transform-origin: 230px 230px;
+    animation: lr-slice-grow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+}
+
+@keyframes lr-slice-grow {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.lr-radar-label {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Legend */
+.lr-radar-legend {
+    flex: 1;
+    min-width: 200px;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lr-radar-legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.lr-radar-legend-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 45, 68, 0.08);
+}
+
+.lr-legend-color {
+    width: 5px;
+    height: 100%;
+    min-height: 38px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.lr-legend-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.lr-legend-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lr-legend-name {
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: #002d44;
+}
+
+.lr-legend-score {
+    font-weight: 800;
+    font-size: 0.78rem;
+    color: #002d44;
+}
+
+.lr-legend-bar-bg {
+    height: 5px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.lr-legend-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lr-legend-interp {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .lr-radar-layout {
+        flex-direction: column;
+    }
+    
+    .lr-radar-chart-container {
+        flex: 0 0 auto;
+        max-width: 300px;
+    }
+    
+    .lr-radar-legend {
+        width: 100%;
+    }
+}

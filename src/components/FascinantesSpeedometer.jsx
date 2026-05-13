@@ -43,13 +43,13 @@ const FascinantesSpeedometer = ({ value, label }) => {
                         {/* 5 segments dividers (on top of the arc) */}
                         {[216, 252, 288, 324].map((angle, i) => (
                              <line 
-                                key={i} 
-                                x1="100" 
-                                y1="100" 
-                                x2={100 + 100 * Math.cos(Math.PI * angle / 180)} 
-                                y2={100 + 100 * Math.sin(Math.PI * angle / 180)} 
-                                stroke="#00121d" 
-                                strokeWidth="2" 
+                                 key={i} 
+                                 x1="100" 
+                                 y1="100" 
+                                 x2={100 + 100 * Math.cos(Math.PI * angle / 180)} 
+                                 y2={100 + 100 * Math.sin(Math.PI * angle / 180)} 
+                                 stroke="#00121d" 
+                                 strokeWidth="2" 
                              />
                         ))}
                         
