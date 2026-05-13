@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { uploadResultImage } from '../utils/imageUpload';
+import { supabase } from '../supabaseClient';
 
 // Use environment variables or place your actual EmailJS config here
 // It is recommended the user configures these in their env or provides them.
@@ -58,6 +59,26 @@ const EmailResultModal = ({ isOpen, onClose, userEmail, imageBlob, top3 }) => {
             );
 
             setStatus('success');
+
+            // 4. Sync with Odoo CRM
+            try {
+                const resultsSummary = top3.map((t, i) => `${i + 1}. Eneatipo ${t.type} (${t.title}) - Afinidad: ${t.affinity}`).join('\n');
+                const scoresMap = top3.reduce((acc, curr) => ({ ...acc, [`Tipo ${curr.type}`]: curr.score }), {});
+
+                await supabase.functions.invoke('odoo-integration', {
+                    body: {
+                        email: email.trim().toLowerCase(),
+                        name: email.split('@')[0], // Fallback name since basic test is anonymous
+                        test_type: 'Eneagrama Básico',
+                        results_summary: resultsSummary,
+                        scores: scoresMap
+                    }
+                });
+                console.log('Odoo sync successful (Basic Test)');
+            } catch (odooError) {
+                console.error('Error syncing with Odoo:', odooError);
+                // We don't block the user if Odoo fails, as email was already sent
+            }
 
             // Auto close after success
             setTimeout(() => {

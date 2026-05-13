@@ -110,6 +110,31 @@ const FascinantesResult = () => {
                 // Clear the needs_save flag so it doesn't save again on refresh
                 localStorage.removeItem('fascinantes_needs_save');
                 sessionStorage.setItem('autodiag_saved', 'true');
+
+                // --- INTEGRACIÓN ODOO ---
+                try {
+                    console.log('Iniciando sincronización con Odoo...');
+                    await supabase.functions.invoke('odoo-integration', {
+                        body: {
+                            email: userData?.email,
+                            name: userData?.name,
+                            test_type: 'Fascinantes',
+                            results_summary: `${analysis?.name}: ${analysis?.insight}`,
+                            scores: {
+                                corporal: domainScores.find(s => s.id === 'corporal')?.score || 0,
+                                mental: domainScores.find(s => s.id === 'mental')?.score || 0,
+                                emocional: domainScores.find(s => s.id === 'emocional')?.score || 0,
+                                social: domainScores.find(s => s.id === 'social')?.score || 0,
+                                espiritual: domainScores.find(s => s.id === 'espiritual')?.score || 0,
+                                financiero: domainScores.find(s => s.id === 'financiero')?.score || 0,
+                            }
+                        }
+                    });
+                    console.log('Sincronización con Odoo completada.');
+                } catch (odooErr) {
+                    console.error('Error en la integración con Odoo:', odooErr);
+                }
+                // ------------------------
             } catch (err) {
                 console.error('Error saving fascinantes result:', err);
             } finally {

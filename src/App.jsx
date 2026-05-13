@@ -186,6 +186,35 @@ function App() {
           }
         );
         console.log('Advanced results email sent with enriched data!');
+
+        // 4. Sync with Odoo CRM
+        try {
+          const resultsSummary = `
+Eneatipo Confirmado: ${type} - ${result.winner.name}
+Centro de Inteligencia: ${details.triads.center}
+Estilo Social: ${details.triads.social}
+Miedo Básico: ${details.motivations.fear}
+Deseo Básico: ${details.motivations.desire}
+          `.trim();
+
+          const scoresMap = (result.results || []).reduce((acc, curr) => ({ 
+            ...acc, 
+            [`Tipo ${curr.type}`]: curr.score 
+          }), {});
+
+          await supabase.functions.invoke('odoo-integration', {
+            body: {
+              email: normalizedEmail,
+              name: user.name,
+              test_type: 'Eneagrama Avanzado',
+              results_summary: resultsSummary,
+              scores: scoresMap
+            }
+          });
+          console.log('Odoo sync successful (Advanced Test)');
+        } catch (odooError) {
+          console.error('Error syncing with Odoo (Advanced):', odooError);
+        }
       } catch (error) {
         console.error('Failed to send advanced results email or update DB:', error);
       }
