@@ -48,38 +48,28 @@ const EneagramaLanding = ({ result, setTestResult }) => {
 
     const testimonials = [
         { 
-            text: "Increíble la precisión del reporte. Me ayudó a ponerle palabras a cosas que sentía pero no sabía explicar. Ahora tengo un mapa claro de por dónde empezar.",
-            author: "Liliana García",
+            text: "Increíble que un test tan rápido sea tan preciso. Me ayudó a entender por qué siempre reacciono de la misma manera ante el estrés. ¡Muy recomendado!",
+            author: "Andrea Rivas",
             stars: 5
         },
         { 
-            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%201.2.mp4#t=0.001",
-            author: "Viviana Colorado",
+            text: "Me encantó descubrir mi eneatipo base. La descripción que recibí al final me dio mucha claridad sobre mis motivaciones ocultas. Un excelente punto de partida.",
+            author: "Carlos Méndez",
             stars: 5
         },
         { 
-            text: "Por fin entiendo por qué me sentía tan agotada a pesar de que todo 'parecía estar bien'. El autodiagnóstico me dio el lenguaje que me faltaba.",
-            author: "Paula Sánchez",
+            text: "Siempre tuve curiosidad sobre el Eneagrama y este test gratuito fue la puerta de entrada perfecta. Es sencillo, intuitivo y los resultados son reveladores.",
+            author: "Elena Torres",
             stars: 5
         },
         { 
-            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%202.2.mp4#t=0.001",
-            author: "María Fernanda Carvajal",
+            text: "Lo hice en 5 minutos y me sorprendió lo mucho que se parece a mi realidad. Ver mis 3 eneatipos más cercanos me hizo mucho sentido.",
+            author: "Javier López",
             stars: 5
         },
         { 
-            text: "Es una conversación honesta con uno mismo. Sin etiquetas, solo claridad pura sobre lo que hoy está influyendo en mi vida personal y profesional.",
-            author: "Mateo Rodríguez",
-            stars: 5
-        },
-        { 
-            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%203.2.mp4#t=1.5",
-            author: "Alex Cerón",
-            stars: 5
-        },
-        { 
-            text: "Pensaba que solo era estrés laboral, pero el reporte me mostró que el desequilibrio venía de mi área espiritual. Esa claridad cambió mi enfoque por completo.",
-            author: "Juan Carlos Ruiz",
+            text: "Una herramienta muy útil para quienes buscamos autoconocimiento sin complicaciones. La precisión es impresionante para ser una versión gratuita.",
+            author: "Sofia Castro",
             stars: 5
         }
     ];
@@ -188,28 +178,28 @@ const EneagramaLanding = ({ result, setTestResult }) => {
 
     const faqs = [
         {
-            q: "¿Qué es exactamente este análisis?",
-            a: "Es una experiencia de autoobservación diseñada para ayudarte a entender con más claridad cómo se encuentran las áreas más importantes de tu vida: mental, emocional, corporal, social, espiritual y financiera."
+            q: "¿Es realmente gratuito?",
+            a: "Sí, este test es una herramienta de acceso libre diseñada para ayudarte a dar el primer paso en tu proceso de autoconocimiento sin costo alguno."
         },
         {
-            q: "¿Cuánto tiempo toma completarlo?",
-            a: "La experiencia completa toma aproximadamente entre 30 y 45 minutos, dependiendo del ritmo con el que respondas."
+            q: "¿Cuánto tiempo toma realizarlo?",
+            a: "Te tomará entre 3 y 5 minutos. Es una versión optimizada para darte resultados precisos y profundos en poco tiempo."
         },
         {
-            q: "¿Cómo recibo mis resultados?",
-            a: "Al finalizar, recibirás un reporte personalizado con el análisis de tus 6 dominios, interpretaciones y recomendaciones prácticas."
+            q: "¿Qué obtengo al finalizar el test?",
+            a: "Recibirás los 3 eneatipos más cercanos a tu personalidad. Si deseas una mayor precisión y un análisis profundo de tu perfil completo, podrás optar por realizar nuestro autodiagnóstico avanzado."
         },
         {
-            q: "¿Mis respuestas son privadas?",
-            a: "Sí. Tu información y tus respuestas son completamente confidenciales y no se comparten con terceros."
+            q: "¿Qué tan preciso es el resultado?",
+            a: "El test es altamente efectivo si respondes con total honestidad desde quién eres realmente, y no desde quién te gustaría ser o quién crees que deberías ser."
         },
         {
-            q: "¿Puedo repetir el análisis más adelante?",
-            a: "Sí. Muchas personas vuelven a realizarlo después de un tiempo para observar cambios en su proceso personal."
+            q: "¿Necesito conocimientos previos del Eneagrama?",
+            a: "Para nada. El test está diseñado para guiarte paso a paso de forma intuitiva. Solo necesitas disposición para observarte con sinceridad."
         },
         {
-            q: "¿Qué pasa si no hago el análisis ahora?",
-            a: "Seguirás operando con el mismo nivel de energía y los mismos 'puntos ciegos' que tienes hoy. Este mapa es la inversión más pequeña de tiempo y dinero que puedes hacer para ganar años de claridad y equilibrio en tu vida personal y profesional."
+            q: "¿Qué pasa si me identifico con más de un eneatipo?",
+            a: "Es normal, todos tenemos rasgos de varios tipos. El test te ayudará a identificar tu 'esencia' o eneatipo base, que es el punto de partida para tu crecimiento."
         }
     ];
 
@@ -233,7 +223,7 @@ const EneagramaLanding = ({ result, setTestResult }) => {
     }, []);
 
     const handleAction = () => {
-        navigate('/eneagrama-payment');
+        navigate('/eneagrama-test-intro');
     };
 
     return (
@@ -250,9 +240,9 @@ const EneagramaLanding = ({ result, setTestResult }) => {
 
                     <div className="el-nav-links">
                         <a href="#inicio" className="el-nav-link">Inicio</a>
-                        <a href="#dominios" className="el-nav-link">Dominios</a>
+                        <a href="#dominios" className="el-nav-link">Eneatipos</a>
+                        <a href="#testimonios" className="el-nav-link">Testimonios</a>
                         <a href="#preguntas" className="el-nav-link">Preguntas</a>
-                        <a href="#precios" className="el-nav-link">Inversión</a>
                     </div>
                 </div>
             </nav>
@@ -264,15 +254,13 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                         {/* 1. Text Column */}
                         <div className="el-hero-text">
                             <h1 className="el-hero-title">
-                                <span className="el-hero-title-top">Puedes seguir funcionando…</span>
-                                <span className="el-gold-text">y aun así sentirte completamente perdido por dentro.</span>
+                                <span className="el-hero-title-top">Deja de vivir en automático…</span>
+                                <span className="el-gold-text">y descubre tus patrones internos.</span>
                             </h1>
 
                             <p className="el-hero-subtitle">
-                                Descubre qué áreas de tu vida están <br />
-                                drenando tu energía, bloqueando <br />
-                                tu claridad y alejándote de la persona <br />
-                                que realmente quieres ser.
+                                Tu personalidad tiene un código oculto que dicta cómo reaccionas, cómo amas y por qué te bloqueas. <br />
+                                Realiza nuestro test gratuito y obtén el mapa exacto de tu esencia en menos de 5 minutos.
                             </p>
                         </div>
 
@@ -294,7 +282,7 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                         {/* 3. Actions Column (Now separate to control order) */}
                         <div className="el-hero-actions">
                             <button onClick={handleAction} className="el-btn-main">
-                                QUIERO MI MAPA DE CLARIDAD
+                                INICIAR MI TEST GRATUITO
                                 <ArrowRight size={22} />
                             </button>
                         </div>
@@ -315,17 +303,17 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                         marginBottom: '60px',
                         color: '#002d44'
                     }}>
-                        ¿Te has sentido <span style={{ color: '#ddbe3d' }}>así últimamente?</span>
+                        ¿Te cuesta entender el <span style={{ color: '#ddbe3d' }}>"por qué" de tus acciones?</span>
                     </h2>
 
                     <div className="el-empathy-grid">
                         {[
-                            "Sabes que algo no está bien, pero no logras explicar qué es exactamente.",
-                            "Te sientes agotado físicamente, pero intuyes que el cansancio es más profundo.",
-                            "Funcionas en automático, cumpliendo con todo pero desconectado de ti.",
-                            "Hay áreas de tu vida que has normalizado, aunque sabes que te están drenando.",
-                            "Te cuesta identificar qué emoción está dominando tus decisiones hoy.",
-                            "Buscas avanzar, pero sientes que hay un freno invisible que no sabes nombrar."
+                            "Sabes lo que haces, pero no logras ver la motivación real que hay detrás.",
+                            "Te sientes desconectado de tus emociones, operando casi siempre desde la lógica.",
+                            "A menudo te sientes incomprendido, como si hablaras un lenguaje diferente al resto.",
+                            "Notas que evitas el conflicto a toda costa, sacrificando tu propia paz interior.",
+                            "Te exiges resultados constantes, pero el éxito no te trae la satisfacción esperada.",
+                            "Sientes que hay una versión de ti más auténtica que aún no logras liberar."
                         ].map((text, i) => (
                             <div key={i} className="el-empathy-item">
                                 <div className="el-empathy-bullet"></div>
@@ -336,18 +324,18 @@ const EneagramaLanding = ({ result, setTestResult }) => {
 
                     <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <button onClick={handleAction} className="el-btn-main">
-                            Iniciar mi análisis
+                            CONOCER MI ENEATIPO GRATIS
                             <ArrowRight size={22} />
                         </button>
                     </div>
                 </div>
             </section>
 
-            {/* 4. 6 Pilares Section */}
+            {/* 4. 9 Eneatipos Section */}
             <section id="dominios" className="el-section el-animate">
                 <div className="el-section-content">
                     <h2 className="el-section-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
-                        Tu vida <span className="el-gold-text" style={{ display: 'inline' }}>no se rompe en un solo lugar</span>
+                        Explora los <span className="el-gold-text" style={{ display: 'inline' }}>9 Eneatipos</span>
                     </h2>
                     <p style={{ 
                         textAlign: 'center', 
@@ -358,25 +346,27 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                         maxWidth: '900px',
                         margin: '0 auto 60px'
                     }}>
-                        El autodiagnóstico no te etiqueta, te proporciona una conversación honesta <br />
-                        contigo mismo para que obtengas una lectura profunda de los patrones <br />
-                        que hoy están influyendo en tu bienestar a través de estas 6 dimensiones:
+                        El Eneagrama no te encasilla, te libera al mostrarte los patrones inconscientes <br />
+                        que hoy están dirigiendo tu vida. Descubre las 9 formas de ver el mundo:
                     </p>
                     
                     <div style={{ 
                         display: 'grid', 
                         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
                         gap: '30px',
-                        maxWidth: '1000px',
+                        maxWidth: '1200px',
                         margin: '0 auto'
                     }}>
                         {[
-                            { icon: <Brain size={32} />, t: "Mental", d: "Identifica tus pensamientos, saturación y falta de enfoque.", color: "#ff9100" },
-                            { icon: <HeartPulse size={32} />, t: "Emocional", d: "Entiende tu regulación emocional y el origen de tu agotamiento.", color: "#ffee00" },
-                            { icon: <User size={32} />, t: "Corporal", d: "Identifica tu nivel real de energía y la relación con tu descanso.", color: "#cc0000" },
-                            { icon: <Handshake size={32} />, t: "Social", d: "Analiza tus vínculos y dónde estás perdiendo tu autenticidad.", color: "#00ff00" },
-                            { icon: <Eye size={32} />, t: "Espiritual", d: "Recupera la dirección y la coherencia con tu propósito personal.", color: "#00e5ff" },
-                            { icon: <TrendingUp size={32} />, t: "Financiero", d: "Observa tu relación con el dinero sin la presión del sistema.", color: "#d500f9" }
+                            { n: 1, t: "Eneatipo 1", d: "Ordenado, íntegro y responsable. Busca la mejora constante y vivir en coherencia ética." },
+                            { n: 2, t: "Eneatipo 2", d: "Cálido, generoso y servicial. Busca sentirse amado y necesario a través de la conexión." },
+                            { n: 3, t: "Eneatipo 3", d: "Eficiente, exitoso y motivado. Busca destacar y alcanzar resultados para ser admirado." },
+                            { n: 4, t: "Eneatipo 4", d: "Profundo, sensible y auténtico. Busca su identidad única y expresar su verdad emocional." },
+                            { n: 5, t: "Eneatipo 5", d: "Analítico, observador y autónomo. Busca comprender el mundo para sentirse preparado." },
+                            { n: 6, t: "Eneatipo 6", d: "Leal, responsable y preventivo. Busca seguridad y apoyo anticipando riesgos." },
+                            { n: 7, t: "Eneatipo 7", d: "Entusiasta, optimista y libre. Busca experiencias y nuevas posibilidades evitando el dolor." },
+                            { n: 8, t: "Eneatipo 8", d: "Intenso, directo y protector. Busca el control de su destino y justicia ante la vulnerabilidad." },
+                            { n: 9, t: "Eneatipo 9", d: "Calmado, conciliador y estable. Busca armonía y paz interior evitando el conflicto directo." }
                         ].map((item, i) => (
                             <div key={i} style={{ 
                                 background: 'rgba(255,255,255,0.03)', 
@@ -387,19 +377,28 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                                 flexDirection: 'column',
                                 gap: '20px',
                                 transition: 'all 0.3s ease',
-                                cursor: 'default'
+                                cursor: 'default',
+                                alignItems: 'center',
+                                textAlign: 'center'
                             }}>
                                 <div style={{ 
-                                    width: '60px', 
-                                    height: '60px', 
-                                    borderRadius: '16px', 
-                                    background: `rgba(${parseInt(item.color.slice(1,3),16)}, ${parseInt(item.color.slice(3,5),16)}, ${parseInt(item.color.slice(5,7),16)}, 0.1)`,
+                                    width: '100px', 
+                                    height: '100px', 
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    color: item.color
+                                    position: 'relative'
                                 }}>
-                                    {item.icon}
+                                    <img 
+                                        src={`/eneatipo-${item.n}.png`} 
+                                        alt={item.t} 
+                                        style={{ 
+                                            width: '100%', 
+                                            height: '100%', 
+                                            objectFit: 'contain',
+                                            filter: 'drop-shadow(0 0 15px rgba(221, 190, 61, 0.3))'
+                                        }} 
+                                    />
                                 </div>
                                 <div>
                                     <h4 style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px' }}>{item.t}</h4>
@@ -411,121 +410,17 @@ const EneagramaLanding = ({ result, setTestResult }) => {
 
                     <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <button onClick={handleAction} className="el-btn-main">
-                            QUIERO ENTENDERME
+                            DESCUBRIR MI ENEATIPO
                             <ArrowRight size={22} />
                         </button>
                     </div>
                 </div>
             </section>
 
-            {/* 5. Minimalist Reflection Section */}
-            <section className="el-section el-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
-                <div className="el-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
-                    <p style={{ 
-                        fontSize: 'clamp(18px, 2.5vw, 22px)', 
-                        lineHeight: '1.6', 
-                        fontWeight: '400',
-                        marginBottom: '40px',
-                        color: 'rgba(0, 45, 68, 0.7)'
-                    }}>
-                        Muchas personas aprenden a seguir adelante <br />
-                        mientras internamente se sienten desconectadas.
-                    </p>
 
-                    <div style={{ 
-                        display: 'flex', 
-                        flexDirection: 'row', 
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
-                        gap: '20px', 
-                        marginBottom: '60px' 
-                    }}>
-                        {["Funcionan.", "Cumplen.", "Responden."].map((text, i) => (
-                            <div key={i} style={{
-                                padding: '15px 30px',
-                                border: '2px solid rgba(0, 45, 68, 0.1)',
-                                borderRadius: '12px',
-                                background: 'rgba(0, 45, 68, 0.02)',
-                                minWidth: '160px'
-                            }}>
-                                <p style={{ 
-                                    fontSize: 'clamp(18px, 2.5vw, 22px)', 
-                                    fontWeight: '900', 
-                                    margin: 0,
-                                    letterSpacing: '-0.01em',
-                                    color: '#002d44'
-                                }}>
-                                    {text}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-
-                    <p style={{ 
-                        fontSize: 'clamp(24px, 3vw, 28px)', 
-                        lineHeight: '1.2', 
-                        fontWeight: '700',
-                        color: '#ddbe3d'
-                    }}>
-                        Pero algo dentro de ellas lleva tiempo pidiendo atención.
-                    </p>
-
-                    <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <button onClick={handleAction} className="el-btn-main">
-                            Descubrir qué me pasa
-                            <ArrowRight size={22} />
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            {/* 6. Información del Producto */}
-            <section id="detalles-producto" className="el-product-section">
-                <div className="el-section-content">
-                    <h2 className="el-section-title el-reveal" style={{ textAlign: 'center', marginBottom: '80px' }}>
-                        Al finalizar el <span className="el-gold-text" style={{ display: 'inline' }}>autodiagnóstico recibirás:</span>
-                    </h2>
-
-                    <div className="el-product-flex">
-                        {/* 1. Book on the LEFT */}
-                        <div className="el-product-img-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <PremiumBook3D />
-                        </div>
-
-                        {/* 2. Text on the RIGHT */}
-                        <div className="el-product-text">
-                            <ul className="el-product-list">
-                                {[
-                                    { t: "Análisis de 6 Dominios", d: "Un estudio profundo de tu estado actual en las dimensiones mental, emocional, corporal, social, espiritual y financiera." },
-                                    { t: "Áreas Críticas", d: "Identificación de los desequilibrios y 'puntos ciegos' que bloquean tu capacidad de influir en otros y en ti mismo." },
-                                    { t: "Reporte Personalizado", d: "Un documento visual, detallado y 100% único con el mapa de tu ecosistema de vida y rutas de mejora." },
-                                    { t: "Hoja de Ruta de 8 Pasos", d: "Un plan de acción estructurado paso a paso para elevar específicamente aquellos dominios que hoy se encuentran en niveles bajos." }
-                                ].map((item, i) => (
-                                    <li key={i} className="el-product-item el-reveal">
-                                        <div className="el-item-bullet">
-                                            <CheckCircle2 size={24} color="#ddbe3d" />
-                                        </div>
-                                        <div>
-                                            <h4 className="el-item-title">{item.t}</h4>
-                                            <p className="el-item-desc">{item.d}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                                <button onClick={handleAction} className="el-btn-main">
-                                    Sí, lo necesito
-                                    <ArrowRight size={22} />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* 7. Testimonials Section */}
-            <section className="el-section el-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
+            <section id="testimonios" className="el-section el-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
                 <div className="el-section-content">
                     <h2 className="el-section-title" style={{ textAlign: 'center', marginBottom: '20px', color: '#002d44' }}>
                         Lo que dicen <span style={{ color: '#ddbe3d' }}>las personas</span>
@@ -619,170 +514,7 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 8. Precios */}
-            <section id="precios" className="el-section">
-                <div className="el-section-content">
-                    <div className="el-pricing-wrapper-single el-animate">
-                        <div className="el-pricing-card">
-                            <div className="el-pricing-glow"></div>
-                            
-                            <div className="el-pricing-header">
-                                <h3>Acceso a tu Claridad</h3>
-                            </div>
 
-                            <div className="el-pricing-content">
-                                <div className="el-price-box">
-                                    {/* Etiqueta de Lanzamiento Central */}
-                                    <div style={{
-                                        background: '#ddbe3d',
-                                        color: '#002d44',
-                                        padding: '6px 18px',
-                                        borderRadius: '6px',
-                                        fontWeight: '900',
-                                        fontSize: '12px',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.12em',
-                                        marginBottom: '20px',
-                                        display: 'inline-block',
-                                        boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                                        border: '1px solid rgba(255,255,255,0.1)'
-                                    }}>
-                                        Aprovecha el precio de lanzamiento
-                                    </div>
-                                    <br />
-                                    <span className="el-old-price">$150.000 COP</span>
-                                    <div className="el-current-price">
-                                        $75.000 <span className="el-currency">COP</span>
-                                    </div>
-                                </div>
-
-                                <div className="el-pricing-grid">
-                                    {[
-                                        'Análisis profundo de 6 Dimensiones',
-                                        'Identificación de áreas críticas',
-                                        <span>Tiempo estimado de duración <br /> entre 30 y 45 minutos</span>,
-                                        'Hoja de Ruta de 8 Pasos',
-                                        'Acceso inmediato e ilimitado',
-                                        'Reporte descargable en PDF'
-                                    ].map((item, i) => (
-                                        <div key={i} className="el-pricing-item">
-                                            <CheckCircle2 size={16} color="#ddbe3d" /> {item}
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div style={{ textAlign: 'center' }}>
-                                    <button onClick={handleAction} className="el-btn-buy">
-                                        QUIERO MI MAPA DE CLARIDAD <Lock size={24} />
-                                    </button>
-                                    
-                                    {/* Iconos de Pago */}
-                                    <div style={{ 
-                                        display: 'flex', 
-                                        justifyContent: 'center', 
-                                        alignItems: 'center', 
-                                        gap: '20px', 
-                                        marginTop: '25px',
-                                        opacity: '0.9'
-                                    }}>
-                                        <img src="/Icono - Visa.png" alt="Visa" style={{ height: '28px', width: 'auto' }} />
-                                        <img src="/Icono - Mastercard.png" alt="Mastercard" style={{ height: '24px', width: 'auto' }} />
-                                        <img src="/Icono - Mercado pago.png" alt="Mercado Pago" style={{ height: '28px', width: 'auto' }} />
-                                        <img src="/Icono - Wompi.png" alt="Wompi" style={{ height: '24px', width: 'auto' }} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Secuencia "Cómo funciona" */}
-                    <div style={{ marginTop: '100px' }}>
-                        <h3 className="el-section-title" style={{ 
-                            textAlign: 'center', 
-                            color: '#ffffff', 
-                            fontSize: 'clamp(30px, 5vw, 36px)', 
-                            fontWeight: '800',
-                            marginBottom: '60px',
-                            letterSpacing: '0.05em'
-                        }}>
-                            ¿Cómo <span style={{ color: '#ddbe3d' }}>funciona?</span>
-                        </h3>
-
-                        <div style={{ 
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-                            gap: '30px',
-                            maxWidth: '1000px',
-                            margin: '0 auto'
-                        }}>
-                            {[
-                                { icon: <CreditCard size={32} />, title: "1. Compra segura", desc: "Realizas el pago de forma segura a través de nuestra plataforma." },
-                                { icon: <UserPlus size={32} />, title: "2. Registro rápido", desc: "Creas tu perfil básico para que podamos personalizar tus resultados." },
-                                { icon: <PlayCircle size={32} />, title: "3. Autodiagnóstico", desc: "Inicias la experiencia de reflexión profunda (toma 30-45 min)." },
-                                { icon: <Mail size={32} />, title: "4. Reporte al instante", desc: "Recibes tu análisis por correo o lo descargas en el momento." }
-                            ].map((step, i) => (
-                                    <div key={i} style={{ 
-                                        textAlign: 'center', 
-                                        padding: '40px 20px 30px',
-                                        background: 'rgba(255,255,255,0.03)',
-                                        borderRadius: '24px',
-                                        border: '1px solid rgba(255,255,255,0.08)',
-                                        position: 'relative',
-                                        minHeight: '230px',
-                                        display: 'flex',
-                                        flexDirection: 'column'
-                                    }}>
-                                        {/* Número en la esquina */}
-                                        <div style={{
-                                            position: 'absolute',
-                                            top: '20px',
-                                            left: '20px',
-                                            fontSize: '22px',
-                                            fontWeight: '900',
-                                            color: '#ffffff',
-                                            fontFamily: 'monospace',
-                                            opacity: 0.8
-                                        }}>
-                                            0{i + 1}
-                                        </div>
-
-                                        <div style={{ color: '#ddbe3d', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
-                                            {step.icon}
-                                        </div>
-                                        <h4 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '700', marginBottom: '12px', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            {step.title.replace(/^\d+\.\s/, '')}
-                                        </h4>
-                                        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.6' }}>{step.desc}</p>
-                                    </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 9. Garantía */}
-            <section className="el-section" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
-                <div className="el-section-content" style={{ textAlign: 'center', maxWidth: '800px' }}>
-                    <img 
-                        src="/Garantia Autodiagnostico.png" 
-                        alt="Garantía Auténticos" 
-                        className="el-guarantee-img"
-                    />
-                    <h2 className="el-section-title" style={{ color: '#002d44', marginBottom: '30px' }}>
-                        Nuestra <span style={{ color: '#ddbe3d' }}>Garantía</span>
-                    </h2>
-                    <p className="el-guarantee-text">
-                        Si al finalizar el análisis sientes que no te aportó claridad o reflexión real sobre tu situación actual, puedes solicitar la devolución de tu dinero dentro de las primeras 24 horas.
-                    </p>
-
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <button onClick={handleAction} className="el-btn-main">
-                            Iniciar mi proceso
-                            <ArrowRight size={22} />
-                        </button>
-                    </div>
-                </div>
-            </section>
 
             {/* 10. FAQ */}
             <section id="preguntas" className="el-faq-section el-animate" style={{ 
@@ -870,12 +602,12 @@ const EneagramaLanding = ({ result, setTestResult }) => {
             {/* Mobile FAB */}
             <div className="el-mobile-fab">
                 <button onClick={handleAction} className="el-btn-fab">
-                    Quiero mi Mapa de Claridad
+                    Quiero mi Test Gratuito
                 </button>
             </div>
             {/* Botón Flotante WhatsApp */}
             <a 
-                href="https://wa.me/573164287586?text=Hola,%20quiero%20mayor%20informaci%C3%B3n%20sobre%20el%20autodiagn%C3%B3stico%20de%20los%206%20dominios"
+                href="https://wa.me/573164287586?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20test%20gratuito%20de%20Eneagrama"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="el-whatsapp-float"
