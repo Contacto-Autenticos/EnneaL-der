@@ -47,7 +47,7 @@ const BusinessReportTemplate = ({ data }) => {
       {/* S1. Información General */}
       <div style={sectionHeaderStyle}>S1. INFORMACIÓN GENERAL</div>
       <div style={rowStyle}><span style={labelStyle}>Empresa:</span> {data.company_name}</div>
-      <div style={rowStyle}><span style={labelStyle}>Solicitante:</span> {data.resp_name}</div>
+      <div style={rowStyle}><span style={labelStyle}>Solicitante:</span> {data.resp_name} {data.resp_lastname}</div>
       <div style={rowStyle}><span style={labelStyle}>Cargo:</span> {data.resp_role}</div>
       <div style={rowStyle}><span style={labelStyle}>Email:</span> {data.email}</div>
       <div style={rowStyle}><span style={labelStyle}>Teléfono:</span> {data.phone}</div>

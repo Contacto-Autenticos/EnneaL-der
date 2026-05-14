@@ -45,6 +45,7 @@ const BusinessScan = () => {
     // S1. Información General
     companyName: '',
     respName: '',
+    respLastName: '',
     respRole: '',
     email: '',
     phone: '',
@@ -140,6 +141,7 @@ const BusinessScan = () => {
         .insert([{
           company_name: formData.companyName,
           resp_name: formData.respName,
+          resp_lastname: formData.respLastName,
           resp_role: formData.respRole,
           email: formData.email,
           phone: formData.phone,
@@ -218,10 +220,11 @@ const BusinessScan = () => {
             <h2>1. Información General</h2>
             <div className="form-grid">
               <div className="form-group"><label>Nombre de la Empresa</label><input name="companyName" value={formData.companyName} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Tu Cargo</label><input name="respRole" value={formData.respRole} onChange={handleChange} required /></div>
               <div className="form-group"><label>Tu Nombre</label><input name="respName" value={formData.respName} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Tu Cargo</label><input name="respRole" value={formData.respRole} onChange={handleChange} /></div>
+              <div className="form-group"><label>Tu Apellido</label><input name="respLastName" value={formData.respLastName} onChange={handleChange} required /></div>
               <div className="form-group"><label>Correo electrónico</label><input type="email" name="email" value={formData.email} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Teléfono</label><input name="phone" value={formData.phone} onChange={handleChange} /></div>
+              <div className="form-group"><label>Teléfono</label><input name="phone" value={formData.phone} onChange={handleChange} required /></div>
               <div className="form-group">
                 <label>Nivel organizacional de interés</label>
                 <select name="orgLevel" value={formData.orgLevel} onChange={handleChange}>

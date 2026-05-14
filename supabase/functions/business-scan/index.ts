@@ -118,7 +118,8 @@ serve(async (req) => {
 
   try {
     const data = await req.json();
-    const { respName: name, email, phone, companyName: company } = data;
+    const { respName: firstName, respLastName: lastName, email, phone, companyName: company } = data;
+    const fullName = `${firstName} ${lastName}`.trim();
 
     const ODOO_URL = Deno.env.get('ODOO_URL');
     const ODOO_DB = Deno.env.get('ODOO_DB');
@@ -134,6 +135,8 @@ DIAGNÓSTICO CORPORATIVO - ESCANEO EMPRESARIAL
 
 S1. INFORMACIÓN GENERAL
 - Empresa: ${data.companyName}
+- Persona de contacto: ${fullName}
+- Cargo: ${data.respRole}
 - Nivel organizacional de interés: ${data.orgLevel}
 - Área Intervención: ${data.interventionArea}
 
@@ -186,6 +189,8 @@ S7. PRESUPUESTO Y DECISIÓN
     const formattedHtml = `
       <div style="${sectionStyle}">S1. INFORMACIÓN GENERAL</div>
       <strong>Empresa:</strong> ${data.companyName}<br/>
+      <strong>Persona de contacto:</strong> ${fullName}<br/>
+      <strong>Cargo:</strong> ${data.respRole}<br/>
       <strong>Nivel organizacional de interés:</strong> ${data.orgLevel}<br/>
       <strong>Área Intervención:</strong> ${data.interventionArea}<br/>
 
@@ -243,13 +248,13 @@ S7. PRESUPUESTO Y DECISIÓN
         if (!partnerId) {
           partnerId = await odooCall(ODOO_URL, "object", "execute_kw", [
             ODOO_DB, uid, ODOO_API_KEY, "res.partner", "create",
-            [{ name, email, phone, comment: 'Business Scan Participant' }]
+            [{ name: fullName, email, phone, comment: 'Business Scan Participant', function: data.respRole }]
           ]);
         }
         leadId = await odooCall(ODOO_URL, "object", "execute_kw", [
           ODOO_DB, uid, ODOO_API_KEY, "crm.lead", "create",
           [{
-            name: `DIAGNÓSTICO: ${company || name}`,
+            name: `DIAGNÓSTICO: ${company || fullName}`,
             partner_id: partnerId,
             email_from: email,
             description: plainDescription,
@@ -261,8 +266,8 @@ S7. PRESUPUESTO Y DECISIÓN
     } catch (e) { console.error('Odoo error:', e); }
 
     // --- Brevo Notifications ---
-    const adminHtml = getEmailHtml(name, company, formattedHtml, false);
-    const clientHtml = getEmailHtml(name, company, formattedHtml, true);
+    const adminHtml = getEmailHtml(fullName, company, formattedHtml, false);
+    const clientHtml = getEmailHtml(fullName, company, formattedHtml, true);
     
     await Promise.all([
       // To Admin
@@ -274,7 +279,7 @@ S7. PRESUPUESTO Y DECISIÓN
           to: [
             { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" }
           ],
-          subject: `DIAGNÓSTICO EMPRESARIAL: ${company || name}`,
+          subject: `DIAGNÓSTICO EMPRESARIAL: ${company || fullName}`,
           htmlContent: adminHtml
         })
       }),
@@ -284,7 +289,7 @@ S7. PRESUPUESTO Y DECISIÓN
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
         body: JSON.stringify({
           sender: { name: "Auténticos", email: "contacto@autenticos.co" },
-          to: [{ email, name }],
+          to: [{ email, name: fullName }],
           subject: `Confirmación de Diagnóstico - Auténticos`,
           htmlContent: clientHtml
         })

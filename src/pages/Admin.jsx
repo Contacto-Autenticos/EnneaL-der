@@ -1449,7 +1449,7 @@ const Admin = () => {
                                         businessResults.map((r) => (
                                             <tr key={r.id}>
                                                 <td style={{ fontWeight: '600' }}>{r.company_name}</td>
-                                                <td>{r.resp_name}</td>
+                                                <td>{r.resp_name} {r.resp_lastname}</td>
                                                 <td>{r.resp_role}</td>
                                                 <td>{r.email}</td>
                                                 <td>{r.phone}</td>
