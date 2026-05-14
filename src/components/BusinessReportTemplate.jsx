@@ -47,13 +47,11 @@ const BusinessReportTemplate = ({ data }) => {
       {/* S1. Información General */}
       <div style={sectionHeaderStyle}>S1. INFORMACIÓN GENERAL</div>
       <div style={rowStyle}><span style={labelStyle}>Empresa:</span> {data.company_name}</div>
-      <div style={rowStyle}><span style={labelStyle}>Industria:</span> {data.industry}</div>
-      <div style={rowStyle}><span style={labelStyle}>Colaboradores:</span> {data.employee_count}</div>
-      <div style={rowStyle}><span style={labelStyle}>Ubicación:</span> {data.location} ({data.coverage})</div>
       <div style={rowStyle}><span style={labelStyle}>Solicitante:</span> {data.resp_name}</div>
       <div style={rowStyle}><span style={labelStyle}>Cargo:</span> {data.resp_role}</div>
       <div style={rowStyle}><span style={labelStyle}>Email:</span> {data.email}</div>
       <div style={rowStyle}><span style={labelStyle}>Teléfono:</span> {data.phone}</div>
+      <div style={rowStyle}><span style={labelStyle}>Nivel organizacional de interés:</span> {data.org_level}</div>
       <div style={rowStyle}><span style={labelStyle}>Área Intervención:</span> {data.intervention_area}</div>
 
       {/* S2. Contexto Estratégico */}

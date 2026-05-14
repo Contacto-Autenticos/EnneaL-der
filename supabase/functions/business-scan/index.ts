@@ -134,10 +134,7 @@ DIAGNÓSTICO CORPORATIVO - ESCANEO EMPRESARIAL
 
 S1. INFORMACIÓN GENERAL
 - Empresa: ${data.companyName}
-- Industria: ${data.industry}
-- Colaboradores: ${data.employeeCount}
-- Ubicación: ${data.location} (${data.coverage})
-- Nivel Interés: ${data.orgLevel}
+- Nivel organizacional de interés: ${data.orgLevel}
 - Área Intervención: ${data.interventionArea}
 
 S2. CONTEXTO ESTRATÉGICO
@@ -189,10 +186,7 @@ S7. PRESUPUESTO Y DECISIÓN
     const formattedHtml = `
       <div style="${sectionStyle}">S1. INFORMACIÓN GENERAL</div>
       <strong>Empresa:</strong> ${data.companyName}<br/>
-      <strong>Industria:</strong> ${data.industry}<br/>
-      <strong>Colaboradores:</strong> ${data.employeeCount}<br/>
-      <strong>Ubicación:</strong> ${data.location} (${data.coverage})<br/>
-      <strong>Nivel Interés:</strong> ${data.orgLevel}<br/>
+      <strong>Nivel organizacional de interés:</strong> ${data.orgLevel}<br/>
       <strong>Área Intervención:</strong> ${data.interventionArea}<br/>
 
       <div style="${sectionStyle}">S2. CONTEXTO ESTRATÉGICO</div>
@@ -276,8 +270,10 @@ S7. PRESUPUESTO Y DECISIÓN
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
         body: JSON.stringify({
-          sender: { name: "Auténticos Diagnóstico", email: "hola@autenticos.co" },
-          to: [{ email: "hola@autenticos.co", name: "Equipo Auténticos" }],
+          sender: { name: "Auténticos Diagnóstico", email: "contacto@autenticos.co" },
+          to: [
+            { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" }
+          ],
           subject: `DIAGNÓSTICO EMPRESARIAL: ${company || name}`,
           htmlContent: adminHtml
         })
@@ -287,7 +283,7 @@ S7. PRESUPUESTO Y DECISIÓN
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
         body: JSON.stringify({
-          sender: { name: "Auténticos", email: "hola@autenticos.co" },
+          sender: { name: "Auténticos", email: "contacto@autenticos.co" },
           to: [{ email, name }],
           subject: `Confirmación de Diagnóstico - Auténticos`,
           htmlContent: clientHtml

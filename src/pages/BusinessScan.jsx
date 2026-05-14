@@ -44,10 +44,6 @@ const BusinessScan = () => {
   const [formData, setFormData] = useState({
     // S1. Información General
     companyName: '',
-    industry: '',
-    employeeCount: '',
-    location: '',
-    coverage: 'Nacional',
     respName: '',
     respRole: '',
     email: '',
@@ -143,10 +139,6 @@ const BusinessScan = () => {
         .from('business_diagnostics')
         .insert([{
           company_name: formData.companyName,
-          industry: formData.industry,
-          employee_count: formData.employeeCount,
-          location: formData.location,
-          coverage: formData.coverage,
           resp_name: formData.respName,
           resp_role: formData.respRole,
           email: formData.email,
@@ -226,20 +218,12 @@ const BusinessScan = () => {
             <h2>1. Información General</h2>
             <div className="form-grid">
               <div className="form-group"><label>Nombre de la Empresa</label><input name="companyName" value={formData.companyName} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Industria</label><input name="industry" value={formData.industry} onChange={handleChange} /></div>
-              <div className="form-group"><label>Colaboradores</label><input name="employeeCount" value={formData.employeeCount} onChange={handleChange} placeholder="Ej: 150" /></div>
-              <div className="form-group"><label>Ubicación</label><input name="location" value={formData.location} onChange={handleChange} /></div>
-              <div className="form-group"><label>Cobertura</label>
-                <select name="coverage" value={formData.coverage} onChange={handleChange}>
-                  <option>Local</option><option>Nacional</option><option>Internacional</option>
-                </select>
-              </div>
               <div className="form-group"><label>Tu Nombre</label><input name="respName" value={formData.respName} onChange={handleChange} required /></div>
               <div className="form-group"><label>Tu Cargo</label><input name="respRole" value={formData.respRole} onChange={handleChange} /></div>
               <div className="form-group"><label>Correo electrónico</label><input type="email" name="email" value={formData.email} onChange={handleChange} required /></div>
               <div className="form-group"><label>Teléfono</label><input name="phone" value={formData.phone} onChange={handleChange} /></div>
               <div className="form-group">
-                <label>Nivel organizacional de interés principal</label>
+                <label>Nivel organizacional de interés</label>
                 <select name="orgLevel" value={formData.orgLevel} onChange={handleChange}>
                   <option>Estratégico (Alta dirección, gerencia, liderazgo)</option>
                   <option>Táctico (Mandos medios, coordinadores, jefaturas)</option>
