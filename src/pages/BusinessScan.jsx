@@ -49,8 +49,8 @@ const BusinessScan = () => {
     respRole: '',
     email: '',
     phone: '',
-    orgLevel: 'Todos los niveles',
-    interventionArea: 'Liderazgo transversal',
+    orgLevel: '',
+    interventionArea: '',
 
     // S2. Contexto Estratégico
     challenges: '',
@@ -84,17 +84,17 @@ const BusinessScan = () => {
 
     // S5. Población Objetivo
     targetPublic: [],
-    participantCount: '11 a 30',
+    participantCount: '',
     needsByLevel: '',
 
     // S6. Formato y Logística
-    preferredModality: 'Presencial',
-    idealDuration: 'Taller (4 a 8 horas)',
+    preferredModality: '',
+    idealDuration: '',
     logisticsRestrictions: '',
 
     // S7. Presupuesto y Decisión
-    investmentRange: 'USD 1.000 a USD 5.000',
-    investmentPriority: 'Media',
+    investmentRange: '',
+    investmentPriority: '',
     decisionMaker: '',
     decisionFactors: []
   });
@@ -227,7 +227,8 @@ const BusinessScan = () => {
               <div className="form-group"><label>Teléfono</label><input name="phone" value={formData.phone} onChange={handleChange} required /></div>
               <div className="form-group">
                 <label>Nivel organizacional de interés</label>
-                <select name="orgLevel" value={formData.orgLevel} onChange={handleChange}>
+                <select name="orgLevel" value={formData.orgLevel} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona un nivel...</option>
                   <option>Estratégico (Alta dirección, gerencia, liderazgo)</option>
                   <option>Táctico (Mandos medios, coordinadores, jefaturas)</option>
                   <option>Operativo (Equipos técnicos, ejecutores, servicio)</option>
@@ -236,7 +237,8 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Área principal de intervención</label>
-                <select name="interventionArea" value={formData.interventionArea} onChange={handleChange}>
+                <select name="interventionArea" value={formData.interventionArea} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona un área...</option>
                   <option>Comercial / Ventas</option>
                   <option>Administrativa</option>
                   <option>Operativa / Productiva</option>
@@ -244,6 +246,7 @@ const BusinessScan = () => {
                   <option>Cultura organizacional</option>
                   <option>Innovación / Transformación</option>
                   <option>Bienestar integral</option>
+                  <option>Otro</option>
                 </select>
               </div>
             </div>
@@ -381,7 +384,8 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Número estimado de participantes</label>
-                <select name="participantCount" value={formData.participantCount} onChange={handleChange}>
+                <select name="participantCount" value={formData.participantCount} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona cantidad...</option>
                   <option>1 a 10</option><option>11 a 30</option><option>31 a 100</option><option>101 a 300</option><option>Más de 300</option>
                 </select>
               </div>
@@ -396,13 +400,15 @@ const BusinessScan = () => {
             <div className="form-grid full-width">
               <div className="form-group">
                 <label>Modalidad preferida</label>
-                <select name="preferredModality" value={formData.preferredModality} onChange={handleChange}>
+                <select name="preferredModality" value={formData.preferredModality} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona modalidad...</option>
                   <option>Presencial</option><option>Virtual sincrónica</option><option>Virtual asincrónica</option><option>Híbrida</option><option>Mentoría</option><option>Consultoría</option>
                 </select>
               </div>
               <div className="form-group">
                 <label>Duración ideal</label>
-                <select name="idealDuration" value={formData.idealDuration} onChange={handleChange}>
+                <select name="idealDuration" value={formData.idealDuration} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona duración...</option>
                   <option>Conferencia (1 a 3 h)</option><option>Taller (4 a 8 h)</option><option>Bootcamp (1 a 3 días)</option><option>Programa modular (varias semanas o meses)</option><option>Ruta integral</option>
                 </select>
               </div>
@@ -428,13 +434,15 @@ const BusinessScan = () => {
             <div className="form-grid full-width">
               <div className="form-group">
                 <label>Inversión estimada disponible</label>
-                <select name="investmentRange" value={formData.investmentRange} onChange={handleChange}>
+                <select name="investmentRange" value={formData.investmentRange} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona rango...</option>
                   <option>Menos de USD 1.000</option><option>USD 1.000 a USD 5.000</option><option>USD 5.000 a USD 15.000</option><option>USD 15.000 a USD 50.000</option><option>Más de USD 50.000</option>
                 </select>
               </div>
               <div className="form-group">
                 <label>Prioridad de inversión</label>
-                <select name="investmentPriority" value={formData.investmentPriority} onChange={handleChange}>
+                <select name="investmentPriority" value={formData.investmentPriority} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona prioridad...</option>
                   <option>Baja</option>
                   <option>Media</option>
                   <option>Alta</option>
