@@ -179,8 +179,7 @@ ${data.logisticsDescription ? `- Detalles logística: ${data.logisticsDescriptio
 S7. PRESUPUESTO Y DECISIÓN
 - Inversión: ${data.investmentRange}
 - Prioridad: ${data.investmentPriority}
-- Decisor: ${data.decisionMaker}
-- Factores Clave: ${data.decisionFactors ? data.decisionFactors.join(', ') : 'No especificado'}
+- Factores Clave: ${data.decisionFactors || 'No especificado'}
     `.trim();
 
     // Format rich HTML for Email
@@ -234,8 +233,7 @@ S7. PRESUPUESTO Y DECISIÓN
       <div style="${sectionStyle}">S7. PRESUPUESTO Y DECISIÓN</div>
       <strong>Inversión:</strong> ${data.investmentRange}<br/>
       <strong>Prioridad:</strong> ${data.investmentPriority}<br/>
-      <strong>Decisor:</strong> ${data.decisionMaker}<br/>
-      <strong>Factores Clave:</strong> ${data.decisionFactors ? data.decisionFactors.join(', ') : 'No especificado'}
+      <strong>Factores Clave:</strong> ${data.decisionFactors || 'No especificado'}
     `;
 
     // --- Odoo Integration ---

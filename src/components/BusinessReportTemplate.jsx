@@ -102,7 +102,7 @@ const BusinessReportTemplate = ({ data }) => {
           {/* S7. Presupuesto y Decisión */}
           <div style={sectionHeaderStyle}>S7. PRESUPUESTO Y DECISIÓN</div>
           <div style={rowStyle}><span style={labelStyle}>Rango Inversión:</span> {data.investment_range}</div>
-          <div style={rowStyle}><span style={labelStyle}>Factores Decisión:</span> {data.decision_factors ? data.decision_factors.join(', ') : 'No especificado'}</div>
+          <div style={rowStyle}><span style={labelStyle}>Factores Decisión:</span> {data.decision_factors || 'No especificado'}</div>
         </div>
       </div>
 

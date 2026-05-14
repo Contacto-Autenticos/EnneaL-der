@@ -97,7 +97,7 @@ const BusinessScan = () => {
     investmentRange: '',
     investmentPriority: '',
     decisionMaker: '',
-    decisionFactors: []
+    decisionFactors: ''
   });
 
   const totalSteps = 7;
@@ -509,14 +509,12 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Factores clave de aprobación</label>
-                <div className="checkbox-grid">
-                  {['ROI esperado', 'Cultura', 'Productividad', 'Ventas', 'Liderazgo', 'Bienestar'].map(f => (
-                    <label key={f} className="checkbox-item">
-                      <input type="checkbox" name="decisionFactors" value={f} checked={formData.decisionFactors.includes(f)} onChange={handleChange} />
-                      {f}
-                    </label>
-                  ))}
-                </div>
+                <textarea 
+                  name="decisionFactors" 
+                  value={formData.decisionFactors} 
+                  onChange={handleChange} 
+                  placeholder="Comparte los criterios que consideras más importantes."
+                />
               </div>
             </div>
           </div>
