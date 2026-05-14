@@ -69,7 +69,7 @@ const BusinessScan = () => {
       productividad: 0, trabajoEquipo: 0, cultura: 0, innovacion: 0,
       adaptabilidad: 0, gestionTiempo: 0, conflictos: 0, compromiso: 0
     },
-    urgency: 'Media',
+    urgency: '',
     consequences: [],
 
     // S4. Cultura y Cambio
@@ -313,24 +313,31 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Urgencia de Intervención</label>
-                <select name="urgency" value={formData.urgency} onChange={handleChange}>
+                <select name="urgency" value={formData.urgency} onChange={handleChange} required>
+                  <option value="" disabled>Selecciona nivel de urgencia...</option>
                   <option>Baja</option><option>Media</option><option>Alta</option><option>Crítica</option>
                 </select>
               </div>
               <div className="form-group">
-                <label>Consecuencias actuales</label>
-                <select name="consequences" value={formData.consequences[0] || ''} onChange={(e) => setFormData(prev => ({ ...prev, consequences: [e.target.value] }))}>
-                  <option value="">Selecciona una opción</option>
-                  <option>Baja productividad</option>
-                  <option>Desmotivación</option>
-                  <option>Alta rotación</option>
-                  <option>Problemas de liderazgo</option>
-                  <option>Fallas de comunicación</option>
-                  <option>Pérdida comercial</option>
-                  <option>Conflictos internos</option>
-                  <option>Desgaste emocional</option>
-                  <option>Dificultades de adaptación</option>
-                </select>
+                <label>Consecuencias actuales (Selecciona todas las que apliquen)</label>
+                <div className="checkbox-grid">
+                  {[
+                    'Baja productividad', 'Desmotivación', 'Alta rotación', 
+                    'Problemas de liderazgo', 'Fallas de comunicación', 'Pérdida comercial', 
+                    'Conflictos internos', 'Desgaste emocional', 'Dificultades de adaptación'
+                  ].map(c => (
+                    <label key={c} className="checkbox-item">
+                      <input 
+                        type="checkbox" 
+                        name="consequences" 
+                        value={c} 
+                        checked={formData.consequences.includes(c)} 
+                        onChange={handleChange} 
+                      />
+                      {c}
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
