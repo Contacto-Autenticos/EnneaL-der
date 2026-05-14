@@ -37,10 +37,15 @@ serve(async (req) => {
   try {
     const { email, name, test_type, results_summary, scores } = await req.json();
 
-    const ODOO_URL = Deno.env.get('ODOO_URL');
-    const ODOO_DB = Deno.env.get('ODOO_DB');
-    const ODOO_USER = Deno.env.get('ODOO_USER');
-    const ODOO_API_KEY = Deno.env.get('ODOO_API_KEY');
+    let ODOO_URL = Deno.env.get('ODOO_URL')?.trim() || '';
+    const ODOO_DB = Deno.env.get('ODOO_DB')?.trim() || '';
+    const ODOO_USER = Deno.env.get('ODOO_USER')?.trim() || '';
+    const ODOO_API_KEY = Deno.env.get('ODOO_API_KEY')?.trim() || '';
+
+    // Normalize URL: remove trailing slash if exists
+    if (ODOO_URL.endsWith('/')) {
+      ODOO_URL = ODOO_URL.slice(0, -1);
+    }
 
     if (!ODOO_URL || !ODOO_DB || !ODOO_USER || !ODOO_API_KEY) {
       throw new Error('Faltan configuraciones de Odoo en Supabase Secrets');

@@ -124,13 +124,23 @@ serve(async (req) => {
     const { respName: firstName, respLastName: lastName, email, phone, companyName: company } = data;
     const fullName = `${firstName} ${lastName}`.trim();
 
-    const ODOO_URL = Deno.env.get('ODOO_URL');
-    const ODOO_DB = Deno.env.get('ODOO_DB');
-    const ODOO_USER = Deno.env.get('ODOO_USER');
-    const ODOO_API_KEY = Deno.env.get('ODOO_API_KEY');
-    const BREVO_API_KEY = Deno.env.get('BREVO_API_KEY');
+    let ODOO_URL = Deno.env.get('ODOO_URL')?.trim() || '';
+    const ODOO_DB = Deno.env.get('ODOO_DB')?.trim() || '';
+    const ODOO_USER = Deno.env.get('ODOO_USER')?.trim() || '';
+    const ODOO_API_KEY = Deno.env.get('ODOO_API_KEY')?.trim() || '';
+    const BREVO_API_KEY = Deno.env.get('BREVO_API_KEY')?.trim() || '';
+    const SUPABASE_URL = Deno.env.get('SUPABASE_URL')?.trim() || '';
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')?.trim() || '';
 
-    if (!ODOO_URL || !BREVO_API_KEY) throw new Error('Missing configuration');
+    // Normalize URL: remove trailing slash if exists
+    if (ODOO_URL.endsWith('/')) {
+      ODOO_URL = ODOO_URL.slice(0, -1);
+    }
+
+    if (!ODOO_URL || !ODOO_DB || !ODOO_USER || !ODOO_API_KEY || !BREVO_API_KEY) {
+      console.error('Missing Odoo or Brevo configuration');
+      throw new Error('Server configuration error (missing secrets)');
+    }
 
     // Format description for Odoo (Plain Text)
     const plainDescription = `
@@ -257,20 +267,21 @@ S7. PRESUPUESTO Y DECISIÓN
 
     // --- Odoo Integration ---
     let leadId = null;
+    let odooLog = { status: 'starting', steps: [] as string[], error: null as any };
     try {
-      console.log("Starting Odoo integration for:", email);
+      odooLog.steps.push("Auth starting");
       const uid = await odooCall(ODOO_URL, "common", "authenticate", [ODOO_DB, ODOO_USER, ODOO_API_KEY, {}]);
-      console.log("Odoo auth successful, uid:", uid);
+      odooLog.steps.push("Auth success, uid: " + uid);
       
       if (uid) {
-        console.log("Searching for partner with email:", email);
+        odooLog.steps.push("Searching partner: " + email);
         const partnerIds = await odooCall(ODOO_URL, "object", "execute_kw", [
           ODOO_DB, uid, ODOO_API_KEY, "res.partner", "search", [[["email", "=", email]]]
         ]);
         
         let partnerId = partnerIds[0];
         if (!partnerId) {
-          console.log("Partner not found, creating new partner:", fullName);
+          odooLog.steps.push("Partner not found, creating: " + fullName);
           partnerId = await odooCall(ODOO_URL, "object", "execute_kw", [
             ODOO_DB, uid, ODOO_API_KEY, "res.partner", "create",
             [{ 
@@ -278,35 +289,56 @@ S7. PRESUPUESTO Y DECISIÓN
               email: email, 
               phone: phone, 
               comment: 'Business Scan Participant', 
-              function: data.respRole,
-              is_company: false
+              function: data.respRole
             }]
           ]);
-          console.log("New partner created, id:", partnerId);
+          odooLog.steps.push("Partner created, id: " + partnerId);
         } else {
-          console.log("Found existing partner, id:", partnerId);
+          odooLog.steps.push("Partner found, id: " + partnerId);
         }
         
-        console.log("Creating CRM lead/opportunity...");
+        odooLog.steps.push("Creating CRM lead");
         leadId = await odooCall(ODOO_URL, "object", "execute_kw", [
           ODOO_DB, uid, ODOO_API_KEY, "crm.lead", "create",
           [{
             name: "DIAGNÓSTICO: " + (company || fullName),
             partner_id: partnerId,
             email_from: email,
-            contact_name: fullName,
-            mobile: phone,
             description: plainDescription,
             type: 'opportunity',
-            priority: '2' // Changed to '2' (standard) to be safe
+            priority: '2'
           }]
         ]);
-        console.log("CRM lead created successfully, id:", leadId);
+        odooLog.steps.push("Lead created, id: " + leadId);
+        odooLog.status = 'success';
       }
     } catch (e) { 
       console.error('Odoo integration failed:', e);
-      // We don't throw here to avoid blocking the email sending, 
-      // but the log will help us debug.
+      odooLog.status = 'failed';
+      odooLog.error = e.message || e;
+    }
+
+    // Save log to DB (using fetch since we don't have supabase client here)
+    try {
+      const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+      const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+        await fetch(`${SUPABASE_URL}/rest/v1/debug_logs`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+          },
+          body: JSON.stringify({
+            service: 'odoo-business-scan',
+            message: odooLog.status === 'success' ? 'Odoo Success' : 'Odoo Failure',
+            data: odooLog
+          })
+        });
+      }
+    } catch (dbLogErr) {
+      console.error("Failed to save debug log:", dbLogErr);
     }
 
     // --- Brevo Notifications ---
@@ -347,6 +379,30 @@ S7. PRESUPUESTO Y DECISIÓN
 
   } catch (error) {
     console.error("Function error:", error);
+    
+    // Attempt to log critical error to DB
+    try {
+      const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+      const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+        await fetch(`${SUPABASE_URL}/rest/v1/debug_logs`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_SERVICE_ROLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+          },
+          body: JSON.stringify({
+            service: 'odoo-business-scan-CRITICAL',
+            message: 'Critical Function Error',
+            data: { error: error.message || error, stack: error.stack }
+          })
+        });
+      }
+    } catch (inner) {
+      console.error("Failed to log critical error:", inner);
+    }
+
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400

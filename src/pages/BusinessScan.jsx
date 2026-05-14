@@ -18,7 +18,7 @@ const BusinessScan = () => {
     const originalOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content');
     const originalOgDesc = document.querySelector('meta[property="og:description"]')?.getAttribute('content');
 
-    const newTitle = "Diagnóstico empresarial | Auténticos";
+    const newTitle = "Diagnóstico Empresarial";
     const newDesc = "Diseñado para comprender de forma estratégica las necesidades reales de formación, liderazgo, cultura, innovación y desarrollo organizacional de su empresa.";
 
     document.title = newTitle;
