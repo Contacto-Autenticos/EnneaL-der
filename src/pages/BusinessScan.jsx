@@ -144,7 +144,7 @@ const BusinessScan = () => {
 
   const nextStep = () => {
     if (step === 1) {
-      const requiredFields = ['companyName', 'respRole', 'respName', 'respLastName', 'email', 'phone', 'orgLevel', 'interventionArea'];
+      const requiredFields = ['companyName', 'respRole', 'respName', 'respLastName', 'email', 'phone'];
       const missing = requiredFields.filter(f => !formData[f]);
       if (missing.length > 0) {
         setErrors(missing);
@@ -255,7 +255,7 @@ const BusinessScan = () => {
               <div className="form-group"><label>Teléfono</label><input className={errors.includes('phone') ? 'error' : ''} name="phone" value={formData.phone} onChange={handleChange} required /></div>
               <div className="form-group">
                 <label>Nivel organizacional de interés</label>
-                <select className={errors.includes('orgLevel') ? 'error' : ''} name="orgLevel" value={formData.orgLevel} onChange={handleChange} required>
+                <select name="orgLevel" value={formData.orgLevel} onChange={handleChange}>
                   <option value="" disabled>Selecciona un nivel...</option>
                   <option>Estratégico (Alta dirección, gerencia, liderazgo)</option>
                   <option>Táctico (Mandos medios, coordinadores, jefaturas)</option>
@@ -265,7 +265,7 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Área principal de intervención</label>
-                <select className={errors.includes('interventionArea') ? 'error' : ''} name="interventionArea" value={formData.interventionArea} onChange={handleChange} required>
+                <select name="interventionArea" value={formData.interventionArea} onChange={handleChange}>
                   <option value="" disabled>Selecciona un área...</option>
                   <option>Comercial / Ventas</option>
                   <option>Administrativa</option>
