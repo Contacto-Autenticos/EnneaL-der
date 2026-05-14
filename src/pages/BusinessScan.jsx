@@ -583,7 +583,7 @@ const BusinessScan = () => {
                 disabled={loading}
               >
                 {loading ? 'Enviando...' : (
-                  <>Finalizar Diagnóstico <Send size={20} /></>
+                  <>Finalizar <Send size={20} /></>
                 )}
               </button>
             )}
