@@ -108,7 +108,7 @@
   gap: 0.6rem;
 }
 
-.form-group label {
+.form-group > label {
   color: #ffffff; /* Pure white for better readability on dark background */
   font-size: 0.9rem;
   font-weight: 700;
@@ -176,7 +176,7 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.checkbox-item {
+.checkbox-grid .checkbox-item {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -199,7 +199,7 @@
   accent-color: #ddbe3d;
 }
 
-.checkbox-item.disabled {
+.checkbox-grid .checkbox-item.disabled {
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
