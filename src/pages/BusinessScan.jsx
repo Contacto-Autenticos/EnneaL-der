@@ -417,7 +417,7 @@ const BusinessScan = () => {
                 <label>Modalidad preferida</label>
                 <select name="preferredModality" value={formData.preferredModality} onChange={handleChange} required>
                   <option value="" disabled>Selecciona modalidad...</option>
-                  <option>Presencial</option><option>Virtual sincrónica</option><option>Virtual asincrónica</option><option>Híbrida</option><option>Mentoría</option><option>Consultoría</option>
+                  <option>Presencial</option><option>Virtual</option><option>Mixta</option><option>Pendiente confirmar</option>
                 </select>
               </div>
               <div className="form-group">
