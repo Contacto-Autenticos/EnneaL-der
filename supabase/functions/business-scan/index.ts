@@ -156,7 +156,15 @@ S3. NECESIDADES Y BRECHAS
 - Urgencia: ${data.urgency}
 - Consecuencias: ${data.consequences ? data.consequences.join(', ') : 'No especificado'}
 - Brechas (1-5):
-${Object.entries(data.breachesScores).map(([k, v]) => `  * ${k}: ${v}`).join('\n')}
+${Object.entries(data.breachesScores).map(([k, v]) => {
+  const labels = {
+    liderazgo: 'Liderazgo', comunicacion: 'Comunicación', gestionEmocional: 'Gestión Emocional',
+    planeacion: 'Planeación', productividad: 'Productividad', trabajoEquipo: 'Trabajo en Equipo',
+    cultura: 'Cultura', innovacion: 'Innovación', adaptabilidad: 'Adaptabilidad',
+    gestionTiempo: 'Gestión del Tiempo', conflictos: 'Manejo de Conflictos', compromiso: 'Compromiso'
+  };
+  return `  * ${labels[k] || k}: ${v}`;
+}).join('\n')}
 
 S4. CULTURA Y CAMBIO
 - Cultura: ${data.cultureDescription}
@@ -210,7 +218,15 @@ S7. PRESUPUESTO Y DECISIÓN
       <strong>Urgencia:</strong> ${data.urgency}<br/>
       <strong>Consecuencias:</strong> ${data.consequences ? data.consequences.join(', ') : 'No especificado'}<br/>
       <strong>Brechas (1-5):</strong><br/>
-      ${Object.entries(data.breachesScores).map(([k, v]) => `&nbsp;&nbsp;&bull; <strong>${k}:</strong> ${v}`).join('<br/>')}
+      ${Object.entries(data.breachesScores).map(([k, v]) => {
+        const labels = {
+          liderazgo: 'Liderazgo', comunicacion: 'Comunicación', gestionEmocional: 'Gestión Emocional',
+          planeacion: 'Planeación', productividad: 'Productividad', trabajoEquipo: 'Trabajo en Equipo',
+          cultura: 'Cultura', innovacion: 'Innovación', adaptabilidad: 'Adaptabilidad',
+          gestionTiempo: 'Gestión del Tiempo', conflictos: 'Manejo de Conflictos', compromiso: 'Compromiso'
+        };
+        return `&nbsp;&nbsp;&bull; <strong>${labels[k] || k}:</strong> ${v}`;
+      }).join('<br/>')}
 
       <div style="${sectionStyle}">S4. CULTURA Y CAMBIO</div>
       <strong>Cultura:</strong> ${data.cultureDescription}<br/>

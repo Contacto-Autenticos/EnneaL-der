@@ -68,11 +68,19 @@ const BusinessReportTemplate = ({ data }) => {
           <div style={{ marginTop: '10px' }}>
             <div style={{ fontWeight: 'bold', fontSize: '12px', color: navyColor }}>Brechas (1-5):</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px', marginTop: '5px' }}>
-              {data.breaches_scores && Object.entries(data.breaches_scores).map(([k, v]) => (
-                <div key={k} style={{ fontSize: '10px' }}>
-                  <span style={{ textTransform: 'capitalize' }}>{k.replace(/([A-Z])/g, ' $1')}:</span> <strong>{v}</strong>
-                </div>
-              ))}
+              {data.breaches_scores && Object.entries(data.breaches_scores).map(([k, v]) => {
+                const labels = {
+                  liderazgo: 'Liderazgo', comunicacion: 'Comunicación', gestionEmocional: 'Gestión Emocional',
+                  planeacion: 'Planeación', productividad: 'Productividad', trabajoEquipo: 'Trabajo en Equipo',
+                  cultura: 'Cultura', innovacion: 'Innovación', adaptabilidad: 'Adaptabilidad',
+                  gestionTiempo: 'Gestión del Tiempo', conflictos: 'Manejo de Conflictos', compromiso: 'Compromiso'
+                };
+                return (
+                  <div key={k} style={{ fontSize: '10px' }}>
+                    <span>{labels[k] || k}:</span> <strong>{v}</strong>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

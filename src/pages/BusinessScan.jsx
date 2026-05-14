@@ -308,9 +308,24 @@ const BusinessScan = () => {
               <div className="form-group">
                 <label>Califica el nivel de brecha (1: Sin brecha, 5: Brecha crítica)</label>
                 <div className="likert-grid">
-                  {Object.entries(formData.breachesScores).map(([key, val]) => (
-                    <div key={key} className="likert-item">
-                      <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                  {Object.entries(formData.breachesScores).map(([key, val]) => {
+                    const labels = {
+                      liderazgo: 'Liderazgo',
+                      comunicacion: 'Comunicación',
+                      gestionEmocional: 'Gestión Emocional',
+                      planeacion: 'Planeación',
+                      productividad: 'Productividad',
+                      trabajoEquipo: 'Trabajo en Equipo',
+                      cultura: 'Cultura',
+                      innovacion: 'Innovación',
+                      adaptabilidad: 'Adaptabilidad',
+                      gestionTiempo: 'Gestión del Tiempo',
+                      conflictos: 'Manejo de Conflictos',
+                      compromiso: 'Compromiso'
+                    };
+                    return (
+                      <div key={key} className="likert-item">
+                        <span>{labels[key] || key}</span>
                       <div className="rating-segments large-segments">
                         {[1, 2, 3, 4, 5].map(num => (
                           <div 
@@ -363,7 +378,7 @@ const BusinessScan = () => {
             <div className="form-grid full-width">
               <div className="form-group"><label>Describe la cultura actual de la empresa</label><textarea name="cultureDescription" value={formData.cultureDescription} onChange={handleChange} /></div>
               <div className="form-group"><label>Fortalezas culturales que poseen</label><textarea name="cultureStrengths" value={formData.cultureStrengths} onChange={handleChange} /></div>
-              <div className="form-group"><label>Barreras culturales que limintan el crecimiento</label><textarea name="cultureBarriers" value={formData.cultureBarriers} onChange={handleChange} /></div>
+              <div className="form-group"><label>Barreras culturales que limitan el crecimiento</label><textarea name="cultureBarriers" value={formData.cultureBarriers} onChange={handleChange} /></div>
               <div className="form-group">
                 <label>Disposición al cambio (1-5)</label>
                 <div className="rating-segments full-width-segments">
@@ -431,7 +446,7 @@ const BusinessScan = () => {
                 <label>Modalidad preferida</label>
                 <select name="preferredModality" value={formData.preferredModality} onChange={handleChange} required>
                   <option value="" disabled>Selecciona modalidad...</option>
-                  <option>Presencial</option><option>Virtual</option><option>Mixta</option><option>Pendiente confirmar</option>
+                  <option>Presencial</option><option>Virtual</option><option>Mixta</option><option>Pendiente por confirmar</option>
                 </select>
               </div>
               <div className="form-group">
