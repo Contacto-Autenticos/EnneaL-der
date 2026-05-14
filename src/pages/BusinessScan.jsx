@@ -507,7 +507,6 @@ const BusinessScan = () => {
                   <option>Estratégica</option>
                 </select>
               </div>
-              <div className="form-group"><label>¿Quién toma la decisión final?</label><input name="decisionMaker" value={formData.decisionMaker} onChange={handleChange} placeholder="Ej: Gerente General, Junta Directiva" /></div>
               <div className="form-group">
                 <label>Factores clave de aprobación</label>
                 <div className="checkbox-grid">
