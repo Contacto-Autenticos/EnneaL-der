@@ -9,6 +9,7 @@ const BusinessScan = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   // SEO & Meta Tags Update
   useEffect(() => {
@@ -146,10 +147,12 @@ const BusinessScan = () => {
       const requiredFields = ['companyName', 'respRole', 'respName', 'respLastName', 'email', 'phone', 'orgLevel', 'interventionArea'];
       const missing = requiredFields.filter(f => !formData[f]);
       if (missing.length > 0) {
+        setErrors(missing);
         alert('Por favor completa todos los campos obligatorios para continuar.');
         return;
       }
     }
+    setErrors([]);
     setStep(s => Math.min(s + 1, totalSteps));
   };
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
@@ -244,15 +247,15 @@ const BusinessScan = () => {
           <div className="step-content animate-in">
             <h2>1. Información General</h2>
             <div className="form-grid">
-              <div className="form-group"><label>Nombre de la Empresa</label><input name="companyName" value={formData.companyName} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Tu Cargo</label><input name="respRole" value={formData.respRole} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Tu Nombre</label><input name="respName" value={formData.respName} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Tu Apellido</label><input name="respLastName" value={formData.respLastName} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Correo electrónico</label><input type="email" name="email" value={formData.email} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Teléfono</label><input name="phone" value={formData.phone} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Nombre de la Empresa</label><input className={errors.includes('companyName') ? 'error' : ''} name="companyName" value={formData.companyName} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Tu Cargo</label><input className={errors.includes('respRole') ? 'error' : ''} name="respRole" value={formData.respRole} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Tu Nombre</label><input className={errors.includes('respName') ? 'error' : ''} name="respName" value={formData.respName} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Tu Apellido</label><input className={errors.includes('respLastName') ? 'error' : ''} name="respLastName" value={formData.respLastName} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Correo electrónico</label><input type="email" className={errors.includes('email') ? 'error' : ''} name="email" value={formData.email} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Teléfono</label><input className={errors.includes('phone') ? 'error' : ''} name="phone" value={formData.phone} onChange={handleChange} required /></div>
               <div className="form-group">
                 <label>Nivel organizacional de interés</label>
-                <select name="orgLevel" value={formData.orgLevel} onChange={handleChange} required>
+                <select className={errors.includes('orgLevel') ? 'error' : ''} name="orgLevel" value={formData.orgLevel} onChange={handleChange} required>
                   <option value="" disabled>Selecciona un nivel...</option>
                   <option>Estratégico (Alta dirección, gerencia, liderazgo)</option>
                   <option>Táctico (Mandos medios, coordinadores, jefaturas)</option>
@@ -262,7 +265,7 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Área principal de intervención</label>
-                <select name="interventionArea" value={formData.interventionArea} onChange={handleChange} required>
+                <select className={errors.includes('interventionArea') ? 'error' : ''} name="interventionArea" value={formData.interventionArea} onChange={handleChange} required>
                   <option value="" disabled>Selecciona un área...</option>
                   <option>Comercial / Ventas</option>
                   <option>Administrativa</option>
