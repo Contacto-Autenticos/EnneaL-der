@@ -34,6 +34,19 @@ const Gateway = () => {
                     >
                         6 Dominios
                     </button>
+
+                    <button 
+                        className="gateway-btn-outline"
+                        onClick={() => navigate("/escaneo-empresarial")}
+                        style={{ 
+                            background: 'transparent', 
+                            border: '2px solid #ddbe3d', 
+                            color: '#ddbe3d',
+                            marginTop: '0.5rem'
+                        }}
+                    >
+                        Escaneo Empresarial
+                    </button>
                 </div>
             </div>
         </div>

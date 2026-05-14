@@ -51,6 +51,7 @@ import LiderazgoTest from './pages/LiderazgoTest';
 import LiderazgoResults from './pages/LiderazgoResults';
 import Agenda from './pages/Agenda';
 import LiderazgoTestIntro from './pages/LiderazgoTestIntro';
+import BusinessScan from './pages/BusinessScan';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -393,6 +394,7 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/programa" element={<CourseLanding />} />
         <Route path="/programa-genuinos" element={<GenuinosLanding />} />
         <Route path="/agenda" element={<Agenda />} />
+        <Route path="/escaneo-empresarial" element={<BusinessScan />} />
         <Route
           path="/eneagrama-empresas"
           element={

@@ -144,3 +144,29 @@
     font-size: 1rem;
   }
 }
+
+.gateway-btn-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.gateway-btn-outline:hover {
+  transform: translateY(-5px);
+  background-color: rgba(221, 190, 61, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(221, 190, 61, 0.3);
+  color: #fff !important;
+}

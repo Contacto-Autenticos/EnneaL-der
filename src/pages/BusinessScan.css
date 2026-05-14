@@ -1,0 +1,385 @@
+.business-scan-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/Montañas 02.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.business-scan-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 45, 68, 0.1); /* Reduced opacity to see the mountains clearer */
+  z-index: 1;
+}
+
+.business-scan-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 45, 68, 0.3); /* More bluish tint */
+  backdrop-filter: blur(15px); /* Reduced blur for clarity */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  padding: 2.5rem;
+  width: 95%; /* Use percentage for better mobile response */
+  max-width: 800px;
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.business-scan-header {
+  margin-bottom: 2rem;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.business-scan-logo {
+  max-height: 75px;
+}
+
+.step-indicator {
+  color: #ddbe3d;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap; /* Prevent breaking in small screens */
+}
+
+.progress-bar-container {
+  flex: 1; /* Occupy remaining space between logo and indicator */
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ddbe3d, #f1d45e);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px rgba(221, 190, 61, 0.5);
+}
+
+.step-content h2 {
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  border-left: 4px solid #ddbe3d;
+  padding-left: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-grid.full-width {
+  grid-template-columns: 1fr;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-group label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  background: rgba(0, 45, 68, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+  width: 100%; /* Force width to stay in container */
+  box-sizing: border-box;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ddbe3d;
+  box-shadow: 0 0 20px rgba(221, 190, 61, 0.2);
+}
+
+.form-group select option {
+  background-color: #002d44; /* Dark blue background for options */
+  color: #fff; /* White text for options */
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* More subtle placeholder */
+  font-style: italic;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.conditional-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 0.5rem;
+}
+
+/* Checkbox Grid */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.checkbox-item:hover {
+  color: #ddbe3d;
+}
+
+.checkbox-item input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #ddbe3d;
+}
+
+/* Likert Grid */
+.likert-grid {
+  display: grid;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.likert-item {
+  display: grid;
+  grid-template-columns: 140px 1fr 30px;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.likert-item span:first-child {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Rating Segments (Replacement for Sliders) */
+.rating-segments {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  align-items: center;
+}
+
+.score-val {
+  color: #ddbe3d;
+  font-weight: 700;
+  width: 20px;
+  text-align: right;
+  font-size: 1.1rem;
+}
+
+.rating-segment {
+  flex: 1;
+  height: 12px;
+  background: rgba(0, 45, 68, 0.2); /* Exact match with inputs */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.rating-segment:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.rating-segment.active {
+  background: #ddbe3d;
+  box-shadow: 0 0 10px rgba(221, 190, 61, 0.2);
+}
+
+.full-width-segments {
+  height: 20px;
+  gap: 12px;
+  margin: 1rem 0;
+}
+
+.full-width-segments .rating-segment {
+  height: 20px;
+  border-radius: 6px;
+}
+
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Navigation */
+.step-navigation {
+  margin-top: auto;
+  padding-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.nav-btn, .submit-btn {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-btn.prev {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-btn.prev:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn.next, .submit-btn {
+  background: #ddbe3d;
+  color: #002d44;
+  border: none;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-btn.next:hover, .submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(221, 190, 61, 0.4);
+  background: #f1d45e;
+  color: #002d44; /* Keep text color consistent */
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success Card */
+.success-card {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.success-icon-large {
+  color: #ddbe3d;
+  filter: drop-shadow(0 0 15px rgba(221, 190, 61, 0.4));
+  margin-bottom: 1rem;
+}
+
+.success-card h1 {
+  color: #fff;
+  font-size: 2.5rem;
+}
+
+.success-card p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.animate-in {
+  animation: fadeInBlur 0.6s ease-out;
+}
+
+@keyframes fadeInBlur {
+  from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .business-scan-card {
+    padding: 1.5rem;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .likert-item {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .likert-item span:first-child {
+    grid-column: 1 / -1;
+  }
+  .nav-btn, .submit-btn {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
