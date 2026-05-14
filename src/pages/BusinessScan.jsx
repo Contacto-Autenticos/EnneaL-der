@@ -401,7 +401,7 @@ const BusinessScan = () => {
                 <label>Número estimado de participantes</label>
                 <select name="participantCount" value={formData.participantCount} onChange={handleChange} required>
                   <option value="" disabled>Selecciona cantidad...</option>
-                  <option>1 a 10</option><option>11 a 30</option><option>31 a 100</option><option>101 a 300</option><option>Más de 300</option>
+                  <option>1 a 10</option><option>11 a 30</option><option>31 a 100</option><option>101 a 300</option><option>Más de 300</option><option>Pendiente por confirmar</option>
                 </select>
               </div>
               <div className="form-group"><label>Necesidades específicas por nivel</label><textarea name="needsByLevel" value={formData.needsByLevel} onChange={handleChange} /></div>
