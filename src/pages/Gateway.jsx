@@ -37,7 +37,7 @@ const Gateway = () => {
 
                     <button 
                         className="gateway-btn-outline"
-                        onClick={() => navigate("/escaneo-empresarial")}
+                        onClick={() => navigate("/diagnostico-empresarial")}
                         style={{ 
                             background: 'transparent', 
                             border: '2px solid #ddbe3d', 
@@ -45,7 +45,7 @@ const Gateway = () => {
                             marginTop: '0.5rem'
                         }}
                     >
-                        Escaneo Empresarial
+                        Diagnóstico Empresarial
                     </button>
                 </div>
             </div>

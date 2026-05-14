@@ -394,7 +394,7 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/programa" element={<CourseLanding />} />
         <Route path="/programa-genuinos" element={<GenuinosLanding />} />
         <Route path="/agenda" element={<Agenda />} />
-        <Route path="/escaneo-empresarial" element={<BusinessScan />} />
+        <Route path="/diagnostico-empresarial" element={<BusinessScan />} />
         <Route
           path="/eneagrama-empresas"
           element={
