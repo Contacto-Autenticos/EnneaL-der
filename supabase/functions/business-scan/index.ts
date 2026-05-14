@@ -120,6 +120,7 @@ serve(async (req) => {
 
   try {
     const data = await req.json();
+    console.log("Received data:", JSON.stringify(data, null, 2));
     const { respName: firstName, respLastName: lastName, email, phone, companyName: company } = data;
     const fullName = `${firstName} ${lastName}`.trim();
 
@@ -163,7 +164,7 @@ ${Object.entries(data.breachesScores).map(([k, v]) => {
     cultura: 'Cultura', innovacion: 'Innovación', adaptabilidad: 'Adaptabilidad',
     gestionTiempo: 'Gestión del Tiempo', conflictos: 'Manejo de Conflictos', compromiso: 'Compromiso'
   };
-  return `  * ${labels[k] || k}: ${v}`;
+  return "  * " + (labels[k as keyof typeof labels] || k) + ": " + v;
 }).join('\n')}
 
 S4. CULTURA Y CAMBIO
@@ -173,7 +174,7 @@ S4. CULTURA Y CAMBIO
 - Disposición Cambio: ${data.changeReadiness}/5
 - Compromiso Líderes: ${data.leadershipCommitment}
 - Programas Previos: ${data.hasPrevPrograms}
-${data.hasPrevPrograms === 'Sí' ? `- Qué funcionó: ${data.prevWhatWorked}\n- Qué no funcionó: ${data.prevWhatNotWorked}` : ''}
+${data.hasPrevPrograms === 'Sí' ? "- Qué funcionó: " + data.prevWhatWorked + "\n- Qué no funcionó: " + data.prevWhatNotWorked : ''}
 
 S5. POBLACIÓN OBJETIVO
 - Público: ${data.targetPublic && data.targetPublic.length > 0 ? data.targetPublic.join(', ') : 'No especificado'}
@@ -184,7 +185,7 @@ S6. FORMATO Y LOGÍSTICA
 - Modalidad: ${data.preferredModality}
 - Duración: ${data.idealDuration}
 - Restricciones: ${data.logisticsRestrictions && data.logisticsRestrictions.length > 0 ? data.logisticsRestrictions.join(', ') : 'Ninguna'}
-${data.logisticsDescription ? `- Detalles logística: ${data.logisticsDescription}` : ''}
+${data.logisticsDescription ? "- Detalles logística: " + data.logisticsDescription : ''}
 
 S7. PRESUPUESTO Y DECISIÓN
 - Inversión: ${data.investmentRange}
@@ -194,7 +195,7 @@ S7. PRESUPUESTO Y DECISIÓN
 
     // Format rich HTML for Email
     const goldColor = '#c39a22';
-    const sectionStyle = `color: ${goldColor}; font-weight: bold; font-size: 16px; margin-top: 25px; margin-bottom: 12px; display: block; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;`;
+    const sectionStyle = "color: " + goldColor + "; font-weight: bold; font-size: 16px; margin-top: 25px; margin-bottom: 12px; display: block; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 5px;";
     
     const formattedHtml = `
       <div style="${sectionStyle}">S1. INFORMACIÓN GENERAL</div>
@@ -225,7 +226,7 @@ S7. PRESUPUESTO Y DECISIÓN
           cultura: 'Cultura', innovacion: 'Innovación', adaptabilidad: 'Adaptabilidad',
           gestionTiempo: 'Gestión del Tiempo', conflictos: 'Manejo de Conflictos', compromiso: 'Compromiso'
         };
-        return `&nbsp;&nbsp;&bull; <strong>${labels[k] || k}:</strong> ${v}`;
+        return "&nbsp;&nbsp;&bull; <strong>" + (labels[k as keyof typeof labels] || k) + ":</strong> " + v;
       }).join('<br/>')}
 
       <div style="${sectionStyle}">S4. CULTURA Y CAMBIO</div>
@@ -235,7 +236,7 @@ S7. PRESUPUESTO Y DECISIÓN
       <strong>Disposición Cambio:</strong> ${data.changeReadiness}/5<br/>
       <strong>Compromiso Líderes:</strong> ${data.leadershipCommitment}<br/>
       <strong>Programas Previos:</strong> ${data.hasPrevPrograms}<br/>
-      ${data.hasPrevPrograms === 'Sí' ? `<strong>Qué funcionó:</strong> ${data.prevWhatWorked}<br/><strong>Qué no funcionó:</strong> ${data.prevWhatNotWorked}` : ''}
+      ${data.hasPrevPrograms === 'Sí' ? "<strong>Qué funcionó:</strong> " + data.prevWhatWorked + "<br/><strong>Qué no funcionó:</strong> " + data.prevWhatNotWorked : ''}
 
       <div style="${sectionStyle}">S5. POBLACIÓN OBJETIVO</div>
       <strong>Público:</strong> ${data.targetPublic && data.targetPublic.length > 0 ? data.targetPublic.join(', ') : 'No especificado'}<br/>
@@ -246,7 +247,7 @@ S7. PRESUPUESTO Y DECISIÓN
       <strong>Modalidad:</strong> ${data.preferredModality}<br/>
       <strong>Duración:</strong> ${data.idealDuration}<br/>
       <strong>Restricciones:</strong> ${data.logisticsRestrictions && data.logisticsRestrictions.length > 0 ? data.logisticsRestrictions.join(', ') : 'Ninguna'}<br/>
-      ${data.logisticsDescription ? `<strong>Detalles logística:</strong> ${data.logisticsDescription}<br/>` : ''}
+      ${data.logisticsDescription ? "<strong>Detalles logística:</strong> " + data.logisticsDescription + "<br/>" : ''}
 
       <div style="${sectionStyle}">S7. PRESUPUESTO Y DECISIÓN</div>
       <strong>Inversión:</strong> ${data.investmentRange}<br/>
@@ -272,7 +273,7 @@ S7. PRESUPUESTO Y DECISIÓN
         leadId = await odooCall(ODOO_URL, "object", "execute_kw", [
           ODOO_DB, uid, ODOO_API_KEY, "crm.lead", "create",
           [{
-            name: `DIAGNÓSTICO: ${company || fullName}`,
+            name: "DIAGNÓSTICO: " + (company || fullName),
             partner_id: partnerId,
             email_from: email,
             description: plainDescription,
@@ -297,7 +298,7 @@ S7. PRESUPUESTO Y DECISIÓN
           to: [
             { email: "felipebeltranh@gmail.com", name: "Felipe Beltrán" }
           ],
-          subject: `DIAGNÓSTICO EMPRESARIAL: ${company || fullName}`,
+          subject: "DIAGNÓSTICO EMPRESARIAL: " + (company || fullName),
           htmlContent: adminHtml
         })
       }),
@@ -320,6 +321,7 @@ S7. PRESUPUESTO Y DECISIÓN
     });
 
   } catch (error) {
+    console.error("Function error:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400
