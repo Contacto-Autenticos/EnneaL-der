@@ -182,6 +182,8 @@
   gap: 0.6rem;
   color: #ffffff;
   font-size: 0.9rem;
+  font-weight: 400;
+  text-transform: none;
   cursor: pointer;
   transition: color 0.2s ease;
 }
