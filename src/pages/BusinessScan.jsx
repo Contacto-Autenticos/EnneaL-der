@@ -64,9 +64,9 @@ const BusinessScan = () => {
     areaBreaches: '',
     missingSkills: '',
     breachesScores: {
-      liderazgo: 3, comunicacion: 3, gestionEmocional: 3, planeacion: 3,
-      productividad: 3, trabajoEquipo: 3, cultura: 3, innovacion: 3,
-      adaptabilidad: 3, gestionTiempo: 3, conflictos: 3, compromiso: 3
+      liderazgo: 0, comunicacion: 0, gestionEmocional: 0, planeacion: 0,
+      productividad: 0, trabajoEquipo: 0, cultura: 0, innovacion: 0,
+      adaptabilidad: 0, gestionTiempo: 0, conflictos: 0, compromiso: 0
     },
     urgency: 'Media',
     consequences: [],
@@ -75,7 +75,7 @@ const BusinessScan = () => {
     cultureDescription: '',
     cultureStrengths: '',
     cultureBarriers: '',
-    changeReadiness: 3,
+    changeReadiness: 0,
     leadershipCommitment: '',
     hasPrevPrograms: 'No',
     prevWhatWorked: '',
@@ -283,7 +283,7 @@ const BusinessScan = () => {
                   {Object.entries(formData.breachesScores).map(([key, val]) => (
                     <div key={key} className="likert-item">
                       <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
-                      <div className="rating-segments">
+                      <div className="rating-segments large-segments">
                         {[1, 2, 3, 4, 5].map(num => (
                           <div 
                             key={num} 
@@ -292,7 +292,7 @@ const BusinessScan = () => {
                           ></div>
                         ))}
                       </div>
-                      <span className="score-val">{val}</span>
+                      <span className="score-val">{val > 0 ? val : ''}</span>
                     </div>
                   ))}
                 </div>

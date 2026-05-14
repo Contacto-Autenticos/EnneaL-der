@@ -211,6 +211,7 @@
   grid-template-columns: 140px 1fr 30px;
   align-items: center;
   gap: 1.5rem;
+  min-height: 40px;
 }
 
 .likert-item span:first-child {
@@ -255,14 +256,24 @@
 }
 
 .full-width-segments {
-  height: 20px;
+  height: 24px;
   gap: 12px;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 .full-width-segments .rating-segment {
-  height: 20px;
+  height: 24px;
   border-radius: 6px;
+}
+
+.large-segments {
+  height: 20px;
+  gap: 10px;
+}
+
+.large-segments .rating-segment {
+  height: 20px;
+  border-radius: 5px;
 }
 
 
@@ -413,22 +424,42 @@
   }
 
   .likert-item {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    grid-template-columns: 1fr auto;
+    gap: 0.3rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .likert-item:last-child {
+    border-bottom: none;
   }
 
   .likert-item span:first-child {
     grid-column: 1 / -1;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
   }
 
   .rating-segments {
-    gap: 4px;
+    gap: 6px;
+  }
+
+  .large-segments .rating-segment {
+    height: 22px;
+    border-radius: 6px;
+  }
+
+  .full-width-segments .rating-segment {
+    height: 28px;
+    border-radius: 8px;
   }
 
   .score-val {
-    font-size: 1rem;
-    width: 15px;
+    font-size: 1.1rem;
+    width: 25px;
+    margin-left: 0.5rem;
   }
 
   .step-navigation {
