@@ -173,7 +173,8 @@ S5. POBLACIÓN OBJETIVO
 S6. FORMATO Y LOGÍSTICA
 - Modalidad: ${data.preferredModality}
 - Duración: ${data.idealDuration}
-- Restricciones: ${data.logisticsRestrictions}
+- Restricciones: ${data.logisticsRestrictions && data.logisticsRestrictions.length > 0 ? data.logisticsRestrictions.join(', ') : 'Ninguna'}
+${data.logisticsDescription ? `- Detalles logística: ${data.logisticsDescription}` : ''}
 
 S7. PRESUPUESTO Y DECISIÓN
 - Inversión: ${data.investmentRange}
@@ -227,7 +228,8 @@ S7. PRESUPUESTO Y DECISIÓN
       <div style="${sectionStyle}">S6. FORMATO Y LOGÍSTICA</div>
       <strong>Modalidad:</strong> ${data.preferredModality}<br/>
       <strong>Duración:</strong> ${data.idealDuration}<br/>
-      <strong>Restricciones:</strong> ${data.logisticsRestrictions}<br/>
+      <strong>Restricciones:</strong> ${data.logisticsRestrictions && data.logisticsRestrictions.length > 0 ? data.logisticsRestrictions.join(', ') : 'Ninguna'}<br/>
+      ${data.logisticsDescription ? `<strong>Detalles logística:</strong> ${data.logisticsDescription}<br/>` : ''}
 
       <div style="${sectionStyle}">S7. PRESUPUESTO Y DECISIÓN</div>
       <strong>Inversión:</strong> ${data.investmentRange}<br/>

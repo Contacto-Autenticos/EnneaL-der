@@ -90,7 +90,8 @@ const BusinessScan = () => {
     // S6. Formato y Logística
     preferredModality: '',
     idealDuration: '',
-    logisticsRestrictions: '',
+    logisticsRestrictions: [],
+    logisticsDescription: '',
 
     // S7. Presupuesto y Decisión
     investmentRange: '',
@@ -112,7 +113,19 @@ const BusinessScan = () => {
       const currentList = formData[name] || [];
       if (checked) {
         if (name === 'priorities' && currentList.length >= 3) return;
-        setFormData(prev => ({ ...prev, [name]: [...currentList, value] }));
+        
+        let newList;
+        if (name === 'logisticsRestrictions') {
+          if (value === 'Ninguna') {
+            newList = ['Ninguna'];
+          } else {
+            newList = currentList.filter(item => item !== 'Ninguna').concat(value);
+          }
+        } else {
+          newList = [...currentList, value];
+        }
+        
+        setFormData(prev => ({ ...prev, [name]: newList }));
       } else {
         setFormData(prev => ({ ...prev, [name]: currentList.filter(item => item !== value) }));
       }
@@ -173,6 +186,7 @@ const BusinessScan = () => {
           preferred_modality: formData.preferredModality,
           ideal_duration: formData.idealDuration,
           logistics_restrictions: formData.logisticsRestrictions,
+          logistics_description: formData.logisticsDescription,
           investment_range: formData.investmentRange,
           investment_priority: formData.investmentPriority,
           decision_maker: formData.decisionMaker,
@@ -429,16 +443,45 @@ const BusinessScan = () => {
               </div>
               <div className="form-group">
                 <label>Restricciones logísticas</label>
-                <select name="logisticsRestrictions" value={formData.logisticsRestrictions} onChange={handleChange}>
-                  <option value="">Selecciona una restricción principal</option>
-                  <option>Tiempo disponible</option>
-                  <option>Disponibilidad de líderes</option>
-                  <option>Presupuesto</option>
-                  <option>Ubicación</option>
-                  <option>Tecnología</option>
-                  <option>Cultura interna</option>
-                </select>
+                <div className="checkbox-grid">
+                  {['Tiempo disponible', 'Disponibilidad de líderes', 'Presupuesto', 'Ubicación', 'Tecnología', 'Cultura interna', 'Ninguna'].map(r => (
+                    <label key={r} className="checkbox-item">
+                      <input 
+                        type="checkbox" 
+                        name="logisticsRestrictions" 
+                        value={r} 
+                        checked={formData.logisticsRestrictions.includes(r)} 
+                        onChange={(e) => {
+                          const { value, checked } = e.target;
+                          if (value === 'Ninguna' && checked) {
+                            setFormData(prev => ({ ...prev, logisticsRestrictions: ['Ninguna'] }));
+                          } else {
+                            setFormData(prev => {
+                              const newRestrictions = checked 
+                                ? [...prev.logisticsRestrictions.filter(item => item !== 'Ninguna'), value]
+                                : prev.logisticsRestrictions.filter(item => item !== value);
+                              return { ...prev, logisticsRestrictions: newRestrictions };
+                            });
+                          }
+                        }} 
+                      />
+                      {r}
+                    </label>
+                  ))}
+                </div>
               </div>
+
+              {!formData.logisticsRestrictions.includes('Ninguna') && formData.logisticsRestrictions.length > 0 && (
+                <div className="form-group animate-in">
+                  <label>Argumenta tu respuesta (Opcional)</label>
+                  <textarea 
+                    name="logisticsDescription" 
+                    value={formData.logisticsDescription} 
+                    onChange={handleChange} 
+                    placeholder="Describe los detalles de las restricciones seleccionadas..."
+                  />
+                </div>
+              )}
             </div>
           </div>
         );
