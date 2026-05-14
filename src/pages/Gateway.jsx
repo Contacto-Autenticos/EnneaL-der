@@ -45,7 +45,7 @@ const Gateway = () => {
                             marginTop: '0.5rem'
                         }}
                     >
-                        Diagnóstico Empresarial
+                        DIAGNÓSTICO EMPR.
                     </button>
                 </div>
             </div>
