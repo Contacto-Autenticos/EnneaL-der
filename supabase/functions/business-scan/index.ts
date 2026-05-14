@@ -7,7 +7,9 @@ const corsHeaders = {
 
 // Helper to generate styled HTML email
 function getEmailHtml(userName: string, companyName: string, contentHtml: string, isClient = false) {
-  const greeting = isClient ? `¡Gracias, ${userName}!` : `Nuevo Diagnóstico: ${companyName}`;
+  const greeting = isClient 
+    ? `¡Gracias, ${userName}!` 
+    : `<strong>Nuevo Diagnóstico</strong><br/><span style="font-weight: normal; font-size: 20px;">${companyName}</span>`;
   const mainMessage = isClient 
     ? `Hemos recibido tu diagnóstico completo para <strong>${companyName}</strong>. Nuestros consultores están analizando las brechas y desafíos que mencionaste para preparar una sesión de diagnóstico personalizada.`
     : `Se ha recibido un nuevo escaneo empresarial completo con la siguiente información detallada:`;
