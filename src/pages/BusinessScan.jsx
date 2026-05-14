@@ -336,8 +336,9 @@ const BusinessScan = () => {
                         ))}
                       </div>
                       <span className="score-val">{val > 0 ? val : ''}</span>
-                    </div>
-                  ))}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="form-group">
