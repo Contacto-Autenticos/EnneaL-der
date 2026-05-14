@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
 import FascinantesReportTemplate from '../components/FascinantesReportTemplate';
+import BusinessReportTemplate from '../components/BusinessReportTemplate';
 import {
     ResponsiveContainer, BarChart, Bar, LineChart, Line,
     XAxis, YAxis, CartesianGrid, Tooltip, Legend
@@ -63,6 +64,13 @@ const Admin = () => {
     const [loadingFascinantes, setLoadingFascinantes] = useState(false);
     const [fascinantesDateFrom, setFascinantesDateFrom] = useState('');
     const [fascinantesDateTo, setFascinantesDateTo] = useState('');
+
+    // Business Diagnostics State
+    const [businessResults, setBusinessResults] = useState([]);
+    const [loadingBusiness, setLoadingBusiness] = useState(false);
+    const [isGeneratingBusinessPdf, setIsGeneratingBusinessPdf] = useState(null);
+    const [selectedBusinessReport, setSelectedBusinessReport] = useState(null);
+    const businessTemplateRef = React.useRef(null);
 
     // Fascinantes PDF Report State
     const [pdfReportUser, setPdfReportUser] = useState(null);
@@ -151,8 +159,75 @@ const Admin = () => {
             if (activeSection === 'fascinantes-anonimos' || activeSection === 'fascinantes-registrados') {
                 fetchFascinantesResults();
             }
+            if (activeSection === 'diagnostico-empresarial') {
+                fetchBusinessResults();
+            }
         }
     }, [activeSection, isAuthenticated]);
+
+    const fetchBusinessResults = async () => {
+        setLoadingBusiness(true);
+        try {
+            const { data, error } = await supabase
+                .from('business_diagnostics')
+                .select('*')
+                .order('created_at', { ascending: false });
+            
+            if (error) throw error;
+            setBusinessResults(data || []);
+        } catch (error) {
+            console.error('Error fetching business results:', error);
+        } finally {
+            setLoadingBusiness(false);
+        }
+    };
+
+    const handleDownloadBusinessPdf = async (report) => {
+        if (isGeneratingBusinessPdf) return;
+
+        try {
+            setIsGeneratingBusinessPdf(report.id);
+            setSelectedBusinessReport(report);
+
+            // Esperar a que React renderice el template
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            const kitRoot = businessTemplateRef.current;
+            if (!kitRoot) throw new Error('Template ref not found');
+
+            // Mostrar temporalmente para captura
+            kitRoot.style.left = '0';
+            kitRoot.style.opacity = '1';
+            kitRoot.style.zIndex = '9999';
+
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            const canvas = await html2canvas(kitRoot.querySelector('.pdf-page'), {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false
+            });
+
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+
+            // Ocultar de nuevo
+            kitRoot.style.left = '-9999px';
+            kitRoot.style.opacity = '0';
+
+            const fileName = `Diagnostico_${report.company_name.replace(/\s+/g, '_')}_${new Date(report.created_at).toLocaleDateString()}.pdf`;
+            pdf.save(fileName);
+
+        } catch (error) {
+            console.error('Error generating Business PDF:', error);
+            alert('Error al generar el PDF.');
+        } finally {
+            setIsGeneratingBusinessPdf(null);
+            setSelectedBusinessReport(null);
+        }
+    };
 
     const fetchFascinantesResults = async () => {
         setLoadingFascinantes(true);
@@ -1146,6 +1221,12 @@ const Admin = () => {
                 </div>
 
                 <nav className="admin-sidebar-nav">
+                    <button className={`admin-nav-item ${activeSection === 'diagnostico-empresarial' ? 'active' : ''}`}
+                        onClick={() => { setActiveSection('diagnostico-empresarial'); setIsMobileSidebarOpen(false); }}
+                        style={{ marginBottom: '15px', backgroundColor: activeSection === 'diagnostico-empresarial' ? 'rgba(184, 155, 45, 0.2)' : 'transparent', border: '1px solid rgba(184, 155, 45, 0.3)' }}>
+                        <BarChart2 size={17} /> Diagnóstico Empr.
+                    </button>
+
                     <button 
                         className={`admin-nav-program ${expandedProgram === 'genuinos' ? 'active' : ''}`}
                         onClick={() => setExpandedProgram(expandedProgram === 'genuinos' ? null : 'genuinos')}
@@ -1334,6 +1415,68 @@ const Admin = () => {
 
             {/* ── MAIN CONTENT ── */}
             <main className="admin-main">
+
+                {/* ── SECTION: Diagnóstico Empresarial ── */}
+                {activeSection === 'diagnostico-empresarial' && (
+                    <div className="admin-card">
+                        <div className="admin-card-header">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                <h2><BarChart2 size={20} /> Diagnósticos Empresariales</h2>
+                                <button onClick={fetchBusinessResults} className="btn-refresh" disabled={loadingBusiness}>
+                                    <RefreshCw size={16} className={loadingBusiness ? 'spinning' : ''} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="codes-table-wrapper">
+                            <table className="codes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Empresa</th>
+                                        <th>Ubicación</th>
+                                        <th>Solicitante</th>
+                                        <th>Cargo</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
+                                        <th style={{ textAlign: 'center' }}>Reporte</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loadingBusiness ? (
+                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Cargando diagnósticos...</td></tr>
+                                    ) : businessResults.length === 0 ? (
+                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>No se han encontrado registros.</td></tr>
+                                    ) : (
+                                        businessResults.map((r) => (
+                                            <tr key={r.id}>
+                                                <td style={{ fontWeight: '600' }}>{r.company_name}</td>
+                                                <td>{r.location}</td>
+                                                <td>{r.resp_name}</td>
+                                                <td>{r.resp_role}</td>
+                                                <td>{r.email}</td>
+                                                <td>{r.phone}</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    <button 
+                                                        onClick={() => handleDownloadBusinessPdf(r)}
+                                                        className="btn-download-pdf"
+                                                        disabled={isGeneratingBusinessPdf === r.id}
+                                                        style={{ 
+                                                            padding: '6px 12px', 
+                                                            fontSize: '0.8rem',
+                                                            backgroundColor: isGeneratingBusinessPdf === r.id ? '#94a3b8' : '#b89b2d'
+                                                        }}
+                                                    >
+                                                        {isGeneratingBusinessPdf === r.id ? <RefreshCw size={14} className="spinning" /> : <Download size={14} />} PDF
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
 
                 {/* ── SECTION: Códigos de acceso ── */}
                 {activeSection === 'codigos' && (
@@ -3191,6 +3334,14 @@ const Admin = () => {
                     />
                 </div>
             )}
+
+            {/* Hidden template for Business Diagnostic PDF */}
+            <div 
+                ref={businessTemplateRef} 
+                style={{ position: 'fixed', left: '-9999px', top: 0, width: '800px', background: 'white', zIndex: -1, opacity: 0 }}
+            >
+                {selectedBusinessReport && <BusinessReportTemplate data={selectedBusinessReport} />}
+            </div>
             </main>
             
             {/* ── MODAL: Historial de usos ── */}

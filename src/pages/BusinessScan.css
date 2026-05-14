@@ -20,16 +20,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 45, 68, 0.1); /* Reduced opacity to see the mountains clearer */
+  background: transparent;
   z-index: 1;
 }
 
 .business-scan-card {
   position: relative;
   z-index: 2;
-  background: rgba(0, 45, 68, 0.3); /* More bluish tint */
-  backdrop-filter: blur(15px); /* Reduced blur for clarity */
-  -webkit-backdrop-filter: blur(15px);
+  background: linear-gradient(145deg, rgba(0, 10, 18, 0.9) 0%, rgba(0, 45, 68, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 28px;
   padding: 2.5rem;
@@ -109,15 +109,17 @@
 }
 
 .form-group label {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-  font-weight: 600;
+  color: #ffffff; /* Pure white for better readability on dark background */
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .form-group input, 
 .form-group select, 
 .form-group textarea {
-  background: rgba(0, 45, 68, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 0.9rem 1.1rem;
@@ -126,7 +128,7 @@
   font-family: inherit;
   transition: all 0.3s ease;
   outline: none;
-  width: 100%; /* Force width to stay in container */
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -168,7 +170,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 0.8rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.2);
   padding: 1.2rem;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -178,7 +180,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   font-size: 0.9rem;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -199,7 +201,7 @@
 .likert-grid {
   display: grid;
   gap: 1rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.2);
   padding: 1.5rem;
   border-radius: 16px;
 }
@@ -236,7 +238,7 @@
 .rating-segment {
   flex: 1;
   height: 12px;
-  background: rgba(0, 45, 68, 0.2); /* Exact match with inputs */
+  background: rgba(0, 0, 0, 0.3); /* Match with inputs */
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;

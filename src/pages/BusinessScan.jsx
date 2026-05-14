@@ -138,6 +138,57 @@ const BusinessScan = () => {
     setLoading(true);
 
     try {
+      // 1. Persistir en base de datos
+      const { error: dbError } = await supabase
+        .from('business_diagnostics')
+        .insert([{
+          company_name: formData.companyName,
+          industry: formData.industry,
+          employee_count: formData.employeeCount,
+          location: formData.location,
+          coverage: formData.coverage,
+          resp_name: formData.respName,
+          resp_role: formData.respRole,
+          email: formData.email,
+          phone: formData.phone,
+          org_level: formData.orgLevel,
+          intervention_area: formData.interventionArea,
+          challenges: formData.challenges,
+          changes: formData.changes,
+          goals: formData.goals,
+          priorities: formData.priorities,
+          expected_results: formData.expectedResults,
+          performance_issues: formData.performanceIssues,
+          area_breaches: formData.areaBreaches,
+          missing_skills: formData.missingSkills,
+          breaches_scores: formData.breachesScores,
+          urgency: formData.urgency,
+          consequences: formData.consequences,
+          culture_description: formData.cultureDescription,
+          culture_strengths: formData.cultureStrengths,
+          culture_barriers: formData.cultureBarriers,
+          change_readiness: formData.changeReadiness,
+          leadership_commitment: formData.leadershipCommitment,
+          has_prev_programs: formData.hasPrevPrograms,
+          prev_what_worked: formData.prevWhatWorked,
+          prev_what_not_worked: formData.prevWhatNotWorked,
+          target_public: formData.targetPublic,
+          participant_count: formData.participantCount,
+          needs_by_level: formData.needsByLevel,
+          preferred_modality: formData.preferredModality,
+          ideal_duration: formData.idealDuration,
+          logistics_restrictions: formData.logisticsRestrictions,
+          investment_range: formData.investmentRange,
+          investment_priority: formData.investmentPriority,
+          decision_maker: formData.decisionMaker,
+          decision_factors: formData.decisionFactors
+        }]);
+
+      if (dbError) {
+        console.error('Error guardando en base de datos:', dbError);
+      }
+
+      // 2. Enviar notificaciones y CRM vía Edge Function
       const { data, error } = await supabase.functions.invoke('business-scan', {
         body: formData
       });
