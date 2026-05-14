@@ -12,7 +12,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         agenda: resolve(__dirname, 'agenda.html'),
         dominios: resolve(__dirname, 'dominios.html'),
-        eneagrama: resolve(__dirname, 'eneagrama.html')
+        eneagrama: resolve(__dirname, 'eneagrama.html'),
+        escaneo: resolve(__dirname, 'escaneo-empresarial.html')
       }
     }
   }

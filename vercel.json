@@ -13,6 +13,10 @@
             "destination": "/agenda.html"
         },
         {
+            "source": "/escaneo-empresarial(.*)",
+            "destination": "/escaneo-empresarial.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
