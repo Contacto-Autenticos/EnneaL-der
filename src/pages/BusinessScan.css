@@ -197,6 +197,12 @@
   accent-color: #ddbe3d;
 }
 
+.checkbox-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* Likert Grid */
 .likert-grid {
   display: grid;

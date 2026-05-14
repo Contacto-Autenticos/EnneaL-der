@@ -111,6 +111,7 @@ const BusinessScan = () => {
     if (type === 'checkbox') {
       const currentList = formData[name] || [];
       if (checked) {
+        if (name === 'priorities' && currentList.length >= 3) return;
         setFormData(prev => ({ ...prev, [name]: [...currentList, value] }));
       } else {
         setFormData(prev => ({ ...prev, [name]: currentList.filter(item => item !== value) }));
@@ -261,11 +262,18 @@ const BusinessScan = () => {
               <div className="form-group"><label>¿Qué cambios está viviendo la organización?</label><textarea name="changes" value={formData.changes} onChange={handleChange} placeholder="crecimiento, transformación, expansión, crisis, cambio cultural, innovación, reestructuración" /></div>
               <div className="form-group"><label>Objetivos estratégicos en los próximos 12 a 24 meses</label><textarea name="goals" value={formData.goals} onChange={handleChange} /></div>
               <div className="form-group">
-                <label>Prioridades Organizacionales</label>
+                <label>Prioridades Organizacionales (Máximo 3)</label>
                 <div className="checkbox-grid">
                   {['Ventas', 'Liderazgo', 'Cultura', 'Productividad', 'Comunicación', 'Rotación', 'Compromiso', 'Innovación', 'Bienestar'].map(p => (
-                    <label key={p} className="checkbox-item">
-                      <input type="checkbox" name="priorities" value={p} checked={formData.priorities.includes(p)} onChange={handleChange} />
+                    <label key={p} className={`checkbox-item ${!formData.priorities.includes(p) && formData.priorities.length >= 3 ? 'disabled' : ''}`}>
+                      <input 
+                        type="checkbox" 
+                        name="priorities" 
+                        value={p} 
+                        checked={formData.priorities.includes(p)} 
+                        onChange={handleChange} 
+                        disabled={!formData.priorities.includes(p) && formData.priorities.length >= 3}
+                      />
                       {p}
                     </label>
                   ))}
