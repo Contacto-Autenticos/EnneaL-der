@@ -141,7 +141,17 @@ const BusinessScan = () => {
     }));
   };
 
-  const nextStep = () => setStep(s => Math.min(s + 1, totalSteps));
+  const nextStep = () => {
+    if (step === 1) {
+      const requiredFields = ['companyName', 'respRole', 'respName', 'respLastName', 'email', 'phone', 'orgLevel', 'interventionArea'];
+      const missing = requiredFields.filter(f => !formData[f]);
+      if (missing.length > 0) {
+        alert('Por favor completa todos los campos obligatorios para continuar.');
+        return;
+      }
+    }
+    setStep(s => Math.min(s + 1, totalSteps));
+  };
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
 
   const handleSubmit = async (e) => {
