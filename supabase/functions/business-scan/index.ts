@@ -258,31 +258,56 @@ S7. PRESUPUESTO Y DECISIÓN
     // --- Odoo Integration ---
     let leadId = null;
     try {
+      console.log("Starting Odoo integration for:", email);
       const uid = await odooCall(ODOO_URL, "common", "authenticate", [ODOO_DB, ODOO_USER, ODOO_API_KEY, {}]);
+      console.log("Odoo auth successful, uid:", uid);
+      
       if (uid) {
+        console.log("Searching for partner with email:", email);
         const partnerIds = await odooCall(ODOO_URL, "object", "execute_kw", [
           ODOO_DB, uid, ODOO_API_KEY, "res.partner", "search", [[["email", "=", email]]]
         ]);
+        
         let partnerId = partnerIds[0];
         if (!partnerId) {
+          console.log("Partner not found, creating new partner:", fullName);
           partnerId = await odooCall(ODOO_URL, "object", "execute_kw", [
             ODOO_DB, uid, ODOO_API_KEY, "res.partner", "create",
-            [{ name: fullName, email, phone, comment: 'Business Scan Participant', function: data.respRole }]
+            [{ 
+              name: fullName, 
+              email: email, 
+              phone: phone, 
+              comment: 'Business Scan Participant', 
+              function: data.respRole,
+              is_company: false
+            }]
           ]);
+          console.log("New partner created, id:", partnerId);
+        } else {
+          console.log("Found existing partner, id:", partnerId);
         }
+        
+        console.log("Creating CRM lead/opportunity...");
         leadId = await odooCall(ODOO_URL, "object", "execute_kw", [
           ODOO_DB, uid, ODOO_API_KEY, "crm.lead", "create",
           [{
             name: "DIAGNÓSTICO: " + (company || fullName),
             partner_id: partnerId,
             email_from: email,
+            contact_name: fullName,
+            mobile: phone,
             description: plainDescription,
             type: 'opportunity',
-            priority: '3'
+            priority: '2' // Changed to '2' (standard) to be safe
           }]
         ]);
+        console.log("CRM lead created successfully, id:", leadId);
       }
-    } catch (e) { console.error('Odoo error:', e); }
+    } catch (e) { 
+      console.error('Odoo integration failed:', e);
+      // We don't throw here to avoid blocking the email sending, 
+      // but the log will help us debug.
+    }
 
     // --- Brevo Notifications ---
     const adminHtml = getEmailHtml(fullName, company, formattedHtml, false);
