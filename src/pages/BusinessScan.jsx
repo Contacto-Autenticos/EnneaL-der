@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { ChevronRight, ChevronLeft, Send, CheckCircle2 } from 'lucide-react';
@@ -9,6 +9,38 @@ const BusinessScan = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // SEO & Meta Tags Update
+  useEffect(() => {
+    const originalTitle = document.title;
+    const originalDescription = document.querySelector('meta[name="description"]')?.getAttribute('content');
+    const originalOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content');
+    const originalOgDesc = document.querySelector('meta[property="og:description"]')?.getAttribute('content');
+
+    const newTitle = "Diagnóstico empresarial | Auténticos";
+    const newDesc = "Diseñado para comprender de forma estratégica las necesidades reales de formación, liderazgo, cultura, innovación y desarrollo organizacional de su empresa.";
+
+    document.title = newTitle;
+    
+    const updateMeta = (selector, attr, value) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    };
+
+    updateMeta('meta[name="description"]', 'content', newDesc);
+    updateMeta('meta[property="og:title"]', 'content', newTitle);
+    updateMeta('meta[property="og:description"]', 'content', newDesc);
+    updateMeta('meta[property="twitter:title"]', 'content', newTitle);
+    updateMeta('meta[property="twitter:description"]', 'content', newDesc);
+
+    return () => {
+      document.title = originalTitle;
+      if (originalDescription) updateMeta('meta[name="description"]', 'content', originalDescription);
+      if (originalOgTitle) updateMeta('meta[property="og:title"]', 'content', originalOgTitle);
+      if (originalOgDesc) updateMeta('meta[property="og:description"]', 'content', originalOgDesc);
+    };
+  }, []);
+
   const [formData, setFormData] = useState({
     // S1. Información General
     companyName: '',
