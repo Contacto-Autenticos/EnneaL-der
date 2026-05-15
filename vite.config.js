@@ -13,7 +13,8 @@ export default defineConfig({
         agenda: resolve(__dirname, 'agenda.html'),
         dominios: resolve(__dirname, 'dominios.html'),
         eneagrama: resolve(__dirname, 'eneagrama.html'),
-        escaneo: resolve(__dirname, 'escaneo-empresarial.html')
+        escaneo: resolve(__dirname, 'escaneo-empresarial.html'),
+        diagnostico: resolve(__dirname, 'diagnostico-empresarial.html')
       }
     }
   }
