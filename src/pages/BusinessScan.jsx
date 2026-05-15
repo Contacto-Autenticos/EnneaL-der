@@ -247,12 +247,20 @@ const BusinessScan = () => {
           <div className="step-content animate-in">
             <h2>1. Información General</h2>
             <div className="form-grid">
-              <div className="form-group"><label>Nombre de la Empresa</label><input className={errors.includes('companyName') ? 'error' : ''} name="companyName" value={formData.companyName} onChange={handleChange} required /></div>
-              <div className="form-group"><label>Tu Cargo</label><input className={errors.includes('respRole') ? 'error' : ''} name="respRole" value={formData.respRole} onChange={handleChange} required /></div>
               <div className="form-group"><label>Tu Nombre</label><input className={errors.includes('respName') ? 'error' : ''} name="respName" value={formData.respName} onChange={handleChange} required /></div>
               <div className="form-group"><label>Tu Apellido</label><input className={errors.includes('respLastName') ? 'error' : ''} name="respLastName" value={formData.respLastName} onChange={handleChange} required /></div>
               <div className="form-group"><label>Correo electrónico</label><input type="email" className={errors.includes('email') ? 'error' : ''} name="email" value={formData.email} onChange={handleChange} required /></div>
               <div className="form-group"><label>Teléfono</label><input className={errors.includes('phone') ? 'error' : ''} name="phone" value={formData.phone} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Nombre de la Empresa</label><input className={errors.includes('companyName') ? 'error' : ''} name="companyName" value={formData.companyName} onChange={handleChange} required /></div>
+              <div className="form-group"><label>Tu Cargo</label><input className={errors.includes('respRole') ? 'error' : ''} name="respRole" value={formData.respRole} onChange={handleChange} required /></div>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="step-content animate-in">
+            <h2>2. Contexto Estratégico</h2>
+            <div className="form-grid" style={{ marginBottom: '1.5rem' }}>
               <div className="form-group">
                 <label>Nivel organizacional de interés</label>
                 <select name="orgLevel" value={formData.orgLevel} onChange={handleChange}>
@@ -278,12 +286,6 @@ const BusinessScan = () => {
                 </select>
               </div>
             </div>
-          </div>
-        );
-      case 2:
-        return (
-          <div className="step-content animate-in">
-            <h2>2. Contexto Estratégico</h2>
             <div className="form-grid full-width">
               <div className="form-group"><label>¿Cuáles son los principales desafíos estratégicos que enfrenta actualmente la empresa?</label><textarea name="challenges" value={formData.challenges} onChange={handleChange} /></div>
               <div className="form-group"><label>¿Qué cambios está viviendo la organización?</label><textarea name="changes" value={formData.changes} onChange={handleChange} placeholder="crecimiento, transformación, expansión, crisis, cambio cultural, innovación, reestructuración" /></div>
