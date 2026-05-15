@@ -129,6 +129,29 @@
     letter-spacing: 1px;
 }
 
+.lr-chart-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 500;
+    animation: pulseHint 2s infinite;
+}
+
+.lr-chart-hint svg {
+    color: #ddbe3d;
+    flex-shrink: 0;
+}
+
+@keyframes pulseHint {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
 .lr-dimensions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

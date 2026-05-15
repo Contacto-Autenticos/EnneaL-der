@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { 
     Download, RefreshCw, ChevronRight, 
     Award, AlertTriangle, Lightbulb, ClipboardList,
-    Quote, User, Target, MessageSquare, Users, Star
+    Quote, User, Target, MessageSquare, Users, Star,
+    MousePointerClick
 } from 'lucide-react';
 
 const getDimIcon = (id) => {
@@ -87,6 +88,10 @@ const LiderazgoResults = () => {
                 <section className="lr-section">
                     <h3 className="lr-section-title">Análisis por Dimensión</h3>
                     <LiderazgoRadarChart dimensions={results.allDimensions} />
+                    <div className="lr-chart-hint">
+                        <MousePointerClick size={16} />
+                        <span>Haz clic o pasa el cursor sobre las áreas del gráfico para ver detalles específicos.</span>
+                    </div>
                 </section>
 
                 <div className="lr-grid-2col">
@@ -175,10 +180,10 @@ const LiderazgoResults = () => {
 
             <footer className="lr-footer">
                 <button className="lr-btn-secondary" onClick={() => navigate('/liderazgo-test')}>
-                    <RefreshCw size={18} /> Repetir Test
+                    <RefreshCw size={18} /> Repetir
                 </button>
                 <button className="lr-btn-primary" onClick={() => window.print()}>
-                    <Download size={18} /> Descargar Reporte PDF
+                    <Download size={18} /> Reporte PDF
                 </button>
             </footer>
         </div>
