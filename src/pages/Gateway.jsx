@@ -21,32 +21,37 @@ const Gateway = () => {
                 </div>
 
                 <div className="gateway-buttons">
-                    <button 
-                        className="gateway-btn"
-                        onClick={() => navigate("/eneagrama")}
-                    >
-                        Eneagrama
-                    </button>
+                    <div className="gateway-row">
+                        <button 
+                            className="gateway-btn"
+                            onClick={() => navigate("/diagnostico-empresarial")}
+                        >
+                            DIAGNÓSTICO EMPR.
+                        </button>
+                        
+                        <button 
+                            className="gateway-btn"
+                            onClick={() => navigate("/eneagrama")}
+                        >
+                            Eneagrama
+                        </button>
+                    </div>
                     
-                    <button 
-                        className="gateway-btn"
-                        onClick={() => navigate("/dominios-landing")}
-                    >
-                        6 Dominios
-                    </button>
+                    <div className="gateway-row">
+                        <button 
+                            className="gateway-btn"
+                            onClick={() => navigate("/dominios-landing")}
+                        >
+                            6 Dominios
+                        </button>
 
-                    <button 
-                        className="gateway-btn-outline"
-                        onClick={() => navigate("/diagnostico-empresarial")}
-                        style={{ 
-                            background: 'transparent', 
-                            border: '2px solid #ddbe3d', 
-                            color: '#ddbe3d',
-                            marginTop: '0.5rem'
-                        }}
-                    >
-                        DIAGNÓSTICO EMPR.
-                    </button>
+                        <button 
+                            className="gateway-btn"
+                            onClick={() => navigate("/liderazgo-test-intro")}
+                        >
+                            Liderazgo
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

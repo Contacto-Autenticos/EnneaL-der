@@ -60,7 +60,19 @@
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  max-width: 320px;
+  max-width: 480px;
+}
+
+.gateway-row {
+  display: flex;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.gateway-row .gateway-btn {
+  flex: 1;
+  padding: 1.2rem 0.5rem; /* Slightly less horizontal padding to fit text */
+  font-size: 1rem; /* Slightly smaller font for the row */
 }
 
 .gateway-btn {
