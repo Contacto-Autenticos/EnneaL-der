@@ -17,6 +17,18 @@
             "destination": "/diagnostico-empresarial.html"
         },
         {
+            "source": "/liderazgo-test-intro(.*)",
+            "destination": "/liderazgo-test-intro.html"
+        },
+        {
+            "source": "/liderazgo-test(.*)",
+            "destination": "/liderazgo-test.html"
+        },
+        {
+            "source": "/liderazgo-results(.*)",
+            "destination": "/liderazgo-results.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
