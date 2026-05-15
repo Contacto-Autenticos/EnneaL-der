@@ -238,7 +238,10 @@ const LiderazgoTest = () => {
                     </div>
                 </header>
 
-                <main className={`l-question-card ${isChanging ? 'l-slide-out' : 'l-slide-in'}`}>
+                <main 
+                    key={currentQuestion.id}
+                    className={`l-question-card ${isChanging ? 'l-slide-out' : 'l-slide-in'}`}
+                >
                     <div className="l-question-box">
                         <h2 className="l-question-text">{currentQuestion.text}</h2>
                     </div>
