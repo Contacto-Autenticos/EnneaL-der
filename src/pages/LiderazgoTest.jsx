@@ -217,10 +217,11 @@ const LiderazgoTest = () => {
             <div className={`l-test-container-inner ${activeScreen ? 'content-blur' : ''}`}>
                 <header className="l-header">
                     <div className={`l-domain-label l-domain-${currentQuestion.domain}`}>
-                        {getDomainIcon(currentQuestion.domain)}
-                        <div className="l-domain-header-row">
+                        <div className="l-domain-icon-box">
+                            {getDomainIcon(currentQuestion.domain)}
+                        </div>
+                        <div className="l-domain-text-wrapper">
                             <span className="l-domain-name">{currentDomain.name}</span>
-                            <span className="l-domain-separator">|</span>
                             <span className="l-domain-subtext">{currentDomain.subtext}</span>
                         </div>
                     </div>

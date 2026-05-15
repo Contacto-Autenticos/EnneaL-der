@@ -150,9 +150,14 @@
   }
   .gateway-buttons {
     gap: 1.2rem;
+    max-width: 320px; /* Return to original narrow width on mobile */
+  }
+  .gateway-row {
+    flex-direction: column;
+    gap: 1.2rem;
   }
   .gateway-btn {
-    padding: 1rem;
+    padding: 1.1rem;
     font-size: 1rem;
   }
 }

@@ -34,23 +34,16 @@
     padding: 5px 0;
     align-self: flex-start;
     transition: all 0.3s ease;
-    flex-wrap: wrap;
-    max-width: 100%;
 }
 
-.l-domain-personal, .l-domain-estrategico, .l-domain-relacional, .l-domain-multiplicador, .l-domain-trascendente, .l-domain-control {
-    border-color: transparent;
-    background: transparent;
+.l-domain-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
 }
 
-.l-domain-personal svg { stroke: #0088ff; }
-.l-domain-estrategico svg { stroke: #ff9100; }
-.l-domain-relacional svg { stroke: #ddbe3d; }
-.l-domain-multiplicador svg { stroke: #00aa00; }
-.l-domain-trascendente svg { stroke: #aa00ff; }
-.l-domain-control svg { stroke: #64748b; }
-
-.l-domain-header-row {
+.l-domain-text-wrapper {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -65,17 +58,28 @@
     white-space: nowrap;
 }
 
-.l-domain-separator {
-    color: #cbd5e1;
-    font-weight: 300;
-    font-size: 1.2rem;
-}
-
 .l-domain-subtext {
     font-size: 0.8rem;
     font-weight: 500;
     color: #64748b;
+    position: relative;
+    padding-left: 12px;
 }
+
+.l-domain-subtext::before {
+    content: "|";
+    position: absolute;
+    left: 0;
+    color: #cbd5e1;
+    font-weight: 300;
+}
+
+.l-domain-personal svg { stroke: #0088ff; }
+.l-domain-estrategico svg { stroke: #ff9100; }
+.l-domain-relacional svg { stroke: #ddbe3d; }
+.l-domain-multiplicador svg { stroke: #00aa00; }
+.l-domain-trascendente svg { stroke: #aa00ff; }
+.l-domain-control svg { stroke: #64748b; }
 
 .l-progress-info {
     width: 100%;
@@ -405,15 +409,64 @@
 }
 
 @media (max-width: 600px) {
-    .l-options-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .l-header {
+        margin: 10px auto;
+        gap: 5px;
     }
-    .l-option-btn:last-child {
-        grid-column: span 2;
+
+    .l-domain-label {
+        gap: 10px;
     }
+
+    .l-domain-text-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .l-domain-name {
+        font-size: 0.85rem;
+    }
+
+    .l-domain-subtext {
+        padding-left: 0;
+        font-size: 0.75rem;
+        text-align: left;
+    }
+
+    .l-domain-subtext::before {
+        display: none;
+    }
+
+    .l-question-card {
+        gap: 20px;
+    }
+
     .l-question-text {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
+
+    .l-options-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .l-option-btn {
+        width: calc(31% - 5px); /* Ensures 3 fit in first row */
+        padding: 10px 5px;
+        min-height: 85px;
+    }
+
+    .l-val-num {
+        font-size: 1.2rem;
+    }
+
+    .l-val-desc {
+        font-size: 0.55rem;
+    }
+
     .l-keyboard-hint {
         display: none;
     }
