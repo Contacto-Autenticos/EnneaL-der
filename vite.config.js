@@ -14,7 +14,10 @@ export default defineConfig({
         dominios: resolve(__dirname, 'dominios.html'),
         eneagrama: resolve(__dirname, 'eneagrama.html'),
         escaneo: resolve(__dirname, 'escaneo-empresarial.html'),
-        diagnostico: resolve(__dirname, 'diagnostico-empresarial.html')
+        diagnostico: resolve(__dirname, 'diagnostico-empresarial.html'),
+        liderazgoIntro: resolve(__dirname, 'liderazgo-test-intro.html'),
+        liderazgoTest: resolve(__dirname, 'liderazgo-test.html'),
+        liderazgoResults: resolve(__dirname, 'liderazgo-results.html')
       }
     }
   }
