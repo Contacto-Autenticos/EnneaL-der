@@ -1,13 +1,13 @@
 .liderazgo-test-container {
     min-height: 100vh;
-    background: #ffffff;
+    background: transparent;
     display: flex;
     flex-direction: column;
     padding: 15px;
     font-family: 'Outfit', sans-serif;
 }
 
-.l-test-main {
+.l-test-container-inner {
     max-width: 850px;
     margin: 0 auto;
     width: 100%;
@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    transition: filter 0.3s ease;
 }
 
 .l-header {
@@ -289,29 +290,53 @@
     cursor: pointer;
 }
 
-.l-progress-screen {
-    flex: 1;
+.l-progress-screen-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 45, 68, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+}
+
+.l-screen-modal {
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 550px;
+    animation: l-modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes l-modal-pop {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.content-blur {
+    filter: blur(4px);
+    pointer-events: none;
 }
 
 .l-screen-content {
-    max-width: 500px;
-    padding: 40px;
+    padding: 50px 40px;
+    text-align: center;
 }
 
 .l-screen-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    color: #002d44;
 }
 
 .l-screen-text {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 40px;
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 35px;
     line-height: 1.5;
 }
 
@@ -319,8 +344,8 @@
     background: #002d44;
     color: white;
     border: none;
-    padding: 18px 40px;
-    border-radius: 50px;
+    padding: 18px 50px;
+    border-radius: 60px;
     font-weight: 800;
     font-size: 1.1rem;
     display: flex;
@@ -329,6 +354,12 @@
     cursor: pointer;
     margin: 0 auto;
     transition: all 0.3s;
+    box-shadow: 0 10px 20px rgba(0, 45, 68, 0.2);
+}
+
+.l-screen-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 45, 68, 0.3);
 }
 
 .l-brand-mini {
@@ -344,6 +375,33 @@
 @keyframes l-fade-in {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.l-slide-in {
+    animation: l-slide-in 0.5s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.l-slide-out {
+    animation: l-slide-out 0.4s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+}
+
+@keyframes l-slide-in {
+    0% { transform: translateX(30px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes l-slide-out {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(-30px); opacity: 0; }
+}
+
+.liderazgo-test-container {
+    min-height: 100vh;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    overflow-x: hidden; /* Prevent horizontal scroll during slides */
 }
 
 @media (max-width: 600px) {

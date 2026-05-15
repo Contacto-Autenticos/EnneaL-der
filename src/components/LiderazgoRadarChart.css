@@ -2,29 +2,61 @@
     width: 100%;
 }
 
+.lr-radar-section.wheel-mode {
+    padding: 40px 0;
+    background: transparent;
+}
+
 .lr-radar-layout {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 30px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .lr-radar-chart-container {
-    flex: 0 0 440px;
-    max-width: 440px;
     position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .lr-radar-svg {
     width: 100%;
     height: auto;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.05));
+}
+
+.lr-wheel-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Increased to wrap around the circle better */
+    pointer-events: none;
+    fill: white;
+}
+
+.lr-center-text {
+    font-size: 11px;
+    font-weight: 900;
+    fill: #0f172a;
+    text-anchor: middle;
+    letter-spacing: 1px;
+}
+
+.lr-level-num {
+    font-size: 12px;
+    font-weight: 800;
+    fill: #1e3a5f;
+    text-anchor: start;
+    pointer-events: none;
 }
 
 /* Slice hover effect */
 .lr-polar-slice {
     transition: fill-opacity 0.2s ease, transform 0.2s ease;
-    cursor: none;
+    cursor: pointer;
 }
 
 .lr-polar-slice:hover {
@@ -32,40 +64,50 @@
     filter: brightness(1.1);
 }
 
-/* Tooltip - Glassmorphism */
+/* Tooltip */
 .lr-chart-tooltip {
     position: absolute;
-    pointer-events: none;
     z-index: 100;
-    background: rgba(0, 30, 48, 0.85); /* Darker and more opaque for text clarity */
+    background: rgba(0, 30, 48, 0.9); /* More opaque */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Subtle shadow for extra sharpness */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     border-radius: 12px;
-    padding: 10px 16px;
+    padding: 12px 18px;
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-    transform: translateX(-50%);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    transform: translateX(-50%) translateY(-100%); /* Position above the cursor */
     white-space: nowrap;
-    animation: lr-tooltip-in 0.15s ease-out;
+    animation: lr-tooltip-in 0.2s ease-out;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: left 0.1s ease-out, top 0.1s ease-out; /* Smooth following */
+    transition: left 0.1s ease-out, top 0.1s ease-out;
+    pointer-events: none; /* CRITICAL: prevents flickering */
+    margin-top: -10px;
+}
+
+.lr-hit-area {
+    transition: all 0.2s ease;
+}
+
+.lr-hit-area:hover ~ .lr-polar-slice {
+    fill-opacity: 0.8;
 }
 
 @keyframes lr-tooltip-in {
-    0% { opacity: 0; transform: translateX(-50%) translateY(5px); }
-    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    0% { opacity: 0; transform: translateX(-50%) translateY(-90%); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(-100%); }
 }
 
 .lr-tooltip-color {
-    width: 5px;
-    min-height: 36px;
+    width: 6px;
+    min-height: 40px;
     border-radius: 4px;
     flex-shrink: 0;
 }
+
 
 .lr-tooltip-content {
     display: flex;
@@ -94,7 +136,7 @@
 
 /* Slice animation: scale from center */
 .lr-polar-slice {
-    transform-origin: 230px 230px;
+    transform-origin: 300px 300px;
     animation: lr-slice-grow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     opacity: 0;
 }
@@ -160,12 +202,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 5px;
+}
+
+.lr-legend-name-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #002d44;
+}
+
+.lr-legend-name-group svg {
+    opacity: 0.7;
 }
 
 .lr-legend-name {
     font-weight: 700;
-    font-size: 0.78rem;
-    color: #002d44;
+    font-size: 0.95rem;
 }
 
 .lr-legend-score {
@@ -186,6 +239,7 @@
     border-radius: 10px;
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 .lr-legend-interp {
     font-size: 0.68rem;

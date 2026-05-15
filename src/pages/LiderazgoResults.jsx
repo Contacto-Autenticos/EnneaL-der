@@ -3,8 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { 
     Download, RefreshCw, ChevronRight, 
     Award, AlertTriangle, Lightbulb, ClipboardList,
-    Quote
+    Quote, User, Target, MessageSquare, Users, Star
 } from 'lucide-react';
+
+const getDimIcon = (id) => {
+    switch(id) {
+        case 'personal': return <User size={14} />;
+        case 'estrategico': return <Target size={14} />;
+        case 'relacional': return <MessageSquare size={14} />;
+        case 'multiplicador': return <Users size={14} />;
+        case 'trascendente': return <Star size={14} />;
+        default: return null;
+    }
+};
 import { calculateLiderazgoResults, getRecommendations } from '../utils/liderazgoUtils';
 import LiderazgoSpeedometer from '../components/LiderazgoSpeedometer';
 import LiderazgoRadarChart from '../components/LiderazgoRadarChart';
@@ -47,7 +58,7 @@ const LiderazgoResults = () => {
         <div className="liderazgo-results-page">
             <header className="lr-header">
                 <div className="lr-header-content">
-                    <span className="lr-brand">AUTÉNTICOS</span>
+                    <img src="/Logo-Blanco.png" alt="Auténticos" className="lr-header-logo" />
                     <h1>Tu Reporte de Liderazgo</h1>
                     <p className="lr-subtitle">Análisis profundo de competencias para el Liderazgo Extraordinario</p>
                 </div>
@@ -66,7 +77,7 @@ const LiderazgoResults = () => {
                         </div>
                         <div className="lr-level-info">
                             <span className="lr-badge">Nivel General</span>
-                            <h2 className="lr-level-title">{results.level.label}</h2>
+                            <h2 className="lr-level-title" style={{ color: results.level.color }}>{results.level.label}</h2>
                             <p className="lr-level-desc">{results.level.desc}</p>
                         </div>
                     </div>
@@ -87,8 +98,9 @@ const LiderazgoResults = () => {
                         </div>
                         <ul className="lr-list">
                             {results.topStrengths.map(s => (
-                                <li key={s.id}>
-                                    <strong>{s.name}:</strong> {s.subtext}
+                                <li key={s.id} className="lr-list-item-with-icon">
+                                    {getDimIcon(s.id)}
+                                    <span><strong>{s.name}:</strong> {s.subtext}</span>
                                 </li>
                             ))}
                         </ul>
@@ -102,8 +114,9 @@ const LiderazgoResults = () => {
                         </div>
                         <ul className="lr-list">
                             {results.topRisks.map(r => (
-                                <li key={r.id}>
-                                    <strong>{r.name}:</strong> {r.interpretation.label}
+                                <li key={r.id} className="lr-list-item-with-icon">
+                                    {getDimIcon(r.id)}
+                                    <span><strong>{r.name}:</strong> {r.interpretation.label}</span>
                                 </li>
                             ))}
                         </ul>

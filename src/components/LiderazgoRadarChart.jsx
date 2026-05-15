@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
+import { User, Target, MessageSquare, Users, Star } from 'lucide-react';
 import './LiderazgoRadarChart.css';
+
+const getIcon = (id) => {
+    switch(id) {
+        case 'personal': return <User size={16} />;
+        case 'estrategico': return <Target size={16} />;
+        case 'relacional': return <MessageSquare size={16} />;
+        case 'multiplicador': return <Users size={16} />;
+        case 'trascendente': return <Star size={16} />;
+        default: return null;
+    }
+};
 
 const DIMENSION_COLORS = {
     personal: '#0088ff',
@@ -11,114 +23,229 @@ const DIMENSION_COLORS = {
 
 const LiderazgoRadarChart = ({ dimensions }) => {
     const [tooltip, setTooltip] = useState(null);
-    const cx = 230;
-    const cy = 230;
-    const maxRadius = 210; // Increased size
+    const cx = 300;
+    const cy = 300;
+    const maxRadius = 225; 
     const numDimensions = dimensions.length;
     const sliceAngle = 360 / numDimensions;
-    const startOffset = -90;
+
+    const polarToCartesian = (centerX, centerY, radius, angleInDegrees) => {
+        const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+        return {
+            x: centerX + radius * Math.cos(angleInRadians),
+            y: centerY + radius * Math.sin(angleInRadians)
+        };
+    };
+
+    const describeArc = (x, y, radius, startAngle, endAngle) => {
+        const start = polarToCartesian(x, y, radius, endAngle);
+        const end = polarToCartesian(x, y, radius, startAngle);
+        const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+        return [
+            "M", start.x, start.y, 
+            "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+        ].join(" ");
+    };
+
+    // Text path that ensures labels always read left-to-right
+    // Bottom half (90°-270°): counterclockwise path
+    // Top half (0°-90° and 270°-360°): clockwise path
+    const describeArcForText = (x, y, radius, startAngle, endAngle) => {
+        const midAngle = (startAngle + endAngle) / 2;
+        const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+        if (midAngle >= 90 && midAngle <= 270) {
+            // Bottom half: counterclockwise (sweep-flag 0)
+            const start = polarToCartesian(x, y, radius, endAngle);
+            const end = polarToCartesian(x, y, radius, startAngle);
+            return ["M", start.x, start.y, "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(" ");
+        } else {
+            // Everything else: clockwise (sweep-flag 1)
+            const start = polarToCartesian(x, y, radius, startAngle);
+            const end = polarToCartesian(x, y, radius, endAngle);
+            return ["M", start.x, start.y, "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y].join(" ");
+        }
+    };
 
     const createSlicePath = (index, radiusPercent) => {
         const radius = (radiusPercent / 100) * maxRadius;
-        const startAngleDeg = startOffset + index * sliceAngle;
-        const endAngleDeg = startAngleDeg + sliceAngle;
-        const startAngleRad = (Math.PI / 180) * startAngleDeg;
-        const endAngleRad = (Math.PI / 180) * endAngleDeg;
+        const startAngleDeg = index * sliceAngle;
+        const endAngleDeg = (index + 1) * sliceAngle;
+        const start = polarToCartesian(cx, cy, radius, startAngleDeg);
+        const end = polarToCartesian(cx, cy, radius, endAngleDeg);
+        const largeArcFlag = endAngleDeg - startAngleDeg <= 180 ? "0" : "1";
+        return `M ${cx} ${cy} L ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y} Z`;
+    };
 
-        const x1 = cx + radius * Math.cos(startAngleRad);
-        const y1 = cy + radius * Math.sin(startAngleRad);
-        const x2 = cx + radius * Math.cos(endAngleRad);
-        const y2 = cy + radius * Math.sin(endAngleRad);
-
-        return `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
+    // New: Path for full-radius hit area to capture hover events more easily
+    const createHitAreaPath = (index) => {
+        const radius = maxRadius + 80; // Extend to cover labels and icons
+        const startAngleDeg = index * sliceAngle;
+        const endAngleDeg = (index + 1) * sliceAngle;
+        const start = polarToCartesian(cx, cy, radius, startAngleDeg);
+        const end = polarToCartesian(cx, cy, radius, endAngleDeg);
+        const largeArcFlag = endAngleDeg - startAngleDeg <= 180 ? "0" : "1";
+        return `M ${cx} ${cy} L ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y} Z`;
     };
 
     const levels = 5;
-    const ringPaths = Array.from({ length: levels }, (_, i) => {
-        const r = ((i + 1) / levels) * maxRadius;
-        return `M ${cx - r} ${cy} A ${r} ${r} 0 1 1 ${cx + r} ${cy} A ${r} ${r} 0 1 1 ${cx - r} ${cy}`;
-    });
-
-    const dividers = Array.from({ length: numDimensions }, (_, i) => {
-        const angleDeg = startOffset + i * sliceAngle;
-        const angleRad = (Math.PI / 180) * angleDeg;
-        return {
-            x2: cx + maxRadius * Math.cos(angleRad),
-            y2: cy + maxRadius * Math.sin(angleRad)
-        };
-    });
+    const ringCircles = Array.from({ length: levels }, (_, i) => ((i + 1) / levels) * maxRadius);
 
     const handleMouseMove = (e, dim) => {
-        const rect = e.currentTarget.closest('.lr-radar-chart-container').getBoundingClientRect();
+        const container = e.currentTarget.closest('.lr-radar-chart-container');
+        if (!container) return;
+        
+        const rect = container.getBoundingClientRect();
         setTooltip({
             name: dim.name,
             score: dim.score,
             color: DIMENSION_COLORS[dim.id],
             interp: dim.interpretation?.label,
             x: e.clientX - rect.left,
-            y: e.clientY - rect.top - 100 // Increased offset to avoid overlap
+            y: e.clientY - rect.top - 15 // Adjusted positioning
         });
     };
 
-    const handleMouseLeave = () => {
-        setTooltip(null);
-    };
-
     return (
-        <div className="lr-radar-section">
+        <div className="lr-radar-section wheel-mode">
             <div className="lr-radar-layout">
                 <div className="lr-radar-chart-container">
-                    <svg viewBox="0 0 460 460" className="lr-radar-svg">
-                        <circle cx={cx} cy={cy} r={maxRadius} fill="#f1f5f9" stroke="#e2e8f0" strokeWidth="1" />
-
-                        {ringPaths.map((d, i) => (
-                            <path
+                    <svg viewBox="0 0 600 600" className="lr-radar-svg">
+                        {/* Background Rings */}
+                        {ringCircles.map((r, i) => (
+                            <circle
                                 key={`ring-${i}`}
-                                d={d}
+                                cx={cx}
+                                cy={cy}
+                                r={r}
                                 fill="none"
-                                stroke="white"
-                                strokeWidth={i === levels - 1 ? 1.5 : 0.8}
-                                strokeOpacity={0.4}
+                                stroke="#94a3b8"
+                                strokeWidth="1.5"
+                                strokeDasharray={i === levels - 1 ? "0" : "6 4"}
+                                style={{ pointerEvents: 'none' }}
                             />
                         ))}
 
+                        {/* Level Numbers */}
+                        {ringCircles.map((r, i) => (
+                            i === 0 ? null : ( // Skip level 1 (too close to center)
+                            <text
+                                key={`num-${i}`}
+                                x={cx + 12}
+                                y={cy - r - 5}
+                                className="lr-level-num"
+                                style={{ pointerEvents: 'none' }}
+                            >
+                                {i + 1}
+                            </text>
+                            )
+                        ))}
+
+                        {/* Slices (Visual) */}
                         {dimensions.map((dim, i) => (
                             <path
                                 key={`slice-${dim.id}`}
                                 d={createSlicePath(i, dim.percentage)}
                                 fill={DIMENSION_COLORS[dim.id]}
-                                fillOpacity="0.7"
+                                fillOpacity="0.4"
                                 stroke={DIMENSION_COLORS[dim.id]}
-                                strokeWidth="1"
+                                strokeWidth="1.5"
                                 className="lr-polar-slice"
-                                style={{ animationDelay: `${i * 0.15}s`, cursor: 'pointer' }}
+                                style={{ 
+                                    animationDelay: `${i * 0.1}s`, 
+                                    pointerEvents: 'none' // Let hit areas handle events
+                                }}
+                            />
+                        ))}
+
+                        {/* Hit Areas (Invisible but interactive) */}
+                        {dimensions.map((dim, i) => (
+                            <path
+                                key={`hit-${dim.id}`}
+                                d={createHitAreaPath(i)}
+                                fill="transparent"
+                                className="lr-hit-area"
                                 onMouseMove={(e) => handleMouseMove(e, dim)}
-                                onMouseLeave={handleMouseLeave}
+                                onMouseLeave={() => setTooltip(null)}
+                                style={{ cursor: 'pointer' }}
                             />
                         ))}
 
-                        {dividers.map((line, i) => (
-                            <line
-                                key={`div-${i}`}
-                                x1={cx}
-                                y1={cy}
-                                x2={line.x2}
-                                y2={line.y2}
-                                stroke="white"
-                                strokeWidth="2.5"
-                                style={{ pointerEvents: 'none' }}
-                            />
-                        ))}
+                        {/* Outer Dividers */}
+                        {dimensions.map((_, i) => {
+                            const p = polarToCartesian(cx, cy, maxRadius + 90, i * sliceAngle);
+                            return (
+                                <line
+                                    key={`div-${i}`}
+                                    x1={cx} y1={cy} x2={p.x} y2={p.y}
+                                    stroke="#94a3b8"
+                                    strokeWidth="1.5"
+                                    strokeOpacity="0.6"
+                                    style={{ pointerEvents: 'none' }}
+                                />
+                            );
+                        })}
 
-                        <circle cx={cx} cy={cy} r="5" fill="white" stroke="#e2e8f0" strokeWidth="1.5" />
+                        {/* Outer Labels & Icons */}
+                        {dimensions.map((dim, i) => {
+                            const midAngle = i * sliceAngle + sliceAngle / 2;
+                            const iconPos = polarToCartesian(cx, cy, maxRadius + 55, midAngle);
+                            const arcRadius = maxRadius + 15;
+                            const textPathId = `textPath-${dim.id}`;
+                            
+                            const startAngle = i * sliceAngle;
+                            const endAngle = (i + 1) * sliceAngle;
+
+                            const arcPath = describeArc(cx, cy, arcRadius, i * sliceAngle + 2, (i + 1) * sliceAngle - 2);
+                            const textPathDef = describeArcForText(cx, cy, arcRadius, startAngle, endAngle);
+
+                            return (
+                                <g key={`label-${dim.id}`} style={{ pointerEvents: 'none' }}>
+                                    <defs>
+                                        <path id={textPathId} d={textPathDef} />
+                                    </defs>
+
+                                    {/* Outer Color Arc */}
+                                    <path
+                                        d={arcPath}
+                                        fill="none"
+                                        stroke={DIMENSION_COLORS[dim.id]}
+                                        strokeWidth="20"
+                                        strokeLinecap="round"
+                                        opacity="0.8"
+                                    />
+                                    
+                                    {/* Curved Dimension Name */}
+                                    <text className="lr-wheel-label" fill="white">
+                                        <textPath 
+                                            href={`#${textPathId}`} 
+                                            startOffset="50%" 
+                                            textAnchor="middle"
+                                            dominantBaseline="middle"
+                                        >
+                                            {dim.name.replace('Liderazgo', '').trim().toUpperCase()}
+                                        </textPath>
+                                    </text>
+
+                                    {/* Icon at outer tip */}
+                                    <g transform={`translate(${iconPos.x - 12}, ${iconPos.y - 12})`}>
+                                        <circle r="16" cx="12" cy="12" fill="white" stroke={DIMENSION_COLORS[dim.id]} strokeWidth="1.5" />
+                                        <g transform="translate(4, 4)" style={{ color: DIMENSION_COLORS[dim.id] }}>
+                                            {getIcon(dim.id)}
+                                        </g>
+                                    </g>
+                                </g>
+                            );
+                        })}
+
+                        {/* Center Circle */}
+                        <circle cx={cx} cy={cy} r="45" fill="white" stroke="#e2e8f0" strokeWidth="2" style={{ pointerEvents: 'none' }} />
+                        <text x={cx} y={cy + 4} textAnchor="middle" className="lr-center-text" style={{ pointerEvents: 'none' }}>LIDERAZGO</text>
                     </svg>
 
-                    {/* Dynamic Tooltip */}
+                    {/* Tooltip */}
                     {tooltip && (
-                        <div 
-                            className="lr-chart-tooltip" 
-                            style={{ left: tooltip.x, top: tooltip.y }}
-                        >
+                        <div className="lr-chart-tooltip" style={{ left: tooltip.x, top: tooltip.y }}>
                             <div className="lr-tooltip-color" style={{ background: tooltip.color }} />
                             <div className="lr-tooltip-content">
                                 <span className="lr-tooltip-name">{tooltip.name}</span>
@@ -128,37 +255,10 @@ const LiderazgoRadarChart = ({ dimensions }) => {
                         </div>
                     )}
                 </div>
-
-                {/* Legend cards */}
-                <div className="lr-radar-legend">
-                    {dimensions.map(dim => (
-                        <div key={dim.id} className="lr-radar-legend-item">
-                            <div
-                                className="lr-legend-color"
-                                style={{ background: DIMENSION_COLORS[dim.id] }}
-                            />
-                            <div className="lr-legend-info">
-                                <div className="lr-legend-top">
-                                    <span className="lr-legend-name">{dim.name}</span>
-                                    <span className="lr-legend-score">{dim.score}/50</span>
-                                </div>
-                                <div className="lr-legend-bar-bg">
-                                    <div
-                                        className="lr-legend-bar-fill"
-                                        style={{
-                                            width: `${dim.percentage}%`,
-                                            background: DIMENSION_COLORS[dim.id]
-                                        }}
-                                    />
-                                </div>
-                                <span className="lr-legend-interp">{dim.interpretation?.label}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
             </div>
         </div>
     );
 };
 
 export default LiderazgoRadarChart;
+

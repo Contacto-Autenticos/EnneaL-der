@@ -18,45 +18,32 @@ const LiderazgoTestIntro = () => {
                 </div>
                 
                 <div className="li-intro-header">
-                    <h1 className="li-intro-title">DIAGNÓSTICO COMPETENCIAS DE LIDERAZGO AUTÉNTICO</h1>
+                    <h1 className="li-intro-title">Liderazgo Auténtico</h1>
                 </div>
 
                 <div className="li-intro-body">
-                    <div className="li-intro-section">
-                        <h2 className="li-section-tag">Objetivo</h2>
-                        <p className="li-intro-description">
-                            Este diagnóstico ha sido diseñado para ofrecer una visión profunda, realista y práctica sobre el nivel actual de desarrollo de competencias clave de liderazgo.
-                        </p>
-                        <p className="li-intro-description highlight">
-                            No mide intención, aspiración o imagen personal. 
-                            <strong> Mide comportamientos, decisiones y patrones reales observables.</strong>
-                        </p>
-                    </div>
+                    <p className="li-intro-subtitle">Una visión profunda, realista y práctica</p>
 
-                    <div className="li-intro-content-flat">
-                        <div className="li-content-header">
-                            <CheckCircle2 size={18} className="li-icon-check" />
-                            <span>Para obtener resultados confiables:</span>
-                        </div>
+                    <div className="li-intro-text-box">
+                        <p className="li-box-subtitle">Objetivo:</p>
+                        <p>
+                            No mide intención, aspiración o imagen personal. Mide <strong>comportamientos, decisiones y patrones reales observables.</strong>
+                        </p>
                         
                         <div className="li-trampas-section">
-                            <div className="li-trampas-title">
-                                <AlertTriangle size={16} className="li-icon-warn" />
-                                <span>Evita estas trampas comunes:</span>
-                            </div>
+                            <p className="li-trampas-title">
+                                <AlertTriangle size={14} style={{ verticalAlign: 'middle', marginRight: '5px' }} />
+                                Evita estas trampas comunes:
+                            </p>
                             <ul className="li-trampas-list">
                                 <li>Responder como quisieras ser</li>
                                 <li>Compararte con personas con menor desarrollo</li>
                                 <li>Justificar patrones improductivos</li>
                                 <li>Responder según momentos excepcionales</li>
-                                <li>Minimizar debilidades por orgullo o temor</li>
                             </ul>
                         </div>
 
-                        <div className="li-recomendacion">
-                            <strong>Recomendación:</strong>
-                            <p>Responde considerando tu comportamiento promedio durante los últimos 90 días.</p>
-                        </div>
+                        <p className="li-duration">Duración aproximada: 5 a 7 minutos</p>
                     </div>
                 </div>
 
@@ -64,7 +51,7 @@ const LiderazgoTestIntro = () => {
                     onClick={() => navigate('/liderazgo-test')}
                     className="li-btn-continue"
                 >
-                    Comenzar Diagnóstico <ArrowRight size={20} />
+                    Continuar <ArrowRight size={20} />
                 </button>
             </div>
 

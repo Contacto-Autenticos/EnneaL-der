@@ -14,8 +14,14 @@ const LiderazgoTest = () => {
     const [answers, setAnswers] = useState({});
     const [showResumeModal, setShowResumeModal] = useState(false);
     const [activeScreen, setActiveScreen] = useState(null);
+    const [isChanging, setIsChanging] = useState(false);
+
 
     const currentQuestion = liderazgoQuestions[currentIndex];
+    
+    // Safety check to avoid crash if out of bounds (useful for corrupted localStorage)
+    if (!currentQuestion) return <div className="l-loading">Cargando...</div>;
+
     const currentDomain = liderazgoDimensions[currentQuestion.domain] || { name: 'Control', subtext: 'Pregunta de verificación' };
 
     useEffect(() => {
@@ -47,14 +53,18 @@ const LiderazgoTest = () => {
                          // Similar logic to handleAnswer for screens
                          if (nextIdx % 10 === 0 && nextIdx !== 0 && nextIdx < 50) {
                             setActiveScreen({
-                                title: `Has completado: ${liderazgoDimensions[liderazgoQuestions[currentIndex].domain].name}`,
+                                title: `Has completado: ${currentDomain.name}`,
                                 text: "¡Buen trabajo! Sigamos con la siguiente dimensión.",
                                 button: "Continuar"
                             });
                          } else if (nextIdx === 50) {
                             setActiveScreen({ title: "Fase de Control", text: "Últimas preguntas...", button: "Comenzar" });
                          } else {
-                            setCurrentIndex(nextIdx);
+                            setIsChanging(true);
+                            setTimeout(() => {
+                                setCurrentIndex(nextIdx);
+                                setIsChanging(false);
+                            }, 400);
                          }
                     }
                 }
@@ -77,7 +87,9 @@ const LiderazgoTest = () => {
                 const parsed = JSON.parse(saved);
                 if (Object.keys(parsed).length > 0) {
                     setAnswers(parsed);
-                    setCurrentIndex(Object.keys(parsed).length);
+                    // Ensure we don't go out of bounds
+                    const targetIdx = Math.min(Object.keys(parsed).length, liderazgoQuestions.length - 1);
+                    setCurrentIndex(targetIdx);
                     setShowResumeModal(true);
                 }
             } catch (e) {
@@ -116,11 +128,16 @@ const LiderazgoTest = () => {
                     });
                     return;
                 }
-                setCurrentIndex(nextIdx);
+                
+                setIsChanging(true);
+                setTimeout(() => {
+                    setCurrentIndex(nextIdx);
+                    setIsChanging(false);
+                }, 400);
             } else {
                 handleFinish(newAnswers);
             }
-        }, 1000);
+        }, 800);
     };
 
     const handleFinish = (finalAnswers) => {
@@ -131,7 +148,13 @@ const LiderazgoTest = () => {
     };
 
     const handlePrev = () => {
-        if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+        if (currentIndex > 0) {
+            setIsChanging(true);
+            setTimeout(() => {
+                setCurrentIndex(currentIndex - 1);
+                setIsChanging(false);
+            }, 400);
+        }
     };
 
     const handleRestart = () => {
@@ -143,7 +166,11 @@ const LiderazgoTest = () => {
 
     const goToNext = () => {
         setActiveScreen(null);
-        setCurrentIndex(currentIndex + 1);
+        setIsChanging(true);
+        setTimeout(() => {
+            setCurrentIndex(currentIndex + 1);
+            setIsChanging(false);
+        }, 400);
     };
 
     const getDomainIcon = (domain) => {
@@ -159,7 +186,7 @@ const LiderazgoTest = () => {
     };
 
     return (
-        <div className="liderazgo-test-page">
+        <div className="liderazgo-test-container">
             {showResumeModal && (
                 <div className="l-modal-overlay">
                     <div className="l-modal">
@@ -173,111 +200,117 @@ const LiderazgoTest = () => {
                 </div>
             )}
             
-            {activeScreen ? (
-                <div className="l-progress-screen fade-in">
-                    <div className="l-screen-content">
-                        <h2 className="l-screen-title">{activeScreen.title}</h2>
-                        <p className="l-screen-text">{activeScreen.text}</p>
-                        <button className="l-screen-btn" onClick={goToNext}>
-                            {activeScreen.button} <ChevronRight size={20} />
-                        </button>
+            {activeScreen && (
+                <div className="l-progress-screen-overlay fade-in">
+                    <div className="l-screen-modal">
+                        <div className="l-screen-content">
+                            <h2 className="l-screen-title">{activeScreen.title}</h2>
+                            <p className="l-screen-text">{activeScreen.text}</p>
+                            <button className="l-screen-btn" onClick={goToNext}>
+                                {activeScreen.button} <ChevronRight size={20} />
+                            </button>
+                        </div>
                     </div>
                 </div>
-            ) : (
-                <>
-                    <header className="l-header">
-                        <div className={`l-domain-label l-domain-${currentQuestion.domain}`}>
-                            {getDomainIcon(currentQuestion.domain)}
-                            <div className="l-domain-header-row">
-                                <span className="l-domain-name">{liderazgoDimensions[currentQuestion.domain].name}</span>
-                                <span className="l-domain-separator">|</span>
-                                <span className="l-domain-subtext">{liderazgoDimensions[currentQuestion.domain].subtext}</span>
-                            </div>
-                        </div>
-                        <div className="l-progress-info">
-                            <span className="l-progress-count">{currentIndex + 1} / {liderazgoQuestions.length}</span>
-                            <div className="l-progress-bar-bg">
-                                <div 
-                                    className="l-progress-fill" 
-                                    style={{ 
-                                        width: `${((currentIndex + 1) / liderazgoQuestions.length) * 100}%`
-                                    }}
-                                ></div>
-                            </div>
-                        </div>
-                    </header>
-
-                    <main className="l-question-card">
-                        <div className="l-question-box">
-                            <h2 className="l-question-text">{currentQuestion.text}</h2>
-                        </div>
-                        
-                        <div className="l-speedometer-box">
-                            <LiderazgoSpeedometer value={answers[currentQuestion.id] || 0} />
-                        </div>
-                            
-                        <div className="l-options-grid">
-                            {[1, 2, 3, 4, 5].map((val) => (
-                                <button 
-                                    key={val}
-                                    className={`l-option-btn ${answers[currentQuestion.id] === val ? 'selected' : ''}`}
-                                    onClick={() => handleAnswer(val)}
-                                >
-                                    <span className="l-val-num">{val}</span>
-                                    <span className="l-val-desc">
-                                        {val === 1 ? 'Nunca' : 
-                                         val === 2 ? 'Rara vez' : 
-                                         val === 3 ? 'Algunas veces' : 
-                                         val === 4 ? 'Frecuentemente' : 'Consistentemente'}
-                                    </span>
-                                </button>
-                            ))}
-                        </div>
-                    </main>
-
-                    <footer className="l-footer">
-                        <button 
-                            className="l-nav-btn"
-                            onClick={handlePrev}
-                            disabled={currentIndex === 0}
-                        >
-                            <ChevronLeft size={18} /> Anterior
-                        </button>
-                        
-                        <div className="l-keyboard-hint">
-                            <span>Teclado: <strong>1-5</strong> para responder • <strong>Enter</strong> siguiente</span>
-                        </div>
-                        
-                        <button 
-                            className="l-nav-btn" 
-                            onClick={() => {
-                                if (answers[currentQuestion.id]) {
-                                    // Manually trigger next logic if answered
-                                    const nextIdx = currentIndex + 1;
-                                    if (nextIdx < liderazgoQuestions.length) {
-                                        if (nextIdx % 10 === 0 && nextIdx !== 0 && nextIdx < 50) {
-                                            setActiveScreen({
-                                                title: `Has completado: ${liderazgoDimensions[liderazgoQuestions[currentIndex].domain].name}`,
-                                                text: "¡Buen trabajo! Sigamos con la siguiente dimensión.",
-                                                button: "Continuar"
-                                            });
-                                        } else if (nextIdx === 50) {
-                                            setActiveScreen({ title: "Fase de Control", text: "Últimas preguntas...", button: "Comenzar" });
-                                        } else {
-                                            setCurrentIndex(nextIdx);
-                                        }
-                                    } else {
-                                        handleFinish(answers);
-                                    }
-                                }
-                            }}
-                            disabled={!answers[currentQuestion.id]}
-                        >
-                            Siguiente <ChevronRight size={18} />
-                        </button>
-                    </footer>
-                </>
             )}
+            
+            <div className={`l-test-container-inner ${activeScreen ? 'content-blur' : ''}`}>
+                <header className="l-header">
+                    <div className={`l-domain-label l-domain-${currentQuestion.domain}`}>
+                        {getDomainIcon(currentQuestion.domain)}
+                        <div className="l-domain-header-row">
+                            <span className="l-domain-name">{currentDomain.name}</span>
+                            <span className="l-domain-separator">|</span>
+                            <span className="l-domain-subtext">{currentDomain.subtext}</span>
+                        </div>
+                    </div>
+                    <div className="l-progress-info">
+                        <span className="l-progress-count">{currentIndex + 1} / {liderazgoQuestions.length}</span>
+                        <div className="l-progress-bar-bg">
+                            <div 
+                                className="l-progress-fill" 
+                                style={{ 
+                                    width: `${((currentIndex + 1) / liderazgoQuestions.length) * 100}%`
+                                }}
+                            ></div>
+                        </div>
+                    </div>
+                </header>
+
+                <main className={`l-question-card ${isChanging ? 'l-slide-out' : 'l-slide-in'}`}>
+                    <div className="l-question-box">
+                        <h2 className="l-question-text">{currentQuestion.text}</h2>
+                    </div>
+                    
+                    <div className="l-speedometer-box">
+                        <LiderazgoSpeedometer value={answers[currentQuestion.id] || 0} />
+                    </div>
+                        
+                    <div className="l-options-grid">
+                        {[1, 2, 3, 4, 5].map((val) => (
+                            <button 
+                                key={val}
+                                className={`l-option-btn ${answers[currentQuestion.id] === val ? 'selected' : ''}`}
+                                onClick={() => handleAnswer(val)}
+                            >
+                                <span className="l-val-num">{val}</span>
+                                <span className="l-val-desc">
+                                    {val === 1 ? 'Nunca' : 
+                                     val === 2 ? 'Rara vez' : 
+                                     val === 3 ? 'Algunas veces' : 
+                                     val === 4 ? 'Frecuentemente' : 'Consistentemente'}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+                </main>
+
+                <footer className="l-footer">
+                    <button 
+                        className="l-nav-btn"
+                        onClick={handlePrev}
+                        disabled={currentIndex === 0}
+                    >
+                        <ChevronLeft size={18} /> Anterior
+                    </button>
+                    
+                    <div className="l-keyboard-hint">
+                        <span>Teclado: <strong>1-5</strong> para responder • <strong>Enter</strong> siguiente</span>
+                    </div>
+                    
+                    <button 
+                        className="l-nav-btn" 
+                        onClick={() => {
+                            if (answers[currentQuestion.id]) {
+                                // Manually trigger next logic if answered
+                                const nextIdx = currentIndex + 1;
+                                if (nextIdx < liderazgoQuestions.length) {
+                                    if (nextIdx % 10 === 0 && nextIdx !== 0 && nextIdx < 50) {
+                                        setActiveScreen({
+                                            title: `Has completado: ${currentDomain.name}`,
+                                            text: "¡Buen trabajo! Sigamos con la siguiente dimensión.",
+                                            button: "Continuar"
+                                        });
+                                    } else if (nextIdx === 50) {
+                                        setActiveScreen({ title: "Fase de Control", text: "Últimas preguntas...", button: "Comenzar" });
+                                    } else {
+                                        setIsChanging(true);
+                                        setTimeout(() => {
+                                            setCurrentIndex(nextIdx);
+                                            setIsChanging(false);
+                                        }, 400);
+                                    }
+                                } else {
+                                    handleFinish(answers);
+                                }
+                            }
+                        }}
+                        disabled={!answers[currentQuestion.id]}
+                    >
+                        Siguiente <ChevronRight size={18} />
+                    </button>
+                </footer>
+            </div>
         </div>
     );
 };

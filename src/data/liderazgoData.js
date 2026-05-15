@@ -97,11 +97,11 @@ export const liderazgoDimensions = {
 
 export const interpretacionLiderazgo = {
     general: [
-        { min: 55, max: 110, label: "Liderazgo emergente", desc: "Bases limitadas, desarrollo prioritario requerido." },
-        { min: 111, max: 165, label: "Liderazgo funcional", desc: "Capacidades presentes pero inconsistentes." },
-        { min: 166, max: 220, label: "Liderazgo sólido", desc: "Buen desarrollo general con áreas claras de mejora." },
-        { min: 221, max: 250, label: "Liderazgo estratégico", desc: "Alta efectividad e influencia." },
-        { min: 251, max: 275, label: "Liderazgo transformador", desc: "Desarrollo integral, impacto elevado y liderazgo consciente." }
+        { min: 55, max: 110, label: "Liderazgo emergente", desc: "Bases limitadas, desarrollo prioritario requerido.", color: "#64748b" },
+        { min: 111, max: 165, label: "Liderazgo funcional", desc: "Capacidades presentes pero inconsistentes.", color: "#a68d2f" },
+        { min: 166, max: 220, label: "Liderazgo sólido", desc: "Buen desarrollo general con áreas claras de mejora.", color: "#b28a00" },
+        { min: 221, max: 250, label: "Liderazgo estratégico", desc: "Alta efectividad e influencia.", color: "#ddbe3d" },
+        { min: 251, max: 275, label: "Liderazgo transformador", desc: "Desarrollo integral, impacto elevado y liderazgo consciente.", color: "#f0d560" }
     ],
     dimension: [
         { min: 10, max: 24, label: "Bajo desarrollo" },
