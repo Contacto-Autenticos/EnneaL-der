@@ -1,0 +1,264 @@
+:root {
+    --pdf-blue: #00121d;
+    --pdf-gold: #ddbe3d;
+    --pdf-bg: #ffffff;
+    --pdf-card-bg: #f8fafc;
+    --pdf-border: #e2e8f0;
+    --pdf-gray: #4b5563;
+}
+
+.eneagrama-pdf-template {
+    width: 800px;
+    background: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+    color: var(--pdf-blue);
+    position: absolute;
+    left: -9999px;
+    top: 0;
+}
+
+.pdf-page {
+    width: 800px;
+    height: 1131px; /* A4 aspect ratio */
+    background: var(--pdf-bg);
+    padding: 50px 50px 85px 50px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.pdf-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pdf-header h1 {
+    font-size: 32px;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--pdf-blue);
+}
+
+.pdf-header p {
+    font-size: 18px;
+    color: var(--pdf-gray);
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+/* Page Numbers */
+.pdf-page-number {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--pdf-blue);
+    background-color: var(--pdf-gold);
+    padding: 8px 12px;
+    border-radius: 50%;
+    min-width: 20px;
+    text-align: center;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-footer {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+
+.pdf-footer img {
+    height: 38px;
+    width: auto;
+}
+
+/* Content Blocks */
+.pdf-section-title {
+    color: var(--pdf-blue);
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid var(--pdf-gold);
+    padding-bottom: 10px;
+}
+
+.pdf-section-icon {
+    color: var(--pdf-gold);
+}
+
+.pdf-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #111827;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.pdf-info-box {
+    background-color: #fdfaf2;
+    border-left: 4px solid var(--pdf-gold);
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    border-radius: 0 8px 8px 0;
+}
+
+.pdf-info-box p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--pdf-blue);
+    line-height: 1.5;
+}
+
+.pdf-info-box strong {
+    color: var(--pdf-gold);
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Grids */
+.pdf-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.pdf-card {
+    background: var(--pdf-card-bg);
+    border: 1px solid var(--pdf-border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.pdf-card h4 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--pdf-blue);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.pdf-card p {
+    font-size: 14px;
+    color: var(--pdf-gray);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Lists */
+.pdf-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+}
+
+.pdf-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: #111827;
+    line-height: 1.5;
+}
+
+.pdf-bullet-icon {
+    color: var(--pdf-gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Differentiation */
+.pdf-diff-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.pdf-diff-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.pdf-diff-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.pdf-diff-badge.winner {
+    background: var(--pdf-gold);
+    color: var(--pdf-blue);
+}
+
+.pdf-diff-badge.rival {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.pdf-diff-vs {
+    font-weight: 800;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.pdf-diff-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--pdf-blue);
+}
+
+.pdf-diff-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--pdf-gray);
+    margin: 0;
+}
+
+/* Triad Table style */
+.pdf-triad-row {
+    display: flex;
+    border-bottom: 1px solid var(--pdf-border);
+    padding: 12px 0;
+}
+.pdf-triad-row:last-child {
+    border-bottom: none;
+}
+.pdf-triad-label {
+    width: 35%;
+    font-weight: 800;
+    color: var(--pdf-blue);
+    font-size: 15px;
+}
+.pdf-triad-value {
+    width: 65%;
+    color: var(--pdf-gray);
+    font-size: 15px;
+}

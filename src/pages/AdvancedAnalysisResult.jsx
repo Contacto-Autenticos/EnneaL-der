@@ -28,6 +28,7 @@ import { jsPDF } from 'jspdf';
 import { advancedEnneagramInfo } from '../data/advancedInfo';
 import { differentiationInfo } from '../data/differentiationInfo';
 import { getEnneagramInfo } from '../utils/calculator';
+import EneagramaReportTemplate from '../components/EneagramaReportTemplate';
 import './AdvancedAnalysisResult.css';
 
 const EnneagramRing = ({ activeType }) => {
@@ -197,6 +198,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     const navigate = useNavigate();
     const { type: urlType } = useParams();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isDownloadingPdf, setIsDownloadingPdf] = React.useState(false);
     const [isDownloadingKit, setIsDownloadingKit] = React.useState(false);
     const [downloadProgress, setDownloadProgress] = React.useState(0);
     const [totalPages, setTotalPages] = React.useState(0);
@@ -238,7 +240,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
 
     // Determine the type and result to display
     const type = urlType || activeResult?.confirmedType;
-    const user = propUser || { name: '' };
+    const user = propUser || { name: 'Eduardo Ruiz' };
 
     console.log('AdvancedAnalysisResult: Init', { type, user, result });
 
@@ -286,162 +288,60 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
         .slice(0, 2);
 
     const shareRef = React.useRef(null);
+    const reportTemplateRef = React.useRef(null);
 
     const handleDownloadPDF = async () => {
-        const reportElement = document.getElementById('advanced-report-content');
-        if (!reportElement) return;
+        if (!reportTemplateRef.current || isDownloadingPdf) return;
+        setIsDownloadingPdf(true);
 
         try {
-            const canvas = await html2canvas(reportElement, {
-                backgroundColor: '#ffffff',
-                scale: 2, // Restaurado a 2 para mantener la calidad del PDF
-                logging: false,
-                useCORS: true,
-                onclone: (clonedDoc) => {
-                    const clonedContent = clonedDoc.getElementById('advanced-report-content');
-                    if (!clonedContent) return;
+            const template = reportTemplateRef.current;
+            
+            // Show template temporarily (it's at left -9999px)
+            template.style.left = '0';
+            template.style.opacity = '1';
+            
+            await new Promise(resolve => setTimeout(resolve, 200)); // Allow styles to apply
+            
+            const originalScrollY = window.scrollY;
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-                    // ── FORZAR ANCHO DESKTOP independiente del viewport ────
-                    // Fix para móvil: position:fixed en advanced-result-page
-                    // limita el render al ancho de la pantalla (~375px),
-                    // haciendo la moneda desproporcionadamente grande.
-                    const resultPage = clonedDoc.querySelector('.advanced-result-page');
-                    if (resultPage) {
-                        resultPage.style.setProperty('position', 'static', 'important');
-                        resultPage.style.setProperty('width', '800px', 'important');
-                        resultPage.style.setProperty('min-height', 'auto', 'important');
-                        resultPage.style.setProperty('overflow', 'visible', 'important');
-                    }
-                    const resultContainer = clonedDoc.querySelector('.advanced-result-container');
-                    if (resultContainer) {
-                        resultContainer.style.setProperty('max-width', '760px', 'important');
-                        resultContainer.style.setProperty('width', '100%', 'important');
-                    }
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = 210;
+            const pdfHeight = 297;
+            
+            // Collect all pdf pages from the template
+            const pages = template.querySelectorAll('.pdf-page');
+            
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                const canvas = await html2canvas(page, {
+                    backgroundColor: '#ffffff',
+                    scale: 2.5,
+                    useCORS: true,
+                    width: 800,
+                    height: 1131
+                });
 
-                    // Configurar el contenedor principal para que parezca una gran hoja
-                    clonedContent.style.background = '#ffffff';
-                    clonedContent.style.width = '210mm'; // Ancho A4
-                    clonedContent.style.padding = '15mm 20mm 35mm 20mm';
-                    clonedContent.style.boxSizing = 'border-box';
-                    clonedContent.style.margin = '0 auto';
-                    clonedContent.style.position = 'relative';
-                    clonedContent.style.display = 'flex';
-                    clonedContent.style.flexDirection = 'column';
-                    clonedContent.style.gap = '20px';
-
-                    // Quitar los estilos de páginas individuales
-                    const exportPages = clonedDoc.querySelectorAll('.pdf-export-page');
-                    exportPages.forEach((p) => {
-                        p.style.width = '100%';
-                        p.style.minHeight = 'auto';
-                        p.style.margin = '0';
-                        p.style.padding = '0';
-                        p.style.background = 'transparent';
-                    });
-
-                    // ── DETENER ANIMACIONES DE LA MONEDA ──────────────────
-                    const coinContainer = clonedDoc.querySelector('.advanced-coin-container');
-                    if (coinContainer) {
-                        coinContainer.style.setProperty('animation', 'none', 'important');
-                        coinContainer.style.setProperty('transition', 'none', 'important');
-                        coinContainer.style.setProperty('transform', 'none', 'important');
-                    }
-                    const coinWrapper = clonedDoc.querySelector('.advanced-coin-wrapper');
-                    if (coinWrapper) {
-                        coinWrapper.style.setProperty('margin-bottom', '110px', 'important');
-                        coinWrapper.style.setProperty('padding', '10px', 'important');
-                    }
-                    // Reducir el gap del hero subtitle
-                    const heroSubtitle = clonedDoc.querySelector('.advanced-hero-subtitle');
-                    if (heroSubtitle) {
-                        heroSubtitle.style.setProperty('margin-bottom', '110px', 'important');
-                    }
-
-                    // Insertar Footer Logo
-                    const footerLogo = clonedDoc.createElement('div');
-                    footerLogo.style.cssText = 'position: absolute; bottom: 10mm; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; z-index: 5; margin: 0; padding: 0;';
-                    const footerImg = clonedDoc.createElement('img');
-                    footerImg.src = '/logo-azul.png';
-                    footerImg.style.cssText = 'height: 45px; object-fit: contain;';
-                    footerLogo.appendChild(footerImg);
-                    clonedContent.appendChild(footerLogo);
-
-                    // Estilizar elementos internos
-                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
-                    const pdfClonedDescription = clonedDoc.querySelector('.description-section');
-                    const pdfClonedPhrase = clonedDoc.querySelector('.phrase-section');
-                    const coinHint = clonedDoc.querySelector('.advanced-coin-hint');
-                    const footerActions = clonedDoc.querySelector('.advanced-footer-actions');
-                    const kitPromo = clonedDoc.querySelector('.executive-kit-promo');
-                    const brandFooter = clonedDoc.querySelector('.detailed-brand-footer');
-
-                    if (clonedHero) {
-                        const heroTitle = clonedHero.querySelector('.advanced-hero-title');
-                        const profileText = clonedHero.querySelector('.profile-text-title');
-                        const userName = clonedHero.querySelector('.user-name-title');
-                        if (heroTitle) heroTitle.style.color = '#002d44';
-                        if (profileText) profileText.style.color = '#002d44';
-                        if (userName) userName.style.color = '#002d44';
-                    }
-
-                    // Función auxiliar para limpiar estilos complejos que fallan en html2canvas
-                    const cleanSectionStyles = (el) => {
-                        if (!el) return;
-                        el.style.setProperty('box-shadow', 'none', 'important');
-                        el.style.setProperty('background', '#0d2535', 'important');
-                        el.style.setProperty('background-color', '#0d2535', 'important');
-                        el.style.setProperty('background-image', 'none', 'important');
-                        el.style.setProperty('border', '1px solid rgba(221, 190, 61, 0.4)', 'important');
-                        el.style.setProperty('border-left', '5px solid #ddbe3d', 'important');
-                        el.style.setProperty('margin', '0 0 30px 0', 'important');
-                        el.style.setProperty('animation', 'none', 'important');
-                        el.style.setProperty('transition', 'none', 'important');
-                        el.style.setProperty('color', '#ffffff', 'important');
-                    };
-
-                    if (pdfClonedDescription) {
-                        cleanSectionStyles(pdfClonedDescription);
-                        const text = pdfClonedDescription.querySelector('.description-text');
-                        if (text) text.style.setProperty('color', '#ffffff', 'important');
-                        const label = pdfClonedDescription.querySelector('.description-label');
-                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
-                    }
-
-                    if (pdfClonedPhrase) {
-                        cleanSectionStyles(pdfClonedPhrase);
-                        const text = pdfClonedPhrase.querySelector('.phrase-text');
-                        if (text) text.style.setProperty('color', '#ffffff', 'important');
-                        const label = pdfClonedPhrase.querySelector('strong');
-                        if (label) label.style.setProperty('color', '#ddbe3d', 'important');
-                    }
-
-                    const advancedSections = clonedDoc.querySelectorAll('.advanced-section');
-                    advancedSections.forEach(section => {
-                        cleanSectionStyles(section);
-                        const sectionTitle = section.querySelector('.section-title');
-                        if (sectionTitle) sectionTitle.style.setProperty('color', '#ffffff', 'important');
-                    });
-
-                    if (coinHint) coinHint.style.display = 'none';
-                    if (footerActions) footerActions.style.display = 'none';
-                    if (kitPromo) kitPromo.style.display = 'none';
-                    if (brandFooter) brandFooter.style.display = 'none';
+                const imgData = canvas.toDataURL('image/jpeg', 0.92);
+                
+                if (i > 0) {
+                    pdf.addPage();
                 }
-            });
+                
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+            }
 
-
-            // Generar una única página dinámica en el PDF
-            const imgData = canvas.toDataURL('image/png');
-            const pdfWidth = 210; // milímetros A4 fijos
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Calcular la altura en mm basado en ratio del canvas
-
-            const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            // Hide template again
+            template.style.left = '-9999px';
+            window.scrollTo({ top: originalScrollY, left: 0, behavior: 'instant' });
 
             pdf.save(`Reporte-Eneatipo-${type}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
-            alert('Hubo un error al generar el PDF.');
+            alert('Hubo un error al generar el reporte PDF.');
+        } finally {
+            setIsDownloadingPdf(false);
         }
     };
 
@@ -587,7 +487,17 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
     };
 
     return (
-        <div className="advanced-result-page">
+        <>
+            <EneagramaReportTemplate 
+                ref={reportTemplateRef} 
+                type={type} 
+                details={details} 
+                basicInfo={basicInfo} 
+                winner={winner} 
+                rivals={rivals} 
+                user={user} 
+            />
+            <div className="advanced-result-page">
             <div className="advanced-result-container">
                 <div id="advanced-report-content">
                     <div ref={shareRef} className="share-content-wrapper pdf-export-page">
@@ -925,10 +835,12 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                             </button>
                             <button
                                 onClick={handleDownloadPDF}
-                                className="btn-advanced-finish btn-download-pdf"
+                                className={`btn-advanced-finish btn-download-pdf ${isDownloadingPdf ? 'loading' : ''}`}
                                 title="Descargar Reporte PDF"
+                                disabled={isDownloadingPdf}
                             >
-                                <Download size={18} /> <span>PDF</span>
+                                {isDownloadingPdf ? <Loader2 size={18} className="spinner" /> : <Download size={18} />}
+                                <span>{isDownloadingPdf ? 'Generando...' : 'PDF'}</span>
                             </button>
                             <button
                                 onClick={handleShare}
@@ -1042,6 +954,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 
