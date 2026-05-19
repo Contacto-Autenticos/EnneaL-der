@@ -207,12 +207,13 @@ const EneagramaBook3D = () => {
                     <div style={{
                         position: 'relative',
                         width: '100%',
-                        height: '480px',
+                        height: 'var(--container-height, 480px)',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         perspective: '1200px',
-                        marginBottom: '20px'
+                        marginBottom: '20px',
+                        transformStyle: 'preserve-3d'
                     }}>
                         {/* Book 1: Reporte */}
                         <div 
@@ -223,45 +224,15 @@ const EneagramaBook3D = () => {
                                     setActiveBook('reporte');
                                 }
                             }}
-                            style={{
-                                width: '310px',
-                                aspectRatio: '1 / 1.41',
-                                position: 'absolute',
-                                cursor: 'pointer',
-                                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                                borderRadius: '4px 16px 16px 4px',
-                                overflow: 'hidden',
-                                border: '1px solid rgba(221, 190, 61, 0.2)',
-                                zIndex: activeBook === 'reporte' ? 10 : 5,
-                                transform: activeBook === 'reporte'
-                                    ? 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)'
-                                    : 'translateX(75px) translateY(25px) translateZ(-100px) rotateY(-18deg) scale(0.95)',
-                                filter: activeBook === 'reporte' ? 'none' : 'brightness(0.55)',
-                                boxShadow: activeBook === 'reporte'
-                                    ? '0 25px 50px rgba(0,0,0,0.6), -10px 0 20px rgba(221,190,61,0.1)'
-                                    : '0 15px 30px rgba(0,0,0,0.4)'
-                            }}
-                            onMouseOver={(e) => {
-                                if (activeBook === 'reporte') {
-                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(30px) rotateY(-8deg) scale(1.18)';
-                                }
-                            }}
-                            onMouseOut={(e) => {
-                                if (activeBook === 'reporte') {
-                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)';
-                                }
-                            }}
+                            className={`premium-book-cover ${activeBook === 'reporte' ? 'is-active' : 'is-inactive'}`}
                         >
                             <img 
                                 src="/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-0001.jpg" 
                                 alt="Portada Reporte" 
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                             />
-                            <div style={{
-                                position: 'absolute',
-                                inset: 0,
-                                background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
-                            }} />
+                            <div className="sheen-overlay" />
+                            <div className="dark-overlay" />
                         </div>
 
                         {/* Book 2: Plan de Acción */}
@@ -273,45 +244,15 @@ const EneagramaBook3D = () => {
                                     setActiveBook('plan');
                                 }
                             }}
-                            style={{
-                                width: '310px',
-                                aspectRatio: '1 / 1.41',
-                                position: 'absolute',
-                                cursor: 'pointer',
-                                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                                borderRadius: '4px 16px 16px 4px',
-                                overflow: 'hidden',
-                                border: '1px solid rgba(221, 190, 61, 0.2)',
-                                zIndex: activeBook === 'plan' ? 10 : 5,
-                                transform: activeBook === 'plan'
-                                    ? 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)'
-                                    : 'translateX(75px) translateY(25px) translateZ(-100px) rotateY(-18deg) scale(0.95)',
-                                filter: activeBook === 'plan' ? 'none' : 'brightness(0.55)',
-                                boxShadow: activeBook === 'plan'
-                                    ? '0 25px 50px rgba(0,0,0,0.6), -10px 0 20px rgba(221,190,61,0.1)'
-                                    : '0 15px 30px rgba(0,0,0,0.4)'
-                            }}
-                            onMouseOver={(e) => {
-                                if (activeBook === 'plan') {
-                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(30px) rotateY(-8deg) scale(1.18)';
-                                }
-                            }}
-                            onMouseOut={(e) => {
-                                if (activeBook === 'plan') {
-                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)';
-                                }
-                            }}
+                            className={`premium-book-cover ${activeBook === 'plan' ? 'is-active' : 'is-inactive'}`}
                         >
                             <img 
                                 src="/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-0001.jpg" 
                                 alt="Portada Plan de Acción" 
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                             />
-                            <div style={{
-                                position: 'absolute',
-                                inset: 0,
-                                background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
-                            }} />
+                            <div className="sheen-overlay" />
+                            <div className="dark-overlay" />
                         </div>
                     </div>
 
@@ -467,6 +408,74 @@ const EneagramaBook3D = () => {
             )}
 
             <style>{`
+                .premium-book-integration {
+                    --book-width: 310px;
+                    --book-active-tx: -35px;
+                    --book-inactive-tx: 75px;
+                    --container-height: 480px;
+                }
+                
+                @media (max-width: 600px) {
+                    .premium-book-integration {
+                        --book-width: 210px;
+                        --book-active-tx: -25px;
+                        --book-inactive-tx: 50px;
+                        --container-height: 340px;
+                    }
+                }
+
+                .premium-book-cover {
+                    width: var(--book-width);
+                    aspect-ratio: 1 / 1.41;
+                    position: absolute;
+                    cursor: pointer;
+                    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                    border-radius: 4px 16px 16px 4px;
+                    overflow: hidden;
+                    border: 1px solid rgba(221, 190, 61, 0.2);
+                    box-shadow: 0 25px 50px rgba(0,0,0,0.6), -10px 0 20px rgba(221,190,61,0.1);
+                    will-change: transform;
+                    backface-visibility: hidden;
+                }
+
+                .premium-book-cover.is-active {
+                    z-index: 10;
+                    transform: translateX(var(--book-active-tx)) translateZ(0) rotateY(-5deg) scale(1.15);
+                }
+
+                .premium-book-cover.is-inactive {
+                    z-index: 5;
+                    transform: translateX(var(--book-inactive-tx)) translateY(25px) translateZ(-100px) rotateY(-18deg) scale(0.95);
+                }
+
+                /* Hover effects only on desktop (devices supporting hover) */
+                @media (hover: hover) {
+                    .premium-book-cover.is-active:hover {
+                        transform: translateX(var(--book-active-tx)) translateZ(30px) rotateY(-8deg) scale(1.18);
+                    }
+                }
+
+                .premium-book-cover .sheen-overlay {
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%);
+                    pointer-events: none;
+                }
+
+                .premium-book-cover .dark-overlay {
+                    position: absolute;
+                    inset: 0;
+                    background-color: #000000;
+                    opacity: 0.45;
+                    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                    pointer-events: none;
+                    will-change: opacity;
+                }
+
+                .premium-book-cover.is-active .dark-overlay {
+                    opacity: 0;
+                }
+
                 .flipbook-canvas-mini {
                     background: transparent !important;
                     box-shadow: none !important;
