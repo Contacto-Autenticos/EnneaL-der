@@ -41,7 +41,7 @@ const EneagramaBook3D = () => {
 
     const pages = Array.from({ length: 5 }, (_, i) => {
         const pageNum = (i + 1).toString().padStart(4, '0');
-        return `/Reporte-Eneatipo-1/Reporte-Eneatipo-1_page-${pageNum}.jpg`;
+        return `/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-${pageNum}.jpg`;
     });
 
     // Handle auto-flip on open
@@ -111,7 +111,7 @@ const EneagramaBook3D = () => {
                             e.currentTarget.style.filter = 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))';
                         }}
                     >
-                        <img src="/Reporte-Eneatipo-1/Reporte-Eneatipo-1_page-0001.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src="/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-0001.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         <div style={{
                             position: 'absolute',
                             inset: 0,
