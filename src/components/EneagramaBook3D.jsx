@@ -6,9 +6,9 @@ import { MousePointerClick, ChevronRight, ChevronLeft } from 'lucide-react';
 const Page = React.forwardRef((props, ref) => {
     return (
         <div className="page" ref={ref} style={{ 
-            backgroundColor: '#fff', 
+            backgroundColor: '#081526', 
             overflow: 'hidden',
-            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.05)',
+            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.15)',
             ...props.style 
         }}>
             <div className="page-content" style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -18,8 +18,8 @@ const Page = React.forwardRef((props, ref) => {
                     style={{ 
                         width: '100%', 
                         height: '100%', 
-                        objectFit: 'contain',
-                        backgroundColor: '#fff'
+                        objectFit: 'cover',
+                        backgroundColor: '#081526'
                     }} 
                 />
                 {/* Paper effect overlay */}
