@@ -4,29 +4,87 @@ import gsap from 'gsap';
 import { MousePointerClick, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const Page = React.forwardRef((props, ref) => {
+    const isDarkPage = props.isLastPage;
     return (
         <div className="page" ref={ref} style={{ 
-            backgroundColor: '#081526', 
+            backgroundColor: isDarkPage ? '#081526' : '#ffffff', 
             overflow: 'hidden',
-            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.15)',
+            boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45)',
+            border: isDarkPage ? '1px solid rgba(221, 190, 61, 0.15)' : '1px solid rgba(0, 0, 0, 0.06)',
+            borderRadius: '6px',
             ...props.style 
         }}>
             <div className="page-content" style={{ width: '100%', height: '100%', position: 'relative' }}>
-                <img 
-                    src={props.image} 
-                    alt={`Página ${props.number}`} 
-                    style={{ 
-                        width: '100%', 
-                        height: '100%', 
-                        objectFit: 'cover',
-                        backgroundColor: '#081526'
-                    }} 
-                />
+                {props.isLastPage ? (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                        padding: '40px 30px',
+                        background: '#081526',
+                        color: '#ffffff',
+                        textAlign: 'center'
+                    }}>
+                        <div style={{
+                            width: '80px',
+                            height: '80px',
+                            borderRadius: '50%',
+                            background: 'rgba(221, 190, 61, 0.1)',
+                            border: '2px solid #ddbe3d',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginBottom: '35px',
+                            boxShadow: '0 0 30px rgba(221, 190, 61, 0.15)'
+                        }}>
+                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '50px', height: 'auto' }} />
+                        </div>
+                        <h3 style={{
+                            color: '#ddbe3d',
+                            fontSize: '22px',
+                            fontWeight: '800',
+                            marginBottom: '20px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            lineHeight: '1.3'
+                        }}>
+                            ¡Hay mucho más por descubrir!
+                        </h3>
+                        <p style={{
+                            fontSize: '15px',
+                            lineHeight: '1.7',
+                            color: 'rgba(255, 255, 255, 0.85)',
+                            margin: '0 0 35px 0',
+                            fontWeight: '500',
+                            maxWidth: '320px'
+                        }}>
+                            Descubre el resto del contenido accediendo al análisis avanzado y plan de acción.
+                        </p>
+                        <div style={{
+                            width: '60px',
+                            height: '1px',
+                            backgroundColor: 'rgba(221, 190, 61, 0.3)'
+                        }} />
+                    </div>
+                ) : (
+                    <img 
+                        src={props.image} 
+                        alt={`Página ${props.number}`} 
+                        style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover',
+                            backgroundColor: '#ffffff'
+                        }} 
+                    />
+                )}
                 {/* Paper effect overlay */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to right, rgba(0,0,0,0.02) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.02) 100%)',
+                    background: 'linear-gradient(to right, rgba(0,0,0,0.01) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.01) 100%)',
                     pointerEvents: 'none'
                 }} />
             </div>
@@ -36,13 +94,21 @@ const Page = React.forwardRef((props, ref) => {
 
 const EneagramaBook3D = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeBook, setActiveBook] = useState('reporte'); // 'reporte' or 'plan'
     const containerRef = useRef();
     const flipBook = useRef();
 
-    const pages = Array.from({ length: 5 }, (_, i) => {
+    const reportPages = Array.from({ length: 5 }, (_, i) => {
         const pageNum = (i + 1).toString().padStart(4, '0');
         return `/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-${pageNum}.jpg`;
     });
+
+    const planPages = Array.from({ length: 5 }, (_, i) => {
+        const pageNum = (i + 1).toString().padStart(4, '0');
+        return `/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-${pageNum}.jpg`;
+    });
+
+    const currentPages = activeBook === 'reporte' ? reportPages : planPages;
 
     // Handle auto-flip on open
     useEffect(() => {
@@ -80,7 +146,7 @@ const EneagramaBook3D = () => {
     return (
         <div className="premium-book-integration" style={{ 
             width: '100%', 
-            maxWidth: '500px',
+            maxWidth: '650px',
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
@@ -88,40 +154,171 @@ const EneagramaBook3D = () => {
         }}>
             {!isOpen ? (
                 <div className="book-teaser-mini" style={{ width: '100%', textAlign: 'center' }}>
-                    <div 
-                        className="teaser-cover-mini" 
-                        onClick={() => setIsOpen(true)}
-                        style={{
-                            width: '100%',
-                            aspectRatio: '1 / 1.41',
-                            cursor: 'pointer',
-                            position: 'relative',
-                            transition: 'all 0.5s ease',
-                            filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))',
-                            borderRadius: '4px 16px 16px 4px',
-                            overflow: 'hidden',
-                            border: '1px solid rgba(221, 190, 61, 0.2)'
-                        }}
-                        onMouseOver={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-10px) rotateY(-5deg)';
-                            e.currentTarget.style.filter = 'drop-shadow(0 30px 50px rgba(0,0,0,0.6))';
-                        }}
-                        onMouseOut={(e) => {
-                            e.currentTarget.style.transform = 'none';
-                            e.currentTarget.style.filter = 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))';
-                        }}
-                    >
-                        <img src="/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-0001.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
-                        }} />
+                    {/* Selector Tabs Pill */}
+                    <div style={{
+                        display: 'inline-flex',
+                        background: 'rgba(0, 45, 68, 0.3)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        padding: '4px',
+                        borderRadius: '30px',
+                        marginBottom: '40px',
+                        position: 'relative',
+                        zIndex: 20
+                    }}>
+                        <button
+                            onClick={() => setActiveBook('reporte')}
+                            style={{
+                                padding: '10px 24px',
+                                border: 'none',
+                                borderRadius: '25px',
+                                background: activeBook === 'reporte' ? '#ddbe3d' : 'transparent',
+                                color: activeBook === 'reporte' ? '#002d44' : 'rgba(255,255,255,0.7)',
+                                fontSize: '12px',
+                                fontWeight: '750',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.5px'
+                            }}
+                        >
+                            Reporte Avanzado
+                        </button>
+                        <button
+                            onClick={() => setActiveBook('plan')}
+                            style={{
+                                padding: '10px 24px',
+                                border: 'none',
+                                borderRadius: '25px',
+                                background: activeBook === 'plan' ? '#ddbe3d' : 'transparent',
+                                color: activeBook === 'plan' ? '#002d44' : 'rgba(255,255,255,0.7)',
+                                fontSize: '12px',
+                                fontWeight: '750',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.5px'
+                            }}
+                        >
+                            Plan de Acción
+                        </button>
                     </div>
+
+                    {/* 3D Container with Perspective */}
+                    <div style={{
+                        position: 'relative',
+                        width: '100%',
+                        height: '480px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        perspective: '1200px',
+                        marginBottom: '20px'
+                    }}>
+                        {/* Book 1: Reporte */}
+                        <div 
+                            onClick={() => {
+                                if (activeBook === 'reporte') {
+                                    setIsOpen(true);
+                                } else {
+                                    setActiveBook('reporte');
+                                }
+                            }}
+                            style={{
+                                width: '310px',
+                                aspectRatio: '1 / 1.41',
+                                position: 'absolute',
+                                cursor: 'pointer',
+                                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                borderRadius: '4px 16px 16px 4px',
+                                overflow: 'hidden',
+                                border: '1px solid rgba(221, 190, 61, 0.2)',
+                                zIndex: activeBook === 'reporte' ? 10 : 5,
+                                transform: activeBook === 'reporte'
+                                    ? 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)'
+                                    : 'translateX(75px) translateY(25px) translateZ(-100px) rotateY(-18deg) scale(0.95)',
+                                filter: activeBook === 'reporte' ? 'none' : 'brightness(0.55)',
+                                boxShadow: activeBook === 'reporte'
+                                    ? '0 25px 50px rgba(0,0,0,0.6), -10px 0 20px rgba(221,190,61,0.1)'
+                                    : '0 15px 30px rgba(0,0,0,0.4)'
+                            }}
+                            onMouseOver={(e) => {
+                                if (activeBook === 'reporte') {
+                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(30px) rotateY(-8deg) scale(1.18)';
+                                }
+                            }}
+                            onMouseOut={(e) => {
+                                if (activeBook === 'reporte') {
+                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)';
+                                }
+                            }}
+                        >
+                            <img 
+                                src="/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-0001.jpg" 
+                                alt="Portada Reporte" 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                            />
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
+                            }} />
+                        </div>
+
+                        {/* Book 2: Plan de Acción */}
+                        <div 
+                            onClick={() => {
+                                if (activeBook === 'plan') {
+                                    setIsOpen(true);
+                                } else {
+                                    setActiveBook('plan');
+                                }
+                            }}
+                            style={{
+                                width: '310px',
+                                aspectRatio: '1 / 1.41',
+                                position: 'absolute',
+                                cursor: 'pointer',
+                                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                borderRadius: '4px 16px 16px 4px',
+                                overflow: 'hidden',
+                                border: '1px solid rgba(221, 190, 61, 0.2)',
+                                zIndex: activeBook === 'plan' ? 10 : 5,
+                                transform: activeBook === 'plan'
+                                    ? 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)'
+                                    : 'translateX(75px) translateY(25px) translateZ(-100px) rotateY(-18deg) scale(0.95)',
+                                filter: activeBook === 'plan' ? 'none' : 'brightness(0.55)',
+                                boxShadow: activeBook === 'plan'
+                                    ? '0 25px 50px rgba(0,0,0,0.6), -10px 0 20px rgba(221,190,61,0.1)'
+                                    : '0 15px 30px rgba(0,0,0,0.4)'
+                            }}
+                            onMouseOver={(e) => {
+                                if (activeBook === 'plan') {
+                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(30px) rotateY(-8deg) scale(1.18)';
+                                }
+                            }}
+                            onMouseOut={(e) => {
+                                if (activeBook === 'plan') {
+                                    e.currentTarget.style.transform = 'translateX(-35px) translateZ(0) rotateY(-5deg) scale(1.15)';
+                                }
+                            }}
+                        >
+                            <img 
+                                src="/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-0001.jpg" 
+                                alt="Portada Plan de Acción" 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                            />
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.2) 100%)'
+                            }} />
+                        </div>
+                    </div>
+
                     <div 
                         onClick={() => setIsOpen(true)}
                         style={{ 
-                            marginTop: '24px', 
+                            marginTop: '30px', 
                             color: '#ddbe3d', 
                             fontSize: '11px', 
                             letterSpacing: '2px', 
@@ -142,25 +339,28 @@ const EneagramaBook3D = () => {
                 </div>
             ) : (
                 <div ref={containerRef} className="book-active-mini" style={{ width: '100%', position: 'relative' }}>
-                    <div style={{ position: 'relative' }}>
+                    <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <HTMLFlipBook 
                             ref={flipBook}
-                            width={500} 
-                            height={700} 
+                            width={440} 
+                            height={620} 
                             size="stretch"
                             minWidth={280}
-                            maxWidth={600}
+                            maxWidth={480}
                             minHeight={400}
-                            maxHeight={850}
-                            maxShadowOpacity={0.4}
+                            maxHeight={680}
+                            maxShadowOpacity={0}
                             showCover={true}
                             display="single"
                             mobileScrollSupport={true}
                             className="flipbook-canvas-mini"
+                            style={{ background: 'transparent' }}
                         >
-                            {pages.map((img, i) => (
+                            {currentPages.map((img, i) => (
                                 <Page key={i} image={img} number={i + 1} />
                             ))}
+                            {/* Page 6: conversion CTA card */}
+                            <Page key={5} isLastPage={true} number={6} />
                         </HTMLFlipBook>
 
                         {/* Navigation Controls */}
@@ -268,7 +468,8 @@ const EneagramaBook3D = () => {
 
             <style>{`
                 .flipbook-canvas-mini {
-                    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+                    background: transparent !important;
+                    box-shadow: none !important;
                 }
                 .dl-pulse-icon {
                     animation: dl-pulse 1.5s infinite;

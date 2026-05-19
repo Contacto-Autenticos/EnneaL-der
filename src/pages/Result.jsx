@@ -246,7 +246,7 @@ const Result = ({ result, user, onReset }) => {
     };
 
     const handleDetailedAnalysis = () => {
-        navigate('/eneagrama-initial-analysis');
+        navigate('/eneagrama-advanced-test-landing');
     };
 
     return (

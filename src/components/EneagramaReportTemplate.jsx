@@ -28,7 +28,7 @@ const EneagramaReportTemplate = forwardRef(({ type, details, basicInfo, winner, 
                     </p>
                     <div style={{ width: '80%', height: '1px', backgroundColor: '#ddbe3d', margin: '0 auto 25px auto', opacity: 0.5 }}></div>
                     <h1 style={{ fontSize: '50px', fontWeight: '900', color: '#ffffff', textTransform: 'uppercase', lineHeight: '1.1', margin: '0' }}>
-                        PERFIL AUTÉNTICO<br />ENEATIPO {type}
+                        PERFIL DOMINANTE<br />ENEATIPO {type}
                     </h1>
                     <h2 style={{ fontSize: '24px', fontWeight: '800', color: '#ffffff', marginTop: '15px', opacity: 0.9 }}>{winner.name}</h2>
                 </div>

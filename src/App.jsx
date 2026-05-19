@@ -15,7 +15,6 @@ import PaymentStatus from './pages/PaymentStatus';
 import PaymentSuccess from './pages/PaymentSuccess';
 import AdvancedLanding from './pages/AdvancedLanding';
 import AdvancedTransition from './pages/AdvancedTransition';
-import InitialTransition from './pages/InitialTransition';
 import CourseLanding from './pages/CourseLanding';
 import ResultVideoIntro from './pages/ResultVideoIntro';
 import emailjs from '@emailjs/browser';
@@ -366,7 +365,7 @@ Deseo Básico: ${details.motivations.desire}
 
         <Route
           path="/eneagrama-initial-analysis"
-          element={<InitialTransition result={testResult} />}
+          element={<Navigate to="/eneagrama-advanced-test-landing" replace />}
         />
 
         <Route

@@ -16,7 +16,16 @@ import {
     HelpCircle,
     Plus,
     Minus,
-    Sparkles
+    Sparkles,
+    PlayCircle,
+    Pause,
+    UserPlus,
+    Mail,
+    Globe,
+    Instagram,
+    Facebook,
+    Youtube,
+    Linkedin
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
 import EneagramaBook3D from '../components/EneagramaBook3D';
@@ -60,6 +69,100 @@ const AdvancedLanding = ({ result, setTestResult }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [navHidden, setNavHidden] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
+    const [testimonialIndex, setTestimonialIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [transitionEnabled, setTransitionEnabled] = useState(true);
+
+    const testimonials = [
+        { 
+            text: "Siempre me enfoqué en el éxito y los resultados, pero sentía un vacío constante. El reporte avanzado me mostró cómo mi Eneatipo 3 opera bajo presión y cómo mi ala 4 me ayuda a conectar con mi verdadera autenticidad. Fue revelador.",
+            author: "Sofía Valenzuela (Eneatipo 3)",
+            stars: 5
+        },
+        { 
+            text: "Creía que mi nivel de autoexigencia era simplemente 'ser responsable'. El análisis avanzado me ayudó a ver el código invisible de mi Eneatipo 1 y me dio herramientas prácticas para soltar el control y liderar desde la serenidad.",
+            author: "Alejandro Gómez (Eneatipo 1)",
+            stars: 5
+        },
+        { 
+            text: "Hacer el test gratuito me dio curiosidad, pero el informe avanzado fue a otro nivel. Descubrir mis dinámicas de estrés del Eneatipo 6 bajo presión y cómo trabajar mi integración al 9 ha cambiado mi forma de tomar decisiones.",
+            author: "Valeria Rojas (Eneatipo 6)",
+            stars: 5
+        },
+        { 
+            text: "Como Eneatipo 5, tiendo a sobreanalizar todo y aislarme. Este análisis no me dio descripciones genéricas; me entregó un mapa exacto de mi energía mental y cómo conectar con la acción sin sentirme agotado.",
+            author: "Daniel Castro (Eneatipo 5)",
+            stars: 5
+        },
+        { 
+            text: "Siempre ponía las necesidades de todos por encima de las mías. Ver la radiografía de mi Eneatipo 2 en el reporte avanzado me permitió entender el origen de mi cansancio extremo y aprender a poner límites sanos.",
+            author: "Natalia Herrera (Eneatipo 2)",
+            stars: 5
+        },
+        { 
+            text: "Pensaba que mi estilo de liderazgo fuerte era la única forma de protegerme. El reporte me confrontó de manera muy honesta pero constructiva, enseñándome a integrar mi vulnerabilidad como Eneatipo 8.",
+            author: "Ricardo Espinoza (Eneatipo 8)",
+            stars: 5
+        },
+        { 
+            text: "Evitaba el conflicto a toda costa para mantener la paz laboral, hasta que el reporte avanzado del Eneagrama me mostró cómo ese silencio me estaba apagando. Ahora sé cómo expresar mi verdad sin miedo.",
+            author: "Camila Ortega (Eneatipo 9)",
+            stars: 5
+        }
+    ];
+
+    // Carousel Logic
+    useEffect(() => {
+        let interval;
+        if (isPlaying) {
+            interval = setInterval(() => {
+                handleNext();
+            }, 5000);
+        }
+        return () => clearInterval(interval);
+    }, [isPlaying, testimonialIndex]);
+
+    const handlePrev = () => {
+        setIsPlaying(false);
+        if (testimonialIndex === 0) {
+            setTransitionEnabled(false);
+            setTestimonialIndex(testimonials.length);
+            setTimeout(() => {
+                setTransitionEnabled(true);
+                setTestimonialIndex(testimonials.length - 1);
+            }, 20);
+        } else {
+            setTransitionEnabled(true);
+            setTestimonialIndex((prev) => prev - 1);
+        }
+    };
+
+    const handleNext = (isManual = false) => {
+        if (isManual) setIsPlaying(false);
+
+        if (testimonialIndex === testimonials.length) {
+            setTransitionEnabled(false);
+            setTestimonialIndex(0);
+            setTimeout(() => {
+                setTransitionEnabled(true);
+                setTestimonialIndex(1);
+            }, 20);
+        } else if (testimonialIndex === testimonials.length - 1) {
+            setTestimonialIndex(testimonials.length);
+            setTimeout(() => {
+                setTransitionEnabled(false);
+                setTestimonialIndex(0);
+                setTimeout(() => setTransitionEnabled(true), 20);
+            }, isPlaying ? 5000 : 600);
+        } else {
+            setTransitionEnabled(true);
+            setTestimonialIndex((prev) => prev + 1);
+        }
+    };
+
+    const togglePlay = () => {
+        setIsPlaying(!isPlaying);
+    };
 
     // Deep Linking: Recover state from URL if missing
     useEffect(() => {
@@ -160,6 +263,10 @@ const AdvancedLanding = ({ result, setTestResult }) => {
         {
             q: "¿Mi información es confidencial?",
             a: "Sí. Tu información es completamente confidencial. Tus respuestas no se comparten, no se publican y no se utilizan para ningún fin distinto a la generación de tu informe. Este proceso es personal. Y así se trata."
+        },
+        {
+            q: "¿Qué métodos de pago están disponibles?",
+            a: "Aceptamos tarjetas de crédito (Visa, Mastercard, Amex), PSE, y todos los medios de pago seguros y autorizados a través de la pasarela Wompi."
         }
     ];
 
@@ -299,6 +406,16 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                         <p>Estos rasgos pueden aparecer en más de un eneatipo, aunque cada uno los experimenta por motivaciones internas diferentes.</p>
                         <p>Por eso tu resultado muestra varios perfiles cercanos.</p>
                     </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '35px' }}>
+                        <button 
+                            className="al-btn-main"
+                            onClick={() => navigate('/eneagrama-payment')}
+                        >
+                            DESCUBRIR MI PATRON
+                            <ArrowRight size={20} />
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -378,11 +495,20 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
                             <p className="al-product-detail-note" style={{ marginTop: '30px', color: 'rgba(255,255,255,0.7)', fontSize: '1rem', lineHeight: '1.6', maxWidth: '90%' }}>
                                 El análisis avanzado utiliza <span style={{ color: '#ffffff', fontWeight: 'bold' }}>45 preguntas adicionales</span> diseñadas para diferenciar con mayor precisión entre los eneatipos que aparecen cercanos en el resultado inicial.
+                                <span style={{ display: 'block', marginTop: '8px', color: '#ffffff', fontWeight: 'bold' }}>(toma 10-15 min).</span>
                             </p>
                         </div>
 
-                        <div className="al-product-img-container al-animate" style={{ animationDelay: '0.4s', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div className="al-product-img-container al-animate" style={{ animationDelay: '0.4s', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '30px' }}>
                             <EneagramaBook3D />
+                            <button
+                                className="al-btn-main"
+                                onClick={() => navigate('/eneagrama-payment')}
+                                style={{ fontSize: '15px', padding: '14px 28px' }}
+                            >
+                                DESBLOQUEAR MI RESULTADO AVANZADO
+                                <ArrowRight size={20} />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -390,41 +516,62 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
 
 
-            {/* 4.6 Puente de Conocimiento */}
-            <section className="al-bridge-section al-animate">
+            {/* 4.6 Testimonios */}
+            <section className="al-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
                 <div className="al-section-content">
-                    <div className="al-bridge-container">
-                        <h2 className="al-section-title">
-                            <span className="al-section-title-top">Ya estás a mitad de camino</span>
-                            <span className="al-gold-text">Decide cuánto seguir avanzando</span>
-                        </h2>
+                    <h2 className="al-section-title" style={{ textAlign: 'center', marginBottom: '40px', color: '#002d44', fontSize: 'clamp(20px, 3.5vw, 28px)', lineHeight: '1.4' }}>
+                        Muchos usuarios creen que con el perfil es suficiente. <br />
+                        <span style={{ color: '#ddbe3d', display: 'block', marginTop: '10px', fontWeight: '900' }}>hasta que descubren el código que surge bajo presión y cómo trabajarlo.</span>
+                    </h2>
 
-                        <div className="al-bridge-content">
-                            <div className="al-bridge-box">
-                                <p className="al-bridge-text">El test gratuito te mostró una ruta.</p>
-                                <p className="al-bridge-text highlight">El informe avanzado te muestra el <span className="al-gold-text" style={{ display: 'inline' }}>mapa completo.</span></p>
-                            </div>
-
-                            <div className="al-bridge-arrow">
-                                <ChevronDown size={32} />
-                            </div>
-
-                            <div className="al-bridge-box">
-                                <p className="al-bridge-text">Muchos usuarios creen que con el perfil es suficiente.</p>
-                                <p className="al-bridge-text highlight">
-                                    <span className="al-white-text" style={{ fontWeight: 900 }}>hasta que descubren el código </span>
-                                    <span className="al-gold-text" style={{ display: 'inline', fontWeight: 900 }}>que surge bajo presión y cómo trabajarlo.</span>
-                                </p>
-                            </div>
-
-                            <div className="al-bridge-arrow">
-                                <ChevronDown size={32} />
-                            </div>
-
-                            <div className="al-bridge-final">
-                                <p>Y ahí es donde <span className="al-gold-text">todo cobra sentido</span></p>
-                            </div>
+                    <div className="dl-testimonials-container">
+                        <div 
+                            className="dl-testimonials-track"
+                            style={{ 
+                                transform: `translateX(calc(-${testimonialIndex * 380}px))`,
+                                transition: transitionEnabled 
+                                    ? (isPlaying ? 'transform 5s linear' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)') 
+                                    : 'none',
+                                animation: 'none'
+                            }}
+                        >
+                            {[...testimonials, ...testimonials.slice(0, 5)].map((t, i) => (
+                                <div key={i} className="dl-testimonial-card">
+                                    <div>
+                                        <span className="dl-quote-icon">“</span>
+                                        <p className="dl-testimonial-text">{t.text}</p>
+                                    </div>
+                                    <div className="dl-testimonial-footer">
+                                        <div className="dl-stars">
+                                            {[...Array(t.stars)].map((_, si) => (
+                                                <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
+                                            ))}
+                                        </div>
+                                        <span className="dl-testimonial-author">- {t.author}</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
+                    </div>
+
+                    {/* Testimonials Controls */}
+                    <div className="dl-testimonials-controls">
+                        <button onClick={handlePrev} className="dl-testimonial-btn" aria-label="Anterior">
+                            <ArrowLeft size={24} />
+                        </button>
+                        <button onClick={togglePlay} className="dl-testimonial-btn dl-play-pause" aria-label={isPlaying ? 'Pausar' : 'Reproducir'}>
+                            {isPlaying ? <Pause size={24} /> : <PlayCircle size={24} />}
+                        </button>
+                        <button onClick={() => handleNext(true)} className="dl-testimonial-btn" aria-label="Siguiente">
+                            <ArrowRight size={24} />
+                        </button>
+                    </div>
+
+                    <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-main">
+                            Obtener mi analisis avanzado
+                            <ArrowRight size={22} />
+                        </button>
                     </div>
                 </div>
             </section>
@@ -468,11 +615,142 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                     Desbloquear análisis completo <Lock size={24} />
                                 </button>
 
+                                <p style={{
+                                    fontSize: '0.85rem',
+                                    color: 'rgba(255, 255, 255, 0.75)',
+                                    marginTop: '10px',
+                                    marginBottom: '0px',
+                                    textAlign: 'center',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '6px'
+                                }}>
+                                    <ShieldCheck size={15} style={{ color: '#2ECC71' }} />
+                                    Transacción segura y protegida con cifrado SSL
+                                </p>
+
+                                <div style={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'center', 
+                                    alignItems: 'center', 
+                                    gap: '15px', 
+                                    marginTop: '8px', 
+                                    marginBottom: '10px' 
+                                }}>
+                                    <img 
+                                        src="/Icono - Visa.png" 
+                                        alt="Visa" 
+                                        style={{ height: '24px', width: 'auto', objectFit: 'contain' }} 
+                                    />
+                                    <img 
+                                        src="/Icono - Mastercard.png" 
+                                        alt="Mastercard" 
+                                        style={{ height: '24px', width: 'auto', objectFit: 'contain' }} 
+                                    />
+                                    <img 
+                                        src="/Icono - Wompi.png" 
+                                        alt="Wompi" 
+                                        style={{ height: '20px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} 
+                                    />
+                                </div>
+
                                 <p className="al-footer-desc" style={{ color: 'rgba(255,255,255,0.3)', marginTop: '0' }}>
                                     Enlace de descarga instantáneo • Pago seguro vía Wompi
                                 </p>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Secuencia "Cómo funciona" */}
+                    <div style={{ marginTop: '100px' }}>
+                        <h3 className="al-section-title" style={{ 
+                            textAlign: 'center', 
+                            color: '#ffffff', 
+                            fontSize: 'clamp(26px, 4vw, 36px)', 
+                            fontWeight: '800',
+                            marginBottom: '60px',
+                            letterSpacing: '0.05em',
+                            whiteSpace: 'nowrap'
+                        }}>
+                            ¿Cómo <span className="al-gold-text" style={{ display: 'inline', whiteSpace: 'nowrap' }}>funciona?</span>
+                        </h3>
+
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+                            gap: '30px',
+                            maxWidth: '1000px',
+                            margin: '0 auto'
+                        }}>
+                            {[
+                                { icon: <CreditCard size={32} />, title: "1. Compra segura", desc: "Realizas el pago de forma 100% segura para habilitar tu diagnóstico completo." },
+                                { icon: <Target size={32} />, title: "2. Preguntas de precisión", desc: "Respondes las 45 preguntas adicionales diseñadas para perfilar tus eneatipos cercanos." },
+                                { icon: <Sparkles size={32} />, title: "3. Análisis dinámico", desc: "Nuestro sistema procesa tus respuestas, analizando patrones y calculando dinámicas de reacción." },
+                                { icon: <Award size={32} />, title: "4. Reporte premium", desc: "Recibes y descargas al instante tus resultados del análisis avanzado de forma digital en PDF." }
+                            ].map((step, i) => (
+                                <div key={i} style={{ 
+                                    textAlign: 'center', 
+                                    padding: '40px 20px 30px',
+                                    background: 'rgba(255,255,255,0.03)',
+                                    borderRadius: '24px',
+                                    border: '1px solid rgba(255,255,255,0.08)',
+                                    position: 'relative',
+                                    minHeight: '230px',
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}>
+                                    {/* Número en la esquina */}
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '20px',
+                                        left: '20px',
+                                        fontSize: '22px',
+                                        fontWeight: '900',
+                                        color: '#ffffff',
+                                        fontFamily: 'monospace',
+                                        opacity: 0.8
+                                    }}>
+                                        0{i + 1}
+                                    </div>
+
+                                    <div style={{ color: '#ddbe3d', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+                                        {step.icon}
+                                    </div>
+                                    <h4 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '700', marginBottom: '12px', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', textTransform: 'none', fontStyle: 'normal' }}>
+                                        {step.title.replace(/^\d+\.\s/, '')}
+                                    </h4>
+                                    <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', lineHeight: '1.6', margin: '0' }}>{step.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 8. Garantía */}
+            <section className="al-guarantee-section">
+                <div className="al-guarantee-content al-animate">
+                    <img 
+                        src="/Garantia eneagrama.png" 
+                        alt="Garantía Auténticos" 
+                        className="al-guarantee-img"
+                    />
+                    <h2 className="al-guarantee-title">
+                        Nuestra <span style={{ color: '#ddbe3d' }}>garantía</span>
+                    </h2>
+                    <p className="al-guarantee-text">
+                        Si el resultado no te aporta claridad real sobre tu personalidad, te devolvemos tu dinero.
+                    </p>
+
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '35px' }}>
+                        <button 
+                            className="al-btn-main"
+                            onClick={() => navigate('/eneagrama-payment')}
+                        >
+                            CONTINUAR CON MI ANALISIS AVANZADO
+                            <ArrowRight size={20} />
+                        </button>
                     </div>
                 </div>
             </section>
@@ -512,6 +790,48 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
+            {/* 11. Footer */}
+            <footer style={{ 
+                padding: '50px 24px', 
+                background: '#ffffff', 
+                textAlign: 'center',
+                borderTop: '1px solid rgba(0, 45, 68, 0.05)'
+            }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <img 
+                        src="/logo-azul.png" 
+                        alt="Auténticos" 
+                        style={{ 
+                            height: '38px', 
+                            marginBottom: '25px',
+                            opacity: '1'
+                        }} 
+                    />
+                    
+                    <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        gap: '24px',
+                        marginBottom: '30px'
+                    }}>
+                        <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Globe size={24} /></a>
+                        <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Instagram size={24} /></a>
+                        <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Facebook size={24} /></a>
+                        <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Youtube size={24} /></a>
+                        <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }}><Linkedin size={24} /></a>
+                    </div>
+
+                    <p style={{ 
+                        color: 'rgba(0, 45, 68, 0.4)', 
+                        fontSize: '11px',
+                        fontWeight: '500',
+                        letterSpacing: '0.05em',
+                        margin: 0
+                    }}>
+                        © 2026 Todos los derechos reservados.
+                    </p>
+                </div>
+            </footer>
 
             {/* Mobile FAB */}
             <div className="al-mobile-fab">
@@ -519,6 +839,18 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     Desbloquear Análisis Ahora
                 </button>
             </div>
+
+            {/* Botón Flotante WhatsApp */}
+            <a 
+                href="https://wa.me/573164287586?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20an%C3%A1lisis%20avanzado%20de%20Eneagrama"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="al-whatsapp-float"
+            >
+                <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.396.015 12.03c0 2.123.553 4.197 1.604 6.013L0 24l6.135-1.61a11.782 11.782 0 005.912 1.583h.005c6.635 0 12.032-5.397 12.035-12.031a11.792 11.792 0 00-3.493-8.504z"/>
+                </svg>
+            </a>
         </div>
     );
 };

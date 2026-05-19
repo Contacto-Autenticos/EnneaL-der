@@ -633,7 +633,7 @@ html {
 .al-product-img-container {
     flex: 1;
     position: relative;
-    max-width: 500px;
+    max-width: 650px;
 }
 
 .al-img-glow {
@@ -786,12 +786,12 @@ html {
     justify-content: center;
     gap: 16px;
     transition: all 0.3s;
-    box-shadow: 0 20px 40px rgba(221, 190, 61, 0.25);
+    box-shadow: none;
 }
 
 .al-btn-buy:hover {
     transform: scale(1.02);
-    box-shadow: 0 25px 60px rgba(221, 190, 61, 0.4);
+    box-shadow: none;
 }
 
 
@@ -1040,11 +1040,18 @@ html {
 }
 
 .al-faq-container {
-    max-width: 800px;
+    max-width: 1100px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .al-faq-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 .al-faq-item {
@@ -1341,4 +1348,206 @@ html {
     color: rgba(0, 45, 68, 0.7);
     margin-bottom: 40px;
     font-weight: 500;
+}
+
+/* Testimonials Carousel styles copied from DominiosLanding.css */
+.dl-testimonials-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.dl-testimonials-track {
+    display: flex;
+    gap: 30px;
+    width: max-content;
+}
+
+.dl-testimonial-card {
+    min-width: 350px;
+    max-width: 350px;
+    min-height: 320px; /* Ultra compact height */
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 24px;
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.dl-quote-icon {
+    font-size: 4rem;
+    color: rgba(0,0,0,0.05);
+    line-height: 0;
+    display: block;
+    margin-bottom: 10px;
+    font-family: serif;
+}
+
+.dl-testimonial-text {
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #002d44;
+    margin-bottom: 30px;
+}
+
+.dl-testimonial-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding-top: 20px;
+}
+
+.dl-stars {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.dl-testimonial-author {
+    font-weight: 700;
+    color: #002d44;
+    text-align: right;
+    max-width: 180px;
+    line-height: 1.3;
+}
+
+/* Controls Styles */
+.dl-testimonials-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 50px;
+}
+
+.dl-testimonial-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 45, 68, 0.1);
+    background: #ffffff;
+    color: #002d44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.dl-testimonial-btn:hover {
+    background: #f8f9fa;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #ddbe3d;
+    color: #ddbe3d;
+}
+
+.dl-testimonial-btn:active {
+    transform: scale(0.95);
+}
+
+.dl-play-pause {
+    width: 64px;
+    height: 64px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 45, 68, 0.08);
+}
+
+.dl-play-pause:hover {
+    background: #ffffff;
+    border-color: #ddbe3d;
+}
+
+@media (max-width: 768px) {
+    .dl-testimonial-card {
+        min-width: 300px;
+        padding: 30px;
+    }
+}
+
+/* Guarantee Section */
+.al-guarantee-section {
+    background: #ffffff;
+    color: #002d44;
+    padding: 100px 24px;
+    text-align: center;
+}
+
+.al-guarantee-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.al-guarantee-img {
+    width: 260px;
+    height: auto;
+    margin: 0 auto 30px;
+    display: block;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+}
+
+.al-guarantee-img:hover {
+    transform: scale(1.05);
+}
+
+.al-guarantee-title {
+    color: #002d44;
+    font-size: clamp(28px, 5vw, 36px);
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+}
+
+.al-guarantee-text {
+    font-size: clamp(16px, 3.5vw, 20px);
+    line-height: 1.8;
+    font-weight: 500;
+    color: rgba(0, 45, 68, 0.85);
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+/* Botón Flotante WhatsApp */
+.al-whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 20px rgba(37, 211, 102, 0.4);
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.al-whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2), 0 0 30px rgba(37, 211, 102, 0.6);
+}
+
+@media (max-width: 768px) {
+    .al-whatsapp-float {
+        left: 20px;
+        right: auto;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+    }
 }

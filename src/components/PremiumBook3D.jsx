@@ -4,29 +4,87 @@ import gsap from 'gsap';
 import { MousePointerClick, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const Page = React.forwardRef((props, ref) => {
+    const isDarkPage = props.isLastPage;
     return (
         <div className="page" ref={ref} style={{ 
-            backgroundColor: '#fff', 
+            backgroundColor: isDarkPage ? '#081526' : '#ffffff', 
             overflow: 'hidden',
-            boxShadow: 'inset 0 0 100px rgba(0,0,0,0.05)',
+            boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45)',
+            border: isDarkPage ? '1px solid rgba(221, 190, 61, 0.15)' : '1px solid rgba(0, 0, 0, 0.06)',
+            borderRadius: '6px',
             ...props.style 
         }}>
             <div className="page-content" style={{ width: '100%', height: '100%', position: 'relative' }}>
-                <img 
-                    src={props.image} 
-                    alt={`Página ${props.number}`} 
-                    style={{ 
-                        width: '100%', 
-                        height: '100%', 
-                        objectFit: 'contain',
-                        backgroundColor: '#fff'
-                    }} 
-                />
+                {props.isLastPage ? (
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                        padding: '40px 30px',
+                        background: '#081526',
+                        color: '#ffffff',
+                        textAlign: 'center'
+                    }}>
+                        <div style={{
+                            width: '80px',
+                            height: '80px',
+                            borderRadius: '50%',
+                            background: 'rgba(221, 190, 61, 0.1)',
+                            border: '2px solid #ddbe3d',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginBottom: '35px',
+                            boxShadow: '0 0 30px rgba(221, 190, 61, 0.15)'
+                        }}>
+                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '50px', height: 'auto' }} />
+                        </div>
+                        <h3 style={{
+                            color: '#ddbe3d',
+                            fontSize: '22px',
+                            fontWeight: '800',
+                            marginBottom: '20px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            lineHeight: '1.3'
+                        }}>
+                            ¡Hay mucho más por descubrir!
+                        </h3>
+                        <p style={{
+                            fontSize: '15px',
+                            lineHeight: '1.7',
+                            color: 'rgba(255, 255, 255, 0.85)',
+                            margin: '0 0 35px 0',
+                            fontWeight: '500',
+                            maxWidth: '320px'
+                        }}>
+                            Descubre el resto del contenido accediendo al análisis avanzado y plan de acción.
+                        </p>
+                        <div style={{
+                            width: '60px',
+                            height: '1px',
+                            backgroundColor: 'rgba(221, 190, 61, 0.3)'
+                        }} />
+                    </div>
+                ) : (
+                    <img 
+                        src={props.image} 
+                        alt={`Página ${props.number}`} 
+                        style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'contain',
+                            backgroundColor: '#ffffff'
+                        }} 
+                    />
+                )}
                 {/* Paper effect overlay */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to right, rgba(0,0,0,0.02) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.02) 100%)',
+                    background: 'linear-gradient(to right, rgba(0,0,0,0.01) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.01) 100%)',
                     pointerEvents: 'none'
                 }} />
             </div>
@@ -39,10 +97,16 @@ const PremiumBook3D = () => {
     const containerRef = useRef();
     const flipBook = useRef();
 
-    const pages = Array.from({ length: 14 }, (_, i) => {
-        const pageNum = (i + 1).toString().padStart(4, '0');
-        return `/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-${pageNum}.jpg`;
-    });
+    // Exact list of pages requested by the user
+    const pages = [
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0001.jpg',
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0002.jpg',
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0003.jpg',
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0004.jpg',
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0005.jpg',
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0012.jpg',
+        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0013.jpg'
+    ];
 
     // Handle auto-flip on open
     useEffect(() => {
@@ -142,7 +206,7 @@ const PremiumBook3D = () => {
                 </div>
             ) : (
                 <div ref={containerRef} className="book-active-mini" style={{ width: '100%', position: 'relative' }}>
-                    <div style={{ position: 'relative' }}>
+                    <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <HTMLFlipBook 
                             ref={flipBook}
                             width={500} 
@@ -152,15 +216,18 @@ const PremiumBook3D = () => {
                             maxWidth={600}
                             minHeight={400}
                             maxHeight={850}
-                            maxShadowOpacity={0.4}
+                            maxShadowOpacity={0}
                             showCover={true}
                             display="single"
                             mobileScrollSupport={true}
                             className="flipbook-canvas-mini"
+                            style={{ background: 'transparent' }}
                         >
                             {pages.map((img, i) => (
                                 <Page key={i} image={img} number={i + 1} />
                             ))}
+                            {/* Page 8: conversion CTA card (index 7) */}
+                            <Page key={7} isLastPage={true} number={8} />
                         </HTMLFlipBook>
 
                         {/* Navigation Controls */}
@@ -248,7 +315,9 @@ const PremiumBook3D = () => {
                             cursor: 'pointer',
                             backdropFilter: 'blur(10px)',
                             width: 'fit-content',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            display: 'block',
+                            margin: '30px auto 0'
                         }}
                         onMouseOver={(e) => {
                             e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
@@ -266,7 +335,8 @@ const PremiumBook3D = () => {
 
             <style>{`
                 .flipbook-canvas-mini {
-                    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+                    background: transparent !important;
+                    box-shadow: none !important;
                 }
                 .dl-pulse-icon {
                     animation: dl-pulse 1.5s infinite;
