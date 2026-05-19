@@ -519,9 +519,9 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             {/* 4.6 Testimonios */}
             <section className="al-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
                 <div className="al-section-content">
-                    <h2 className="al-section-title" style={{ textAlign: 'center', marginBottom: '40px', color: '#002d44', fontSize: 'clamp(20px, 3.5vw, 28px)', lineHeight: '1.4' }}>
+                    <h2 className="al-testimonials-title">
                         Muchos usuarios creen que con el perfil es suficiente. <br />
-                        <span style={{ color: '#ddbe3d', display: 'block', marginTop: '10px', fontWeight: '900' }}>hasta que descubren el código que surge bajo presión y cómo trabajarlo.</span>
+                        <span className="al-testimonials-title-yellow">hasta que descubren el código que surge bajo presión y cómo trabajarlo.</span>
                     </h2>
 
                     <div className="dl-testimonials-container">

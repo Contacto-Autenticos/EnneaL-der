@@ -815,10 +815,10 @@ html {
 /* Mobile FAB */
 .al-mobile-fab {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
-    right: 24px;
-    z-index: 500;
+    bottom: 20px;
+    left: 84px; /* Shift to the right to make room for WhatsApp button on the left */
+    right: 20px;
+    z-index: 999;
 }
 
 @media (min-width: 768px) {
@@ -1350,6 +1350,23 @@ html {
     font-weight: 500;
 }
 
+.al-testimonials-title {
+    text-align: center;
+    margin: 0 auto 40px;
+    color: var(--al-blue);
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 800;
+    line-height: 1.4;
+    max-width: 900px;
+}
+
+.al-testimonials-title-yellow {
+    color: var(--al-gold);
+    display: block;
+    margin-top: 10px;
+    font-weight: 900;
+}
+
 /* Testimonials Carousel styles copied from DominiosLanding.css */
 .dl-testimonials-container {
     width: 100%;
@@ -1549,5 +1566,6 @@ html {
         bottom: 20px;
         width: 50px;
         height: 50px;
+        z-index: 1000; /* Ensure WhatsApp button is on top of everything */
     }
 }
