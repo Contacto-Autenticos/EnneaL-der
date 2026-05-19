@@ -15,10 +15,45 @@ import {
     ChevronDown,
     HelpCircle,
     Plus,
-    Minus
+    Minus,
+    Sparkles
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
 import './AdvancedLanding.css';
+
+import './AdvancedLanding.css';
+
+// Dynamic patterns database (Expert-generated traits)
+const patternsData = {
+    '1': 'Buscan la excelencia y tienen un fuerte sentido del deber en todo lo que hacen.',
+    '2': 'Priorizan las necesidades de los demás y se esfuerzan por crear conexiones significativas.',
+    '3': 'Se enfocan en objetivos claros y buscan destacar por su eficiencia y resultados.',
+    '4': 'Valoran la autenticidad y buscan expresar su identidad única de forma profunda.',
+    '5': 'Analizan cada situación con detenimiento y valoran la autonomía y el conocimiento.',
+    '6': 'Son previsores, leales y valoran la seguridad y la claridad en sus entornos.',
+    '7': 'Buscan nuevas experiencias y mantienen una perspectiva optimista y ágil ante la vida.',
+    '8': 'Protegen su independencia y ejercen un liderazgo directo y protector.',
+    '9': 'Buscan la armonía y tienen una gran capacidad para mediar y entender otros puntos de vista.'
+};
+
+// Composite traits (expert-blended combinations)
+const getCompositeTraits = (types) => {
+    const traits = [];
+    types.forEach(type => {
+        if (patternsData[type]) traits.push(patternsData[type]);
+    });
+    const blendedOptions = [
+        "Combinan una gran capacidad de servicio con un enfoque riguroso en la calidad.",
+        "Equilibran la intuición emocional con un análisis lógico de las situaciones.",
+        "Mantienen un alto nivel de responsabilidad mientras buscan soluciones creativas.",
+        "Toman decisiones basadas en la lealtad a tus valores y el impacto en los demás."
+    ];
+    while (traits.length < 4) {
+        const randomTrait = blendedOptions[Math.floor(Math.random() * blendedOptions.length)];
+        if (!traits.includes(randomTrait)) traits.push(randomTrait);
+    }
+    return traits.slice(0, 4);
+};
 
 const AdvancedLanding = ({ result, setTestResult }) => {
     const navigate = useNavigate();
@@ -101,6 +136,11 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             });
     }, [result]);
 
+    const displayPatterns = React.useMemo(() => {
+        const types = top3.map(t => t.type);
+        return getCompositeTraits(types);
+    }, [top3]);
+
     const faqs = [
         {
             q: "¿Vale la pena si ya vi mis resultados?",
@@ -179,30 +219,44 @@ const AdvancedLanding = ({ result, setTestResult }) => {
 
             {/* 2. Hero Section */}
             <section className="al-hero al-animate">
-                <div className="al-tag">
-                    <Rocket size={14} /> El Siguiente Nivel de Liderazgo
-                </div>
+                <div className="al-hero-content-wrapper">
+                    <div className="al-hero-text-col">
+                        <div className="al-tag">
+                            <Rocket size={14} /> El Siguiente Nivel de Liderazgo
+                        </div>
 
-                <h1 className="al-hero-title">
-                    <span className="al-hero-title-top">Ya conoces tu resultado</span>
-                    <span className="al-gold-text">Ahora descifra el código</span>
-                </h1>
+                        <h1 className="al-hero-title">
+                            <span className="al-hero-title-top">Ya conoces tu resultado</span>
+                            <span className="al-gold-text">Ahora descifra el código</span>
+                        </h1>
 
-                <p className="al-hero-subtitle">
-                    Tu perfil no es un número, no es una etiqueta y mucho menos un defecto. <br />
-                    <strong>Es un patrón de comportamiento que influye en cómo decides, <br className="al-mobile-br" /> lideras y reaccionas</strong> <br className="al-mobile-br" /> <strong>bajo presión.</strong> <br /><br />
-                    El test basico te mostró la estructura que lo describe. <br />
-                    <strong>El informe avanzado revela la arquitectura interna que lo sostiene.</strong>
-                </p>
+                        <p className="al-hero-subtitle">
+                            El test basico te mostró la estructura que lo describe. <br />
+                            <strong>El informe avanzado revela la arquitectura interna que lo sostiene.</strong>
+                        </p>
 
-                <div className="al-hero-actions" style={{ flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                    <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-main">
-                        QUIERO MI ANÁLISIS AVANZADO
-                        <ArrowRight size={22} />
-                    </button>
+                        <div className="al-hero-actions" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
+                            <button onClick={() => navigate('/eneagrama-payment')} className="al-btn-main">
+                                QUIERO MI ANÁLISIS AVANZADO
+                                <ArrowRight size={22} />
+                            </button>
 
-                    <div className="al-author-role" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '15px', fontWeight: '400', textAlign: 'center' }}>
-                        Entender el código es solo información, es poder.
+                            <div className="al-author-role" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '15px', fontWeight: '400' }}>
+                                Entender el código es solo información, es poder.
+                            </div>
+                        </div>
+                    </div>
+                    <div className="al-hero-video-col">
+                        <div className="al-hero-video-container">
+                            <video 
+                                src="/Videos/Eneagrama-Autenticos.mp4" 
+                                autoPlay 
+                                loop 
+                                muted 
+                                playsInline 
+                                className="al-hero-video"
+                            ></video>
+                        </div>
                     </div>
                 </div>
 
@@ -211,7 +265,81 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
+            {/* 3. New White Quote Section */}
+            <section className="al-white-quote-section al-animate">
+                <div className="al-section-content">
+                    <h2 className="al-quote-text">
+                        <span className="al-quote-blue">Tu perfil no es un número, no es una etiqueta y mucho menos un defecto.</span><br/>
+                        <span className="al-quote-yellow">Es un patrón de comportamiento que influye en cómo decides, lideras y reaccionas bajo presión.</span>
+                    </h2>
+                </div>
+            </section>
 
+            {/* 3.5 Dynamic Patterns Section */}
+            <section className="al-patterns-section al-animate">
+                <div className="al-section-content">
+                    <header className="al-patterns-header">
+                        <h2 className="al-patterns-title">
+                            Algo interesante <span className="al-gold-text" style={{display: 'inline'}}>aparece en tus respuestas</span>
+                        </h2>
+                        <p className="al-patterns-intro">
+                            Al analizar tus respuestas encontramos patrones que suelen aparecer en personas que:
+                        </p>
+                    </header>
+
+                    <ul className="al-patterns-list">
+                        {displayPatterns.map((pattern, index) => (
+                            <li key={index} className="al-pattern-item" style={{ animationDelay: `${index * 0.1}s` }}>
+                                <Sparkles size={20} className="al-pattern-icon" />
+                                <p className="al-pattern-text">{pattern}</p>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <div className="al-patterns-footer" style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+                        <p>Estos rasgos pueden aparecer en más de un eneatipo, aunque cada uno los experimenta por motivaciones internas diferentes.</p>
+                        <p>Por eso tu resultado muestra varios perfiles cercanos.</p>
+                    </div>
+                </div>
+            </section>
+
+
+
+            {/* 3.6 Next Steps Section (White Background) */}
+            <section className="al-next-steps-section al-animate">
+                <div className="al-section-content">
+                    <div className="al-next-steps-container">
+                        <h2 className="al-next-steps-title">Tu resultado inicial es solo el primer paso</h2>
+
+                        <div className="al-benefits-list">
+                            {[
+                                "¿Qué motiva realmente tus decisiones?",
+                                "¿Cómo reaccionas ante el estrés?",
+                                "¿Qué activa tus patrones automáticos?",
+                                "¿Cuál es tu camino natural de crecimiento?"
+                            ].map((benefit, i) => (
+                                <div key={i} className="al-benefit-item">
+                                    <div className="al-benefit-dot"></div>
+                                    <span>{benefit}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="al-next-steps-text">
+                            Para identificar estos elementos se necesita una evaluación más detallada.
+                        </p>
+
+                        <button
+                            className="al-btn-main"
+                            onClick={() => navigate('/eneagrama-payment')}
+                            style={{ margin: '0 auto', fontSize: '16px', padding: '16px 36px', whiteSpace: 'nowrap', display: 'flex', justifyContent: 'center' }}
+                        >
+                            <span>QUIERO MI ANÁLISIS AVANZADO</span>
+                            <ArrowRight size={20} />
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             {/* 4. Información del Producto */}
             <section id="analisis-avanzado" className="al-section">
