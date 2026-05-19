@@ -307,12 +307,10 @@
 
 @media (max-width: 480px) {
     .security-bar {
-        font-size: 0.9rem;
-        /* Smaller font */
+        font-size: 0.8rem;
         gap: 5px;
-        /* Reduce gap */
-        white-space: nowrap;
-        /* Prevent wrapping */
+        white-space: normal;
+        flex-wrap: wrap;
     }
 
     .security-bar::before {
@@ -505,8 +503,7 @@
 
     /* Fix for mobile overlap */
     .payment-summary {
-        padding-top: 80px;
-        /* Increase top padding to push content down */
+        padding-top: 50px;
     }
 
     .payment-container {
@@ -792,3 +789,137 @@
         font-size: 1.8rem;
     }
 }
+
+/* --- Refactored AutodiagPayment Classes --- */
+
+/* Title */
+.autodiag-title-container {
+    margin: 0;
+    text-align: center;
+    line-height: 0.9;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.autodiag-title-1 {
+    font-size: 1.6rem;
+    color: #002e4d;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
+}
+
+.autodiag-title-2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #002e4d;
+}
+
+/* Badge */
+.special-benefit-badge {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    background: linear-gradient(135deg, #ddbe3d 0%, #b89a2d 100%);
+    color: #00121d;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    transform: rotate(8deg);
+    overflow: hidden;
+}
+
+.badge-shimmer-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+    animation: shimmer 2.5s infinite linear;
+}
+
+.badge-percent {
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1;
+    position: relative;
+}
+
+.badge-text {
+    font-size: 0.65rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.2;
+    position: relative;
+}
+
+/* Amount & Currency */
+.payment-amount {
+    color: #ddbe3d;
+    font-size: 4.0rem;
+    font-weight: 900;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.currency-label {
+    color: #fff;
+    font-size: 1.3rem;
+    opacity: 0.9;
+    font-weight: bold;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+
+/* Responsive Overrides */
+@media (max-width: 480px) {
+    .autodiag-title-1 {
+        font-size: 1.1rem;
+    }
+    .autodiag-title-2 {
+        font-size: 1.3rem;
+    }
+    .special-benefit-badge {
+        right: 0px;
+        top: -15px;
+        padding: 8px 12px;
+        transform: rotate(4deg);
+    }
+    .badge-percent {
+        font-size: 1.4rem;
+    }
+    .badge-text {
+        font-size: 0.55rem;
+    }
+    .payment-amount {
+        font-size: 2.8rem;
+        gap: 5px;
+    }
+    .currency-label {
+        font-size: 1.1rem;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}

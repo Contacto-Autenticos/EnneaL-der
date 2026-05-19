@@ -163,9 +163,9 @@ const AutodiagPayment = () => {
             <div className="payment-container">
                 <div className="payment-header-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px', width: '100%' }}>
                     <div className="decorative-line" style={{ height: '2px', flex: 1, background: '#ddbe3d', minWidth: '20px', maxWidth: '60px' }}></div>
-                    <h1 className="payment-title" style={{ margin: 0, textAlign: 'center', lineHeight: '0.9', flex: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <span style={{ fontSize: '1.6rem', color: '#002e4d', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '800' }}>Autodiagnóstico</span>
-                        <span style={{ fontSize: '1.8rem', fontWeight: '900', color: '#002e4d' }}>Dominios Fundamentales</span>
+                    <h1 className="payment-title autodiag-title-container">
+                        <span className="autodiag-title-1">Autodiagnóstico</span>
+                        <span className="autodiag-title-2">Dominios Fundamentales</span>
                     </h1>
                     <div className="decorative-line" style={{ height: '2px', flex: 1, background: '#ddbe3d', minWidth: '20px', maxWidth: '60px' }}></div>
                 </div>
@@ -185,35 +185,12 @@ const AutodiagPayment = () => {
                     `}</style>
 
                     {/* Sticker Descuento */}
-                    <div style={{
-                        position: 'absolute',
-                        top: '-20px',
-                        right: '-10px',
-                        background: 'linear-gradient(135deg, #ddbe3d 0%, #b89a2d 100%)',
-                        color: '#00121d',
-                        padding: '12px 18px',
-                        borderRadius: '10px',
-                        boxShadow: '0 5px 20px rgba(0,0,0,0.4)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        zIndex: 10,
-                        transform: 'rotate(8deg)',
-                        overflow: 'hidden'
-                    }}>
+                    <div className="special-benefit-badge">
                         {/* Capa de Brillo */}
-                        <div style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent)',
-                            animation: 'shimmer 2.5s infinite linear',
-                        }}></div>
+                        <div className="badge-shimmer-layer"></div>
 
-                        <span style={{ fontSize: '1.6rem', fontWeight: '900', lineHeight: '1', position: 'relative' }}>50%</span>
-                        <span style={{ fontSize: '0.65rem', fontWeight: 'bold', textTransform: 'uppercase', textAlign: 'center', lineHeight: '1.2', position: 'relative' }}>Beneficio<br/>Especial</span>
+                        <span className="badge-percent">50%</span>
+                        <span className="badge-text">Beneficio<br/>Especial</span>
                     </div>
 
                     <div className="payment-row centered-price-column" style={{ padding: '25px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '160px' }}>
@@ -222,9 +199,9 @@ const AutodiagPayment = () => {
                                 Antes {localCurrency.code === 'COP' ? '$150.000' : `${localCurrency.symbol}${Math.round(150000 * localCurrency.rate).toLocaleString()}`}
                             </span>
                             <div className="payment-current-row" style={{ margin: '2px 0' }}>
-                                <span className="payment-amount" style={{ color: '#ddbe3d', fontSize: '4.0rem', fontWeight: '900', lineHeight: '1', display: 'flex', alignItems: 'baseline', gap: '10px' }}>
+                                <span className="payment-amount">
                                     {localCurrency.code === 'COP' ? '$75.000' : `${localCurrency.symbol}${Math.round(75000 * localCurrency.rate).toLocaleString()}`} 
-                                    <span className="currency-label" style={{ color: '#fff', fontSize: '1.3rem', opacity: 0.9, fontWeight: 'bold' }}>{localCurrency.code}</span>
+                                    <span className="currency-label">{localCurrency.code}</span>
                                 </span>
                             </div>
                             {localCurrency.code !== 'COP' && (
@@ -236,16 +213,7 @@ const AutodiagPayment = () => {
                             <p style={{ margin: 0, fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '900', textTransform: 'none', letterSpacing: '0.5px' }}>Precio de lanzamiento</p>
 
                              {/* Lista de beneficios integrada */}
-                             <div style={{ 
-                                 display: 'grid', 
-                                 gridTemplateColumns: 'repeat(2, 1fr)', 
-                                 gap: '12px', 
-                                 width: '100%', 
-                                 marginTop: '25px',
-                                 paddingTop: '20px',
-                                 borderTop: '1px solid rgba(255,255,255,0.1)',
-                                 textAlign: 'left'
-                             }}>
+                             <div className="features-grid">
                                  {[
                                      'Análisis profundo de 6 Dimensiones',
                                      'Identificación de áreas críticas',
