@@ -19,8 +19,7 @@ import {
     Sparkles
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
-import './AdvancedLanding.css';
-
+import EneagramaBook3D from '../components/EneagramaBook3D';
 import './AdvancedLanding.css';
 
 // Dynamic patterns database (Expert-generated traits)
@@ -382,9 +381,8 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                             </p>
                         </div>
 
-                        <div className="al-product-img-container al-animate" style={{ animationDelay: '0.4s' }}>
-                            <div className="al-img-glow"></div>
-                            <img src="/Portada-Analisis Avanzado-2.png" alt="Análisis Avanzado" className="al-product-img" />
+                        <div className="al-product-img-container al-animate" style={{ animationDelay: '0.4s', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <EneagramaBook3D />
                         </div>
                     </div>
                 </div>
