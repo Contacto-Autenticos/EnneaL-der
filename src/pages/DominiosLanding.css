@@ -600,6 +600,12 @@ html {
     gap: 40px;
 }
 
+@media (min-width: 768px) {
+    .dl-pricing-content {
+        padding: 80px;
+    }
+}
+
 .dl-price-box {
     text-align: center;
 }
@@ -625,6 +631,8 @@ html {
 
 .dl-pricing-grid {
     width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
@@ -645,8 +653,16 @@ html {
     color: #002d44;
 }
 
+.dl-btn-buy-wrapper {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .dl-btn-buy {
     width: 100%;
+    max-width: 550px;
     padding: 24px;
     background: var(--dl-gold);
     color: var(--dl-blue);

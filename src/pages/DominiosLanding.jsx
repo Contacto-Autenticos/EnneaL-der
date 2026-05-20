@@ -679,7 +679,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                     ))}
                                 </div>
 
-                                <div style={{ textAlign: 'center' }}>
+                                <div className="dl-btn-buy-wrapper">
                                     <button onClick={handleAction} className="dl-btn-buy">
                                         QUIERO MI MAPA DE CLARIDAD <Lock size={24} />
                                     </button>
