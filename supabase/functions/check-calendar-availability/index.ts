@@ -14,10 +14,10 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { date, operatorEmail } = body;
+    const { date, timeMin, timeMax, operatorEmail } = body;
 
-    if (!date) {
-        throw new Error('Date is required');
+    if (!date && (!timeMin || !timeMax)) {
+        throw new Error('Date or time boundaries are required');
     }
 
     // Get env variables
@@ -65,25 +65,27 @@ serve(async (req) => {
     // Calendar to use
     const calendarId = operatorEmail || Deno.env.get('GOOGLE_CALENDAR_ID') || 'primary';
 
-    // Parse date and create start/end of day boundaries
-    const targetDate = new Date(date);
-    
-    // Create an ISO string for start of day and end of day in the specified timezone
-    // Since Google Calendar API handles timeMin/timeMax correctly if provided as RFC3339 strings,
-    // we'll construct them.
-    const year = targetDate.getFullYear();
-    const month = String(targetDate.getMonth() + 1).padStart(2, '0');
-    const day = String(targetDate.getDate()).padStart(2, '0');
-    
-    // ISO format for America/Bogota (UTC-5)
-    const timeMin = `${year}-${month}-${day}T00:00:00-05:00`;
-    const timeMax = `${year}-${month}-${day}T23:59:59-05:00`;
+    let finalTimeMin = timeMin;
+    let finalTimeMax = timeMax;
+
+    if (!finalTimeMin || !finalTimeMax) {
+      // Parse date and create start/end of day boundaries
+      const targetDate = new Date(date);
+      
+      const year = targetDate.getFullYear();
+      const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+      const day = String(targetDate.getDate()).padStart(2, '0');
+      
+      // ISO format for America/Bogota (UTC-5)
+      finalTimeMin = `${year}-${month}-${day}T00:00:00-05:00`;
+      finalTimeMax = `${year}-${month}-${day}T23:59:59-05:00`;
+    }
 
     // Query Google Free/Busy API
     const freeBusyBody = {
-      timeMin: timeMin,
-      timeMax: timeMax,
-      timeZone: 'America/Bogota',
+      timeMin: finalTimeMin,
+      timeMax: finalTimeMax,
+      timeZone: 'UTC',
       items: [{ id: calendarId }]
     };
 

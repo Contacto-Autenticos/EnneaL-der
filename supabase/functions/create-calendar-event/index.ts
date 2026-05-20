@@ -14,7 +14,8 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { name, email, phone, serviceRequired, guests, startTime, endTime, operatorEmail } = body;
+    const { name, email, phone, serviceRequired, guests, startTime, endTime, operatorEmail, clientTimeZone } = body;
+    const tz = clientTimeZone || 'America/Bogota';
 
     // Get env variables
     const clientEmail = Deno.env.get('GOOGLE_CLIENT_EMAIL');
@@ -125,8 +126,8 @@ serve(async (req) => {
               <p>Hola <strong>${name}</strong>,</p>
               <p>Tu sesión de <strong>${serviceRequired}</strong> ha sido agendada correctamente.</p>
               <div style="background: #F7FAFC; border-radius: 8px; padding: 15px; margin: 20px 0;">
-                <p style="margin: 5px 0;"><strong>📅 Fecha:</strong> ${new Date(startTime).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                <p style="margin: 5px 0;"><strong>⏰ Hora:</strong> ${new Date(startTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} (Hora Colombia)</p>
+                <p style="margin: 5px 0;"><strong>📅 Fecha:</strong> ${new Date(startTime).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: tz })}</p>
+                <p style="margin: 5px 0;"><strong>⏰ Hora:</strong> ${new Date(startTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: tz })} (${tz === 'America/Bogota' ? 'Hora Colombia' : 'Tu hora local'})</p>
                 <p style="margin: 5px 0;"><strong>💻 Reunión (Google Meet):</strong> <a href="${meetLink}" style="color: #3182CE;">Entrar a la sesión</a></p>
               </div>
               <p style="font-size: 0.9em; color: #718096; text-align: center;">Te recomendamos conectarte 5 minutos antes de la hora acordada.</p>

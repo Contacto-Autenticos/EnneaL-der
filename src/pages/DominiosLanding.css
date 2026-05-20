@@ -617,7 +617,7 @@ html {
 }
 
 .dl-current-price {
-    font-size: clamp(48px, 9vw, 84px);
+    font-size: 65px;
     font-weight: 900;
     line-height: 1;
     color: #002d44;

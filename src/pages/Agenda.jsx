@@ -80,52 +80,74 @@ const Agenda = () => {
 
   const generateSlots = (duration) => {
     const slots = [];
-    const blocks = [
-      { start: 9, end: 12 },   // 9:00 AM - 12:00 PM
-      { start: 14, end: 17 }  // 2:00 PM - 5:00 PM (14:00 - 17:00)
-    ];
+    if (!selectedDate) return slots;
 
-    blocks.forEach(block => {
-      let currentMinutes = block.start * 60;
-      const endMinutes = block.end * 60;
+    const dateOffsets = [-1, 0, 1];
+    
+    dateOffsets.forEach(offset => {
+      const base = new Date(selectedDate);
+      base.setDate(base.getDate() + offset);
+      
+      const year = base.getFullYear();
+      const month = base.getMonth();
+      const date = base.getDate();
 
-      while (currentMinutes + duration <= endMinutes) {
-        const hours = Math.floor(currentMinutes / 60);
-        const mins = currentMinutes % 60;
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        const displayHours = hours > 12 ? hours - 12 : (hours === 0 ? 12 : hours);
-        const timeStr = `${displayHours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')} ${ampm}`;
-        
-        let isOverlapping = false;
-        let isPast = false;
-        
-        if (selectedDate) {
-          const slotStart = new Date(selectedDate);
-          slotStart.setHours(hours, mins, 0, 0);
-          const slotEnd = new Date(slotStart.getTime() + duration * 60000);
+      const bogotaMidnightStr = `${year}-${String(month+1).padStart(2, '0')}-${String(date).padStart(2, '0')}T00:00:00-05:00`;
+      const bogotaMidnight = new Date(bogotaMidnightStr);
 
-          // Filtrar horarios que ya pasaron
-          if (slotStart < new Date()) {
-            isPast = true;
-          } else {
+      const blocks = [
+        { start: 9, end: 12 },
+        { start: 14, end: 17 }
+      ];
+
+      blocks.forEach(block => {
+        let currentSlot = new Date(bogotaMidnight.getTime() + block.start * 60 * 60000);
+        const endSlot = new Date(bogotaMidnight.getTime() + block.end * 60 * 60000);
+
+        while (currentSlot.getTime() + duration * 60000 <= endSlot.getTime()) {
+          if (currentSlot.getDate() === selectedDate.getDate() && 
+              currentSlot.getMonth() === selectedDate.getMonth() && 
+              currentSlot.getFullYear() === selectedDate.getFullYear()) {
+            
+            let isPast = currentSlot < new Date();
+            let isOverlapping = false;
+            const slotEnd = new Date(currentSlot.getTime() + duration * 60000);
+            
             for (const busy of busySlots) {
               const busyStart = new Date(busy.start);
               const busyEnd = new Date(busy.end);
-              
-              if (slotStart < busyEnd && slotEnd > busyStart) {
+              if (currentSlot < busyEnd && slotEnd > busyStart) {
                 isOverlapping = true;
                 break;
               }
             }
-          }
-        }
 
-        if (!isOverlapping && !isPast) {
-          slots.push(timeStr);
+            if (!isPast && !isOverlapping) {
+              const localHour12 = currentSlot.getHours() % 12 || 12;
+              const ampm = currentSlot.getHours() >= 12 ? 'PM' : 'AM';
+              const minStr = currentSlot.getMinutes().toString().padStart(2, '0');
+              const timeStr = `${localHour12.toString().padStart(2, '0')}:${minStr} ${ampm}`;
+              if (!slots.includes(timeStr)) {
+                slots.push(timeStr);
+              }
+            }
+          }
+          currentSlot = new Date(currentSlot.getTime() + duration * 60000);
         }
-        currentMinutes += duration;
-      }
+      });
     });
+
+    slots.sort((a, b) => {
+      const getMins = (str) => {
+        const [time, ampm] = str.split(' ');
+        let [h, m] = time.split(':').map(Number);
+        if (ampm === 'PM' && h < 12) h += 12;
+        if (ampm === 'AM' && h === 12) h = 0;
+        return h * 60 + m;
+      };
+      return getMins(a) - getMins(b);
+    });
+
     return slots;
   };
 
@@ -140,8 +162,15 @@ const Agenda = () => {
 
       setIsLoadingSlots(true);
       try {
+        const startOfDay = new Date(selectedDate);
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(selectedDate);
+        endOfDay.setHours(23, 59, 59, 999);
+
         const payload = { 
           date: selectedDate.toISOString(), 
+          timeMin: startOfDay.toISOString(),
+          timeMax: endOfDay.toISOString(),
           operatorEmail: 'felipebeltranh@gmail.com' 
         };
         
@@ -264,7 +293,8 @@ const Agenda = () => {
         guests: formData.guests,
         startTime: startDateTime.toISOString(),
         endTime: endDateTime.toISOString(),
-        operatorEmail: 'felipebeltranh@gmail.com'
+        operatorEmail: 'felipebeltranh@gmail.com',
+        clientTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
       };
 
       const { data, error } = await supabase.functions.invoke('create-calendar-event', {
