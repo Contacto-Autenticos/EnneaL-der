@@ -47,18 +47,22 @@ const patternsData = {
 // Composite traits (expert-blended combinations)
 const getCompositeTraits = (types) => {
     const traits = [];
-    types.forEach(type => {
-        if (patternsData[type]) traits.push(patternsData[type]);
-    });
+    if (Array.isArray(types)) {
+        types.forEach(type => {
+            if (patternsData[type]) traits.push(patternsData[type]);
+        });
+    }
     const blendedOptions = [
         "Combinan una gran capacidad de servicio con un enfoque riguroso en la calidad.",
         "Equilibran la intuición emocional con un análisis lógico de las situaciones.",
         "Mantienen un alto nivel de responsabilidad mientras buscan soluciones creativas.",
         "Toman decisiones basadas en la lealtad a tus valores y el impacto en los demás."
     ];
-    while (traits.length < 4) {
-        const randomTrait = blendedOptions[Math.floor(Math.random() * blendedOptions.length)];
-        if (!traits.includes(randomTrait)) traits.push(randomTrait);
+    for (let i = 0; i < blendedOptions.length && traits.length < 4; i++) {
+        const option = blendedOptions[i];
+        if (!traits.includes(option)) {
+            traits.push(option);
+        }
     }
     return traits.slice(0, 4);
 };
@@ -282,16 +286,6 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                 setNavHidden(false);
             }
             lastScrollY = currentScrollY;
-
-            // New logic from user instruction
-            const header = document.querySelector('.advanced-landing-header');
-            if (!header) return; // Defensive check
-
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
         };
         window.addEventListener('scroll', handleScroll);
         return () => {

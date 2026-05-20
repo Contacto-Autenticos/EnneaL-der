@@ -366,6 +366,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                 scale: 3,
                 useCORS: true,
                 onclone: (clonedDoc) => {
+                    const clonedWrapper = clonedDoc.querySelector('.share-content-wrapper');
+                    const clonedHero = clonedDoc.querySelector('.advanced-hero');
                     const shareClonedDescription = clonedDoc.querySelector('.description-section');
                     const shareClonedPhrase = clonedDoc.querySelector('.phrase-section');
                     const coinHint = clonedDoc.querySelector('.advanced-coin-hint');

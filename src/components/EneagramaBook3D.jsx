@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import gsap from 'gsap';
 import { MousePointerClick, ChevronRight, ChevronLeft } from 'lucide-react';
+import ErrorBoundary from './ErrorBoundary';
 
 const Page = React.forwardRef((props, ref) => {
     const isDarkPage = props.isLastPage;
@@ -97,6 +98,7 @@ const EneagramaBook3D = () => {
     const [activeBook, setActiveBook] = useState('reporte'); // 'reporte' or 'plan'
     const containerRef = useRef();
     const flipBook = useRef();
+    const [fallbackPageIndex, setFallbackPageIndex] = useState(0);
 
     const reportPages = Array.from({ length: 5 }, (_, i) => {
         const pageNum = (i + 1).toString().padStart(4, '0');
@@ -109,6 +111,11 @@ const EneagramaBook3D = () => {
     });
 
     const currentPages = activeBook === 'reporte' ? reportPages : planPages;
+
+    // Reset fallback index when active book or open state changes
+    useEffect(() => {
+        setFallbackPageIndex(0);
+    }, [activeBook, isOpen]);
 
     // Handle auto-flip on open
     useEffect(() => {
@@ -134,12 +141,16 @@ const EneagramaBook3D = () => {
     const flipNext = () => {
         if (flipBook.current && flipBook.current.pageFlip) {
             flipBook.current.pageFlip().flipNext();
+        } else {
+            setFallbackPageIndex(prev => Math.min(prev + 1, currentPages.length));
         }
     };
 
     const flipPrev = () => {
         if (flipBook.current && flipBook.current.pageFlip) {
             flipBook.current.pageFlip().flipPrev();
+        } else {
+            setFallbackPageIndex(prev => Math.max(prev - 1, 0));
         }
     };
 
@@ -281,28 +292,113 @@ const EneagramaBook3D = () => {
             ) : (
                 <div ref={containerRef} className="book-active-mini" style={{ width: '100%', position: 'relative' }}>
                     <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <HTMLFlipBook 
-                            ref={flipBook}
-                            width={440} 
-                            height={620} 
-                            size="stretch"
-                            minWidth={280}
-                            maxWidth={480}
-                            minHeight={400}
-                            maxHeight={680}
-                            maxShadowOpacity={0}
-                            showCover={true}
-                            display="single"
-                            mobileScrollSupport={true}
-                            className="flipbook-canvas-mini"
-                            style={{ background: 'transparent' }}
-                        >
-                            {currentPages.map((img, i) => (
-                                <Page key={i} image={img} number={i + 1} />
-                            ))}
-                            {/* Page 6: conversion CTA card */}
-                            <Page key={5} isLastPage={true} number={6} />
-                        </HTMLFlipBook>
+                        <ErrorBoundary fallback={
+                            <div className="book-fallback-carousel" style={{ 
+                                width: '100%', 
+                                maxWidth: '440px',
+                                aspectRatio: '1 / 1.41',
+                                background: '#ffffff',
+                                borderRadius: '12px',
+                                boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45)',
+                                border: '1px solid rgba(0,0,0,0.06)',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                {fallbackPageIndex === currentPages.length ? (
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: '100%',
+                                        width: '100%',
+                                        padding: '40px 30px',
+                                        background: '#081526',
+                                        color: '#ffffff',
+                                        textAlign: 'center'
+                                    }}>
+                                        <div style={{
+                                            width: '80px',
+                                            height: '80px',
+                                            borderRadius: '50%',
+                                            background: 'rgba(221, 190, 61, 0.1)',
+                                            border: '2px solid #ddbe3d',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            marginBottom: '35px',
+                                            boxShadow: '0 0 30px rgba(221, 190, 61, 0.15)'
+                                        }}>
+                                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '50px', height: 'auto' }} />
+                                        </div>
+                                        <h3 style={{
+                                            color: '#ddbe3d',
+                                            fontSize: '22px',
+                                            fontWeight: '800',
+                                            marginBottom: '20px',
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '1px',
+                                            lineHeight: '1.3'
+                                        }}>
+                                            ¡Hay mucho más por descubrir!
+                                        </h3>
+                                        <p style={{
+                                            fontSize: '15px',
+                                            lineHeight: '1.7',
+                                            color: 'rgba(255, 255, 255, 0.85)',
+                                            margin: '0 0 35px 0',
+                                            fontWeight: '500',
+                                            maxWidth: '320px'
+                                        }}>
+                                            Descubre el resto del contenido accediendo al análisis avanzado y plan de acción.
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <img 
+                                        src={currentPages[fallbackPageIndex]} 
+                                        alt={`Página ${fallbackPageIndex + 1}`} 
+                                        style={{ 
+                                            width: '100%', 
+                                            height: '100%', 
+                                            objectFit: 'contain',
+                                            backgroundColor: '#ffffff'
+                                        }} 
+                                    />
+                                )}
+                                <div style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    background: 'linear-gradient(to right, rgba(0,0,0,0.01) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.01) 100%)',
+                                    pointerEvents: 'none'
+                                }} />
+                            </div>
+                        }>
+                            <HTMLFlipBook 
+                                ref={flipBook}
+                                width={440} 
+                                height={620} 
+                                size="stretch"
+                                minWidth={280}
+                                maxWidth={480}
+                                minHeight={400}
+                                maxHeight={680}
+                                maxShadowOpacity={0}
+                                showCover={true}
+                                display="single"
+                                mobileScrollSupport={true}
+                                className="flipbook-canvas-mini"
+                                style={{ background: 'transparent' }}
+                            >
+                                {currentPages.map((img, i) => (
+                                    <Page key={i} image={img} number={i + 1} />
+                                ))}
+                                {/* Page 6: conversion CTA card */}
+                                <Page key={5} isLastPage={true} number={6} />
+                            </HTMLFlipBook>
+                        </ErrorBoundary>
 
                         {/* Navigation Controls */}
                         {/* Left Arrow */}

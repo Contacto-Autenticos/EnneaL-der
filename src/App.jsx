@@ -59,21 +59,26 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load state from localStorage on mount
-    const storedUser = localStorage.getItem('enneagramUser');
-    const storedResult = localStorage.getItem('enneagramResult');
-    const storedAdvancedResult = localStorage.getItem('enneagramAdvancedResult');
+    // Load state from localStorage on mount safely
+    try {
+      const storedUser = localStorage.getItem('enneagramUser');
+      const storedResult = localStorage.getItem('enneagramResult');
+      const storedAdvancedResult = localStorage.getItem('enneagramAdvancedResult');
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      if (storedUser && storedUser !== 'undefined') {
+        setUser(JSON.parse(storedUser));
+      }
+      if (storedResult && storedResult !== 'undefined') {
+        setTestResult(JSON.parse(storedResult));
+      }
+      if (storedAdvancedResult && storedAdvancedResult !== 'undefined') {
+        setAdvancedTestResult(JSON.parse(storedAdvancedResult));
+      }
+    } catch (e) {
+      console.error('Error loading or parsing session state from localStorage:', e);
+    } finally {
+      setLoading(false);
     }
-    if (storedResult) {
-      setTestResult(JSON.parse(storedResult));
-    }
-    if (storedAdvancedResult) {
-      setAdvancedTestResult(JSON.parse(storedAdvancedResult));
-    }
-    setLoading(false);
   }, []);
 
   const handleRegister = (userData) => {

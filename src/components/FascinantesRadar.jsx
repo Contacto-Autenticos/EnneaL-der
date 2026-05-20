@@ -16,6 +16,7 @@ const DOMAIN_STYLES = {
 };
 
 const CustomTick = ({ payload, x, y, cx, cy, index, isPDF, ...props }) => {
+    if (!payload || !payload.value) return null;
     const domainId = payload.value.toLowerCase().replace('dominio ', '');
     const style = DOMAIN_STYLES[domainId] || { color: '#ddbe3d', Icon: Zap };
     const { Icon } = style;
