@@ -29,18 +29,12 @@ const Page = React.forwardRef((props, ref) => {
                         textAlign: 'center'
                     }}>
                         <div style={{
-                            width: '80px',
-                            height: '80px',
-                            borderRadius: '50%',
-                            background: 'rgba(221, 190, 61, 0.1)',
-                            border: '2px solid #ddbe3d',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            marginBottom: '35px',
-                            boxShadow: '0 0 30px rgba(221, 190, 61, 0.15)'
+                            marginBottom: '30px'
                         }}>
-                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '50px', height: 'auto' }} />
+                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '110px', height: 'auto' }} />
                         </div>
                         <h3 style={{
                             color: '#ddbe3d',
@@ -51,7 +45,7 @@ const Page = React.forwardRef((props, ref) => {
                             letterSpacing: '1px',
                             lineHeight: '1.3'
                         }}>
-                            ¡Hay mucho más por descubrir!
+                            ¡Hay mucho más<br />por descubrir!
                         </h3>
                         <p style={{
                             fontSize: '15px',
@@ -321,18 +315,12 @@ const EneagramaBook3D = () => {
                                         textAlign: 'center'
                                     }}>
                                         <div style={{
-                                            width: '80px',
-                                            height: '80px',
-                                            borderRadius: '50%',
-                                            background: 'rgba(221, 190, 61, 0.1)',
-                                            border: '2px solid #ddbe3d',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            marginBottom: '35px',
-                                            boxShadow: '0 0 30px rgba(221, 190, 61, 0.15)'
+                                            marginBottom: '30px'
                                         }}>
-                                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '50px', height: 'auto' }} />
+                                            <img src="/logo-moneda.png" alt="Auténticos" style={{ width: '110px', height: 'auto' }} />
                                         </div>
                                         <h3 style={{
                                             color: '#ddbe3d',
@@ -343,7 +331,7 @@ const EneagramaBook3D = () => {
                                             letterSpacing: '1px',
                                             lineHeight: '1.3'
                                         }}>
-                                            ¡Hay mucho más por descubrir!
+                                            ¡Hay mucho más<br />por descubrir!
                                         </h3>
                                         <p style={{
                                             fontSize: '15px',
