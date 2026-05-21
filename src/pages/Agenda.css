@@ -377,9 +377,10 @@
   padding: 14px 18px;
   border-radius: 12px;
   border: 2px solid #eee;
+  background-color: #ffffff;
   font-family: var(--font-family);
   font-size: 1rem;
-  color: var(--color-secondary); /* Text color blue/dark */
+  color: #002d44 !important; /* Force dark blue text */
   transition: all 0.2s;
 }
 
