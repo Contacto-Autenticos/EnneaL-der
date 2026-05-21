@@ -116,6 +116,10 @@ serve(async (req) => {
           });
         }
 
+        const formatICSDate = (dateStr: string) => new Date(dateStr).toISOString().replace(/-|:|\.\d\d\d/g, "");
+        const gCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`Sesión: ${serviceRequired}`)}&dates=${formatICSDate(startTime)}/${formatICSDate(endTime)}&details=${encodeURIComponent(`Enlace de la reunión: ${meetLink}`)}`;
+        const outlookLink = `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(`Sesión: ${serviceRequired}`)}&startdt=${new Date(startTime).toISOString()}&enddt=${new Date(endTime).toISOString()}&body=${encodeURIComponent(`Enlace de la reunión: ${meetLink}`)}`;
+
         const clientEmailPayload = {
           sender: { name: "Auténticos", email: "contacto@autenticos.co" },
           to: clientRecipients,
@@ -130,6 +134,13 @@ serve(async (req) => {
                 <p style="margin: 5px 0;"><strong>⏰ Hora:</strong> ${new Date(startTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: tz })} (${tz === 'America/Bogota' ? 'Hora Colombia' : 'Tu hora local'})</p>
                 <p style="margin: 5px 0;"><strong>💻 Reunión (Google Meet):</strong> <a href="${meetLink}" style="color: #3182CE;">Entrar a la sesión</a></p>
               </div>
+              
+              <div style="text-align: center; margin: 25px 0;">
+                <p style="font-size: 0.9em; color: #4A5568; margin-bottom: 15px;">Añade este evento a tu calendario:</p>
+                <a href="${gCalLink}" target="_blank" style="display: inline-block; background-color: #4285F4; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; margin: 0 5px;">Añadir a Google Calendar</a>
+                <a href="${outlookLink}" target="_blank" style="display: inline-block; background-color: #0078D4; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; margin: 0 5px;">Añadir a Outlook</a>
+              </div>
+
               <p style="font-size: 0.9em; color: #718096; text-align: center;">Te recomendamos conectarte 5 minutos antes de la hora acordada.</p>
               <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
               <p style="text-align: center;">Saludos,<br /><strong>Equipo Auténticos</strong></p>
