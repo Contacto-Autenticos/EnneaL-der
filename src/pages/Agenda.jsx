@@ -528,7 +528,7 @@ const Agenda = () => {
                     <input 
                       type="text" 
                       required
-                      className="booking-input"
+                      className={`booking-input ${formData.name.trim().length >= 3 ? 'valid' : ''}`}
                       placeholder="Tu nombre"
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
@@ -543,7 +543,7 @@ const Agenda = () => {
                     <input 
                       type="email" 
                       required
-                      className="booking-input"
+                      className={`booking-input ${/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'valid' : ''}`}
                       placeholder="tu@email.com"
                       value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
@@ -558,7 +558,7 @@ const Agenda = () => {
                     <input 
                       type="tel" 
                       required
-                      className="booking-input"
+                      className={`booking-input ${formData.phone.trim().length >= 7 ? 'valid' : ''}`}
                       placeholder="Tu número de teléfono"
                       value={formData.phone}
                       onChange={e => setFormData({...formData, phone: e.target.value})}
@@ -573,7 +573,7 @@ const Agenda = () => {
                     <input 
                       type="text" 
                       required
-                      className="booking-input"
+                      className={`booking-input ${formData.serviceRequired.trim().length >= 3 ? 'valid' : ''}`}
                       placeholder="Ej: Asesoría, Consulta general..."
                       value={formData.serviceRequired}
                       onChange={e => setFormData({...formData, serviceRequired: e.target.value})}

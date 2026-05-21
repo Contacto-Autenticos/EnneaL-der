@@ -379,12 +379,18 @@
   border: 2px solid #eee;
   font-family: var(--font-family);
   font-size: 1rem;
-  transition: border-color 0.2s;
+  color: var(--color-secondary); /* Text color blue/dark */
+  transition: all 0.2s;
 }
 
 .booking-input:focus {
   outline: none;
   border-color: var(--color-primary);
+}
+
+.booking-input.valid {
+  background-color: #f0fdf4;
+  border-color: #86efac;
 }
 
 .btn-confirm {
