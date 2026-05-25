@@ -174,12 +174,16 @@ const LiderazgoTest = () => {
     };
 
     const goToNext = () => {
+        const isInstructions = activeScreen?.title === "Instrucciones";
         setActiveScreen(null);
-        setIsChanging(true);
-        setTimeout(() => {
-            setCurrentIndex(currentIndex + 1);
-            setIsChanging(false);
-        }, 400);
+        
+        if (!isInstructions) {
+            setIsChanging(true);
+            setTimeout(() => {
+                setCurrentIndex(currentIndex + 1);
+                setIsChanging(false);
+            }, 400);
+        }
     };
 
     const getDomainIcon = (domain) => {

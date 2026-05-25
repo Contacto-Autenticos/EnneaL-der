@@ -251,6 +251,12 @@ const FascinantesTest = () => {
     };
 
     const goToNext = () => {
+        const isInstruction = activeScreen?.type === 'instruction';
+        if (isInstruction) {
+            setActiveScreen(null);
+            return;
+        }
+
         const questionNumber = currentIndex + 1;
         if (PROGRESS_SCREENS[questionNumber] && !activeScreen) {
             setActiveScreen(PROGRESS_SCREENS[questionNumber]);
