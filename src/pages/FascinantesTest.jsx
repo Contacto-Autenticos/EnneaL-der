@@ -31,7 +31,22 @@ const FascinantesTest = () => {
         return {};
     });
     const [isTransitioning, setIsTransitioning] = useState(false);
-    const [activeScreen, setActiveScreen] = useState(null);
+    const [activeScreen, setActiveScreen] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('fascinantesProgress');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (!saved && !isMobile) {
+                return {
+                    type: 'instruction',
+                    title: "Instrucciones",
+                    text: <span>Teclado: <strong>1-5</strong> para responder • <strong>Enter</strong> siguiente</span>,
+                    button: "Comenzar"
+                };
+            }
+        }
+        return null;
+    });
     const [showResumeModal, setShowResumeModal] = useState(false);
 
     // Check for saved progress on mount
@@ -311,7 +326,9 @@ const FascinantesTest = () => {
                 <div className="progress-screen-overlay fade-in">
                     <div className="progress-screen-content">
                         <div className="screen-type-tag">
-                            {activeScreen.type === 'motivation' ? 'MOMENTO DE REFLEXIÓN' : 'MOMENTO DE DESCANSO'}
+                            {activeScreen.type === 'motivation' ? 'MOMENTO DE REFLEXIÓN' : 
+                             activeScreen.type === 'rest' ? 'MOMENTO DE DESCANSO' : 
+                             'INSTRUCCIONES'}
                         </div>
                         
                         <h2 className="screen-title">{activeScreen.title}</h2>

@@ -95,6 +95,15 @@ const LiderazgoTest = () => {
             } catch (e) {
                 console.error("Error loading progress", e);
             }
+        } else {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (!isMobile) {
+                setActiveScreen({
+                    title: "Instrucciones",
+                    text: <span>Teclado: <strong>1-5</strong> para responder • <strong>Enter</strong> siguiente</span>,
+                    button: "Comenzar"
+                });
+            }
         }
     }, []);
 
@@ -229,7 +238,7 @@ const LiderazgoTest = () => {
                         <span className="l-progress-count">{currentIndex + 1} / {liderazgoQuestions.length}</span>
                         <div className="l-progress-bar-bg">
                             <div 
-                                className="l-progress-fill" 
+                                className={`l-progress-fill ${currentQuestion.domain}`} 
                                 style={{ 
                                     width: `${((currentIndex + 1) / liderazgoQuestions.length) * 100}%`
                                 }}
@@ -247,7 +256,7 @@ const LiderazgoTest = () => {
                     </div>
                     
                     <div className="l-speedometer-box">
-                        <LiderazgoSpeedometer value={answers[currentQuestion.id] || 0} />
+                        <LiderazgoSpeedometer value={answers[currentQuestion.id] || 0} domain={currentQuestion.domain} />
                     </div>
                         
                     <div className="l-options-grid">
@@ -277,10 +286,6 @@ const LiderazgoTest = () => {
                     >
                         <ChevronLeft size={18} /> Anterior
                     </button>
-                    
-                    <div className="l-keyboard-hint">
-                        <span>Teclado: <strong>1-5</strong> para responder • <strong>Enter</strong> siguiente</span>
-                    </div>
                     
                     <button 
                         className="l-nav-btn" 
@@ -313,6 +318,11 @@ const LiderazgoTest = () => {
                     >
                         Siguiente <ChevronRight size={18} />
                     </button>
+                </footer>
+
+                <footer className="l-test-footer-logo">
+                    <img src="/logo-azul.png" alt="Auténticos" />
+                    {/* Forzando recarga de Vite */}
                 </footer>
             </div>
         </div>

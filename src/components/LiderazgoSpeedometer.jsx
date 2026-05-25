@@ -1,7 +1,7 @@
 import React from 'react';
 import './LiderazgoSpeedometer.css';
 
-const LiderazgoSpeedometer = ({ value, showLabels = true, showInfo = true }) => {
+const LiderazgoSpeedometer = ({ value, domain = 'relacional', showLabels = true, showInfo = true }) => {
     const numericValue = parseInt(value);
     
     // Logic copied from FascinantesSpeedometer: 1 -> 20%, 5 -> 100%
@@ -24,6 +24,16 @@ const LiderazgoSpeedometer = ({ value, showLabels = true, showInfo = true }) => 
     // We use a very strict cap and round to avoid floating point issues
     const rotation = Math.min(90, Math.max(-90, -90 + (percentage * 1.8)));
 
+    const DOMAIN_COLORS = {
+        personal: { start: "#004080", end: "#0099ff" },
+        estrategico: { start: "#b35900", end: "#ff9933" },
+        relacional: { start: "#8a6a00", end: "#ddbe3d" },
+        multiplicador: { start: "#006622", end: "#33cc55" },
+        trascendente: { start: "#5900b3", end: "#b366ff" },
+        control: { start: "#334155", end: "#94a3b8" }
+    };
+    const dColor = DOMAIN_COLORS[domain] || DOMAIN_COLORS.relacional;
+
     return (
         <div className="l-speedometer-wrapper">
             <div className="l-speedometer-container">
@@ -31,12 +41,12 @@ const LiderazgoSpeedometer = ({ value, showLabels = true, showInfo = true }) => 
                     <svg viewBox="0 0 200 100" className="l-speedometer-svg" style={{ display: 'block' }}>
                         <defs>
                             <linearGradient 
-                                id="l-gold-gradient-v2" 
+                                id={`l-grad-${domain}`} 
                                 x1="20" y1="0" x2="180" y2="0" 
                                 gradientUnits="userSpaceOnUse"
                             >
-                                <stop offset="0%" stopColor="#8a6a00" />
-                                <stop offset="100%" stopColor="#ddbe3d" />
+                                <stop offset="0%" stopColor={dColor.start} />
+                                <stop offset="100%" stopColor={dColor.end} />
                             </linearGradient>
                         </defs>
                         
@@ -53,7 +63,7 @@ const LiderazgoSpeedometer = ({ value, showLabels = true, showInfo = true }) => 
                         <path 
                             d="M 20 100 A 80 80 0 0 1 180 100" 
                             fill="none" 
-                            stroke="url(#l-gold-gradient-v2)" 
+                            stroke={`url(#l-grad-${domain})`} 
                             strokeWidth="18" 
                             strokeDasharray="251.32 1000"
                             strokeDashoffset={251.32 - (percentage * 2.5132)}

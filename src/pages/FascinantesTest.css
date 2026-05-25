@@ -204,6 +204,7 @@
     width: 100%;
     margin: 40px auto 30px;
     display: flex;
+    gap: 15px;
     justify-content: space-between;
     align-items: center;
     z-index: 10;
@@ -211,6 +212,7 @@
 
 
 .nav-btn {
+    flex: 1;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.7);
@@ -221,6 +223,7 @@
     letter-spacing: 1.5px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(5px);
@@ -241,6 +244,7 @@
 }
 
 .submit-btn {
+    flex: 1;
     background: #ddbe3d;
     color: #00121d;
     padding: 12px 25px;
@@ -248,6 +252,7 @@
     font-weight: 900;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     box-shadow: 0 0 15px rgba(221, 190, 61, 0.3);
 }

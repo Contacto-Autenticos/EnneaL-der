@@ -104,10 +104,15 @@
 
 .l-progress-fill {
     height: 100%;
-    transition: width 0.3s ease;
-    background: linear-gradient(90deg, #8a6a00 0%, #ddbe3d 50%, #8a6a00 100%);
-    box-shadow: 0 0 15px rgba(221, 190, 61, 0.3);
+    transition: width 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
+
+.l-progress-fill.personal { background: linear-gradient(90deg, #004080 0%, #0099ff 50%, #004080 100%); box-shadow: 0 0 15px rgba(0, 153, 255, 0.4); }
+.l-progress-fill.estrategico { background: linear-gradient(90deg, #b35900 0%, #ff9933 50%, #b35900 100%); box-shadow: 0 0 15px rgba(255, 153, 51, 0.4); }
+.l-progress-fill.relacional { background: linear-gradient(90deg, #8a6a00 0%, #ddbe3d 50%, #8a6a00 100%); box-shadow: 0 0 15px rgba(221, 190, 61, 0.4); }
+.l-progress-fill.multiplicador { background: linear-gradient(90deg, #006622 0%, #33cc55 50%, #006622 100%); box-shadow: 0 0 15px rgba(51, 204, 85, 0.4); }
+.l-progress-fill.trascendente { background: linear-gradient(90deg, #5900b3 0%, #b366ff 50%, #5900b3 100%); box-shadow: 0 0 15px rgba(179, 102, 255, 0.4); }
+.l-progress-fill.control { background: linear-gradient(90deg, #334155 0%, #94a3b8 50%, #334155 100%); box-shadow: 0 0 15px rgba(148, 163, 184, 0.4); }
 
 .l-question-card {
     flex: 1;
@@ -186,6 +191,7 @@
     width: 100%;
     margin: 20px auto 0;
     display: flex;
+    gap: 15px;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 10px;
@@ -210,6 +216,8 @@
 }
 
 .l-nav-btn {
+    flex: 1;
+    width: 100%;
     background: white;
     border: 1px solid #ddd;
     color: #666;
@@ -219,6 +227,7 @@
     font-size: 0.8rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     cursor: pointer;
     transition: all 0.2s;
@@ -470,4 +479,14 @@
     .l-keyboard-hint {
         display: none;
     }
+}
+
+.l-test-footer-logo {
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.l-test-footer-logo img {
+    max-height: 40px;
 }
