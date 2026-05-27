@@ -349,11 +349,12 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                     <div className="al-hero-video-col">
                         <div className="al-hero-video-container">
                             <video 
-                                src="/Videos/Eneagrama-Autenticos.mp4" 
+                                src="/Videos/Eneagrama-Autenticos-landing.mp4" 
                                 autoPlay 
                                 loop 
                                 muted 
                                 playsInline 
+                                preload="auto"
                                 className="al-hero-video"
                             ></video>
                         </div>

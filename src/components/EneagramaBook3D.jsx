@@ -96,12 +96,12 @@ const EneagramaBook3D = () => {
 
     const reportPages = Array.from({ length: 5 }, (_, i) => {
         const pageNum = (i + 1).toString().padStart(4, '0');
-        return `/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-${pageNum}.jpg`;
+        return encodeURI(`/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-${pageNum}.jpg`);
     });
 
     const planPages = Array.from({ length: 5 }, (_, i) => {
         const pageNum = (i + 1).toString().padStart(4, '0');
-        return `/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-${pageNum}.jpg`;
+        return encodeURI(`/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-${pageNum}.jpg`);
     });
 
     const currentPages = activeBook === 'reporte' ? reportPages : planPages;
@@ -232,7 +232,7 @@ const EneagramaBook3D = () => {
                             className={`premium-book-cover ${activeBook === 'reporte' ? 'is-active' : 'is-inactive'}`}
                         >
                             <img 
-                                src="/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-0001.jpg" 
+                                src={encodeURI("/Ejemplo resultado test avanzado eneagrama/Reporte-Eneatipo-1_page-0001.jpg")} 
                                 alt="Portada Reporte" 
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                             />
@@ -252,7 +252,7 @@ const EneagramaBook3D = () => {
                             className={`premium-book-cover ${activeBook === 'plan' ? 'is-active' : 'is-inactive'}`}
                         >
                             <img 
-                                src="/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-0001.jpg" 
+                                src={encodeURI("/Ejemplo resultado test avanzado eneagrama/Plan-de-Accion-Eneatipo-1_page-0001.jpg")} 
                                 alt="Portada Plan de Acción" 
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                             />
