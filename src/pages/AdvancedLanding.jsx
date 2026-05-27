@@ -76,6 +76,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
     const [testimonialIndex, setTestimonialIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
     const [transitionEnabled, setTransitionEnabled] = useState(true);
+    const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
     const testimonials = [
         { 
@@ -347,7 +348,12 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                         </div>
                     </div>
                     <div className="al-hero-video-col">
-                        <div className="al-hero-video-container">
+                        <div className="al-hero-video-container" style={{ position: 'relative', backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: '16px', overflow: 'hidden' }}>
+                            {!isVideoLoaded && (
+                                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div className="dl-pulse-icon" style={{ color: '#ddbe3d' }}><Sparkles size={32} /></div>
+                                </div>
+                            )}
                             <video 
                                 src="/Videos/Eneagrama-Autenticos-landing.mp4" 
                                 autoPlay 
@@ -355,7 +361,9 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                 muted 
                                 playsInline 
                                 preload="auto"
+                                onCanPlay={() => setIsVideoLoaded(true)}
                                 className="al-hero-video"
+                                style={{ opacity: isVideoLoaded ? 1 : 0, transition: 'opacity 0.8s ease' }}
                             ></video>
                         </div>
                     </div>
