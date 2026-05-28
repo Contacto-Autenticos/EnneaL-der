@@ -29,6 +29,7 @@ const VideoLoopWithFlash = ({ src }) => {
                 autoPlay 
                 muted 
                 playsInline
+                preload="metadata"
                 onEnded={handleVideoEnd}
                 style={{ 
                     position: 'absolute',

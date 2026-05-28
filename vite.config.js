@@ -18,6 +18,15 @@ export default defineConfig({
         liderazgoIntro: resolve(__dirname, 'liderazgo-test-intro.html'),
         liderazgoTest: resolve(__dirname, 'liderazgo-test.html'),
         liderazgoResults: resolve(__dirname, 'liderazgo-results.html')
+      },
+      output: {
+        manualChunks: {
+          'vendor-pdf': ['jspdf', 'html2canvas'],
+          'vendor-charts': ['recharts'],
+          'vendor-animations': ['gsap'],
+          'vendor-icons': ['lucide-react'],
+          'vendor-react-core': ['react', 'react-dom', 'react-router-dom']
+        }
       }
     }
   }

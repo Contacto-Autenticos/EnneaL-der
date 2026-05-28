@@ -274,6 +274,7 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                                     loop 
                                     muted 
                                     playsInline
+                                    preload="metadata"
                                 />
                                 <div className="el-video-overlay-glow"></div>
                             </div>
@@ -455,7 +456,7 @@ const EneagramaLanding = ({ result, setTestResult }) => {
                                                 <video 
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                     controls
-                                                    preload="auto"
+                                                    preload="none"
                                                     playsInline
                                                 >
                                                     <source src={t.video} type="video/mp4" />

@@ -360,7 +360,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                 loop 
                                 muted 
                                 playsInline 
-                                preload="auto"
+                                preload="metadata"
                                 onCanPlay={() => setIsVideoLoaded(true)}
                                 className="al-hero-video"
                                 style={{ opacity: isVideoLoaded ? 1 : 0, transition: 'opacity 0.8s ease' }}

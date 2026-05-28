@@ -1,56 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './pages/Home';
+import { Suspense, lazy } from 'react';
+import Home from './pages/Home'; // Home can be kept eager or lazy, but let's lazy load it too to keep things uniform, wait actually Home is the root, let's lazy load it.
 
-import Test from './pages/Test';
-import Result from './pages/Result';
-import DetailedResult from './pages/DetailedResult';
-import SingleEnneatypeResult from './pages/SingleEnneatypeResult';
-import Admin from './pages/Admin';
-import AdvancedIntro from './pages/AdvancedIntro';
-import AdvancedTest from './pages/AdvancedTest';
-import AdvancedAnalysisResult from './pages/AdvancedAnalysisResult';
-import PaymentPage from './pages/PaymentPage';
-import PaymentStatus from './pages/PaymentStatus';
-import PaymentSuccess from './pages/PaymentSuccess';
-import AdvancedLanding from './pages/AdvancedLanding';
-import AdvancedTransition from './pages/AdvancedTransition';
-import CourseLanding from './pages/CourseLanding';
-import ResultVideoIntro from './pages/ResultVideoIntro';
-import emailjs from '@emailjs/browser';
-import { supabase } from './supabaseClient';
-import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
-import { advancedEnneagramInfo } from './data/advancedInfo';
-import ScrollToTop from './components/ScrollToTop';
-import FloatingScrollToTop from './components/FloatingScrollToTop';
-import BasicTestIntro from './pages/BasicTestIntro';
-import Analytics from './components/Analytics';
-import Gateway from './pages/Gateway';
-import Hub from './pages/Hub';
-import MyResults from './pages/MyResults';
-import FascinantesIntro from './pages/FascinantesIntro';
-import FascinantesTest from './pages/FascinantesTest';
-import FascinantesTransition from './pages/FascinantesTransition';
-import FascinantesResult from './pages/FascinantesResult';
-import GenuinosLanding from './pages/GenuinosLanding';
-import MpStatus from './pages/MpStatus';
-import Extraordinarios from './pages/Extraordinarios';
-import Fascinantes from './pages/Fascinantes';
-import Trascendentes from './pages/Trascendentes';
-import Genuinos from './pages/Genuinos';
-import Conscientes from './pages/Conscientes';
-import AutodiagRegister from './pages/AutodiagRegister';
-import AutodiagPayment from './pages/AutodiagPayment';
-import AutodiagPaymentStatus from './pages/AutodiagPaymentStatus';
-import WorkshopInscripcion from './pages/WorkshopInscripcion';
-import WorkshopPaymentStatus from './pages/WorkshopPaymentStatus';
-import DominiosLanding from './pages/DominiosLanding';
-import EneagramaLanding from './pages/EneagramaLanding';
-import LiderazgoTest from './pages/LiderazgoTest';
-import LiderazgoResults from './pages/LiderazgoResults';
-import Agenda from './pages/Agenda';
-import LiderazgoTestIntro from './pages/LiderazgoTestIntro';
-import BusinessScan from './pages/BusinessScan';
+const Test = lazy(() => import('./pages/Test'));
+const Result = lazy(() => import('./pages/Result'));
+const DetailedResult = lazy(() => import('./pages/DetailedResult'));
+const SingleEnneatypeResult = lazy(() => import('./pages/SingleEnneatypeResult'));
+const Admin = lazy(() => import('./pages/Admin'));
+const AdvancedIntro = lazy(() => import('./pages/AdvancedIntro'));
+const AdvancedTest = lazy(() => import('./pages/AdvancedTest'));
+const AdvancedAnalysisResult = lazy(() => import('./pages/AdvancedAnalysisResult'));
+const PaymentPage = lazy(() => import('./pages/PaymentPage'));
+const PaymentStatus = lazy(() => import('./pages/PaymentStatus'));
+const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
+const AdvancedLanding = lazy(() => import('./pages/AdvancedLanding'));
+const AdvancedTransition = lazy(() => import('./pages/AdvancedTransition'));
+const CourseLanding = lazy(() => import('./pages/CourseLanding'));
+const ResultVideoIntro = lazy(() => import('./pages/ResultVideoIntro'));
+const BasicTestIntro = lazy(() => import('./pages/BasicTestIntro'));
+const Gateway = lazy(() => import('./pages/Gateway'));
+const Hub = lazy(() => import('./pages/Hub'));
+const MyResults = lazy(() => import('./pages/MyResults'));
+const FascinantesIntro = lazy(() => import('./pages/FascinantesIntro'));
+const FascinantesTest = lazy(() => import('./pages/FascinantesTest'));
+const FascinantesTransition = lazy(() => import('./pages/FascinantesTransition'));
+const FascinantesResult = lazy(() => import('./pages/FascinantesResult'));
+const GenuinosLanding = lazy(() => import('./pages/GenuinosLanding'));
+const MpStatus = lazy(() => import('./pages/MpStatus'));
+const Extraordinarios = lazy(() => import('./pages/Extraordinarios'));
+const Fascinantes = lazy(() => import('./pages/Fascinantes'));
+const Trascendentes = lazy(() => import('./pages/Trascendentes'));
+const Genuinos = lazy(() => import('./pages/Genuinos'));
+const Conscientes = lazy(() => import('./pages/Conscientes'));
+const AutodiagRegister = lazy(() => import('./pages/AutodiagRegister'));
+const AutodiagPayment = lazy(() => import('./pages/AutodiagPayment'));
+const AutodiagPaymentStatus = lazy(() => import('./pages/AutodiagPaymentStatus'));
+const WorkshopInscripcion = lazy(() => import('./pages/WorkshopInscripcion'));
+const WorkshopPaymentStatus = lazy(() => import('./pages/WorkshopPaymentStatus'));
+const DominiosLanding = lazy(() => import('./pages/DominiosLanding'));
+const EneagramaLanding = lazy(() => import('./pages/EneagramaLanding'));
+const LiderazgoTest = lazy(() => import('./pages/LiderazgoTest'));
+const LiderazgoResults = lazy(() => import('./pages/LiderazgoResults'));
+const Agenda = lazy(() => import('./pages/Agenda'));
+const LiderazgoTestIntro = lazy(() => import('./pages/LiderazgoTestIntro'));
+const BusinessScan = lazy(() => import('./pages/BusinessScan'));
 
 function App() {
   const [user, setUser] = useState(null);
@@ -247,7 +241,8 @@ Deseo Básico: ${details.motivations.desire}
       <Analytics />
       <ScrollToTop />
       <FloatingScrollToTop />
-      <Routes>
+      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ddbe3d' }}>Cargando...</div>}>
+        <Routes>
         <Route path="/eneagrama" element={<Home />} />
         <Route path="/" element={<Gateway />} />
         <Route path="/hub" element={<Hub />} />
@@ -426,6 +421,7 @@ Deseo Básico: ${details.motivations.desire}
         {/* Redirect any other route to home */}
         <Route path="*" element={<Navigate to="/eneagrama" replace />} />
       </Routes>
+      </Suspense>
     </Router>
   );
 }

@@ -87,7 +87,7 @@ const ResultVideoIntro = ({ type }) => {
                 autoPlay
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
                 onEnded={handleVideoEnded}
                 onError={(e) => {
                     console.error("Video element error:", e);
