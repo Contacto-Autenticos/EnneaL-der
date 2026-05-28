@@ -361,7 +361,7 @@ Deseo Básico: ${details.motivations.desire}
 
         <Route
           path="/eneagrama-advanced-register"
-          element={<AdvancedIntro onRegister={handleRegister} user={user} initialEnneatype={testResult?.enneatype} />}
+          element={<AdvancedIntro onRegister={handleRegister} user={user} initialEnneatype={testResult?.enneatype} targetRoute="/eneagrama-advanced-test" />}
         />
 
         <Route
