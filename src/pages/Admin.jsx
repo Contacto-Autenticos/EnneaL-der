@@ -3017,6 +3017,7 @@ const Admin = () => {
                                             <th>Fecha Realización</th>
                                             <th>Nivel Obtenido</th>
                                             <th style={{ textAlign: 'center' }}>Acceso</th>
+                                            <th style={{ textAlign: 'center' }}>Comercial</th>
 
                                             <th style={{ textAlign: 'center' }}>C.</th>
                                             <th style={{ textAlign: 'center' }}>M.</th>
@@ -3077,6 +3078,14 @@ const Admin = () => {
                                                             <span style={{ color: '#2ecc71', fontWeight: 500 }} title="Ingreso con pago">
                                                                 Pagado
                                                             </span>
+                                                        )}
+                                                    </td>
+
+                                                    <td style={{ textAlign: 'center', fontSize: '0.85rem' }}>
+                                                        {r.commercial_name ? (
+                                                            <span style={{ color: '#b89b2d', fontWeight: 600 }}>{r.commercial_name}</span>
+                                                        ) : (
+                                                            <span style={{ color: '#9ca3af' }}>-</span>
                                                         )}
                                                     </td>
 

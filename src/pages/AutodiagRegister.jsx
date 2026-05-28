@@ -143,7 +143,25 @@ const AutodiagRegister = () => {
             }
         }
 
-        // Si NO hay código, proceder al pago normalmente
+        // Si NO hay código normal, revisar si viene de una alianza (ruta oculta)
+        const partnerSource = localStorage.getItem('partner_source_dominios');
+        if (partnerSource) {
+            // Guardar leads con el source del socio
+            await supabase.from('user_leads').insert([{
+                full_name: userData.name,
+                email: userData.email,
+                birth_date: userData.birth_date,
+                source: partnerSource
+            }]);
+
+            // Guardar datos y autorizar el acceso
+            localStorage.setItem('tempAutodiagUser', JSON.stringify(userData));
+            localStorage.setItem('autodiagPaid', 'true');
+            navigate('/dominios-intro');
+            return;
+        }
+
+        // Si NO hay código ni socio, proceder al pago normalmente
         localStorage.setItem('tempAutodiagUser', JSON.stringify(userData));
         navigate('/dominios-payment');
     };

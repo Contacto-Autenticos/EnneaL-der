@@ -89,6 +89,9 @@ const FascinantesResult = () => {
                 try { userData = JSON.parse(tempUserStr); } catch (e) {}
             }
 
+            const partnerSource = localStorage.getItem('partner_source_dominios');
+            const commercialName = partnerSource ? partnerSource.replace('alianza_dominios_', 'alianza_') : null;
+
             try {
                 const { error } = await supabase.from('fascinantes_results').insert([{
                     is_anonymous: !userData,
@@ -102,7 +105,8 @@ const FascinantesResult = () => {
                     score_social: domainScores.find(s => s.id === 'social')?.score || 0,
                     score_espiritual: domainScores.find(s => s.id === 'espiritual')?.score || 0,
                     score_financiero: domainScores.find(s => s.id === 'financiero')?.score || 0,
-                    user_answers: userAnswers
+                    user_answers: userAnswers,
+                    commercial_name: commercialName
                 }]);
 
                 if (error) throw error;

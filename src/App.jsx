@@ -45,6 +45,7 @@ const Conscientes = lazy(() => import('./pages/Conscientes'));
 const AutodiagRegister = lazy(() => import('./pages/AutodiagRegister'));
 const AutodiagPayment = lazy(() => import('./pages/AutodiagPayment'));
 const AutodiagPaymentStatus = lazy(() => import('./pages/AutodiagPaymentStatus'));
+const PartnerGatewayDominios = lazy(() => import('./pages/PartnerGatewayDominios'));
 const WorkshopInscripcion = lazy(() => import('./pages/WorkshopInscripcion'));
 const WorkshopPaymentStatus = lazy(() => import('./pages/WorkshopPaymentStatus'));
 const DominiosLanding = lazy(() => import('./pages/DominiosLanding'));
@@ -274,6 +275,7 @@ Deseo Básico: ${details.motivations.desire}
         <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ddbe3d' }}>Cargando...</div>}>
         <Routes>
         <Route path="/alianza/:partnerId" element={<PartnerGateway />} />
+        <Route path="/alianza-dominios/:partnerId" element={<PartnerGatewayDominios />} />
         <Route path="/eneagrama" element={<Home />} />
         <Route path="/" element={<Gateway />} />
         <Route path="/hub" element={<Hub />} />
