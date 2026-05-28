@@ -10,6 +10,7 @@ import { advancedEnneagramInfo } from './data/advancedInfo';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingScrollToTop from './components/FloatingScrollToTop';
 import Analytics from './components/Analytics';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const Test = lazy(() => import('./pages/Test'));
 const Result = lazy(() => import('./pages/Result'));
@@ -249,7 +250,21 @@ Deseo Básico: ${details.motivations.desire}
       <Analytics />
       <ScrollToTop />
       <FloatingScrollToTop />
-      <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ddbe3d' }}>Cargando...</div>}>
+      <ErrorBoundary fallback={
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ffffff' }}>
+          <h2>Actualizando la aplicación...</h2>
+          <p>Por favor espera un momento.</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            style={{ marginTop: '20px', padding: '10px 20px', background: '#ddbe3d', color: '#002d44', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}
+          >
+            Recargar ahora
+          </button>
+          {/* Auto reload after 2 seconds to fix ChunkLoadError */}
+          {setTimeout(() => window.location.reload(), 2000) && null}
+        </div>
+      }>
+        <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ddbe3d' }}>Cargando...</div>}>
         <Routes>
         <Route path="/eneagrama" element={<Home />} />
         <Route path="/" element={<Gateway />} />
@@ -430,6 +445,7 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="*" element={<Navigate to="/eneagrama" replace />} />
       </Routes>
       </Suspense>
+      </ErrorBoundary>
     </Router>
   );
 }
