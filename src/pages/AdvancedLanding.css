@@ -337,7 +337,6 @@ html {
     border-radius: 20px;
     overflow: hidden;
     border: none;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(221, 190, 61, 0.2);
 }
 .al-hero-video {
     width: 100%;

@@ -348,7 +348,7 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                         </div>
                     </div>
                     <div className="al-hero-video-col">
-                        <div className="al-hero-video-container" style={{ position: 'relative', backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: '16px', overflow: 'hidden' }}>
+                        <div className="al-hero-video-container" style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden' }}>
                             {!isVideoLoaded && (
                                 <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <div className="dl-pulse-icon" style={{ color: '#ddbe3d' }}><Sparkles size={32} /></div>
