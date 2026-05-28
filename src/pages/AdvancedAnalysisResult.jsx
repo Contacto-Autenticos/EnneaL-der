@@ -218,7 +218,8 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
 
         // Check if Advanced Program should be hidden (test mode)
         const hideProgram = localStorage.getItem('hideAdvancedProgram') === 'true';
-        if (hideProgram) {
+        const isPartner = localStorage.getItem('partner_source');
+        if (hideProgram || isPartner) {
             setShowAdvancedProgram(false);
         }
 
@@ -933,7 +934,7 @@ const AdvancedAnalysisResult = ({ result, user: propUser }) => {
                                     <p className="order-bump-price-bottom-note" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', marginTop: '5px', textTransform: 'uppercase', letterSpacing: '1px' }}>Pago único · Acceso inmediato</p>
                                     
                                     <button 
-                                        onClick={() => navigate('/payment?mode=plan')}
+                                        onClick={() => navigate('/eneagrama-payment?mode=plan')}
                                         className="btn-advanced-finish btn-deepen-primary"
                                         style={{ width: '100%', maxWidth: '100%', marginTop: '25px' }}
                                     >
