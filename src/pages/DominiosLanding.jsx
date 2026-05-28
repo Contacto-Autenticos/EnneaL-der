@@ -568,7 +568,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                                                 <video 
                                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                                     controls
-                                                    preload="auto"
+                                                    preload="none"
                                                     playsInline
                                                 >
                                                     <source src={t.video} type="video/mp4" />

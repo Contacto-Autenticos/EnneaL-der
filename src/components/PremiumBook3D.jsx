@@ -95,13 +95,13 @@ const PremiumBook3D = () => {
 
     // Exact list of pages requested by the user
     const pages = [
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0001.jpg',
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0002.jpg',
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0003.jpg',
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0004.jpg',
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0005.jpg',
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0012.jpg',
-        '/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0013.jpg'
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0001.jpg'),
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0002.jpg'),
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0003.jpg'),
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0004.jpg'),
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0005.jpg'),
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0012.jpg'),
+        encodeURI('/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0013.jpg')
     ];
 
     // Handle auto-flip on open
@@ -177,7 +177,7 @@ const PremiumBook3D = () => {
                             e.currentTarget.style.filter = 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))';
                         }}
                     >
-                        <img src="/Ejemplo resltado autodiagnostico/Reporte_Fascinantes_Carlos_Orozco_page-0001.jpg" alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={pages[0]} alt="Portada" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         <div style={{
                             position: 'absolute',
                             inset: 0,
