@@ -141,6 +141,8 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
             access_code: requireAccessCode ? accessCode.trim() : null
         };
 
+        const partnerSource = localStorage.getItem('partner_source');
+
         try {
             // Save to Supabase
             const { error } = await supabase
@@ -150,7 +152,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                         full_name: name,
                         email: normalizedEmail,
                         birth_date: formattedDate,
-                        source: 'advanced_analysis',
+                        source: partnerSource ? `alianza_${partnerSource}` : 'advanced_analysis',
                         organization: showOrganization ? organization : null,
                         enneatype: initialEnneatype
                     }

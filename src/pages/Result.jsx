@@ -246,7 +246,12 @@ const Result = ({ result, user, onReset }) => {
     };
 
     const handleDetailedAnalysis = () => {
-        navigate('/eneagrama-advanced-test-landing');
+        const partnerSource = localStorage.getItem('partner_source');
+        if (partnerSource) {
+            navigate('/eneagrama-advanced-register');
+        } else {
+            navigate('/eneagrama-advanced-test-landing');
+        }
     };
 
     return (

@@ -54,6 +54,7 @@ const LiderazgoResults = lazy(() => import('./pages/LiderazgoResults'));
 const Agenda = lazy(() => import('./pages/Agenda'));
 const LiderazgoTestIntro = lazy(() => import('./pages/LiderazgoTestIntro'));
 const BusinessScan = lazy(() => import('./pages/BusinessScan'));
+const PartnerGateway = lazy(() => import('./pages/PartnerGateway'));
 
 function App() {
   const [user, setUser] = useState(null);
@@ -148,6 +149,12 @@ function App() {
         }));
 
         const commercialName = localStorage.getItem('activeCommercial');
+        const partnerSource = localStorage.getItem('partner_source');
+
+        let finalCommercialName = commercialName || null;
+        if (partnerSource) {
+            finalCommercialName = finalCommercialName ? `${finalCommercialName} | alianza_${partnerSource}` : `alianza_${partnerSource}`;
+        }
 
         await supabase.from('advanced_test_responses').insert([{
           user_name: user.name || null,
@@ -156,7 +163,7 @@ function App() {
           test_type: advancedQuestionsUsed.length > 50 ? '135' : '45',
           organization_code: user.organization || null,
           access_code: user.access_code || null,
-          commercial_name: commercialName || null,
+          commercial_name: finalCommercialName,
           answers: formattedAnswers
         }]);
 
@@ -266,6 +273,7 @@ Deseo Básico: ${details.motivations.desire}
       }>
         <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ddbe3d' }}>Cargando...</div>}>
         <Routes>
+        <Route path="/alianza/:partnerId" element={<PartnerGateway />} />
         <Route path="/eneagrama" element={<Home />} />
         <Route path="/" element={<Gateway />} />
         <Route path="/hub" element={<Hub />} />
