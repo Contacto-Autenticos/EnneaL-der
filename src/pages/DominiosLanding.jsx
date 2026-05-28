@@ -37,6 +37,15 @@ import FascinantesRadar from '../components/FascinantesRadar';
 import PremiumBook3D from '../components/PremiumBook3D';
 import './DominiosLanding.css';
 
+const radarData = [
+    { domain: 'Dominio Corporal', score: 49 }, // 70%
+    { domain: 'Dominio Mental', score: 57.4 }, // 82%
+    { domain: 'Dominio Emocional', score: 44.1 }, // 63%
+    { domain: 'Dominio Social', score: 38.5 }, // 55%
+    { domain: 'Dominio Espiritual', score: 54.6 }, // 78%
+    { domain: 'Dominio Financiero', score: 35 }, // 50%
+];
+
 const DominiosLanding = ({ result, setTestResult }) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -139,14 +148,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
         setIsPlaying(!isPlaying);
     };
 
-    const radarData = [
-        { domain: 'Dominio Corporal', score: 49 }, // 70%
-        { domain: 'Dominio Mental', score: 57.4 }, // 82%
-        { domain: 'Dominio Emocional', score: 44.1 }, // 63%
-        { domain: 'Dominio Social', score: 38.5 }, // 55%
-        { domain: 'Dominio Espiritual', score: 54.6 }, // 78%
-        { domain: 'Dominio Financiero', score: 35 }, // 50%
-    ];
+
 
     // Deep Linking: Recover state from URL if missing
     useEffect(() => {

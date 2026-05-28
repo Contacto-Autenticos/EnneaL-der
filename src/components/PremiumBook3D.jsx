@@ -440,4 +440,4 @@ const PremiumBook3D = () => {
     );
 };
 
-export default PremiumBook3D;
+export default React.memo(PremiumBook3D);

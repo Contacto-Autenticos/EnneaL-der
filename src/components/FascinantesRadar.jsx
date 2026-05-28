@@ -209,4 +209,4 @@ const FascinantesRadar = ({ data, height = 720, radius, isPDF, transparent = fal
     );
 };
 
-export default FascinantesRadar;
+export default React.memo(FascinantesRadar);
