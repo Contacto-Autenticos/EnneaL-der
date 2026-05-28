@@ -226,23 +226,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
     ];
 
 
-    useEffect(() => {
-        let lastScrollY = window.scrollY;
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            setIsScrolled(currentScrollY > 20);
-            if (currentScrollY > lastScrollY && currentScrollY > 80) {
-                setNavHidden(true);
-            } else {
-                setNavHidden(false);
-            }
-            lastScrollY = currentScrollY;
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    // Scroll listener removed to prevent performance issues and white screen crashes
 
     const handleAction = () => {
         navigate('/dominios-payment');
