@@ -483,10 +483,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
                     <div className="dl-product-flex">
                         {/* 1. Book on the LEFT */}
                         <div className="dl-product-img-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            {/* <PremiumBook3D /> */}
-                            <div style={{ padding: '50px', background: 'rgba(255,255,255,0.1)', textAlign: 'center', borderRadius: '16px', color: '#ddbe3d' }}>
-                                [Vista previa del libro 3D deshabilitada por mantenimiento]
-                            </div>
+                            <PremiumBook3D />
                         </div>
 
                         {/* 2. Text on the RIGHT */}
