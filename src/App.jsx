@@ -3,6 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Suspense, lazy } from 'react';
 import Home from './pages/Home'; // Home can be kept eager or lazy, but let's lazy load it too to keep things uniform, wait actually Home is the root, let's lazy load it.
 
+import emailjs from '@emailjs/browser';
+import { supabase } from './supabaseClient';
+import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } from './utils/calculator';
+import { advancedEnneagramInfo } from './data/advancedInfo';
+import ScrollToTop from './components/ScrollToTop';
+import FloatingScrollToTop from './components/FloatingScrollToTop';
+import Analytics from './components/Analytics';
+
 const Test = lazy(() => import('./pages/Test'));
 const Result = lazy(() => import('./pages/Result'));
 const DetailedResult = lazy(() => import('./pages/DetailedResult'));
