@@ -354,17 +354,13 @@ const AdvancedLanding = ({ result, setTestResult }) => {
                                     <div className="dl-pulse-icon" style={{ color: '#ddbe3d' }}><Sparkles size={32} /></div>
                                 </div>
                             )}
-                            <video 
-                                src="/Videos/Eneagrama-Autenticos-landing.mp4" 
-                                autoPlay 
-                                loop 
-                                muted 
-                                playsInline 
-                                preload="metadata"
-                                onCanPlay={() => setIsVideoLoaded(true)}
+                            <img 
+                                src="/eneagrama_new.png" 
+                                alt="Eneagrama"
+                                onLoad={() => setIsVideoLoaded(true)}
                                 className="al-hero-video"
-                                style={{ opacity: isVideoLoaded ? 1 : 0, transition: 'opacity 0.8s ease' }}
-                            ></video>
+                                style={{ opacity: isVideoLoaded ? 1 : 0, transition: 'opacity 0.8s ease', width: '100%', height: '100%', objectFit: 'contain' }}
+                            />
                         </div>
                     </div>
                 </div>
