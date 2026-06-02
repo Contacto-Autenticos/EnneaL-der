@@ -55,6 +55,8 @@ const DominiosLanding = ({ result, setTestResult }) => {
     const [testimonialIndex, setTestimonialIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
     const [transitionEnabled, setTransitionEnabled] = useState(true);
+    const [showMainVideo, setShowMainVideo] = useState(false);
+    const [playingVideoIndex, setPlayingVideoIndex] = useState(null);
 
     const testimonials = [
         { 
@@ -63,7 +65,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             stars: 5
         },
         { 
-            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%201.2.mp4#t=0.001",
+            youtubeId: "tTUPAh8Uah0",
             author: "Viviana Colorado",
             stars: 5
         },
@@ -73,7 +75,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             stars: 5
         },
         { 
-            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%202.2.mp4#t=0.001",
+            youtubeId: "F52giTsYzaE",
             author: "María Fernanda Carvajal",
             stars: 5
         },
@@ -83,7 +85,7 @@ const DominiosLanding = ({ result, setTestResult }) => {
             stars: 5
         },
         { 
-            video: "/Videos%20Autodiagnostico/Testimonio%20Autodiagnostico%206%20dominios%20-%203.2.mp4#t=1.5",
+            youtubeId: "uaSALZis2FM",
             author: "Alex Cerón",
             stars: 5
         },
@@ -476,14 +478,80 @@ const DominiosLanding = ({ result, setTestResult }) => {
             {/* 6. Información del Producto */}
             <section id="detalles-producto" className="dl-product-section">
                 <div className="dl-section-content">
-                    <h2 className="dl-section-title dl-reveal" style={{ textAlign: 'center', marginBottom: '80px' }}>
+                    <h2 className="dl-section-title dl-reveal" style={{ textAlign: 'center', marginBottom: '40px' }}>
                         Al finalizar el <span className="dl-gold-text" style={{ display: 'inline' }}>autodiagnóstico recibirás:</span>
                     </h2>
+
+                    {/* Video Explicativo Centrado Arriba (Facade Alta Resolución) */}
+                    <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '60px' }}>
+                        <div 
+                            style={{
+                                width: '100%',
+                                maxWidth: '650px',
+                                aspectRatio: '16/9',
+                                borderRadius: '16px',
+                                overflow: 'hidden',
+                                boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+                                border: '1px solid rgba(221, 190, 61, 0.3)',
+                                position: 'relative',
+                                cursor: showMainVideo ? 'default' : 'pointer',
+                                background: '#000'
+                            }}
+                            onClick={() => !showMainVideo && setShowMainVideo(true)}
+                        >
+                            {!showMainVideo ? (
+                                <>
+                                    <img 
+                                        src="https://img.youtube.com/vi/53UUW4i7fsk/maxresdefault.jpg" 
+                                        alt="Thumbnail Autodiagnóstico" 
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                    />
+                                    <div style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        background: 'rgba(0,0,0,0.1)',
+                                        transition: 'all 0.3s ease'
+                                    }}>
+                                        <div style={{
+                                            width: '68px',
+                                            height: '48px',
+                                            backgroundColor: 'rgba(255, 0, 0, 0.9)',
+                                            borderRadius: '12px',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+                                        }}>
+                                            <svg viewBox="0 0 68 48" width="40" height="40">
+                                                <path d="M45 24L27 14v20z" fill="#ffffff" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    src="https://www.youtube.com/embed/53UUW4i7fsk?rel=0&autoplay=1" 
+                                    title="¿Qué obtendrás en el autodiagnóstico?" 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowFullScreen>
+                                </iframe>
+                            )}
+                        </div>
+                    </div>
 
                     <div className="dl-product-flex">
                         {/* 1. Book on the LEFT */}
                         <div className="dl-product-img-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <PremiumBook3D />
+                            {/* Libro Dinámico (Tamaño reducido) */}
+                            <div style={{ width: '80%', maxWidth: '350px' }}>
+                                <PremiumBook3D />
+                            </div>
                         </div>
 
                         {/* 2. Text on the RIGHT */}
@@ -547,19 +615,61 @@ const DominiosLanding = ({ result, setTestResult }) => {
                             }}
                         >
                             {[...testimonials, ...testimonials.slice(0, 5)].map((t, i) => (
-                                <div key={i} className="dl-testimonial-card" style={t.video ? { padding: '0', overflow: 'hidden' } : {}}>
-                                    {t.video ? (
+                                <div key={i} className="dl-testimonial-card" style={t.youtubeId ? { padding: '0', overflow: 'hidden' } : {}}>
+                                    {t.youtubeId ? (
                                         <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                                            <div style={{ width: '100%', height: '240px', background: '#000' }}>
-                                                <video 
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                    controls
-                                                    preload="none"
-                                                    playsInline
-                                                >
-                                                    <source src={t.video} type="video/mp4" />
-                                                    Tu navegador no soporta la reproducción de video.
-                                                </video>
+                                            <div 
+                                                style={{ width: '100%', height: '240px', background: '#000', position: 'relative', cursor: playingVideoIndex === i ? 'default' : 'pointer' }}
+                                                onClick={() => {
+                                                    if (playingVideoIndex !== i) {
+                                                        setPlayingVideoIndex(i);
+                                                        setIsPlaying(false);
+                                                    }
+                                                }}
+                                            >
+                                                {playingVideoIndex !== i ? (
+                                                    <>
+                                                        <img 
+                                                            src={`https://img.youtube.com/vi/${t.youtubeId}/hqdefault.jpg`} 
+                                                            alt={`Testimonio de ${t.author}`} 
+                                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                                        />
+                                                        <div style={{
+                                                            position: 'absolute',
+                                                            inset: 0,
+                                                            display: 'flex',
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            background: 'rgba(0,0,0,0.1)',
+                                                            transition: 'all 0.3s ease'
+                                                        }}>
+                                                            <div style={{
+                                                                width: '50px',
+                                                                height: '35px',
+                                                                backgroundColor: 'rgba(255, 0, 0, 0.9)',
+                                                                borderRadius: '8px',
+                                                                display: 'flex',
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+                                                            }}>
+                                                                <svg viewBox="0 0 68 48" width="28" height="28">
+                                                                    <path d="M45 24L27 14v20z" fill="#ffffff" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <iframe 
+                                                        width="100%" 
+                                                        height="100%" 
+                                                        src={`https://www.youtube.com/embed/${t.youtubeId}?rel=0&autoplay=1`} 
+                                                        title={`Testimonio de ${t.author}`} 
+                                                        frameBorder="0" 
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                                        allowFullScreen>
+                                                    </iframe>
+                                                )}
                                             </div>
                                             <div className="dl-testimonial-footer" style={{ padding: '10px 25px 20px', borderTop: 'none', background: '#f8f9fa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                                 <div className="dl-stars">
