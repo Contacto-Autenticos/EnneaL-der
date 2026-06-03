@@ -728,7 +728,7 @@ html {
 }
 
 .al-current-price {
-    font-size: clamp(60px, 12vw, 110px);
+    font-size: clamp(35px, 6vw, 65px);
     font-weight: 900;
     letter-spacing: -0.05em;
     line-height: 1;
