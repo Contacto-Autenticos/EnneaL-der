@@ -29,6 +29,10 @@
             "destination": "/liderazgo-results.html"
         },
         {
+            "source": "/inscripcion-haz-que-suceda(.*)",
+            "destination": "/haz-que-suceda.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }

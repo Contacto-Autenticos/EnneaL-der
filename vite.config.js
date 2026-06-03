@@ -17,7 +17,8 @@ export default defineConfig({
         diagnostico: resolve(__dirname, 'diagnostico-empresarial.html'),
         liderazgoIntro: resolve(__dirname, 'liderazgo-test-intro.html'),
         liderazgoTest: resolve(__dirname, 'liderazgo-test.html'),
-        liderazgoResults: resolve(__dirname, 'liderazgo-results.html')
+        liderazgoResults: resolve(__dirname, 'liderazgo-results.html'),
+        hazQueSuceda: resolve(__dirname, 'haz-que-suceda.html')
       },
       output: {
         manualChunks: {
