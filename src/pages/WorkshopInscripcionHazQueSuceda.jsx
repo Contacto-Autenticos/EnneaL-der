@@ -296,7 +296,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                     <div className="hqs-includes-wrapper">
                         <span className="hqs-dot">•</span>
                         <div className="hqs-includes">
-                            <span style={{textTransform: 'uppercase', letterSpacing: '2px'}}>UN DÍA - UNA DECISIÓN - UNA NUEVA REALIDAD</span>
+                            <span style={{textTransform: 'uppercase', letterSpacing: '2px', textAlign: 'center'}}>UN DÍA - UNA DECISIÓN - UNA NUEVA REALIDAD</span>
                         </div>
                         <span className="hqs-dot">•</span>
                     </div>
