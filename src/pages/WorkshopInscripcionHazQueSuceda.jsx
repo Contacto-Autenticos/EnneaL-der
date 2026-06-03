@@ -431,7 +431,9 @@ const WorkshopInscripcionHazQueSuceda = () => {
             
             <footer className="hqs-footer">
                 <div className="hqs-footer-content">
-                    <img src="/Logo-Blanco.png" alt="Auténticos" className="hqs-footer-logo" />
+                    <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer">
+                        <img src="/Logo-Blanco.png" alt="Auténticos" className="hqs-footer-logo" />
+                    </a>
                     <div className="hqs-footer-social">
                         <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer"><Globe size={18} /></a>
                         <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer"><Instagram size={18} /></a>
