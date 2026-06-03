@@ -36,7 +36,42 @@ const WorkshopInscripcionHazQueSuceda = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        document.title = "Haz Que Suceda | Auténticos";
+        document.title = "HAZ QUE SUCEDA | Taller experiencial";
+
+        const updateMeta = (name, content) => {
+            let element = document.querySelector(`meta[name="${name}"]`) || document.querySelector(`meta[property="${name}"]`);
+            if (element) {
+                element.setAttribute('content', content);
+            } else {
+                element = document.createElement('meta');
+                if (name.startsWith('og:') || name.startsWith('twitter:')) {
+                    element.setAttribute('property', name);
+                } else {
+                    element.setAttribute('name', name);
+                }
+                element.setAttribute('content', content);
+                document.head.appendChild(element);
+            }
+            return element;
+        };
+
+        const prevDescription = document.querySelector('meta[name="description"]')?.getAttribute('content');
+        const prevOgTitle = document.querySelector('meta[property="og:title"]')?.getAttribute('content');
+        const prevOgDesc = document.querySelector('meta[property="og:description"]')?.getAttribute('content');
+        const prevOgImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content');
+        
+        updateMeta('description', "Un día para reflexionar, para sentir y para tomar accion.");
+        updateMeta('og:title', "HAZ QUE SUCEDA | Taller experiencial");
+        updateMeta('og:description', "Un día para reflexionar, para sentir y para tomar accion.");
+        updateMeta('og:image', "https://enesencia.autenticos.co/Haz%20que%20suceda/Puerta-cuadrada.jpg");
+
+        return () => {
+            document.title = "Enesencia | Auténticos";
+            if (prevDescription) updateMeta('description', prevDescription);
+            if (prevOgTitle) updateMeta('og:title', prevOgTitle);
+            if (prevOgDesc) updateMeta('og:description', prevOgDesc);
+            if (prevOgImage) updateMeta('og:image', prevOgImage);
+        };
     }, []);
 
     useEffect(() => {
