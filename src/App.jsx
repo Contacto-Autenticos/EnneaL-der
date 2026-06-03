@@ -47,6 +47,7 @@ const AutodiagPayment = lazy(() => import('./pages/AutodiagPayment'));
 const AutodiagPaymentStatus = lazy(() => import('./pages/AutodiagPaymentStatus'));
 const PartnerGatewayDominios = lazy(() => import('./pages/PartnerGatewayDominios'));
 const WorkshopInscripcion = lazy(() => import('./pages/WorkshopInscripcion'));
+const WorkshopInscripcionHazQueSuceda = lazy(() => import('./pages/WorkshopInscripcionHazQueSuceda'));
 const WorkshopPaymentStatus = lazy(() => import('./pages/WorkshopPaymentStatus'));
 const DominiosLanding = lazy(() => import('./pages/DominiosLanding'));
 const EneagramaLanding = lazy(() => import('./pages/EneagramaLanding'));
@@ -306,6 +307,7 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/eneagrama-landing" element={<EneagramaLanding result={testResult} setTestResult={setTestResult} />} />
 
         <Route path="/inscripcion" element={<WorkshopInscripcion />} />
+        <Route path="/inscripcion-haz-que-suceda" element={<WorkshopInscripcionHazQueSuceda />} />
         <Route path="/inscripcion-status" element={<WorkshopPaymentStatus />} />
 
         <Route
