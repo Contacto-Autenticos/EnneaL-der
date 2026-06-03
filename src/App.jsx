@@ -272,7 +272,12 @@ Deseo Básico: ${details.motivations.desire}
           </button>
         </div>
       }>
-        <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ddbe3d' }}>Cargando...</div>}>
+        <Suspense fallback={
+          <div className="premium-loader-container">
+            <div className="premium-spinner"></div>
+            <div className="premium-loader-text">Cargando</div>
+          </div>
+        }>
         <Routes>
         <Route path="/alianza/:partnerId" element={<PartnerGateway />} />
         <Route path="/alianza-dominios/:partnerId" element={<PartnerGatewayDominios />} />

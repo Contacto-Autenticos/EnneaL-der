@@ -4,12 +4,27 @@ import './ResultVideoIntro.css';
 
 const ResultVideoIntro = ({ type }) => {
     const navigate = useNavigate();
-    const videoRef = useRef(null);
+    const playerRef = useRef(null);
+    const containerRef = useRef(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const [videoError, setVideoError] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
     const [isFading, setIsFading] = useState(false);
-    const [hasEnded, setHasEnded] = useState(false);
+    const [ytReady, setYtReady] = useState(false);
+
+    const youtubeLinks = {
+        '1': { desktop: '805ziDZnQak', mobile: 'aYU-Sc51xLA' },
+        '2': { desktop: '9hZbPuxmAsM', mobile: 'Rxvtz3a1PKE' },
+        '3': { desktop: 'VRK97R6wxhw', mobile: '9f4qh5byOm0' },
+        '4': { desktop: 'gh6SX3BBs7U', mobile: 'JgOj_JunHuE' },
+        '5': { desktop: 'LGdOi0z-A-0', mobile: 'rf2cMOtB7mc' },
+        '6': { desktop: 'qDek2lQ9Maw', mobile: 'sLbIbbnfyuQ' },
+        '7': { desktop: '6UF8EAD7hYY', mobile: 'YLquL5TYOoY' },
+        '8': { desktop: 'hh2QKvlgLcU', mobile: 'elcerA-Kyok' },
+        '9': { desktop: '9ebvZRaYz9o', mobile: 'YxBCc-2G6pA' }
+    };
+
+    const cleanType = String(type).trim();
+    const youtubeId = youtubeLinks[cleanType]?.[isMobile ? 'mobile' : 'desktop'];
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -17,44 +32,75 @@ const ResultVideoIntro = ({ type }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleVideoEnded = () => {
-        setHasEnded(true);
-        setIsFading(true);
-        // Wait for CSS transition (0.8s) before navigating
-        setTimeout(() => {
-            navigate('/eneagrama-advanced-analysis-result');
-        }, 800);
-    };
+    // Load YouTube API
+    useEffect(() => {
+        if (!window.YT) {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            
+            window.onYouTubeIframeAPIReady = () => {
+                setYtReady(true);
+            };
+        } else {
+            setYtReady(true);
+        }
+    }, []);
 
     const handleSkip = () => {
         setIsFading(true);
         setTimeout(() => {
             navigate('/eneagrama-advanced-analysis-result');
-        }, 400); // Shorter fade for skip
+        }, 400);
     };
 
-    // Use a clean version of type
-    const cleanType = String(type).trim();
-    // The folder is capitalized as 'Videos' in the public directory
-    const videoSrc = cleanType ? `/Videos/Eneatipo-${cleanType}-intro-${isMobile ? 'mobile' : 'desktop'}.mp4` : null;
-
+    // Initialize YouTube Player
     useEffect(() => {
-        if (videoSrc && videoRef.current) {
-            videoRef.current.load();
-            const playPromise = videoRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Autoplay check:", error);
-                    // Only show play button if it hasn't ended and we're not fading
-                    if (!hasEnded && !isFading) {
-                        setIsPaused(true);
+        if (ytReady && youtubeId && containerRef.current && !playerRef.current) {
+            playerRef.current = new window.YT.Player(containerRef.current, {
+                videoId: youtubeId,
+                playerVars: {
+                    autoplay: 1,
+                    mute: 1, // Required for autoplay
+                    controls: 0,
+                    disablekb: 1,
+                    fs: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    showinfo: 0,
+                    playsinline: 1
+                },
+                events: {
+                    onReady: (event) => {
+                        event.target.playVideo();
+                    },
+                    onStateChange: (event) => {
+                        if (event.data === window.YT.PlayerState.ENDED) {
+                            setIsFading(true);
+                            setTimeout(() => {
+                                navigate('/eneagrama-advanced-analysis-result');
+                            }, 800);
+                        }
+                    },
+                    onError: (event) => {
+                        console.error('YouTube Player Error', event);
+                        setVideoError(true);
                     }
-                });
-            }
+                }
+            });
         }
-    }, [videoSrc]);
+        
+        // Cleanup when component unmounts or ID changes
+        return () => {
+            if (playerRef.current) {
+                playerRef.current.destroy();
+                playerRef.current = null;
+            }
+        };
+    }, [ytReady, youtubeId, navigate]);
 
-    if (!type) {
+    if (!type || !youtubeId) {
         return (
             <div className="video-intro-page">
                 <div style={{ color: 'white', textAlign: 'center' }}>
@@ -69,57 +115,30 @@ const ResultVideoIntro = ({ type }) => {
 
     return (
         <div className={`video-intro-page ${isFading ? 'fade-out-active' : ''}`}>
-            {/* Transition Overlay */}
             <div className="video-fade-overlay"></div>
 
             <div className="video-controls-overlay">
                 {!isFading && (
-                    <button className="skip-video-btn" onClick={handleSkip}>
+                    <button className="skip-video-btn" onClick={handleSkip} style={{ zIndex: 100 }}>
                         {videoError ? 'IR AL RESULTADO' : 'SALTAR'}
                     </button>
                 )}
             </div>
 
-            <video
-                key={videoSrc}
-                ref={videoRef}
-                className="intro-video"
-                autoPlay
-                muted
-                playsInline
-                preload="metadata"
-                onEnded={handleVideoEnded}
-                onError={(e) => {
-                    console.error("Video element error:", e);
-                    setVideoError(true);
-                }}
-                onPlay={() => setIsPaused(false)}
-                onPause={() => {
-                    // Only show pause state if not at end and not fading
-                    if (!videoRef.current?.ended && !isFading) {
-                        setIsPaused(true);
-                    }
-                }}
-                src={videoSrc}
-            >
-                Tu navegador no soporta videos.
-            </video>
-
-            {isPaused && !videoError && !isFading && !hasEnded && (
-                <div className="play-overlay" onClick={() => videoRef.current?.play()}>
-                    <div className="play-button-icon">▶</div>
-                    <p>Haz clic para reproducir el video promocional</p>
-                </div>
-            )}
+            <div className="youtube-player-container" style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none' // Prevent user from interacting with video
+            }}>
+                <div ref={containerRef} style={{ width: '100%', height: '100%' }}></div>
+            </div>
 
             {videoError && (
                 <div className="error-overlay">
-                    <p>No se pudo cargar el video de tu Eneatipo {type}.</p>
-                    <span className="error-path">Ruta intentada: {videoSrc}</span>
-                    <div style={{ marginTop: '15px', fontSize: '12px', color: '#ffaaaa' }}>
-                        Por favor verifica que los archivos estén en: <br/>
-                        <code>public/Videos/</code>
-                    </div>
+                    <p>Ocurrió un problema reproduciendo la introducción.</p>
                     <button className="al-btn-main" onClick={handleSkip} style={{ marginTop: '20px', padding: '12px 30px' }}>
                         CONTINUAR AL RESULTADO
                     </button>
