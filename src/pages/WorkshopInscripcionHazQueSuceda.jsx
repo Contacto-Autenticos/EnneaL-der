@@ -230,18 +230,21 @@ const WorkshopInscripcionHazQueSuceda = () => {
                                     <img src="/Haz que suceda/Carlos Lopera_02.png" alt="Carlos Lopera" className="hqs-fac-img-clean" />
                                 </a>
                                 <h4>CARLOS<br/>LOPERA</h4>
+                                <p className="hqs-fac-title">Empresario serial</p>
                             </div>
                             <div className="hqs-fac-card">
                                 <a href="https://www.instagram.com/paulaguayaba/" target="_blank" rel="noopener noreferrer">
                                     <img src="/Haz que suceda/Paula Guayaba_02.png" alt="Paula Guayaba" className="hqs-fac-img-clean" />
                                 </a>
                                 <h4>PAULA<br/>GUAYABA</h4>
+                                <p className="hqs-fac-title">Músico profesional y<br/>Coach de vida plena</p>
                             </div>
                             <div className="hqs-fac-card">
                                 <a href="https://www.instagram.com/felipebeltranhernandez/" target="_blank" rel="noopener noreferrer">
                                     <img src="/Haz que suceda/Felipe Beltran_02.png" alt="Felipe Beltrán" className="hqs-fac-img-clean" />
                                 </a>
                                 <h4>FELIPE<br/>BELTRÁN</h4>
+                                <p className="hqs-fac-title">Emprendedor y<br/>mentor de vida</p>
                             </div>
                         </div>
                     </div>

@@ -197,7 +197,7 @@
 .hqs-fac-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 60px;
   margin-bottom: 60px;
   width: 100%;
 }
@@ -238,6 +238,15 @@
   color: #e0e0e0;
   line-height: 1.4;
   font-weight: 300;
+}
+
+.hqs-fac-title {
+  color: #ddbe3d;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 /* Info Box */
