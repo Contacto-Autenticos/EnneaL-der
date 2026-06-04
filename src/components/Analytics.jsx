@@ -7,9 +7,10 @@ const Analytics = () => {
     useEffect(() => {
         // Enviar evento de vista de página para Google Analytics 4
         if (typeof window.gtag === 'function') {
-            window.gtag('config', 'G-8GMEDNBSZP', {
+            window.gtag('event', 'page_view', {
                 page_path: location.pathname + location.search,
                 page_title: document.title,
+                send_to: 'G-8GMEDNBSZP'
             });
         }
 
