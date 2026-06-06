@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Home from './pages/Home';
+import AdvancedLanding from './pages/AdvancedLanding';
 
 // Función para reintentar cargar módulos lazy (previene pantallas en blanco tras nuevos despliegues)
 const lazyRetry = (componentImport) => {
@@ -44,7 +45,7 @@ const AdvancedAnalysisResult = lazy(() => lazyRetry(() => import('./pages/Advanc
 const PaymentPage = lazy(() => lazyRetry(() => import('./pages/PaymentPage')));
 const PaymentStatus = lazy(() => lazyRetry(() => import('./pages/PaymentStatus')));
 const PaymentSuccess = lazy(() => lazyRetry(() => import('./pages/PaymentSuccess')));
-const AdvancedLanding = lazy(() => lazyRetry(() => import('./pages/AdvancedLanding')));
+// AdvancedLanding is eagerly loaded (imported at top) to prevent blank screen on navigation
 const AdvancedTransition = lazy(() => lazyRetry(() => import('./pages/AdvancedTransition')));
 const CourseLanding = lazy(() => lazyRetry(() => import('./pages/CourseLanding')));
 const ResultVideoIntro = lazy(() => lazyRetry(() => import('./pages/ResultVideoIntro')));

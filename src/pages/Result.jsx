@@ -247,10 +247,12 @@ const Result = ({ result, user, onReset }) => {
 
     const handleDetailedAnalysis = () => {
         const partnerSource = localStorage.getItem('partner_source');
+        // Pass top3 types in URL so AdvancedLanding can reconstruct state if needed
+        const topTypes = top3.map(t => t.type).join(',');
         if (partnerSource) {
             navigate('/eneagrama-advanced-register');
         } else {
-            navigate('/eneagrama-advanced-test-landing');
+            navigate(`/eneagrama-advanced-test-landing?t=${topTypes}`);
         }
     };
 
