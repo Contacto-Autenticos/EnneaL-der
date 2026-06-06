@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChevronUp } from 'lucide-react';
 import './FloatingScrollToTop.css';
-
 const FloatingScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
     const location = useLocation();
