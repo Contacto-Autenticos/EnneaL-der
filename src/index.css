@@ -17,6 +17,15 @@
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Body override when AdvancedLanding is active — loaded in main CSS bundle to avoid lazy chunk race */
+body.advanced-landing-active {
+  background-image: none !important;
+  background-color: #002d44 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

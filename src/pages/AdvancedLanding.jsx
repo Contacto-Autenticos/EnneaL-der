@@ -77,6 +77,18 @@ const AdvancedLanding = ({ result, setTestResult }) => {
     const [isPlaying, setIsPlaying] = useState(true);
     const [transitionEnabled, setTransitionEnabled] = useState(true);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+    const [isReady, setIsReady] = useState(false);
+
+    // Ensure CSS and DOM are fully painted before showing content
+    useEffect(() => {
+        // Use requestAnimationFrame to wait for the browser to paint the CSS
+        const raf = requestAnimationFrame(() => {
+            // Then use a small timeout to ensure CSS chunks are applied
+            const timer = setTimeout(() => setIsReady(true), 80);
+            return () => clearTimeout(timer);
+        });
+        return () => cancelAnimationFrame(raf);
+    }, []);
 
     const testimonials = [
         { 
@@ -200,27 +212,11 @@ const AdvancedLanding = ({ result, setTestResult }) => {
         }
     }, [searchParams, result, setTestResult]);
 
-    // Isolation and Reset Logic
+    // Isolation and Reset Logic — use CSS class instead of inline styles
     useEffect(() => {
-        // Save original styles
-        const originalBG = document.body.style.backgroundImage;
-        const originalColor = document.body.style.color;
-        const originalMargin = document.body.style.margin;
-        const originalOverflow = document.body.style.overflow;
-
-        // Apply isolation resets
-        document.body.style.backgroundImage = 'none';
-        document.body.style.backgroundColor = '#002d44';
-        document.body.style.color = '#ffffff';
-        document.body.style.margin = '0';
-        document.body.style.padding = '0';
-
+        document.body.classList.add('advanced-landing-active');
         return () => {
-            // Restore original styles
-            document.body.style.backgroundImage = originalBG;
-            document.body.style.color = originalColor;
-            document.body.style.margin = originalMargin;
-            document.body.style.overflow = originalOverflow;
+            document.body.classList.remove('advanced-landing-active');
         };
     }, []);
 
@@ -293,6 +289,23 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    if (!isReady) {
+        return (
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                background: '#000a12',
+                color: '#ffffff'
+            }}>
+                <div className="premium-spinner"></div>
+                <div className="premium-loader-text" style={{ marginTop: '16px' }}>Cargando</div>
+            </div>
+        );
+    }
 
     return (
         <div id="inicio" className="advanced-landing-container">
