@@ -170,7 +170,7 @@ const PaymentPage = () => {
             script.setAttribute('data-amount-in-cents', getFinalAmount(amountInCents, bumpSelected));
             script.setAttribute('data-reference', signatureData.reference);
             script.setAttribute('data-signature:integrity', signatureData.signature);
-            script.setAttribute('data-redirect-url', `${window.location.origin}/payment-status`); // Verify status first
+            script.setAttribute('data-redirect-url', `${window.location.origin}/eneagrama-payment-status`); // Verify status first
 
             const container = document.getElementById('wompi-container');
             if (container) {

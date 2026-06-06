@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
 
     const handleProceed = () => {
         if (automatedCode) {
-            navigate(`/advanced-intro?code=${automatedCode}`);
+            navigate(`/eneagrama-advanced-register?code=${automatedCode}`);
         } else {
             navigate('/eneagrama-advanced-register');
         }

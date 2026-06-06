@@ -1,7 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
-import Home from './pages/Home'; // Home can be kept eager or lazy, but let's lazy load it too to keep things uniform, wait actually Home is the root, let's lazy load it.
+import Home from './pages/Home';
+
+// Función para reintentar cargar módulos lazy (previene pantallas en blanco tras nuevos despliegues)
+const lazyRetry = (componentImport) => {
+  return new Promise((resolve, reject) => {
+    const hasRefreshed = JSON.parse(
+      window.sessionStorage.getItem('retry-lazy-refreshed') || 'false'
+    );
+    componentImport()
+      .then((component) => {
+        window.sessionStorage.setItem('retry-lazy-refreshed', 'false');
+        resolve(component);
+      })
+      .catch((error) => {
+        if (!hasRefreshed) {
+          window.sessionStorage.setItem('retry-lazy-refreshed', 'true');
+          return window.location.reload();
+        }
+        reject(error);
+      });
+  });
+};
 
 import emailjs from '@emailjs/browser';
 import { supabase } from './supabaseClient';
@@ -12,51 +33,51 @@ import FloatingScrollToTop from './components/FloatingScrollToTop';
 import Analytics from './components/Analytics';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const Test = lazy(() => import('./pages/Test'));
-const Result = lazy(() => import('./pages/Result'));
-const DetailedResult = lazy(() => import('./pages/DetailedResult'));
-const SingleEnneatypeResult = lazy(() => import('./pages/SingleEnneatypeResult'));
-const Admin = lazy(() => import('./pages/Admin'));
-const AdvancedIntro = lazy(() => import('./pages/AdvancedIntro'));
-const AdvancedTest = lazy(() => import('./pages/AdvancedTest'));
-const AdvancedAnalysisResult = lazy(() => import('./pages/AdvancedAnalysisResult'));
-const PaymentPage = lazy(() => import('./pages/PaymentPage'));
-const PaymentStatus = lazy(() => import('./pages/PaymentStatus'));
-const PaymentSuccess = lazy(() => import('./pages/PaymentSuccess'));
-const AdvancedLanding = lazy(() => import('./pages/AdvancedLanding'));
-const AdvancedTransition = lazy(() => import('./pages/AdvancedTransition'));
-const CourseLanding = lazy(() => import('./pages/CourseLanding'));
-const ResultVideoIntro = lazy(() => import('./pages/ResultVideoIntro'));
-const BasicTestIntro = lazy(() => import('./pages/BasicTestIntro'));
-const Gateway = lazy(() => import('./pages/Gateway'));
-const Hub = lazy(() => import('./pages/Hub'));
-const MyResults = lazy(() => import('./pages/MyResults'));
-const FascinantesIntro = lazy(() => import('./pages/FascinantesIntro'));
-const FascinantesTest = lazy(() => import('./pages/FascinantesTest'));
-const FascinantesTransition = lazy(() => import('./pages/FascinantesTransition'));
-const FascinantesResult = lazy(() => import('./pages/FascinantesResult'));
-const GenuinosLanding = lazy(() => import('./pages/GenuinosLanding'));
-const MpStatus = lazy(() => import('./pages/MpStatus'));
-const Extraordinarios = lazy(() => import('./pages/Extraordinarios'));
-const Fascinantes = lazy(() => import('./pages/Fascinantes'));
-const Trascendentes = lazy(() => import('./pages/Trascendentes'));
-const Genuinos = lazy(() => import('./pages/Genuinos'));
-const Conscientes = lazy(() => import('./pages/Conscientes'));
-const AutodiagRegister = lazy(() => import('./pages/AutodiagRegister'));
-const AutodiagPayment = lazy(() => import('./pages/AutodiagPayment'));
-const AutodiagPaymentStatus = lazy(() => import('./pages/AutodiagPaymentStatus'));
-const PartnerGatewayDominios = lazy(() => import('./pages/PartnerGatewayDominios'));
-const WorkshopInscripcion = lazy(() => import('./pages/WorkshopInscripcion'));
-const WorkshopInscripcionHazQueSuceda = lazy(() => import('./pages/WorkshopInscripcionHazQueSuceda'));
-const WorkshopPaymentStatus = lazy(() => import('./pages/WorkshopPaymentStatus'));
-const DominiosLanding = lazy(() => import('./pages/DominiosLanding'));
-const EneagramaLanding = lazy(() => import('./pages/EneagramaLanding'));
-const LiderazgoTest = lazy(() => import('./pages/LiderazgoTest'));
-const LiderazgoResults = lazy(() => import('./pages/LiderazgoResults'));
-const Agenda = lazy(() => import('./pages/Agenda'));
-const LiderazgoTestIntro = lazy(() => import('./pages/LiderazgoTestIntro'));
-const BusinessScan = lazy(() => import('./pages/BusinessScan'));
-const PartnerGateway = lazy(() => import('./pages/PartnerGateway'));
+const Test = lazy(() => lazyRetry(() => import('./pages/Test')));
+const Result = lazy(() => lazyRetry(() => import('./pages/Result')));
+const DetailedResult = lazy(() => lazyRetry(() => import('./pages/DetailedResult')));
+const SingleEnneatypeResult = lazy(() => lazyRetry(() => import('./pages/SingleEnneatypeResult')));
+const Admin = lazy(() => lazyRetry(() => import('./pages/Admin')));
+const AdvancedIntro = lazy(() => lazyRetry(() => import('./pages/AdvancedIntro')));
+const AdvancedTest = lazy(() => lazyRetry(() => import('./pages/AdvancedTest')));
+const AdvancedAnalysisResult = lazy(() => lazyRetry(() => import('./pages/AdvancedAnalysisResult')));
+const PaymentPage = lazy(() => lazyRetry(() => import('./pages/PaymentPage')));
+const PaymentStatus = lazy(() => lazyRetry(() => import('./pages/PaymentStatus')));
+const PaymentSuccess = lazy(() => lazyRetry(() => import('./pages/PaymentSuccess')));
+const AdvancedLanding = lazy(() => lazyRetry(() => import('./pages/AdvancedLanding')));
+const AdvancedTransition = lazy(() => lazyRetry(() => import('./pages/AdvancedTransition')));
+const CourseLanding = lazy(() => lazyRetry(() => import('./pages/CourseLanding')));
+const ResultVideoIntro = lazy(() => lazyRetry(() => import('./pages/ResultVideoIntro')));
+const BasicTestIntro = lazy(() => lazyRetry(() => import('./pages/BasicTestIntro')));
+const Gateway = lazy(() => lazyRetry(() => import('./pages/Gateway')));
+const Hub = lazy(() => lazyRetry(() => import('./pages/Hub')));
+const MyResults = lazy(() => lazyRetry(() => import('./pages/MyResults')));
+const FascinantesIntro = lazy(() => lazyRetry(() => import('./pages/FascinantesIntro')));
+const FascinantesTest = lazy(() => lazyRetry(() => import('./pages/FascinantesTest')));
+const FascinantesTransition = lazy(() => lazyRetry(() => import('./pages/FascinantesTransition')));
+const FascinantesResult = lazy(() => lazyRetry(() => import('./pages/FascinantesResult')));
+const GenuinosLanding = lazy(() => lazyRetry(() => import('./pages/GenuinosLanding')));
+const MpStatus = lazy(() => lazyRetry(() => import('./pages/MpStatus')));
+const Extraordinarios = lazy(() => lazyRetry(() => import('./pages/Extraordinarios')));
+const Fascinantes = lazy(() => lazyRetry(() => import('./pages/Fascinantes')));
+const Trascendentes = lazy(() => lazyRetry(() => import('./pages/Trascendentes')));
+const Genuinos = lazy(() => lazyRetry(() => import('./pages/Genuinos')));
+const Conscientes = lazy(() => lazyRetry(() => import('./pages/Conscientes')));
+const AutodiagRegister = lazy(() => lazyRetry(() => import('./pages/AutodiagRegister')));
+const AutodiagPayment = lazy(() => lazyRetry(() => import('./pages/AutodiagPayment')));
+const AutodiagPaymentStatus = lazy(() => lazyRetry(() => import('./pages/AutodiagPaymentStatus')));
+const PartnerGatewayDominios = lazy(() => lazyRetry(() => import('./pages/PartnerGatewayDominios')));
+const WorkshopInscripcion = lazy(() => lazyRetry(() => import('./pages/WorkshopInscripcion')));
+const WorkshopInscripcionHazQueSuceda = lazy(() => lazyRetry(() => import('./pages/WorkshopInscripcionHazQueSuceda')));
+const WorkshopPaymentStatus = lazy(() => lazyRetry(() => import('./pages/WorkshopPaymentStatus')));
+const DominiosLanding = lazy(() => lazyRetry(() => import('./pages/DominiosLanding')));
+const EneagramaLanding = lazy(() => lazyRetry(() => import('./pages/EneagramaLanding')));
+const LiderazgoTest = lazy(() => lazyRetry(() => import('./pages/LiderazgoTest')));
+const LiderazgoResults = lazy(() => lazyRetry(() => import('./pages/LiderazgoResults')));
+const Agenda = lazy(() => lazyRetry(() => import('./pages/Agenda')));
+const LiderazgoTestIntro = lazy(() => lazyRetry(() => import('./pages/LiderazgoTestIntro')));
+const BusinessScan = lazy(() => lazyRetry(() => import('./pages/BusinessScan')));
+const PartnerGateway = lazy(() => lazyRetry(() => import('./pages/PartnerGateway')));
 
 function App() {
   const [user, setUser] = useState(null);
