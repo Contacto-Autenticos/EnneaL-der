@@ -4,12 +4,11 @@ import './FloatingScrollToTop.css';
 
 const FloatingScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const location = useLocation();
 
-    // Hide on specific pages where it overlaps with other buttons
+    // Check if current page should hide the floating button
     const excludedPages = ['/dominios-landing', '/eneagrama-landing', '/diagnostico-empresarial', '/escaneo-empresarial', '/eneagrama-advanced-test-landing'];
-    if (excludedPages.includes(window.location.pathname)) {
-        return null;
-    }
+    const isExcluded = excludedPages.includes(location.pathname);
 
     // Show button when page is scrolled down
     const checkScroll = () => {
@@ -65,6 +64,8 @@ const FloatingScrollToTop = () => {
 
         return () => window.removeEventListener("scroll", checkScroll, true);
     }, []);
+
+    if (isExcluded) return null;
 
     return (
         <div className="floating-scroll-to-top">
