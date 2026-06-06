@@ -286,6 +286,14 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
                                                     Adquirir nuevo acceso
                                                 </button>
                                             )}
+                                            <a 
+                                                href="https://wa.me/573164287586?text=Hola,%20tengo%20un%20problema%20con%20mi%20c%C3%B3digo%20de%20acceso%20en%20la%20plataforma%20y%20necesito%20ayuda." 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                style={{ display: 'inline-block', marginTop: '15px', padding: '10px 20px', background: '#25D366', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '14px', textDecoration: 'none', textAlign: 'center' }}
+                                            >
+                                                Contactar Soporte
+                                            </a>
                                         </div>
                                     )}
                                 </div>

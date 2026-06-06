@@ -244,14 +244,21 @@ const PaymentStatus = () => {
                 </p>
 
                 {(status === 'DECLINED' || status === 'ERROR') && (
-                    <div style={{ marginTop: '30px' }}>
+                    <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center' }}>
                         <button onClick={() => navigate('/eneagrama-payment')} className="btn-retry">
                             Intentar de nuevo
                         </button>
-                        <br />
                         <button onClick={() => navigate('/eneagrama-result')} className="btn-cancel">
                             Volver a mis resultados
                         </button>
+                        <a 
+                            href="https://wa.me/573164287586?text=Hola,%20tuve%20un%20inconveniente%20con%20mi%20pago%20en%20la%20plataforma%20y%20necesito%20ayuda." 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style={{ padding: '12px 24px', background: '#25D366', color: '#ffffff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', width: '100%', maxWidth: '300px', justifyContent: 'center' }}
+                        >
+                            Contactar Soporte
+                        </a>
                     </div>
                 )}
             </div>

@@ -287,12 +287,22 @@ Deseo Básico: ${details.motivations.desire}
           <p style={{ maxWidth: '400px', marginBottom: '20px' }}>
             Hemos implementado nuevas mejoras. Para continuar, por favor recarga la página.
           </p>
-          <button 
-            onClick={() => window.location.reload()} 
-            style={{ padding: '12px 24px', background: '#ddbe3d', color: '#002d44', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
-          >
-            Recargar Página
-          </button>
+          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button 
+              onClick={() => window.location.reload()} 
+              style={{ padding: '12px 24px', background: '#ddbe3d', color: '#002d44', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px' }}
+            >
+              Recargar Página
+            </button>
+            <a 
+              href="https://wa.me/573164287586?text=Hola,%20tuve%20un%20inconveniente%20t%C3%A9cnico%20en%20la%20plataforma%20y%20necesito%20ayuda." 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ padding: '12px 24px', background: '#25D366', color: '#ffffff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '16px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              Contactar Soporte
+            </a>
+          </div>
         </div>
       }>
         <Suspense fallback={
