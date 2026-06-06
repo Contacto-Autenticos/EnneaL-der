@@ -77,18 +77,6 @@ const AdvancedLanding = ({ result, setTestResult }) => {
     const [isPlaying, setIsPlaying] = useState(true);
     const [transitionEnabled, setTransitionEnabled] = useState(true);
     const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-    const [isReady, setIsReady] = useState(false);
-
-    // Ensure CSS and DOM are fully painted before showing content
-    useEffect(() => {
-        // Use requestAnimationFrame to wait for the browser to paint the CSS
-        const raf = requestAnimationFrame(() => {
-            // Then use a small timeout to ensure CSS chunks are applied
-            const timer = setTimeout(() => setIsReady(true), 80);
-            return () => clearTimeout(timer);
-        });
-        return () => cancelAnimationFrame(raf);
-    }, []);
 
     const testimonials = [
         { 
@@ -215,6 +203,9 @@ const AdvancedLanding = ({ result, setTestResult }) => {
     // Isolation and Reset Logic — use CSS class instead of inline styles
     useEffect(() => {
         document.body.classList.add('advanced-landing-active');
+        // Enforce scroll to top instantly
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        
         return () => {
             document.body.classList.remove('advanced-landing-active');
         };
@@ -289,23 +280,6 @@ const AdvancedLanding = ({ result, setTestResult }) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
-    if (!isReady) {
-        return (
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100vh',
-                background: '#000a12',
-                color: '#ffffff'
-            }}>
-                <div className="premium-spinner"></div>
-                <div className="premium-loader-text" style={{ marginTop: '16px' }}>Cargando</div>
-            </div>
-        );
-    }
 
     return (
         <div id="inicio" className="advanced-landing-container">
