@@ -33,6 +33,10 @@
             "destination": "/haz-que-suceda.html"
         },
         {
+            "source": "/mlt-landing(.*)",
+            "destination": "/mlt-landing.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
