@@ -1568,3 +1568,49 @@ html {
         z-index: 1000; /* Ensure WhatsApp button is on top of everything */
     }
 }
+
+/* Footer (Minimal) */
+.al-footer {
+    background: #ffffff;
+    padding: 30px 24px;
+    border-top: 1px solid rgba(0, 45, 68, 0.05);
+    display: flex;
+    justify-content: center;
+}
+
+.al-footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.al-footer-logo {
+    height: 38px;
+}
+
+.al-footer-social {
+    display: flex;
+    gap: 20px;
+}
+
+.al-footer-social a {
+    color: #ddbe3d;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.al-footer-social a:hover {
+    transform: scale(1.1);
+    color: #b89b2d;
+}
+
+@media (max-width: 600px) {
+    .al-footer-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

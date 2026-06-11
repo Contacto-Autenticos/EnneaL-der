@@ -7,7 +7,7 @@ const FloatingScrollToTop = () => {
     const location = useLocation();
 
     // Check if current page should hide the floating button
-    const excludedPages = ['/dominios-landing', '/eneagrama-landing', '/diagnostico-empresarial', '/escaneo-empresarial', '/eneagrama-advanced-test-landing'];
+    const excludedPages = ['/dominios-landing', '/eneagrama-landing', '/diagnostico-empresarial', '/escaneo-empresarial', '/eneagrama-advanced-test-landing', '/mlt-landing'];
     const isExcluded = excludedPages.includes(location.pathname);
 
     // Show button when page is scrolled down

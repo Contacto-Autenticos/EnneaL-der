@@ -72,6 +72,7 @@ const WorkshopInscripcion = lazy(() => lazyRetry(() => import('./pages/WorkshopI
 const WorkshopInscripcionHazQueSuceda = lazy(() => lazyRetry(() => import('./pages/WorkshopInscripcionHazQueSuceda')));
 const WorkshopPaymentStatus = lazy(() => lazyRetry(() => import('./pages/WorkshopPaymentStatus')));
 const DominiosLanding = lazy(() => lazyRetry(() => import('./pages/DominiosLanding')));
+const MltLanding = lazy(() => lazyRetry(() => import('./pages/MltLanding')));
 const EneagramaLanding = lazy(() => lazyRetry(() => import('./pages/EneagramaLanding')));
 const LiderazgoTest = lazy(() => lazyRetry(() => import('./pages/LiderazgoTest')));
 const LiderazgoResults = lazy(() => lazyRetry(() => import('./pages/LiderazgoResults')));
@@ -336,6 +337,7 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/dominios-payment-status" element={<AutodiagPaymentStatus />} />
 
         <Route path="/dominios-landing" element={<DominiosLanding result={testResult} setTestResult={setTestResult} />} />
+        <Route path="/mlt-Landing" element={<MltLanding result={testResult} setTestResult={setTestResult} />} />
         <Route path="/eneagrama-landing" element={<EneagramaLanding result={testResult} setTestResult={setTestResult} />} />
 
         <Route path="/inscripcion" element={<WorkshopInscripcion />} />

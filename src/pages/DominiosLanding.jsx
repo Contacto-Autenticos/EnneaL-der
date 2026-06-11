@@ -929,45 +929,18 @@ const DominiosLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 11. Footer */}
-            <footer style={{ 
-                padding: '50px 24px', 
-                background: '#ffffff', 
-                textAlign: 'center',
-                borderTop: '1px solid rgba(0, 45, 68, 0.05)'
-            }}>
-                <div className="dl-section-content">
-                    <img 
-                        src="/logo-azul.png" 
-                        alt="Auténticos" 
-                        style={{ 
-                            height: '38px', 
-                            marginBottom: '25px',
-                            opacity: '1'
-                        }} 
-                    />
-                    
-                    <div style={{ 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        gap: '24px',
-                        marginBottom: '30px'
-                    }}>
-                        <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Globe size={24} /></a>
-                        <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Instagram size={24} /></a>
-                        <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Facebook size={24} /></a>
-                        <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Youtube size={24} /></a>
-                        <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer" style={{ color: '#ddbe3d' }} className="dl-social-icon"><Linkedin size={24} /></a>
+            <footer className="dl-footer">
+                <div className="dl-footer-content">
+                    <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer">
+                        <img src="/logo-azul.png" alt="Auténticos" className="dl-footer-logo" />
+                    </a>
+                    <div className="dl-footer-social">
+                        <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer"><Globe size={18} /></a>
+                        <a href="https://www.instagram.com/autenticos.co/" target="_blank" rel="noopener noreferrer"><Instagram size={18} /></a>
+                        <a href="https://www.facebook.com/clubautenticos" target="_blank" rel="noopener noreferrer"><Facebook size={18} /></a>
+                        <a href="https://www.youtube.com/@AutenticosTV" target="_blank" rel="noopener noreferrer"><Youtube size={18} /></a>
+                        <a href="https://www.linkedin.com/company/autenticos/?viewAsMember=true" target="_blank" rel="noopener noreferrer"><Linkedin size={18} /></a>
                     </div>
-
-                    <p style={{ 
-                        color: 'rgba(0, 45, 68, 0.4)', 
-                        fontSize: '11px',
-                        fontWeight: '500',
-                        letterSpacing: '0.05em',
-                        margin: 0
-                    }}>
-                        © 2026 Todos los derechos reservados.
-                    </p>
                 </div>
             </footer>
 
