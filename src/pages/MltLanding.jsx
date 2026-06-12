@@ -580,36 +580,56 @@ const MltLanding = ({ result, setTestResult }) => {
 
             {/* 4. Why changes don't last Section */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '100px 24px', position: 'relative' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px', fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800' }}>
+                <div className="mlt-section-content" style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '80px', fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900' }}>
                         ¿Por qué la mayoría de los cambios no duran?
                     </h2>
-                    <div style={{ fontSize: '18px', lineHeight: '1.6', color: 'rgba(0, 45, 68, 0.9)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                        <p>
-                            Muchas personas han leído libros, asistido a conferencias, tomado cursos o participado en procesos de desarrollo personal y profesional. Aunque suelen obtener aprendizajes valiosos, con frecuencia descubren que, después de algunas semanas o meses, vuelven a los mismos hábitos, las mismas dinámicas y los mismos resultados.
-                        </p>
-                        <p>
-                            Esto no ocurre porque les falte disciplina o buenas intenciones. Ocurre porque la mayoría de estos procesos trabaja aspectos aislados de la persona.
-                        </p>
-                        <p>
-                            Algunos se enfocan en liderazgo. Otros en productividad, comunicación, bienestar o habilidades específicas. El problema es que la vida no funciona por partes.
-                        </p>
-                        <p>
-                            Tus resultados son el reflejo de tus acciones. Tus acciones son el reflejo de tus pensamientos. Y tus pensamientos están profundamente influenciados por tus creencias, experiencias y la forma en que te comprendes a ti mismo.
-                        </p>
-                        <p>
-                            Por eso los cambios superficiales rara vez generan resultados sostenibles. Puedes modificar una conducta durante un tiempo, pero si no transformas aquello que la origina, tarde o temprano volverás al mismo lugar.
-                        </p>
-                        <p>
-                            Cuando comprendes que tu forma de pensar, sentir, relacionarte, liderar y actuar están conectadas, dejas de verte como un conjunto de piezas separadas y empiezas a comprenderte como un sistema.
-                        </p>
-                        <p>
-                            Por eso Master Live Training fue diseñado como un sistema integral de desarrollo humano. No trabajamos únicamente sobre lo que haces. Trabajamos sobre la persona que lo hace.
-                        </p>
-                        <p style={{ fontWeight: 'bold' }}>
-                            Porque creemos que los cambios más profundos y sostenibles ocurren cuando la persona se desarrolla de manera integral.
-                        </p>
+
+                    {/* Part 1: Text Left (4 paragraphs), Image Right */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                        gap: '60px',
+                        alignItems: 'flex-start',
+                        marginBottom: '80px'
+                    }}>
+                        <div style={{ fontSize: '1.15rem', lineHeight: '1.7', color: 'rgba(0, 45, 68, 0.85)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            <p>Muchas personas han leído libros, asistido a conferencias, tomado cursos o participado en procesos de desarrollo personal y profesional. Aunque suelen obtener aprendizajes valiosos, con frecuencia descubren que, después de algunas semanas o meses, vuelven a los mismos hábitos, las mismas dinámicas y los mismos resultados.</p>
+                            <p>Esto no ocurre porque les falte disciplina o buenas intenciones. Ocurre porque la mayoría de estos procesos trabaja aspectos aislados de la persona.</p>
+                            <p>Algunos se enfocan en liderazgo. Otros en productividad, comunicación, bienestar o habilidades específicas. El problema es que la vida no funciona por partes.</p>
+                            <p>Tus resultados son el reflejo de tus acciones. Tus acciones son el reflejo de tus pensamientos. Y tus pensamientos están profundamente influenciados por tus creencias, experiencias y la forma en que te comprendes a ti mismo.</p>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img 
+                                src="/mlt/Habitos negativos.jpg" 
+                                alt="Hábitos Negativos" 
+                                style={{ maxWidth: '100%', width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
+                            />
+                        </div>
                     </div>
+
+                    {/* Part 2: Image Left, Text Right (Remaining paragraphs) */}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                        gap: '60px',
+                        alignItems: 'flex-start'
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img 
+                                src="/mlt/Desarrollo personal.png" 
+                                alt="Desarrollo Personal" 
+                                style={{ maxWidth: '420px', width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
+                            />
+                        </div>
+                        <div style={{ fontSize: '1.15rem', lineHeight: '1.7', color: 'rgba(0, 45, 68, 0.85)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            <p>Por eso los cambios superficiales rara vez generan resultados sostenibles. Puedes modificar una conducta durante un tiempo, pero si no transformas aquello que la origina, tarde o temprano volverás al mismo lugar.</p>
+                            <p>Cuando comprendes que tu forma de pensar, sentir, relacionarte, liderar y actuar están conectadas, dejas de verte como un conjunto de piezas separadas y empiezas a comprenderte como un sistema.</p>
+                            <p>Por eso Master Live Training fue diseñado como un sistema integral de desarrollo humano. No trabajamos únicamente sobre lo que haces. Trabajamos sobre la persona que lo hace.</p>
+                            <p style={{ fontWeight: 'bold', color: '#002d44' }}>Porque creemos que los cambios más profundos y sostenibles ocurren cuando la persona se desarrolla de manera integral.</p>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -1496,44 +1516,50 @@ const MltLanding = ({ result, setTestResult }) => {
 
             {/* 9. Garantía */}
             <section className="mlt-section" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
-                <div className="mlt-section-content" style={{ textAlign: 'center', maxWidth: '800px' }}>
+                <div className="mlt-section-content" style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+                    
+                    {/* Image above Title */}
                     <img 
                         src="/mlt/Nuestro Compromiso-3.png" 
-                        alt="Nuestro Compromiso Auténticos" 
-                        className="mlt-guarantee-img"
+                        alt="100% Compromiso" 
+                        style={{ maxWidth: '280px', width: '100%', height: 'auto', marginBottom: '30px', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.15))' }}
                     />
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '30px' }}>
-                        Nuestro <span style={{ color: '#ddbe3d' }}>compromiso contigo</span>
+
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px', fontSize: 'clamp(32px, 5vw, 48px)' }}>
+                        <span style={{ fontWeight: '900' }}>Nuestro</span> <span style={{ color: '#ddbe3d', fontWeight: '900' }}>compromiso contigo</span>
                     </h2>
-                    <div style={{ textAlign: 'left', color: '#002d44', fontSize: '18px', lineHeight: '1.6', marginBottom: '40px' }}>
-                        <p style={{ marginBottom: '15px' }}>
+                    
+                    <div style={{ textAlign: 'left', color: '#002d44', fontSize: '1.15rem', lineHeight: '1.6', marginBottom: '40px' }}>
+                        <p style={{ marginBottom: '20px' }}>
                             Sabemos que decidir invertir tiempo, energía y recursos en un proceso de desarrollo personal no es una decisión menor.
                         </p>
-                        <p style={{ marginBottom: '15px' }}>
+                        <p style={{ marginBottom: '30px' }}>
                             Por eso queremos ser claros sobre lo que puedes esperar de nosotros.
                         </p>
+                        
                         <div style={{ marginBottom: '30px' }}>
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '15px' }}>
-                                <CheckCircle2 size={24} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} />
-                                <p style={{ margin: 0 }}>Nos comprometemos a poner a tu disposición toda nuestra experiencia, metodología, acompañamiento y dedicación para ayudarte a aprovechar al máximo esta experiencia.</p>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '25px' }}>
+                                <CheckCircle2 size={26} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} />
+                                <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: '1.6' }}>Nos comprometemos a poner a tu disposición toda nuestra experiencia, metodología, acompañamiento y dedicación para ayudarte a aprovechar al máximo esta experiencia.</p>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '15px' }}>
-                                <CheckCircle2 size={24} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} />
-                                <p style={{ margin: 0 }}>Crearemos un espacio seguro para la reflexión, el aprendizaje y el crecimiento, entregándote herramientas, conversaciones y experiencias diseñadas para generar cambios profundos y sostenibles.</p>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '25px' }}>
+                                <CheckCircle2 size={26} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} />
+                                <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: '1.6' }}>Crearemos un espacio seguro para la reflexión, el aprendizaje y el crecimiento, entregándote herramientas, conversaciones y experiencias diseñadas para generar cambios profundos y sostenibles.</p>
                             </div>
                         </div>
 
-                        <p style={{ marginBottom: '15px', fontStyle: 'italic', color: '#666' }}>
+                        <p style={{ marginBottom: '30px', fontStyle: 'italic', color: '#5c7c8a', fontSize: '1.15rem' }}>
                             Pero hay algo que no podemos hacer por ti, no podemos recorrer el camino en tu lugar.
                         </p>
                         
-                        <div style={{ background: 'rgba(221, 190, 61, 0.1)', padding: '25px', borderRadius: '12px', borderLeft: '5px solid #ddbe3d', marginBottom: '40px' }}>
-                            <p style={{ margin: 0, color: '#002d44', fontSize: '1.1rem', lineHeight: '1.6' }}>
+                        <div style={{ background: '#fcfaf2', padding: '30px', borderRadius: '12px', border: '1px solid rgba(221, 190, 61, 0.3)', borderLeft: '5px solid #ddbe3d', marginBottom: '50px' }}>
+                            <p style={{ margin: 0, color: '#002d44', fontSize: '1.15rem', lineHeight: '1.6', fontWeight: '500' }}>
                                 La transformación siempre será el resultado del encuentro entre una experiencia significativa y una persona dispuesta a aprovecharla. Nosotros nos comprometemos con la experiencia.
                             </p>
                         </div>
 
-                        <h3 style={{ fontWeight: '900', fontSize: 'clamp(24px, 4vw, 32px)', textAlign: 'center', marginTop: '40px', marginBottom: '50px', color: '#002d44', lineHeight: '1.3' }}>
+                        {/* Text above CTA */}
+                        <h3 style={{ fontWeight: '900', fontSize: 'clamp(24px, 4vw, 32px)', textAlign: 'center', marginTop: '50px', marginBottom: '40px', color: '#002d44', lineHeight: '1.3' }}>
                             <span style={{ color: '#ddbe3d' }}>¿Estás dispuesto a comprometerte contigo mismo?</span>
                         </h3>
                     </div>
@@ -1551,7 +1577,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             textAlign: 'center',
                             background: 'transparent',
                             color: '#002d44',
-                            border: '2px solid #002d44',
+                            border: '2px solid rgba(0,45,68,0.3)',
                             borderRadius: '12px',
                             fontWeight: '800',
                             textDecoration: 'none',
@@ -1559,12 +1585,12 @@ const MltLanding = ({ result, setTestResult }) => {
                             transition: 'all 0.3s'
                         }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.background = '#002d44';
-                            e.currentTarget.style.color = '#ffffff';
+                            e.currentTarget.style.background = 'rgba(0,45,68,0.05)';
+                            e.currentTarget.style.borderColor = '#002d44';
                         }}
                         onMouseOut={(e) => {
                             e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.color = '#002d44';
+                            e.currentTarget.style.borderColor = 'rgba(0,45,68,0.3)';
                         }}
                         >
                             Aún tengo dudas

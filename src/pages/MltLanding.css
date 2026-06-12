@@ -574,7 +574,7 @@ html {
 .mlt-pricing-glow {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0, 45, 68, 0.3), transparent, rgba(221, 190, 61, 0.05));
+    background: linear-gradient(135deg, transparent, transparent, rgba(221, 190, 61, 0.05));
     pointer-events: none;
 }
 
