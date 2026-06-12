@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 const MltInteractiveModel = () => {
     const nodesRef = useRef([]);
+    const iconsRef = useRef([]);
     const containerRef = useRef(null);
     const progressRef = useRef(null);
 
@@ -75,6 +76,19 @@ const MltInteractiveModel = () => {
             }
             
             progressRef.current.style.height = `${Math.min(Math.max(progress, 0), 100)}%`;
+            
+            const currentLinePx = (progress / 100) * rect.height;
+            nodesRef.current.forEach((node, i) => {
+                if (!node || !iconsRef.current[i]) return;
+                const nodeCenter = node.offsetTop + 40;
+                if (currentLinePx >= nodeCenter) {
+                    iconsRef.current[i].style.boxShadow = '0 0 45px rgba(221, 190, 61, 1)';
+                    iconsRef.current[i].style.borderColor = '#ffe566';
+                } else {
+                    iconsRef.current[i].style.boxShadow = '0 0 20px rgba(221, 190, 61, 0.3)';
+                    iconsRef.current[i].style.borderColor = '#ddbe3d';
+                }
+            });
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -154,7 +168,10 @@ const MltInteractiveModel = () => {
                     }}
                 >
                     {/* Icon Node */}
-                    <div className="mlt-vertical-timeline-icon" style={{
+                    <div 
+                        className="mlt-vertical-timeline-icon" 
+                        ref={el => iconsRef.current[index] = el}
+                        style={{
                         width: '80px',
                         height: '80px',
                         flexShrink: 0,
@@ -166,7 +183,8 @@ const MltInteractiveModel = () => {
                         alignItems: 'center',
                         boxShadow: '0 0 20px rgba(221, 190, 61, 0.3)',
                         backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)'
+                        WebkitBackdropFilter: 'blur(12px)',
+                        transition: 'all 0.4s ease'
                     }}>
                         {item.img ? (
                             <img src={item.img} alt={item.title} style={{ width: '55%', height: 'auto', objectFit: 'contain' }} />

@@ -1220,9 +1220,13 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* 6.6. 20 Cupos Section */}
             <section className="mlt-section mlt-animate" style={{ padding: '120px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '900px', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ marginBottom: '50px' }}>
-                        Por esta razón hemos decidido abrir únicamente <span className="mlt-gold-text">20 cupos.</span>
+                    <h2 className="mlt-section-title" style={{ marginBottom: '30px' }}>
+                        Por esta razón hemos decidido abrir únicamente
                     </h2>
+                    
+                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
+                        <img src="/mlt/Cupos habilitados.png" alt="20 Cupos habilitados" style={{ maxWidth: '250px', width: '100%', height: 'auto' }} />
+                    </div>
                     
                     <div style={{
                         display: 'flex',
@@ -1613,7 +1617,7 @@ const MltLanding = ({ result, setTestResult }) => {
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
                     <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '50px' }}>
-                        La vida que deseas construir ya te <span className="mlt-gold-text">está llamando.</span>
+                        La vida que deseas construir <br /> ya te <span className="mlt-gold-text" style={{ display: 'inline' }}>está llamando.</span>
                     </h2>
                     
                     <div style={{
