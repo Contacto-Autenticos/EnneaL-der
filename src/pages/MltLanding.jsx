@@ -603,7 +603,6 @@ const MltLanding = ({ result, setTestResult }) => {
                             <img 
                                 src="/mlt/Habitos negativos.jpg" 
                                 alt="Hábitos Negativos" 
-                                loading="lazy"
                                 style={{ maxWidth: '100%', width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
                             />
                         </div>
@@ -620,7 +619,6 @@ const MltLanding = ({ result, setTestResult }) => {
                             <img 
                                 src="/mlt/Desarrollo personal.png" 
                                 alt="Desarrollo Personal" 
-                                loading="lazy"
                                 style={{ maxWidth: '420px', width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
                             />
                         </div>
@@ -1067,7 +1065,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                 justifyContent: 'center'
                             }}>
                                 <img 
-                                    src="/Bombillo-2.gif" 
+                                    src="/Bombillo-2.webp" 
                                     alt="Origen Master Live Training" 
                                     style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }} 
                                 />
