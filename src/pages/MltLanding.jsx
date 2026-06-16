@@ -349,7 +349,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                         "6 conversatorios en vivo",
                                         "Comunidad exclusiva",
                                         "Acompañamiento continuo",
-                                        "Solo 20 participantes"
+                                        "Solo 21 participantes"
                                     ].map((item, idx) => (
                                         <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '18px', fontWeight: '600' }}>
                                             <CheckCircle2 size={22} color="#ddbe3d" style={{ flexShrink: 0 }} />
@@ -419,8 +419,8 @@ const MltLanding = ({ result, setTestResult }) => {
                         ))}
                     </div>
 
-                    <div style={{ marginTop: '60px', maxWidth: '800px', margin: '60px auto 0 auto', textAlign: 'left' }}>
-                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '0', color: '#002d44' }}>
+                    <div style={{ margin: '90px auto 0 auto', width: '100%', textAlign: 'left' }}>
+                        <p style={{ fontSize: '18.5px', lineHeight: '1.6', marginBottom: '0', color: '#002d44' }}>
                             Tal vez no te faltan más conocimientos, herramientas o capacidades. Lo que quizás estás buscando es algo más profundo: <strong style={{ color: '#ddbe3d' }}>claridad, dirección y fortaleza personal</strong> para sostener el nivel de impacto que deseas generar. El problema no siempre está en lo que haces, generalmente está en quién eres mientras lo haces.
                         </p>
                     </div>
