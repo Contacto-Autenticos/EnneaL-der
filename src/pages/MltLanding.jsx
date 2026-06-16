@@ -499,8 +499,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                     {/* Right: Image (Logo) */}
                     <div className="mlt-why-image">
-                        <img 
-                            src="/mlt/mlt-S2-1.jpg" 
+                        <img loading="lazy" src="/mlt/mlt-S2-1.jpg" 
                             alt="¿Por qué ocurre esto?" 
                             style={{ 
                                 width: '100%', 
@@ -516,8 +515,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     
                     {/* Left: Image (Water Glass) */}
                     <div className="mlt-why-left-image" style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-                        <img 
-                            src="/Baso de agua.jpg" 
+                        <img loading="lazy" src="/Baso de agua.jpg" 
                             alt="Capacidad y Agua" 
                             style={{ 
                                 width: '100%', 
@@ -578,8 +576,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             <p style={{ fontWeight: 'bold', color: '#002d44' }}>No trabajamos únicamente sobre lo que haces, trabajamos sobre la persona que lo hace.</p>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
-                            <img 
-                                src="/mlt/Habitos negativos.jpg" 
+                            <img loading="lazy" src="/mlt/Habitos negativos.jpg" 
                                 alt="Hábitos Negativos" 
                                 style={{ maxWidth: '100%', width: '100%', height: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
                             />
@@ -957,8 +954,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                 display: 'flex',
                                 justifyContent: 'center'
                             }}>
-                                <img 
-                                    src="/Bombillo-2.webp" 
+                                <img loading="lazy" src="/Bombillo-2.webp" 
                                     alt="Origen Master Live Training" 
                                     style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }} 
                                 />
@@ -1138,7 +1134,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     </h2>
                     
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-                        <img src="/mlt/Cupos habilitados.png" alt="20 Cupos habilitados" style={{ maxWidth: '250px', width: '100%', height: 'auto' }} />
+                        <img loading="lazy" src="/mlt/Cupos habilitados.png" alt="20 Cupos habilitados" style={{ maxWidth: '250px', width: '100%', height: 'auto' }} />
                     </div>
                     
                     <div style={{
@@ -1206,8 +1202,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                             >
                                                 {playingVideoIndex !== i ? (
                                                     <>
-                                                        <img 
-                                                            src={`https://img.youtube.com/vi/${t.youtubeId}/hqdefault.jpg`} 
+                                                        <img loading="lazy" src={`https://img.youtube.com/vi/${t.youtubeId}/hqdefault.jpg`} 
                                                             alt={`Testimonio de ${t.author}`} 
                                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                                                         />
@@ -1555,8 +1550,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     <div className="compromiso-container">
                         <div className="compromiso-top">
                             <div className="compromiso-left">
-                                <img 
-                                    src="/mlt/Nuestro Compromiso-3.png" 
+                                <img loading="lazy" src="/mlt/Nuestro Compromiso-3.png" 
                                     alt="100% Compromiso" 
                                     style={{ maxWidth: '250px', width: '100%', height: 'auto', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.15))' }}
                                 />
@@ -1701,7 +1695,7 @@ const MltLanding = ({ result, setTestResult }) => {
             <footer className="mlt-footer">
                 <div className="mlt-footer-content">
                     <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer">
-                        <img src="/Logo-Blanco.png" alt="Auténticos" className="mlt-footer-logo" />
+                        <img loading="lazy" src="/Logo-Blanco.png" alt="Auténticos" className="mlt-footer-logo" />
                     </a>
                     <div className="mlt-footer-social">
                         <a href="https://www.autenticos.co/" target="_blank" rel="noopener noreferrer"><Globe size={18} /></a>
