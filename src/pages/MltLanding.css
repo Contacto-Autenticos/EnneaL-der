@@ -132,7 +132,7 @@ html {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 120px 24px 120px;
+    padding: 80px 24px 80px;
     position: relative;
     background: linear-gradient(to bottom, var(--mlt-blue-dark) 0%, var(--mlt-blue-light) 100%);
 }
@@ -383,7 +383,7 @@ html {
 
 /* Sections General */
 .mlt-section {
-    padding: 100px 0;
+    padding: 80px 0;
     width: 100%;
     position: relative;
     background: linear-gradient(to bottom, var(--mlt-blue-dark) 0%, var(--mlt-blue-light) 100%);
@@ -429,7 +429,7 @@ html {
 
 /* Product Info Section */
 .mlt-product-section {
-    padding: 100px 0;
+    padding: 80px 0;
     background: linear-gradient(to bottom, var(--mlt-blue-dark) 0%, var(--mlt-blue-light) 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -505,7 +505,7 @@ html {
 
 /* Bridge Section */
 .mlt-bridge-section {
-    padding: 100px 0;
+    padding: 80px 0;
     background: var(--mlt-blue-dark);
 }
 
@@ -686,7 +686,7 @@ html {
 
 /* FAQ */
 .mlt-faq-section {
-    padding: 100px 0;
+    padding: 80px 0;
 }
 
 .mlt-faq-container {
@@ -1044,7 +1044,7 @@ html {
 .mlt-empathy-grid {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
 }
 
 @media (min-width: 1024px) {

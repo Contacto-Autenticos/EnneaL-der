@@ -64,7 +64,7 @@ const MltLanding = ({ result, setTestResult }) => {
     const [navHidden, setNavHidden] = useState(false);
     const [openFaq, setOpenFaq] = useState(null);
     const [testimonialIndex, setTestimonialIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(true);
+
     const [transitionEnabled, setTransitionEnabled] = useState(true);
     const [showMainVideo, setShowMainVideo] = useState(false);
     const [playingVideoIndex, setPlayingVideoIndex] = useState(null);
@@ -189,19 +189,7 @@ const MltLanding = ({ result, setTestResult }) => {
     ];
 
     // Carousel Logic
-    useEffect(() => {
-        let interval;
-        if (isPlaying) {
-            // Smooth linear movement: move one card every 5 seconds
-            interval = setInterval(() => {
-                handleNext();
-            }, 5000);
-        }
-        return () => clearInterval(interval);
-    }, [isPlaying, testimonialIndex]);
-
     const handlePrev = () => {
-        setIsPlaying(false); // Stop auto-play on manual interaction
         if (testimonialIndex === 0) {
             setTransitionEnabled(false);
             setTestimonialIndex(testimonials.length);
@@ -215,9 +203,7 @@ const MltLanding = ({ result, setTestResult }) => {
         }
     };
 
-    const handleNext = (isManual = false) => {
-        if (isManual) setIsPlaying(false);
-
+    const handleNext = () => {
         if (testimonialIndex === testimonials.length) {
             setTransitionEnabled(false);
             setTestimonialIndex(0);
@@ -231,15 +217,11 @@ const MltLanding = ({ result, setTestResult }) => {
                 setTransitionEnabled(false);
                 setTestimonialIndex(0);
                 setTimeout(() => setTransitionEnabled(true), 20);
-            }, isPlaying ? 5000 : 600); // Wait for current transition to finish
+            }, 600); // Wait for current transition to finish
         } else {
             setTransitionEnabled(true);
             setTestimonialIndex((prev) => prev + 1);
         }
-    };
-
-    const togglePlay = () => {
-        setIsPlaying(!isPlaying);
     };
 
 
@@ -332,24 +314,10 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* Background Layer */}
             <div className="mlt-bg-glow"></div>
 
-            {/* 1. Header Navigation */}
-            <nav className={`mlt-nav ${isScrolled ? 'scrolled' : ''} ${navHidden ? 'nav-hidden' : ''}`}>
-                <div className="mlt-nav-content">
-                    <div className="mlt-logo-wrapper">
-                        <img src="/Logo-Blanco.png" alt="Auténticos Logo" className="mlt-logo" />
-                    </div>
 
-                    <div className="mlt-nav-links">
-                        <a href="#inicio" className="mlt-nav-link">Inicio</a>
-                        <a href="#desarrollo-humano" className="mlt-nav-link">Desarrollo humano</a>
-                        <a href="#preguntas" className="mlt-nav-link">Preguntas</a>
-                        <a href="#precios" className="mlt-nav-link">Inversión</a>
-                    </div>
-                </div>
-            </nav>
 
             {/* 2. Hero Section */}
-            <section className="mlt-hero mlt-animate">
+            <section className="mlt-hero mlt-animate" style={{ minHeight: 'auto', padding: '60px 24px', justifyContent: 'flex-start' }}>
                 <div className="mlt-section-content mlt-hero-container">
                     <div>
                         {/* 1. Full width header */}
@@ -360,7 +328,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         </div>
 
                         {/* 2. Video placeholder */}
-                        <div style={{ width: '100%', maxWidth: '900px', margin: '0 auto 60px auto', background: '#000000', aspectRatio: '16/9', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <div style={{ width: '100%', maxWidth: '700px', margin: '0 auto 60px auto', background: '#000000', aspectRatio: '16/9', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
                             <p style={{ color: '#ffffff', opacity: 0.5, fontSize: '18px', fontWeight: '500', letterSpacing: '2px' }}>[ ESPACIO PARA VIDEO ]</p>
                         </div>
 
@@ -424,7 +392,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 3. Empathy Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content mlt-empathy-container">
                     <h2 className="mlt-section-title" style={{ 
                         fontWeight: '900', 
@@ -452,7 +420,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <div style={{ marginTop: '60px', maxWidth: '800px', margin: '60px auto 0 auto', textAlign: 'left' }}>
-                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '30px', color: '#002d44' }}>
+                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '0', color: '#002d44' }}>
                             Tal vez no te faltan más conocimientos, herramientas o capacidades. Lo que quizás estás buscando es algo más profundo: <strong style={{ color: '#ddbe3d' }}>claridad, dirección y fortaleza personal</strong> para sostener el nivel de impacto que deseas generar. El problema no siempre está en lo que haces, generalmente está en quién eres mientras lo haces.
                         </p>
                     </div>
@@ -460,7 +428,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 3.5. Why this happens Section */}
-            <section className="mlt-section mlt-animate" style={{ padding: '100px 24px', position: 'relative' }}>
+            <section className="mlt-section mlt-animate" style={{ padding: '80px 24px', position: 'relative' }}>
                 <div className="mlt-section-content mlt-why-grid" style={{ padding: 0 }}>
                     
                     {/* Left: Text */}
@@ -514,19 +482,22 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
                     
                     {/* Left: Image (Water Glass) */}
-                    <div className="mlt-why-left-image" style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-                        <img loading="lazy" src="/Baso de agua.jpg" 
-                            alt="Capacidad y Agua" 
-                            style={{ 
-                                width: '100%', 
-                                maxWidth: '450px', 
-                                maxHeight: '550px',
-                                height: 'auto', 
-                                borderRadius: '24px',
-                                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-                                objectFit: 'cover'
-                            }} 
-                        />
+                    <div className="mlt-why-left-image" style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ position: 'relative', width: '100%', maxWidth: '450px', height: '100%', minHeight: '400px' }}>
+                            <img loading="lazy" src="/Baso de agua.jpg" 
+                                alt="Capacidad y Agua" 
+                                style={{ 
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%', 
+                                    height: '100%', 
+                                    borderRadius: '24px',
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                                    objectFit: 'cover'
+                                }} 
+                            />
+                        </div>
                     </div>
                     
                     {/* Right: Extra Text (Continuation) */}
@@ -546,7 +517,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         <p style={{ marginBottom: '30px' }}>
                             No puedes aspirar a una vida más plena sin desarrollar primero a la persona que habrá de vivirla.
                         </p>
-                        <p style={{ fontWeight: 'bold', color: '#ddbe3d', fontSize: '20px' }}>
+                        <p style={{ fontWeight: 'bold', color: '#ddbe3d', fontSize: '20px', marginBottom: '0' }}>
                             ¿Quién necesitas llegar a ser para sostener la vida, el liderazgo y el impacto que deseas construir?
                         </p>
                     </div>
@@ -555,10 +526,10 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 4. Why changes don't last Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '100px 24px', position: 'relative' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '80px 24px', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '80px', fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900' }}>
-                        ¿Por qué la mayoría de los cambios no duran?
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '80px', fontSize: 'clamp(20px, 4vw, 48px)', fontWeight: '900', whiteSpace: 'nowrap' }}>
+                        ¿Por qué la mayoría de <span className="mlt-gold-text" style={{ display: 'inline' }}>cambios</span> no duran?
                     </h2>
 
                     {/* Part 1: Text Left (all paragraphs), Image Right */}
@@ -587,7 +558,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 4.5. Modelo de Formación (Ported) */}
-            <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ padding: '100px 24px', position: 'relative' }}>
+            <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ padding: '80px 24px', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                         <h2 className="mlt-section-title" style={{ marginBottom: '20px' }}>
@@ -605,64 +576,61 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 5. 6 Pilares Section (White version) */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content">
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '20px', color: '#002d44' }}>
-                        Lo que podrás llevarte <span className="mlt-gold-text" style={{ display: 'inline' }}>de esta experiencia</span>
-                    </h2>
-                    <p style={{ 
-                        textAlign: 'center', 
-                        fontSize: '1.1rem', 
-                        lineHeight: '1.8',
-                        color: 'rgba(0, 45, 68, 0.7)', 
-                        marginBottom: '60px',
-                        maxWidth: '900px',
-                        margin: '0 auto 60px'
-                    }}>
-                        Cada persona llega a Master Live Training con una historia, unos desafíos y unos objetivos diferentes. Sin embargo, existe algo que suele repetirse en quienes recorren un proceso profundo de desarrollo humano: comienzan a verse a sí mismos, a sus relaciones y a su vida desde una perspectiva completamente diferente.<br /><br />
-                        Al finalizar este proceso tendrás:
-                    </p>
+                    <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
+                            <div style={{ height: '1px', width: '80px', background: '#ddbe3d' }}></div>
+                            <span style={{ color: '#ddbe3d', fontSize: '18px', letterSpacing: '0.2em', fontWeight: '600', textTransform: 'uppercase' }}>LO QUE LOGRARÁS CON</span>
+                            <div style={{ height: '1px', width: '80px', background: '#ddbe3d' }}></div>
+                        </div>
+                        <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '20px', fontSize: 'clamp(36px, 6vw, 64px)' }}>
+                            Master Live <span className="mlt-gold-text" style={{ display: 'inline' }}>Training</span>
+                        </h2>
+                        <p style={{ 
+                            fontSize: '1.25rem', 
+                            lineHeight: '1.6',
+                            color: 'rgba(0, 45, 68, 0.85)', 
+                            maxWidth: '700px',
+                            margin: '0 auto'
+                        }}>
+                            Un desarrollo integral que transforma la forma en que te conoces, lideras y construyes tu vida.
+                        </p>
+                    </div>
                     
                     <div style={{ 
                         display: 'grid', 
                         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-                        gap: '30px',
-                        maxWidth: '1000px',
+                        gap: '15px',
+                        maxWidth: '1100px',
                         margin: '0 auto'
                     }}>
                         {[
-                            { icon: <Eye size={32} />, t: "Claridad Personal", d: "Una comprensión mucho más clara de quién eres, cuáles son los patrones que impulsan o limitan tu crecimiento y qué aspectos de tu vida requieren mayor atención para alcanzar el siguiente nivel de desarrollo.", color: "#0097a7" },
-                            { icon: <Target size={32} />, t: "Dirección y Enfoque", d: "Contarás con una hoja de ruta personal y profesional que te permitirá tomar decisiones con mayor intención, enfocar tu energía en lo que realmente importa y avanzar con una dirección más clara durante los próximos años.", color: "#e65100" },
-                            { icon: <Zap size={32} />, t: "Liderazgo Consciente", d: "Habrás fortalecido tu capacidad para liderar, comunicarte, relacionarte y generar impacto de una forma más consciente y coherente con la persona que deseas llegar a ser.", color: "#f5b041" },
-                            { icon: <Settings size={32} />, t: "Herramientas Prácticas", d: "Tendrás herramientas prácticas para continuar desarrollando tu cuerpo, tu mente, tus emociones, tus relaciones y tu liderazgo mucho después de haber terminado el programa.", color: "#2e7d32" },
-                            { icon: <UserPlus size={32} />, t: "Comunidad de Crecimiento", d: "Formarás parte de una comunidad de personas comprometidas con su crecimiento, con quienes podrás compartir aprendizajes, desafíos y experiencias a lo largo del camino.", color: "#c62828" },
-                            { icon: <Star size={32} />, t: "Coherencia de Vida", d: "Pero quizás el resultado más importante no sea algo que puedas medir fácilmente. Es la tranquilidad que surge cuando existe una mayor coherencia entre lo que piensas, lo que sientes, lo que haces y la vida que realmente quieres construir.", color: "#aa00ff" }
+                            { img: "Iconos MLT-S1-Claridad.png", t: <>CLARIDAD<br/>PERSONAL</>, d: "Comprender quién eres, qué te impulsa y qué necesita tu siguiente etapa de crecimiento." },
+                            { img: "Iconos MLT-S1-Direccion.png", t: <>DIRECCIÓN Y<br/>ENFOQUE</>, d: "Una hoja de ruta personal y profesional para tomar decisiones con intención y avanzar con claridad." },
+                            { img: "Iconos MLT-S1-liderazgo.png", t: <>LIDERAZGO<br/>CONSCIENTE</>, d: "Mayor capacidad para liderar, comunicarte, relacionarte e influir generando impacto de forma coherente." },
+                            { img: "Iconos MLT-S1-Herramientas.png", t: <>HERRAMIENTAS<br/>PRÁCTICAS</>, d: "Recursos y prácticas para convertir los aprendizajes en cambios sostenibles y reales." },
+                            { img: "Iconos MLT-S1-Comunidad.png", t: <>COMUNIDAD DE<br/>CRECIMIENTO</>, d: "Un grupo de personas comprometidas con crecer, aprender y acompañarse mutuamente." },
+                            { img: "Iconos MLT-S1-Coherencia.png", t: <>COHERENCIA DE<br/>VIDA</>, d: "Mayor alineación entre lo que piensas, sientes, haces y la vida que deseas construir." }
                         ].map((item, i) => (
                             <div key={i} className="mlt-white-card" style={{ 
-                                background: '#e8ecef', 
+                                background: '#000a12', 
                                 padding: '30px', 
-                                borderRadius: '24px',
-                                border: '1px solid rgba(0, 45, 68, 0.08)',
+                                borderRadius: '16px',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
                                 display: 'flex',
-                                flexDirection: 'column',
+                                flexDirection: 'row',
                                 gap: '20px',
+                                alignItems: 'flex-start',
                                 cursor: 'default'
                             }}>
-                                <div style={{ 
-                                    width: '60px', 
-                                    height: '60px', 
-                                    borderRadius: '16px', 
-                                    background: `rgba(${parseInt(item.color.slice(1,3),16)}, ${parseInt(item.color.slice(3,5),16)}, ${parseInt(item.color.slice(5,7),16)}, 0.1)`,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: item.color
-                                }}>
-                                    {item.icon}
+                                <div style={{ flexShrink: 0, width: '70px', height: '70px' }}>
+                                    <img src={`/mlt/${item.img}`} alt={item.t} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                 </div>
                                 <div>
-                                    <h4 style={{ color: '#002d44', fontSize: '1.2rem', fontWeight: '800', marginBottom: '8px' }}>{item.t}</h4>
-                                    <p style={{ color: 'rgba(0, 45, 68, 0.6)', fontSize: '1rem', lineHeight: '1.6', margin: 0 }}>{item.d}</p>
+                                    <h4 style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: '800', marginBottom: '12px', lineHeight: '1.4' }}>{item.t}</h4>
+                                    <div style={{ height: '2px', width: '30px', background: '#ddbe3d', marginBottom: '12px' }}></div>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>{item.d}</p>
                                 </div>
                             </div>
                         ))}
@@ -752,20 +720,20 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* NEW SECTION: En 90 días podrás llevarte */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '40px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
                     <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                        <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.6', color: '#002d44', fontWeight: '600', margin: 0 }}>
-                            No se trata únicamente de comprender nuevas ideas. Vamos a vivirlas, ponerlas en práctica y convertirlas en parte de la persona que estás llegando a ser.
+                        <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.3', color: '#002d44', fontWeight: '600', margin: 0 }}>
+                            No se trata únicamente de comprender nuevas ideas. <span className="mlt-gold-text" style={{ display: 'inline' }}>Vamos a vivirlas, ponerlas en práctica y convertirlas</span> en parte de la persona que estás llegando a ser.
                         </h2>
                     </div>
                 </div>
             </section>
 
             {/* 7. ¿Para quién es? Section */}
-            <section className="mlt-section mlt-animate">
+            <section className="mlt-section mlt-animate" style={{ paddingTop: '40px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '60px' }}>
                         ¿Para quién es <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training?</span>
                     </h2>
 
@@ -873,9 +841,9 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* NEW SECTION: Por qué creamos Master Live Training? */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1000px', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px' }}>
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px', lineHeight: '1.3' }}>
                         Las preguntas que dieron origen a <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training</span>
                     </h2>
                     
@@ -886,7 +854,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         Con el paso de los años observamos algo que se repetía una y otra vez. Personas talentosas, comprometidas y exitosas que, aun habiendo alcanzado importantes logros profesionales, continuaban haciéndose preguntas como:
                     </p>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0px', width: '100%' }}>
                         {[
                             "¿Cómo encontrar una mayor claridad sobre mi vida?",
                             "¿Cómo ejercer un liderazgo más consciente?",
@@ -895,7 +863,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             "¿Cómo construir una vida más coherente con aquello que realmente considero importante?"
                         ].map((q, i) => (
                             <div key={i} style={{
-                                padding: '10px 0',
+                                padding: '0',
                                 width: '100%',
                                 maxWidth: '800px',
                                 margin: '0 auto',
@@ -904,15 +872,8 @@ const MltLanding = ({ result, setTestResult }) => {
                                 gap: '20px',
                                 textAlign: 'left'
                             }}>
-                                <div style={{
-                                    fontSize: '2.5rem',
-                                    fontWeight: '900',
-                                    color: 'transparent',
-                                    WebkitTextStroke: '2px #ddbe3d',
-                                    fontFamily: 'monospace',
-                                    flexShrink: 0
-                                }}>
-                                    ?
+                                <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+                                    <CheckCircle2 size={28} color="#ddbe3d" />
                                 </div>
                                 <p style={{ fontSize: '1.25rem', margin: 0, fontWeight: '600', color: '#002d44', lineHeight: '1.5' }}>
                                     {q}
@@ -928,7 +889,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6. Nosotros / Origen Section */}
-            <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '120px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '80px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
                     <div style={{
                         display: 'grid',
@@ -950,7 +911,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <div style={{
                                 width: '100%',
-                                maxWidth: '500px',
+                                maxWidth: '350px',
                                 display: 'flex',
                                 justifyContent: 'center'
                             }}>
@@ -965,10 +926,11 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6.5. Trayectoria Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
+
                     <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '80px', color: '#002d44' }}>
-                        Algunos datos de <span className="mlt-gold-text">esta trayectoria:</span>
+                        Algunos datos de <span className="mlt-gold-text" style={{ display: 'inline' }}>esta trayectoria:</span>
                     </h2>
 
                     <div style={{
@@ -982,21 +944,21 @@ const MltLanding = ({ result, setTestResult }) => {
                             { 
                                 type: "top",
                                 value: "+25", 
-                                icon: <Star size={24} color="#ddbe3d" />,
+                                icon: <Calendar size={24} color="#ddbe3d" />,
                                 label: "AÑOS DE EXPERIENCIA", 
                                 text: "Acompañando procesos de desarrollo humano, liderazgo y emprendimiento." 
                             },
                             { 
                                 type: "top",
                                 value: "+18", 
-                                icon: <User size={24} color="#ddbe3d" />,
+                                icon: <Users size={24} color="#ddbe3d" />,
                                 label: "AÑOS FORMANDO LÍDERES", 
                                 text: "Como conferencista, facilitador y mentor en escenarios nacionales e internacionales." 
                             },
                             { 
                                 type: "top",
                                 value: "+58.000", 
-                                icon: <UserPlus size={24} color="#ddbe3d" />,
+                                icon: <TrendingUp size={24} color="#ddbe3d" />,
                                 label: "PERSONAS IMPACTADAS", 
                                 text: "A través de conferencias, talleres, entrenamientos y experiencias de desarrollo." 
                             },
@@ -1020,10 +982,12 @@ const MltLanding = ({ result, setTestResult }) => {
                             }
                         ].map((item, i) => (
                             <div key={i} className="mlt-white-card" style={{
-                                background: '#ffffff',
+                                background: 'linear-gradient(to bottom, #001a29 0%, #003b59 100%)',
                                 padding: item.type === 'top' ? '50px 30px 40px' : '30px',
                                 borderRadius: '16px',
-                                border: '1px solid rgba(0,45,68,0.05)',
+                                borderLeft: '1px solid rgba(255,255,255,0.1)',
+                                borderRight: '1px solid rgba(255,255,255,0.1)',
+                                borderBottom: '1px solid rgba(255,255,255,0.1)',
                                 borderTop: '4px solid #ddbe3d',
                                 display: 'flex',
                                 flexDirection: item.type === 'top' ? 'column' : 'row',
@@ -1033,7 +997,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                 transition: 'all 0.4s ease',
                                 cursor: 'default',
                                 position: 'relative',
-                                boxShadow: '0 10px 30px rgba(0,45,68,0.05)'
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
                             }}>
                                 {item.type === 'top' ? (
                                     <>
@@ -1044,7 +1008,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                             transform: 'translateX(-50%)',
                                             width: '50px',
                                             height: '50px',
-                                            background: '#ffffff',
+                                            background: '#001a29',
                                             border: '1px solid rgba(221, 190, 61, 0.5)',
                                             borderRadius: '50%',
                                             display: 'flex',
@@ -1063,10 +1027,10 @@ const MltLanding = ({ result, setTestResult }) => {
                                         }}>
                                             {item.value}
                                         </div>
-                                        <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#002d44', marginBottom: '15px', letterSpacing: '1px' }}>
+                                        <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#ffffff', marginBottom: '15px', letterSpacing: '1px' }}>
                                             {item.label}
                                         </h4>
-                                        <p style={{ fontSize: '0.95rem', color: 'rgba(0,45,68,0.7)', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
+                                        <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
                                             {item.text}
                                         </p>
                                     </>
@@ -1076,10 +1040,10 @@ const MltLanding = ({ result, setTestResult }) => {
                                             {item.icon}
                                         </div>
                                         <div>
-                                            <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#002d44', marginBottom: '10px', letterSpacing: '0.5px', whiteSpace: 'pre-line' }}>
+                                            <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#ffffff', marginBottom: '10px', letterSpacing: '0.5px', whiteSpace: 'pre-line' }}>
                                                 {item.label}
                                             </h4>
-                                            <p style={{ fontSize: '0.95rem', color: 'rgba(0,45,68,0.7)', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
+                                            <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
                                                 {item.text}
                                             </p>
                                         </div>
@@ -1091,9 +1055,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                     <div style={{ textAlign: 'center', marginBottom: '80px' }}>
                         <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '20px' }}>
-                            <div style={{ width: '40px', height: '1px', background: 'rgba(0,45,68,0.2)' }}></div>
-                            <UserPlus size={24} color="#002d44" opacity={0.6} />
-                            <div style={{ width: '40px', height: '1px', background: 'rgba(0,45,68,0.2)' }}></div>
+                            <img loading="lazy" src="/mlt/Iconos MLT-S1-horizontal.png" alt="Iconos Trayectoria" style={{ height: '40px', width: 'auto' }} />
                         </div>
                         <p style={{ fontSize: '1.1rem', color: '#002d44', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6', fontWeight: '500' }}>
                             Empresas, universidades, cámaras de comercio, organizaciones sociales y miles de líderes han confiado en nuestras metodologías durante <strong style={{ color: '#ddbe3d' }}>más de dos décadas.</strong>
@@ -1127,79 +1089,78 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6.6. 20 Cupos Section */}
-            <section className="mlt-section mlt-animate" style={{ padding: '120px 24px' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '900px', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ marginBottom: '30px' }}>
-                        ¿POR QUÉ SOLO 21 CUPOS?
-                    </h2>
-                    
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-                        <img loading="lazy" src="/mlt/Cupos habilitados.png" alt="20 Cupos habilitados" style={{ maxWidth: '250px', width: '100%', height: 'auto' }} />
-                    </div>
-                    
+            <section className="mlt-section mlt-animate" style={{ padding: '80px 24px' }}>
+                <div className="mlt-section-content" style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <div style={{
                         display: 'flex',
-                        flexDirection: 'column',
-                        gap: '24px',
-                        fontSize: '1.25rem',
-                        lineHeight: '1.8',
-                        color: 'rgba(255,255,255,0.85)',
-                        textAlign: 'center'
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '60px',
+                        flexWrap: 'wrap'
                     }}>
-                        <p style={{ margin: 0 }}>
-                            Porque queremos construir una experiencia cercana, profunda y significativa. No buscamos reunir a la mayor cantidad de personas.
-                        </p>
-                        <p style={{ margin: 0 }}>
-                            <strong style={{ color: '#ffffff' }}>BUSCAMOS REUNIR A LAS PERSONAS CORRECTAS.</strong>
-                        </p>
-                        <p style={{ margin: 0, color: '#ddbe3d', fontWeight: '700', fontSize: '1.5rem', marginTop: '30px' }}>
-                            Aplicación &rarr; Conversación &rarr; Confirmación
-                        </p>
+                        {/* Columna Izquierda: Imagen */}
+                        <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center' }}>
+                            <img loading="lazy" src="/mlt/Cupos habilitados.png" alt="21 Cupos habilitados" style={{ maxWidth: '320px', width: '100%', height: 'auto' }} />
+                        </div>
+                        
+                        {/* Columna Derecha: Textos */}
+                        <div style={{
+                            flex: '1 1 450px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '24px',
+                            fontSize: '1.25rem',
+                            lineHeight: '1.8',
+                            color: 'rgba(255,255,255,0.85)',
+                            textAlign: 'left'
+                        }}>
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
+                                ¿Por qué solo <span className="mlt-gold-text" style={{ display: 'inline' }}>21 cupos?</span>
+                            </h2>
+                            <p style={{ margin: 0 }}>
+                                Porque queremos construir una experiencia cercana, profunda y significativa. No buscamos reunir a la mayor cantidad de personas.
+                            </p>
+                            <p style={{ margin: 0 }}>
+                                <strong style={{ color: '#ffffff' }}>BUSCAMOS REUNIR A LAS PERSONAS CORRECTAS.</strong>
+                            </p>
+                            <p style={{ margin: 0, color: '#ddbe3d', fontWeight: '700', fontSize: 'clamp(1rem, 3vw, 1.5rem)', marginTop: '10px', whiteSpace: 'nowrap' }}>
+                                Aplicación &rarr; Conversación &rarr; Confirmación
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* 7. Testimonials Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content">
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '20px', color: '#002d44' }}>
+                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '30px', color: '#002d44' }}>
                         Lo que dicen <span style={{ color: '#ddbe3d' }}>las personas</span>
                     </h2>
-                    <p style={{ 
-                        textAlign: 'center', 
-                        fontSize: '1.1rem', 
-                        color: 'rgba(0, 45, 68, 0.6)', 
-                        marginBottom: '60px',
-                        maxWidth: '600px',
-                        margin: '0 auto 60px'
-                    }}>
-                        Historias reales de personas que obtuvieron el lenguaje para entender su propio proceso.
-                    </p>
 
-                    <div className="mlt-testimonials-container">
-                        <div 
-                            className="mlt-testimonials-track"
-                            style={{ 
-                                transform: `translateX(calc(-${testimonialIndex * 380}px))`,
-                                transition: transitionEnabled 
-                                    ? (isPlaying ? 'transform 5s linear' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)') 
-                                    : 'none',
-                                animation: 'none'
-                            }}
-                        >
-                            {[...testimonials, ...testimonials.slice(0, 5)].map((t, i) => (
-                                <div key={i} className="mlt-testimonial-card" style={t.youtubeId ? { padding: '0', overflow: 'hidden' } : {}}>
-                                    {t.youtubeId ? (
-                                        <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                                            <div 
-                                                style={{ width: '100%', height: '240px', background: '#000', position: 'relative', cursor: playingVideoIndex === i ? 'default' : 'pointer' }}
-                                                onClick={() => {
-                                                    if (playingVideoIndex !== i) {
-                                                        setPlayingVideoIndex(i);
-                                                        setIsPlaying(false);
-                                                    }
-                                                }}
-                                            >
+                    <div style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
+                        <div className="mlt-testimonials-container">
+                            <div 
+                                className="mlt-testimonials-track"
+                                style={{ 
+                                    transform: `translateX(calc(-${testimonialIndex * 380}px))`,
+                                    transition: transitionEnabled ? 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+                                    animation: 'none'
+                                }}
+                            >
+                                {[...testimonials, ...testimonials.slice(0, 5)].map((t, i) => (
+                                    <div key={i} className="mlt-testimonial-card" style={t.youtubeId ? { padding: '0', overflow: 'hidden' } : {}}>
+                                        {t.youtubeId ? (
+                                            <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                                                <div 
+                                                    style={{ width: '100%', height: '240px', background: '#000', position: 'relative', cursor: playingVideoIndex === i ? 'default' : 'pointer' }}
+                                                    onClick={() => {
+                                                        if (playingVideoIndex !== i) {
+                                                            setPlayingVideoIndex(i);
+                                                        }
+                                                    }}
+                                                >
                                                 {playingVideoIndex !== i ? (
                                                     <>
                                                         <img loading="lazy" src={`https://img.youtube.com/vi/${t.youtubeId}/hqdefault.jpg`} 
@@ -1273,20 +1234,16 @@ const MltLanding = ({ result, setTestResult }) => {
                         </div>
                     </div>
 
-                    {/* Testimonials Controls */}
-                    <div className="mlt-testimonials-controls">
-                        <button onClick={handlePrev} className="mlt-testimonial-btn" aria-label="Anterior">
-                            <ArrowLeft size={24} />
-                        </button>
-                        <button onClick={togglePlay} className="mlt-testimonial-btn mlt-play-pause" aria-label={isPlaying ? 'Pausar' : 'Reproducir'}>
-                            {isPlaying ? <Pause size={24} /> : <PlayCircle size={24} />}
-                        </button>
-                        <button onClick={() => handleNext(true)} className="mlt-testimonial-btn" aria-label="Siguiente">
-                            <ArrowRight size={24} />
-                        </button>
-                    </div>
+                    {/* Overlaid Controls */}
+                    <button onClick={handlePrev} className="mlt-testimonial-btn" aria-label="Anterior" style={{ position: 'absolute', top: '50%', left: '-20px', transform: 'translateY(-50%)', zIndex: 10, background: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                        <ArrowLeft size={24} />
+                    </button>
+                    <button onClick={() => handleNext()} className="mlt-testimonial-btn" aria-label="Siguiente" style={{ position: 'absolute', top: '50%', right: '-20px', transform: 'translateY(-50%)', zIndex: 10, background: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                        <ArrowRight size={24} />
+                    </button>
+                </div>
 
-                    <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', width: '100%' }}>
+                <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <button onClick={handleAction} className="mlt-btn-main">
                             OBTENER MI CUPO EN EL MLT
                             <ArrowRight size={22} />
@@ -1341,8 +1298,8 @@ const MltLanding = ({ result, setTestResult }) => {
                 .pricing-item-new {
                     padding: 30px;
                     display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
+                    flex-direction: row;
+                    align-items: center;
                     gap: 15px;
                     border-right: 1px solid rgba(255,255,255,0.1);
                     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -1356,6 +1313,7 @@ const MltLanding = ({ result, setTestResult }) => {
                 .pricing-icon-wrapper {
                     width: 50px;
                     height: 50px;
+                    flex-shrink: 0;
                     border-radius: 50%;
                     border: 1px solid #ddbe3d;
                     display: flex;
@@ -1517,77 +1475,68 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 9. Garantía */}
-            <style>{`
-                .compromiso-container {
-                    display: flex;
-                    flex-direction: column;
-                }
-                .compromiso-top {
-                    display: flex;
-                    flex-wrap: wrap;
-                }
-                .compromiso-left {
-                    flex: 1 1 300px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 40px;
-                }
-                .compromiso-right {
-                    flex: 2 1 400px;
-                    padding: 40px;
-                    color: #002d44;
-                    text-align: left;
-                }
-                .compromiso-bottom {
-                    padding: 30px 40px;
-                    text-align: center;
-                    color: #002d44;
-                }
-            `}</style>
-            <section className="mlt-section" style={{ background: '#ffffff', padding: '100px 24px' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                    <div className="compromiso-container">
-                        <div className="compromiso-top">
-                            <div className="compromiso-left">
-                                <img loading="lazy" src="/mlt/Nuestro Compromiso-3.png" 
-                                    alt="100% Compromiso" 
-                                    style={{ maxWidth: '250px', width: '100%', height: 'auto', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.15))' }}
-                                />
-                            </div>
-                            <div className="compromiso-right">
-                                <h3 style={{ fontSize: '2rem', fontWeight: '900', margin: '0 0 20px 0', textTransform: 'uppercase', color: '#002d44', lineHeight: '1.2' }}>
-                                    NUESTRO <span style={{ color: '#ddbe3d' }}>COMPROMISO CONTIGO</span>
-                                </h3>
-                                <p style={{ fontSize: '1.15rem', lineHeight: '1.6', margin: '0 0 30px 0', color: 'rgba(0,45,68,0.85)' }}>
-                                    Sabemos que invertir en tu desarrollo personal es una decisión importante.
-                                </p>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '1.15rem', color: 'rgba(0,45,68,0.85)' }}>
-                                    <div style={{ display: 'flex', gap: '10px' }}>
-                                        <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
-                                        <span>Nuestra experiencia, metodología y acompañamiento.</span>
-                                    </div>
-                                    <div style={{ display: 'flex', gap: '10px' }}>
-                                        <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
-                                        <span>Un espacio seguro para aprender y crecer.</span>
-                                    </div>
-                                    <div style={{ display: 'flex', gap: '10px' }}>
-                                        <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
-                                        <span>Herramientas y experiencias diseñadas para generar cambios sostenibles.</span>
-                                    </div>
+            <section className="mlt-section" style={{ background: '#ffffff', padding: '80px 24px' }}>
+                <div className="mlt-section-content" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '60px',
+                        flexWrap: 'wrap',
+                        marginBottom: '60px'
+                    }}>
+                        {/* Columna Izquierda: Imagen */}
+                        <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center' }}>
+                            <img loading="lazy" src="/mlt/Nuestro Compromiso-3.png" 
+                                alt="100% Compromiso" 
+                                style={{ maxWidth: '320px', width: '100%', height: 'auto', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.15))' }}
+                            />
+                        </div>
+                        
+                        {/* Columna Derecha: Textos */}
+                        <div style={{
+                            flex: '1 1 450px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '24px',
+                            fontSize: '1.25rem',
+                            lineHeight: '1.8',
+                            color: 'rgba(0,45,68,0.85)',
+                            textAlign: 'left'
+                        }}>
+                            <h3 style={{ fontSize: '2.5rem', fontWeight: '800', margin: '0 0 10px 0', color: '#002d44', lineHeight: '1.2' }}>
+                                Nuestro <span className="mlt-gold-text" style={{ display: 'inline' }}>compromiso contigo</span>
+                            </h3>
+                            <p style={{ margin: 0 }}>
+                                Sabemos que invertir en tu desarrollo personal es una decisión importante.
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                <div style={{ display: 'flex', gap: '15px' }}>
+                                    <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
+                                    <span>Nuestra experiencia, metodología y acompañamiento.</span>
+                                </div>
+                                <div style={{ display: 'flex', gap: '15px' }}>
+                                    <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
+                                    <span>Un espacio seguro para aprender y crecer.</span>
+                                </div>
+                                <div style={{ display: 'flex', gap: '15px' }}>
+                                    <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
+                                    <span>Herramientas y experiencias diseñadas para generar cambios sostenibles.</span>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="compromiso-bottom">
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: '800', margin: '0 0 20px 0', textTransform: 'uppercase', color: '#002d44' }}>
-                                HAY ALGO QUE NO PODEMOS HACER POR TI
+                    <div style={{ textAlign: 'center', color: '#002d44' }}>
+                        <h3 style={{ fontSize: '1.5rem', fontWeight: '800', margin: '0 0 20px 0', color: '#002d44' }}>
+                                Hay algo que no podemos hacer por ti
                             </h3>
                             <p style={{ fontSize: '1.15rem', lineHeight: '1.6', margin: '0 auto 30px auto', maxWidth: '800px', color: 'rgba(0,45,68,0.85)' }}>
                                 No podemos recorrer el camino en tu lugar. La transformación ocurre cuando una experiencia significativa encuentra a una persona dispuesta a aprovecharla. Nosotros nos comprometemos con la experiencia.
                             </p>
-                            <p style={{ fontSize: '1.15rem', fontWeight: '800', margin: '0 0 30px 0', textTransform: 'uppercase', color: '#002d44' }}>
-                                ¿ESTÁS DISPUESTO A COMPROMETERTE CONTIGO MISMO?
+                            <p style={{ fontSize: '1.15rem', fontWeight: '800', margin: '0 0 30px 0', color: '#002d44' }}>
+                                ¿Estás dispuesto a comprometerte contigo mismo?
                             </p>
                             <button 
                                 onClick={handleAction} 
@@ -1619,7 +1568,6 @@ const MltLanding = ({ result, setTestResult }) => {
                             </button>
                         </div>
                     </div>
-                </div>
             </section>
 
             {/* 10. FAQ */}
@@ -1658,9 +1606,9 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 10.5 Final Call to Action */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '50px', textTransform: 'uppercase' }}>
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '50px' }}>
                         La vida que deseas construir <br /> te está <span className="mlt-gold-text" style={{ display: 'inline' }}>llamando.</span>
                     </h2>
                     
