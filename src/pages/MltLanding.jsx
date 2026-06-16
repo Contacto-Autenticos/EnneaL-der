@@ -36,7 +36,11 @@ import {
     Mail,
     Globe,
     Loader2,
-    X
+    X,
+    Calendar,
+    Mountain,
+    MessageCircle,
+    Users
 } from 'lucide-react';
 import { getEnneagramInfo } from '../utils/calculator';
 import MltInteractiveModel from '../components/MltInteractiveModel';
@@ -297,14 +301,7 @@ const MltLanding = ({ result, setTestResult }) => {
             q: "¿Necesito ser empresario o dirigir un equipo para participar?",
             a: <>No.<br/><br/>Aunque muchos participantes son empresarios, directivos o líderes de equipos, la experiencia está dirigida a cualquier persona comprometida con su crecimiento personal y profesional que desee desarrollar una vida con mayor claridad, dirección, coherencia e impacto.</>
         },
-        {
-            q: "¿Cuánto tiempo debo dedicar al programa?",
-            a: <>Hemos diseñado una experiencia exigente pero compatible con la vida profesional de personas ocupadas.<br/><br/>Además de las sesiones programadas, recomendamos destinar algunas horas semanales para la reflexión, las prácticas y la aplicación de los aprendizajes en tu vida personal y profesional.</>
-        },
-        {
-            q: "¿Qué sucede si no puedo asistir a alguna sesión?",
-            a: <>Las sesiones serán grabadas y estarán disponibles para los participantes, de manera que puedas mantener la continuidad del proceso.<br/><br/>Sin embargo, recomendamos participar en vivo siempre que sea posible, ya que gran parte del valor de la experiencia surge de la interacción con el grupo y de las conversaciones compartidas.</>
-        },
+
         {
             q: "¿Es un proceso de coaching o terapia?",
             a: <>No.<br/><br/>Master Live Training es una experiencia de entrenamiento integral y desarrollo humano. Aunque promueve la reflexión profunda y el autoconocimiento, no reemplaza procesos terapéuticos ni intervenciones clínicas especializadas.</>
@@ -442,10 +439,10 @@ const MltLanding = ({ result, setTestResult }) => {
                         {[
                             "Has crecido profesionalmente y asumido mayores responsabilidades.",
                             "Cada vez más personas dependen de tus decisiones.",
-                            "Te cuesta delegar algunas responsabilidades importantes.",
-                            "Existen conversaciones y conflictos que consumen más energía de la necesaria.",
-                            "El tiempo parece insuficiente para todo lo que quieres lograr.",
-                            "Aunque sigues avanzando, a veces te preguntas si realmente estás construyendo la vida que deseas."
+                            "Te cuesta delegar.",
+                            "Algunos conflictos consumen demasiada energía.",
+                            "El tiempo nunca parece suficiente.",
+                            "A veces te preguntas si estás construyendo la vida que deseas."
                         ].map((text, i) => (
                             <div key={i} className="mlt-empathy-item">
                                 <div className="mlt-empathy-bullet"></div>
@@ -455,28 +452,9 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <div style={{ marginTop: '60px', maxWidth: '800px', margin: '60px auto 0 auto', textAlign: 'left' }}>
-                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '20px', color: '#002d44' }}>
-                            Tal vez no te faltan más conocimientos, herramientas o capacidades.
-                        </p>
-                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '20px', color: '#002d44' }}>
-                            Lo que quizás estás buscando es algo más profundo: <strong style={{ color: '#ddbe3d' }}>claridad, dirección y fortaleza personal</strong> para sostener el nivel de impacto que deseas generar.
-                        </p>
-                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '20px', color: '#002d44' }}>
-                            Porque el problema no siempre está en lo que haces.
-                        </p>
-                        <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '20px', color: '#002d44' }}>
-                            Muchas veces está en quién eres mientras lo haces.
-                        </p>
                         <p style={{ fontSize: '20px', lineHeight: '1.6', marginBottom: '30px', color: '#002d44' }}>
-                            Por eso el verdadero desafío no consiste únicamente en aprender más. Consiste en convertirte en la persona capaz de sostener la vida, el liderazgo y el impacto que deseas construir.
+                            Tal vez no te faltan más conocimientos, herramientas o capacidades. Lo que quizás estás buscando es algo más profundo: <strong style={{ color: '#ddbe3d' }}>claridad, dirección y fortaleza personal</strong> para sostener el nivel de impacto que deseas generar. El problema no siempre está en lo que haces, generalmente está en quién eres mientras lo haces.
                         </p>
-                    </div>
-
-                    <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <button onClick={handleAction} className="mlt-btn-main">
-                            Aplicar al Master Live Training
-                            <ArrowRight size={22} />
-                        </button>
                     </div>
                 </div>
             </section>
@@ -585,48 +563,26 @@ const MltLanding = ({ result, setTestResult }) => {
                         ¿Por qué la mayoría de los cambios no duran?
                     </h2>
 
-                    {/* Part 1: Text Left (4 paragraphs), Image Right */}
+                    {/* Part 1: Text Left (all paragraphs), Image Right */}
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
                         gap: '60px',
-                        alignItems: 'flex-start',
-                        marginBottom: '80px'
+                        alignItems: 'stretch'
                     }}>
                         <div style={{ fontSize: '1.15rem', lineHeight: '1.7', color: 'rgba(0, 45, 68, 0.85)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                            <p>Muchas personas han leído libros, asistido a conferencias, tomado cursos o participado en procesos de desarrollo personal y profesional. Aunque suelen obtener aprendizajes valiosos, con frecuencia descubren que, después de algunas semanas o meses, vuelven a los mismos hábitos, las mismas dinámicas y los mismos resultados.</p>
-                            <p>Esto no ocurre porque les falte disciplina o buenas intenciones. Ocurre porque la mayoría de estos procesos trabaja aspectos aislados de la persona.</p>
-                            <p>Algunos se enfocan en liderazgo. Otros en productividad, comunicación, bienestar o habilidades específicas. El problema es que la vida no funciona por partes.</p>
-                            <p>Tus resultados son el reflejo de tus acciones. Tus acciones son el reflejo de tus pensamientos. Y tus pensamientos están profundamente influenciados por tus creencias, experiencias y la forma en que te comprendes a ti mismo.</p>
+                            <p>La mayoría de los procesos de desarrollo trabajan aspectos aislados de la persona. Algunos se enfocan en liderazgo, otros en productividad, comunicación o bienestar.</p>
+                            <p>El problema es que la vida no funciona por partes. Tus resultados son el reflejo de tus acciones. Tus acciones son el reflejo de tus pensamientos. Y tus pensamientos están profundamente influenciados por la forma en que te comprendes a ti mismo.</p>
+                            <p><strong>Por eso los cambios superficiales rara vez generan resultados sostenibles.</strong></p>
+                            <p>Cuando comprendes que tu forma de pensar, sentir, relacionarte, liderar y actuar están conectadas, comienzas a verte como un sistema y no como un conjunto de piezas separadas y es por eso que el Master Live Training fue diseñado como un sistema integral de desarrollo humano.</p>
+                            <p style={{ fontWeight: 'bold', color: '#002d44' }}>No trabajamos únicamente sobre lo que haces, trabajamos sobre la persona que lo hace.</p>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
                             <img 
                                 src="/mlt/Habitos negativos.jpg" 
                                 alt="Hábitos Negativos" 
-                                style={{ maxWidth: '100%', width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
+                                style={{ maxWidth: '100%', width: '100%', height: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
                             />
-                        </div>
-                    </div>
-
-                    {/* Part 2: Image Left, Text Right (Remaining paragraphs) */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                        gap: '60px',
-                        alignItems: 'flex-start'
-                    }}>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <img 
-                                src="/mlt/Desarrollo personal.png" 
-                                alt="Desarrollo Personal" 
-                                style={{ maxWidth: '420px', width: '100%', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.15)', objectFit: 'cover' }}
-                            />
-                        </div>
-                        <div style={{ fontSize: '1.15rem', lineHeight: '1.7', color: 'rgba(0, 45, 68, 0.85)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                            <p>Por eso los cambios superficiales rara vez generan resultados sostenibles. Puedes modificar una conducta durante un tiempo, pero si no transformas aquello que la origina, tarde o temprano volverás al mismo lugar.</p>
-                            <p>Cuando comprendes que tu forma de pensar, sentir, relacionarte, liderar y actuar están conectadas, dejas de verte como un conjunto de piezas separadas y empiezas a comprenderte como un sistema.</p>
-                            <p>Por eso Master Live Training fue diseñado como un sistema integral de desarrollo humano. No trabajamos únicamente sobre lo que haces. Trabajamos sobre la persona que lo hace.</p>
-                            <p style={{ fontWeight: 'bold', color: '#002d44' }}>Porque creemos que los cambios más profundos y sostenibles ocurren cuando la persona se desarrolla de manera integral.</p>
                         </div>
                     </div>
 
@@ -732,11 +688,8 @@ const MltLanding = ({ result, setTestResult }) => {
                     </h2>
                     
                     <div style={{ maxWidth: '900px', margin: '0 auto 50px', textAlign: 'center' }}>
-                        <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '20px' }}>
-                            Master Live Training ha sido diseñado para que el desarrollo no se quede en una buena conversación, una reflexión inspiradora o una idea interesante. <strong>Nuestro propósito es ayudarte a transformar el conocimiento en consciencia, la consciencia en acción y la acción en resultados sostenibles.</strong>
-                        </p>
-                        <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.7)', marginBottom: '40px' }}>
-                            Durante 90 días recorrerás un proceso estructurado de entrenamiento integral que combina aprendizaje, reflexión, práctica, acompañamiento y comunidad. A lo largo de este recorrido participarás en:
+                        <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '40px' }}>
+                            Durante 90 días vivirás un proceso de entrenamiento integral diseñado para ayudarte a transformar el conocimiento en consciencia, la consciencia en acción y la acción en resultados sostenibles.
                         </p>
                     </div>
 
@@ -748,11 +701,11 @@ const MltLanding = ({ result, setTestResult }) => {
                         margin: '0 auto 50px'
                     }}>
                         {[
-                            { icon: <Rocket size={24} />, text: "5 experiencias inmersivas diseñadas para profundizar en las dimensiones fundamentales del desarrollo humano.", color: "#ddbe3d" },
-                            { icon: <Handshake size={24} />, text: "6 conversatorios en vivo para reflexionar, compartir aprendizajes y resolver inquietudes junto a otros participantes.", color: "#00e5ff" },
-                            { icon: <Target size={24} />, text: "Contenidos y recursos prácticos que te permitirán continuar trabajando entre cada encuentro.", color: "#ff9100" },
-                            { icon: <Zap size={24} />, text: "Ejercicios de aplicación personal y profesional para llevar cada aprendizaje a tu realidad cotidiana.", color: "#ffee00" },
-                            { icon: <UserPlus size={24} />, text: "Una comunidad exclusiva de líderes y empresarios comprometidos con su crecimiento y evolución.", color: "#00ff00" },
+                            { icon: <Rocket size={24} />, text: "5 experiencias inmersivas para profundizar en las dimensiones fundamentales del desarrollo humano.", color: "#ddbe3d" },
+                            { icon: <Handshake size={24} />, text: "6 conversatorios en vivo para reflexionar, compartir aprendizajes y resolver inquietudes.", color: "#00e5ff" },
+                            { icon: <Target size={24} />, text: "Recursos prácticos para continuar aplicando los aprendizajes entre cada encuentro.", color: "#ff9100" },
+                            { icon: <Zap size={24} />, text: "Ejercicios para llevar cada aprendizaje a tu realidad personal y profesional.", color: "#ffee00" },
+                            { icon: <UserPlus size={24} />, text: "Una comunidad exclusiva de líderes y empresarios comprometidos con su crecimiento.", color: "#00ff00" },
                             { icon: <CheckCircle2 size={24} />, text: "Acompañamiento permanente durante todo el proceso.", color: "#d500f9" }
                         ].map((item, i) => (
                             <div key={i} style={{ 
@@ -787,11 +740,8 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '40px', background: 'rgba(221, 190, 61, 0.05)', borderRadius: '24px', border: '1px solid rgba(221, 190, 61, 0.2)' }}>
-                        <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '15px' }}>
+                        <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', margin: 0 }}>
                             La experiencia ha sido diseñada para generar un equilibrio entre reflexión y acción, entre desarrollo personal y aplicación práctica, entre crecimiento individual y aprendizaje colectivo.
-                        </p>
-                        <p style={{ fontSize: '1.2rem', lineHeight: '1.6', color: '#ddbe3d', fontWeight: '700', margin: 0 }}>
-                            No se trata únicamente de comprender nuevas ideas. Se trata de vivirlas, ponerlas en práctica y convertirlas en parte de la persona que estás llegando a ser.
                         </p>
                     </div>
                     
@@ -807,46 +757,10 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* NEW SECTION: En 90 días podrás llevarte */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '60px', color: '#002d44' }}>
-                        En 90 días <span className="mlt-gold-text" style={{ display: 'inline' }}>podrás llevarte:</span>
-                    </h2>
-                    
-                    <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        {[
-                            "Mayor claridad sobre quién eres y hacia dónde quieres dirigir tu vida.",
-                            "Identificación de los patrones que limitan tu crecimiento.",
-                            "Una hoja de ruta personal y profesional para los próximos tres años.",
-                            "Herramientas para fortalecer tu liderazgo y aumentar tu impacto.",
-                            "Un plan de desarrollo integral para continuar creciendo.",
-                            "Una comunidad de líderes y empresarios comprometidos con su evolución.",
-                            "Una mayor sensación de coherencia entre la vida que vives y la vida que deseas construir."
-                        ].map((text, i) => (
-                            <div key={i} className="mlt-list-item-futuristic" style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '24px',
-                                padding: '16px 40px',
-                                background: '#f0f4f8',
-                                borderRadius: '16px',
-                                borderLeft: '4px solid #ddbe3d',
-                                cursor: 'default'
-                            }}>
-                                <div style={{
-                                    fontSize: '3rem',
-                                    fontWeight: '900',
-                                    color: '#ddbe3d',
-                                    opacity: 0.9,
-                                    width: '70px',
-                                    flexShrink: 0,
-                                    fontFamily: 'monospace'
-                                }}>
-                                    0{i + 1}
-                                </div>
-                                <p style={{ color: '#002d44', fontSize: '1.15rem', lineHeight: '1.5', margin: 0, fontWeight: '500' }}>
-                                    {text}
-                                </p>
-                            </div>
-                        ))}
+                    <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+                        <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.6', color: '#002d44', fontWeight: '600', margin: 0 }}>
+                            No se trata únicamente de comprender nuevas ideas. Vamos a vivirlas, ponerlas en práctica y convertirlas en parte de la persona que estás llegando a ser.
+                        </h2>
                     </div>
                 </div>
             </section>
@@ -857,17 +771,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
                         ¿Para quién es <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training?</span>
                     </h2>
-                    <p style={{ 
-                        textAlign: 'center', 
-                        fontSize: '1.2rem', 
-                        lineHeight: '1.8',
-                        color: 'rgba(255,255,255,0.8)', 
-                        marginBottom: '60px',
-                        maxWidth: '900px',
-                        margin: '0 auto 60px'
-                    }}>
-                        Este programa ha sido diseñado para empresarios, directivos, gerentes, líderes y profesionales que sienten un compromiso genuino con su crecimiento y están dispuestos a asumir la responsabilidad de su propio desarrollo.
-                    </p>
+
 
                     <div style={{
                         display: 'grid',
@@ -894,17 +798,16 @@ const MltLanding = ({ result, setTestResult }) => {
                                 background: 'linear-gradient(90deg, transparent, #00e5ff, transparent)'
                             }} />
                             <h3 style={{ color: '#00e5ff', fontSize: '1.5rem', fontWeight: '800', marginBottom: '30px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <CheckCircle2 size={28} /> Es para personas que:
+                                Es para personas que:
                             </h3>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                 {[
-                                    "Han alcanzado logros importantes, pero sienten que existe un siguiente nivel de desarrollo personal y profesional por descubrir.",
-                                    "Buscan mayor claridad sobre quiénes son, qué quieren construir y hacia dónde desean dirigir su vida.",
-                                    "Desean fortalecer su liderazgo, aumentar su impacto y tomar decisiones más conscientes.",
-                                    "Reconocen que el crecimiento sostenible requiere trabajar tanto en el ser como en el hacer.",
-                                    "Están dispuestas a cuestionar creencias, revisar patrones y explorar nuevas posibilidades de desarrollo.",
-                                    "Comprenden que las herramientas son importantes, pero saben que la verdadera transformación ocurre cuando la persona cambia.",
-                                    "Valoran el aprendizaje, la reflexión y el intercambio con otras personas comprometidas con su evolución."
+                                    "Han alcanzado logros importantes, pero saben que aún pueden crecer.",
+                                    "Buscan mayor claridad sobre quiénes son y hacia dónde quieren dirigir su vida.",
+                                    "Desean fortalecer su liderazgo y aumentar su impacto.",
+                                    "Comprenden que el crecimiento sostenible comienza por la persona.",
+                                    "Están dispuestos a cuestionarse, aprender y evolucionar.",
+                                    "Valoran crecer junto a otras personas comprometidas con su desarrollo."
                                 ].map((text, i) => (
                                     <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem', lineHeight: '1.6' }}>
                                         <div style={{ color: '#00e5ff', flexShrink: 0, marginTop: '2px' }}><CheckCircle2 size={20} /></div>
@@ -932,20 +835,17 @@ const MltLanding = ({ result, setTestResult }) => {
                                 height: '4px',
                                 background: 'linear-gradient(90deg, transparent, #ff3232, transparent)'
                             }} />
-                            <h3 style={{ color: '#ff3232', fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <X size={28} /> ¿Para quién NO es?
+                            <h3 style={{ color: '#ff3232', fontSize: '1.5rem', fontWeight: '800', marginBottom: '30px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                No es para quienes:
                             </h3>
-                            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.05rem', marginBottom: '25px' }}>
-                                Master Live Training probablemente no sea para ti si:
-                            </p>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                 {[
-                                    "Buscas soluciones rápidas o resultados inmediatos sin un trabajo personal profundo.",
-                                    "Esperas que alguien más resuelva por ti los desafíos que hoy enfrentas.",
-                                    "No estás dispuesto a dedicar tiempo a reflexionar, practicar y aplicar lo que aprendas.",
-                                    "Consideras que ya no tienes nada nuevo por aprender sobre ti mismo.",
-                                    "Buscas únicamente herramientas de liderazgo, ventas, productividad o gestión sin trabajar sobre la persona que las utiliza.",
-                                    "No estás dispuesto a cuestionar algunas de las ideas, hábitos o creencias que te han traído hasta aquí."
+                                    "Buscan soluciones rápidas sin un trabajo personal profundo.",
+                                    "Esperan que otros resuelvan sus desafíos.",
+                                    "No están dispuestos a reflexionar, practicar y aplicar lo aprendido.",
+                                    "Creen que ya no tienen nada nuevo por descubrir sobre sí mismos.",
+                                    "Buscan herramientas sin trabajar sobre la persona que las utiliza.",
+                                    "No están dispuestos a cuestionar sus hábitos, ideas o creencias."
                                 ].map((text, i) => (
                                     <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem', lineHeight: '1.6' }}>
                                         <div style={{ color: '#ff3232', flexShrink: 0, marginTop: '2px' }}><X size={20} /></div>
@@ -968,7 +868,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
                     }}>
                         <p style={{ fontSize: '1.25rem', lineHeight: '1.7', color: '#ddbe3d', fontWeight: '800', margin: 0 }}>
-                            Este no es un programa para quienes quieren hacer más, es un programa para quienes están dispuestos a convertirse en una mejor versión de sí mismos para sostener una vida, un liderazgo y un impacto mayor.
+                            No se trata de hacer más. Se trata de convertirte en la persona capaz de sostener más.
                         </p>
                     </div>
 
@@ -979,14 +879,14 @@ const MltLanding = ({ result, setTestResult }) => {
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1000px', textAlign: 'center' }}>
                     <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px' }}>
-                        ¿Por qué creamos <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training?</span>
+                        Las preguntas que dieron origen a <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training</span>
                     </h2>
                     
                     <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(0, 45, 68, 0.8)', marginBottom: '20px', fontWeight: '500' }}>
                         Durante más de dos décadas hemos acompañado a miles de personas, líderes, empresarios, emprendedores y equipos en procesos de desarrollo humano, liderazgo y transformación organizacional.
                     </p>
-                    <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(0, 45, 68, 0.8)', marginBottom: '80px', fontWeight: '500' }}>
-                        A lo largo de ese camino hemos observado algo que se repite una y otra vez. Personas brillantes, talentosas y comprometidas que, aun habiendo alcanzado importantes logros profesionales, continúan sintiendo preguntas que ninguna posición, reconocimiento o resultado parece responder completamente.
+                    <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(0, 45, 68, 0.8)', marginBottom: '60px', fontWeight: '500' }}>
+                        Con el paso de los años observamos algo que se repetía una y otra vez. Personas talentosas, comprometidas y exitosas que, aun habiendo alcanzado importantes logros profesionales, continuaban haciéndose preguntas como:
                     </p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
@@ -997,22 +897,18 @@ const MltLanding = ({ result, setTestResult }) => {
                             "¿Cómo crecer profesionalmente sin desconectarme de mí mismo?",
                             "¿Cómo construir una vida más coherente con aquello que realmente considero importante?"
                         ].map((q, i) => (
-                            <div key={i} className="mlt-white-card" style={{
-                                background: '#f8f9fa',
-                                padding: '15px 40px',
-                                borderRadius: '24px',
-                                border: '1px solid rgba(0,45,68,0.05)',
-                                borderLeft: '4px solid #ddbe3d',
-                                maxWidth: '750px',
-                                width: '90%',
-                                alignSelf: i % 2 === 0 ? 'flex-start' : 'flex-end',
+                            <div key={i} style={{
+                                padding: '10px 0',
+                                width: '100%',
+                                maxWidth: '800px',
+                                margin: '0 auto',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '24px',
-                                cursor: 'default'
+                                gap: '20px',
+                                textAlign: 'left'
                             }}>
                                 <div style={{
-                                    fontSize: '3rem',
+                                    fontSize: '2.5rem',
                                     fontWeight: '900',
                                     color: 'transparent',
                                     WebkitTextStroke: '2px #ddbe3d',
@@ -1021,7 +917,7 @@ const MltLanding = ({ result, setTestResult }) => {
                                 }}>
                                     ?
                                 </div>
-                                <p style={{ fontSize: '1.25rem', margin: 0, fontWeight: '600', color: '#002d44', textAlign: 'left', lineHeight: '1.5' }}>
+                                <p style={{ fontSize: '1.25rem', margin: 0, fontWeight: '600', color: '#002d44', lineHeight: '1.5' }}>
                                     {q}
                                 </p>
                             </div>
@@ -1046,13 +942,10 @@ const MltLanding = ({ result, setTestResult }) => {
                         {/* Text Column */}
                         <div>
                             <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
-                                Master Live Training nace precisamente <span className="mlt-gold-text">de esa búsqueda.</span>
+                                Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
                             </h2>
-                            <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)', marginBottom: '20px' }}>
-                                Es el resultado de años de experiencia acompañando personas, estudiando el comportamiento humano y desarrollando metodologías que permitan integrar crecimiento personal, liderazgo, propósito y consciencia en una sola experiencia. No creemos que exista una fórmula única para el éxito.
-                            </p>
                             <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
-                                Tampoco creemos que todas las personas deban recorrer el mismo camino. Lo que sí creemos es que cada ser humano posee un potencial mucho mayor del que normalmente expresa y que, cuando aprende a conocerse mejor, desarrollar sus capacidades y actuar de manera coherente con aquello que realmente importa, su vida comienza a transformarse de una manera mucho más profunda y sostenible. Ese es el propósito que da origen a Master Live Training.
+                                Cuando una persona se conoce mejor, desarrolla sus capacidades y actúa de manera coherente con aquello que realmente importa, su vida comienza a transformarse de una forma más profunda y sostenible. Ese es el propósito que da origen a esta experiencia.
                             </p>
                         </div>
 
@@ -1241,7 +1134,7 @@ const MltLanding = ({ result, setTestResult }) => {
             <section className="mlt-section mlt-animate" style={{ padding: '120px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '900px', textAlign: 'center' }}>
                     <h2 className="mlt-section-title" style={{ marginBottom: '30px' }}>
-                        Por esta razón hemos decidido abrir únicamente
+                        ¿POR QUÉ SOLO 21 CUPOS?
                     </h2>
                     
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
@@ -1255,28 +1148,16 @@ const MltLanding = ({ result, setTestResult }) => {
                         fontSize: '1.25rem',
                         lineHeight: '1.8',
                         color: 'rgba(255,255,255,0.85)',
-                        textAlign: 'left'
+                        textAlign: 'center'
                     }}>
                         <p style={{ margin: 0 }}>
-                            Queremos construir una experiencia cercana, profunda y significativa, donde cada participante tenga la oportunidad de ser escuchado, acompañado y retado en su proceso de desarrollo.
+                            Porque queremos construir una experiencia cercana, profunda y significativa. No buscamos reunir a la mayor cantidad de personas.
                         </p>
                         <p style={{ margin: 0 }}>
-                            No buscamos reunir a la mayor cantidad de personas. <strong style={{ color: '#ffffff' }}>Buscamos reunir a las personas correctas.</strong>
+                            <strong style={{ color: '#ffffff' }}>BUSCAMOS REUNIR A LAS PERSONAS CORRECTAS.</strong>
                         </p>
-                        <p style={{ margin: 0 }}>
-                            Personas dispuestas a invertir en sí mismas, desarrollar la persona que sostiene su liderazgo y construir una vida más coherente con aquello que realmente importa.
-                        </p>
-                        <p style={{ margin: 0 }}>
-                            Los integrantes de esta <span style={{ color: '#ddbe3d', fontWeight: '600' }}>Primera Generación</span> tendrán la oportunidad de convertirse en los miembros fundadores de una comunidad que seguirá creciendo y evolucionando durante los próximos años.
-                        </p>
-                        <p style={{ margin: 0 }}>
-                            Por eso el ingreso se realiza mediante un sencillo proceso de aplicación.
-                        </p>
-                    </div>
-
-                    <div style={{ marginTop: '50px', padding: '30px', background: 'rgba(221, 190, 61, 0.1)', borderRadius: '16px', border: '1px solid rgba(221, 190, 61, 0.3)' }}>
-                        <p style={{ fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '700', margin: 0 }}>
-                            Si sientes que este es tu momento, estaremos encantados de conocerte.
+                        <p style={{ margin: 0, color: '#ddbe3d', fontWeight: '700', fontSize: '1.5rem', marginTop: '30px' }}>
+                            Aplicación &rarr; Conversación &rarr; Confirmación
                         </p>
                     </div>
                 </div>
@@ -1420,181 +1301,329 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 8. Precios */}
+            <style>{`
+                .pricing-new-card {
+                    background: #001a29;
+                    border: 1px solid #ddbe3d;
+                    border-radius: 16px;
+                    padding: 60px 40px 40px;
+                    position: relative;
+                    color: #ffffff;
+                    margin-top: 40px;
+                }
+                .pricing-pill {
+                    background: #ddbe3d;
+                    color: #002d44;
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    font-weight: 800;
+                    font-size: 14px;
+                    letter-spacing: 0.1em;
+                    position: absolute;
+                    top: -18px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+                .pricing-pill::before, .pricing-pill::after {
+                    content: '';
+                    width: 4px;
+                    height: 4px;
+                    background: #002d44;
+                    border-radius: 50%;
+                }
+                .pricing-grid-new {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 0;
+                    margin: 40px 0;
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+                .pricing-item-new {
+                    padding: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 15px;
+                    border-right: 1px solid rgba(255,255,255,0.1);
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                }
+                .pricing-item-new:nth-child(4n) {
+                    border-right: none;
+                }
+                .pricing-item-new:nth-child(n+5) {
+                    border-bottom: none;
+                }
+                .pricing-icon-wrapper {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    border: 1px solid #ddbe3d;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: #ddbe3d;
+                }
+                @media (max-width: 1024px) {
+                    .pricing-grid-new {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                    .pricing-item-new:nth-child(2n) {
+                        border-right: none;
+                    }
+                    .pricing-item-new:nth-child(n+3) {
+                        border-bottom: 1px solid rgba(255,255,255,0.1);
+                    }
+                    .pricing-item-new:nth-child(n+7) {
+                        border-bottom: none;
+                    }
+                }
+                @media (max-width: 600px) {
+                    .pricing-grid-new {
+                        grid-template-columns: 1fr;
+                    }
+                    .pricing-item-new {
+                        border-right: none;
+                        border-bottom: 1px solid rgba(255,255,255,0.1);
+                        flex-direction: row;
+                        align-items: center;
+                    }
+                    .pricing-item-new:last-child {
+                        border-bottom: none;
+                    }
+                }
+            `}</style>
             <section id="precios" className="mlt-section">
                 <div className="mlt-section-content">
-                    <div className="mlt-pricing-wrapper-single mlt-animate">
-                        <div className="mlt-pricing-card">
-                            <div className="mlt-pricing-glow"></div>
-                            
-                            <div className="mlt-pricing-header">
-                                <h3>Únete a la Primera Generación</h3>
+                    <div className="pricing-new-card mlt-animate">
+                        <div className="pricing-pill">
+                            PRIMERA GENERACIÓN
+                        </div>
+                        
+                        <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '800', marginBottom: '50px', color: '#ffffff' }}>
+                            ÚNETE A LA <span style={{ color: '#ddbe3d' }}>PRIMERA GENERACIÓN</span>
+                        </h2>
+
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '30px', flexWrap: 'wrap', marginBottom: '20px' }}>
+                            <div style={{ textAlign: 'center', color: '#888' }}>
+                                <div style={{ fontSize: '28px', fontWeight: '500', textDecoration: 'line-through' }}>
+                                    USD 3.800
+                                </div>
+                                <div style={{ fontSize: '14px', letterSpacing: '0.1em', marginTop: '5px' }}>
+                                    VALOR REGULAR
+                                </div>
                             </div>
+                            
+                            <ArrowRight color="#ddbe3d" size={32} />
 
-                            <div className="mlt-pricing-content">
-                                <div className="mlt-price-box">
-                                    <span className="mlt-old-price" style={{ fontSize: '24px' }}>Valor de la experiencia: 3.800 <span style={{ fontSize: '0.8em', color: '#ddbe3d' }}>USD</span></span>
-                                    
-                                    <div style={{
-                                        background: '#ddbe3d',
-                                        color: '#002d44',
-                                        padding: '8px 20px',
-                                        borderRadius: '8px',
-                                        fontWeight: '800',
-                                        fontSize: '15px',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.05em',
-                                        marginTop: '20px',
-                                        marginBottom: '15px',
-                                        display: 'inline-block',
-                                        boxShadow: '0 0 20px rgba(221, 190, 61, 0.6)'
-                                    }}>
-                                        Valor especial Primera Generación
-                                    </div>
-
-                                    <div className="mlt-current-price" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '8px', marginTop: '0' }}>
-                                        2.900 <span style={{ color: '#ddbe3d', fontSize: '0.5em', fontWeight: '900' }}>USD</span>
-                                    </div>
-                                    <p style={{ fontSize: '15px', lineHeight: '1.5', color: '#002d44', opacity: 0.8, maxWidth: '600px', margin: '15px auto 30px' }}>
-                                        La Primera Generación tendrá acceso a una condición preferencial de lanzamiento como reconocimiento a quienes decidan recorrer este camino desde el comienzo.
-                                    </p>
+                            <div style={{ textAlign: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: '8px' }}>
+                                    <span style={{ fontSize: '24px', fontWeight: '700', marginTop: '15px' }}>USD</span>
+                                    <span style={{ fontSize: 'clamp(60px, 8vw, 90px)', fontWeight: '900', lineHeight: '1' }}>2.900</span>
                                 </div>
-
-                                <p style={{ fontWeight: 'bold', color: '#002d44', textAlign: 'left', marginBottom: '20px', fontSize: '18px' }}>Tu inscripción incluye:</p>
-                                
-                                <div className="mlt-pricing-grid" style={{ 
-                                    display: 'grid',
-                                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-                                    gap: '25px 40px' 
-                                }}>
-                                    {[
-                                        "90 días de entrenamiento integral",
-                                        "5 experiencias inmersivas",
-                                        "6 conversatorios en vivo",
-                                        "Diagnósticos y herramientas de autoconocimiento",
-                                        "Recursos, grabaciones y materiales de trabajo",
-                                        "Comunidad exclusiva de participantes",
-                                        "Certificación y Colección Legacy de Auténticos"
-                                    ].map((item, i) => (
-                                        <div key={i} className="mlt-pricing-item" style={{ display: 'flex', textAlign: 'left', alignItems: 'flex-start', gap: '12px' }}>
-                                            <CheckCircle2 size={22} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} /> 
-                                            <span style={{ fontSize: '17px', fontWeight: '800', color: '#002d44', lineHeight: '1.4' }}>{item}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#002d44', marginTop: '30px', marginBottom: '30px', textAlign: 'center', fontStyle: 'italic', fontWeight: '500' }}>
-                                    Esta no es una inversión en un programa.<br />
-                                    Es una inversión en la persona que sostendrá la vida, el liderazgo y el impacto que deseas construir.
-                                </p>
-
-                                <div className="mlt-btn-buy-wrapper">
-                                    <button onClick={handleAction} className="mlt-btn-buy" style={{ fontSize: '18px', padding: '20px 40px' }}>
-                                        APLICAR A LA PRIMERA GENERACIÓN <Lock size={22} />
-                                    </button>
-                                    
-                                    {/* Iconos de Pago */}
-                                    <div style={{ 
-                                        display: 'flex', 
-                                        justifyContent: 'center', 
-                                        alignItems: 'center', 
-                                        gap: '20px', 
-                                        marginTop: '25px',
-                                        opacity: '0.9'
-                                    }}>
-                                        <img src="/Icono - Visa.png" alt="Visa" style={{ height: '28px', width: 'auto' }} />
-                                        <img src="/Icono - Mastercard.png" alt="Mastercard" style={{ height: '24px', width: 'auto' }} />
-                                        <img src="/Icono - Mercado pago.png" alt="Mercado Pago" style={{ height: '28px', width: 'auto' }} />
-                                        <img src="/Icono - Wompi.png" alt="Wompi" style={{ height: '24px', width: 'auto' }} />
-                                    </div>
+                                <div style={{ fontSize: '16px', letterSpacing: '0.1em', color: '#ddbe3d', marginTop: '5px', fontWeight: '600' }}>
+                                    VALOR ESPECIAL DE LANZAMIENTO
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <div className="pricing-grid-new">
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><Calendar size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>90 DÍAS</span><br/>
+                                    de entrenamiento integral
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><Mountain size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>5 EXPERIENCIAS</span><br/>
+                                    inmersivas
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><MessageCircle size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>6 CONVERSATORIOS</span><br/>
+                                    en vivo
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><Brain size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>DIAGNÓSTICOS</span><br/>
+                                    y herramientas de autoconocimiento
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><PlayCircle size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>RECURSOS, GRABACIONES</span><br/>
+                                    y materiales de trabajo
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><Users size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>COMUNIDAD EXCLUSIVA</span><br/>
+                                    de participantes
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><Award size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>CERTIFICACIÓN</span><br/>
+                                    y Colección Legacy
+                                </div>
+                            </div>
+                            <div className="pricing-item-new">
+                                <div className="pricing-icon-wrapper"><Star size={24} /></div>
+                                <div style={{ fontSize: '15px', color: '#ccc', lineHeight: '1.4' }}>
+                                    <span style={{ color: '#fff', fontWeight: '700' }}>COLECCIÓN LEGACY</span><br/>
+                                    de Auténticos
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }}>
+                            <button 
+                                onClick={handleAction} 
+                                style={{ 
+                                    background: 'linear-gradient(to right, #ddbe3d, #cba92d)', 
+                                    border: 'none', 
+                                    color: '#002d44', 
+                                    fontSize: '1.25rem', 
+                                    fontWeight: '800', 
+                                    cursor: 'pointer',
+                                    padding: '20px 40px',
+                                    borderRadius: '8px',
+                                    textTransform: 'uppercase',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '15px',
+                                    transition: 'all 0.3s',
+                                    boxShadow: '0 10px 20px rgba(221, 190, 61, 0.2)'
+                                }}
+                            >
+                                <ArrowRight size={24} color="#002d44" /> APLICAR A LA PRIMERA GENERACIÓN
+                            </button>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#777', marginTop: '20px', fontSize: '13px', letterSpacing: '0.05em' }}>
+                                <Lock size={14} color="#ddbe3d" /> PROCESO DE APLICACIÓN PRIVADO Y CONFIDENCIAL
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </section>
 
             {/* 9. Garantía */}
-            <section className="mlt-section" style={{ background: '#ffffff', color: '#002d44', padding: '100px 24px' }}>
-                <div className="mlt-section-content" style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
-                    
-                    {/* Image above Title */}
-                    <img 
-                        src="/mlt/Nuestro Compromiso-3.png" 
-                        alt="100% Compromiso" 
-                        style={{ maxWidth: '280px', width: '100%', height: 'auto', marginBottom: '30px', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.15))' }}
-                    />
-
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px', fontSize: 'clamp(32px, 5vw, 48px)' }}>
-                        <span style={{ fontWeight: '900' }}>Nuestro</span> <span style={{ color: '#ddbe3d', fontWeight: '900' }}>compromiso contigo</span>
-                    </h2>
-                    
-                    <div style={{ textAlign: 'left', color: '#002d44', fontSize: '1.15rem', lineHeight: '1.6', marginBottom: '40px' }}>
-                        <p style={{ marginBottom: '20px' }}>
-                            Sabemos que decidir invertir tiempo, energía y recursos en un proceso de desarrollo personal no es una decisión menor.
-                        </p>
-                        <p style={{ marginBottom: '30px' }}>
-                            Por eso queremos ser claros sobre lo que puedes esperar de nosotros.
-                        </p>
-                        
-                        <div style={{ marginBottom: '30px' }}>
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '25px' }}>
-                                <CheckCircle2 size={26} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} />
-                                <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: '1.6' }}>Nos comprometemos a poner a tu disposición toda nuestra experiencia, metodología, acompañamiento y dedicación para ayudarte a aprovechar al máximo esta experiencia.</p>
+            <style>{`
+                .compromiso-container {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .compromiso-top {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+                .compromiso-left {
+                    flex: 1 1 300px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 40px;
+                }
+                .compromiso-right {
+                    flex: 2 1 400px;
+                    padding: 40px;
+                    color: #002d44;
+                    text-align: left;
+                }
+                .compromiso-bottom {
+                    padding: 30px 40px;
+                    text-align: center;
+                    color: #002d44;
+                }
+            `}</style>
+            <section className="mlt-section" style={{ background: '#ffffff', padding: '100px 24px' }}>
+                <div className="mlt-section-content" style={{ maxWidth: '900px', margin: '0 auto' }}>
+                    <div className="compromiso-container">
+                        <div className="compromiso-top">
+                            <div className="compromiso-left">
+                                <img 
+                                    src="/mlt/Nuestro Compromiso-3.png" 
+                                    alt="100% Compromiso" 
+                                    style={{ maxWidth: '250px', width: '100%', height: 'auto', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.15))' }}
+                                />
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '25px' }}>
-                                <CheckCircle2 size={26} color="#ddbe3d" style={{ flexShrink: 0, marginTop: '2px' }} />
-                                <p style={{ margin: 0, fontSize: '1.15rem', lineHeight: '1.6' }}>Crearemos un espacio seguro para la reflexión, el aprendizaje y el crecimiento, entregándote herramientas, conversaciones y experiencias diseñadas para generar cambios profundos y sostenibles.</p>
+                            <div className="compromiso-right">
+                                <h3 style={{ fontSize: '2rem', fontWeight: '900', margin: '0 0 20px 0', textTransform: 'uppercase', color: '#002d44', lineHeight: '1.2' }}>
+                                    NUESTRO <span style={{ color: '#ddbe3d' }}>COMPROMISO CONTIGO</span>
+                                </h3>
+                                <p style={{ fontSize: '1.15rem', lineHeight: '1.6', margin: '0 0 30px 0', color: 'rgba(0,45,68,0.85)' }}>
+                                    Sabemos que invertir en tu desarrollo personal es una decisión importante.
+                                </p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontSize: '1.15rem', color: 'rgba(0,45,68,0.85)' }}>
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
+                                        <span>Nuestra experiencia, metodología y acompañamiento.</span>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
+                                        <span>Un espacio seguro para aprender y crecer.</span>
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <span style={{ color: '#ddbe3d', fontWeight: 'bold' }}>&#10003;</span>
+                                        <span>Herramientas y experiencias diseñadas para generar cambios sostenibles.</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <p style={{ marginBottom: '30px', fontStyle: 'italic', color: '#5c7c8a', fontSize: '1.15rem' }}>
-                            Pero hay algo que no podemos hacer por ti, no podemos recorrer el camino en tu lugar.
-                        </p>
-                        
-                        <div style={{ background: '#fcfaf2', padding: '30px', borderRadius: '12px', border: '1px solid rgba(221, 190, 61, 0.3)', borderLeft: '5px solid #ddbe3d', marginBottom: '50px' }}>
-                            <p style={{ margin: 0, color: '#002d44', fontSize: '1.15rem', lineHeight: '1.6', fontWeight: '500' }}>
-                                La transformación siempre será el resultado del encuentro entre una experiencia significativa y una persona dispuesta a aprovecharla. Nosotros nos comprometemos con la experiencia.
+                        <div className="compromiso-bottom">
+                            <h3 style={{ fontSize: '1.5rem', fontWeight: '800', margin: '0 0 20px 0', textTransform: 'uppercase', color: '#002d44' }}>
+                                HAY ALGO QUE NO PODEMOS HACER POR TI
+                            </h3>
+                            <p style={{ fontSize: '1.15rem', lineHeight: '1.6', margin: '0 auto 30px auto', maxWidth: '800px', color: 'rgba(0,45,68,0.85)' }}>
+                                No podemos recorrer el camino en tu lugar. La transformación ocurre cuando una experiencia significativa encuentra a una persona dispuesta a aprovecharla. Nosotros nos comprometemos con la experiencia.
                             </p>
+                            <p style={{ fontSize: '1.15rem', fontWeight: '800', margin: '0 0 30px 0', textTransform: 'uppercase', color: '#002d44' }}>
+                                ¿ESTÁS DISPUESTO A COMPROMETERTE CONTIGO MISMO?
+                            </p>
+                            <button 
+                                onClick={handleAction} 
+                                style={{ 
+                                    background: '#ddbe3d', 
+                                    border: 'none', 
+                                    color: '#002d44', 
+                                    fontSize: '1.1rem', 
+                                    fontWeight: '800', 
+                                    cursor: 'pointer',
+                                    padding: '15px 30px',
+                                    borderRadius: '8px',
+                                    textTransform: 'uppercase',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    transition: 'all 0.3s'
+                                }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.background = '#cba92d';
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.background = '#ddbe3d';
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                }}
+                            >
+                                SÍ, ME COMPROMETO <ArrowRight size={20} />
+                            </button>
                         </div>
-
-                        {/* Text above CTA */}
-                        <h3 style={{ fontWeight: '900', fontSize: 'clamp(24px, 4vw, 32px)', textAlign: 'center', marginTop: '50px', marginBottom: '40px', color: '#002d44', lineHeight: '1.3' }}>
-                            <span style={{ color: '#ddbe3d' }}>¿Estás dispuesto a comprometerte contigo mismo?</span>
-                        </h3>
-                    </div>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center' }}>
-                        <button onClick={handleAction} className="mlt-btn-main" style={{ width: '100%', maxWidth: '400px', justifyContent: 'center' }}>
-                            SÍ, ME COMPROMETO
-                            <ArrowRight size={22} />
-                        </button>
-                        
-                        <a href="#preguntas" style={{ 
-                            width: '100%', 
-                            maxWidth: '400px', 
-                            padding: '18px', 
-                            textAlign: 'center',
-                            background: 'transparent',
-                            color: '#002d44',
-                            border: '2px solid rgba(0,45,68,0.3)',
-                            borderRadius: '12px',
-                            fontWeight: '800',
-                            textDecoration: 'none',
-                            textTransform: 'uppercase',
-                            transition: 'all 0.3s'
-                        }}
-                        onMouseOver={(e) => {
-                            e.currentTarget.style.background = 'rgba(0,45,68,0.05)';
-                            e.currentTarget.style.borderColor = '#002d44';
-                        }}
-                        onMouseOut={(e) => {
-                            e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.borderColor = 'rgba(0,45,68,0.3)';
-                        }}
-                        >
-                            Aún tengo dudas
-                        </a>
                     </div>
                 </div>
             </section>
@@ -1630,61 +1659,37 @@ const MltLanding = ({ result, setTestResult }) => {
                         ))}
                     </div>
 
-                    <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center' }}>
-                        <button onClick={handleAction} className="mlt-btn-main">
-                            Empezar ahora
-                            <ArrowRight size={22} />
-                        </button>
-                    </div>
+
                 </div>
             </section>
 
             {/* 10.5 Final Call to Action */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '120px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '50px' }}>
-                        La vida que deseas construir <br /> ya te <span className="mlt-gold-text" style={{ display: 'inline' }}>está llamando.</span>
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '50px', textTransform: 'uppercase' }}>
+                        La vida que deseas construir <br /> te está <span className="mlt-gold-text" style={{ display: 'inline' }}>llamando.</span>
                     </h2>
                     
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '20px',
+                        gap: '30px',
                         fontSize: '1.25rem',
                         lineHeight: '1.8',
                         color: 'rgba(0,45,68,0.85)',
                         textAlign: 'center',
                         marginBottom: '60px'
                     }}>
-                        <p style={{ margin: 0, fontWeight: '600', color: '#002d44' }}>
-                            Has dedicado años a construir tu carrera, tu empresa, tu familia y tus responsabilidades.
+                        <p style={{ margin: 0, fontWeight: '600', color: '#002d44', fontSize: '1.4rem' }}>
+                            Has dedicado años a construir tu vida, ahora es momento de desarrollar a la persona que la sostiene.
                         </p>
-                        <p style={{ margin: 0, fontWeight: '700', color: '#ddbe3d', fontSize: '1.4rem', marginTop: '20px' }}>
-                            Ahora es momento de dedicar tiempo a quien hace posible todo lo demás.
-                        </p>
-                        <p style={{ margin: 0, marginTop: '20px' }}>
-                            Porque cada nueva etapa de la vida exige una nueva versión de nosotros mismos.
-                        </p>
-                        <p style={{ margin: 0, marginTop: '20px', fontStyle: 'italic' }}>
+                        <p style={{ margin: 0, fontStyle: 'italic' }}>
                             Si sientes que este es tu momento, estaremos encantados de acompañarte.
                         </p>
                     </div>
 
-                    <div style={{
-                        background: '#f8f9fa',
-                        padding: '40px',
-                        borderRadius: '24px',
-                        border: '1px solid rgba(0,45,68,0.05)',
-                        marginBottom: '50px'
-                    }}>
-                        <h4 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#ddbe3d', marginBottom: '15px', marginTop: 0 }}>Primera Generación Master Live Training</h4>
-                        <p style={{ fontSize: '1.1rem', color: '#002d44', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
-                            20 participantes · 90 días de entrenamiento integral · Una experiencia diseñada para transformar la forma en que te conoces, lideras y construyes tu vida.
-                        </p>
-                    </div>
-
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <button onClick={handleAction} className="mlt-btn-main" style={{ padding: '20px 45px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <button onClick={handleAction} className="mlt-btn-main" style={{ padding: '20px 45px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '10px', textTransform: 'uppercase' }}>
                             Aplicar a la Primera Generación
                             <ArrowRight size={24} />
                         </button>
