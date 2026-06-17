@@ -651,14 +651,14 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* 4. Why changes don't last Section */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '80px 24px', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '80px', fontSize: 'clamp(20px, 4vw, 48px)', fontWeight: '900', whiteSpace: 'nowrap' }}>
+                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '80px', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '900' }}>
                         ¿Por qué la mayoría de <span className="mlt-gold-text" style={{ display: 'inline' }}>cambios</span> no duran?
                     </h2>
 
                     {/* Part 1: Text Left (all paragraphs), Image Right */}
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                         gap: '60px',
                         alignItems: 'stretch'
                     }}>
@@ -701,11 +701,35 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* 5. 6 Pilares Section (White version) */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content">
+                    <style>{`
+                        .mlt-title-line {
+                            height: 1px;
+                            width: 80px;
+                            background: #ddbe3d;
+                        }
+                        .mlt-title-subtitle {
+                            color: #ddbe3d;
+                            font-size: 18px;
+                            letter-spacing: 0.2em;
+                            font-weight: 600;
+                            text-transform: uppercase;
+                        }
+                        @media (max-width: 768px) {
+                            .mlt-title-line {
+                                display: none;
+                            }
+                            .mlt-title-subtitle {
+                                font-size: 15px;
+                                letter-spacing: 0.1em;
+                                white-space: nowrap;
+                            }
+                        }
+                    `}</style>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
-                            <div style={{ height: '1px', width: '80px', background: '#ddbe3d' }}></div>
-                            <span style={{ color: '#ddbe3d', fontSize: '18px', letterSpacing: '0.2em', fontWeight: '600', textTransform: 'uppercase' }}>LO QUE LOGRARÁS CON</span>
-                            <div style={{ height: '1px', width: '80px', background: '#ddbe3d' }}></div>
+                            <div className="mlt-title-line"></div>
+                            <span className="mlt-title-subtitle">LO QUE LOGRARÁS CON</span>
+                            <div className="mlt-title-line"></div>
                         </div>
                         <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '20px', fontSize: 'clamp(36px, 6vw, 64px)' }}>
                             Master Live <span className="mlt-gold-text" style={{ display: 'inline' }}>Training</span>
@@ -1217,16 +1241,16 @@ const MltLanding = ({ result, setTestResult }) => {
 
                     <div style={{
                         background: 'linear-gradient(135deg, #002d44 0%, #001a29 100%)',
-                        padding: '60px',
+                        padding: 'clamp(30px, 5vw, 60px)',
                         borderRadius: '30px',
-                        textAlign: 'center',
+                        textAlign: 'left',
                         position: 'relative',
                         overflow: 'hidden',
                         boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
                         border: '1px solid rgba(221, 190, 61, 0.2)'
                     }}>
                         <p style={{ 
-                            fontSize: '1.4rem', 
+                            fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
                             lineHeight: '1.8', 
                             color: 'rgba(255,255,255,0.95)', 
                             margin: 0, 
@@ -1259,7 +1283,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         
                         {/* Columna Derecha: Textos */}
                         <div style={{
-                            flex: '1 1 450px',
+                            flex: '1 1 300px',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '24px',
@@ -1277,7 +1301,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             <p style={{ margin: 0 }}>
                                 <strong style={{ color: '#ffffff' }}>BUSCAMOS REUNIR A LAS PERSONAS CORRECTAS.</strong>
                             </p>
-                            <p style={{ margin: 0, color: '#ddbe3d', fontWeight: '700', fontSize: 'clamp(1rem, 3vw, 1.5rem)', marginTop: '10px', whiteSpace: 'nowrap' }}>
+                            <p style={{ margin: 0, color: '#ddbe3d', fontWeight: '700', fontSize: 'clamp(1rem, 3vw, 1.5rem)', marginTop: '10px' }}>
                                 Aplicación &rarr; Conversación &rarr; Confirmación
                             </p>
                         </div>
