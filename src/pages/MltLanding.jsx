@@ -996,7 +996,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         Con el paso de los años observamos algo que se repetía una y otra vez. Personas talentosas, comprometidas y exitosas que, aun habiendo alcanzado importantes logros profesionales, continuaban haciéndose preguntas como:
                     </p>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0px', width: '100%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
                         {[
                             "¿Cómo encontrar una mayor claridad sobre mi vida?",
                             "¿Cómo ejercer un liderazgo más consciente?",
@@ -1062,9 +1062,8 @@ const MltLanding = ({ result, setTestResult }) => {
                     `}</style>
                     <div className="mlt-origen-grid">
                         
-                        {/* Mobile Title */}
                         <div className="mlt-origen-mobile-title">
-                            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
+                            <h2 className="mlt-section-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
                                 Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
                             </h2>
                         </div>
@@ -1086,7 +1085,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                         {/* Text Column (Left on desktop, 3rd on mobile) */}
                         <div className="mlt-origen-left">
-                            <h2 className="mlt-origen-desktop-title" style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
+                            <h2 className="mlt-section-title mlt-origen-desktop-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
                                 Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
                             </h2>
                             <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
@@ -1287,7 +1286,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             color: 'rgba(255,255,255,0.85)',
                             textAlign: 'left'
                         }}>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
+                            <h2 className="mlt-section-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
                                 ¿Por qué solo <span className="mlt-gold-text" style={{ display: 'inline' }}>21 cupos?</span>
                             </h2>
                             <p style={{ margin: 0 }}>
@@ -1315,8 +1314,8 @@ const MltLanding = ({ result, setTestResult }) => {
                             </span>
                             <div style={{ height: '2px', width: '60px', background: '#ddbe3d' }}></div>
                         </div>
-                        <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#002d44', marginBottom: '20px', letterSpacing: '-1px', lineHeight: '1.2' }}>
-                            Organizaciones que <span style={{ color: '#ddbe3d' }}>confían en nosotros</span>
+                        <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '20px' }}>
+                            Organizaciones que <span className="mlt-gold-text" style={{ display: 'inline' }}>confían en nosotros</span>
                         </h2>
                         <p style={{ fontSize: '1.1rem', color: '#002d44', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6', fontWeight: '500' }}>
                             Empresas, universidades y organizaciones que han confiado en nuestra metodología.
