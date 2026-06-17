@@ -424,7 +424,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
 
             {/* 2. Hero Section */}
-            <section className="mlt-hero mlt-animate" style={{ minHeight: 'auto', padding: '60px 24px', justifyContent: 'flex-start' }}>
+            <section className="mlt-hero mlt-animate" style={{ minHeight: 'auto', padding: '60px 0', justifyContent: 'flex-start' }}>
                 <div className="mlt-section-content mlt-hero-container">
                     <div>
                         {/* 1. Full width header */}
@@ -493,13 +493,11 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
                 </div>
 
-                <div className="mlt-scroll-indicator">
-                    <ChevronDown size={24} />
-                </div>
+
             </section>
 
             {/* 3. Empathy Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
                 <div className="mlt-section-content mlt-empathy-container">
                     <h2 className="mlt-section-title" style={{ 
                         fontWeight: '900', 
@@ -535,7 +533,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 3.5. Why this happens Section */}
-            <section className="mlt-section mlt-animate" style={{ padding: '80px 24px', position: 'relative' }}>
+            <section className="mlt-section mlt-animate" style={{ padding: '80px 0', position: 'relative' }}>
                 <style>{`
                     .mlt-why-mobile-title { display: none; }
                     @media (max-width: 899px) {
@@ -543,7 +541,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         .mlt-why-desktop-title { display: none; }
                     }
                 `}</style>
-                <div className="mlt-section-content mlt-why-grid" style={{ padding: 0 }}>
+                <div className="mlt-section-content mlt-why-grid">
                     
                     {/* Mobile Title */}
                     <div className="mlt-why-mobile-title" style={{ textAlign: 'left' }}>
@@ -649,7 +647,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 4. Why changes don't last Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '80px 24px', position: 'relative' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '80px 0', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1100px', margin: '0 auto', textAlign: 'center' }}>
                     <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '80px', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '900' }}>
                         ¿Por qué la mayoría de <span className="mlt-gold-text" style={{ display: 'inline' }}>cambios</span> no duran?
@@ -681,7 +679,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 4.5. Modelo de Formación (Ported) */}
-            <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ padding: '80px 24px', position: 'relative' }}>
+            <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ padding: '80px 0', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                         <h2 className="mlt-section-title" style={{ marginBottom: '20px' }}>
@@ -699,7 +697,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 5. 6 Pilares Section (White version) */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
                 <div className="mlt-section-content">
                     <style>{`
                         .mlt-title-line {
@@ -783,12 +781,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         ))}
                     </div>
 
-                    <div style={{ marginTop: '80px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <button onClick={handleAction} className="mlt-btn-main">
-                            INGRESAR AL MASTER LIVE TRAINING
-                            <ArrowRight size={22} />
-                        </button>
-                    </div>
+
                 </div>
             </section>
 
@@ -857,17 +850,12 @@ const MltLanding = ({ result, setTestResult }) => {
                         </p>
                     </div>
                     
-                    <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <button onClick={handleAction} className="mlt-btn-main">
-                            UNIRME AL MASTER LIVE TRAINING
-                            <ArrowRight size={22} />
-                        </button>
-                    </div>
+
                 </div>
             </section>
 
             {/* NEW SECTION: En 90 días podrás llevarte */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '40px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '40px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
                     <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
                         <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.3', color: '#002d44', fontWeight: '600', margin: 0 }}>
@@ -984,11 +972,18 @@ const MltLanding = ({ result, setTestResult }) => {
                         </p>
                     </div>
 
+                    <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <button onClick={handleAction} className="mlt-btn-main">
+                            APLICAR A LA PRIMERA GENERACIÓN
+                            <ArrowRight size={22} />
+                        </button>
+                    </div>
+
                 </div>
             </section>
 
             {/* NEW SECTION: Por qué creamos Master Live Training? */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1000px', textAlign: 'center' }}>
                     <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px', lineHeight: '1.3' }}>
                         Las preguntas que dieron origen a <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training</span>
@@ -1036,7 +1031,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6. Nosotros / Origen Section */}
-            <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '80px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
                     <style>{`
                         .mlt-origen-mobile-title { display: none; }
@@ -1103,7 +1098,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6.5. Trayectoria Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
 
                     <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '80px', color: '#002d44' }}>
@@ -1112,7 +1107,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                         gap: '30px',
                         marginBottom: '80px',
                         rowGap: '60px'
@@ -1266,7 +1261,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 6.6. 20 Cupos Section */}
-            <section className="mlt-section mlt-animate" style={{ padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ padding: '80px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <div style={{
                         display: 'flex',
@@ -1310,7 +1305,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 7. Testimonials Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
                 <div className="mlt-section-content">
                     <div style={{ textAlign: 'center', marginBottom: '50px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
@@ -1385,12 +1380,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         </div>
                     </div>
 
-                <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <button onClick={handleAction} className="mlt-btn-main">
-                            OBTENER MI CUPO EN EL MLT
-                            <ArrowRight size={22} />
-                        </button>
-                    </div>
+
                 </div>
             </section>
 
@@ -1617,7 +1607,7 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 9. Garantía */}
-            <section className="mlt-section" style={{ background: '#ffffff', padding: '80px 24px' }}>
+            <section className="mlt-section" style={{ background: '#ffffff', padding: '80px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     <div style={{
                         display: 'flex',
@@ -1712,36 +1702,6 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
             </section>
 
-            {/* CTA Sesión Informativa */}
-            <section style={{ padding: '60px 24px', background: '#002d44', textAlign: 'center', color: 'white' }}>
-                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                    <h3 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '20px', color: '#ffffff' }}>¿Aún tienes dudas?</h3>
-                    <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.8)', margin: '0 auto 30px', lineHeight: '1.6' }}>
-                        Agenda una sesión informativa gratuita y en vivo (cupos limitados a 100 personas). Te explicaremos todos los detalles del Master Live Training y resolveremos tus preguntas.
-                    </p>
-                    <button 
-                        onClick={() => setIsInfoModalOpen(true)}
-                        style={{
-                            padding: '16px 40px',
-                            fontSize: '16px',
-                            fontWeight: 'bold',
-                            color: '#002d44',
-                            background: '#ddbe3d',
-                            border: 'none',
-                            borderRadius: '30px',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '10px'
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                        onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-                    >
-                        AGENDAR SESIÓN INFORMATIVA <Calendar size={20} />
-                    </button>
-                </div>
-            </section>
 
             {/* 10. FAQ */}
             <section id="preguntas" className="mlt-faq-section mlt-animate" style={{ 
@@ -1774,12 +1734,40 @@ const MltLanding = ({ result, setTestResult }) => {
                         ))}
                     </div>
 
+                    {/* CTA Sesión Informativa (Inside FAQ) */}
+                    <div style={{ maxWidth: '800px', margin: '80px auto 0', textAlign: 'center' }}>
+                        <h3 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '20px', color: '#ffffff' }}>¿Aún tienes dudas?</h3>
+                        <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.8)', margin: '0 auto 30px', lineHeight: '1.6' }}>
+                            Agenda una sesión informativa gratuita y en vivo (cupos limitados a 100 personas). Te explicaremos todos los detalles del Master Live Training y resolveremos tus preguntas.
+                        </p>
+                        <button 
+                            onClick={() => setIsInfoModalOpen(true)}
+                            style={{
+                                padding: '16px 40px',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                color: '#002d44',
+                                background: '#ddbe3d',
+                                border: 'none',
+                                borderRadius: '30px',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '10px'
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                        >
+                            AGENDAR SESIÓN INFORMATIVA <Calendar size={20} />
+                        </button>
+                    </div>
 
                 </div>
             </section>
 
             {/* 10.5 Final Call to Action */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
+            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '800px', textAlign: 'center' }}>
                     <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '50px' }}>
                         La vida que deseas construir <br /> te está <span className="mlt-gold-text" style={{ display: 'inline' }}>llamando.</span>
