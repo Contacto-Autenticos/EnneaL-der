@@ -1853,6 +1853,59 @@ const MltLanding = ({ result, setTestResult }) => {
                 </div>
             )}
 
+            {/* Botón Flotante para Sesión Info */}
+            <style>{`
+                .info-floating-btn {
+                    position: fixed;
+                    bottom: 25px;
+                    left: 25px;
+                    z-index: 990;
+                    background-color: #DDBE3D;
+                    color: #002d44;
+                    border: none;
+                    border-radius: 50px;
+                    padding: 12px 24px;
+                    font-size: 15px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(221, 190, 61, 0.4);
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    animation: pulse-ring 3s infinite;
+                }
+                .info-floating-btn:hover {
+                    transform: translateY(-5px) scale(1.05);
+                    box-shadow: 0 8px 25px rgba(221, 190, 61, 0.6);
+                    background-color: #f0ce43;
+                }
+                @media (max-width: 768px) {
+                    .info-floating-btn {
+                        bottom: 20px;
+                        left: 20px;
+                        padding: 14px;
+                        border-radius: 50%;
+                    }
+                    .info-floating-btn span {
+                        display: none;
+                    }
+                }
+                @keyframes pulse-ring {
+                    0% { box-shadow: 0 0 0 0 rgba(221, 190, 61, 0.7); }
+                    70% { box-shadow: 0 0 0 15px rgba(221, 190, 61, 0); }
+                    100% { box-shadow: 0 0 0 0 rgba(221, 190, 61, 0); }
+                }
+            `}</style>
+            <button 
+                className="info-floating-btn" 
+                onClick={() => setIsInfoModalOpen(true)}
+                title="Agendar Sesión Informativa"
+            >
+                <Calendar size={22} />
+                <span>Sesión Info Gratuita</span>
+            </button>
+
             {/* Modal Sesión Informativa */}
             {isInfoModalOpen && (
                 <div className="mlt-modal-overlay" onClick={() => setIsInfoModalOpen(false)}>
