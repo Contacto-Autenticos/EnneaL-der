@@ -80,6 +80,113 @@ const MltLanding = ({ result, setTestResult }) => {
         city: ''
     });
 
+    // Informativa state
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const [infoLoading, setInfoLoading] = useState(false);
+    const [infoSuccess, setInfoSuccess] = useState(false);
+    const [infoError, setInfoError] = useState(null);
+    const [infoFormData, setInfoFormData] = useState({
+        name: '',
+        email: '',
+        phone: ''
+    });
+
+    const getNextInfoSession = () => {
+        const colTimeStr = new Date().toLocaleString("en-US", {timeZone: "America/Bogota"});
+        const colDate = new Date(colTimeStr);
+        
+        // Target: Thursday (4)
+        let daysToAdd = (4 - colDate.getDay() + 7) % 7;
+        
+        // If it's Thursday but after 19:30, move to next Thursday
+        if (daysToAdd === 0 && (colDate.getHours() > 19 || (colDate.getHours() === 19 && colDate.getMinutes() >= 30))) {
+            daysToAdd = 7;
+        }
+        
+        colDate.setDate(colDate.getDate() + daysToAdd);
+        colDate.setHours(19, 30, 0, 0); 
+        
+        // Base start date: June 25, 2026, 19:30
+        const startDate = new Date(2026, 5, 25, 19, 30, 0, 0); // Month 5 is June
+        let finalDate = colDate;
+        
+        if (colDate.getTime() < startDate.getTime()) {
+            finalDate = startDate;
+        }
+        
+        const pad = (n) => n.toString().padStart(2, '0');
+        return `${finalDate.getFullYear()}-${pad(finalDate.getMonth()+1)}-${pad(finalDate.getDate())}T19:30:00-05:00`;
+    };
+
+    const getFormattedNextSessionDate = () => {
+        const isoDate = getNextInfoSession();
+        const dateObj = new Date(isoDate);
+        
+        const options = { 
+            timeZone: "America/Bogota", 
+            weekday: 'long', 
+            month: 'long', 
+            day: 'numeric'
+        };
+        const formatter = new Intl.DateTimeFormat('es-CO', options);
+        let formatted = formatter.format(dateObj).replace(',', '');
+        formatted = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+        return `${formatted} a las 7:30 PM`;
+    };
+
+    const handleInfoSubmit = async (e) => {
+        e.preventDefault();
+        setInfoLoading(true);
+        setInfoError(null);
+
+        try {
+            // Guardar en la BD
+            const { error: insertError } = await supabase
+                .from('workshop_registrations')
+                .insert([{
+                    full_name: infoFormData.name,
+                    email: infoFormData.email.trim().toLowerCase(),
+                    phone: infoFormData.phone,
+                    workshop_name: 'Sesión Informativa MLT Grupal',
+                    payment_status: 'FREE',
+                    raw_data: { source: 'MLT Landing Modal' }
+                }]);
+
+            if (insertError) throw insertError;
+
+            // Calcular fechas (45 minutos de duración)
+            const startTimeStr = getNextInfoSession();
+            const startD = new Date(startTimeStr);
+            const endD = new Date(startD.getTime() + 45 * 60000);
+            const pad = (n) => n.toString().padStart(2, '0');
+            const endTimeStr = `${endD.getFullYear()}-${pad(endD.getMonth()+1)}-${pad(endD.getDate())}T${pad(endD.getHours())}:${pad(endD.getMinutes())}:00-05:00`;
+
+            // Invocar Edge Function
+            const { data, functionError } = await supabase.functions.invoke('register-informativa', {
+                body: {
+                    name: infoFormData.name,
+                    email: infoFormData.email.trim().toLowerCase(),
+                    phone: infoFormData.phone,
+                    startTime: startTimeStr,
+                    endTime: endTimeStr,
+                    clientTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                }
+            });
+
+            if (functionError) throw functionError;
+            if (data?.error) throw new Error(data.error);
+
+            setInfoSuccess(true);
+            setInfoFormData({ name: '', email: '', phone: '' });
+
+        } catch (err) {
+            console.error("Error en registro de sesión informativa:", err);
+            setInfoError("Hubo un problema al procesar tu registro. Por favor intenta de nuevo.");
+        } finally {
+            setInfoLoading(false);
+        }
+    };
+
     const mltConfig = {
         title: "Mapa de Claridad",
         price: 75000,
@@ -1570,6 +1677,37 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
             </section>
 
+            {/* CTA Sesión Informativa */}
+            <section style={{ padding: '60px 24px', background: '#002d44', textAlign: 'center', color: 'white' }}>
+                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                    <h3 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '20px', color: '#ffffff' }}>¿Aún tienes dudas?</h3>
+                    <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.8)', margin: '0 auto 30px', lineHeight: '1.6' }}>
+                        Agenda una sesión informativa gratuita y en vivo (cupos limitados a 100 personas). Te explicaremos todos los detalles del Master Live Training y resolveremos tus preguntas.
+                    </p>
+                    <button 
+                        onClick={() => setIsInfoModalOpen(true)}
+                        style={{
+                            padding: '16px 40px',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            color: '#002d44',
+                            background: '#ddbe3d',
+                            border: 'none',
+                            borderRadius: '30px',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '10px'
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                        onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    >
+                        AGENDAR SESIÓN INFORMATIVA <Calendar size={20} />
+                    </button>
+                </div>
+            </section>
+
             {/* 10. FAQ */}
             <section id="preguntas" className="mlt-faq-section mlt-animate" style={{ 
                 background: 'linear-gradient(to bottom, #002d44 0%, #001a29 100%)', 
@@ -1746,6 +1884,87 @@ const MltLanding = ({ result, setTestResult }) => {
                                 ) : "CONTINUAR AL PAGO"}
                             </button>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal Sesión Informativa */}
+            {isInfoModalOpen && (
+                <div className="mlt-modal-overlay" onClick={() => setIsInfoModalOpen(false)}>
+                    <div className="mlt-form-container mlt-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="mlt-modal-close" onClick={() => setIsInfoModalOpen(false)}>
+                            <X size={24} />
+                        </button>
+                        
+                        {infoSuccess ? (
+                            <div style={{ textAlign: 'center', padding: '30px 10px' }}>
+                                <CheckCircle2 size={64} color="#10B981" style={{ margin: '0 auto 20px' }} />
+                                <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#10B981', marginBottom: '15px' }}>¡Registro Exitoso!</h3>
+                                <p style={{ color: '#fff', opacity: 0.9, marginBottom: '25px', fontSize: '16px', lineHeight: '1.5' }}>
+                                    Hemos reservado tu cupo. Revisa tu correo electrónico, allí te hemos enviado la invitación con la fecha, hora y el enlace de Google Meet. Nos vemos el jueves.
+                                </p>
+                                <button 
+                                    className="mlt-submit-btn" 
+                                    onClick={() => setIsInfoModalOpen(false)}
+                                >
+                                    Cerrar y Volver
+                                </button>
+                            </div>
+                        ) : (
+                            <>
+                                <h3 className="mlt-form-title" style={{ fontSize: '24px', marginBottom: '10px' }}>Sesión Informativa Grupal</h3>
+                                <p style={{ color: 'rgba(255,255,255,0.7)', textAlign: 'center', marginBottom: '25px', fontSize: '14px' }}>
+                                    {getFormattedNextSessionDate()} (Hora Colombia).<br/>Cupos limitados.
+                                </p>
+                                {infoError && <div style={{ color: '#ff4d4d', marginBottom: '20px', textAlign: 'center', fontSize: '14px', background: 'rgba(255,77,77,0.1)', padding: '10px', borderRadius: '5px' }}>{infoError}</div>}
+                                
+                                <form onSubmit={handleInfoSubmit}>
+                                    <div className="mlt-form-group">
+                                        <label>Nombre Completo</label>
+                                        <input 
+                                            type="text" 
+                                            value={infoFormData.name} 
+                                            onChange={(e) => setInfoFormData({...infoFormData, name: e.target.value})} 
+                                            required 
+                                            placeholder="Ej: Juan Pérez"
+                                        />
+                                    </div>
+                                    <div className="mlt-form-group">
+                                        <label>Correo Electrónico</label>
+                                        <input 
+                                            type="email" 
+                                            value={infoFormData.email} 
+                                            onChange={(e) => setInfoFormData({...infoFormData, email: e.target.value})} 
+                                            required 
+                                            placeholder="tu@email.com"
+                                        />
+                                    </div>
+                                    <div className="mlt-form-group">
+                                        <label>Celular (WhatsApp)</label>
+                                        <input 
+                                            type="tel" 
+                                            value={infoFormData.phone} 
+                                            onChange={(e) => setInfoFormData({...infoFormData, phone: e.target.value})} 
+                                            required 
+                                            placeholder="Ej: +57 300 123 4567"
+                                        />
+                                    </div>
+
+                                    <button 
+                                        type="submit" 
+                                        className="mlt-submit-btn"
+                                        disabled={infoLoading}
+                                    >
+                                        {infoLoading ? (
+                                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                                                <Loader2 className="animate-spin" size={20} />
+                                                RESERVANDO CUPO...
+                                            </span>
+                                        ) : "AGENDAR MI CUPO GRATIS"}
+                                    </button>
+                                </form>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
