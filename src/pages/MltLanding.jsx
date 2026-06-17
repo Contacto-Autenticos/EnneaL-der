@@ -536,11 +536,41 @@ const MltLanding = ({ result, setTestResult }) => {
 
             {/* 3.5. Why this happens Section */}
             <section className="mlt-section mlt-animate" style={{ padding: '80px 24px', position: 'relative' }}>
+                <style>{`
+                    .mlt-why-mobile-title { display: none; }
+                    @media (max-width: 899px) {
+                        .mlt-why-mobile-title { display: block; }
+                        .mlt-why-desktop-title { display: none; }
+                    }
+                `}</style>
                 <div className="mlt-section-content mlt-why-grid" style={{ padding: 0 }}>
                     
+                    {/* Mobile Title */}
+                    <div className="mlt-why-mobile-title" style={{ textAlign: 'left' }}>
+                        <h2 className="mlt-section-title" style={{ color: '#ddbe3d', marginBottom: '30px', fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800' }}>
+                            ¿Por qué ocurre esto?
+                        </h2>
+                    </div>
+
+                    {/* Image (Man on mountain) - Moved up for mobile order */}
+                    <div className="mlt-why-image">
+                        <img loading="lazy" src="/mlt/mlt-S2-1.jpg" 
+                            alt="¿Por qué ocurre esto?" 
+                            style={{ 
+                                width: '100%', 
+                                maxWidth: '450px', 
+                                height: 'auto', 
+                                borderRadius: '24px', 
+                                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                                border: '1px solid rgba(255,255,255,0.05)',
+                                display: 'block'
+                            }} 
+                        />
+                    </div>
+
                     {/* Left: Text */}
                     <div className="mlt-why-left" style={{ textAlign: 'left' }}>
-                        <h2 className="mlt-section-title" style={{ color: '#ddbe3d', marginBottom: '30px', fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800' }}>
+                        <h2 className="mlt-section-title mlt-why-desktop-title" style={{ color: '#ddbe3d', marginBottom: '30px', fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800' }}>
                             ¿Por qué ocurre esto?
                         </h2>
                         <div style={{ fontSize: '18px', lineHeight: '1.6', color: 'rgba(255,255,255,0.9)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -572,21 +602,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         </div>
                     </div>
 
-                    {/* Right: Image (Logo) */}
-                    <div className="mlt-why-image">
-                        <img loading="lazy" src="/mlt/mlt-S2-1.jpg" 
-                            alt="¿Por qué ocurre esto?" 
-                            style={{ 
-                                width: '100%', 
-                                maxWidth: '450px', 
-                                height: 'auto', 
-                                borderRadius: '24px', 
-                                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-                                border: '1px solid rgba(255,255,255,0.05)',
-                                display: 'block'
-                            }} 
-                        />
-                    </div>
+
                     
                     {/* Left: Image (Water Glass) */}
                     <div className="mlt-why-left-image" style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
@@ -998,24 +1014,44 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* 6. Nosotros / Origen Section */}
             <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '80px 24px' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        gap: '60px',
-                        alignItems: 'center'
-                    }}>
-                        {/* Text Column */}
-                        <div>
-                            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
+                    <style>{`
+                        .mlt-origen-mobile-title { display: none; }
+                        .mlt-origen-grid {
+                            display: grid;
+                            grid-template-columns: 1fr;
+                            gap: 40px;
+                            align-items: center;
+                        }
+                        @media (min-width: 900px) {
+                            .mlt-origen-grid {
+                                grid-template-columns: 1fr 1fr;
+                                gap: 60px;
+                            }
+                            .mlt-origen-left {
+                                grid-column: 1 / 2;
+                                grid-row: 1 / 2;
+                            }
+                            .mlt-origen-right {
+                                grid-column: 2 / 3;
+                                grid-row: 1 / 2;
+                            }
+                        }
+                        @media (max-width: 899px) {
+                            .mlt-origen-mobile-title { display: block; }
+                            .mlt-origen-desktop-title { display: none; }
+                        }
+                    `}</style>
+                    <div className="mlt-origen-grid">
+                        
+                        {/* Mobile Title */}
+                        <div className="mlt-origen-mobile-title">
+                            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
                                 Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
                             </h2>
-                            <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
-                                Cuando una persona se conoce mejor, desarrolla sus capacidades y actúa de manera coherente con aquello que realmente importa, su vida comienza a transformarse de una forma más profunda y sostenible. Ese es el propósito que da origen a esta experiencia.
-                            </p>
                         </div>
 
-                        {/* Image Column */}
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        {/* Image Column (Right on desktop, 2nd on mobile) */}
+                        <div className="mlt-origen-right" style={{ display: 'flex', justifyContent: 'center' }}>
                             <div style={{
                                 width: '100%',
                                 maxWidth: '350px',
@@ -1027,6 +1063,16 @@ const MltLanding = ({ result, setTestResult }) => {
                                     style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }} 
                                 />
                             </div>
+                        </div>
+
+                        {/* Text Column (Left on desktop, 3rd on mobile) */}
+                        <div className="mlt-origen-left">
+                            <h2 className="mlt-origen-desktop-title" style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: '800', marginBottom: '30px', color: '#ffffff', lineHeight: '1.2' }}>
+                                Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
+                            </h2>
+                            <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
+                                Cuando una persona se conoce mejor, desarrolla sus capacidades y actúa de manera coherente con aquello que realmente importa, su vida comienza a transformarse de una forma más profunda y sostenible. Ese es el propósito que da origen a esta experiencia.
+                            </p>
                         </div>
                     </div>
                 </div>
