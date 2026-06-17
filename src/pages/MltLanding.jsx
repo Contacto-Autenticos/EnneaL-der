@@ -1242,113 +1242,78 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* 7. Testimonials Section */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 24px' }}>
                 <div className="mlt-section-content">
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '30px', color: '#002d44' }}>
-                        Lo que dicen <span style={{ color: '#ddbe3d' }}>las personas</span>
-                    </h2>
+                    <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '15px' }}>
+                            <div style={{ height: '2px', width: '60px', background: '#ddbe3d' }}></div>
+                            <span style={{ fontSize: '0.9rem', fontWeight: '800', color: '#ddbe3d', textTransform: 'uppercase', letterSpacing: '2px' }}>
+                                CONFIANZA QUE RESPALDA RESULTADOS
+                            </span>
+                            <div style={{ height: '2px', width: '60px', background: '#ddbe3d' }}></div>
+                        </div>
+                        <h2 style={{ fontSize: '2.8rem', fontWeight: '900', color: '#002d44', marginBottom: '20px', letterSpacing: '-1px', lineHeight: '1.2' }}>
+                            Organizaciones que <span style={{ color: '#ddbe3d' }}>confían en nosotros</span>
+                        </h2>
+                        <p style={{ fontSize: '1.1rem', color: '#002d44', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6', fontWeight: '500' }}>
+                            Empresas, universidades y organizaciones que han confiado en nuestra metodología.
+                        </p>
+                    </div>
 
-                    <div style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-                        <div className="mlt-testimonials-container">
-                            <div 
-                                className="mlt-testimonials-track"
-                                style={{ 
-                                    transform: `translateX(calc(-${testimonialIndex * 380}px))`,
-                                    transition: transitionEnabled ? 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
-                                    animation: 'none'
+                    <style>{`
+                        .mlt-logos-grid {
+                            display: grid;
+                            grid-template-columns: repeat(8, 1fr);
+                            gap: 5px;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        @media (max-width: 1024px) {
+                            .mlt-logos-grid {
+                                grid-template-columns: repeat(4, 1fr);
+                                gap: 15px;
+                            }
+                        }
+                        @media (max-width: 600px) {
+                            .mlt-logos-grid {
+                                grid-template-columns: repeat(2, 1fr);
+                                gap: 15px;
+                            }
+                        }
+                    `}</style>
+                    <div style={{ position: 'relative', width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '0 20px' }}>
+                        <div className="mlt-logos-grid">
+                            {[1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15, 18, 20, 21].map((num) => (
+                                <div key={num} style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100px',
+                                    padding: '5px',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    cursor: 'default'
                                 }}
-                            >
-                                {[...testimonials, ...testimonials.slice(0, 5)].map((t, i) => (
-                                    <div key={i} className="mlt-testimonial-card" style={t.youtubeId ? { padding: '0', overflow: 'hidden' } : {}}>
-                                        {t.youtubeId ? (
-                                            <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                                                <div 
-                                                    style={{ width: '100%', height: '240px', background: '#000', position: 'relative', cursor: playingVideoIndex === i ? 'default' : 'pointer' }}
-                                                    onClick={() => {
-                                                        if (playingVideoIndex !== i) {
-                                                            setPlayingVideoIndex(i);
-                                                        }
-                                                    }}
-                                                >
-                                                {playingVideoIndex !== i ? (
-                                                    <>
-                                                        <img loading="lazy" src={`https://img.youtube.com/vi/${t.youtubeId}/hqdefault.jpg`} 
-                                                            alt={`Testimonio de ${t.author}`} 
-                                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                                                        />
-                                                        <div style={{
-                                                            position: 'absolute',
-                                                            inset: 0,
-                                                            display: 'flex',
-                                                            justifyContent: 'center',
-                                                            alignItems: 'center',
-                                                            background: 'rgba(0,0,0,0.1)',
-                                                            transition: 'all 0.3s ease'
-                                                        }}>
-                                                            <div style={{
-                                                                width: '50px',
-                                                                height: '35px',
-                                                                backgroundColor: 'rgba(255, 0, 0, 0.9)',
-                                                                borderRadius: '8px',
-                                                                display: 'flex',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
-                                                            }}>
-                                                                <svg viewBox="0 0 68 48" width="28" height="28">
-                                                                    <path d="M45 24L27 14v20z" fill="#ffffff" />
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                ) : (
-                                                    <iframe 
-                                                        width="100%" 
-                                                        height="100%" 
-                                                        src={`https://www.youtube.com/embed/${t.youtubeId}?rel=0&autoplay=1`} 
-                                                        title={`Testimonio de ${t.author}`} 
-                                                        frameBorder="0" 
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                                        allowFullScreen>
-                                                    </iframe>
-                                                )}
-                                            </div>
-                                            <div className="mlt-testimonial-footer" style={{ padding: '10px 25px 20px', borderTop: 'none', background: '#f8f9fa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                                <div className="mlt-stars">
-                                                    {[...Array(t.stars)].map((_, si) => (
-                                                        <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
-                                                    ))}
-                                                </div>
-                                                <span className="mlt-testimonial-author">- {t.author}</span>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <div>
-                                                <span className="mlt-quote-icon">“</span>
-                                                <p className="mlt-testimonial-text">{t.text}</p>
-                                            </div>
-                                            <div className="mlt-testimonial-footer">
-                                                <div className="mlt-stars">
-                                                    {[...Array(t.stars)].map((_, si) => (
-                                                        <Star key={si} size={16} fill="#ddbe3d" color="#ddbe3d" />
-                                                    ))}
-                                                </div>
-                                                <span className="mlt-testimonial-author">- {t.author}</span>
-                                            </div>
-                                        </>
-                                    )}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.transform = 'scale(1.15)';
+                                    e.currentTarget.style.filter = 'drop-shadow(0 0 12px rgba(221, 190, 61, 0.5))';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.transform = 'scale(1)';
+                                    e.currentTarget.style.filter = 'none';
+                                }}
+                                >
+                                    <img 
+                                        src={`/mlt/Logos clientes/Cliente-${num}.png`} 
+                                        alt={`Organización que confía en nosotros`} 
+                                        style={{ 
+                                            maxWidth: '100%', 
+                                            maxHeight: '100%', 
+                                            objectFit: 'contain'
+                                        }} 
+                                        loading="lazy"
+                                    />
                                 </div>
                             ))}
                         </div>
                     </div>
-
-                    {/* Overlaid Controls */}
-                    <button onClick={handlePrev} className="mlt-testimonial-btn" aria-label="Anterior" style={{ position: 'absolute', top: '50%', left: '-20px', transform: 'translateY(-50%)', zIndex: 10, background: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-                        <ArrowLeft size={24} />
-                    </button>
-                    <button onClick={() => handleNext()} className="mlt-testimonial-btn" aria-label="Siguiente" style={{ position: 'absolute', top: '50%', right: '-20px', transform: 'translateY(-50%)', zIndex: 10, background: '#ffffff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-                        <ArrowRight size={24} />
-                    </button>
-                </div>
 
                 <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <button onClick={handleAction} className="mlt-btn-main">

@@ -1376,6 +1376,10 @@ const Admin = () => {
                             onClick={() => { setActiveSection('inscripciones'); setIsMobileSidebarOpen(false); }}>
                             <Calendar size={17} /> Inscripciones Taller
                         </button>
+                        <button className={`admin-nav-item ${activeSection === 'sesiones-info' ? 'active' : ''}`}
+                            onClick={() => { setActiveSection('sesiones-info'); setIsMobileSidebarOpen(false); }}>
+                            <Calendar size={17} /> Sesiones Info MLT
+                        </button>
                     </div>
                 </nav>
 
@@ -2548,7 +2552,7 @@ const Admin = () => {
                             <h2><Calendar size={20} /> Inscripciones al taller</h2>
                             <div className="header-actions-group">
                                 <span className="registros-badge">
-                                    {workshopRegistrations.length} registros
+                                    {workshopRegistrations.filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal').length} registros
                                 </span>
                                 <div className="header-buttons-wrapper">
                                     <button onClick={fetchWorkshopRegistrations} className="btn-refresh-boxed" disabled={loadingWorkshop} title="Actualizar">
@@ -2573,11 +2577,12 @@ const Admin = () => {
                                 </thead>
                                 <tbody>
                                     {loadingWorkshop ? (
-                                        <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
-                                    ) : workshopRegistrations.length === 0 ? (
-                                        <tr><td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>No hay inscripciones registradas aún.</td></tr>
+                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                    ) : workshopRegistrations.filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal').length === 0 ? (
+                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>No hay inscripciones registradas aún.</td></tr>
                                     ) : (
                                         workshopRegistrations
+                                            .filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal')
                                             .map(r => (
                                                 <tr key={r.id}>
                                                     <td style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--color-primary)' }}>{r.workshop_name || 'Taller Eneagrama'}</td>
@@ -2594,6 +2599,67 @@ const Admin = () => {
                                                     <td>
                                                         <span className={`status-badge ${r.payment_status === 'APPROVED' ? 'unused' : 'used'}`} style={{ fontSize: '0.7rem' }}>
                                                             {r.payment_status === 'APPROVED' ? 'PAGADO' : 'PENDIENTE'}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
+
+                {/* ── SECTION: Sesiones Info MLT ── */}
+                {activeSection === 'sesiones-info' && (
+                    <div className="admin-card">
+                        <div className="admin-card-header responses-header-flex">
+                            <h2><Calendar size={20} /> Sesiones Info MLT</h2>
+                            <div className="header-actions-group">
+                                <span className="registros-badge">
+                                    {workshopRegistrations.filter(r => r.workshop_name === 'Sesión Informativa MLT Grupal').length} registros
+                                </span>
+                                <div className="header-buttons-wrapper">
+                                    <button onClick={fetchWorkshopRegistrations} className="btn-refresh-boxed" disabled={loadingWorkshop} title="Actualizar">
+                                        <RefreshCw size={18} className={loadingWorkshop ? 'spinning' : ''} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                            <table className="codes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Correo</th>
+                                        <th>Celular</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loadingWorkshop ? (
+                                        <tr><td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                    ) : workshopRegistrations.filter(r => r.workshop_name === 'Sesión Informativa MLT Grupal').length === 0 ? (
+                                        <tr><td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>No hay registros para sesiones informativas aún.</td></tr>
+                                    ) : (
+                                        workshopRegistrations
+                                            .filter(r => r.workshop_name === 'Sesión Informativa MLT Grupal')
+                                            .map(r => (
+                                                <tr key={r.id}>
+                                                    <td style={{ fontWeight: '500' }}>{r.full_name || '-'}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>{r.email || '-'}</td>
+                                                    <td style={{ fontSize: '0.85rem' }}>{r.phone || '-'}</td>
+                                                    <td style={{ fontSize: '0.8rem' }}>
+                                                        {new Date(r.created_at).toLocaleString('es-CO', { 
+                                                            day: '2-digit', month: '2-digit', year: 'numeric', 
+                                                            hour: '2-digit', minute: '2-digit' 
+                                                        })}
+                                                    </td>
+                                                    <td>
+                                                        <span className="status-badge unused" style={{ fontSize: '0.7rem' }}>
+                                                            REGISTRADO
                                                         </span>
                                                     </td>
                                                 </tr>
