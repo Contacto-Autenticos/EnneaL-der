@@ -1669,34 +1669,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             <p style={{ fontSize: '1.15rem', fontWeight: '800', margin: '0 0 30px 0', color: '#002d44' }}>
                                 ¿Estás dispuesto a comprometerte contigo mismo?
                             </p>
-                            <button 
-                                onClick={handleAction} 
-                                style={{ 
-                                    background: '#ddbe3d', 
-                                    border: 'none', 
-                                    color: '#002d44', 
-                                    fontSize: '1.1rem', 
-                                    fontWeight: '800', 
-                                    cursor: 'pointer',
-                                    padding: '15px 30px',
-                                    borderRadius: '8px',
-                                    textTransform: 'uppercase',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '10px',
-                                    transition: 'all 0.3s'
-                                }}
-                                onMouseOver={(e) => {
-                                    e.currentTarget.style.background = '#cba92d';
-                                    e.currentTarget.style.transform = 'translateY(-2px)';
-                                }}
-                                onMouseOut={(e) => {
-                                    e.currentTarget.style.background = '#ddbe3d';
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                }}
-                            >
-                                SÍ, ME COMPROMETO <ArrowRight size={20} />
-                            </button>
+
                         </div>
                     </div>
             </section>
