@@ -153,7 +153,7 @@ const Admin = () => {
             fetchTransactions();
             fetchCoupons();
             fetchAffiliates();
-            if (activeSection === 'inscripciones') {
+            if (activeSection === 'inscripciones' || activeSection === 'sesiones-info') {
                 fetchWorkshopRegistrations();
             }
             if (activeSection === 'fascinantes-anonimos' || activeSection === 'fascinantes-registrados') {
@@ -578,9 +578,11 @@ const Admin = () => {
             if (registrations) {
                 registrations.forEach(reg => {
                     const email = reg.email?.toLowerCase().trim();
+                    const wName = reg.workshop_name || '';
                     if (email) {
-                        if (!seenEmails.has(email)) {
-                            seenEmails.add(email);
+                        const dedupeKey = `${email}_${wName}`;
+                        if (!seenEmails.has(dedupeKey)) {
+                            seenEmails.add(dedupeKey);
                             uniqueRegistrations.push(reg);
                         }
                     } else {
