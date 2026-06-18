@@ -79,6 +79,7 @@ const LiderazgoResults = lazy(() => lazyRetry(() => import('./pages/LiderazgoRes
 const Agenda = lazy(() => lazyRetry(() => import('./pages/Agenda')));
 const LiderazgoTestIntro = lazy(() => lazyRetry(() => import('./pages/LiderazgoTestIntro')));
 const BusinessScan = lazy(() => lazyRetry(() => import('./pages/BusinessScan')));
+const PostulacionMlt = lazy(() => lazyRetry(() => import('./pages/PostulacionMlt')));
 const PartnerGateway = lazy(() => lazyRetry(() => import('./pages/PartnerGateway')));
 
 function App() {
@@ -468,6 +469,7 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/programa-genuinos" element={<GenuinosLanding />} />
         <Route path="/agenda" element={<Agenda />} />
         <Route path="/diagnostico-empresarial" element={<BusinessScan />} />
+        <Route path="/postulacion-mlt" element={<PostulacionMlt />} />
         <Route
           path="/eneagrama-empresas"
           element={
