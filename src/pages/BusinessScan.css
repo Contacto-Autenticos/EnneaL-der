@@ -344,8 +344,6 @@
   background: #ddbe3d;
   color: #002d44;
   border: none;
-  flex: 1;
-  justify-content: center;
 }
 
 .nav-btn.next:hover, .submit-btn:hover {
