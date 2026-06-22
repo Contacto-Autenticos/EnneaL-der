@@ -435,8 +435,17 @@ const MltLanding = ({ result, setTestResult }) => {
                         </div>
 
                         {/* 2. Video placeholder */}
-                        <div style={{ width: '100%', maxWidth: '700px', margin: '0 auto 60px auto', background: '#000000', aspectRatio: '16/9', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                            <p style={{ color: '#ffffff', opacity: 0.5, fontSize: '18px', fontWeight: '500', letterSpacing: '2px' }}>[ ESPACIO PARA VIDEO ]</p>
+                        <div style={{ width: '100%', maxWidth: '700px', margin: '0 auto 60px auto', background: '#000000', aspectRatio: '16/9', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', overflow: 'hidden' }}>
+                            <iframe 
+                                width="100%" 
+                                height="100%" 
+                                src="https://www.youtube.com/embed/Cr5EebrKbQU" 
+                                title="YouTube video player" 
+                                frameBorder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerPolicy="strict-origin-when-cross-origin" 
+                                allowFullScreen
+                            ></iframe>
                         </div>
 
                         {/* 3. Content Grid (Text + Image) */}
