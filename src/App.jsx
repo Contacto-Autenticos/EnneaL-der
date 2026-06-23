@@ -31,6 +31,7 @@ import { calculateResults, calculateAdvancedResults, getEnneagramEmailImage } fr
 import { advancedEnneagramInfo } from './data/advancedInfo';
 import ScrollToTop from './components/ScrollToTop';
 import FloatingScrollToTop from './components/FloatingScrollToTop';
+import PwaInstallBanner from './components/PwaInstallBanner';
 import Analytics from './components/Analytics';
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -283,6 +284,7 @@ Deseo Básico: ${details.motivations.desire}
       <Analytics />
       <ScrollToTop />
       <FloatingScrollToTop />
+      <PwaInstallBanner />
       <ErrorBoundary fallback={
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#002d44', color: '#ffffff', textAlign: 'center', padding: '20px' }}>
           <h2 style={{ color: '#ddbe3d', marginBottom: '10px' }}>Actualización de Sistema</h2>
