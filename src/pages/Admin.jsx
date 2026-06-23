@@ -4131,6 +4131,7 @@ const Admin = () => {
                                     return <p className="no-usages-msg">No hay registros de uso detallados aún para este código.</p>;
                                 }
                                 return (
+                                    <>
                                     <div className="usage-history-table-wrapper desktop-table-view">
                                         <table className="usage-history-table">
                                             <thead>
@@ -4176,6 +4177,7 @@ const Admin = () => {
                                             </div>
                                         ))}
                                     </div>
+                                    </>
                                 );
                             })()}
                         </div>
