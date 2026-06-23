@@ -34,6 +34,7 @@ const WorkshopPaymentStatus = () => {
                                 payment_status: 'APPROVED', 
                                 transaction_id: paymentId,
                                 raw_data: { preference_id: preferenceId }
+                            })
                             .eq('id', registrationId);
 
                         // --- TELEGRAM NOTIFICATION ---
