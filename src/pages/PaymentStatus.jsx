@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendTelegramNotification } from '../utils/notifications';
 import './PaymentStyles.css'; // Reuse styles for consistency
 
 const PaymentStatus = () => {
@@ -58,6 +59,21 @@ const PaymentStatus = () => {
                             currency: 'COP',
                             value: amountInCop,
                             content_name: contentName
+                        });
+                    }
+                    
+                    // --- TELEGRAM NOTIFICATION ---
+                    if (isWorkshop) {
+                        sendTelegramNotification('workshop_inscription', {
+                            email: data.data.customer_email,
+                            amount: amountInCop,
+                            reference: reference
+                        });
+                    } else {
+                        sendTelegramNotification('advanced_test_purchase', {
+                            email: data.data.customer_email,
+                            amount: amountInCop,
+                            reference: reference
                         });
                     }
                     // ----------------------------

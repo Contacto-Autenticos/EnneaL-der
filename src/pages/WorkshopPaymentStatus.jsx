@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendTelegramNotification } from '../utils/notifications';
 import './PaymentStyles.css';
 
 const WorkshopPaymentStatus = () => {
@@ -33,8 +34,17 @@ const WorkshopPaymentStatus = () => {
                                 payment_status: 'APPROVED', 
                                 transaction_id: paymentId,
                                 raw_data: { preference_id: preferenceId }
-                            })
                             .eq('id', registrationId);
+
+                        // --- TELEGRAM NOTIFICATION ---
+                        if (storedEmail) {
+                            sendTelegramNotification('workshop_inscription', {
+                                email: storedEmail,
+                                amount: 'N/A', // O el monto real si lo guardaron
+                                reference: paymentId || 'N/A'
+                            });
+                        }
+                        // ----------------------------
 
                         // 2. Disparar correos si tenemos los datos
                         if (storedEmail) {

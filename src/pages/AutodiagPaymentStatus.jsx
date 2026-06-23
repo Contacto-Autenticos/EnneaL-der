@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendTelegramNotification } from '../utils/notifications';
 import './PaymentStyles.css';
 
 const AutodiagPaymentStatus = () => {
@@ -39,6 +40,13 @@ const AutodiagPaymentStatus = () => {
                             content_name: 'Autodiagnóstico de Dominios'
                         });
                     }
+
+                    // --- TELEGRAM NOTIFICATION ---
+                    sendTelegramNotification('dominios_purchase', {
+                        email: data.data.customer_email,
+                        amount: amountInCop,
+                        reference: data.data.reference || ''
+                    });
                     // ----------------------------
 
                     // Guardar en la base de datos si existe data temporal
