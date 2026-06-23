@@ -30,6 +30,7 @@ const Admin = () => {
     // Dashboard State
     const [activeSection, setActiveSection] = useState('codigos');
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [preguntasOpen, setPreguntasOpen] = useState(false);
     const [respuestasOpen, setRespuestasOpen] = useState(false);
     const [expandedProgram, setExpandedProgram] = useState(null);
@@ -1447,16 +1448,21 @@ const Admin = () => {
                     </div>
                 </nav>
 
-                <div className="admin-sidebar-user-info" style={{
-                    padding: '15px 20px',
-                    borderTop: '1px solid rgba(255,255,255,0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    color: '#e2e8f0',
-                    fontSize: '0.9rem',
-                    marginTop: 'auto'
-                }}>
+                <div 
+                    className="admin-sidebar-user-info" 
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    style={{
+                        padding: '15px 20px',
+                        borderTop: '1px solid rgba(255,255,255,0.1)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        color: '#e2e8f0',
+                        fontSize: '0.9rem',
+                        marginTop: 'auto',
+                        cursor: 'pointer'
+                    }}
+                >
                     <div style={{
                         width: '32px',
                         height: '32px',
@@ -1471,20 +1477,26 @@ const Admin = () => {
                     }}>
                         {localStorage.getItem('adminUser') ? localStorage.getItem('adminUser').charAt(0).toUpperCase() : 'A'}
                     </div>
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flexGrow: 1 }}>
                         <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Conectado como</div>
                         <div style={{ fontWeight: '500' }}>{localStorage.getItem('adminUser') || 'Administrador'}</div>
                     </div>
+                    <ChevronDown size={16} style={{ transform: isUserMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', color: '#94a3b8' }} />
                 </div>
-                <button onClick={handleSubscribeToPush} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#10b981' }}>
-                    <Bell size={16} /> Suscribirse a alertas
-                </button>
-                <button onClick={() => navigate('/')} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#b89b2d' }}>
-                    <Home size={16} /> Volver a Inicio
-                </button>
-                <button onClick={handleLogout} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none' }}>
-                    <LogOut size={16} /> Cerrar sesión
-                </button>
+                
+                {isUserMenuOpen && (
+                    <div style={{ backgroundColor: 'rgba(0,0,0,0.2)', paddingBottom: '10px' }}>
+                        <button onClick={handleSubscribeToPush} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#10b981' }}>
+                            <Bell size={16} /> Suscribirse a alertas
+                        </button>
+                        <button onClick={() => navigate('/')} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#b89b2d' }}>
+                            <Home size={16} /> Volver a Inicio
+                        </button>
+                        <button onClick={handleLogout} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none' }}>
+                            <LogOut size={16} /> Cerrar sesión
+                        </button>
+                    </div>
+                )}
             </aside>
 
             {/* ── MAIN CONTENT ── */}
