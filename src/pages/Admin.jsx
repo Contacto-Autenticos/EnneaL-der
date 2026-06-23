@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -17,6 +18,8 @@ import { calculateDomainScores, getExpertAnalysis, DOMAIN_STYLES } from '../util
 import './Admin.css';
 
 const Admin = () => {
+    const navigate = useNavigate();
+    
     // Auth State
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [usernameInput, setUsernameInput] = useState('');
@@ -1414,6 +1417,9 @@ const Admin = () => {
                         <div style={{ fontWeight: '500' }}>{localStorage.getItem('adminUser') || 'Administrador'}</div>
                     </div>
                 </div>
+                <button onClick={() => navigate('/')} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#b89b2d' }}>
+                    <Home size={16} /> Volver a Inicio
+                </button>
                 <button onClick={handleLogout} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none' }}>
                     <LogOut size={16} /> Cerrar sesión
                 </button>
