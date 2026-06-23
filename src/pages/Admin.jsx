@@ -28,7 +28,7 @@ const Admin = () => {
     const [loginError, setLoginError] = useState('');
 
     // Dashboard State
-    const [activeSection, setActiveSection] = useState('codigos');
+    const [activeSection, setActiveSection] = useState('inscripciones');
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [preguntasOpen, setPreguntasOpen] = useState(false);
