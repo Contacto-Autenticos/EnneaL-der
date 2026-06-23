@@ -24,6 +24,10 @@ const WorkshopInscripcionHazQueSuceda = () => {
         mobilityRequirementDetails: ''
     });
 
+    const [discountCode, setDiscountCode] = useState('');
+    const [discountApplied, setDiscountApplied] = useState(false);
+    const [discountError, setDiscountError] = useState('');
+
     const workshopConfig = {
         title: "Haz Que Suceda",
         subtitle: "Un día para reflexionar, para sentir y para tomar acción.",
@@ -32,6 +36,18 @@ const WorkshopInscripcionHazQueSuceda = () => {
         location: "Casa Obeso, Cali Colombia",
         time: "9:00 AM - 5:00 PM",
         name: "Haz que suceda"
+    };
+
+    const finalPrice = discountApplied ? workshopConfig.price * 0.5 : workshopConfig.price;
+
+    const applyDiscount = () => {
+        if (discountCode.toUpperCase() === 'TECREO') {
+            setDiscountApplied(true);
+            setDiscountError('');
+        } else {
+            setDiscountApplied(false);
+            setDiscountError('Código inválido');
+        }
     };
 
     useEffect(() => {
@@ -128,7 +144,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                     phone: formData.phone,
                     city: formData.city,
                     workshop_name: workshopConfig.name,
-                    amount: workshopConfig.price,
+                    amount: finalPrice,
                     payment_status: 'PENDING',
                     raw_data: {
                         food_restriction: formData.hasFoodRestriction === 'si' ? formData.foodRestrictionDetails : 'No',
@@ -150,7 +166,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
             const { data: mpData, error: mpError } = await supabase.functions.invoke('create-mp-preference', {
                 body: {
                     reference,
-                    unit_price: workshopConfig.price,
+                    unit_price: finalPrice,
                     title: workshopConfig.name,
                     user_email: formData.email,
                     back_url_custom: `${window.location.origin}/inscripcion-status`
@@ -415,6 +431,42 @@ const WorkshopInscripcionHazQueSuceda = () => {
                             )}
                         </div>
 
+                        <div className="workshop-form-group">
+                            <label>Código de Descuento (Opcional)</label>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <input 
+                                    type="text" 
+                                    value={discountCode} 
+                                    onChange={(e) => {
+                                        setDiscountCode(e.target.value);
+                                        setDiscountError('');
+                                    }} 
+                                    placeholder="Ingresa tu código"
+                                    style={{ flex: 1, textTransform: 'uppercase' }}
+                                    disabled={discountApplied}
+                                />
+                                <button 
+                                    type="button" 
+                                    onClick={applyDiscount}
+                                    style={{
+                                        padding: '10px 15px',
+                                        backgroundColor: discountApplied ? '#10b981' : '#333',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '8px',
+                                        cursor: discountApplied ? 'default' : 'pointer',
+                                        fontWeight: 'bold',
+                                        minWidth: '100px'
+                                    }}
+                                    disabled={discountApplied || !discountCode}
+                                >
+                                    {discountApplied ? 'APLICADO' : 'APLICAR'}
+                                </button>
+                            </div>
+                            {discountError && <span style={{ color: '#ff4d4d', fontSize: '0.8rem', marginTop: '5px', display: 'block' }}>{discountError}</span>}
+                            {discountApplied && <span style={{ color: '#10b981', fontSize: '0.8rem', marginTop: '5px', display: 'block' }}>¡Descuento del 50% aplicado exitosamente! Valor final: ${finalPrice.toLocaleString('es-CO')} COP</span>}
+                        </div>
+
                         <button 
                             type="submit" 
                             className="workshop-submit-btn"
@@ -425,7 +477,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                                     <Loader2 className="animate-spin" size={20} />
                                     PROCESANDO...
                                 </span>
-                            ) : "INSCRIBIRME Y PAGAR"}
+                            ) : `INSCRIBIRME Y PAGAR ${discountApplied ? `($${finalPrice.toLocaleString('es-CO')})` : ''}`}
                         </button>
                     </form>
                     </div>
