@@ -18,7 +18,8 @@ serve(async (req) => {
         // Determinar título y mensaje
         let title = 'Nueva Alerta Auténticos';
         let body = 'Tienes una nueva notificación de la plataforma.';
-        let url = 'https://autenticos.co/admin';
+        const origin = req.headers.get('origin') || 'https://enesencia.autenticos.co';
+        let url = `${origin}/admin`;
 
         if (event_type === 'free_test') {
             title = '🎯 Test Básico Finalizado';
