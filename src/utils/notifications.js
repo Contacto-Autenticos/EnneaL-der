@@ -1,16 +1,16 @@
 import { supabase } from '../supabaseClient';
 
-export const sendTelegramNotification = async (eventType, details) => {
+export const sendWebPushNotification = async (eventType, details) => {
   try {
-    const { data, error } = await supabase.functions.invoke('send-telegram-notification', {
+    const { data, error } = await supabase.functions.invoke('send-web-push', {
       body: { event_type: eventType, details }
     });
     
     if (error) {
-      console.error('Error enviando notificación a Telegram:', error);
+      console.error('Error enviando notificación Web Push:', error);
     }
     return data;
   } catch (err) {
-    console.error('Excepción al enviar notificación a Telegram:', err);
+    console.error('Excepción al enviar notificación Web Push:', err);
   }
 };

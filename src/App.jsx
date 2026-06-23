@@ -34,7 +34,7 @@ import FloatingScrollToTop from './components/FloatingScrollToTop';
 import PwaInstallBanner from './components/PwaInstallBanner';
 import Analytics from './components/Analytics';
 import ErrorBoundary from './components/ErrorBoundary';
-import { sendTelegramNotification } from './utils/notifications';
+import { sendWebPushNotification } from './utils/notifications';
 
 const Test = lazy(() => lazyRetry(() => import('./pages/Test')));
 const Result = lazy(() => lazyRetry(() => import('./pages/Result')));
@@ -128,9 +128,9 @@ function App() {
     setTestResult(resultWithQuestions);
     localStorage.setItem('enneagramResult', JSON.stringify(resultWithQuestions));
 
-    // Enviar notificación a Telegram
+    // Enviar notificación a Web Push
     const mainType = result.enneatypes?.[0]?.type || 'Desconocido';
-    sendTelegramNotification('free_test', { 
+    sendWebPushNotification('free_test', { 
       name: user?.name || 'Anónimo', 
       email: user?.email || 'Anónimo', 
       enneatype: mainType 

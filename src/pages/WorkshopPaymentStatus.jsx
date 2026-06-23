@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { sendTelegramNotification } from '../utils/notifications';
+import { sendWebPushNotification } from '../utils/notifications';
 import './PaymentStyles.css';
 
 const WorkshopPaymentStatus = () => {
@@ -37,9 +37,9 @@ const WorkshopPaymentStatus = () => {
                             })
                             .eq('id', registrationId);
 
-                        // --- TELEGRAM NOTIFICATION ---
+                        // --- WEB PUSH NOTIFICATION ---
                         if (storedEmail) {
-                            sendTelegramNotification('workshop_inscription', {
+                            sendWebPushNotification('workshop_inscription', {
                                 email: storedEmail,
                                 amount: 'N/A', // O el monto real si lo guardaron
                                 reference: paymentId || 'N/A'

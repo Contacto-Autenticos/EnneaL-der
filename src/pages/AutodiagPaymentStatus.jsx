@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { sendTelegramNotification } from '../utils/notifications';
+import { sendWebPushNotification } from '../utils/notifications';
 import './PaymentStyles.css';
 
 const AutodiagPaymentStatus = () => {
@@ -41,8 +41,8 @@ const AutodiagPaymentStatus = () => {
                         });
                     }
 
-                    // --- TELEGRAM NOTIFICATION ---
-                    sendTelegramNotification('dominios_purchase', {
+                    // --- WEB PUSH NOTIFICATION ---
+                    sendWebPushNotification('dominios_purchase', {
                         email: data.data.customer_email,
                         amount: amountInCop,
                         reference: data.data.reference || ''

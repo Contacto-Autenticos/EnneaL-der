@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -1146,6 +1146,65 @@ const Admin = () => {
         }
     };
 
+    const urlBase64ToUint8Array = (base64String) => {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    };
+
+    const handleSubscribeToPush = async () => {
+        try {
+            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                alert('Las notificaciones Web Push no son compatibles con este navegador.');
+                return;
+            }
+
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                alert('Debes conceder permisos de notificación en el navegador.');
+                return;
+            }
+
+            const registration = await navigator.serviceWorker.ready;
+            const existingSubscription = await registration.pushManager.getSubscription();
+            if (existingSubscription) {
+                alert('Ya estás suscrito a las alertas en este dispositivo.');
+                return;
+            }
+
+            const vapidPublicKey = 'BIpCShZ8ygDnIsLfwbp5eimMXpQeevqJ-RVU1Jffd12LtE_1M0tqSDYDNtG-o8KmJT92u603n-M6FgrXH3h-rNo';
+            const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: convertedVapidKey
+            });
+
+            const { error } = await supabase.from('push_subscriptions').insert([{
+                endpoint: subscription.endpoint,
+                keys: {
+                    p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('p256dh')))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ''),
+                    auth: btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('auth')))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
+                }
+            }]);
+
+            if (error && error.code !== '23505') { 
+                throw error;
+            }
+
+            alert('¡Te has suscrito exitosamente a las alertas en este dispositivo!');
+
+        } catch (error) {
+            console.error('Error al suscribirse:', error);
+            alert('Ocurrió un error al intentar suscribirse a las alertas.');
+        }
+    };
+
     if (!isAuthenticated) {
         return (
             <div className="admin-login-wrapper">
@@ -1417,6 +1476,9 @@ const Admin = () => {
                         <div style={{ fontWeight: '500' }}>{localStorage.getItem('adminUser') || 'Administrador'}</div>
                     </div>
                 </div>
+                <button onClick={handleSubscribeToPush} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#10b981' }}>
+                    <Bell size={16} /> Suscribirse a alertas
+                </button>
                 <button onClick={() => navigate('/')} className="admin-sidebar-logout" style={{ marginTop: '0', borderTop: 'none', color: '#b89b2d' }}>
                     <Home size={16} /> Volver a Inicio
                 </button>
