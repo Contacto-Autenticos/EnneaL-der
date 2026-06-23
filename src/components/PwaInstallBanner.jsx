@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Download, X } from 'lucide-react';
 import './PwaInstallBanner.css';
+
+// Define aquí las rutas donde SÍ quieres que aparezca el banner
+const ALLOWED_PATHS = [
+  '/',
+  '/eneagrama',
+  '/hub',
+  '/my-results'
+];
 
 const PwaInstallBanner = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     // Verificar si el usuario ya lo cerró antes
@@ -53,7 +63,9 @@ const PwaInstallBanner = () => {
     localStorage.setItem('pwa-banner-dismissed', 'true');
   };
 
-  if (!showBanner) return null;
+  const isAllowedPage = ALLOWED_PATHS.includes(location.pathname);
+
+  if (!showBanner || !isAllowedPage) return null;
 
   return (
     <div className="pwa-install-banner">
