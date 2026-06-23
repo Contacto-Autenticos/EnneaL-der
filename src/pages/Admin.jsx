@@ -3045,13 +3045,20 @@ const Admin = () => {
                         </div>
 
                         <div className="resp-filters">
-                            <input
-                                className="resp-filter-input"
-                                type="text"
-                                placeholder="Filtrar por taller..."
+                            <select
+                                className="resp-filter-select"
                                 value={filterWorkshopName}
                                 onChange={e => setFilterWorkshopName(e.target.value)}
-                            />
+                            >
+                                <option value="">Todos los talleres</option>
+                                {Array.from(new Set(
+                                    workshopRegistrations
+                                        .filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal')
+                                        .map(r => r.workshop_name || 'Taller Eneagrama')
+                                )).map(name => (
+                                    <option key={name} value={name}>{name}</option>
+                                ))}
+                            </select>
                             <select
                                 className="resp-filter-select"
                                 value={filterWorkshopStatus}
