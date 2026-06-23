@@ -2,7 +2,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-const inputImagePath = path.join(__dirname, 'public', 'Icono-Aplicación-autenticos.jpg');
+const inputImagePath = path.join(__dirname, 'public', 'Icono-Aplicación-autenticos.png');
 const outputDir = path.join(__dirname, 'public', 'pwa-icons');
 
 if (!fs.existsSync(outputDir)) {
