@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -1514,7 +1514,7 @@ const Admin = () => {
                             </div>
                         </div>
 
-                        <div className="codes-table-wrapper">
+                        <div className="codes-table-wrapper desktop-table-view">
                             <table className="codes-table">
                                 <thead>
                                     <tr>
@@ -1558,6 +1558,46 @@ const Admin = () => {
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="mobile-cards-list">
+                            {loadingBusiness ? (
+                                <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando diagnósticos...</div>
+                            ) : businessResults.length === 0 ? (
+                                <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No se han encontrado registros.</div>
+                            ) : (
+                                businessResults.map((r) => (
+                                    <div className="mobile-card" key={r.id}>
+                                        <div className="mobile-card-header">
+                                            <span className="mobile-card-badge">{r.company_name}</span>
+                                        </div>
+                                        <h4 className="mobile-card-name">{r.resp_name} {r.resp_lastname}</h4>
+                                        <div className="mobile-card-details-row">
+                                            <div className="mobile-card-detail-item"><Tag size={14}/> <span>{r.resp_role}</span></div>
+                                        </div>
+                                        <div className="mobile-card-details-row">
+                                            <div className="mobile-card-detail-item"><Mail size={14}/> <span>{r.email}</span></div>
+                                            <div className="mobile-card-detail-item"><Phone size={14}/> <span>{r.phone}</span></div>
+                                        </div>
+                                        <div className="mobile-card-actions">
+                                            <button 
+                                                onClick={() => handleDownloadBusinessPdf(r)}
+                                                className="btn-download-pdf"
+                                                disabled={isGeneratingBusinessPdf === r.id}
+                                                style={{ 
+                                                    padding: '8px 12px', 
+                                                    fontSize: '0.85rem',
+                                                    backgroundColor: isGeneratingBusinessPdf === r.id ? '#94a3b8' : '#b89b2d',
+                                                    color: 'white', border: 'none', borderRadius: '6px',
+                                                    display: 'flex', alignItems: 'center', gap: '6px', width: '100%', justifyContent: 'center'
+                                                }}
+                                            >
+                                                {isGeneratingBusinessPdf === r.id ? <RefreshCw size={14} className="spinning" /> : <Download size={14} />} 
+                                                Descargar PDF
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
                 )}
@@ -1604,7 +1644,7 @@ const Admin = () => {
                                     <RefreshCw size={16} className={loading ? 'spinning' : ''} />
                                 </button>
                             </div>
-                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '400px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -1758,6 +1798,172 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className="mobile-cards-list">
+                                {codes.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
+                                        {loading ? 'Cargando...' : 'No hay códigos.'}
+                                    </div>
+                                ) : (
+                                    codes.slice(0, 50).map((item) => {
+                                        const usages = allCodeUsages.filter(u => u.code === item.code);
+                                        const isDeactivated = item.expires_at && item.expires_at.startsWith('2020-01-01');
+                                        const isExpired = item.expires_at && new Date(item.expires_at) < new Date() && !isDeactivated;
+                                        
+                                        return (
+                                            <div className="mobile-card" key={item.code}>
+                                                <div className="mobile-card-header">
+                                                    <span className="mobile-card-badge" style={{ fontFamily: 'monospace', fontSize: '0.95rem' }}>{item.code}</span>
+                                                    <button
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(item.code);
+                                                            setCopySuccess(item.code);
+                                                            setTimeout(() => setCopySuccess(''), 2000);
+                                                        }}
+                                                        className="btn-action-admin"
+                                                        title="Copiar código"
+                                                        style={{ color: copySuccess === item.code ? '#4ade80' : '#b89b2d', border: 'none', background: 'transparent', padding: 0 }}
+                                                    >
+                                                        {copySuccess === item.code ? <CheckCircle2 size={20} /> : <Copy size={20} />}
+                                                    </button>
+                                                </div>
+                                                
+                                                <div className="mobile-card-details-row">
+                                                    <span style={{ 
+                                                        fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px',
+                                                        background: item.is_multi_use ? 'rgba(59, 130, 246, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+                                                        color: item.is_multi_use ? '#1e40af' : '#334155',
+                                                        border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(148, 163, 184, 0.4)',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {item.is_multi_use ? 'Multiuso' : 'Único'}
+                                                    </span>
+                                                    
+                                                    {item.is_multi_use ? (
+                                                        <span className={`status-badge ${isExpired || isDeactivated ? 'used' : 'unused'}`}>
+                                                            {isDeactivated ? 'Inactivo' : (isExpired ? 'Expirado' : 'Disponible')}
+                                                        </span>
+                                                    ) : (
+                                                        <span className={`status-badge ${item.is_used || isExpired || isDeactivated ? 'used' : 'unused'}`}>
+                                                            {item.is_used ? 'Usado' : (isDeactivated ? 'Inactivo' : (isExpired ? 'Expirado' : 'Disponible'))}
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Tag size={14}/> <span>{item.used_in_program || 'Sin programa'}</span></div>
+                                                </div>
+
+                                                <div className="mobile-card-details-row">
+                                                    {item.is_multi_use ? (
+                                                        <button onClick={() => setSelectedCodeForUsages(item)} className="btn-view-usages" style={{ background: 'none', border: 'none', color: '#1e40af', padding: 0, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                            <User size={14} /> {usages.length} {usages.length === 1 ? 'persona' : 'personas'}
+                                                        </button>
+                                                    ) : (
+                                                        <div className="mobile-card-detail-item"><Mail size={14}/> <span>{item.used_by || 'Sin uso'}</span></div>
+                                                    )}
+                                                </div>
+
+                                                {item.used_at && (
+                                                    <div className="mobile-card-details-row">
+                                                        <div className="mobile-card-detail-item"><Calendar size={14}/> <span>Usado: {new Date(item.used_at).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                                    </div>
+                                                )}
+
+                                                {item.is_multi_use && (!item.expires_at || item.expires_at.startsWith('2020-01-01')) && (
+                                                    <div className="mobile-card-actions">
+                                                        <button onClick={() => handleToggleMultiUseCode(item.code, !item.expires_at)} className={`btn-action-admin`} style={{ color: !item.expires_at ? '#ef4444' : '#10b981', border: 'none', background: 'transparent' }}>
+                                                            {!item.expires_at ? <EyeOff size={18} /> : <Eye size={18} />} <span style={{fontSize: '0.8rem', fontWeight: '500', marginLeft: '4px'}}>{!item.expires_at ? 'Desactivar' : 'Activar'}</span>
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
+                            <div className="mobile-cards-list">
+                                {codes.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
+                                        {loading ? 'Cargando...' : 'No hay códigos.'}
+                                    </div>
+                                ) : (
+                                    codes.slice(0, 50).map((item) => {
+                                        const usages = allCodeUsages.filter(u => u.code === item.code);
+                                        const isDeactivated = item.expires_at && item.expires_at.startsWith('2020-01-01');
+                                        const isExpired = item.expires_at && new Date(item.expires_at) < new Date() && !isDeactivated;
+                                        
+                                        return (
+                                            <div className="mobile-card" key={item.code}>
+                                                <div className="mobile-card-header">
+                                                    <span className="mobile-card-badge" style={{ fontFamily: 'monospace', fontSize: '0.95rem' }}>{item.code}</span>
+                                                    <button
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(item.code);
+                                                            setCopySuccess(item.code);
+                                                            setTimeout(() => setCopySuccess(''), 2000);
+                                                        }}
+                                                        className="btn-action-admin"
+                                                        title="Copiar código"
+                                                        style={{ color: copySuccess === item.code ? '#4ade80' : '#b89b2d', border: 'none', background: 'transparent', padding: 0 }}
+                                                    >
+                                                        {copySuccess === item.code ? <CheckCircle2 size={20} /> : <Copy size={20} />}
+                                                    </button>
+                                                </div>
+                                                
+                                                <div className="mobile-card-details-row">
+                                                    <span style={{ 
+                                                        fontSize: '0.75rem', padding: '2px 8px', borderRadius: '10px',
+                                                        background: item.is_multi_use ? 'rgba(59, 130, 246, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+                                                        color: item.is_multi_use ? '#1e40af' : '#334155',
+                                                        border: item.is_multi_use ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(148, 163, 184, 0.4)',
+                                                        fontWeight: '600'
+                                                    }}>
+                                                        {item.is_multi_use ? 'Multiuso' : 'Único'}
+                                                    </span>
+                                                    
+                                                    {item.is_multi_use ? (
+                                                        <span className={`status-badge ${isExpired || isDeactivated ? 'used' : 'unused'}`}>
+                                                            {isDeactivated ? 'Inactivo' : (isExpired ? 'Expirado' : 'Disponible')}
+                                                        </span>
+                                                    ) : (
+                                                        <span className={`status-badge ${item.is_used || isExpired || isDeactivated ? 'used' : 'unused'}`}>
+                                                            {item.is_used ? 'Usado' : (isDeactivated ? 'Inactivo' : (isExpired ? 'Expirado' : 'Disponible'))}
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Tag size={14}/> <span>{item.used_in_program || 'Sin programa'}</span></div>
+                                                </div>
+
+                                                <div className="mobile-card-details-row">
+                                                    {item.is_multi_use ? (
+                                                        <button onClick={() => setSelectedCodeForUsages(item)} className="btn-view-usages" style={{ background: 'none', border: 'none', color: '#1e40af', padding: 0, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                            <User size={14} /> {usages.length} {usages.length === 1 ? 'persona' : 'personas'}
+                                                        </button>
+                                                    ) : (
+                                                        <div className="mobile-card-detail-item"><Mail size={14}/> <span>{item.used_by || 'Sin uso'}</span></div>
+                                                    )}
+                                                </div>
+
+                                                {item.used_at && (
+                                                    <div className="mobile-card-details-row">
+                                                        <div className="mobile-card-detail-item"><Calendar size={14}/> <span>Usado: {new Date(item.used_at).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                                    </div>
+                                                )}
+
+                                                {item.is_multi_use && (!item.expires_at || item.expires_at.startsWith('2020-01-01')) && (
+                                                    <div className="mobile-card-actions">
+                                                        <button onClick={() => handleToggleMultiUseCode(item.code, !item.expires_at)} className={`btn-action-admin`} style={{ color: !item.expires_at ? '#ef4444' : '#10b981', border: 'none', background: 'transparent' }}>
+                                                            {!item.expires_at ? <EyeOff size={18} /> : <Eye size={18} />} <span style={{fontSize: '0.8rem', fontWeight: '500', marginLeft: '4px'}}>{!item.expires_at ? 'Desactivar' : 'Activar'}</span>
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
@@ -1834,7 +2040,7 @@ const Admin = () => {
                                     <RefreshCw size={16} className={loadingCoupons ? 'spinning' : ''} />
                                 </button>
                             </div>
-                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '400px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -1897,6 +2103,57 @@ const Admin = () => {
                                         )}
                                     </tbody>
                                 </table>
+                            </div>
+                            <div className="mobile-cards-list">
+                                {coupons.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '10px' }}>
+                                        {loadingCoupons ? 'Cargando...' : 'No hay cupones.'}
+                                    </div>
+                                ) : (
+                                    coupons.map((c) => (
+                                        <div className="mobile-card" key={c.id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge" style={{ fontFamily: 'monospace', fontSize: '0.95rem' }}>{c.code}</span>
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(c.code);
+                                                        setCopySuccess(c.code);
+                                                        setTimeout(() => setCopySuccess(''), 2000);
+                                                    }}
+                                                    className="btn-action-admin"
+                                                    title="Copiar cupón"
+                                                    style={{ color: copySuccess === c.code ? '#4ade80' : '#b89b2d', border: 'none', background: 'transparent', padding: 0 }}
+                                                >
+                                                    {copySuccess === c.code ? <CheckCircle2 size={20} /> : <Copy size={20} />}
+                                                </button>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Tag size={14}/> <span>{c.discount_percentage}% Descuento</span></div>
+                                                <span className={`status-badge ${c.is_active ? 'unused' : 'used'}`}>
+                                                    {c.is_active ? 'Activo' : 'Off'}
+                                                </span>
+                                            </div>
+                                            <div className="mobile-card-actions" style={{ justifyContent: 'space-between', padding: '10px', background: '#f8fafc', borderRadius: '8px', marginTop: '10px' }}>
+                                                <button
+                                                    onClick={() => handleToggleCoupon(c.id, c.is_active)}
+                                                    className="btn-action-admin refresh"
+                                                    title={c.is_active ? 'Desactivar' : 'Activar'}
+                                                    style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'transparent', border: 'none' }}
+                                                >
+                                                    <RefreshCw size={14} /> <span style={{fontSize: '0.8rem', fontWeight: 500}}>{c.is_active ? 'Desactivar' : 'Activar'}</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteCoupon(c.id)}
+                                                    className="btn-action-admin delete"
+                                                    title="Eliminar"
+                                                    style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'transparent', border: 'none', color: '#ef4444' }}
+                                                >
+                                                    <Trash2 size={14} /> <span style={{fontSize: '0.8rem', fontWeight: 500}}>Eliminar</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     </div>
@@ -1986,7 +2243,7 @@ const Admin = () => {
                                     <RefreshCw size={16} className={loadingAffiliates ? 'spinning' : ''} />
                                 </button>
                             </div>
-                            <div className="codes-table-wrapper" style={{ maxHeight: '400px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '400px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -2051,6 +2308,58 @@ const Admin = () => {
                                         )}
                                     </tbody>
                                 </table>
+                            </div>
+                            <div className="mobile-cards-list">
+                                {affiliates.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '10px' }}>
+                                        {loadingAffiliates ? 'Cargando...' : 'No hay afiliados configurados.'}
+                                    </div>
+                                ) : (
+                                    affiliates.map((a) => (
+                                        <div className="mobile-card" key={a.id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge" style={{ fontFamily: 'monospace', fontSize: '0.95rem' }}>{a.code}</span>
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(a.code);
+                                                        setCopySuccess(a.code);
+                                                        setTimeout(() => setCopySuccess(''), 2000);
+                                                    }}
+                                                    className="btn-action-admin"
+                                                    title="Copiar código"
+                                                    style={{ color: copySuccess === a.code ? '#4ade80' : '#b89b2d', border: 'none', background: 'transparent', padding: 0 }}
+                                                >
+                                                    {copySuccess === a.code ? <CheckCircle2 size={20} /> : <Copy size={20} />}
+                                                </button>
+                                            </div>
+                                            <h4 className="mobile-card-name" style={{ marginBottom: '10px' }}>{a.commercial_name}</h4>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Tag size={14}/> <span>{a.discount_percentage}% Descuento</span></div>
+                                                <span className={`status-badge ${a.is_active ? 'unused' : 'used'}`}>
+                                                    {a.is_active ? 'Activo' : 'Off'}
+                                                </span>
+                                            </div>
+                                            <div className="mobile-card-actions" style={{ justifyContent: 'space-between', padding: '10px', background: '#f8fafc', borderRadius: '8px', marginTop: '10px' }}>
+                                                <button
+                                                    onClick={() => handleToggleAffiliate(a.id, a.is_active)}
+                                                    className="btn-action-admin refresh"
+                                                    title={a.is_active ? 'Desactivar' : 'Activar'}
+                                                    style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'transparent', border: 'none' }}
+                                                >
+                                                    <RefreshCw size={14} /> <span style={{fontSize: '0.8rem', fontWeight: 500}}>{a.is_active ? 'Desactivar' : 'Activar'}</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteAffiliate(a.id)}
+                                                    className="btn-action-admin delete"
+                                                    title="Eliminar"
+                                                    style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'transparent', border: 'none', color: '#ef4444' }}
+                                                >
+                                                    <Trash2 size={14} /> <span style={{fontSize: '0.8rem', fontWeight: 500}}>Eliminar</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     </div>
@@ -2492,7 +2801,7 @@ const Admin = () => {
                                 )}
                             </div>
 
-                            <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '500px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -2561,6 +2870,64 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className="mobile-cards-list">
+                                {loadingResponses ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando...</div>
+                                ) : testResponses.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay respuestas registradas aún.</div>
+                                ) : (
+                                    testResponses
+                                        .filter(r => {
+                                            const nameMatch = !filterName || (r.user_name || '').toLowerCase().includes(filterName.toLowerCase());
+                                            const orgMatch = !filterOrg || (r.organization_code || '').toLowerCase().includes(filterOrg.toLowerCase());
+                                            const eneatypeMatch = !filterEneatype || String(r.enneatype) === filterEneatype;
+                                            const testTypeMatch = !filterTestType || String(r.test_type) === filterTestType;
+                                            const commercialMatch = !filterCommercial || (r.commercial_name || '').toLowerCase().includes(filterCommercial.toLowerCase());
+                                            return nameMatch && orgMatch && eneatypeMatch && testTypeMatch && commercialMatch;
+                                        })
+                                        .map(r => (
+                                            <div className="mobile-card" key={r.id}>
+                                                <div className="mobile-card-header">
+                                                    <span className="mobile-card-badge status-badge used" style={{ fontSize: '0.9rem' }}>Tipo {r.enneatype}</span>
+                                                    <span className="status-badge-premium unused mobile-card-status" style={{ fontSize: '0.8rem' }}>{r.test_type} preg.</span>
+                                                </div>
+                                                <h4 className="mobile-card-name" style={{ margin: '10px 0' }}>{r.user_name || 'Sin nombre'}</h4>
+                                                
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Mail size={14}/> <span>{r.user_email || '-'}</span></div>
+                                                </div>
+                                                
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item">
+                                                        <Tag size={14}/> 
+                                                        <span>Org: {r.organization_code && r.organization_code !== 'NO_CODE' ? r.organization_code : '-'}</span>
+                                                    </div>
+                                                    <div className="mobile-card-detail-item">
+                                                        <Key size={14}/> 
+                                                        <span>Cód: {r.access_code || '-'}</span>
+                                                    </div>
+                                                </div>
+                                                {r.commercial_name && (
+                                                    <div className="mobile-card-details-row">
+                                                        <div className="mobile-card-detail-item"><User size={14}/> <span>Comercial: {r.commercial_name}</span></div>
+                                                    </div>
+                                                )}
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                                </div>
+                                                <div className="mobile-card-actions">
+                                                    <button 
+                                                        className="btn-ver-respuestas" 
+                                                        onClick={() => setSelectedResponse(r)}
+                                                        style={{ width: '100%', display: 'flex', justifyContent: 'center', gap: '6px' }}
+                                                    >
+                                                        Ver respuestas
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))
+                                )}
+                            </div>
                         </div>
                     )
                 }
@@ -2589,7 +2956,7 @@ const Admin = () => {
                                 </div>
                             </div>
 
-                            <div className="codes-table-wrapper" style={{ maxHeight: '500px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '500px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -2623,6 +2990,37 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className="mobile-cards-list">
+                                {loadingResponses ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando sesiones...</div>
+                                ) : initialResponses.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay sesiones registradas aún.</div>
+                                ) : (
+                                    initialResponses.map(r => (
+                                        <div className="mobile-card" key={r.session_id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge status-badge unused" style={{ fontSize: '0.8rem', background: '#f1f5f9', color: '#64748b' }}>Sesión</span>
+                                                <span className="status-badge-premium unused mobile-card-status" style={{ fontSize: '0.8rem' }}>
+                                                    {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                                                </span>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Key size={14}/> <span style={{fontFamily: 'monospace', fontSize: '0.8rem'}}>{r.session_id}</span></div>
+                                            </div>
+                                            <div className="mobile-card-actions">
+                                                <button 
+                                                    className="btn-ver-respuestas" 
+                                                    onClick={() => fetchInitialResponseDetails(r.session_id)} 
+                                                    disabled={loadingInitialDetails}
+                                                    style={{ width: '100%', display: 'flex', justifyContent: 'center', gap: '6px' }}
+                                                >
+                                                    {loadingInitialDetails ? 'Cargando...' : 'Ver respuestas'}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
                         </div>
                     )
                 }
@@ -2644,7 +3042,7 @@ const Admin = () => {
                             </div>
                         </div>
 
-                        <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                        <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '600px' }}>
                             <table className="codes-table">
                                 <thead>
                                     <tr>
@@ -2689,6 +3087,35 @@ const Admin = () => {
                                 </tbody>
                             </table>
                         </div>
+                        <div className="mobile-cards-list">
+                            {loadingWorkshop ? (
+                                <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando...</div>
+                            ) : workshopRegistrations.filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal').length === 0 ? (
+                                <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay inscripciones registradas aún.</div>
+                            ) : (
+                                workshopRegistrations
+                                    .filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal')
+                                    .map(r => (
+                                        <div className="mobile-card" key={r.id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge">{r.workshop_name || 'Taller Eneagrama'}</span>
+                                                <span className={`status-badge mobile-card-status ${r.payment_status === 'APPROVED' ? 'unused' : 'used'}`} style={{ fontSize: '0.7rem' }}>
+                                                    {r.payment_status === 'APPROVED' ? 'PAGADO' : 'PENDIENTE'}
+                                                </span>
+                                            </div>
+                                            <h4 className="mobile-card-name">{r.full_name || '-'}</h4>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Mail size={14}/> <span>{r.email || '-'}</span></div>
+                                                <div className="mobile-card-detail-item"><Phone size={14}/> <span>{r.phone || '-'}</span></div>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><MapPin size={14}/> <span>{r.city || '-'}</span></div>
+                                                <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                            </div>
+                                        </div>
+                                    ))
+                            )}
+                        </div>
                     </div>
                 )}
 
@@ -2709,7 +3136,7 @@ const Admin = () => {
                             </div>
                         </div>
 
-                        <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                        <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '600px' }}>
                             <table className="codes-table">
                                 <thead>
                                     <tr>
@@ -2749,6 +3176,32 @@ const Admin = () => {
                                     )}
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="mobile-cards-list">
+                            {loadingWorkshop ? (
+                                <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando...</div>
+                            ) : workshopRegistrations.filter(r => r.workshop_name === 'Sesión Informativa MLT Grupal').length === 0 ? (
+                                <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay registros para sesiones informativas aún.</div>
+                            ) : (
+                                workshopRegistrations
+                                    .filter(r => r.workshop_name === 'Sesión Informativa MLT Grupal')
+                                    .map(r => (
+                                        <div className="mobile-card" key={r.id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge">{r.workshop_name}</span>
+                                                <span className="status-badge unused mobile-card-status" style={{ fontSize: '0.7rem' }}>REGISTRADO</span>
+                                            </div>
+                                            <h4 className="mobile-card-name">{r.full_name || '-'}</h4>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Mail size={14}/> <span>{r.email || '-'}</span></div>
+                                                <div className="mobile-card-detail-item"><Phone size={14}/> <span>{r.phone || '-'}</span></div>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                            </div>
+                                        </div>
+                                    ))
+                            )}
                         </div>
                     </div>
                 )}
@@ -2951,7 +3404,7 @@ const Admin = () => {
                                 </div>
                             </div>
 
-                            <div className="transactions-table-wrapper">
+                            <div className="transactions-table-wrapper desktop-table-view">
                                 <table className="admin-table">
                                     <thead>
                                         <tr>
@@ -3010,6 +3463,37 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className="mobile-cards-list">
+                                {loadingTransactions ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando transacciones...</div>
+                                ) : transactions.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No se encontraron transacciones en este período.</div>
+                                ) : (
+                                    transactions.map((tr) => (
+                                        <div className="mobile-card" key={tr.id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge">Ref: {tr.reference}</span>
+                                                <span className={`status-badge-premium mobile-card-status ${tr.status?.toLowerCase() || ''}`}>
+                                                    {tr.status === 'APPROVED' ? 'Pagada' : tr.status === 'DECLINED' ? 'Declinada' : tr.status}
+                                                </span>
+                                            </div>
+                                            <h4 className="mobile-card-name" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <span style={{ fontSize: '1rem' }}>{tr.customer_name || '—'}</span>
+                                                <span style={{ color: '#002d44', fontSize: '1.05rem' }}>{tr.currency} ${(tr.amount_in_cents / 100).toLocaleString('es-CO')}</span>
+                                            </h4>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Mail size={14}/> <span>{tr.customer_email}</span></div>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><CreditCard size={14}/> <span>#{tr.transaction_id} {tr.payment_method_brand ? `(${tr.payment_method_brand})` : ''}</span></div>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(tr.created_at).toLocaleString('es-ES', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}</span></div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
                         </div>
                     )
                 }
@@ -3048,7 +3532,7 @@ const Admin = () => {
                                 </div>
                             </div>
 
-                            <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '600px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -3116,6 +3600,56 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className="mobile-cards-list">
+                                {loadingFascinantes ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando resultados...</div>
+                                ) : fascinantesResults.filter(r => r.is_anonymous).length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay resultados registrados aún.</div>
+                                ) : (() => {
+                                    const anonData = fascinantesResults.filter(r => r.is_anonymous);
+                                    const uniqueAnon = [];
+                                    const seenAnon = new Set();
+                                    anonData.forEach(r => {
+                                        if (!seenAnon.has(r.id)) {
+                                            seenAnon.add(r.id);
+                                            uniqueAnon.push(r);
+                                        }
+                                    });
+                                    return uniqueAnon.map((r, index) => (
+                                        <div className="mobile-card" key={r.id}>
+                                            <div className="mobile-card-header">
+                                                <span className="mobile-card-badge">Nivel: {calculateFascinantesLevel(r)}</span>
+                                                <span className="status-badge-premium unused mobile-card-status" style={{ fontFamily: 'monospace' }}>#{uniqueAnon.length - index}</span>
+                                            </div>
+                                            <div className="mobile-card-details-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', margin: '10px 0', textAlign: 'center' }}>
+                                                <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>C:</strong> {r.score_corporal}</div>
+                                                <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>M:</strong> {r.score_mental}</div>
+                                                <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>E:</strong> {r.score_emocional}</div>
+                                                <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>S:</strong> {r.score_social}</div>
+                                                <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>Es:</strong> {r.score_espiritual}</div>
+                                                <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>F:</strong> {r.score_financiero}</div>
+                                            </div>
+                                            <div className="mobile-card-details-row">
+                                                <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                            </div>
+                                            <div className="mobile-card-actions">
+                                                <button 
+                                                    className="btn-ver-respuestas" 
+                                                    style={{ padding: '8px 12px', fontSize: '0.85rem', height: 'auto', display: 'flex', alignItems: 'center', gap: '6px', width: '100%', justifyContent: 'center' }}
+                                                    onClick={() => handleDownloadFascinantesPdf(r)}
+                                                    disabled={isGeneratingFascinantesPdf === r.id}
+                                                >
+                                                    {isGeneratingFascinantesPdf === r.id ? (
+                                                        <RefreshCw size={14} className="spinning" />
+                                                    ) : (
+                                                        <><Download size={14} /> Descargar PDF</>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ));
+                                })()}
+                            </div>
                         </div>
                     )
                 }
@@ -3154,7 +3688,7 @@ const Admin = () => {
                                 </div>
                             </div>
 
-                            <div className="codes-table-wrapper" style={{ maxHeight: '600px' }}>
+                            <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '600px' }}>
                                 <table className="codes-table">
                                     <thead>
                                         <tr>
@@ -3264,6 +3798,79 @@ const Admin = () => {
                                         })()}
                                     </tbody>
                                 </table>
+                            </div>
+                            <div className="mobile-cards-list">
+                                {loadingFascinantes ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando resultados...</div>
+                                ) : fascinantesResults.filter(r => !r.is_anonymous).length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay resultados registrados aún.</div>
+                                ) : (() => {
+                                    const regData = fascinantesResults.filter(r => !r.is_anonymous);
+                                    const uniqueReg = [];
+                                    const seenRegEmails = new Set();
+                                    regData.forEach(r => {
+                                        const email = r.email?.toLowerCase().trim();
+                                        if (email) {
+                                            if (!seenRegEmails.has(email)) {
+                                                seenRegEmails.add(email);
+                                                uniqueReg.push(r);
+                                            }
+                                        } else {
+                                            uniqueReg.push(r);
+                                        }
+                                    });
+
+                                    return uniqueReg.map((r, index) => {
+                                        const usage = allCodeUsages.find(u => 
+                                            u.user_email?.toLowerCase() === r.email?.toLowerCase() &&
+                                            (u.program === 'Fascinantes' || !u.program)
+                                        );
+
+                                        return (
+                                            <div className="mobile-card" key={r.id}>
+                                                <div className="mobile-card-header">
+                                                    <span className="mobile-card-badge">Nivel: {calculateFascinantesLevel(r)}</span>
+                                                    <span className="status-badge-premium unused mobile-card-status" style={{ fontFamily: 'monospace' }}>#{uniqueReg.length - index}</span>
+                                                </div>
+                                                <h4 className="mobile-card-name">{r.full_name}</h4>
+                                                
+                                                <div className="mobile-card-details-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', margin: '10px 0', textAlign: 'center' }}>
+                                                    <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>C:</strong> {r.score_corporal}</div>
+                                                    <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>M:</strong> {r.score_mental}</div>
+                                                    <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>E:</strong> {r.score_emocional}</div>
+                                                    <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>S:</strong> {r.score_social}</div>
+                                                    <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>Es:</strong> {r.score_espiritual}</div>
+                                                    <div style={{background: '#f8fafc', padding: '8px', borderRadius: '8px'}}><strong>F:</strong> {r.score_financiero}</div>
+                                                </div>
+                                                
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Mail size={14}/> <span>{r.email}</span></div>
+                                                </div>
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Tag size={14}/> <span>Acceso: {usage ? usage.code : 'Pagado'}</span></div>
+                                                    {r.commercial_name && <div className="mobile-card-detail-item"><User size={14}/> <span>Comercial: {r.commercial_name}</span></div>}
+                                                </div>
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                                </div>
+                                                <div className="mobile-card-actions">
+                                                    <button 
+                                                        className="btn-ver-respuestas" 
+                                                        style={{ padding: '8px 12px', fontSize: '0.85rem', height: 'auto', display: 'flex', alignItems: 'center', gap: '6px', width: '100%', justifyContent: 'center' }}
+                                                        onClick={() => handleDownloadFascinantesPdf(r)}
+                                                        disabled={isGeneratingFascinantesPdf === r.id}
+                                                    >
+                                                        {isGeneratingFascinantesPdf === r.id ? (
+                                                            <RefreshCw size={14} className="spinning" />
+                                                        ) : (
+                                                            <><Download size={14} /> Descargar PDF</>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        );
+                                    });
+                                })()}
                             </div>
                         </div>
                     )
@@ -3524,7 +4131,7 @@ const Admin = () => {
                                     return <p className="no-usages-msg">No hay registros de uso detallados aún para este código.</p>;
                                 }
                                 return (
-                                    <div className="usage-history-table-wrapper">
+                                    <div className="usage-history-table-wrapper desktop-table-view">
                                         <table className="usage-history-table">
                                             <thead>
                                                 <tr>
@@ -3555,6 +4162,19 @@ const Admin = () => {
                                                 ))}
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div className="mobile-cards-list">
+                                        {usages.map((u, idx) => (
+                                            <div className="mobile-card" key={u.id || idx}>
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Mail size={14}/> <span>{u.user_email}</span></div>
+                                                </div>
+                                                <div className="mobile-card-details-row">
+                                                    <div className="mobile-card-detail-item"><Tag size={14}/> <span className={`program-badge ${u.program.toLowerCase()}`}>{u.program}</span></div>
+                                                    <div className="mobile-card-detail-item"><Calendar size={14}/> <span style={{color: '#64748b', fontSize: '0.8rem'}}>{new Date(u.used_at).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 );
                             })()}
