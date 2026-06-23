@@ -1210,7 +1210,7 @@ const Admin = () => {
             <div className="admin-login-wrapper">
                 <div className="admin-login-card">
                     <img
-                        src="/Circulo_Eneagrama_Autenticos_02.png"
+                        src="/Logo-admin.png"
                         alt="Enesencia Logo"
                         className="admin-login-logo"
                     />
