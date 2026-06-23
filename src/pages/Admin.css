@@ -1711,6 +1711,17 @@
 
 @media (max-width: 768px) {
 
+    .admin-main {
+        padding: 10px 0;
+    }
+
+    .admin-card {
+        padding: 15px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
     /* Responsive Table Adjustments */
     .admin-main .codes-table th,
     .admin-main .codes-table td,
@@ -1724,7 +1735,12 @@
         overflow-x: auto;
         padding-bottom: 20px;
         -webkit-overflow-scrolling: touch;
-        width: 100%;
+        margin-left: -15px;
+        margin-right: -15px;
+        width: calc(100% + 30px);
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
     }
 
     .codes-table,
