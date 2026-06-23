@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Lock } from 'lucide-react';
 import './Gateway.css';
 
 const Gateway = () => {
@@ -53,6 +54,14 @@ const Gateway = () => {
                         </button>
                     </div>
                 </div>
+            </div>
+
+            {/* Acceso oculto para administradores */}
+            <div 
+                style={{ position: 'absolute', bottom: '20px', right: '20px', opacity: 0.15, cursor: 'pointer', zIndex: 100, padding: '10px' }}
+                onClick={() => navigate('/admin')}
+            >
+                <Lock size={16} color="#ffffff" />
             </div>
         </div>
     );
