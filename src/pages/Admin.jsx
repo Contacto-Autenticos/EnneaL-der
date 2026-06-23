@@ -133,6 +133,8 @@ const Admin = () => {
     // Workshop registrations State
     const [workshopRegistrations, setWorkshopRegistrations] = useState([]);
     const [loadingWorkshop, setLoadingWorkshop] = useState(false);
+    const [filterWorkshopName, setFilterWorkshopName] = useState('');
+    const [filterWorkshopStatus, setFilterWorkshopStatus] = useState('');
 
     // Chart State
     const [chartPeriod, setChartPeriod] = useState('days7'); // 'days7' | 'week' | 'month' | 'year'
@@ -3042,6 +3044,30 @@ const Admin = () => {
                             </div>
                         </div>
 
+                        <div className="resp-filters">
+                            <input
+                                className="resp-filter-input"
+                                type="text"
+                                placeholder="Filtrar por taller..."
+                                value={filterWorkshopName}
+                                onChange={e => setFilterWorkshopName(e.target.value)}
+                            />
+                            <select
+                                className="resp-filter-select"
+                                value={filterWorkshopStatus}
+                                onChange={e => setFilterWorkshopStatus(e.target.value)}
+                            >
+                                <option value="">Todos los estados</option>
+                                <option value="APPROVED">PAGADO</option>
+                                <option value="PENDING">PENDIENTE</option>
+                            </select>
+                            {(filterWorkshopName || filterWorkshopStatus) && (
+                                <button className="resp-filter-clear" onClick={() => { setFilterWorkshopName(''); setFilterWorkshopStatus(''); }}>
+                                    ✕ Limpiar
+                                </button>
+                            )}
+                        </div>
+
                         <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '600px' }}>
                             <table className="codes-table">
                                 <thead>
@@ -3058,11 +3084,21 @@ const Admin = () => {
                                 <tbody>
                                     {loadingWorkshop ? (
                                         <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
-                                    ) : workshopRegistrations.filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal').length === 0 ? (
+                                    ) : workshopRegistrations.filter(r => {
+                                        if (r.workshop_name === 'Sesión Informativa MLT Grupal') return false;
+                                        const nameMatch = !filterWorkshopName || (r.workshop_name || 'Taller Eneagrama').toLowerCase().includes(filterWorkshopName.toLowerCase());
+                                        const statusMatch = !filterWorkshopStatus || r.payment_status === filterWorkshopStatus;
+                                        return nameMatch && statusMatch;
+                                    }).length === 0 ? (
                                         <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>No hay inscripciones registradas aún.</td></tr>
                                     ) : (
                                         workshopRegistrations
-                                            .filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal')
+                                            .filter(r => {
+                                                if (r.workshop_name === 'Sesión Informativa MLT Grupal') return false;
+                                                const nameMatch = !filterWorkshopName || (r.workshop_name || 'Taller Eneagrama').toLowerCase().includes(filterWorkshopName.toLowerCase());
+                                                const statusMatch = !filterWorkshopStatus || r.payment_status === filterWorkshopStatus;
+                                                return nameMatch && statusMatch;
+                                            })
                                             .map(r => (
                                                 <tr key={r.id}>
                                                     <td style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--color-primary)' }}>{r.workshop_name || 'Taller Eneagrama'}</td>
@@ -3090,11 +3126,21 @@ const Admin = () => {
                         <div className="mobile-cards-list">
                             {loadingWorkshop ? (
                                 <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando...</div>
-                            ) : workshopRegistrations.filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal').length === 0 ? (
+                            ) : workshopRegistrations.filter(r => {
+                                if (r.workshop_name === 'Sesión Informativa MLT Grupal') return false;
+                                const nameMatch = !filterWorkshopName || (r.workshop_name || 'Taller Eneagrama').toLowerCase().includes(filterWorkshopName.toLowerCase());
+                                const statusMatch = !filterWorkshopStatus || r.payment_status === filterWorkshopStatus;
+                                return nameMatch && statusMatch;
+                            }).length === 0 ? (
                                 <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay inscripciones registradas aún.</div>
                             ) : (
                                 workshopRegistrations
-                                    .filter(r => r.workshop_name !== 'Sesión Informativa MLT Grupal')
+                                    .filter(r => {
+                                        if (r.workshop_name === 'Sesión Informativa MLT Grupal') return false;
+                                        const nameMatch = !filterWorkshopName || (r.workshop_name || 'Taller Eneagrama').toLowerCase().includes(filterWorkshopName.toLowerCase());
+                                        const statusMatch = !filterWorkshopStatus || r.payment_status === filterWorkshopStatus;
+                                        return nameMatch && statusMatch;
+                                    })
                                     .map(r => (
                                         <div className="mobile-card" key={r.id}>
                                             <div className="mobile-card-header">
