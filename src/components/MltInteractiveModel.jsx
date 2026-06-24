@@ -290,16 +290,16 @@ const MltInteractiveModel = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 9999,
-                    padding: '20px'
+                    padding: '15px'
                 }} onClick={() => setActiveModal(null)}>
                     <div style={{
                         backgroundColor: '#001a2c',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         borderRadius: '24px',
-                        padding: '40px 30px',
-                        maxWidth: '900px',
+                        padding: '25px 25px',
+                        maxWidth: '850px',
                         width: '100%',
-                        maxHeight: '90vh',
+                        maxHeight: '95vh',
                         overflowY: 'auto',
                         position: 'relative',
                         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
@@ -309,73 +309,73 @@ const MltInteractiveModel = () => {
                             onClick={() => setActiveModal(null)}
                             style={{
                                 position: 'absolute',
-                                top: '20px', right: '20px',
+                                top: '15px', right: '15px',
                                 background: 'rgba(255, 255, 255, 0.1)',
                                 border: 'none',
                                 borderRadius: '50%',
-                                width: '40px', height: '40px',
+                                width: '35px', height: '35px',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 color: '#ffffff', cursor: 'pointer', transition: 'background 0.2s'
                             }}
                             onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
                             onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
                         >
-                            <X size={20} />
+                            <X size={18} />
                         </button>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '40px', textAlign: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px', textAlign: 'center' }}>
                             <div style={{
-                                width: '80px', height: '80px',
+                                width: '60px', height: '60px',
                                 borderRadius: '50%',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                marginBottom: '20px'
+                                marginBottom: '10px'
                             }}>
                                 <img src={timelineData.find(t => t.id === activeModal).img} alt={activeModal} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                             </div>
-                            <h2 style={{ color: '#ddbe3d', fontSize: '32px', fontWeight: '900', textTransform: 'uppercase', margin: '0 0 10px 0', letterSpacing: '2px' }}>
+                            <h2 style={{ color: '#ddbe3d', fontSize: '26px', fontWeight: '900', textTransform: 'uppercase', margin: '0 0 5px 0', letterSpacing: '2px' }}>
                                 {activeModal}
                             </h2>
-                            <h3 style={{ color: '#ffffff', fontSize: '20px', fontWeight: '400', margin: 0 }}>
+                            <h3 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '400', margin: 0 }}>
                                 {timelineData.find(t => t.id === activeModal).subtitle}
                             </h3>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '15px' }}>
                             {/* Left Column */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                                <div style={{ background: '#002236', padding: '30px', borderRadius: '20px', height: '100%' }}>
-                                    <h4 style={{ color: '#ddbe3d', fontSize: '20px', fontWeight: '700', marginBottom: '15px', marginTop: 0 }}>Dirigido a:</h4>
-                                    <p style={{ color: '#ffffff', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                                <div style={{ background: '#002236', padding: '20px', borderRadius: '16px', height: '100%' }}>
+                                    <h4 style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '700', marginBottom: '10px', marginTop: 0 }}>Dirigido a:</h4>
+                                    <p style={{ color: '#ffffff', fontSize: '14.5px', lineHeight: '1.5', margin: 0 }}>
                                         {modalContent[activeModal].dirigido}
                                     </p>
                                 </div>
-                                <div style={{ background: '#002236', padding: '30px', borderRadius: '20px', height: '100%' }}>
-                                    <h4 style={{ color: '#ddbe3d', fontSize: '20px', fontWeight: '700', marginBottom: '15px', marginTop: 0 }}>Objetivos:</h4>
-                                    <p style={{ color: '#ffffff', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+                                <div style={{ background: '#002236', padding: '20px', borderRadius: '16px', height: '100%' }}>
+                                    <h4 style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '700', marginBottom: '10px', marginTop: 0 }}>Objetivos:</h4>
+                                    <p style={{ color: '#ffffff', fontSize: '14.5px', lineHeight: '1.5', margin: 0 }}>
                                         {modalContent[activeModal].objetivos}
                                     </p>
                                 </div>
                             </div>
 
                             {/* Right Column */}
-                            <div style={{ background: '#002236', padding: '30px', borderRadius: '20px' }}>
-                                <h4 style={{ color: '#ddbe3d', fontSize: '20px', fontWeight: '700', marginBottom: '20px', marginTop: 0 }}>Beneficios:</h4>
+                            <div style={{ background: '#002236', padding: '20px', borderRadius: '16px' }}>
+                                <h4 style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '700', marginBottom: '15px', marginTop: 0 }}>Beneficios:</h4>
                                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                     {modalContent[activeModal].beneficios.map((beneficio, idx) => (
                                         <li key={idx} style={{ 
                                             color: '#ffffff', 
-                                            fontSize: '15px', 
-                                            lineHeight: '1.5', 
-                                            marginBottom: '15px',
+                                            fontSize: '14px', 
+                                            lineHeight: '1.4', 
+                                            marginBottom: '10px',
                                             position: 'relative',
-                                            paddingLeft: '20px'
+                                            paddingLeft: '15px'
                                         }}>
                                             <span style={{
                                                 position: 'absolute',
                                                 left: 0,
-                                                top: '8px',
-                                                width: '6px',
-                                                height: '6px',
+                                                top: '6px',
+                                                width: '5px',
+                                                height: '5px',
                                                 borderRadius: '50%',
                                                 backgroundColor: '#ffffff'
                                             }}></span>
