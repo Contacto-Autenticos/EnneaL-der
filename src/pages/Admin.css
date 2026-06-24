@@ -2138,4 +2138,9 @@
         border-top: 1px solid #f1f5f9;
         padding-top: 12px;
     }
+    .mobile-card-actions .btn-action-admin {
+        width: auto;
+        height: auto;
+        padding: 6px 12px;
+    }
 }
