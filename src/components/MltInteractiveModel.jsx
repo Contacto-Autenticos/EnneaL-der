@@ -113,16 +113,15 @@ const MltInteractiveModel = () => {
             ]
         },
         'Conscientes': {
-            dirigido: 'Personas que buscan vivir con mayor presencia, reconectando con lo esencial y elevando su nivel de consciencia.',
-            objetivos: 'Desarrollar la capacidad de vivir el momento presente, disminuyendo la reactividad y aumentando la sabiduría para enfrentar los retos cotidianos.',
+            dirigido: 'Personas que buscan integrar su desarrollo personal, profesional y espiritual, fortaleciendo su bienestar y su capacidad de liderar desde la plenitud y la serenidad.',
+            objetivos: 'Reconectar a los líderes con su esencia y hacerlos más conscientes para tomar decisiones más sabias, actuar con coherencia y liderar con humanidad e inspiración genuina.',
             beneficios: [
-                'Mayor capacidad para vivir en el momento presente.',
-                'Reducción significativa del estrés y la ansiedad.',
-                'Conexión genuina y profunda con los demás.',
-                'Sabiduría y ecuanimidad ante situaciones complejas.',
-                'Equilibrio interior y paz mental.',
-                'Capacidad de adaptación y fluidez ante los cambios.',
-                'Visión más amplia, compasiva e integradora del mundo y de la vida.'
+                'Reconexión con la esencia personal y el propósito vital.',
+                'Despertar la serenidad, la claridad y la intuición para decidir y actuar.',
+                'Integración de lo aprendido a nivel personal, profesional y espiritual.',
+                'Mayor coherencia, empatía y capacidad de inspirar desde el ejemplo.',
+                'Bienestar emocional, físico y mental sostenible.',
+                'Líderes más plenos, centrados y conscientes, capaces de generar entornos humanos y productivos.'
             ]
         }
     };
@@ -313,7 +312,7 @@ const MltInteractiveModel = () => {
                             background-color: #001d2d;
                             border: 1px solid rgba(221, 190, 61, 0.2);
                             border-radius: 16px;
-                            padding: 20px 25px;
+                            padding: 25px 30px;
                             max-width: 850px;
                             width: 100%;
                             margin: auto;
@@ -323,21 +322,21 @@ const MltInteractiveModel = () => {
                         
                         .modal-prog__header {
                             text-align: center;
-                            margin-bottom: 15px;
+                            margin-bottom: 20px;
                             position: relative;
                         }
                         
                         .modal-prog__icon {
                             position: absolute;
-                            top: -2px;
+                            top: -5px;
                             left: 0;
-                            width: 55px;
+                            width: 65px;
                             height: auto;
                         }
                         
                         .modal-prog__title {
                             color: #ddbe3d;
-                            font-size: 1.6rem;
+                            font-size: 1.8rem;
                             font-weight: 800;
                             line-height: 1.1;
                             text-transform: uppercase;
@@ -347,43 +346,43 @@ const MltInteractiveModel = () => {
                         
                         .modal-prog__subtitle {
                             color: #ffffff;
-                            font-size: 1rem;
+                            font-size: 1.1rem;
                             font-weight: 400;
-                            margin-top: 2px;
+                            margin-top: 5px;
                             margin-bottom: 0;
                         }
                         
                         .modal-prog__grid {
                             display: grid;
                             grid-template-columns: 1fr 1.2fr;
-                            gap: 12px;
+                            gap: 16px;
                         }
                         
                         .modal-prog__col-left {
                             display: flex;
                             flex-direction: column;
-                            gap: 12px;
+                            gap: 16px;
                         }
                         
                         .modal-prog__box {
                             background: rgba(30, 60, 75, 0.4);
                             border: 1px solid rgba(255, 255, 255, 0.05);
                             border-radius: 12px;
-                            padding: 15px;
+                            padding: 18px;
                             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
                             flex: 1;
                         }
                         
                         .modal-prog__box-title {
                             color: #ddbe3d;
-                            font-size: 1.1rem;
+                            font-size: 1.2rem;
                             font-weight: 600;
                             margin-top: 0;
                             margin-bottom: 8px;
                         }
                         
                         .modal-prog__text {
-                            font-size: 0.85rem;
+                            font-size: 0.92rem;
                             color: #ffffff;
                             line-height: 1.4;
                             margin: 0;
@@ -398,8 +397,8 @@ const MltInteractiveModel = () => {
                         .modal-prog__list li {
                             position: relative;
                             padding-left: 12px;
-                            margin-bottom: 6px;
-                            font-size: 0.85rem;
+                            margin-bottom: 8px;
+                            font-size: 0.92rem;
                             color: #ffffff;
                             line-height: 1.3;
                         }
