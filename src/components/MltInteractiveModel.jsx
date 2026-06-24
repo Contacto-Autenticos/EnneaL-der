@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
 
 const MltInteractiveModel = () => {
     const nodesRef = useRef([]);
     const iconsRef = useRef([]);
     const containerRef = useRef(null);
     const progressRef = useRef(null);
+    
+    const [activeModal, setActiveModal] = useState(null);
 
     const timelineData = [
         {
@@ -43,6 +46,73 @@ const MltInteractiveModel = () => {
             text: 'La evolución humana no consiste únicamente en lograr más cosas. Consiste en vivir con mayor presencia, sabiduría y conexión contigo mismo, con los demás y con la vida.'
         }
     ];
+
+    const modalContent = {
+        'Genuinos': {
+            dirigido: 'Personas que buscan profundizar en su autoconocimiento y liderar con mayor autenticidad, equilibrio y conexión humana.',
+            objetivos: 'Potenciar líderes auténticos que conozcan su estilo de liderazgo, gestionen mejor sus equipos y aprovechen mejor sus talentos y los pongan al servicio de la organización.',
+            beneficios: [
+                'Profundo autoconocimiento y comprensión del propio estilo de liderazgo.',
+                'Potenciación de los talentos naturales y su aplicación en el trabajo.',
+                'Mejora en la comunicación, la empatía y las relaciones laborales.',
+                'Incremento del nivel de consciencia y madurez emocional.',
+                'Equipos más colaborativos y auténticos.',
+                'Líderes más coherentes, confiables y equilibrados.'
+            ]
+        },
+        'Trascendentes': {
+            dirigido: 'Líderes y profesionales que quieren sentir que su trabajo tiene una razón de ser que va más allá de generar ingresos y desean dejar huella con su labor cotidiana.',
+            objetivos: 'Aumentar el nivel de compromiso de los líderes y sus equipos con su labor diaria, convirtiendo el trabajo en un instrumento de realización personal y profesional.',
+            beneficios: [
+                'Conexión clara con el propósito personal y colectivo.',
+                'Mayor inspiración y sentido en el trabajo diario.',
+                'Equipos más resilientes y comprometidos con el impacto que generan.',
+                'Alineación entre visión personal y objetivos empresariales.',
+                'Cultura organizacional más coherente, humana y sostenible.',
+                'Fortalecimiento de la reputación y valor percibido por el mercado.',
+                'Capacidad de generar legado e impacto trascendente.'
+            ]
+        },
+        'Fascinantes': {
+            dirigido: 'Profesionales que requieren equilibrar trabajo, familia y tiempo personal en medio de múltiples responsabilidades.',
+            objetivos: 'Impulsar líderes integrales capaces de equilibrar su vida personal y profesional, fortaleciendo su bienestar, mientras alcanzan sus más importantes objetivos personales y profesionales.',
+            beneficios: [
+                'Cuerpos más saludables y vitales.',
+                'Mente enfocada, creativa y en equilibrio.',
+                'Emociones mejor gestionadas ante la presión y el cambio.',
+                'Relaciones más empáticas, saludables y constructivas.',
+                'Conexión profunda con el propósito y la autenticidad personal.',
+                'Líderes más humanos, conscientes y coherentes.',
+                'Equipos inspirados por el ejemplo, no solo por las metas.'
+            ]
+        },
+        'Extraordinarios': {
+            dirigido: 'Profesionales en cargos de liderazgo que deben lograr un equilibrio entre el resultado y el cuidado del equipo en el proceso.',
+            objetivos: 'Empoderar a los líderes para que asuman la responsabilidad de sus acciones e inspirar a sus equipos a lograr resultados de manera sostenible y coherente.',
+            beneficios: [
+                'Recuperación del poder personal y sentido de responsabilidad.',
+                'Mayor efectividad en la planeación, ejecución y logro de resultados.',
+                'Equipos más autónomos, colaborativos y enfocados.',
+                'Comunicación asertiva y relaciones laborales más constructivas.',
+                'Capacidad para negociar, resolver y decidir con claridad.',
+                'Incremento del pensamiento crítico, la creatividad y la mejora continua.',
+                'Liderazgo coherente, inspirador y con propósito.'
+            ]
+        },
+        'Conscientes': {
+            dirigido: 'Personas que buscan vivir con mayor presencia, reconectando con lo esencial y elevando su nivel de consciencia.',
+            objetivos: 'Desarrollar la capacidad de vivir el momento presente, disminuyendo la reactividad y aumentando la sabiduría para enfrentar los retos cotidianos.',
+            beneficios: [
+                'Mayor capacidad para vivir en el momento presente.',
+                'Reducción significativa del estrés y la ansiedad.',
+                'Conexión genuina y profunda con los demás.',
+                'Sabiduría y ecuanimidad ante situaciones complejas.',
+                'Equilibrio interior y paz mental.',
+                'Capacidad de adaptación y fluidez ante los cambios.',
+                'Visión más amplia, compasiva e integradora del mundo y de la vida.'
+            ]
+        }
+    };
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -171,6 +241,7 @@ const MltInteractiveModel = () => {
                     <div 
                         className="mlt-vertical-timeline-icon" 
                         ref={el => iconsRef.current[index] = el}
+                        onClick={() => setActiveModal(item.id)}
                         style={{
                         width: '80px',
                         height: '80px',
@@ -184,7 +255,8 @@ const MltInteractiveModel = () => {
                         boxShadow: '0 0 20px rgba(221, 190, 61, 0.3)',
                         backdropFilter: 'blur(12px)',
                         WebkitBackdropFilter: 'blur(12px)',
-                        transition: 'all 0.4s ease'
+                        transition: 'all 0.4s ease',
+                        cursor: 'pointer'
                     }}>
                         {item.img ? (
                             <img src={item.img} alt={item.title} style={{ width: '55%', height: 'auto', objectFit: 'contain' }} />
@@ -202,11 +274,121 @@ const MltInteractiveModel = () => {
                             {item.subtitle}
                         </h4>
                         <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.05rem', lineHeight: '1.6', margin: '0' }}>
-                            {item.text}
+                            {item.text} <span onClick={() => setActiveModal(item.id)} style={{ color: '#ddbe3d', fontWeight: 'bold', cursor: 'pointer', marginLeft: '5px' }}>Ver más</span>
                         </p>
                     </div>
                 </div>
             ))}
+
+            {/* Modal */}
+            {activeModal && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0, left: 0, right: 0, bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 9999,
+                    padding: '20px'
+                }} onClick={() => setActiveModal(null)}>
+                    <div style={{
+                        backgroundColor: '#001a2c',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderRadius: '24px',
+                        padding: '40px 30px',
+                        maxWidth: '900px',
+                        width: '100%',
+                        maxHeight: '90vh',
+                        overflowY: 'auto',
+                        position: 'relative',
+                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+                    }} onClick={e => e.stopPropagation()}>
+                        
+                        <button 
+                            onClick={() => setActiveModal(null)}
+                            style={{
+                                position: 'absolute',
+                                top: '20px', right: '20px',
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                border: 'none',
+                                borderRadius: '50%',
+                                width: '40px', height: '40px',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                color: '#ffffff', cursor: 'pointer', transition: 'background 0.2s'
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
+                            onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
+                        >
+                            <X size={20} />
+                        </button>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '40px', textAlign: 'center' }}>
+                            <div style={{
+                                width: '80px', height: '80px',
+                                borderRadius: '50%',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                marginBottom: '20px'
+                            }}>
+                                <img src={timelineData.find(t => t.id === activeModal).img} alt={activeModal} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
+                            </div>
+                            <h2 style={{ color: '#ddbe3d', fontSize: '32px', fontWeight: '900', textTransform: 'uppercase', margin: '0 0 10px 0', letterSpacing: '2px' }}>
+                                {activeModal}
+                            </h2>
+                            <h3 style={{ color: '#ffffff', fontSize: '20px', fontWeight: '400', margin: 0 }}>
+                                {timelineData.find(t => t.id === activeModal).subtitle}
+                            </h3>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                            {/* Left Column */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                <div style={{ background: '#002236', padding: '30px', borderRadius: '20px', height: '100%' }}>
+                                    <h4 style={{ color: '#ddbe3d', fontSize: '20px', fontWeight: '700', marginBottom: '15px', marginTop: 0 }}>Dirigido a:</h4>
+                                    <p style={{ color: '#ffffff', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+                                        {modalContent[activeModal].dirigido}
+                                    </p>
+                                </div>
+                                <div style={{ background: '#002236', padding: '30px', borderRadius: '20px', height: '100%' }}>
+                                    <h4 style={{ color: '#ddbe3d', fontSize: '20px', fontWeight: '700', marginBottom: '15px', marginTop: 0 }}>Objetivos:</h4>
+                                    <p style={{ color: '#ffffff', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+                                        {modalContent[activeModal].objetivos}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Right Column */}
+                            <div style={{ background: '#002236', padding: '30px', borderRadius: '20px' }}>
+                                <h4 style={{ color: '#ddbe3d', fontSize: '20px', fontWeight: '700', marginBottom: '20px', marginTop: 0 }}>Beneficios:</h4>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                    {modalContent[activeModal].beneficios.map((beneficio, idx) => (
+                                        <li key={idx} style={{ 
+                                            color: '#ffffff', 
+                                            fontSize: '15px', 
+                                            lineHeight: '1.5', 
+                                            marginBottom: '15px',
+                                            position: 'relative',
+                                            paddingLeft: '20px'
+                                        }}>
+                                            <span style={{
+                                                position: 'absolute',
+                                                left: 0,
+                                                top: '8px',
+                                                width: '6px',
+                                                height: '6px',
+                                                borderRadius: '50%',
+                                                backgroundColor: '#ffffff'
+                                            }}></span>
+                                            {beneficio}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
