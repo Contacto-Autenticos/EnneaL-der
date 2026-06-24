@@ -1392,7 +1392,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     <div style={{ marginTop: '80px', display: 'flex', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', flexWrap: 'wrap', gap: '50px', maxWidth: '1200px', margin: '80px auto 0 auto', padding: '0 20px' }}>
                         {/* Left: Image (Glued to bottom) */}
                         <div style={{ flex: '1', minWidth: '300px', maxWidth: '450px', display: 'flex', justifyContent: 'center', marginBottom: '-80px' }}>
-                            <img src="/Felipe Beltran.png" alt="Felipe Beltran" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain', objectPosition: 'bottom' }} />
+                            <img src="/felipe-beltran.png" alt="Felipe Beltran" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain', objectPosition: 'bottom' }} />
                         </div>
                         {/* Right: Text */}
                         <div style={{ flex: '1.5', minWidth: '300px', paddingBottom: '40px', textAlign: 'left' }}>
