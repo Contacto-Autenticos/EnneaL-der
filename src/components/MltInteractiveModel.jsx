@@ -288,10 +288,11 @@ const MltInteractiveModel = () => {
                     backgroundColor: 'rgba(0, 15, 22, 0.85)',
                     backdropFilter: 'blur(8px)',
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start', /* CRITICAL: prevents top cutoff */
                     justifyContent: 'center',
                     zIndex: 9999,
-                    padding: '20px'
+                    padding: '40px 24px',
+                    overflowY: 'auto'
                 }} onClick={() => setActiveModal(null)}>
                     <style>
                         {`
@@ -302,8 +303,7 @@ const MltInteractiveModel = () => {
                             padding: 40px;
                             max-width: 850px;
                             width: 100%;
-                            max-height: 95vh;
-                            overflow-y: auto;
+                            margin: auto; /* Vertically centers when small, pushes from top when large */
                             position: relative;
                             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
                         }
