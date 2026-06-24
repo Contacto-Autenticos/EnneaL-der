@@ -1388,6 +1388,28 @@ const MltLanding = ({ result, setTestResult }) => {
                         </div>
                     </div>
 
+                    {/* Felipe Beltran Profile */}
+                    <div style={{ marginTop: '80px', display: 'flex', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', flexWrap: 'wrap', gap: '50px', maxWidth: '1200px', margin: '80px auto 0 auto', padding: '0 20px' }}>
+                        {/* Left: Image (Glued to bottom) */}
+                        <div style={{ flex: '1', minWidth: '300px', maxWidth: '450px', display: 'flex', justifyContent: 'center', marginBottom: '-80px' }}>
+                            <img src="/Felipe Beltran.png" alt="Felipe Beltran" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain', objectPosition: 'bottom' }} />
+                        </div>
+                        {/* Right: Text */}
+                        <div style={{ flex: '1.5', minWidth: '300px', paddingBottom: '40px', textAlign: 'left' }}>
+                            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: '900', marginBottom: '25px', textTransform: 'uppercase', lineHeight: '1.1' }}>
+                                <span style={{ color: '#002d44' }}>Felipe</span> <span style={{ color: '#ddbe3d' }}>Beltran</span>
+                            </h2>
+                            <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontStyle: 'italic', fontWeight: '500' }}>
+                                "Me declaro un buscador en constante evolución y aprendiz de tiempo completo, que al igual que tú, recorre un camino en busca de la verdad, un sendero donde hay bosques de niebla y desiertos lleno de espejismos y fantasmas, pero que sin lugar a dudas, me han permitido renacer frecuentemente fortaleciendo mi carácter y determinación.
+                            </p>
+                            <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontWeight: '500' }}>
+                                Por todo esto, estoy convencido que los seres humanos tenemos el poder natural de transformar nuestra vida sin importar cuáles sean las circunstancias. Lo hice primero conmigo y ahora acompaño a otros a hacerlo también.
+                            </p>
+                            <p style={{ fontSize: '1.25rem', color: '#ddbe3d', lineHeight: '1.6', fontWeight: '800' }}>
+                                La tarea empieza por conocer realmente quién eres."
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
             </section>
