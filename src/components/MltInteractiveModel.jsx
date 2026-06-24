@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 const MltInteractiveModel = () => {
@@ -293,7 +294,7 @@ const MltInteractiveModel = () => {
             ))}
 
             {/* Modal */}
-            {activeModal && (
+            {activeModal && createPortal(
                 <div style={{
                     position: 'fixed',
                     top: 0, left: 0, right: 0, bottom: 0,
@@ -500,7 +501,8 @@ const MltInteractiveModel = () => {
                         </div>
 
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
