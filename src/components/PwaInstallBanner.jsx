@@ -14,11 +14,21 @@ const ALLOWED_PATHS = [
 const PwaInstallBanner = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showBanner, setShowBanner] = useState(false);
+  const [isIosDevice, setIsIosDevice] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     // Verificar si el usuario ya lo cerró antes
     const dismissed = localStorage.getItem('pwa-banner-dismissed');
+    
+    // Detectar iOS Safari
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+    
+    if (isIos && !isInStandaloneMode && !dismissed) {
+      setIsIosDevice(true);
+      setShowBanner(true);
+    }
     
     const handleBeforeInstallPrompt = (e) => {
       // Prevenir el comportamiento por defecto de Chrome (aunque en Android suele ser silencioso)
@@ -45,6 +55,13 @@ const PwaInstallBanner = () => {
   }, []);
 
   const handleInstallClick = async () => {
+    if (isIosDevice) {
+      alert("Para instalar Auténticos en iOS:\n\n1. Toca el ícono 'Compartir' (cuadro con flecha hacia arriba) en la barra de navegación.\n2. Desliza hacia abajo y selecciona 'Agregar a inicio'.");
+      setShowBanner(false);
+      localStorage.setItem('pwa-banner-dismissed', 'true');
+      return;
+    }
+
     if (!deferredPrompt) return;
     
     // Disparar el prompt nativo
