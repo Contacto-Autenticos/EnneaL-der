@@ -285,100 +285,198 @@ const MltInteractiveModel = () => {
                 <div style={{
                     position: 'fixed',
                     top: 0, left: 0, right: 0, bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                    backgroundColor: 'rgba(0, 15, 22, 0.85)',
+                    backdropFilter: 'blur(8px)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 9999,
-                    padding: '15px'
+                    padding: '20px'
                 }} onClick={() => setActiveModal(null)}>
-                    <div style={{
-                        backgroundColor: '#001a2c',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        borderRadius: '24px',
-                        padding: '25px 25px',
-                        maxWidth: '850px',
-                        width: '100%',
-                        maxHeight: '95vh',
-                        overflowY: 'auto',
-                        position: 'relative',
-                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-                    }} onClick={e => e.stopPropagation()}>
+                    <style>
+                        {`
+                        .mlt-modal-content {
+                            background-color: #001d2d;
+                            border: 1px solid rgba(221, 190, 61, 0.2);
+                            border-radius: 24px;
+                            padding: 40px;
+                            max-width: 850px;
+                            width: 100%;
+                            max-height: 95vh;
+                            overflow-y: auto;
+                            position: relative;
+                            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+                        }
+                        
+                        .modal-prog__header {
+                            text-align: center;
+                            margin-bottom: 30px;
+                            position: relative;
+                        }
+                        
+                        .modal-prog__icon {
+                            position: absolute;
+                            top: -5px;
+                            left: 0;
+                            width: 90px;
+                            height: auto;
+                        }
+                        
+                        .modal-prog__title {
+                            color: #ddbe3d;
+                            font-size: clamp(1.2rem, 5.5vw, 2.2rem);
+                            font-weight: 800;
+                            line-height: 1.1;
+                            text-transform: uppercase;
+                            margin: 0;
+                            letter-spacing: 2px;
+                        }
+                        
+                        .modal-prog__subtitle {
+                            color: #ffffff;
+                            font-size: 1.2rem;
+                            font-weight: 400;
+                            margin-top: 5px;
+                            margin-bottom: 0;
+                        }
+                        
+                        .modal-prog__grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1.2fr;
+                            gap: 20px;
+                        }
+                        
+                        .modal-prog__col-left {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                        }
+                        
+                        .modal-prog__box {
+                            background: rgba(30, 60, 75, 0.4);
+                            border: 1px solid rgba(255, 255, 255, 0.05);
+                            border-radius: 18px;
+                            padding: 24px;
+                            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+                            flex: 1;
+                        }
+                        
+                        .modal-prog__box-title {
+                            color: #ddbe3d;
+                            font-size: 1.25rem;
+                            font-weight: 600;
+                            margin-top: 0;
+                            margin-bottom: 15px;
+                        }
+                        
+                        .modal-prog__text {
+                            font-size: 0.95rem;
+                            color: #ffffff;
+                            line-height: 1.5;
+                            margin: 0;
+                        }
+                        
+                        .modal-prog__list {
+                            list-style: none;
+                            padding: 0;
+                            margin: 0;
+                        }
+                        
+                        .modal-prog__list li {
+                            position: relative;
+                            padding-left: 15px;
+                            margin-bottom: 10px;
+                            font-size: 0.92rem;
+                            color: #ffffff;
+                            line-height: 1.4;
+                        }
+                        
+                        .modal-prog__list li::before {
+                            content: "•";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            color: #ffffff;
+                        }
+
+                        @media (max-width: 768px) {
+                            .modal-prog__grid {
+                                grid-template-columns: 1fr;
+                            }
+                            .modal-prog__icon {
+                                position: relative;
+                                display: block;
+                                margin: 0 auto 15px;
+                                width: 80px;
+                            }
+                            .mlt-modal-content {
+                                padding: 25px;
+                            }
+                        }
+                        `}
+                    </style>
+                    <div className="mlt-modal-content" onClick={e => e.stopPropagation()}>
                         
                         <button 
                             onClick={() => setActiveModal(null)}
                             style={{
                                 position: 'absolute',
-                                top: '15px', right: '15px',
-                                background: 'rgba(255, 255, 255, 0.1)',
-                                border: 'none',
+                                top: '20px', right: '20px',
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
                                 borderRadius: '50%',
-                                width: '35px', height: '35px',
+                                width: '44px', height: '44px',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                color: '#ffffff', cursor: 'pointer', transition: 'background 0.2s'
+                                color: '#ffffff', cursor: 'pointer', transition: 'all 0.3s ease',
+                                zIndex: 2
                             }}
-                            onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'}
-                            onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.background = '#ddbe3d';
+                                e.currentTarget.style.color = '#001520';
+                                e.currentTarget.style.borderColor = '#ddbe3d';
+                                e.currentTarget.style.transform = 'rotate(90deg)';
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                                e.currentTarget.style.color = '#ffffff';
+                                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                e.currentTarget.style.transform = 'rotate(0deg)';
+                            }}
                         >
-                            <X size={18} />
+                            <X size={20} />
                         </button>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px', textAlign: 'center' }}>
-                            <div style={{
-                                width: '60px', height: '60px',
-                                borderRadius: '50%',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                marginBottom: '10px'
-                            }}>
-                                <img src={timelineData.find(t => t.id === activeModal).img} alt={activeModal} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
-                            </div>
-                            <h2 style={{ color: '#ddbe3d', fontSize: '26px', fontWeight: '900', textTransform: 'uppercase', margin: '0 0 5px 0', letterSpacing: '2px' }}>
+                        <div className="modal-prog__header">
+                            <img src={timelineData.find(t => t.id === activeModal).img} alt={activeModal} className="modal-prog__icon" />
+                            <h2 className="modal-prog__title">
                                 {activeModal}
                             </h2>
-                            <h3 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '400', margin: 0 }}>
+                            <h3 className="modal-prog__subtitle">
                                 {timelineData.find(t => t.id === activeModal).subtitle}
                             </h3>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '15px' }}>
-                            {/* Left Column */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                                <div style={{ background: '#002236', padding: '20px', borderRadius: '16px', height: '100%' }}>
-                                    <h4 style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '700', marginBottom: '10px', marginTop: 0 }}>Dirigido a:</h4>
-                                    <p style={{ color: '#ffffff', fontSize: '14.5px', lineHeight: '1.5', margin: 0 }}>
+                        <div className="modal-prog__grid">
+                            <div className="modal-prog__col-left">
+                                <div className="modal-prog__box">
+                                    <h4 className="modal-prog__box-title">Dirigido a:</h4>
+                                    <p className="modal-prog__text">
                                         {modalContent[activeModal].dirigido}
                                     </p>
                                 </div>
-                                <div style={{ background: '#002236', padding: '20px', borderRadius: '16px', height: '100%' }}>
-                                    <h4 style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '700', marginBottom: '10px', marginTop: 0 }}>Objetivos:</h4>
-                                    <p style={{ color: '#ffffff', fontSize: '14.5px', lineHeight: '1.5', margin: 0 }}>
+                                <div className="modal-prog__box">
+                                    <h4 className="modal-prog__box-title">Objetivos:</h4>
+                                    <p className="modal-prog__text">
                                         {modalContent[activeModal].objetivos}
                                     </p>
                                 </div>
                             </div>
 
-                            {/* Right Column */}
-                            <div style={{ background: '#002236', padding: '20px', borderRadius: '16px' }}>
-                                <h4 style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '700', marginBottom: '15px', marginTop: 0 }}>Beneficios:</h4>
-                                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                            <div className="modal-prog__box">
+                                <h4 className="modal-prog__box-title">Beneficios:</h4>
+                                <ul className="modal-prog__list">
                                     {modalContent[activeModal].beneficios.map((beneficio, idx) => (
-                                        <li key={idx} style={{ 
-                                            color: '#ffffff', 
-                                            fontSize: '14px', 
-                                            lineHeight: '1.4', 
-                                            marginBottom: '10px',
-                                            position: 'relative',
-                                            paddingLeft: '15px'
-                                        }}>
-                                            <span style={{
-                                                position: 'absolute',
-                                                left: 0,
-                                                top: '6px',
-                                                width: '5px',
-                                                height: '5px',
-                                                borderRadius: '50%',
-                                                backgroundColor: '#ffffff'
-                                            }}></span>
+                                        <li key={idx}>
                                             {beneficio}
                                         </li>
                                     ))}
