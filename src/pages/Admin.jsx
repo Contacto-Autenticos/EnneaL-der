@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit, DollarSign } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -3086,18 +3086,19 @@ const Admin = () => {
                                         <th>Ciudad</th>
                                         <th>Fecha Registro</th>
                                         <th>Estado</th>
+                                        <th>Valor Pagado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {loadingWorkshop ? (
-                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
                                     ) : workshopRegistrations.filter(r => {
                                         if (r.workshop_name === 'Sesión Informativa MLT Grupal') return false;
                                         const nameMatch = !filterWorkshopName || (r.workshop_name || 'Taller Eneagrama').toLowerCase().includes(filterWorkshopName.toLowerCase());
                                         const statusMatch = !filterWorkshopStatus || r.payment_status === filterWorkshopStatus;
                                         return nameMatch && statusMatch;
                                     }).length === 0 ? (
-                                        <tr><td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>No hay inscripciones registradas aún.</td></tr>
+                                        <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No hay inscripciones registradas aún.</td></tr>
                                     ) : (
                                         workshopRegistrations
                                             .filter(r => {
@@ -3123,6 +3124,9 @@ const Admin = () => {
                                                         <span className={`status-badge ${r.payment_status === 'APPROVED' ? 'unused' : 'used'}`} style={{ fontSize: '0.7rem' }}>
                                                             {r.payment_status === 'APPROVED' ? 'PAGADO' : 'PENDIENTE'}
                                                         </span>
+                                                    </td>
+                                                    <td style={{ fontWeight: '600', color: r.payment_status === 'APPROVED' ? '#10b981' : '#9ca3af' }}>
+                                                        {r.payment_status === 'APPROVED' && r.amount ? `$${r.amount.toLocaleString('es-CO')}` : '-'}
                                                     </td>
                                                 </tr>
                                             ))
@@ -3165,6 +3169,11 @@ const Admin = () => {
                                                 <div className="mobile-card-detail-item"><MapPin size={14}/> <span>{r.city || '-'}</span></div>
                                                 <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
                                             </div>
+                                            {r.payment_status === 'APPROVED' && r.amount && (
+                                                <div className="mobile-card-details-row" style={{ marginTop: '5px', paddingTop: '8px', borderTop: '1px solid #f1f5f9' }}>
+                                                    <div className="mobile-card-detail-item" style={{ color: '#10b981', fontWeight: '600' }}><DollarSign size={14}/> <span>Pago: ${r.amount.toLocaleString('es-CO')}</span></div>
+                                                </div>
+                                            )}
                                         </div>
                                     ))
                             )}
