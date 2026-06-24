@@ -9,6 +9,18 @@ const MltInteractiveModel = () => {
     
     const [activeModal, setActiveModal] = useState(null);
 
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        if (activeModal) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [activeModal]);
+
     const timelineData = [
         {
             id: 'Genuinos',
@@ -288,10 +300,10 @@ const MltInteractiveModel = () => {
                     backgroundColor: 'rgba(0, 15, 22, 0.85)',
                     backdropFilter: 'blur(8px)',
                     display: 'flex',
-                    alignItems: 'flex-start', /* CRITICAL: prevents top cutoff */
+                    alignItems: 'center', /* Changed back to center because now it should fit and it looks better centered */
                     justifyContent: 'center',
                     zIndex: 9999,
-                    padding: '40px 24px',
+                    padding: '10px',
                     overflowY: 'auto'
                 }} onClick={() => setActiveModal(null)}>
                     <style>
@@ -299,80 +311,80 @@ const MltInteractiveModel = () => {
                         .mlt-modal-content {
                             background-color: #001d2d;
                             border: 1px solid rgba(221, 190, 61, 0.2);
-                            border-radius: 24px;
-                            padding: 40px;
+                            border-radius: 16px;
+                            padding: 20px 25px;
                             max-width: 850px;
                             width: 100%;
-                            margin: auto; /* Vertically centers when small, pushes from top when large */
+                            margin: auto;
                             position: relative;
                             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
                         }
                         
                         .modal-prog__header {
                             text-align: center;
-                            margin-bottom: 30px;
+                            margin-bottom: 15px;
                             position: relative;
                         }
                         
                         .modal-prog__icon {
                             position: absolute;
-                            top: -5px;
+                            top: -2px;
                             left: 0;
-                            width: 90px;
+                            width: 55px;
                             height: auto;
                         }
                         
                         .modal-prog__title {
                             color: #ddbe3d;
-                            font-size: clamp(1.2rem, 5.5vw, 2.2rem);
+                            font-size: 1.6rem;
                             font-weight: 800;
                             line-height: 1.1;
                             text-transform: uppercase;
                             margin: 0;
-                            letter-spacing: 2px;
+                            letter-spacing: 1.5px;
                         }
                         
                         .modal-prog__subtitle {
                             color: #ffffff;
-                            font-size: 1.2rem;
+                            font-size: 1rem;
                             font-weight: 400;
-                            margin-top: 5px;
+                            margin-top: 2px;
                             margin-bottom: 0;
                         }
                         
                         .modal-prog__grid {
                             display: grid;
                             grid-template-columns: 1fr 1.2fr;
-                            gap: 20px;
+                            gap: 12px;
                         }
                         
                         .modal-prog__col-left {
                             display: flex;
                             flex-direction: column;
-                            gap: 20px;
+                            gap: 12px;
                         }
                         
                         .modal-prog__box {
                             background: rgba(30, 60, 75, 0.4);
                             border: 1px solid rgba(255, 255, 255, 0.05);
-                            border-radius: 18px;
-                            padding: 24px;
+                            border-radius: 12px;
+                            padding: 15px;
                             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
                             flex: 1;
                         }
                         
                         .modal-prog__box-title {
                             color: #ddbe3d;
-                            font-size: 1.25rem;
+                            font-size: 1.1rem;
                             font-weight: 600;
                             margin-top: 0;
-                            margin-bottom: 15px;
+                            margin-bottom: 8px;
                         }
                         
                         .modal-prog__text {
-                            font-size: 0.95rem;
+                            font-size: 0.85rem;
                             color: #ffffff;
-                            line-height: 1.5;
+                            line-height: 1.4;
                             margin: 0;
                         }
                         
@@ -384,11 +396,11 @@ const MltInteractiveModel = () => {
                         
                         .modal-prog__list li {
                             position: relative;
-                            padding-left: 15px;
-                            margin-bottom: 10px;
-                            font-size: 0.92rem;
+                            padding-left: 12px;
+                            margin-bottom: 6px;
+                            font-size: 0.85rem;
                             color: #ffffff;
-                            line-height: 1.4;
+                            line-height: 1.3;
                         }
                         
                         .modal-prog__list li::before {
@@ -406,11 +418,14 @@ const MltInteractiveModel = () => {
                             .modal-prog__icon {
                                 position: relative;
                                 display: block;
-                                margin: 0 auto 15px;
-                                width: 80px;
+                                margin: 0 auto 10px;
+                                width: 50px;
                             }
                             .mlt-modal-content {
-                                padding: 25px;
+                                padding: 20px 15px;
+                            }
+                            .modal-prog__title {
+                                font-size: 1.3rem;
                             }
                         }
                         `}
