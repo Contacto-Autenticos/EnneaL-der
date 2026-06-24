@@ -64,10 +64,13 @@ const PaymentStatus = () => {
                     
                     // --- WEB PUSH NOTIFICATION ---
                     if (isWorkshop) {
+                        const isVirtual = reference.includes('virtual');
+                        const workshopName = isVirtual ? 'Programa Virtual' : 'Taller Presencial';
                         sendWebPushNotification('workshop_inscription', {
                             email: data.data.customer_email,
                             amount: amountInCop,
-                            reference: reference
+                            reference: reference,
+                            workshopName: workshopName
                         });
                     } else {
                         sendWebPushNotification('advanced_test_purchase', {

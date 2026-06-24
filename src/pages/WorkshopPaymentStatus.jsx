@@ -42,7 +42,8 @@ const WorkshopPaymentStatus = () => {
                             sendWebPushNotification('workshop_inscription', {
                                 email: storedEmail,
                                 amount: 'N/A', // O el monto real si lo guardaron
-                                reference: paymentId || 'N/A'
+                                reference: paymentId || 'N/A',
+                                workshopName: 'Workshop Presencial Fascinantes'
                             });
                         }
                         // ----------------------------

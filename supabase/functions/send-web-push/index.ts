@@ -31,7 +31,8 @@ serve(async (req) => {
             title = '📊 Compra: Autodiagnóstico';
             body = `Email: ${details.email} | Valor: $${details.amount} COP | Ref: ${details.reference}`;
         } else if (event_type === 'workshop_inscription') {
-            title = '🎟️ Nueva Inscripción a Taller';
+            const wName = details.workshopName ? ` (${details.workshopName})` : '';
+            title = `🎟️ Nueva Inscripción a Taller${wName}`;
             body = `Email: ${details.email} | Ref: ${details.reference}`;
         }
 
