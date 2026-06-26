@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendWebPushNotification } from '../utils/notifications';
 import { Calendar, MapPin, Clock, Tag, Target, Users, Loader2, Globe, Instagram, Linkedin, Youtube } from 'lucide-react';
 import './WorkshopInscripcion.css';
 
@@ -85,6 +86,11 @@ const WorkshopInscripcion = () => {
 
             // 4. Redirigir a Mercado Pago
             if (mpData?.init_point) {
+                // Notificación de intención de compra
+                sendWebPushNotification('purchase_intent', { 
+                    email: formData.email, 
+                    product: workshopConfig.name 
+                });
                 window.location.href = mpData.init_point;
             } else {
                 throw new Error("No se pudo generar el link de pago.");

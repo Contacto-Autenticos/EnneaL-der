@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendWebPushNotification } from '../utils/notifications';
 import { Star, Shield, Target, BookOpen, Users, ArrowRight, CheckCircle2, Check, Play, ArrowLeft, Lock, Rocket, ChevronLeft, ChevronRight, ClipboardList, UserSearch, RefreshCw, Instagram, Linkedin, Globe } from 'lucide-react';
 import './CourseLanding.css';
 
@@ -338,6 +339,12 @@ const GenuinosLanding = () => {
 
             // Intentar abrir en nueva pestaña
             if (data?.init_point) {
+                // Notificación de intención de compra
+                sendWebPushNotification('purchase_intent', { 
+                    email: customerEmail, 
+                    product: `Genuinos - Plan ${plan === 'virtual' ? 'Virtual' : 'Presencial'}` 
+                });
+
                 const newWindow = window.open(data.init_point, '_blank');
                 
                 // Si el bloqueador de popups impidió abrirlo, redirigir en la misma pestaña

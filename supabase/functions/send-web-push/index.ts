@@ -24,16 +24,19 @@ serve(async (req) => {
         if (event_type === 'free_test') {
             title = '🎯 Test Básico Finalizado';
             body = `Usuario (${details.name} - ${details.email}) finalizó el test con resultado: Tipo ${details.enneatype}`;
+        } else if (event_type === 'purchase_intent') {
+            title = '🎟️ Intención de Compra';
+            body = `El usuario ${details.email} está en la pasarela de pago para adquirir ${details.product || 'un producto'}.`;
         } else if (event_type === 'advanced_test_purchase') {
-            title = '💰 Compra: Análisis Avanzado';
-            body = `Email: ${details.email} | Valor: $${details.amount} COP | Ref: ${details.reference}`;
+            title = '💵 ¡Nueva Compra Exitosa!';
+            body = `El usuario ${details.email} ha comprado Test Avanzado por $${details.amount} COP. Ref: ${details.reference}`;
         } else if (event_type === 'dominios_purchase') {
-            title = '📊 Compra: Autodiagnóstico';
-            body = `Email: ${details.email} | Valor: $${details.amount} COP | Ref: ${details.reference}`;
+            title = '💵 ¡Nueva Compra Exitosa!';
+            body = `El usuario ${details.email} ha comprado Autodiagnóstico por $${details.amount} COP. Ref: ${details.reference}`;
         } else if (event_type === 'workshop_inscription') {
             const wName = details.workshopName ? ` (${details.workshopName})` : '';
-            title = `🎟️ Nueva Inscripción a Taller${wName}`;
-            body = `Email: ${details.email} | Ref: ${details.reference}`;
+            title = `💵 ¡Nueva Compra Exitosa!`;
+            body = `El usuario ${details.email} ha comprado Inscripción a Taller${wName}. Ref: ${details.reference}`;
         }
 
         const payload = JSON.stringify({ title, body, url });

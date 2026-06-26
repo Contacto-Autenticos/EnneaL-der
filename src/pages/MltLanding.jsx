@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendWebPushNotification } from '../utils/notifications';
 import {
     Star,
     ShieldCheck,
@@ -245,6 +246,11 @@ const MltLanding = ({ result, setTestResult }) => {
             if (mpData?.error) throw new Error(mpData.error);
 
             if (mpData?.init_point) {
+                // Notificación de intención de compra
+                sendWebPushNotification('purchase_intent', { 
+                    email: formData.email, 
+                    product: mltConfig.name 
+                });
                 window.location.href = mpData.init_point;
             } else {
                 throw new Error("No se pudo generar el link de pago.");

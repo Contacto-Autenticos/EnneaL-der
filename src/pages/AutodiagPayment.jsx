@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendWebPushNotification } from '../utils/notifications';
 import { ShieldCheck, CheckCircle } from 'lucide-react';
 import './PaymentStyles.css';
 
@@ -146,6 +147,11 @@ const AutodiagPayment = () => {
             }
 
             if (data?.init_point) {
+                // Notificación de intención de compra
+                sendWebPushNotification('purchase_intent', { 
+                    email: userEmail, 
+                    product: 'Autodiagnóstico Dominios Fundamentales' 
+                });
                 window.location.href = data.init_point;
             } else {
                 throw new Error("No se recibió el enlace de pago de Mercado Pago.");

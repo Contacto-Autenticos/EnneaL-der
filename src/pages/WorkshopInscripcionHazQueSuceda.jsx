@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { sendWebPushNotification } from '../utils/notifications';
 import { Calendar, MapPin, Clock, Tag, Target, Users, Loader2, Globe, Instagram, Linkedin, Youtube, Heart, Brain, CheckCircle, DollarSign, Utensils, Rocket, Map, Navigation, X, Volume2, VolumeX } from 'lucide-react';
 import './WorkshopInscripcionHazQueSuceda.css';
 
@@ -177,6 +178,11 @@ const WorkshopInscripcionHazQueSuceda = () => {
             if (mpData?.error) throw new Error(mpData.error);
 
             if (mpData?.init_point) {
+                // Notificación de intención de compra
+                sendWebPushNotification('purchase_intent', { 
+                    email: formData.email, 
+                    product: workshopConfig.name 
+                });
                 window.location.href = mpData.init_point;
             } else {
                 throw new Error("No se pudo generar el link de pago.");
