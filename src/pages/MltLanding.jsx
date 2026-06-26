@@ -1068,15 +1068,17 @@ const MltLanding = ({ result, setTestResult }) => {
                             <img src="/felipe-beltran.png" alt="Felipe Beltran" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain', objectPosition: 'bottom' }} />
                         </div>
                         {/* Right: Text */}
-                        <div style={{ flex: '1.5', minWidth: '300px', paddingBottom: '40px', textAlign: 'left' }}>
-                            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: '900', marginBottom: '25px', textTransform: 'uppercase', lineHeight: '1.1' }}>
-                                <span style={{ color: '#002d44' }}>Felipe</span> <span style={{ color: '#ddbe3d' }}>Beltran</span>
-                            </h2>
-                            <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontWeight: '500' }}>
-                                Durante más de 25 años he acompañado a líderes, empresarios y organizaciones a crecer, innovar y transformarse. Soy economista, coach, empresario y conferencista internacional, y he tenido la oportunidad de impactar a más de 75.000 personas en 32 ciudades y 6 países.
+                        <div style={{ flex: '1', minWidth: '300px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                            <h3 style={{ color: '#002d44', marginBottom: '20px', textAlign: 'left', lineHeight: '0.95', fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)', fontWeight: '900' }}>
+                                <span style={{ letterSpacing: '0.11em', display: 'block', marginLeft: '0.05em' }}>Felipe</span>
+                                <span style={{ color: '#ddbe3d', letterSpacing: '-0.02em', display: 'block' }}>Beltran</span>
+                            </h3>
+                            <div style={{ height: '4px', width: '70px', background: '#ddbe3d', marginBottom: '30px', marginTop: '10px' }}></div>
+                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#002d44', marginBottom: '20px' }}>
+                                Durante más de <strong>25 años</strong> he acompañado a líderes, empresarios y organizaciones a crecer, innovar y transformarse. Soy economista, coach, empresario y conferencista internacional, y he tenido la oportunidad de impactar a más de <strong>75.000 personas</strong> en <strong>32 ciudades</strong> y 6 países.
                             </p>
-                            <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontWeight: '500' }}>
-                                Sin embargo, mi mayor aprendizaje no ha venido de los escenarios, sino de comprender que las transformaciones más profundas comienzan cuando una persona decide conocerse, asumir la responsabilidad de su vida y liderar desde la consciencia. Ese es el propósito con el que creé Master Live Training.
+                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#002d44', marginBottom: '0' }}>
+                                Sin embargo, mi mayor aprendizaje no ha venido de los escenarios, sino de comprender que las transformaciones más profundas comienzan cuando una persona decide <strong>conocerse, asumir la responsabilidad de su vida y liderar desde la consciencia.</strong> Ese es el propósito con el que creé Master Live Training.
                             </p>
                         </div>
                     </div>
