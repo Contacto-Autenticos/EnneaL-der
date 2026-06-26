@@ -694,7 +694,7 @@ html {
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 12px;
 }
 
 @media (max-width: 992px) {
@@ -718,7 +718,7 @@ html {
 }
 
 .mlt-faq-question {
-    padding: 24px;
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -726,7 +726,7 @@ html {
 }
 
 .mlt-faq-answer {
-    padding: 0 24px 24px;
+    padding: 0 20px 12px;
     max-height: 0;
     opacity: 0;
     transition: all 0.3s;

@@ -489,58 +489,28 @@ const MltInteractiveModel = () => {
                         </div>
 
                         <div className="modal-prog__grid">
-                            <div className="modal-prog__col-left">
-                                <div className="modal-prog__box">
-                                    <p className="modal-prog__text" style={{ marginBottom: '20px', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
-                                        <span className="modal-prog__box-title" style={{ marginBottom: 0 }}>Tema:</span> {timelineData.find(t => t.id === activeModal).subtitle}
-                                    </p>
-                                    <h4 className="modal-prog__box-title">Objetivos:</h4>
-                                    <p className="modal-prog__text">
-                                        {modalContent[activeModal].objetivos}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="modal-prog__box">
-                                <h4 className="modal-prog__box-title">
+                            <div style={{ display: 'flex', flexDirection: 'column', padding: '12px 0' }}>
+                                <h4 className="modal-prog__box-title" style={{ marginBottom: '15px' }}>
                                     Contenido:
                                 </h4>
-                                <ul className="modal-prog__list">
-                                    {modalContent[activeModal].beneficios.map((beneficio, idx) => (
-                                        <li key={idx}>
-                                            {beneficio}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="modal-prog__box" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                    <ul className="modal-prog__list">
+                                        {modalContent[activeModal].beneficios.map((beneficio, idx) => (
+                                            <li key={idx}>
+                                                {beneficio}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="modal-prog__box" style={{ marginTop: '12px' }}>
-                            <h4 className="modal-prog__box-title">Momentos:</h4>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', marginTop: '10px' }}>
-                                
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
-                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #ddbe3d', color: '#ddbe3d', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px', fontWeight: 'bold', fontSize: '1rem' }}>1</div>
-                                    <h5 style={{ color: '#ddbe3d', margin: '0 0 2px 0', fontSize: '0.9rem', fontWeight: 'bold' }}>Bootcamp</h5>
-                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>presencial</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', padding: '12px 0' }}>
+                                <h4 className="modal-prog__box-title" style={{ marginBottom: '15px' }}>
+                                    Momentos:
+                                </h4>
+                                <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <img src="/Momentos-MLT.png" alt="Momentos" style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain', borderRadius: '16px', boxShadow: '0 15px 35px rgba(0,0,0,0.4)' }} />
                                 </div>
-
-                                <ArrowRight color="#ddbe3d" size={18} style={{ opacity: 0.5, flexShrink: 0 }} />
-
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
-                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #ddbe3d', color: '#ddbe3d', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px', fontWeight: 'bold', fontSize: '1rem' }}>2</div>
-                                    <h5 style={{ color: '#ddbe3d', margin: '0 0 2px 0', fontSize: '0.9rem', fontWeight: 'bold' }}>Curso en línea</h5>
-                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>asincrónico</p>
-                                </div>
-
-                                <ArrowRight color="#ddbe3d" size={18} style={{ opacity: 0.5, flexShrink: 0 }} />
-
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
-                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #ddbe3d', color: '#ddbe3d', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px', fontWeight: 'bold', fontSize: '1rem' }}>3</div>
-                                    <h5 style={{ color: '#ddbe3d', margin: '0 0 2px 0', fontSize: '0.9rem', fontWeight: 'bold' }}>Conversatorio</h5>
-                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>virtual sincrónico</p>
-                                </div>
-
                             </div>
                         </div>
 
