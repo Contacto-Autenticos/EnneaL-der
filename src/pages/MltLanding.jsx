@@ -413,7 +413,7 @@ const MltLanding = ({ result, setTestResult }) => {
     // Scroll listener removed to prevent performance issues and white screen crashes
 
     const handleAction = () => {
-        window.open('/postulacion-mlt', '_blank');
+        setIsInfoModalOpen(true);
     };
 
     return (
