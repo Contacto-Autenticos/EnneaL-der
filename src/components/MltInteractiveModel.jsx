@@ -392,7 +392,7 @@ const MltInteractiveModel = () => {
                         }
                         
                         .modal-prog__text {
-                            font-size: 0.88rem;
+                            font-size: 1rem;
                             color: #ffffff;
                             line-height: 1.4;
                             margin: 0;
@@ -408,7 +408,7 @@ const MltInteractiveModel = () => {
                             position: relative;
                             padding-left: 12px;
                             margin-bottom: 4px;
-                            font-size: 0.88rem;
+                            font-size: 1rem;
                             color: #ffffff;
                             line-height: 1.3;
                         }
@@ -473,32 +473,27 @@ const MltInteractiveModel = () => {
 
                         <div className="modal-prog__header">
                             <img src={timelineData.find(t => t.id === activeModal).img} alt={activeModal} className="modal-prog__icon" />
-                            <h2 className="modal-prog__title" style={{ textTransform: 'uppercase' }}>
-                                Paso {timelineData.findIndex(t => t.id === activeModal) + 1}
-                            </h2>
-                            <h3 className="modal-prog__subtitle">
-                                {
+                            <h2 className="modal-prog__title" style={{ textTransform: 'uppercase', color: '#ffffff' }}>
+                                Paso {timelineData.findIndex(t => t.id === activeModal) + 1} - {
                                     activeModal === 'Genuinos' ? 'Conócete' :
                                     activeModal === 'Trascendentes' ? 'Exprésate' :
                                     activeModal === 'Fascinantes' ? 'Equilíbrate' :
                                     activeModal === 'Extraordinarios' ? 'Proyéctate' :
                                     activeModal === 'Conscientes' ? 'Expándete' :
-                                    modalContent[activeModal].beneficios[0]
+                                    ''
                                 }
+                            </h2>
+                            <h3 className="modal-prog__subtitle" style={{ textTransform: 'uppercase', color: '#ddbe3d', letterSpacing: '1px', fontWeight: '800', fontSize: '1.5rem', marginTop: '4px' }}>
+                                {activeModal}
                             </h3>
                         </div>
 
                         <div className="modal-prog__grid">
                             <div className="modal-prog__col-left">
                                 <div className="modal-prog__box">
-                                    <p className="modal-prog__text" style={{ marginBottom: '12px', fontSize: '1.1rem' }}>
-                                        <strong style={{ color: '#ddbe3d' }}>Experiencia:</strong> {activeModal}
+                                    <p className="modal-prog__text" style={{ marginBottom: '20px', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
+                                        <span className="modal-prog__box-title" style={{ marginBottom: 0 }}>Tema:</span> {timelineData.find(t => t.id === activeModal).subtitle}
                                     </p>
-                                    <p className="modal-prog__text" style={{ fontSize: '1.1rem' }}>
-                                        <strong style={{ color: '#ddbe3d' }}>Tema:</strong> {timelineData.find(t => t.id === activeModal).subtitle}
-                                    </p>
-                                </div>
-                                <div className="modal-prog__box">
                                     <h4 className="modal-prog__box-title">Objetivos:</h4>
                                     <p className="modal-prog__text">
                                         {modalContent[activeModal].objetivos}
@@ -508,7 +503,7 @@ const MltInteractiveModel = () => {
 
                             <div className="modal-prog__box">
                                 <h4 className="modal-prog__box-title">
-                                    Temas:
+                                    Contenido:
                                 </h4>
                                 <ul className="modal-prog__list">
                                     {modalContent[activeModal].beneficios.map((beneficio, idx) => (
@@ -521,7 +516,7 @@ const MltInteractiveModel = () => {
                         </div>
 
                         <div className="modal-prog__box" style={{ marginTop: '12px' }}>
-                            <h4 className="modal-prog__box-title">Contenido:</h4>
+                            <h4 className="modal-prog__box-title">Momentos:</h4>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', marginTop: '10px' }}>
                                 
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
