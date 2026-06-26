@@ -577,7 +577,54 @@ const Admin = () => {
 
             if (registrationsError) throw registrationsError;
             
-            setWorkshopRegistrations(registrations || []);
+            let finalRegistrations = [];
+            if (registrations) {
+                const userHasApproved = new Set();
+                const latestPending = new Map();
+
+                // First pass: identify who has an APPROVED payment and find the latest PENDING for each user
+                registrations.forEach(reg => {
+                    const email = reg.email?.toLowerCase().trim();
+                    const wName = reg.workshop_name || '';
+                    if (email) {
+                        const key = `${email}_${wName}`;
+                        if (reg.payment_status === 'APPROVED') {
+                            userHasApproved.add(key);
+                        } else if (reg.payment_status === 'PENDING') {
+                            if (!latestPending.has(key)) {
+                                latestPending.set(key, reg.id); // since it's ordered by created_at desc, the first one we see is the latest
+                            }
+                        }
+                    }
+                });
+
+                // Second pass: filter the registrations
+                finalRegistrations = registrations.filter(reg => {
+                    const email = reg.email?.toLowerCase().trim();
+                    const wName = reg.workshop_name || '';
+                    if (!email) return true; // keep if no email
+
+                    const key = `${email}_${wName}`;
+
+                    if (reg.payment_status === 'APPROVED') {
+                        return true; // Always show all successful payments
+                    }
+
+                    if (reg.payment_status === 'PENDING') {
+                        // Hide if they eventually paid
+                        if (userHasApproved.has(key)) return false;
+                        
+                        // Hide if it's not their most recent pending attempt
+                        if (latestPending.get(key) !== reg.id) return false;
+                        
+                        return true;
+                    }
+                    
+                    return true;
+                });
+            }
+
+            setWorkshopRegistrations(finalRegistrations);
         } catch (error) {
             console.error('Error fetching workshop registrations:', error);
         } finally {
