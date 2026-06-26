@@ -19,10 +19,16 @@ const MpStatus = () => {
         const processStatus = async () => {
             if (status === 'approved') {
                 setUiStatus('APPROVED');
-                setMessage('¡Pago exitoso! Redirigiendo...');
+                setMessage('¡Pago exitoso! Procesando tu acceso...');
 
-                // Disparar correo de confirmación si el plan corresponde al programa Genuinos
                 try {
+                    // Trigger webhook manually as a fallback (Doble Verificación)
+                    // Fire-and-forget request bypassing CORS via mode: 'no-cors'
+                    if (paymentId) {
+                        const webhookUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/mercadopago-webhook?id=${paymentId}&topic=payment`;
+                        fetch(webhookUrl, { mode: 'no-cors' }).catch(err => console.error("Fallback webhook failed:", err));
+                    }
+
                     const reference = `gen-${plan}-${paymentId}`;
                     const isVirtual = plan === 'virtual';
 

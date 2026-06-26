@@ -799,13 +799,8 @@ const MltLanding = ({ result, setTestResult }) => {
                         }
                     `}</style>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
-                            <div className="mlt-title-line"></div>
-                            <span className="mlt-title-subtitle">LO QUE LOGRARÁS CON</span>
-                            <div className="mlt-title-line"></div>
-                        </div>
                         <h2 className="mlt-section-title" style={{ color: '#ffffff', marginBottom: '20px', fontSize: 'clamp(36px, 6vw, 64px)' }}>
-                            Master Live <span className="mlt-gold-text" style={{ display: 'inline' }}>Training</span>
+                            Lo que transformarás en <span className="mlt-gold-text" style={{ display: 'inline' }}>90 días</span>
                         </h2>
                         <p style={{ 
                             fontSize: '1.25rem', 
@@ -814,7 +809,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             maxWidth: '700px',
                             margin: '0 auto'
                         }}>
-                            Un desarrollo integral que transforma la forma en que te conoces, lideras y construyes tu vida.
+                            Seis pilares para convertirte en la mejor versión de ti y liderar con propósito e impacto.
                         </p>
                     </div>
                     
@@ -826,48 +821,45 @@ const MltLanding = ({ result, setTestResult }) => {
                         margin: '0 auto'
                     }}>
                         {[
-                            { img: "Iconos MLT-S1-Claridad.png", t: <>CLARIDAD<br/>PERSONAL</>, d: "Comprender quién eres, qué te impulsa y qué necesita tu siguiente etapa de crecimiento." },
-                            { img: "Iconos MLT-S1-Direccion.png", t: <>DIRECCIÓN Y<br/>ENFOQUE</>, d: "Una hoja de ruta personal y profesional para tomar decisiones con intención y avanzar con claridad." },
-                            { img: "Iconos MLT-S1-liderazgo.png", t: <>LIDERAZGO<br/>CONSCIENTE</>, d: "Mayor capacidad para liderar, comunicarte, relacionarte e influir generando impacto de forma coherente." },
-                            { img: "Iconos MLT-S1-Herramientas.png", t: <>HERRAMIENTAS<br/>PRÁCTICAS</>, d: "Recursos y prácticas para convertir los aprendizajes en cambios sostenibles y reales." },
-                            { img: "Iconos MLT-S1-Comunidad.png", t: <>COMUNIDAD DE<br/>CRECIMIENTO</>, d: "Un grupo de personas comprometidas con crecer, aprender y acompañarse mutuamente." },
-                            { img: "Iconos MLT-S1-Coherencia.png", t: <>COHERENCIA DE<br/>VIDA</>, d: "Mayor alineación entre lo que piensas, sientes, haces y la vida que deseas construir." }
+                            { img: "Iconos MLT-S1-Claridad.png", t: <>CLARIDAD<br/>PERSONAL</>, d: "Comprende quién eres y define tu siguiente paso." },
+                            { img: "Iconos MLT-S1-Direccion.png", t: <>DIRECCIÓN Y<br/>ENFOQUE</>, d: "Diseña una hoja de ruta para avanzar con intención." },
+                            { img: "Iconos MLT-S1-liderazgo.png", t: <>LIDERAZGO<br/>CONSCIENTE</>, d: "Lidera e influye con mayor coherencia." },
+                            { img: "Iconos MLT-S1-Herramientas.png", t: <>HERRAMIENTAS<br/>PRÁCTICAS</>, d: "Convierte el aprendizaje en resultados reales." },
+                            { img: "Iconos MLT-S1-Comunidad.png", t: <>COMUNIDAD DE<br/>CRECIMIENTO</>, d: "Crece junto a líderes comprometidos." },
+                            { img: "Iconos MLT-S1-Coherencia.png", t: <>COHERENCIA DE<br/>VIDA</>, d: "Alinea lo que piensas, sientes y haces." }
                         ].map((item, i) => (
                             <div key={i} className="mlt-white-card" style={{ 
                                 background: '#000a12', 
-                                padding: '30px', 
+                                padding: '24px', 
                                 borderRadius: '16px',
                                 border: '1px solid rgba(255, 255, 255, 0.1)',
                                 display: 'flex',
                                 flexDirection: 'row',
-                                gap: '20px',
+                                gap: '15px',
                                 alignItems: 'flex-start',
                                 cursor: 'default'
                             }}>
-                                <div style={{ flexShrink: 0, width: '70px', height: '70px' }}>
+                                <div style={{ flexShrink: 0, width: '65px', height: '65px' }}>
                                     <img src={`/mlt/${item.img}`} alt={item.t} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                 </div>
                                 <div>
-                                    <h4 style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: '800', marginBottom: '12px', lineHeight: '1.4' }}>{item.t}</h4>
-                                    <div style={{ height: '2px', width: '30px', background: '#ddbe3d', marginBottom: '12px' }}></div>
-                                    <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>{item.d}</p>
+                                    <h4 style={{ color: '#ffffff', fontSize: '1.05rem', fontWeight: '800', marginBottom: '10px', lineHeight: '1.3' }}>{item.t}</h4>
+                                    <div style={{ height: '2px', width: '30px', background: '#ddbe3d', marginBottom: '10px' }}></div>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0, letterSpacing: '-0.2px' }}>{item.d}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-
-
                 </div>
             </section>
 
-
-            {/* NEW SECTION: En 90 días podrás llevarte */}
+            {/* NEW SECTION: Todo lo que necesitas */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '40px 0' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
-                    <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-                        <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', lineHeight: '1.3', color: '#002d44', fontWeight: '600', margin: 0 }}>
-                            No se trata únicamente de comprender nuevas ideas. <span className="mlt-gold-text" style={{ display: 'inline' }}>Vamos a vivirlas, ponerlas en práctica y convertirlas</span> en parte de la persona que estás llegando a ser.
-                        </h2>
+                    <div style={{ textAlign: 'center' }}>
+                        <p style={{ fontSize: 'clamp(1.1rem, 3vw, 1.3rem)', color: '#002d44', margin: 0, fontWeight: '500' }}>
+                            Todo lo que necesitas para convertir el conocimiento en una vida con mayor <span style={{ fontWeight: '800' }}>claridad, liderazgo e impacto.</span>
+                        </p>
                     </div>
                 </div>
             </section>

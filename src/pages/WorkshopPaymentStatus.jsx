@@ -22,6 +22,13 @@ const WorkshopPaymentStatus = () => {
                 setMessage('¡Pago exitoso! Estamos confirmando tu lugar en el taller...');
 
                 try {
+                    // Trigger webhook manually as a fallback (Doble Verificación)
+                    // Fire-and-forget request bypassing CORS via mode: 'no-cors'
+                    if (paymentId) {
+                        const webhookUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/mercadopago-webhook?id=${paymentId}&topic=payment`;
+                        fetch(webhookUrl, { mode: 'no-cors' }).catch(err => console.error("Fallback webhook failed:", err));
+                    }
+
                     const storedEmail = localStorage.getItem('workshop_email');
                     const storedName = localStorage.getItem('workshop_name');
                     const registrationId = localStorage.getItem('workshop_reg_id');
