@@ -754,13 +754,13 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
             {/* 4.5. Modelo de Formación (Ported) */}
-            <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ padding: '80px 0', position: 'relative' }}>
+            <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ background: '#ffffff', padding: '80px 0', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                        <h2 className="mlt-section-title" style={{ marginBottom: '20px' }}>
+                        <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '20px' }}>
                             ¿Cómo vivirás <span style={{ color: '#ddbe3d' }}>la experiencia?</span>
                         </h2>
-                        <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)', maxWidth: '900px', margin: '0 auto', lineHeight: '1.6' }}>
+                        <p style={{ fontSize: '1.2rem', color: 'rgba(0, 45, 68, 0.85)', maxWidth: '900px', margin: '0 auto', lineHeight: '1.6' }}>
                             Durante 90 días vivirás un proceso de transformación diseñado para convertir el conocimiento en consciencia, la consciencia en acción y la acción en resultados sostenibles.
                             <br /><br />
                             A lo largo del programa participarás en cinco experiencias presenciales inmersivas, seis conversatorios en vivo y accederás a contenidos exclusivos en video dentro de una comunidad de aprendizaje que acompañará tu evolución en cada etapa del proceso.
@@ -771,8 +771,8 @@ const MltLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 5. 6 Pilares Section (White version) */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
+            {/* 5. 6 Pilares Section */}
+            <section className="mlt-section mlt-animate" style={{ padding: '80px 0' }}>
                 <div className="mlt-section-content">
                     <style>{`
                         .mlt-title-line {
@@ -804,13 +804,13 @@ const MltLanding = ({ result, setTestResult }) => {
                             <span className="mlt-title-subtitle">LO QUE LOGRARÁS CON</span>
                             <div className="mlt-title-line"></div>
                         </div>
-                        <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '20px', fontSize: 'clamp(36px, 6vw, 64px)' }}>
+                        <h2 className="mlt-section-title" style={{ color: '#ffffff', marginBottom: '20px', fontSize: 'clamp(36px, 6vw, 64px)' }}>
                             Master Live <span className="mlt-gold-text" style={{ display: 'inline' }}>Training</span>
                         </h2>
                         <p style={{ 
                             fontSize: '1.25rem', 
                             lineHeight: '1.6',
-                            color: 'rgba(0, 45, 68, 0.85)', 
+                            color: 'rgba(255, 255, 255, 0.85)', 
                             maxWidth: '700px',
                             margin: '0 auto'
                         }}>
@@ -990,170 +990,6 @@ const MltLanding = ({ result, setTestResult }) => {
             </section>
 
 
-
-
-            {/* 6.5. Trayectoria Section */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
-
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '80px', color: '#002d44' }}>
-                        Algunos datos de <span className="mlt-gold-text" style={{ display: 'inline' }}>esta trayectoria:</span>
-                    </h2>
-
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '30px',
-                        marginBottom: '80px',
-                        rowGap: '60px'
-                    }}>
-                        {[
-                            { 
-                                type: "top",
-                                value: "+25", 
-                                icon: <Calendar size={24} color="#ddbe3d" />,
-                                label: "AÑOS DE EXPERIENCIA", 
-                                text: "Acompañando procesos de desarrollo humano, liderazgo y emprendimiento." 
-                            },
-                            { 
-                                type: "top",
-                                value: "+18", 
-                                icon: <Users size={24} color="#ddbe3d" />,
-                                label: "AÑOS FORMANDO LÍDERES", 
-                                text: "Como conferencista, facilitador y mentor en escenarios nacionales e internacionales." 
-                            },
-                            { 
-                                type: "top",
-                                value: "+58.000", 
-                                icon: <TrendingUp size={24} color="#ddbe3d" />,
-                                label: "PERSONAS IMPACTADAS", 
-                                text: "A través de conferencias, talleres, entrenamientos y experiencias de desarrollo." 
-                            },
-                            { 
-                                type: "side",
-                                icon: <Globe size={40} color="#ddbe3d" />,
-                                label: "32 CIUDADES\n6 PAÍSES", 
-                                text: "Llevando experiencias de desarrollo a diferentes culturas y contextos." 
-                            },
-                            { 
-                                type: "side",
-                                icon: <Target size={40} color="#ddbe3d" />,
-                                label: "METODOLOGÍA INTEGRADA", 
-                                text: "Autoconocimiento, propósito, desarrollo humano y liderazgo en un solo sistema." 
-                            },
-                            { 
-                                type: "side",
-                                icon: <Handshake size={40} color="#ddbe3d" />,
-                                label: "ACOMPAÑAMIENTO REAL", 
-                                text: "Experiencia trabajando con empresarios, líderes y organizaciones en procesos de crecimiento y transformación." 
-                            }
-                        ].map((item, i) => (
-                            <div key={i} className="mlt-white-card" style={{
-                                background: 'linear-gradient(to bottom, #001a29 0%, #003b59 100%)',
-                                padding: item.type === 'top' ? '50px 30px 40px' : '30px',
-                                borderRadius: '16px',
-                                borderLeft: '1px solid rgba(255,255,255,0.1)',
-                                borderRight: '1px solid rgba(255,255,255,0.1)',
-                                borderBottom: '1px solid rgba(255,255,255,0.1)',
-                                borderTop: '4px solid #ddbe3d',
-                                display: 'flex',
-                                flexDirection: item.type === 'top' ? 'column' : 'row',
-                                alignItems: item.type === 'top' ? 'center' : 'flex-start',
-                                textAlign: item.type === 'top' ? 'center' : 'left',
-                                gap: item.type === 'top' ? '0' : '20px',
-                                transition: 'all 0.4s ease',
-                                cursor: 'default',
-                                position: 'relative',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
-                            }}>
-                                {item.type === 'top' ? (
-                                    <>
-                                        <div style={{
-                                            position: 'absolute',
-                                            top: '-25px',
-                                            left: '50%',
-                                            transform: 'translateX(-50%)',
-                                            width: '50px',
-                                            height: '50px',
-                                            background: '#001a29',
-                                            border: '1px solid rgba(221, 190, 61, 0.5)',
-                                            borderRadius: '50%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}>
-                                            {item.icon}
-                                        </div>
-                                        <div style={{
-                                            fontSize: '4rem',
-                                            fontWeight: '900',
-                                            color: '#ddbe3d',
-                                            marginBottom: '10px',
-                                            lineHeight: '1',
-                                            fontFamily: 'monospace'
-                                        }}>
-                                            {item.value}
-                                        </div>
-                                        <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#ffffff', marginBottom: '15px', letterSpacing: '1px' }}>
-                                            {item.label}
-                                        </h4>
-                                        <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
-                                            {item.text}
-                                        </p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div style={{ flexShrink: 0, marginTop: '5px' }}>
-                                            {item.icon}
-                                        </div>
-                                        <div>
-                                            <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#ffffff', marginBottom: '10px', letterSpacing: '0.5px', whiteSpace: 'pre-line' }}>
-                                                {item.label}
-                                            </h4>
-                                            <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', margin: 0, fontWeight: '500' }}>
-                                                {item.text}
-                                            </p>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '20px' }}>
-                            <img loading="lazy" src="/mlt/Iconos MLT-S1-horizontal.png" alt="Iconos Trayectoria" style={{ height: '40px', width: 'auto' }} />
-                        </div>
-                        <p style={{ fontSize: '1.1rem', color: '#002d44', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6', fontWeight: '500' }}>
-                            Empresas, universidades, cámaras de comercio, organizaciones sociales y miles de líderes han confiado en nuestras metodologías durante <strong style={{ color: '#ddbe3d' }}>más de dos décadas.</strong>
-                        </p>
-                    </div>
-
-                    <div style={{
-                        background: 'linear-gradient(135deg, #002d44 0%, #001a29 100%)',
-                        padding: 'clamp(30px, 5vw, 60px)',
-                        borderRadius: '30px',
-                        textAlign: 'left',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
-                        border: '1px solid rgba(221, 190, 61, 0.2)'
-                    }}>
-                        <p style={{ 
-                            fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-                            lineHeight: '1.8', 
-                            color: 'rgba(255,255,255,0.95)', 
-                            margin: 0, 
-                            fontWeight: '500',
-                            position: 'relative',
-                            zIndex: 1
-                        }}>
-                            Más que cifras, estos años han dejado una convicción profunda: <span style={{ color: '#ddbe3d', fontWeight: '800' }}>las personas no necesitan únicamente solo información.</span><br/><br/>
-                            Necesitan espacios, conversaciones, experiencias y caminos que les ayuden a integrar lo que saben, reconocer quiénes son y convertirse en personas más conscientes, sólidas y coherentes con la vida que desean construir.
-                        </p>
-                    </div>
-                </div>
-            </section>
 
 
 

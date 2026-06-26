@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
-
+import { X, Users, Laptop, Video, ArrowRight } from 'lucide-react';
 const MltInteractiveModel = () => {
     const nodesRef = useRef([]);
     const iconsRef = useRef([]);
@@ -173,11 +172,13 @@ const MltInteractiveModel = () => {
                 if (!node || !iconsRef.current[i]) return;
                 const nodeCenter = node.offsetTop + 40;
                 if (currentLinePx >= nodeCenter) {
-                    iconsRef.current[i].style.boxShadow = '0 0 45px rgba(221, 190, 61, 1)';
+                    iconsRef.current[i].style.boxShadow = '0 0 40px rgba(221, 190, 61, 0.8), 0 0 20px rgba(221, 190, 61, 1)';
                     iconsRef.current[i].style.borderColor = '#ffe566';
+                    iconsRef.current[i].style.transform = 'scale(1.15)';
                 } else {
-                    iconsRef.current[i].style.boxShadow = '0 0 20px rgba(221, 190, 61, 0.3)';
+                    iconsRef.current[i].style.boxShadow = '0 0 15px rgba(221, 190, 61, 0.2)';
                     iconsRef.current[i].style.borderColor = '#ddbe3d';
+                    iconsRef.current[i].style.transform = 'scale(1)';
                 }
             });
         };
@@ -224,7 +225,7 @@ const MltInteractiveModel = () => {
                 top: '0', 
                 bottom: '0', 
                 width: '4px', 
-                background: 'rgba(255,255,255,0.1)', 
+                background: 'rgba(0, 45, 68, 0.1)', 
                 borderRadius: '2px',
                 transform: 'translateX(-50%)',
                 zIndex: 1
@@ -235,12 +236,12 @@ const MltInteractiveModel = () => {
                 position: 'absolute', 
                 top: '0', 
                 height: '0%', 
-                width: '4px', 
-                background: 'linear-gradient(to bottom, #ddbe3d, rgba(221, 190, 61, 0.2))', 
-                borderRadius: '2px',
+                width: '6px', 
+                background: '#ddbe3d', 
+                borderRadius: '3px',
                 transform: 'translateX(-50%)',
                 zIndex: 1,
-                boxShadow: '0 0 15px rgba(221, 190, 61, 0.6)',
+                boxShadow: '0 0 20px rgba(221, 190, 61, 0.8), 0 0 10px rgba(221, 190, 61, 1)',
                 transition: 'height 0.1s ease-out'
             }}></div>
 
@@ -269,14 +270,14 @@ const MltInteractiveModel = () => {
                         flexShrink: 0,
                         background: '#002d44',
                         borderRadius: '50%',
-                        border: '2px solid #ddbe3d',
+                        border: '3px solid #ddbe3d',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        boxShadow: '0 0 20px rgba(221, 190, 61, 0.3)',
+                        boxShadow: '0 0 15px rgba(221, 190, 61, 0.2)',
                         backdropFilter: 'blur(12px)',
                         WebkitBackdropFilter: 'blur(12px)',
-                        transition: 'all 0.4s ease',
+                        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
                         cursor: 'pointer'
                     }}>
                         {item.img ? (
@@ -291,10 +292,10 @@ const MltInteractiveModel = () => {
                         <h3 style={{ color: '#ddbe3d', fontSize: '1.4rem', fontWeight: '800', margin: '0 0 5px 0' }}>
                             {item.title}
                         </h3>
-                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: '500', margin: '0 0 15px 0' }}>
+                        <h4 style={{ color: '#002d44', fontSize: '1.1rem', fontWeight: '500', margin: '0 0 15px 0' }}>
                             {item.subtitle}
                         </h4>
-                        <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.05rem', lineHeight: '1.6', margin: '0' }}>
+                        <p style={{ color: 'rgba(0, 45, 68, 0.85)', fontSize: '1.05rem', lineHeight: '1.6', margin: '0' }}>
                             {item.text} <span onClick={() => setActiveModal(item.id)} style={{ color: '#ddbe3d', fontWeight: 'bold', cursor: 'pointer', marginLeft: '5px' }}>Contenido</span>
                         </p>
                     </div>
@@ -321,7 +322,7 @@ const MltInteractiveModel = () => {
                             background-color: #001d2d;
                             border: 1px solid rgba(221, 190, 61, 0.2);
                             border-radius: 16px;
-                            padding: 25px 30px;
+                            padding: 20px 25px;
                             max-width: 850px;
                             width: 100%;
                             margin: auto;
@@ -331,7 +332,7 @@ const MltInteractiveModel = () => {
                         
                         .modal-prog__header {
                             text-align: center;
-                            margin-bottom: 20px;
+                            margin-bottom: 12px;
                             position: relative;
                         }
                         
@@ -339,13 +340,13 @@ const MltInteractiveModel = () => {
                             position: absolute;
                             top: -5px;
                             left: 0;
-                            width: 65px;
+                            width: 55px;
                             height: auto;
                         }
                         
                         .modal-prog__title {
                             color: #ddbe3d;
-                            font-size: 1.8rem;
+                            font-size: 1.5rem;
                             font-weight: 800;
                             line-height: 1.1;
                             text-transform: uppercase;
@@ -355,7 +356,7 @@ const MltInteractiveModel = () => {
                         
                         .modal-prog__subtitle {
                             color: #ffffff;
-                            font-size: 1.1rem;
+                            font-size: 1rem;
                             font-weight: 400;
                             margin-top: 5px;
                             margin-bottom: 0;
@@ -370,28 +371,28 @@ const MltInteractiveModel = () => {
                         .modal-prog__col-left {
                             display: flex;
                             flex-direction: column;
-                            gap: 16px;
+                            gap: 12px;
                         }
                         
                         .modal-prog__box {
                             background: rgba(30, 60, 75, 0.4);
                             border: 1px solid rgba(255, 255, 255, 0.05);
                             border-radius: 12px;
-                            padding: 18px;
+                            padding: 12px 16px;
                             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
                             flex: 1;
                         }
                         
                         .modal-prog__box-title {
                             color: #ddbe3d;
-                            font-size: 1.2rem;
+                            font-size: 1.05rem;
                             font-weight: 600;
                             margin-top: 0;
-                            margin-bottom: 8px;
+                            margin-bottom: 4px;
                         }
                         
                         .modal-prog__text {
-                            font-size: 0.92rem;
+                            font-size: 0.88rem;
                             color: #ffffff;
                             line-height: 1.4;
                             margin: 0;
@@ -406,8 +407,8 @@ const MltInteractiveModel = () => {
                         .modal-prog__list li {
                             position: relative;
                             padding-left: 12px;
-                            margin-bottom: 8px;
-                            font-size: 0.92rem;
+                            margin-bottom: 4px;
+                            font-size: 0.88rem;
                             color: #ffffff;
                             line-height: 1.3;
                         }
@@ -480,6 +481,7 @@ const MltInteractiveModel = () => {
                                     activeModal === 'Genuinos' ? 'Conócete' :
                                     activeModal === 'Trascendentes' ? 'Exprésate' :
                                     activeModal === 'Fascinantes' ? 'Equilíbrate' :
+                                    activeModal === 'Extraordinarios' ? 'Proyéctate' :
                                     activeModal === 'Conscientes' ? 'Expándete' :
                                     modalContent[activeModal].beneficios[0]
                                 }
@@ -515,6 +517,35 @@ const MltInteractiveModel = () => {
                                         </li>
                                     ))}
                                 </ul>
+                            </div>
+                        </div>
+
+                        <div className="modal-prog__box" style={{ marginTop: '12px' }}>
+                            <h4 className="modal-prog__box-title">Contenido:</h4>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', marginTop: '10px' }}>
+                                
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
+                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #ddbe3d', color: '#ddbe3d', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px', fontWeight: 'bold', fontSize: '1rem' }}>1</div>
+                                    <h5 style={{ color: '#ddbe3d', margin: '0 0 2px 0', fontSize: '0.9rem', fontWeight: 'bold' }}>Bootcamp</h5>
+                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>presencial</p>
+                                </div>
+
+                                <ArrowRight color="#ddbe3d" size={18} style={{ opacity: 0.5, flexShrink: 0 }} />
+
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
+                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #ddbe3d', color: '#ddbe3d', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px', fontWeight: 'bold', fontSize: '1rem' }}>2</div>
+                                    <h5 style={{ color: '#ddbe3d', margin: '0 0 2px 0', fontSize: '0.9rem', fontWeight: 'bold' }}>Curso en línea</h5>
+                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>asincrónico</p>
+                                </div>
+
+                                <ArrowRight color="#ddbe3d" size={18} style={{ opacity: 0.5, flexShrink: 0 }} />
+
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '120px' }}>
+                                    <div style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #ddbe3d', color: '#ddbe3d', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px', fontWeight: 'bold', fontSize: '1rem' }}>3</div>
+                                    <h5 style={{ color: '#ddbe3d', margin: '0 0 2px 0', fontSize: '0.9rem', fontWeight: 'bold' }}>Conversatorio</h5>
+                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>virtual sincrónico</p>
+                                </div>
+
                             </div>
                         </div>
 
