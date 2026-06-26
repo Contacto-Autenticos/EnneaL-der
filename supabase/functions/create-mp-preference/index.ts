@@ -36,6 +36,7 @@ serve(async (req) => {
           }
         ],
         external_reference: reference,
+        notification_url: "https://hwrlijzctnzbrkmurvjf.supabase.co/functions/v1/mercadopago-webhook",
         back_urls: {
           success: `${finalBackUrl}?status=approved`,
           failure: `${finalBackUrl}?status=failure`,

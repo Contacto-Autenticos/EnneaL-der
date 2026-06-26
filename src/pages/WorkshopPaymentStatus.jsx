@@ -27,87 +27,17 @@ const WorkshopPaymentStatus = () => {
                     const registrationId = localStorage.getItem('workshop_reg_id');
 
                     if (registrationId) {
-                        // 1. Actualizar estado en Supabase
-                        await supabase
-                            .from('workshop_registrations')
-                            .update({ 
-                                payment_status: 'APPROVED', 
-                                transaction_id: paymentId,
-                                raw_data: { preference_id: preferenceId }
-                            })
-                            .eq('id', registrationId);
-
-                        // --- WEB PUSH NOTIFICATION ---
-                        if (storedEmail) {
-                            sendWebPushNotification('workshop_inscription', {
-                                email: storedEmail,
-                                amount: 'N/A', // O el monto real si lo guardaron
-                                reference: paymentId || 'N/A',
-                                workshopName: 'Workshop Presencial Fascinantes'
-                            });
-                        }
-                        // ----------------------------
-
-                        // 2. Disparar correos si tenemos los datos
-                        if (storedEmail) {
-                            const workshopDate = new Date('2026-05-01T09:00:00-05:00');
-                            
-                            const baseEmailInfo = {
-                                email: storedEmail,
-                                name: storedName,
-                                workshop_type: 'FASCINANTES',
-                                workshop_date: '1 de Mayo',
-                                workshop_time: '9:00 AM - 1:00 PM',
-                                workshop_location: 'https://maps.app.goo.gl/R64NW2y99LhatQA37',
-                                workshop_location_name: 'CAFE DEL RIO - CALI COLOMBIA',
-                                workshop_location_url: 'https://maps.app.goo.gl/R64NW2y99LhatQA37',
-                                workshop_name: 'Workshop Presencial Fascinantes',
-                                lugar_nombre: 'CAFE DEL RIO - CALI COLOMBIA',
-                                start_datetime: '20260501T140000Z', // UTC 9:00 AM COT
-                                end_datetime: '20260501T180000Z',   // UTC 1:00 PM COT
-                                start_iso: '2026-05-01T09:00:00',
-                                end_iso: '2026-05-01T13:00:00',
-                            };
-
-                            // Cola de correos a enviar/programar
-                            const emailQueue = [
-                                { templateId: 1 } // Confirmación inmediata (Template ID 1)
-                            ];
-
-                            // Recordatorio 3 días antes (Abril 28)
-                            const rem3Days = new Date(workshopDate.getTime() - 3 * 24 * 60 * 60 * 1000);
-                            if (rem3Days > new Date()) {
-                                emailQueue.push({ templateId: 2, scheduledAt: rem3Days.toISOString() });
-                            }
-
-                            // Recordatorio 24 horas antes (Abril 30)
-                            const rem24h = new Date(workshopDate.getTime() - 24 * 60 * 60 * 1000);
-                            if (rem24h > new Date()) {
-                                emailQueue.push({ templateId: 3, scheduledAt: rem24h.toISOString() });
-                            }
-
-                            // Invocar función para cada correo
-                            await Promise.all(
-                                emailQueue.map((item) =>
-                                    supabase.functions.invoke('send-workshop-email', {
-                                        body: { ...baseEmailInfo, ...item },
-                                    })
-                                )
-                            );
-
-                            console.log('Correos de taller procesados');
-                        }
-
                         // Limpiar datos temporales
                         localStorage.removeItem('workshop_email');
                         localStorage.removeItem('workshop_name');
                         localStorage.removeItem('workshop_reg_id');
-                        // 3. Actualizar mensaje final
+                        
+                        // Actualizar mensaje final
                         setMessage('¡Inscripción confirmada! Revisa tu correo electrónico para ver todos los detalles y los próximos pasos.');
                     }
                 } catch (err) {
                     console.error('Error procesando el estado del pago:', err);
-                    setMessage('Tu pago fue aprobado, pero hubo un error al enviar la confirmación. Por favor contáctanos.');
+                    setMessage('Tu pago fue aprobado, pero hubo un error al procesar el estado en tu navegador. Si el cobro se realizó, tu inscripción es válida.');
                 }
 
             } else if (status === 'failure') {
