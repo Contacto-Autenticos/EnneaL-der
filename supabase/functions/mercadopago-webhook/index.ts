@@ -77,8 +77,8 @@ serve(async (req) => {
                     return new Response("Already processed", { status: 200 });
                 }
 
-                // 2. Update DB status to APPROVED
-                const { error: updateError } = await supabase
+                // 2. Update DB status to APPROVED atomically
+                const { data: updatedData, error: updateError } = await supabase
                     .from('workshop_registrations')
                     .update({
                         payment_status: 'APPROVED',
@@ -88,11 +88,13 @@ serve(async (req) => {
                             mp_payment_data: paymentData
                         }
                     })
-                    .eq('id', registrationId);
+                    .eq('id', registrationId)
+                    .eq('payment_status', 'PENDING')
+                    .select();
 
                 if (updateError) {
                     console.error("Error updating registration status:", updateError);
-                } else {
+                } else if (updatedData && updatedData.length > 0) {
                     console.log(`Registration ${registrationId} marked as APPROVED.`);
 
                     // 3. Send Web Push Notification
@@ -201,6 +203,8 @@ serve(async (req) => {
                     } catch (e) {
                         console.error("Error dispatching workshop emails:", e);
                     }
+                } else {
+                    console.log(`Registration ${registrationId} was already updated by another process.`);
                 }
             } else {
                 console.log("Not a workshop reference, ignored:", external_reference);
