@@ -54,11 +54,11 @@ serve(async (req) => {
 
         if (status === "approved" && external_reference) {
             // Extract the registration ID from external_reference
-            // It looks like "workshop-123-17000000" or "workshop-hqs-123-17000000"
-            const match = external_reference.match(/workshop(?:-[a-z]+)?-(\d+)-/i);
+            // It looks like "workshop-123-17000000" or "workshop-hqs-123-17000000" or "workshop-hqs-<uuid>-17000000"
+            const match = external_reference.match(/workshop(?:-[a-z]+)?-(.+)-(\d+)$/i);
             
             if (match && match[1]) {
-                const registrationId = parseInt(match[1], 10);
+                const registrationId = match[1];
 
                 // 1. Check current status to avoid duplicate processing
                 const { data: regData, error: fetchError } = await supabase

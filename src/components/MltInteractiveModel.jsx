@@ -25,35 +25,35 @@ const MltInteractiveModel = () => {
     const timelineData = [
         {
             id: 'Genuinos',
-            title: 'Genuinos',
+            title: '1. Genuinos',
             subtitle: 'Autoconocimiento',
             img: '/Logo-Genuinos-03.png',
             text: 'El punto de partida de todo proceso de transformación es el autoconocimiento. Comprender quién eres, reconocer tus fortalezas, identificar tus patrones y entender aquello que impulsa tus decisiones te permite construir sobre una base sólida.'
         },
         {
             id: 'Trascendentes',
-            title: 'Trascendentes',
+            title: '2. Trascendentes',
             subtitle: 'Sentido de propósito',
             img: '/Logo-Trascendentes-03.png',
             text: 'Toda persona necesita una dirección. Cuando conectas con aquello que da sentido a tu vida, tus decisiones adquieren mayor coherencia y tu energía encuentra un propósito más claro.'
         },
         {
             id: 'Fascinantes',
-            title: 'Fascinantes',
+            title: '3. Fascinantes',
             subtitle: 'Desarrollo integral',
             img: '/Logo-Fascinantes-03.png',
             text: 'No basta con saber quién eres ni hacia dónde quieres ir. También necesitas desarrollar las capacidades físicas, mentales, emocionales, relacionales y espirituales que te permitan sostener ese camino.'
         },
         {
             id: 'Extraordinarios',
-            title: 'Extraordinarios',
+            title: '4. Extraordinarios',
             subtitle: 'Liderazgo estratégico',
             img: '/Logo-Extraordinarios-03.png',
             text: 'El liderazgo, la influencia y la capacidad de generar resultados no son fruto del azar. Son el resultado de aprender a actuar con responsabilidad, visión, estrategia y determinación.'
         },
         {
             id: 'Conscientes',
-            title: 'Conscientes',
+            title: '5. Conscientes',
             subtitle: 'Reconexión personal',
             img: '/Logo-Conscientes-03.png',
             text: 'La evolución humana no consiste únicamente en lograr más cosas. Consiste en vivir con mayor presencia, sabiduría y conexión contigo mismo, con los demás y con la vida.'
@@ -65,63 +65,72 @@ const MltInteractiveModel = () => {
             dirigido: 'Personas que buscan profundizar en su autoconocimiento y liderar con mayor autenticidad, equilibrio y conexión humana.',
             objetivos: 'Potenciar líderes auténticos que conozcan su estilo de liderazgo, gestionen mejor sus equipos y aprovechen mejor sus talentos y los pongan al servicio de la organización.',
             beneficios: [
-                'Profundo autoconocimiento y comprensión del propio estilo de liderazgo.',
-                'Potenciación de los talentos naturales y su aplicación en el trabajo.',
-                'Mejora en la comunicación, la empatía y las relaciones laborales.',
-                'Incremento del nivel de consciencia y madurez emocional.',
-                'Equipos más colaborativos y auténticos.',
-                'Líderes más coherentes, confiables y equilibrados.'
+                'Conócete',
+                'Identifica tu temperamento',
+                'Fortalece tu carácter',
+                'Potencia tu personalidad',
+                'Reconoce tus deseos',
+                'Enfrenta tus miedos',
+                'Abraza tus conflictos',
+                'Cumple tu función',
+                'Acelera tu evolución'
             ]
         },
         'Trascendentes': {
             dirigido: 'Líderes y profesionales que quieren sentir que su trabajo tiene una razón de ser que va más allá de generar ingresos y desean dejar huella con su labor cotidiana.',
             objetivos: 'Aumentar el nivel de compromiso de los líderes y sus equipos con su labor diaria, convirtiendo el trabajo en un instrumento de realización personal y profesional.',
             beneficios: [
-                'Conexión clara con el propósito personal y colectivo.',
-                'Mayor inspiración y sentido en el trabajo diario.',
-                'Equipos más resilientes y comprometidos con el impacto que generan.',
-                'Alineación entre visión personal y objetivos empresariales.',
-                'Cultura organizacional más coherente, humana y sostenible.',
-                'Fortalecimiento de la reputación y valor percibido por el mercado.',
-                'Capacidad de generar legado e impacto trascendente.'
+                'Sentido y propósito',
+                'Identifica tus talentos',
+                'Desarrolla tus capacidades',
+                'Encuentra la inspiración',
+                'Presta un servicio',
+                'Deja un legado'
             ]
         },
         'Fascinantes': {
             dirigido: 'Profesionales que requieren equilibrar trabajo, familia y tiempo personal en medio de múltiples responsabilidades.',
             objetivos: 'Impulsar líderes integrales capaces de equilibrar su vida personal y profesional, fortaleciendo su bienestar, mientras alcanzan sus más importantes objetivos personales y profesionales.',
             beneficios: [
-                'Cuerpos más saludables y vitales.',
-                'Mente enfocada, creativa y en equilibrio.',
-                'Emociones mejor gestionadas ante la presión y el cambio.',
-                'Relaciones más empáticas, saludables y constructivas.',
-                'Conexión profunda con el propósito y la autenticidad personal.',
-                'Líderes más humanos, conscientes y coherentes.',
-                'Equipos inspirados por el ejemplo, no solo por las metas.'
+                'Determina tu nivel de desarrollo',
+                'Revitaliza tu cuerpo',
+                'Potencia tu mente',
+                'Gestiona tus emociones',
+                'Cultiva tus relaciones',
+                'Conecta con tu esencia',
+                'Establece un plan de desarrollo'
             ]
         },
         'Extraordinarios': {
             dirigido: 'Profesionales en cargos de liderazgo que deben lograr un equilibrio entre el resultado y el cuidado del equipo en el proceso.',
             objetivos: 'Empoderar a los líderes para que asuman la responsabilidad de sus acciones e inspirar a sus equipos a lograr resultados de manera sostenible y coherente.',
             beneficios: [
-                'Recuperación del poder personal y sentido de responsabilidad.',
-                'Mayor efectividad en la planeación, ejecución y logro de resultados.',
-                'Equipos más autónomos, colaborativos y enfocados.',
-                'Comunicación asertiva y relaciones laborales más constructivas.',
-                'Capacidad para negociar, resolver y decidir con claridad.',
-                'Incremento del pensamiento crítico, la creatividad y la mejora continua.',
-                'Liderazgo coherente, inspirador y con propósito.'
+                'Asume la responsabilidad',
+                'Define tus objetivos y metas',
+                'Gestiona efectivamente el tiempo',
+                'Conecta empáticamente',
+                'Comunícate asertivamente',
+                'Establece acuerdos',
+                'Apalanca tus capacidades',
+                'Prepárate para crecer',
+                'Visiona el futuro',
+                'Diseña un plan de acción'
             ]
         },
         'Conscientes': {
             dirigido: 'Personas que buscan integrar su desarrollo personal, profesional y espiritual, fortaleciendo su bienestar y su capacidad de liderar desde la plenitud y la serenidad.',
             objetivos: 'Reconectar a los líderes con su esencia y hacerlos más conscientes para tomar decisiones más sabias, actuar con coherencia y liderar con humanidad e inspiración genuina.',
             beneficios: [
-                'Reconexión con la esencia personal y el propósito vital.',
-                'Despertar la serenidad, la claridad y la intuición para decidir y actuar.',
-                'Integración de lo aprendido a nivel personal, profesional y espiritual.',
-                'Mayor coherencia, empatía y capacidad de inspirar desde el ejemplo.',
-                'Bienestar emocional, físico y mental sostenible.',
-                'Líderes más plenos, centrados y conscientes, capaces de generar entornos humanos y productivos.'
+                'El campo de lo invisible',
+                'Confía en tu poder',
+                'Expresa tu creatividad',
+                'Actúa con determinación',
+                'Ama incondicionalmente',
+                'Manifiesta tu verdad',
+                'Atiende las señales',
+                'Conecta con la fuente',
+                'Expándete',
+                'Descansa'
             ]
         }
     };
@@ -286,7 +295,7 @@ const MltInteractiveModel = () => {
                             {item.subtitle}
                         </h4>
                         <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.05rem', lineHeight: '1.6', margin: '0' }}>
-                            {item.text} <span onClick={() => setActiveModal(item.id)} style={{ color: '#ddbe3d', fontWeight: 'bold', cursor: 'pointer', marginLeft: '5px' }}>Ver más</span>
+                            {item.text} <span onClick={() => setActiveModal(item.id)} style={{ color: '#ddbe3d', fontWeight: 'bold', cursor: 'pointer', marginLeft: '5px' }}>Contenido</span>
                         </p>
                     </div>
                 </div>
@@ -463,20 +472,28 @@ const MltInteractiveModel = () => {
 
                         <div className="modal-prog__header">
                             <img src={timelineData.find(t => t.id === activeModal).img} alt={activeModal} className="modal-prog__icon" />
-                            <h2 className="modal-prog__title">
-                                {activeModal}
+                            <h2 className="modal-prog__title" style={{ textTransform: 'uppercase' }}>
+                                Paso {timelineData.findIndex(t => t.id === activeModal) + 1}
                             </h2>
                             <h3 className="modal-prog__subtitle">
-                                {timelineData.find(t => t.id === activeModal).subtitle}
+                                {
+                                    activeModal === 'Genuinos' ? 'Conócete' :
+                                    activeModal === 'Trascendentes' ? 'Exprésate' :
+                                    activeModal === 'Fascinantes' ? 'Equilíbrate' :
+                                    activeModal === 'Conscientes' ? 'Expándete' :
+                                    modalContent[activeModal].beneficios[0]
+                                }
                             </h3>
                         </div>
 
                         <div className="modal-prog__grid">
                             <div className="modal-prog__col-left">
                                 <div className="modal-prog__box">
-                                    <h4 className="modal-prog__box-title">Dirigido a:</h4>
-                                    <p className="modal-prog__text">
-                                        {modalContent[activeModal].dirigido}
+                                    <p className="modal-prog__text" style={{ marginBottom: '12px', fontSize: '1.1rem' }}>
+                                        <strong style={{ color: '#ddbe3d' }}>Experiencia:</strong> {activeModal}
+                                    </p>
+                                    <p className="modal-prog__text" style={{ fontSize: '1.1rem' }}>
+                                        <strong style={{ color: '#ddbe3d' }}>Tema:</strong> {timelineData.find(t => t.id === activeModal).subtitle}
                                     </p>
                                 </div>
                                 <div className="modal-prog__box">
@@ -488,7 +505,9 @@ const MltInteractiveModel = () => {
                             </div>
 
                             <div className="modal-prog__box">
-                                <h4 className="modal-prog__box-title">Beneficios:</h4>
+                                <h4 className="modal-prog__box-title">
+                                    Temas:
+                                </h4>
                                 <ul className="modal-prog__list">
                                     {modalContent[activeModal].beneficios.map((beneficio, idx) => (
                                         <li key={idx}>

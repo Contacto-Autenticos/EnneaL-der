@@ -495,7 +495,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         {/* 4. Centered CTA */}
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <button onClick={handleAction} className="mlt-btn-main" style={{ padding: '20px 45px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                Aplicar a la Primera Generación
+                                Sesión informativa
                                 <ArrowRight size={24} />
                             </button>
                         </div>
@@ -687,17 +687,83 @@ const MltLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
+            {/* 6. Nosotros / Origen Section */}
+            <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '80px 0' }}>
+                <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
+                    <style>{`
+                        .mlt-origen-mobile-title { display: none; }
+                        .mlt-origen-grid {
+                            display: grid;
+                            grid-template-columns: 1fr;
+                            gap: 40px;
+                            align-items: center;
+                        }
+                        @media (min-width: 900px) {
+                            .mlt-origen-grid {
+                                grid-template-columns: 1fr 1fr;
+                                gap: 60px;
+                            }
+                            .mlt-origen-left {
+                                grid-column: 1 / 2;
+                                grid-row: 1 / 2;
+                            }
+                            .mlt-origen-right {
+                                grid-column: 2 / 3;
+                                grid-row: 1 / 2;
+                            }
+                        }
+                        @media (max-width: 899px) {
+                            .mlt-origen-mobile-title { display: block; }
+                            .mlt-origen-desktop-title { display: none; }
+                        }
+                    `}</style>
+                    <div className="mlt-origen-grid">
+                        
+                        <div className="mlt-origen-mobile-title">
+                            <h2 className="mlt-section-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
+                                Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
+                            </h2>
+                        </div>
+
+                        {/* Image Column (Right on desktop, 2nd on mobile) */}
+                        <div className="mlt-origen-right" style={{ display: 'flex', justifyContent: 'center' }}>
+                            <div style={{
+                                width: '100%',
+                                maxWidth: '350px',
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }}>
+                                <img loading="lazy" src="/Bombillo-2.webp" 
+                                    alt="Origen Master Live Training" 
+                                    style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }} 
+                                />
+                            </div>
+                        </div>
+
+                        {/* Text Column (Left on desktop, 3rd on mobile) */}
+                        <div className="mlt-origen-left">
+                            <h2 className="mlt-section-title mlt-origen-desktop-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
+                                Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
+                            </h2>
+                            <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
+                                Cuando una persona se conoce mejor, desarrolla sus capacidades y actúa de manera coherente con aquello que realmente importa, su vida comienza a transformarse de una forma más profunda y sostenible. Ese es el propósito que da origen a esta experiencia.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* 4.5. Modelo de Formación (Ported) */}
             <section id="desarrollo-humano" className="mlt-section mlt-animate" style={{ padding: '80px 0', position: 'relative' }}>
                 <div className="mlt-section-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                         <h2 className="mlt-section-title" style={{ marginBottom: '20px' }}>
-                            Las cinco dimensiones del <span style={{ color: '#ddbe3d' }}>desarrollo humano</span>
+                            ¿Cómo vivirás <span style={{ color: '#ddbe3d' }}>la experiencia?</span>
                         </h2>
                         <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)', maxWidth: '900px', margin: '0 auto', lineHeight: '1.6' }}>
-                            A lo largo de nuestra experiencia hemos descubierto que las personas no transforman su vida trabajando un único aspecto de sí mismas. La verdadera evolución ocurre cuando desarrollan de manera consciente las dimensiones fundamentales que dan forma a quienes son, a cómo viven y al impacto que generan.
+                            Durante 90 días vivirás un proceso de transformación diseñado para convertir el conocimiento en consciencia, la consciencia en acción y la acción en resultados sostenibles.
                             <br /><br />
-                            Por eso Master Live Training está construido sobre cinco dimensiones que se complementan entre sí y que, juntas, conforman una ruta integral de desarrollo humano.
+                            A lo largo del programa participarás en cinco experiencias presenciales inmersivas, seis conversatorios en vivo y accederás a contenidos exclusivos en video dentro de una comunidad de aprendizaje que acompañará tu evolución en cada etapa del proceso.
                         </p>
                     </div>
                     
@@ -794,74 +860,6 @@ const MltLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 6. ¿Cómo vivirás la experiencia? */}
-            <section className="mlt-section mlt-animate">
-                <div className="mlt-section-content">
-                    <h2 className="mlt-section-title" style={{ textAlign: 'center', marginBottom: '40px' }}>
-                        ¿Cómo vivirás <span className="mlt-gold-text" style={{ display: 'inline' }}>la experiencia?</span>
-                    </h2>
-                    
-                    <div style={{ maxWidth: '900px', margin: '0 auto 50px', textAlign: 'center' }}>
-                        <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '40px' }}>
-                            Durante 90 días vivirás un proceso de entrenamiento integral diseñado para ayudarte a transformar el conocimiento en consciencia, la consciencia en acción y la acción en resultados sostenibles.
-                        </p>
-                    </div>
-
-                    <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-                        gap: '24px',
-                        maxWidth: '1000px',
-                        margin: '0 auto 50px'
-                    }}>
-                        {[
-                            { icon: <Rocket size={24} />, text: "5 experiencias inmersivas para profundizar en las dimensiones fundamentales del desarrollo humano.", color: "#ddbe3d" },
-                            { icon: <Handshake size={24} />, text: "6 conversatorios en vivo para reflexionar, compartir aprendizajes y resolver inquietudes.", color: "#00e5ff" },
-                            { icon: <Target size={24} />, text: "Recursos prácticos para continuar aplicando los aprendizajes entre cada encuentro.", color: "#ff9100" },
-                            { icon: <Zap size={24} />, text: "Ejercicios para llevar cada aprendizaje a tu realidad personal y profesional.", color: "#ffee00" },
-                            { icon: <UserPlus size={24} />, text: "Una comunidad exclusiva de líderes y empresarios comprometidos con su crecimiento.", color: "#00ff00" },
-                            { icon: <CheckCircle2 size={24} />, text: "Acompañamiento permanente durante todo el proceso.", color: "#d500f9" }
-                        ].map((item, i) => (
-                            <div key={i} style={{ 
-                                background: 'rgba(255,255,255,0.04)', 
-                                padding: '24px', 
-                                borderRadius: '20px',
-                                border: '1px solid rgba(255,255,255,0.05)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '20px',
-                                transition: 'all 0.3s ease',
-                                cursor: 'default'
-                            }} className="mlt-dark-hover-card">
-                                <div style={{ 
-                                    width: '50px', 
-                                    height: '50px', 
-                                    borderRadius: '14px', 
-                                    background: `rgba(${parseInt(item.color.slice(1,3),16)}, ${parseInt(item.color.slice(3,5),16)}, ${parseInt(item.color.slice(5,7),16)}, 0.1)`,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: item.color,
-                                    flexShrink: 0
-                                }}>
-                                    {item.icon}
-                                </div>
-                                <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1rem', lineHeight: '1.5', margin: 0 }}>
-                                    {item.text}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '40px', background: 'rgba(221, 190, 61, 0.05)', borderRadius: '24px', border: '1px solid rgba(221, 190, 61, 0.2)' }}>
-                        <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', margin: 0 }}>
-                            La experiencia ha sido diseñada para generar un equilibrio entre reflexión y acción, entre desarrollo personal y aplicación práctica, entre crecimiento individual y aprendizaje colectivo.
-                        </p>
-                    </div>
-                    
-
-                </div>
-            </section>
 
             {/* NEW SECTION: En 90 días podrás llevarte */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '40px 0' }}>
@@ -983,7 +981,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                     <div style={{ marginTop: '60px', display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <button onClick={handleAction} className="mlt-btn-main">
-                            APLICAR A LA PRIMERA GENERACIÓN
+                            SESIÓN INFORMATIVA
                             <ArrowRight size={22} />
                         </button>
                     </div>
@@ -991,119 +989,8 @@ const MltLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* NEW SECTION: Por qué creamos Master Live Training? */}
-            <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '1000px', textAlign: 'center' }}>
-                    <h2 className="mlt-section-title" style={{ color: '#002d44', marginBottom: '40px', lineHeight: '1.3' }}>
-                        Las preguntas que dieron origen a <span className="mlt-gold-text" style={{ display: 'inline' }}>Master Live Training</span>
-                    </h2>
-                    
-                    <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(0, 45, 68, 0.8)', marginBottom: '20px', fontWeight: '500' }}>
-                        Durante más de dos décadas hemos acompañado a miles de personas, líderes, empresarios, emprendedores y equipos en procesos de desarrollo humano, liderazgo y transformación organizacional.
-                    </p>
-                    <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(0, 45, 68, 0.8)', marginBottom: '60px', fontWeight: '500' }}>
-                        Con el paso de los años observamos algo que se repetía una y otra vez. Personas talentosas, comprometidas y exitosas que, aun habiendo alcanzado importantes logros profesionales, continuaban haciéndose preguntas como:
-                    </p>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
-                        {[
-                            "¿Cómo encontrar una mayor claridad sobre mi vida?",
-                            "¿Cómo ejercer un liderazgo más consciente?",
-                            "¿Cómo sostener mayores responsabilidades sin perder el equilibrio?",
-                            "¿Cómo crecer profesionalmente sin desconectarme de mí mismo?",
-                            "¿Cómo construir una vida más coherente con aquello que realmente considero importante?"
-                        ].map((q, i) => (
-                            <div key={i} style={{
-                                padding: '0',
-                                width: '100%',
-                                maxWidth: '800px',
-                                margin: '0 auto',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '20px',
-                                textAlign: 'left'
-                            }}>
-                                <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>
-                                    <CheckCircle2 size={28} color="#ddbe3d" />
-                                </div>
-                                <p style={{ fontSize: '1.25rem', margin: 0, fontWeight: '600', color: '#002d44', lineHeight: '1.5' }}>
-                                    {q}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                    
-                    <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#002d44', marginTop: '60px', fontWeight: '600' }}>
-                        Estas preguntas no suelen resolverse con más información. Requieren un proceso más profundo de autoconocimiento, reflexión, desarrollo y acción.
-                    </p>
-                </div>
-            </section>
 
-            {/* 6. Nosotros / Origen Section */}
-            <section className="mlt-section mlt-animate" style={{ color: '#ffffff', padding: '80px 0' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '1200px' }}>
-                    <style>{`
-                        .mlt-origen-mobile-title { display: none; }
-                        .mlt-origen-grid {
-                            display: grid;
-                            grid-template-columns: 1fr;
-                            gap: 40px;
-                            align-items: center;
-                        }
-                        @media (min-width: 900px) {
-                            .mlt-origen-grid {
-                                grid-template-columns: 1fr 1fr;
-                                gap: 60px;
-                            }
-                            .mlt-origen-left {
-                                grid-column: 1 / 2;
-                                grid-row: 1 / 2;
-                            }
-                            .mlt-origen-right {
-                                grid-column: 2 / 3;
-                                grid-row: 1 / 2;
-                            }
-                        }
-                        @media (max-width: 899px) {
-                            .mlt-origen-mobile-title { display: block; }
-                            .mlt-origen-desktop-title { display: none; }
-                        }
-                    `}</style>
-                    <div className="mlt-origen-grid">
-                        
-                        <div className="mlt-origen-mobile-title">
-                            <h2 className="mlt-section-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
-                                Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
-                            </h2>
-                        </div>
-
-                        {/* Image Column (Right on desktop, 2nd on mobile) */}
-                        <div className="mlt-origen-right" style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div style={{
-                                width: '100%',
-                                maxWidth: '350px',
-                                display: 'flex',
-                                justifyContent: 'center'
-                            }}>
-                                <img loading="lazy" src="/Bombillo-2.webp" 
-                                    alt="Origen Master Live Training" 
-                                    style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }} 
-                                />
-                            </div>
-                        </div>
-
-                        {/* Text Column (Left on desktop, 3rd on mobile) */}
-                        <div className="mlt-origen-left">
-                            <h2 className="mlt-section-title mlt-origen-desktop-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
-                                Master Live Training nace de una <span className="mlt-gold-text">convicción sencilla</span>
-                            </h2>
-                            <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.85)' }}>
-                                Cuando una persona se conoce mejor, desarrolla sus capacidades y actúa de manera coherente con aquello que realmente importa, su vida comienza a transformarse de una forma más profunda y sostenible. Ese es el propósito que da origen a esta experiencia.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* 6.5. Trayectoria Section */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
@@ -1268,49 +1155,7 @@ const MltLanding = ({ result, setTestResult }) => {
                 </div>
             </section>
 
-            {/* 6.6. 20 Cupos Section */}
-            <section className="mlt-section mlt-animate" style={{ padding: '80px 0' }}>
-                <div className="mlt-section-content" style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '60px',
-                        flexWrap: 'wrap'
-                    }}>
-                        {/* Columna Izquierda: Imagen */}
-                        <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center' }}>
-                            <img loading="lazy" src="/mlt/Cupos habilitados.png" alt="21 Cupos habilitados" style={{ maxWidth: '320px', width: '100%', height: 'auto' }} />
-                        </div>
-                        
-                        {/* Columna Derecha: Textos */}
-                        <div style={{
-                            flex: '1 1 300px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '24px',
-                            fontSize: '1.25rem',
-                            lineHeight: '1.8',
-                            color: 'rgba(255,255,255,0.85)',
-                            textAlign: 'left'
-                        }}>
-                            <h2 className="mlt-section-title" style={{ marginBottom: '30px', color: '#ffffff', textAlign: 'left' }}>
-                                ¿Por qué solo <span className="mlt-gold-text" style={{ display: 'inline' }}>21 cupos?</span>
-                            </h2>
-                            <p style={{ margin: 0 }}>
-                                Porque queremos construir una experiencia cercana, profunda y significativa. No buscamos reunir a la mayor cantidad de personas.
-                            </p>
-                            <p style={{ margin: 0 }}>
-                                <strong style={{ color: '#ffffff' }}>BUSCAMOS REUNIR A LAS PERSONAS CORRECTAS.</strong>
-                            </p>
-                            <p style={{ margin: 0, color: '#ddbe3d', fontWeight: '700', fontSize: 'clamp(1rem, 3vw, 1.5rem)', marginTop: '10px' }}>
-                                Aplicación &rarr; Conversación &rarr; Confirmación
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
 
             {/* 7. Testimonials Section */}
             <section className="mlt-section mlt-animate" style={{ background: '#ffffff', color: '#002d44', padding: '80px 0' }}>
@@ -1399,14 +1244,11 @@ const MltLanding = ({ result, setTestResult }) => {
                             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: '900', marginBottom: '25px', textTransform: 'uppercase', lineHeight: '1.1' }}>
                                 <span style={{ color: '#002d44' }}>Felipe</span> <span style={{ color: '#ddbe3d' }}>Beltran</span>
                             </h2>
-                            <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontStyle: 'italic', fontWeight: '500' }}>
-                                "Me declaro un buscador en constante evolución y aprendiz de tiempo completo, que al igual que tú, recorre un camino en busca de la verdad, un sendero donde hay bosques de niebla y desiertos lleno de espejismos y fantasmas, pero que sin lugar a dudas, me han permitido renacer frecuentemente fortaleciendo mi carácter y determinación.
+                            <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontWeight: '500' }}>
+                                Durante más de 25 años he acompañado a líderes, empresarios y organizaciones a crecer, innovar y transformarse. Soy economista, coach, empresario y conferencista internacional, y he tenido la oportunidad de impactar a más de 75.000 personas en 32 ciudades y 6 países.
                             </p>
                             <p style={{ fontSize: '1.15rem', color: '#002d44', lineHeight: '1.6', marginBottom: '20px', fontWeight: '500' }}>
-                                Por todo esto, estoy convencido que los seres humanos tenemos el poder natural de transformar nuestra vida sin importar cuáles sean las circunstancias. Lo hice primero conmigo y ahora acompaño a otros a hacerlo también.
-                            </p>
-                            <p style={{ fontSize: '1.25rem', color: '#ddbe3d', lineHeight: '1.6', fontWeight: '800' }}>
-                                La tarea empieza por conocer realmente quién eres."
+                                Sin embargo, mi mayor aprendizaje no ha venido de los escenarios, sino de comprender que las transformaciones más profundas comienzan cuando una persona decide conocerse, asumir la responsabilidad de su vida y liderar desde la consciencia. Ese es el propósito con el que creé Master Live Training.
                             </p>
                         </div>
                     </div>
