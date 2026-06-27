@@ -179,10 +179,14 @@ const WorkshopInscripcionHazQueSuceda = () => {
 
             if (mpData?.init_point) {
                 // Notificación de intención de compra
-                sendWebPushNotification('purchase_intent', { 
-                    email: formData.email, 
-                    product: workshopConfig.name 
-                });
+                try {
+                    await sendWebPushNotification('purchase_intent', { 
+                        email: formData.email, 
+                        product: workshopConfig.name 
+                    });
+                } catch(e) {
+                    console.error(e);
+                }
                 window.location.href = mpData.init_point;
             } else {
                 throw new Error("No se pudo generar el link de pago.");
