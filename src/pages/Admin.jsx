@@ -1283,13 +1283,20 @@ const Admin = () => {
             </div>
         );
     }
+    const getAdminLogo = () => {
+        const user = localStorage.getItem('adminUser');
+        if (user === 'Felipe-7') return '/eneatipo-7.png';
+        if (user === 'Carlos-9') return '/eneatipo-9.png';
+        if (user === 'Lorena-1') return '/eneatipo-1.png';
+        return '/Circulo_Eneagrama_Autenticos_01.jpg';
+    };
 
     return (
         <div className="admin-shell">
             {/* ── MOBILE HEADER (Visible only on mobile via CSS) ── */}
             <div className="admin-mobile-header">
                 <div className="admin-mobile-brand">
-                    <img src="/Circulo_Eneagrama_Autenticos_01.jpg" alt="Logo" className="admin-mobile-logo" />
+                    <img src={getAdminLogo()} alt="Logo" className="admin-mobile-logo" />
                     <span className="admin-mobile-brand-name">Enesencia Admin</span>
                 </div>
                 <button
@@ -1310,7 +1317,7 @@ const Admin = () => {
             {/* ── SIDEBAR ── */}
             <aside className={`admin-sidebar ${isMobileSidebarOpen ? 'open' : ''}`}>
                 <div className="admin-sidebar-brand">
-                    <img src="/Circulo_Eneagrama_Autenticos_01.jpg" alt="Logo" className="admin-sidebar-logo" />
+                    <img src={getAdminLogo()} alt="Logo" className="admin-sidebar-logo" />
                     <span className="admin-sidebar-brand-name">Enesencia Admin</span>
                 </div>
 
