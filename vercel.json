@@ -37,6 +37,10 @@
             "destination": "/mlt-landing.html"
         },
         {
+            "source": "/test-temperamento-intro(.*)",
+            "destination": "/test-temperamento-intro.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
