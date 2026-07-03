@@ -62,7 +62,7 @@ const TemperamentoResult = () => {
     const data = TEMPERAMENT_DESCRIPTIONS[result];
 
     return (
-        <div className="liderazgo-results-page" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', paddingBottom: '0', background: '#fff' }}>
+        <div className="liderazgo-results-page" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', paddingBottom: '0' }}>
             <header className="lr-header" style={{ background: 'linear-gradient(135deg, #0a1118 0%, #112031 100%)', padding: '50px 20px' }}>
                 <div className="lr-header-content">
                     <h1 style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontWeight: 'bold', opacity: 0.9, color: '#fff', margin: '0' }}>Tu temperamento es:</h1>
@@ -72,10 +72,10 @@ const TemperamentoResult = () => {
                 </div>
             </header>
 
-            <main className="lr-main" style={{ flex: 1 }}>
-                <section className="lr-section lr-profile-hero" style={{ padding: '30px 15px' }}>
-                    <div className="lr-score-card" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-                        <div className="lr-level-info" style={{ padding: '15px 30px 30px' }}>
+            <main className="lr-main temperamento-main" style={{ flex: 1 }}>
+                <section className="lr-section lr-profile-hero temperamento-section">
+                    <div className="lr-score-card temperamento-card" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+                        <div className="lr-level-info temperamento-info">
                             <div style={{ textAlign: 'left', marginTop: '10px' }}>
                                 <h3 style={{ color: '#002d44', marginBottom: '10px' }}>¿Cómo comunicarte contigo?</h3>
                                 <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: '1.6', marginBottom: '25px' }}>
@@ -98,12 +98,6 @@ const TemperamentoResult = () => {
                 </section>
             </main>
             <footer className="lr-actions" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 20px 10px', flexWrap: 'wrap' }}>
-                <button
-                    onClick={() => navigate('/g-1-genuinos-intro')}
-                    className="lr-btn lr-btn-secondary"
-                >
-                    <ArrowLeft size={18} /> Volver al Programa
-                </button>
                 <button
                     onClick={() => {
                         localStorage.removeItem('temperamentResult');

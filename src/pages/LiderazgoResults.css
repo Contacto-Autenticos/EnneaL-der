@@ -397,6 +397,7 @@
     .lr-grid-2col { grid-template-columns: 1fr; }
     .lr-header h1 { font-size: 2.2rem; }
     .lr-score-card { gap: 20px; }
+    .liderazgo-results-page { background: white !important; }
 }
 
 @media print {
@@ -410,8 +411,32 @@
     font-size: 4.2rem;
 }
 
+.temperamento-section {
+    padding: 40px 20px;
+}
+.temperamento-info {
+    padding: 15px 30px 30px;
+}
+
 @media (max-width: 768px) {
     .temperamento-title-responsive {
         font-size: 3.5rem !important;
+    }
+    .temperamento-main {
+        padding: 0 !important;
+    }
+    .temperamento-section {
+        padding: 20px 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    .temperamento-card {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    .temperamento-info {
+        padding: 15px 20px 30px !important;
     }
 }
