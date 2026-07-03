@@ -66,7 +66,7 @@ const TemperamentoResult = () => {
             <header className="lr-header" style={{ background: 'linear-gradient(135deg, #0a1118 0%, #112031 100%)', padding: '50px 20px' }}>
                 <div className="lr-header-content">
                     <h1 style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontWeight: 'bold', opacity: 0.9, color: '#fff', margin: '0' }}>Tu temperamento es:</h1>
-                    <h2 style={{ color: data.color, fontSize: 'clamp(3rem, 15vw, 5rem)', margin: '5px 0 0 0', fontWeight: 'bold', textShadow: '0 2px 10px rgba(0,0,0,0.3)', lineHeight: '1' }}>
+                    <h2 className="temperamento-title-responsive" style={{ color: data.color, margin: '5px 0 0 0', fontWeight: 'bold', textShadow: '0 2px 10px rgba(0,0,0,0.3)', lineHeight: '1' }}>
                         {data.title}
                     </h2>
                 </div>

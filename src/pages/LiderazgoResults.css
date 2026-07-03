@@ -405,3 +405,13 @@
     .liderazgo-results-page { background: white; padding: 0; }
     .lr-section { box-shadow: none; border: 1px solid #eee; break-inside: avoid; }
 }
+
+.temperamento-title-responsive {
+    font-size: 4.2rem;
+}
+
+@media (max-width: 768px) {
+    .temperamento-title-responsive {
+        font-size: 3.5rem !important;
+    }
+}
