@@ -424,9 +424,13 @@
     }
     .temperamento-main {
         padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden;
     }
     .temperamento-section {
-        padding: 20px 0 !important;
+        padding: 20px 0 20px 0 !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         border: none !important;
