@@ -8,28 +8,28 @@ const TEMPERAMENT_DESCRIPTIONS = {
         title: 'Sanguíneo',
         color: '#f97316', // Orange
         description: 'A las personas sanguíneas conviene hablarles con entusiasmo, cercanía y claridad. Suelen responder mejor cuando sienten conexión, reconocimiento y posibilidad de participar.',
-        leadThem: 'Es importante canalizar su energía, darles espacios de expresión y ayudarles a convertir sus ideas en compromisos concretos.',
+        leadThem: <><strong style={{color: '#ddbe3d'}}>Es importante canalizar su energía, darles espacios de expresión</strong> y ayudarles a convertir sus ideas en compromisos concretos.</>,
         leadership: 'Como líder, inspiras a tu equipo con energía, entusiasmo y optimismo. Para potenciar tu liderazgo, asegúrate de mantener el enfoque, dar seguimiento a los detalles y estructurar los compromisos para convertirlos en resultados concretos.'
     },
     'Colérico': {
         title: 'Colérico',
         color: '#ef4444', // Red
         description: 'A las personas coléricas conviene hablarles de forma directa, clara y orientada a resultados. Suelen valorar la autonomía, los retos y las decisiones oportunas.',
-        leadThem: 'Es importante darles objetivos definidos, margen de acción y retroalimentación firme sin caer en confrontaciones innecesarias.',
+        leadThem: <><strong style={{color: '#ddbe3d'}}>Es importante darles objetivos definidos, margen de acción</strong> y retroalimentación firme sin caer en confrontaciones innecesarias.</>,
         leadership: 'Como líder, impulsas a tu equipo hacia la acción y los resultados de forma rápida y decidida. Para potenciar tu liderazgo, recuerda cultivar la paciencia, escuchar activamente a los demás y equilibrar la firmeza con la empatía.'
     },
     'Melancólico': {
         title: 'Melancólico',
         color: '#3b82f6', // Blue
         description: 'A las personas melancólicas conviene hablarles con profundidad, respeto y precisión. Suelen responder mejor cuando entienden el sentido, los detalles y la coherencia de lo que se les propone.',
-        leadThem: 'Es importante darles tiempo para analizar, cuidar la calidad del proceso y reconocer su sensibilidad y criterio.',
+        leadThem: <><strong style={{color: '#ddbe3d'}}>Es importante darles tiempo para analizar, cuidar la calidad del proceso</strong> y reconocer su sensibilidad y criterio.</>,
         leadership: 'Como líder, aportas profundidad, orden y un alto estándar de calidad al trabajo. Para potenciar tu liderazgo, procura no frenarte por el perfeccionismo, confía más al delegar tareas y celebra los pequeños avances del equipo.'
     },
     'Flemático': {
         title: 'Flemático',
         color: '#10b981', // Green
         description: 'A las personas flemáticas conviene hablarles con calma, paciencia y confianza. Suelen valorar la estabilidad, la armonía y los ambientes donde no se sienten presionadas innecesariamente.',
-        leadThem: 'Es importante acompañarlas con claridad, invitarlas a tomar posición y ayudarles a avanzar sin romper su serenidad.',
+        leadThem: <><strong style={{color: '#ddbe3d'}}>Es importante acompañarlas con claridad, invitarlas a tomar posición</strong> y ayudarles a avanzar sin romper su serenidad.</>,
         leadership: 'Como líder, creas un ambiente de confianza, estabilidad y armonía, siendo un excelente mediador. Para potenciar tu liderazgo, atrévete a tomar decisiones difíciles más rápido e impulsa al equipo a salir de su zona de confort.'
     }
 };
