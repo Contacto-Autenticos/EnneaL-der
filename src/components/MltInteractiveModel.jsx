@@ -26,7 +26,7 @@ const MltInteractiveModel = () => {
             id: 'Genuinos',
             title: '1. Genuinos',
             subtitle: 'Autoconocimiento',
-            img: '/Logo-Genuinos-03.png',
+            img: '/Iconos de programas/Programa_genuinos_huella_icono.png',
             text: 'El punto de partida de todo proceso de transformación es el autoconocimiento. Comprender quién eres, reconocer tus fortalezas, identificar tus patrones y entender aquello que impulsa tus decisiones te permite construir sobre una base sólida.'
         },
         {

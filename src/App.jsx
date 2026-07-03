@@ -83,6 +83,9 @@ const LiderazgoTestIntro = lazy(() => lazyRetry(() => import('./pages/LiderazgoT
 const BusinessScan = lazy(() => lazyRetry(() => import('./pages/BusinessScan')));
 const PostulacionMlt = lazy(() => lazyRetry(() => import('./pages/PostulacionMlt')));
 const PartnerGateway = lazy(() => lazyRetry(() => import('./pages/PartnerGateway')));
+const TemperamentoTestIntro = lazy(() => lazyRetry(() => import('./pages/TemperamentoTestIntro')));
+const TemperamentoTest = lazy(() => lazyRetry(() => import('./pages/TemperamentoTest')));
+const TemperamentoResult = lazy(() => lazyRetry(() => import('./pages/TemperamentoResult')));
 
 function App() {
   const [user, setUser] = useState(null);
@@ -343,6 +346,9 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/liderazgo-test-intro" element={<LiderazgoTestIntro />} />
         <Route path="/liderazgo-test" element={<LiderazgoTest />} />
         <Route path="/liderazgo-results" element={<LiderazgoResults />} />
+        <Route path="/test-temperamento-intro" element={<TemperamentoTestIntro />} />
+        <Route path="/test-temperamento" element={<TemperamentoTest />} />
+        <Route path="/test-temperamento-resultado" element={<TemperamentoResult />} />
 
         <Route path="/dominios" element={<AutodiagRegister />} />
         <Route path="/dominios-payment" element={<AutodiagPayment />} />

@@ -26,7 +26,7 @@ const Hub = () => {
                 <div className="programs-section" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     <div className="programs-list">
                         {[
-                            { name: 'GENUINOS', icon: '/Logo-Genuinos-03.png', path: '/Genuinos' },
+                            { name: 'GENUINOS', icon: '/Iconos de programas/Programa_genuinos_huella_icono.png', path: '/Genuinos' },
                             { name: 'FASCINANTES', icon: '/Logo-Fascinantes-03.png', path: '/Fascinantes' },
                             { name: 'EXTRAORDINARIOS', icon: '/Logo-Extraordinarios-03.png', path: '/Extraordinarios', locked: true },
                             { name: 'TRASCENDENTES', icon: '/Logo-Trascendentes-03.png', path: '/Trascendentes', locked: true },

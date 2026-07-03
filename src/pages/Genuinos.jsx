@@ -7,16 +7,19 @@ const Genuinos = () => {
     const navigate = useNavigate();
     const [results, setResults] = useState({
         enneagram: false,
-        advanced: false
+        advanced: false,
+        temperament: false
     });
 
     useEffect(() => {
         const storedResult = localStorage.getItem('enneagramResult');
         const storedAdvancedResult = localStorage.getItem('enneagramAdvancedResult');
+        const storedTemperamentResult = localStorage.getItem('temperamentResult');
         
         setResults({
             enneagram: !!storedResult,
-            advanced: !!storedAdvancedResult
+            advanced: !!storedAdvancedResult,
+            temperament: !!storedTemperamentResult
         });
     }, []);
 
@@ -35,6 +38,14 @@ const Genuinos = () => {
             description: 'Analiza tu impacto como líder y cómo potenciar a tu equipo.',
             path: '/test-liderazgo',
             completed: results.advanced,
+            icon: <ArrowRight size={20} />
+        },
+        {
+            id: 'temperament',
+            title: 'Test de temperamento',
+            description: 'Descubre y comprende los rasgos de tu temperamento natural.',
+            path: '/test-temperamento-intro',
+            completed: results.temperament,
             icon: <ArrowRight size={20} />
         }
     ];
