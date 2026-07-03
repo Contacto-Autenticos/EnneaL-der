@@ -22,12 +22,12 @@ const TemperamentoTestIntro = () => {
                 </div>
 
                 <div className="intro-body">
-                    <p className="intro-subtitle">Este test analizará tu temperamento dominante.</p>
+                    <p className="intro-subtitle">Este test analizará tu temperamento.</p>
 
                     <div className="intro-text-box">
                         <p className="intro-box-subtitle">Para obtener un resultado más representativo:</p>
                         <p>
-                            Responde basándote en <strong>cómo actúas naturalmente,</strong>
+                            Responde basándote en <strong>cómo actúas naturalmente,</strong>{' '}
                             sin pensar demasiado. No hay respuestas correctas ni incorrectas.
                         </p>
                         <p className="intro-duration">Duración aproximada: 2 a 3 minutos</p>

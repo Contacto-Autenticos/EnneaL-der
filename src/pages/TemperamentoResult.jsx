@@ -62,18 +62,18 @@ const TemperamentoResult = () => {
     const data = TEMPERAMENT_DESCRIPTIONS[result];
 
     return (
-        <div className="liderazgo-results-page" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', paddingBottom: '0' }}>
+        <div className="liderazgo-results-page" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', paddingBottom: '0', background: '#fff' }}>
             <header className="lr-header" style={{ background: 'linear-gradient(135deg, #0a1118 0%, #112031 100%)', padding: '50px 20px' }}>
                 <div className="lr-header-content">
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', opacity: 0.9, color: '#fff', margin: '0' }}>Tu temperamento es:</h1>
-                    <h2 style={{ color: data.color, fontSize: '4rem', margin: '0', fontWeight: 'bold', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                    <h1 style={{ fontSize: 'clamp(1.2rem, 4vw, 1.5rem)', fontWeight: 'bold', opacity: 0.9, color: '#fff', margin: '0' }}>Tu temperamento es:</h1>
+                    <h2 style={{ color: data.color, fontSize: 'clamp(3rem, 15vw, 5rem)', margin: '5px 0 0 0', fontWeight: 'bold', textShadow: '0 2px 10px rgba(0,0,0,0.3)', lineHeight: '1' }}>
                         {data.title}
                     </h2>
                 </div>
             </header>
 
             <main className="lr-main" style={{ flex: 1 }}>
-                <section className="lr-section lr-profile-hero" style={{ padding: '40px 20px' }}>
+                <section className="lr-section lr-profile-hero" style={{ padding: '30px 15px' }}>
                     <div className="lr-score-card" style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
                         <div className="lr-level-info" style={{ padding: '15px 30px 30px' }}>
                             <div style={{ textAlign: 'left', marginTop: '10px' }}>
@@ -91,21 +91,30 @@ const TemperamentoResult = () => {
                                 <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: '1.6', padding: '15px', background: 'rgba(221, 190, 61, 0.1)', borderLeft: '4px solid #ddbe3d', borderRadius: '4px' }}>
                                     <strong>{data.leadership}</strong>
                                 </p>
+
                             </div>
                         </div>
                     </div>
                 </section>
             </main>
-
-            <footer className="lr-footer">
-                <button className="lr-btn-secondary" onClick={() => navigate('/Genuinos')}>
+            <footer className="lr-actions" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 20px 10px', flexWrap: 'wrap' }}>
+                <button
+                    onClick={() => navigate('/g-1-genuinos-intro')}
+                    className="lr-btn lr-btn-secondary"
+                >
                     <ArrowLeft size={18} /> Volver al Programa
                 </button>
-                <button className="lr-btn-primary" onClick={() => navigate('/test-temperamento')}>
+                <button
+                    onClick={() => {
+                        localStorage.removeItem('temperamentResult');
+                        navigate('/test-temperamento');
+                    }}
+                    className="lr-btn lr-btn-primary"
+                >
                     <RefreshCw size={18} /> Repetir Test
                 </button>
             </footer>
-            <div className="test-footer" style={{ paddingBottom: '0px', marginBottom: '10px', textAlign: 'center' }}>
+            <div className="test-footer" style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: '20px' }}>
                 <img
                     src="/logo-azul.png"
                     alt="Logo Auténticos"
