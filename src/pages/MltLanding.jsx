@@ -366,6 +366,14 @@ const MltLanding = ({ result, setTestResult }) => {
         }
     }, [searchParams, result, setTestResult]);
 
+    // Deep Linking: Auto-open Info Modal if requested in URL
+    useEffect(() => {
+        const modalParam = searchParams.get('modal');
+        if (modalParam === 'info' || modalParam === 'informativa' || modalParam === 'registro') {
+            setIsInfoModalOpen(true);
+        }
+    }, [searchParams]);
+
     // Isolation and Reset Logic
     useEffect(() => {
         const originalBG = document.body.style.backgroundImage;
