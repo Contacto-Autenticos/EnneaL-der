@@ -83,6 +83,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
     // Informativa state
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const [isForcedModal, setIsForcedModal] = useState(false);
     const [infoLoading, setInfoLoading] = useState(false);
     const [infoSuccess, setInfoSuccess] = useState(false);
     const [infoError, setInfoError] = useState(null);
@@ -371,6 +372,7 @@ const MltLanding = ({ result, setTestResult }) => {
         const modalParam = searchParams.get('modal');
         if (modalParam === 'info' || modalParam === 'informativa' || modalParam === 'registro') {
             setIsInfoModalOpen(true);
+            setIsForcedModal(true);
         }
     }, [searchParams]);
 
@@ -1655,11 +1657,13 @@ const MltLanding = ({ result, setTestResult }) => {
 
             {/* Modal Sesión Informativa */}
             {isInfoModalOpen && (
-                <div className="mlt-modal-overlay" onClick={() => setIsInfoModalOpen(false)}>
+                <div className="mlt-modal-overlay" onClick={() => !isForcedModal && setIsInfoModalOpen(false)}>
                     <div className="mlt-form-container mlt-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="mlt-modal-close" onClick={() => setIsInfoModalOpen(false)}>
-                            <X size={24} />
-                        </button>
+                        {!isForcedModal && (
+                            <button className="mlt-modal-close" onClick={() => setIsInfoModalOpen(false)}>
+                                <X size={24} />
+                            </button>
+                        )}
                         
                         {infoSuccess ? (
                             <div style={{ textAlign: 'center', padding: '30px 10px' }}>
@@ -1670,9 +1674,15 @@ const MltLanding = ({ result, setTestResult }) => {
                                 </p>
                                 <button 
                                     className="mlt-submit-btn" 
-                                    onClick={() => setIsInfoModalOpen(false)}
+                                    onClick={() => {
+                                        if (isForcedModal) {
+                                            navigate('/');
+                                        } else {
+                                            setIsInfoModalOpen(false);
+                                        }
+                                    }}
                                 >
-                                    Cerrar y Volver
+                                    {isForcedModal ? "Volver al inicio" : "Cerrar y Volver"}
                                 </button>
                             </div>
                         ) : (
