@@ -1672,18 +1672,14 @@ const MltLanding = ({ result, setTestResult }) => {
                                 <p style={{ color: '#fff', opacity: 0.9, marginBottom: '25px', fontSize: '16px', lineHeight: '1.5' }}>
                                     Hemos reservado tu cupo. Revisa tu correo electrónico, allí te hemos enviado la invitación con la fecha, hora y el enlace de Google Meet. Nos vemos el jueves.
                                 </p>
-                                <button 
-                                    className="mlt-submit-btn" 
-                                    onClick={() => {
-                                        if (isForcedModal) {
-                                            navigate('/');
-                                        } else {
-                                            setIsInfoModalOpen(false);
-                                        }
-                                    }}
-                                >
-                                    {isForcedModal ? "Volver al inicio" : "Cerrar y Volver"}
-                                </button>
+                                {!isForcedModal && (
+                                    <button 
+                                        className="mlt-submit-btn" 
+                                        onClick={() => setIsInfoModalOpen(false)}
+                                    >
+                                        Cerrar y Volver
+                                    </button>
+                                )}
                             </div>
                         ) : (
                             <>
