@@ -1684,10 +1684,15 @@ const MltLanding = ({ result, setTestResult }) => {
                             </div>
                         ) : (
                             <>
-                                <h3 className="mlt-form-title" style={{ fontSize: '24px', marginBottom: '10px' }}>Sesión Informativa Grupal</h3>
-                                <p style={{ color: 'rgba(255,255,255,0.7)', textAlign: 'center', marginBottom: '25px', fontSize: '14px' }}>
-                                    {getFormattedNextSessionDate()} (Hora Colombia).<br/>Cupos limitados.
-                                </p>
+                                <h3 className="mlt-form-title" style={{ fontSize: '24px', marginBottom: '15px' }}>Sesión Informativa Grupal</h3>
+                                <div style={{ background: 'rgba(221, 190, 61, 0.1)', border: '1px solid rgba(221, 190, 61, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '25px', textAlign: 'center' }}>
+                                    <p style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '800', margin: '0 0 5px 0' }}>
+                                        {getFormattedNextSessionDate()}
+                                    </p>
+                                    <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px', margin: 0 }}>
+                                        (Hora Colombia) - Cupos limitados
+                                    </p>
+                                </div>
                                 {infoError && <div style={{ color: '#ff4d4d', marginBottom: '20px', textAlign: 'center', fontSize: '14px', background: 'rgba(255,77,77,0.1)', padding: '10px', borderRadius: '5px' }}>{infoError}</div>}
                                 
                                 <form onSubmit={handleInfoSubmit}>
