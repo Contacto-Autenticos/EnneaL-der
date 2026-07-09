@@ -1684,7 +1684,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             </div>
                         ) : (
                             <>
-                                <h3 className="mlt-form-title" style={{ fontSize: '24px', marginBottom: '15px', color: '#ffffff' }}>Sesión Informativa Grupal</h3>
+                                <h3 className="mlt-form-title" style={{ fontSize: '18px', marginBottom: '15px', color: '#ffffff' }}>Sesión informativa virtual</h3>
                                 <div style={{ background: 'rgba(221, 190, 61, 0.1)', border: '1px solid rgba(221, 190, 61, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '25px', textAlign: 'center' }}>
                                     <p style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '800', margin: '0 0 5px 0' }}>
                                         {getFormattedNextSessionDate()}
