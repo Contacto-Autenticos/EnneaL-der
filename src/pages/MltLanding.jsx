@@ -214,10 +214,37 @@ const MltLanding = ({ result, setTestResult }) => {
             // Obtener TRM actual de Datos Abiertos (Banco de la República)
             let trmValue = 4000; // Valor fallback
             try {
-                const trmResponse = await fetch('https://www.datos.gov.co/resource/32sa-8pi3.json?%24limit=1&%24order=vigenciahasta%20DESC');
+                const trmResponse = await fetch('https://www.datos.gov.co/resource/32sa-8pi3.json?%24limit=10&%24order=vigenciahasta%20DESC');
                 const trmData = await trmResponse.json();
-                if (trmData && trmData.length > 0 && trmData[0].valor) {
-                    trmValue = parseFloat(trmData[0].valor);
+                
+                if (trmData && trmData.length > 0) {
+                    const colTimeStr = new Date().toLocaleString("en-US", {timeZone: "America/Bogota"});
+                    const colDateObj = new Date(colTimeStr);
+                    const yyyy = colDateObj.getFullYear();
+                    const mm = String(colDateObj.getMonth() + 1).padStart(2, '0');
+                    const dd = String(colDateObj.getDate()).padStart(2, '0');
+                    const todayStr = `${yyyy}-${mm}-${dd}`;
+                    
+                    const validTrm = trmData.find(item => {
+                        const desdeStr = item.vigenciadesde.substring(0, 10);
+                        const hastaStr = item.vigenciahasta.substring(0, 10);
+                        return todayStr >= desdeStr && todayStr <= hastaStr;
+                    });
+
+                    if (validTrm && validTrm.valor) {
+                        trmValue = parseFloat(validTrm.valor);
+                    } else {
+                        // Fallback al TRM más reciente en el pasado (ignorar los del futuro)
+                        const pastTrm = trmData.find(item => {
+                            const desdeStr = item.vigenciadesde.substring(0, 10);
+                            return todayStr >= desdeStr;
+                        });
+                        if (pastTrm && pastTrm.valor) {
+                            trmValue = parseFloat(pastTrm.valor);
+                        } else {
+                            trmValue = parseFloat(trmData[0].valor);
+                        }
+                    }
                 }
             } catch (err) {
                 console.error("Error obteniendo TRM:", err);
