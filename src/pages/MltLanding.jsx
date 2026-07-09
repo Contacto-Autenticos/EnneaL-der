@@ -74,6 +74,7 @@ const MltLanding = ({ result, setTestResult }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
     const [mpLink, setMpLink] = useState(null);
+    const [currentTrm, setCurrentTrm] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
@@ -191,6 +192,47 @@ const MltLanding = ({ result, setTestResult }) => {
         }
     };
 
+    useEffect(() => {
+        const initTrm = async () => {
+            try {
+                const trmResponse = await fetch('https://www.datos.gov.co/resource/32sa-8pi3.json?%24limit=10&%24order=vigenciahasta%20DESC');
+                const trmData = await trmResponse.json();
+                
+                if (trmData && trmData.length > 0) {
+                    const colTimeStr = new Date().toLocaleString("en-US", {timeZone: "America/Bogota"});
+                    const colDateObj = new Date(colTimeStr);
+                    const yyyy = colDateObj.getFullYear();
+                    const mm = String(colDateObj.getMonth() + 1).padStart(2, '0');
+                    const dd = String(colDateObj.getDate()).padStart(2, '0');
+                    const todayStr = `${yyyy}-${mm}-${dd}`;
+                    
+                    const validTrm = trmData.find(item => {
+                        const desdeStr = item.vigenciadesde.substring(0, 10);
+                        const hastaStr = item.vigenciahasta.substring(0, 10);
+                        return todayStr >= desdeStr && todayStr <= hastaStr;
+                    });
+
+                    if (validTrm && validTrm.valor) {
+                        setCurrentTrm(parseFloat(validTrm.valor));
+                    } else {
+                        const pastTrm = trmData.find(item => {
+                            const desdeStr = item.vigenciadesde.substring(0, 10);
+                            return todayStr >= desdeStr;
+                        });
+                        if (pastTrm && pastTrm.valor) {
+                            setCurrentTrm(parseFloat(pastTrm.valor));
+                        } else {
+                            setCurrentTrm(parseFloat(trmData[0].valor));
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Error obteniendo TRM inicial:", err);
+            }
+        };
+        initTrm();
+    }, []);
+
     const mltConfig = {
         title: "Master Live Training",
         priceInUSD: 3300,
@@ -211,44 +253,8 @@ const MltLanding = ({ result, setTestResult }) => {
         setError(null);
 
         try {
-            // Obtener TRM actual de Datos Abiertos (Banco de la República)
-            let trmValue = 4000; // Valor fallback
-            try {
-                const trmResponse = await fetch('https://www.datos.gov.co/resource/32sa-8pi3.json?%24limit=10&%24order=vigenciahasta%20DESC');
-                const trmData = await trmResponse.json();
-                
-                if (trmData && trmData.length > 0) {
-                    const colTimeStr = new Date().toLocaleString("en-US", {timeZone: "America/Bogota"});
-                    const colDateObj = new Date(colTimeStr);
-                    const yyyy = colDateObj.getFullYear();
-                    const mm = String(colDateObj.getMonth() + 1).padStart(2, '0');
-                    const dd = String(colDateObj.getDate()).padStart(2, '0');
-                    const todayStr = `${yyyy}-${mm}-${dd}`;
-                    
-                    const validTrm = trmData.find(item => {
-                        const desdeStr = item.vigenciadesde.substring(0, 10);
-                        const hastaStr = item.vigenciahasta.substring(0, 10);
-                        return todayStr >= desdeStr && todayStr <= hastaStr;
-                    });
-
-                    if (validTrm && validTrm.valor) {
-                        trmValue = parseFloat(validTrm.valor);
-                    } else {
-                        // Fallback al TRM más reciente en el pasado (ignorar los del futuro)
-                        const pastTrm = trmData.find(item => {
-                            const desdeStr = item.vigenciadesde.substring(0, 10);
-                            return todayStr >= desdeStr;
-                        });
-                        if (pastTrm && pastTrm.valor) {
-                            trmValue = parseFloat(pastTrm.valor);
-                        } else {
-                            trmValue = parseFloat(trmData[0].valor);
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error("Error obteniendo TRM:", err);
-            }
+            // Usar TRM precargado, o fallback a 4000 si falló
+            let trmValue = currentTrm || 4000;
 
             const priceInCOP = Math.round(mltConfig.priceInUSD * trmValue);
 
@@ -1367,6 +1373,11 @@ const MltLanding = ({ result, setTestResult }) => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#777', marginTop: '20px', fontSize: '13px', letterSpacing: '0.05em' }}>
                                 <Lock size={14} color="#ddbe3d" /> PROCESO DE APLICACIÓN PRIVADO Y CONFIDENCIAL
                             </div>
+                            {currentTrm && (
+                                <div style={{ color: 'rgba(255,255,255,0.4)', marginTop: '12px', fontSize: '12px', fontStyle: 'italic', letterSpacing: '0.03em' }}>
+                                    * TRM del día aplicada: ${currentTrm.toLocaleString('es-CO')} COP aprox.
+                                </div>
+                            )}
                         </div>
 
                     </div>
