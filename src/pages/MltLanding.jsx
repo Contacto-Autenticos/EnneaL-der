@@ -72,6 +72,8 @@ const MltLanding = ({ result, setTestResult }) => {
 
     // Form and Payment state
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
+    const [mpLink, setMpLink] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
@@ -190,9 +192,9 @@ const MltLanding = ({ result, setTestResult }) => {
     };
 
     const mltConfig = {
-        title: "Mapa de Claridad",
-        price: 75000,
-        name: "Mapa de Claridad MLT"
+        title: "Master Live Training",
+        priceInUSD: 3300,
+        name: "Master Live Training - Primera Generación"
     };
 
     const handleChange = (e) => {
@@ -209,6 +211,20 @@ const MltLanding = ({ result, setTestResult }) => {
         setError(null);
 
         try {
+            // Obtener TRM actual de Datos Abiertos (Banco de la República)
+            let trmValue = 4000; // Valor fallback
+            try {
+                const trmResponse = await fetch('https://www.datos.gov.co/resource/32sa-8pi3.json?%24limit=1&%24order=vigenciahasta%20DESC');
+                const trmData = await trmResponse.json();
+                if (trmData && trmData.length > 0 && trmData[0].valor) {
+                    trmValue = parseFloat(trmData[0].valor);
+                }
+            } catch (err) {
+                console.error("Error obteniendo TRM:", err);
+            }
+
+            const priceInCOP = Math.round(mltConfig.priceInUSD * trmValue);
+
             const { data, error: insertError } = await supabase
                 .from('workshop_registrations')
                 .insert([{
@@ -217,10 +233,12 @@ const MltLanding = ({ result, setTestResult }) => {
                     phone: formData.phone,
                     city: formData.city,
                     workshop_name: mltConfig.name,
-                    amount: mltConfig.price,
+                    amount: priceInCOP,
                     payment_status: 'PENDING',
                     raw_data: {
-                        source: 'MLT Landing'
+                        source: 'MLT Landing',
+                        trm: trmValue,
+                        priceInUSD: mltConfig.priceInUSD
                     }
                 }])
                 .select();
@@ -228,7 +246,6 @@ const MltLanding = ({ result, setTestResult }) => {
             if (insertError) throw insertError;
 
             const registrationId = data[0].id;
-
             localStorage.setItem('mlt_email', formData.email.trim().toLowerCase());
             localStorage.setItem('mlt_name', formData.full_name);
 
@@ -237,7 +254,7 @@ const MltLanding = ({ result, setTestResult }) => {
             const { data: mpData, error: mpError } = await supabase.functions.invoke('create-mp-preference', {
                 body: {
                     reference,
-                    unit_price: mltConfig.price,
+                    unit_price: priceInCOP,
                     title: mltConfig.name,
                     user_email: formData.email,
                     back_url_custom: `${window.location.origin}/dominios-payment-status`
@@ -248,19 +265,23 @@ const MltLanding = ({ result, setTestResult }) => {
             if (mpData?.error) throw new Error(mpData.error);
 
             if (mpData?.init_point) {
-                // Notificación de intención de compra
+                setMpLink(mpData.init_point);
                 sendWebPushNotification('purchase_intent', { 
                     email: formData.email, 
                     product: mltConfig.name 
                 });
-                window.location.href = mpData.init_point;
+                
+                setIsModalOpen(false);
+                setIsWelcomeModalOpen(true);
+                setFormData({ full_name: '', email: '', phone: '', city: '' });
             } else {
                 throw new Error("No se pudo generar el link de pago.");
             }
-
+            
         } catch (err) {
             console.error("Error en el registro:", err);
             setError("Hubo un problema al procesar tu registro. Por favor intenta de nuevo.");
+        } finally {
             setLoading(false);
         }
     };
@@ -1215,7 +1236,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '30px', flexWrap: 'wrap', marginBottom: '20px' }}>
                             <div style={{ textAlign: 'center', color: '#888' }}>
                                 <div style={{ fontSize: '28px', fontWeight: '500', textDecoration: 'line-through' }}>
-                                    USD 3.800
+                                    USD 4.200
                                 </div>
                                 <div style={{ fontSize: '14px', letterSpacing: '0.1em', marginTop: '5px' }}>
                                     VALOR REGULAR
@@ -1227,7 +1248,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             <div style={{ textAlign: 'center' }}>
                                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: '8px' }}>
                                     <span style={{ fontSize: '24px', fontWeight: '700', marginTop: '15px' }}>USD</span>
-                                    <span style={{ fontSize: 'clamp(60px, 8vw, 90px)', fontWeight: '900', lineHeight: '1' }}>2.900</span>
+                                    <span style={{ fontSize: 'clamp(60px, 8vw, 90px)', fontWeight: '900', lineHeight: '1' }}>3.300</span>
                                 </div>
                                 <div style={{ fontSize: '16px', letterSpacing: '0.1em', color: '#ddbe3d', marginTop: '5px', fontWeight: '600' }}>
                                     VALOR ESPECIAL DE LANZAMIENTO
@@ -1296,7 +1317,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '40px' }}>
                             <button 
-                                onClick={handleAction} 
+                                onClick={() => setIsModalOpen(true)} 
                                 style={{ 
                                     background: 'linear-gradient(to right, #ddbe3d, #cba92d)', 
                                     border: 'none', 
@@ -1484,7 +1505,7 @@ const MltLanding = ({ result, setTestResult }) => {
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <button onClick={handleAction} className="mlt-btn-main" style={{ padding: '20px 45px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '10px', textTransform: 'uppercase' }}>
+                        <button onClick={() => setIsModalOpen(true)} className="mlt-btn-main" style={{ padding: '20px 45px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '10px', textTransform: 'uppercase' }}>
                             Aplicar a la Primera Generación
                             <ArrowRight size={24} />
                         </button>
@@ -1596,9 +1617,43 @@ const MltLanding = ({ result, setTestResult }) => {
                                         <Loader2 className="animate-spin" size={20} />
                                         PROCESANDO...
                                     </span>
-                                ) : "CONTINUAR AL PAGO"}
+                                ) : "ENVIAR MIS DATOS"}
                             </button>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Bienvenida */}
+            {isWelcomeModalOpen && (
+                <div className="mlt-modal-overlay" onClick={() => setIsWelcomeModalOpen(false)}>
+                    <div className="mlt-form-container mlt-modal-content" onClick={(e) => e.stopPropagation()} style={{ textAlign: 'center', padding: '40px 20px' }}>
+                        <button className="mlt-modal-close" onClick={() => setIsWelcomeModalOpen(false)}>
+                            <X size={24} />
+                        </button>
+                        <CheckCircle2 size={64} color="#ddbe3d" style={{ margin: '0 auto 20px' }} />
+                        <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#ddbe3d', marginBottom: '15px' }}>¡Bienvenido a Auténticos!</h3>
+                        <p style={{ color: '#fff', opacity: 0.9, marginBottom: '25px', fontSize: '18px', lineHeight: '1.5' }}>
+                            Gracias por dejar tus datos de contacto. Has dado el primer paso hacia el programa Master Live Training.<br/><br/>
+                            Pronto nos pondremos en contacto contigo.
+                        </p>
+                        
+                        {mpLink && (
+                            <a 
+                                href={mpLink}
+                                className="mlt-submit-btn" 
+                                style={{ display: 'inline-block', textDecoration: 'none', marginBottom: '20px', textAlign: 'center' }}
+                            >
+                                CONTINUAR AL PAGO
+                            </a>
+                        )}
+
+                        <button 
+                            onClick={() => setIsWelcomeModalOpen(false)}
+                            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '15px', textDecoration: 'underline', width: '100%', textAlign: 'center' }}
+                        >
+                            Cerrar y volver
+                        </button>
                     </div>
                 </div>
             )}
