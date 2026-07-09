@@ -1596,7 +1596,7 @@ const MltLanding = ({ result, setTestResult }) => {
                         <button className="mlt-modal-close" onClick={() => setIsModalOpen(false)}>
                             <X size={24} />
                         </button>
-                        <h3 className="mlt-form-title">Formulario de registro Master Live Training</h3>
+                        <h3 className="mlt-form-title">Formulario de registro <br/> Master Live Training</h3>
                         {error && <div style={{ color: '#ff4d4d', marginBottom: '20px', textAlign: 'center' }}>{error}</div>}
                         
                         <form onSubmit={handleSubmit}>
