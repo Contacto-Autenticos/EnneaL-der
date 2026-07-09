@@ -133,6 +133,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return; // Prevención de doble clic
         setLoading(true);
         setError(null);
 

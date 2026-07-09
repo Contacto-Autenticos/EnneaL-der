@@ -67,7 +67,7 @@ const MltInteractiveModel = () => {
                 'Conócete',
                 'Identifica tu temperamento',
                 'Fortalece tu carácter',
-                'Potencia tu personalidad',
+                'Comprende tu personalidad',
                 'Reconoce tus deseos',
                 'Enfrenta tus miedos',
                 'Abraza tus conflictos',

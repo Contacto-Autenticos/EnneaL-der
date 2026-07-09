@@ -118,6 +118,7 @@ const PostulacionMlt = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
 
     try {

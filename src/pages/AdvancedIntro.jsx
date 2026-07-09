@@ -45,6 +45,7 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return; // Prevención de doble clic
         setLoading(true);
         setCodeError(null);
 
