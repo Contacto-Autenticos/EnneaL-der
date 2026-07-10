@@ -168,7 +168,18 @@ serve(async (req) => {
       );
     }
 
-    await Promise.all(fetchPromises);
+    const responses = await Promise.all(fetchPromises);
+    const errors = [];
+    for (let i = 0; i < responses.length; i++) {
+      const res = responses[i];
+      if (!res.ok) {
+        const errText = await res.text();
+        errors.push(`Request ${i} failed: ${errText}`);
+      }
+    }
+    if (errors.length > 0) {
+      throw new Error(`Brevo API Errors: ${errors.join(' | ')}`);
+    }
 
     return new Response(
       JSON.stringify({ success: true, message: "Correos enviados y programados exitosamente" }),
