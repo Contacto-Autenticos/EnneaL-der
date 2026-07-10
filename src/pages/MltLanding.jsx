@@ -1592,7 +1592,7 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* Modal de Pago */}
             {isModalOpen && (
                 <div className="mlt-modal-overlay" onClick={() => setIsModalOpen(false)}>
-                    <div className="mlt-form-container mlt-modal-content" onClick={(e) => e.stopPropagation()}>
+                    <div className="mlt-form-container mlt-modal-content mlt-white-modal" onClick={(e) => e.stopPropagation()}>
                         <button className="mlt-modal-close" onClick={() => setIsModalOpen(false)}>
                             <X size={24} />
                         </button>
@@ -1665,13 +1665,13 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* Modal de Bienvenida */}
             {isWelcomeModalOpen && (
                 <div className="mlt-modal-overlay" onClick={() => setIsWelcomeModalOpen(false)}>
-                    <div className="mlt-form-container mlt-modal-content" onClick={(e) => e.stopPropagation()} style={{ textAlign: 'center', padding: '40px 20px' }}>
+                    <div className="mlt-form-container mlt-modal-content mlt-white-modal" onClick={(e) => e.stopPropagation()} style={{ textAlign: 'center', padding: '40px 20px' }}>
                         <button className="mlt-modal-close" onClick={() => setIsWelcomeModalOpen(false)}>
                             <X size={24} />
                         </button>
                         <CheckCircle2 size={64} color="#ddbe3d" style={{ margin: '0 auto 20px' }} />
-                        <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#ddbe3d', marginBottom: '15px' }}>¡Bienvenido a Auténticos!</h3>
-                        <p style={{ color: '#fff', opacity: 0.9, marginBottom: '25px', fontSize: '18px', lineHeight: '1.5' }}>
+                        <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#002d44', marginBottom: '15px' }}>¡Bienvenido a Auténticos!</h3>
+                        <p style={{ color: '#002d44', opacity: 0.9, marginBottom: '25px', fontSize: '18px', lineHeight: '1.5' }}>
                             Gracias por dejar tus datos de contacto. Has dado el primer paso hacia el programa Master Live Training.<br/><br/>
                             Pronto nos pondremos en contacto contigo.
                         </p>
@@ -1688,7 +1688,7 @@ const MltLanding = ({ result, setTestResult }) => {
 
                         <button 
                             onClick={() => setIsWelcomeModalOpen(false)}
-                            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '15px', textDecoration: 'underline', width: '100%', textAlign: 'center' }}
+                            style={{ background: 'none', border: 'none', color: 'rgba(0,45,68,0.6)', cursor: 'pointer', fontSize: '15px', textDecoration: 'underline', width: '100%', textAlign: 'center' }}
                         >
                             Cerrar y volver
                         </button>
@@ -1752,7 +1752,7 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* Modal Sesión Informativa */}
             {isInfoModalOpen && (
                 <div className="mlt-modal-overlay" onClick={() => !isForcedModal && setIsInfoModalOpen(false)}>
-                    <div className="mlt-form-container mlt-modal-content" onClick={(e) => e.stopPropagation()}>
+                    <div className="mlt-form-container mlt-modal-content mlt-white-modal" onClick={(e) => e.stopPropagation()}>
                         {!isForcedModal && (
                             <button className="mlt-modal-close" onClick={() => setIsInfoModalOpen(false)}>
                                 <X size={24} />
@@ -1763,7 +1763,7 @@ const MltLanding = ({ result, setTestResult }) => {
                             <div style={{ textAlign: 'center', padding: '30px 10px' }}>
                                 <CheckCircle2 size={64} color="#10B981" style={{ margin: '0 auto 20px' }} />
                                 <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#10B981', marginBottom: '15px' }}>¡Registro Exitoso!</h3>
-                                <p style={{ color: '#fff', opacity: 0.9, marginBottom: '25px', fontSize: '16px', lineHeight: '1.5' }}>
+                                <p style={{ color: '#002d44', opacity: 0.9, marginBottom: '25px', fontSize: '16px', lineHeight: '1.5' }}>
                                     Hemos reservado tu cupo. Revisa tu correo electrónico, allí te hemos enviado la invitación con la fecha, hora y el enlace de Google Meet. Nos vemos el jueves.
                                 </p>
                                 {!isForcedModal && (
@@ -1777,12 +1777,12 @@ const MltLanding = ({ result, setTestResult }) => {
                             </div>
                         ) : (
                             <>
-                                <h3 className="mlt-form-title" style={{ fontSize: '18px', marginBottom: '15px', color: '#ffffff' }}>Sesión informativa virtual</h3>
+                                <h3 className="mlt-form-title" style={{ fontSize: '18px', marginBottom: '15px' }}>Sesión informativa virtual</h3>
                                 <div style={{ background: 'rgba(221, 190, 61, 0.1)', border: '1px solid rgba(221, 190, 61, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '25px', textAlign: 'center' }}>
-                                    <p style={{ color: '#ddbe3d', fontSize: '18px', fontWeight: '800', margin: '0 0 5px 0' }}>
+                                    <p style={{ color: '#b89b2d', fontSize: '18px', fontWeight: '800', margin: '0 0 5px 0' }}>
                                         {getFormattedNextSessionDate()}
                                     </p>
-                                    <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px', margin: 0 }}>
+                                    <p style={{ color: 'rgba(0,45,68,0.8)', fontSize: '14px', margin: 0 }}>
                                         (Hora Colombia) - Cupos limitados
                                     </p>
                                 </div>

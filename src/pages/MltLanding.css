@@ -1271,6 +1271,43 @@ html {
   transform: none;
 }
 
+/* White Modal Theme */
+.mlt-white-modal {
+  background: #ffffff !important;
+  color: #002d44;
+  border: 1px solid rgba(0, 45, 68, 0.1);
+}
+
+.mlt-white-modal .mlt-form-title {
+  color: #002d44;
+}
+
+.mlt-white-modal .mlt-form-group label {
+  color: #002d44;
+  font-weight: 600;
+  opacity: 1;
+}
+
+.mlt-white-modal .mlt-form-group input {
+  background: #f5f7f9;
+  border: 1px solid rgba(0, 45, 68, 0.2);
+  color: #002d44;
+}
+
+.mlt-white-modal .mlt-form-group input:focus {
+  background: #ffffff;
+  border-color: #ddbe3d;
+  box-shadow: 0 0 0 2px rgba(221, 190, 61, 0.2);
+}
+
+.mlt-white-modal .mlt-modal-close {
+  color: #002d44;
+}
+
+.mlt-white-modal .mlt-modal-close:hover {
+  color: #ddbe3d;
+}
+
 /* Mobile Modal Overrides */
 @media (max-width: 768px) {
   .mlt-modal-overlay {
