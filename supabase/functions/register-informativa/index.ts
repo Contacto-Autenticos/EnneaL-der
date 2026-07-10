@@ -18,8 +18,8 @@ const buildEmailHTML = (title: string, message: string, name: string, serviceNam
     
     <div style="text-align: center; margin: 25px 0;">
       <p style="font-size: 0.9em; color: #4A5568; margin-bottom: 15px;">Añade este evento a tu calendario para no olvidarlo:</p>
-      <a href="${gCalLink}" target="_blank" style="display: inline-block; background-color: #4285F4; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; margin: 0 5px;">Añadir a Google Calendar</a>
-      <a href="${outlookLink}" target="_blank" style="display: inline-block; background-color: #0078D4; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; margin: 0 5px;">Añadir a Outlook</a>
+      <a href="${gCalLink}" target="_blank" style="display: inline-block; background-color: #4285F4; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; margin: 5px;">Añadir a Google Calendar</a>
+      <a href="${outlookLink}" target="_blank" style="display: inline-block; background-color: #0078D4; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 0.9em; margin: 5px;">Añadir a Outlook</a>
     </div>
 
     <p style="font-size: 0.9em; color: #718096; text-align: center;">Te recomendamos conectarte 5 minutos antes de la hora acordada. ¡Te esperamos!</p>
@@ -98,76 +98,6 @@ serve(async (req) => {
       })
     ];
 
-    // Cálculos de Tiempos
-    const now = Date.now();
-    const startMs = new Date(startTime).getTime();
-    
-    // 3. Recordatorio 24 horas antes
-    const time24h = startMs - (24 * 60 * 60 * 1000);
-    if (time24h > now) {
-      fetchPromises.push(
-        fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
-          body: JSON.stringify({
-            sender: { name: "Auténticos", email: "contacto@autenticos.co" },
-            to: [{ email: email, name: name }],
-            subject: `Recordatorio: Falta 1 día para la ${serviceName}`,
-            scheduledAt: new Date(time24h).toISOString(),
-            htmlContent: buildEmailHTML(
-              "¡Falta 1 día para nuestra Sesión Informativa!",
-              `Te recordamos que mañana es nuestra <strong>${serviceName}</strong>. ¡No te la pierdas!`,
-              name, serviceName, startTime, tz, meetLink, gCalLink, outlookLink
-            )
-          })
-        })
-      );
-    }
-
-    // 4. Recordatorio 2 horas antes
-    const time2h = startMs - (2 * 60 * 60 * 1000);
-    if (time2h > now) {
-      fetchPromises.push(
-        fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
-          body: JSON.stringify({
-            sender: { name: "Auténticos", email: "contacto@autenticos.co" },
-            to: [{ email: email, name: name }],
-            subject: `¡Nos vemos en 2 horas! - ${serviceName}`,
-            scheduledAt: new Date(time2h).toISOString(),
-            htmlContent: buildEmailHTML(
-              "¡Nos vemos en 2 horas!",
-              `Estamos a tan solo 2 horas de iniciar nuestra <strong>${serviceName}</strong>. Ten listo todo para conectarte.`,
-              name, serviceName, startTime, tz, meetLink, gCalLink, outlookLink
-            )
-          })
-        })
-      );
-    }
-
-    // 5. Recordatorio 10 minutos antes
-    const time10m = startMs - (10 * 60 * 1000);
-    if (time10m > now) {
-      fetchPromises.push(
-        fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'api-key': BREVO_API_KEY },
-          body: JSON.stringify({
-            sender: { name: "Auténticos", email: "contacto@autenticos.co" },
-            to: [{ email: email, name: name }],
-            subject: `🔴 ¡Estamos a punto de empezar! - ${serviceName}`,
-            scheduledAt: new Date(time10m).toISOString(),
-            htmlContent: buildEmailHTML(
-              "¡Estamos a punto de empezar!",
-              `La <strong>${serviceName}</strong> inicia en 10 minutos. Haz clic en el enlace para entrar a la sala.`,
-              name, serviceName, startTime, tz, meetLink, gCalLink, outlookLink
-            )
-          })
-        })
-      );
-    }
-
     const responses = await Promise.all(fetchPromises);
     const errors = [];
     for (let i = 0; i < responses.length; i++) {
@@ -182,7 +112,7 @@ serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: "Correos enviados y programados exitosamente" }),
+      JSON.stringify({ success: true, message: "Correos enviados exitosamente" }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {

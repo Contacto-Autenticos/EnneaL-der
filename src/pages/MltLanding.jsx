@@ -145,6 +145,13 @@ const MltLanding = ({ result, setTestResult }) => {
         setInfoError(null);
 
         try {
+            // Calcular fechas (45 minutos de duración)
+            const startTimeStr = getNextInfoSession();
+            const startD = new Date(startTimeStr);
+            const endD = new Date(startD.getTime() + 45 * 60000);
+            const pad = (n) => n.toString().padStart(2, '0');
+            const endTimeStr = `${endD.getFullYear()}-${pad(endD.getMonth()+1)}-${pad(endD.getDate())}T${pad(endD.getHours())}:${pad(endD.getMinutes())}:00-05:00`;
+
             // Guardar en la BD
             const { error: insertError } = await supabase
                 .from('workshop_registrations')
@@ -154,17 +161,18 @@ const MltLanding = ({ result, setTestResult }) => {
                     phone: infoFormData.phone,
                     workshop_name: 'Sesión Informativa MLT Grupal',
                     payment_status: 'FREE',
-                    raw_data: { source: 'MLT Landing Modal' }
+                    raw_data: { 
+                        source: 'MLT Landing Modal',
+                        session_date: startTimeStr,
+                        reminders: {
+                            r24h: false,
+                            r2h: false,
+                            r10m: false
+                        }
+                    }
                 }]);
 
             if (insertError) throw insertError;
-
-            // Calcular fechas (45 minutos de duración)
-            const startTimeStr = getNextInfoSession();
-            const startD = new Date(startTimeStr);
-            const endD = new Date(startD.getTime() + 45 * 60000);
-            const pad = (n) => n.toString().padStart(2, '0');
-            const endTimeStr = `${endD.getFullYear()}-${pad(endD.getMonth()+1)}-${pad(endD.getDate())}T${pad(endD.getHours())}:${pad(endD.getMinutes())}:00-05:00`;
 
             // Invocar Edge Function
             const { data, functionError } = await supabase.functions.invoke('register-informativa', {
