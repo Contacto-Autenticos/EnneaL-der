@@ -439,7 +439,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
             </section>
 
             {/* Section 3: Gallery */}
-            <section className="hqs-section-light" style={{ overflow: 'hidden', padding: '40px 0' }}>
+            <section className="hqs-section-light" style={{ overflow: 'hidden', padding: '80px 0' }}>
                 <div className="hqs-section-light-content" style={{ maxWidth: '100%' }}>
                     <div className="hqs-section-title-wrapper" style={{ marginBottom: '20px', width: '100%', maxWidth: '900px', margin: '0 auto 20px', padding: '0 20px' }}>
                         <span className="hqs-line"></span>

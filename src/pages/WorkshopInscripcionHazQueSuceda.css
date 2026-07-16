@@ -201,7 +201,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 60px;
-  margin-bottom: 60px;
+  margin-bottom: 0;
   width: 100%;
 }
 @media (max-width: 600px) {
