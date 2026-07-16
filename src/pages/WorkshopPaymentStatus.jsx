@@ -79,7 +79,7 @@ const WorkshopPaymentStatus = () => {
 
                 {(uiStatus === 'DECLINED' || uiStatus === 'ERROR') && (
                     <div style={{ marginTop: '30px' }}>
-                        <button onClick={() => navigate('/inscripcion')} className="btn-retry">
+                        <button onClick={() => navigate('/inscripcion-haz-que-suceda')} className="btn-retry">
                             Intentar de nuevo
                         </button>
                     </div>
