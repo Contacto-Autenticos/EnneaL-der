@@ -11,9 +11,18 @@ const WorkshopInscripcionHazQueSuceda = () => {
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [playingVideoIndex, setPlayingVideoIndex] = useState(null);
+    const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+    const galleryScrollRef = useRef(null);
+    const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(0);
+    const testimonialScrollRef = useRef(null);
+    const [galleryDots, setGalleryDots] = useState(7);
+    const [testimonialDots, setTestimonialDots] = useState(5);
     const audioRef = useRef(null);
     const [hasInteracted, setHasInteracted] = useState(false);
     
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
     const [formData, setFormData] = useState({
         full_name: '',
         email: '',
@@ -33,7 +42,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
         title: "Haz Que Suceda",
         subtitle: "Un día para reflexionar, para sentir y para tomar acción.",
         price: 750000,
-        date: "27 de junio",
+        date: "1 de agosto",
         location: "Casa Obeso, Cali Colombia",
         time: "9:00 AM - 5:00 PM",
         name: "Haz que suceda"
@@ -51,9 +60,65 @@ const WorkshopInscripcionHazQueSuceda = () => {
         }
     };
 
+    const scrollToGalleryImage = (index) => {
+        setActiveGalleryIndex(index);
+        if (galleryScrollRef.current) {
+            const container = galleryScrollRef.current;
+            const item = container.children[index];
+            if (item) {
+                container.scrollTo({
+                    left: item.offsetLeft - container.offsetLeft - 20,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    };
+
+    const handleGalleryScroll = (e) => {
+        const container = e.target;
+        const scrollPosition = container.scrollLeft;
+        const itemWidth = container.children[0].offsetWidth + 20; // Item width + gap
+        const currentIndex = Math.round(scrollPosition / itemWidth);
+        setActiveGalleryIndex(currentIndex);
+    };
+
+    const scrollToTestimonialVideo = (index) => {
+        setActiveTestimonialIndex(index);
+        if (testimonialScrollRef.current) {
+            const container = testimonialScrollRef.current;
+            const item = container.children[index];
+            if (item) {
+                container.scrollTo({
+                    left: item.offsetLeft - container.offsetLeft - 20,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    };
+
+    const handleTestimonialScroll = (e) => {
+        const container = e.target;
+        const scrollPosition = container.scrollLeft;
+        const itemWidth = container.children[0].offsetWidth + 20;
+        const currentIndex = Math.round(scrollPosition / itemWidth);
+        setActiveTestimonialIndex(currentIndex);
+    };
+
     useEffect(() => {
         window.scrollTo(0, 0);
         document.title = "HAZ QUE SUCEDA | Taller experiencial";
+
+        const updateDots = () => {
+            if (window.innerWidth >= 768) {
+                setGalleryDots(5); // 7 items - 3 visible + 1
+                setTestimonialDots(3); // 5 items - 3 visible + 1
+            } else {
+                setGalleryDots(7);
+                setTestimonialDots(5);
+            }
+        };
+        updateDots();
+        window.addEventListener('resize', updateDots);
 
         const updateMeta = (name, content) => {
             let element = document.querySelector(`meta[name="${name}"]`) || document.querySelector(`meta[property="${name}"]`);
@@ -82,7 +147,28 @@ const WorkshopInscripcionHazQueSuceda = () => {
         updateMeta('og:description', "Un día para reflexionar, para sentir y para tomar accion.");
         updateMeta('og:image', "https://enesencia.autenticos.co/Haz%20que%20suceda/Puerta-cuadrada.jpg");
 
+        const targetDate = new Date('2026-08-01T09:00:00').getTime();
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(interval);
+                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                return;
+            }
+
+            setTimeLeft({
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds: Math.floor((distance % (1000 * 60)) / 1000)
+            });
+        }, 1000);
+
         return () => {
+            window.removeEventListener('resize', updateDots);
+            clearInterval(interval);
             document.title = "Enesencia | Auténticos";
             if (prevDescription) updateMeta('description', prevDescription);
             if (prevOgTitle) updateMeta('og:title', prevOgTitle);
@@ -202,6 +288,32 @@ const WorkshopInscripcionHazQueSuceda = () => {
 
     return (
         <div className="hqs-page">
+            {/* Top Bar Countdown */}
+            <div style={{ backgroundColor: '#000', padding: '30px 20px', display: 'flex', justifyContent: 'center' }}>
+                <div className="hqs-section-title-wrapper" style={{ width: '100%', maxWidth: '900px', justifyContent: 'center', margin: 0 }}>
+                    <span className="hqs-line"></span>
+                    <div className="hqs-countdown-container" style={{ margin: '0 20px', marginBottom: 0 }}>
+                        <div className="hqs-countdown-item">
+                            <span className="hqs-countdown-number">{timeLeft.days}</span>
+                            <span className="hqs-countdown-label">DÍAS</span>
+                        </div>
+                        <div className="hqs-countdown-item">
+                            <span className="hqs-countdown-number">{timeLeft.hours}</span>
+                            <span className="hqs-countdown-label">HORAS</span>
+                        </div>
+                        <div className="hqs-countdown-item">
+                            <span className="hqs-countdown-number">{timeLeft.minutes}</span>
+                            <span className="hqs-countdown-label">MIN</span>
+                        </div>
+                        <div className="hqs-countdown-item">
+                            <span className="hqs-countdown-number">{timeLeft.seconds}</span>
+                            <span className="hqs-countdown-label">SEG</span>
+                        </div>
+                    </div>
+                    <span className="hqs-line"></span>
+                </div>
+            </div>
+
             <section className="hqs-hero">
                 <div className="hqs-hero-content">
                     <div className="hqs-top-text">
@@ -220,31 +332,79 @@ const WorkshopInscripcionHazQueSuceda = () => {
                         <li><Brain className="hqs-icon" size={28} /> <span>LO DECIDES EN TU <strong className="hqs-text-gold">MENTE,</strong></span></li>
                         <li><CheckCircle className="hqs-icon" size={28} /> <span>LO HACES <strong className="hqs-text-gold">REALIDAD.</strong></span></li>
                     </ul>
-
-                    <div className="hqs-music-seal">
-                        <img src="/Haz que suceda/Medalla-musica.png" alt="Música en Vivo" className="hqs-seal-img" />
-                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px'}}>
-                            <button className="hqs-audio-toggle" onClick={toggleAudio}>
-                                {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
-                            </button>
-                            <span className="hqs-audio-note">{isPlaying ? 'Escuchando' : 'Clic para escuchar'}</span>
-                        </div>
-                    </div>
-
-                    <audio ref={audioRef} loop src="/Haz que suceda/Musica - Te creo.mp3" />
-
-                    <p className="hqs-subtitle">
-                        UN TALLER EXPERIENCIAL CON <strong className="hqs-text-gold">MÚSICA EN VIVO</strong> QUE CAMBIARÁ LA FORMA DE <strong className="hqs-text-gold">ALCANZAR</strong> LO QUE TE PROPONES.
-                    </p>
-
-                    <button className="hqs-cta-btn" onClick={() => setIsModalOpen(true)}>
-                        TU MOMENTO ES AHORA
-                    </button>
                 </div>
             </section>
 
+            {/* Section 2: CTA and Countdown */}
             <section className="hqs-section-dark">
                 <div className="hqs-section-dark-content">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '80px', flexWrap: 'wrap' }}>
+                        {/* Left: Music Seal */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+                            <img src="/Haz que suceda/Medalla-musica.png" alt="Música en Vivo" className="hqs-seal-img" />
+                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px'}}>
+                                <button className="hqs-audio-toggle" onClick={toggleAudio}>
+                                    {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+                                </button>
+                                <span className="hqs-audio-note" style={{ color: '#ddbe3d', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.8, fontSize: '0.75rem', marginTop: '2px' }}>
+                                    {isPlaying ? 'Escuchando' : 'Clic para escuchar'}
+                                </span>
+                            </div>
+                            <audio ref={audioRef} loop src="/Haz que suceda/Musica - Te creo.mp3" />
+                        </div>
+
+                        {/* Right: Text and CTA */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', flex: '1', minWidth: '300px', maxWidth: '600px' }}>
+                            <p className="hqs-subtitle" style={{ margin: '0 auto 40px', fontSize: '1.3rem', width: '100%' }}>
+                                UN TALLER EXPERIENCIAL CON <strong className="hqs-text-gold">MÚSICA EN VIVO</strong> QUE CAMBIARÁ LA FORMA DE <strong className="hqs-text-gold">ALCANZAR</strong> LO QUE TE PROPONES.
+                            </p>
+
+                            <button className="hqs-cta-btn" onClick={() => setIsModalOpen(true)}>
+                                TU MOMENTO ES AHORA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Section: Qualification */}
+            <section className="hqs-section-light">
+                <div className="hqs-section-light-content">
+                    <div className="hqs-section-title-wrapper" style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
+                        <span className="hqs-line"></span>
+                        <h3 className="hqs-section-title" style={{textAlign: 'center'}}>ESTE TALLER ES PARA TI SI...</h3>
+                        <span className="hqs-line"></span>
+                    </div>
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                        gap: '30px',
+                        marginTop: '40px',
+                        width: '100%',
+                        maxWidth: '1000px',
+                        margin: '40px auto 0'
+                    }}>
+                        <div style={{ background: '#ffffff', padding: '35px 25px', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'transform 0.3s ease' }}>
+                            <Target size={48} color="#ddbe3d" style={{ marginBottom: '20px' }} />
+                            <h4 style={{ fontSize: '1.2rem', marginBottom: '15px', color: '#111', fontWeight: 'bold' }}>Buscas enfoque</h4>
+                            <p style={{ color: '#555', lineHeight: '1.6', margin: 0 }}>Sientes que tienes gran potencial, pero la indecisión o el exceso de análisis te mantienen en el mismo lugar.</p>
+                        </div>
+                        <div style={{ background: '#ffffff', padding: '35px 25px', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'transform 0.3s ease' }}>
+                            <Users size={48} color="#ddbe3d" style={{ marginBottom: '20px' }} />
+                            <h4 style={{ fontSize: '1.2rem', marginBottom: '15px', color: '#111', fontWeight: 'bold' }}>Quieres elevar tu entorno</h4>
+                            <p style={{ color: '#555', lineHeight: '1.6', margin: 0 }}>Sabes que necesitas conectar con personas de alto valor, mentores y emprendedores que compartan tu visión.</p>
+                        </div>
+                        <div style={{ background: '#ffffff', padding: '35px 25px', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'transform 0.3s ease' }}>
+                            <Rocket size={48} color="#ddbe3d" style={{ marginBottom: '20px' }} />
+                            <h4 style={{ fontSize: '1.2rem', marginBottom: '15px', color: '#111', fontWeight: 'bold' }}>Estás listo para accionar</h4>
+                            <p style={{ color: '#555', lineHeight: '1.6', margin: 0 }}>Estás cansado de las excusas y quieres un plan o un empujón emocional exacto para materializar lo que te propones.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="hqs-section-gray">
+                <div className="hqs-section-gray-content">
                     <div className="hqs-facilitators">
                         <div className="hqs-section-title-wrapper">
                             <span className="hqs-line"></span>
@@ -254,86 +414,271 @@ const WorkshopInscripcionHazQueSuceda = () => {
                         <div className="hqs-fac-grid">
                             <div className="hqs-fac-card">
                                 <a href="https://www.instagram.com/soycarloslopera/" target="_blank" rel="noopener noreferrer">
-                                    <img src="/Haz que suceda/Carlos Lopera_02.png" alt="Carlos Lopera" className="hqs-fac-img-clean" />
+                                    <img src="/Haz que suceda/Carlos Lopera_02.png?v=2" alt="Carlos Lopera" className="hqs-fac-img-clean" />
                                 </a>
                                 <h4>CARLOS<br/>LOPERA</h4>
                                 <p className="hqs-fac-title">Empresario serial</p>
                             </div>
                             <div className="hqs-fac-card">
                                 <a href="https://www.instagram.com/paulaguayaba/" target="_blank" rel="noopener noreferrer">
-                                    <img src="/Haz que suceda/Paula Guayaba_02.png" alt="Paula Guayaba" className="hqs-fac-img-clean" />
+                                    <img src="/Haz que suceda/Paula Guayaba_02.png?v=2" alt="Paula Guayaba" className="hqs-fac-img-clean" />
                                 </a>
                                 <h4>PAULA<br/>GUAYABA</h4>
                                 <p className="hqs-fac-title">Músico profesional y<br/>Coach de vida plena</p>
                             </div>
                             <div className="hqs-fac-card">
                                 <a href="https://www.instagram.com/felipebeltranhernandez/" target="_blank" rel="noopener noreferrer">
-                                    <img src="/Haz que suceda/Felipe Beltran_02.png" alt="Felipe Beltrán" className="hqs-fac-img-clean" />
+                                    <img src="/Haz que suceda/Felipe Beltran_02.png?v=2" alt="Felipe Beltrán" className="hqs-fac-img-clean" />
                                 </a>
                                 <h4>FELIPE<br/>BELTRÁN</h4>
                                 <p className="hqs-fac-title">Emprendedor y<br/>mentor de vida</p>
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <div className="hqs-info-box-wrapper">
-                        <div className="hqs-info-box">
-                            <div className="hqs-info-grid">
-                                <div className="hqs-info-item">
-                                    <Calendar className="hqs-info-icon" size={28} />
-                                    <div>
-                                        <span className="hqs-info-label">FECHA</span>
-                                        <span className="hqs-info-val">SÁBADO<br/><strong className="hqs-info-big">27</strong> de junio</span>
-                                    </div>
+            {/* Section 3: Gallery */}
+            <section className="hqs-section-light" style={{ overflow: 'hidden', padding: '40px 0' }}>
+                <div className="hqs-section-light-content" style={{ maxWidth: '100%' }}>
+                    <div className="hqs-section-title-wrapper" style={{ marginBottom: '20px', width: '100%', maxWidth: '900px', margin: '0 auto 20px', padding: '0 20px' }}>
+                        <span className="hqs-line"></span>
+                        <h3 className="hqs-section-title" style={{textAlign: 'center'}}>EXPERIENCIAS ANTERIORES</h3>
+                        <span className="hqs-line"></span>
+                    </div>
+                    
+                    <div className="hqs-gallery-carousel" ref={galleryScrollRef} onScroll={handleGalleryScroll}>
+                        {[
+                            "1.JPG",
+                            "2.JPG",
+                            "3.JPG",
+                            "4.jpg",
+                            "5.JPG",
+                            "6.jpg",
+                            "7.JPG"
+                        ].map((imgName, idx) => (
+                            <div key={idx} className="hqs-gallery-item">
+                                <img 
+                                    src={`/Haz que suceda/${imgName}`} 
+                                    alt={`Experiencia ${idx + 1}`} 
+                                    loading="lazy" 
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
+                        {[...Array(galleryDots).keys()].map((idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => scrollToGalleryImage(idx)}
+                                style={{
+                                    width: '10px',
+                                    height: '10px',
+                                    borderRadius: '50%',
+                                    background: activeGalleryIndex === idx ? '#ddbe3d' : 'rgba(0, 0, 0, 0.2)',
+                                    border: 'none',
+                                    padding: 0,
+                                    cursor: 'pointer',
+                                    transition: 'background 0.3s ease'
+                                }}
+                                aria-label={`Ir a la imagen ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Section 4: Testimonials */}
+            <section className="hqs-section-dark">
+                <div className="hqs-section-dark-content" style={{ padding: '20px 0' }}>
+                    <div className="hqs-testimonials" style={{ marginBottom: 0 }}>
+                        <div className="hqs-section-title-wrapper" style={{ marginBottom: '20px' }}>
+                            <span className="hqs-line"></span>
+                            <h3 className="hqs-section-title" style={{textAlign: 'center'}}>LO QUE DICEN QUIENES LO VIVIERON</h3>
+                            <span className="hqs-line"></span>
+                        </div>
+                        <div className="hqs-testimonials-grid" ref={testimonialScrollRef} onScroll={handleTestimonialScroll}>
+                            {["f8GeoiqP8-4", "WRs0-x9xp4g", "um8Ltkwtvqc", "tEeh1PqaZBg", "Xc8yU2OHvuQ"].map((id, index) => (
+                                <div key={index} className="hqs-testimonial-video" style={{ position: 'relative', cursor: playingVideoIndex === index ? 'default' : 'pointer' }} onClick={() => setPlayingVideoIndex(index)}>
+                                    {playingVideoIndex !== index ? (
+                                        <>
+                                            <img 
+                                                src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`} 
+                                                alt={`Testimonio ${index + 1}`} 
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover', aspectRatio: '16/9', display: 'block' }} 
+                                            />
+                                            <div style={{
+                                                position: 'absolute',
+                                                inset: 0,
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                background: 'rgba(0,0,0,0.1)',
+                                                transition: 'all 0.3s ease'
+                                            }}>
+                                                <div style={{
+                                                    width: '50px',
+                                                    height: '35px',
+                                                    backgroundColor: 'rgba(255, 0, 0, 0.9)',
+                                                    borderRadius: '8px',
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+                                                }}>
+                                                    <svg viewBox="0 0 68 48" width="28" height="28">
+                                                        <path d="M45 24L27 14v20z" fill="#ffffff" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <iframe 
+                                            src={`https://www.youtube.com/embed/${id}?rel=0&autoplay=1`} 
+                                            title={`Testimonio ${index + 1}`} 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowFullScreen
+                                        ></iframe>
+                                    )}
                                 </div>
-                                <div className="hqs-info-item">
-                                    <Clock className="hqs-info-icon" size={28} />
-                                    <div>
-                                        <span className="hqs-info-label">HORARIO</span>
-                                        <span className="hqs-info-val"><strong className="hqs-info-medium">9:00 AM</strong><br/><span className="hqs-dash">-</span><br/><strong className="hqs-info-medium">5:00 PM</strong></span>
-                                    </div>
-                                </div>
-                                <div className="hqs-info-item">
-                                    <MapPin className="hqs-info-icon" size={28} />
-                                    <div>
-                                        <span className="hqs-info-label">LUGAR</span>
-                                        <span className="hqs-info-val"><strong className="hqs-info-medium">Casa Obeso</strong><br/>Cali, Colombia</span>
-                                        <div style={{ marginTop: '12px', display: 'flex', gap: '15px', justifyContent: 'center' }}>
-                                            <a href="https://www.google.com/maps/search/Casa+Obeso+Mejia,+Cali" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Ver en Mapa">
-                                                <Map size={20} />
-                                            </a>
-                                            <a href="https://waze.com/ul?q=Casa%20Obeso%20Mejia%20Cali" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Navegar">
-                                                <Navigation size={20} />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="hqs-info-item hqs-info-price">
-                                    <DollarSign className="hqs-info-icon" size={28} />
-                                    <div>
-                                        <span className="hqs-info-label">INVERSIÓN</span>
-                                        <span className="hqs-info-val">
-                                            <strong className="hqs-info-big-price">$750.000</strong> <span style={{fontWeight: '400', fontSize: '1rem'}}>COP</span><br/>
-                                            por persona<br/>
-                                            <span style={{fontSize: '0.75rem', color: '#ddbe3d', display: 'block', marginTop: '6px', fontWeight: '500'}}>INCLUYE ALMUERZO Y REFRIGERIOS •</span>
-                                        </span>
-                                    </div>
+                            ))}
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
+                            {[...Array(testimonialDots).keys()].map((idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => scrollToTestimonialVideo(idx)}
+                                    style={{
+                                        width: '10px',
+                                        height: '10px',
+                                        borderRadius: '50%',
+                                        background: activeTestimonialIndex === idx ? '#ddbe3d' : 'rgba(255, 255, 255, 0.3)',
+                                        border: 'none',
+                                        padding: 0,
+                                        cursor: 'pointer',
+                                        transition: 'background 0.3s ease'
+                                    }}
+                                    aria-label={`Ir al testimonio ${idx + 1}`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Section 5: Event Info */}
+            <section className="hqs-section-gray">
+                <div className="hqs-section-gray-content">
+                    <div className="hqs-section-title-wrapper" style={{ marginBottom: '40px', width: '100%' }}>
+                        <span className="hqs-line"></span>
+                        <h3 className="hqs-section-title" style={{textAlign: 'center'}}>AGÉNDATE</h3>
+                        <span className="hqs-line"></span>
+                    </div>
+                    <div className="hqs-info-grid">
+                        <div className="hqs-info-item">
+                            <Calendar className="hqs-info-icon" size={32} />
+                            <div>
+                                <span className="hqs-info-label">FECHA</span>
+                                <span className="hqs-info-val">SÁBADO<br/><strong className="hqs-info-big">1</strong> de agosto</span>
+                            </div>
+                        </div>
+                        <div className="hqs-info-item">
+                            <Clock className="hqs-info-icon" size={32} />
+                            <div>
+                                <span className="hqs-info-label">HORARIO</span>
+                                <span className="hqs-info-val"><strong className="hqs-info-medium">9:00 AM</strong><br/><span className="hqs-dash">-</span><br/><strong className="hqs-info-medium">5:00 PM</strong></span>
+                            </div>
+                        </div>
+                        <div className="hqs-info-item">
+                            <MapPin className="hqs-info-icon" size={32} />
+                            <div>
+                                <span className="hqs-info-label">LUGAR</span>
+                                <span className="hqs-info-val"><strong className="hqs-info-medium">Casa Obeso</strong><br/>Cali, Colombia</span>
+                                <div style={{ marginTop: '12px', display: 'flex', gap: '15px', justifyContent: 'center' }}>
+                                    <a href="https://www.google.com/maps/search/Casa+Obeso+Mejia,+Cali" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Ver en Mapa">
+                                        <Map size={22} />
+                                    </a>
+                                    <a href="https://waze.com/ul?q=Casa%20Obeso%20Mejia%20Cali" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Navegar">
+                                        <Navigation size={22} />
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <div className="hqs-includes-wrapper">
-                        <span className="hqs-dot">•</span>
-                        <div className="hqs-includes">
-                            <span style={{textTransform: 'uppercase', letterSpacing: '2px', textAlign: 'center'}}>UN DÍA - UNA DECISIÓN - UNA NUEVA REALIDAD</span>
+            {/* Section 5: Pricing Box */}
+            <section className="hqs-section-light">
+                <div className="hqs-section-light-content">
+                    <div className="hqs-pricing-section">
+                        <div className="hqs-pricing-box">
+                            <div className="hqs-pricing-ribbon">CUPOS LIMITADOS</div>
+                            <h3 className="hqs-pricing-title">INVERSIÓN</h3>
+                            <div className="hqs-pricing-amount">
+                                $750.000 <span className="hqs-pricing-currency">COP</span>
+                            </div>
+                            <div className="hqs-pricing-iva">por persona (IVA incluido)</div>
+                            <ul className="hqs-pricing-benefits">
+                                <li><CheckCircle size={20} className="hqs-text-gold" /> Acceso completo de 9:00 AM a 5:00 PM</li>
+                                <li><Utensils size={20} className="hqs-text-gold" /> Almuerzo y refrigerios incluidos</li>
+                                <li><Heart size={20} className="hqs-text-gold" /> Música en vivo y dinámicas experienciales</li>
+                                <li><Rocket size={20} className="hqs-text-gold" /> Un día, una decisión, una nueva realidad</li>
+                            </ul>
+                            <button className="hqs-cta-btn-alt hqs-pricing-btn" onClick={() => setIsModalOpen(true)}>
+                                HAZ QUE SUCEDA
+                            </button>
                         </div>
-                        <span className="hqs-dot">•</span>
                     </div>
+                </div>
+            </section>
 
-                    <button className="hqs-cta-btn-alt" onClick={() => setIsModalOpen(true)}>
-                        HAZ QUE SUCEDA
-                    </button>
+            {/* Section: Guarantee */}
+            <section className="hqs-section-gray" style={{ padding: '60px 0' }}>
+                <div className="hqs-section-gray-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '0 20px' }}>
+                    <img 
+                        src="/Haz que suceda/Garantia.png" 
+                        alt="Garantía de Satisfacción" 
+                        style={{ maxWidth: '450px', width: '100%', marginBottom: '25px' }} 
+                    />
+                    <div style={{ marginBottom: '20px' }}>
+                        <h3 style={{ fontSize: '2.2rem', color: '#111', fontWeight: 'bold', margin: 0, fontFamily: 'Outfit, sans-serif', lineHeight: '1.1' }}>
+                            Tranquilo, tu compra está
+                        </h3>
+                        <h3 style={{ fontSize: '2.6rem', color: '#ddbe3d', fontWeight: 'bold', margin: 0, fontFamily: 'Outfit, sans-serif', lineHeight: '1.1' }}>
+                            100% protegida.
+                        </h3>
+                    </div>
+                    <p style={{ maxWidth: '600px', fontSize: '1.2rem', lineHeight: '1.6', color: '#444', margin: 0 }}>
+                        Si al finalizar el evento sientes que no era para ti, ni contribuyó en tu desarrollo. Te devolvemos el 100% de tu dinero.
+                    </p>
+                </div>
+            </section>
+
+            {/* Section 6: FAQ */}
+            <section className="hqs-section-light" style={{ background: '#ffffff' }}>
+                <div className="hqs-section-light-content">
+                    <div className="hqs-faq-section">
+                        <div className="hqs-section-title-wrapper">
+                            <span className="hqs-line"></span>
+                            <h3 className="hqs-section-title" style={{textAlign: 'center'}}>PREGUNTAS FRECUENTES</h3>
+                            <span className="hqs-line"></span>
+                        </div>
+                        <div className="hqs-faq-container">
+                            {[
+                                { q: '¿A quién va dirigido este taller?', a: 'A cualquier persona que quiera tomar acción y transformar su realidad.' },
+                                { q: '¿Qué incluye el valor de la inscripción?', a: 'Acceso completo al taller de 9:00 AM a 5:00 PM, música en vivo, almuerzo y refrigerios.' },
+                                { q: '¿Cuáles son los métodos de pago?', a: 'Aceptamos todos los medios de pago a través de Mercado Pago (PSE, Tarjetas de Crédito, Efecty, etc.)' },
+                                { q: '¿Puedo ceder mi entrada si finalmente no puedo asistir?', a: 'Sí, puedes transferir tu entrada notificándonos con al menos 48 horas de anticipación.' }
+                            ].map((faq, idx) => (
+                                <details key={idx} className="hqs-faq-item">
+                                    <summary className="hqs-faq-question">{faq.q}</summary>
+                                    <div className="hqs-faq-answer">{faq.a}</div>
+                                </details>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -490,6 +835,9 @@ const WorkshopInscripcionHazQueSuceda = () => {
                                 </span>
                             ) : `INSCRIBIRME Y PAGAR ${discountApplied ? `($${finalPrice.toLocaleString('es-CO')})` : ''}`}
                         </button>
+                        <div style={{ marginTop: '15px', textAlign: 'center', color: '#666', fontSize: '0.85rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                            <span role="img" aria-label="Seguro">🔒</span> Pago 100% Seguro cifrado por Mercado Pago
+                        </div>
                     </form>
                     </div>
                 </div>
