@@ -896,7 +896,7 @@
 
 @media (min-width: 768px) {
   .hqs-testimonials-grid {
-    max-width: 960px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px 20px 10px;
     gap: 30px;
@@ -907,7 +907,7 @@
   flex: 0 0 auto;
   scroll-snap-align: center;
   width: 75vw;
-  max-width: 300px;
+  max-width: 500px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);

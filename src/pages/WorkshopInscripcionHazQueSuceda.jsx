@@ -508,7 +508,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                                     {playingVideoIndex !== index ? (
                                         <>
                                             <img 
-                                                src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`} 
+                                                src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} 
                                                 alt={`Testimonio ${index + 1}`} 
                                                 style={{ width: '100%', height: '100%', objectFit: 'cover', aspectRatio: '16/9', display: 'block' }} 
                                             />
