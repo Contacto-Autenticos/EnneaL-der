@@ -110,10 +110,10 @@ const WorkshopInscripcionHazQueSuceda = () => {
 
         const updateDots = () => {
             if (window.innerWidth >= 768) {
-                setGalleryDots(5); // 7 items - 3 visible + 1
+                setGalleryDots(9); // 11 items - 3 visible + 1
                 setTestimonialDots(3); // 5 items - 3 visible + 1
             } else {
-                setGalleryDots(7);
+                setGalleryDots(11);
                 setTestimonialDots(5);
             }
         };
@@ -450,12 +450,16 @@ const WorkshopInscripcionHazQueSuceda = () => {
                     <div className="hqs-gallery-carousel" ref={galleryScrollRef} onScroll={handleGalleryScroll}>
                         {[
                             "1.JPG",
-                            "2.JPG",
+                            "2.jpg",
                             "3.JPG",
                             "4.jpg",
                             "5.JPG",
                             "6.jpg",
-                            "7.JPG"
+                            "7.jpg",
+                            "8.jpg",
+                            "9.jpg",
+                            "10.JPG",
+                            "11.JPG"
                         ].map((imgName, idx) => (
                             <div key={idx} className="hqs-gallery-item">
                                 <img 
