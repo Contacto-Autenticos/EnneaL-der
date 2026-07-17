@@ -111,7 +111,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
         const updateDots = () => {
             if (window.innerWidth >= 768) {
                 setGalleryDots(9); // 11 items - 3 visible + 1
-                setTestimonialDots(3); // 5 items - 3 visible + 1
+                setTestimonialDots(4); // 5 items - 2 visible + 1
             } else {
                 setGalleryDots(11);
                 setTestimonialDots(5);

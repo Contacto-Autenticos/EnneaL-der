@@ -907,7 +907,8 @@
   flex: 0 0 auto;
   scroll-snap-align: center;
   width: 75vw;
-  max-width: 500px;
+  max-width: 600px;
+  aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
@@ -917,7 +918,7 @@
 
 @media (min-width: 768px) {
   .hqs-testimonial-video {
-    width: calc(33.333% - 20px);
+    width: calc(50% - 15px);
   }
 }
 
