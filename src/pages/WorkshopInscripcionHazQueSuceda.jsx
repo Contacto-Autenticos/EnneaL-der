@@ -342,14 +342,6 @@ const WorkshopInscripcionHazQueSuceda = () => {
                         {/* Left: Music Seal */}
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
                             <img src="/Haz que suceda/Medalla-musica.png" alt="Música en Vivo" className="hqs-seal-img" />
-                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px'}}>
-                                <button className="hqs-audio-toggle" onClick={toggleAudio}>
-                                    {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
-                                </button>
-                                <span className="hqs-audio-note" style={{ color: '#ddbe3d', letterSpacing: '1px', textTransform: 'uppercase', opacity: 0.8, fontSize: '0.75rem', marginTop: '2px' }}>
-                                    {isPlaying ? 'Escuchando' : 'Clic para escuchar'}
-                                </span>
-                            </div>
                             <audio ref={audioRef} loop src="/Haz que suceda/Musica - Te creo.mp3" />
                         </div>
 
@@ -873,6 +865,13 @@ const WorkshopInscripcionHazQueSuceda = () => {
                     <path d="M16.004 0C7.165 0 0 7.163 0 16.001c0 2.82.736 5.573 2.134 7.997L.074 32l8.2-2.148A15.93 15.93 0 0016.004 32C24.838 32 32 24.837 32 16.001 32 7.163 24.838 0 16.004 0zm0 29.393a13.346 13.346 0 01-7.213-2.106l-.517-.307-5.362 1.406 1.43-5.226-.337-.535a13.306 13.306 0 01-2.042-7.124c0-7.38 6.005-13.387 13.387-13.387 7.38 0 13.387 6.007 13.387 13.387 0 7.382-6.352 13.392-13.733 13.392zm7.335-10.025c-.402-.201-2.38-1.175-2.749-1.309-.369-.134-.637-.201-.906.201-.268.402-1.04 1.309-1.275 1.578-.235.268-.47.302-.872.1-.402-.201-1.698-.626-3.234-1.996-1.195-1.066-2.002-2.384-2.236-2.786-.235-.402-.025-.62.176-.82.181-.18.402-.47.603-.704.201-.235.268-.402.402-.67.134-.268.067-.503-.034-.704-.1-.201-.906-2.183-1.241-2.988-.327-.784-.659-.678-.906-.69-.235-.012-.503-.015-.771-.015s-.704.1-1.073.503c-.369.402-1.41 1.377-1.41 3.36 0 1.982 1.443 3.897 1.644 4.165.201.268 2.838 4.332 6.879 6.074.961.415 1.712.663 2.297.849.965.307 1.843.264 2.537.16.774-.116 2.38-.973 2.716-1.912.336-.94.336-1.745.235-1.912-.1-.168-.369-.268-.771-.47z"/>
                 </svg>
             </a>
+
+            {/* Floating Audio Button */}
+            <div className="hqs-floating-audio">
+                <button className="hqs-audio-toggle" onClick={toggleAudio} title={isPlaying ? "Silenciar música" : "Reproducir música"}>
+                    {isPlaying ? <Volume2 size={24} /> : <VolumeX size={24} />}
+                </button>
+            </div>
         </div>
     );
 };

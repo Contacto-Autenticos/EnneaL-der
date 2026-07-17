@@ -832,6 +832,32 @@
   }
 }
 
+/* Floating Audio Button */
+.hqs-floating-audio {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9998;
+}
+
+@media (min-width: 768px) {
+  .hqs-floating-audio {
+    bottom: 30px;
+    right: 30px;
+  }
+}
+
+/* Adjust global scroll-to-top button so audio button fits underneath */
+body:has(.hqs-page) .floating-scroll-to-top {
+  bottom: 80px !important;
+}
+
+@media (min-width: 768px) {
+  body:has(.hqs-page) .floating-scroll-to-top {
+    bottom: 90px !important;
+  }
+}
+
 /* Countdown */
 .hqs-countdown-container {
     display: flex;
