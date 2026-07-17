@@ -1772,8 +1772,29 @@ const MltLanding = ({ result, setTestResult }) => {
                                 <CheckCircle2 size={64} color="#10B981" style={{ margin: '0 auto 20px' }} />
                                 <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#10B981', marginBottom: '15px' }}>¡Registro Exitoso!</h3>
                                 <p style={{ color: '#002d44', opacity: 0.9, marginBottom: '25px', fontSize: '16px', lineHeight: '1.5' }}>
-                                    Hemos reservado tu cupo. Revisa tu correo electrónico, allí te hemos enviado la invitación con la fecha, hora y el enlace de Google Meet. Nos vemos el jueves.
+                                    Hemos reservado tu cupo. Revisa tu correo electrónico con la invitación y <strong>únete a nuestro grupo exclusivo de WhatsApp</strong>. Por allí enviaremos el recordatorio y el enlace de conexión el día del evento.
                                 </p>
+
+                                <a 
+                                    href="https://chat.whatsapp.com/BlyxWFUfGYL6b5sYAuyf8E?s=sw&p=a&ilr=0" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="mlt-submit-btn" 
+                                    style={{ 
+                                        background: '#25D366', 
+                                        color: 'white', 
+                                        marginBottom: '20px', 
+                                        textDecoration: 'none', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'center', 
+                                        gap: '10px' 
+                                    }}
+                                >
+                                    <MessageCircle size={20} />
+                                    UNIRME AL GRUPO DE WHATSAPP
+                                </a>
+
                                 {!isForcedModal && (
                                     <button 
                                         className="mlt-submit-btn" 

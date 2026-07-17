@@ -442,12 +442,12 @@ const WorkshopInscripcionHazQueSuceda = () => {
                     <div className="hqs-gallery-carousel" ref={galleryScrollRef} onScroll={handleGalleryScroll}>
                         {[
                             "1.JPG",
-                            "2.JPG",
+                            "2.jpg",
                             "3.JPG",
                             "4.jpg",
                             "5.JPG",
                             "6.jpg",
-                            "7.JPG",
+                            "7.jpg",
                             "8.jpg",
                             "9.jpg",
                             "10.JPG",
