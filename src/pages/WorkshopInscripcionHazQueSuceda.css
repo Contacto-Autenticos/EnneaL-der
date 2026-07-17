@@ -140,8 +140,8 @@
 }
 
 .hqs-audio-toggle {
-  background: rgba(221, 190, 61, 0.1);
-  border: 1px solid rgba(221, 190, 61, 0.3);
+  background-color: #333333;
+  border: 2px solid #ddbe3d;
   color: #ddbe3d;
   border-radius: 50%;
   width: 50px;
@@ -150,13 +150,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
 
 .hqs-audio-toggle:hover {
-  background: rgba(221, 190, 61, 0.4);
+  background-color: #4a4a4a;
   color: #fff;
   transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(221, 190, 61, 0.4);
 }
 
 .hqs-audio-note {
