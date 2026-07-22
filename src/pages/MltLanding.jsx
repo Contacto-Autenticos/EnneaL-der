@@ -1760,7 +1760,7 @@ const MltLanding = ({ result, setTestResult }) => {
             {/* Modal Sesión Informativa */}
             {isInfoModalOpen && (
                 <div className="mlt-modal-overlay" onClick={() => !isForcedModal && setIsInfoModalOpen(false)}>
-                    <div className="mlt-form-container mlt-modal-content mlt-white-modal" onClick={(e) => e.stopPropagation()}>
+                    <div className="mlt-form-container mlt-modal-content mlt-white-modal" style={infoSuccess ? { padding: 0, overflow: 'hidden' } : {}} onClick={(e) => e.stopPropagation()}>
                         {!isForcedModal && (
                             <button className="mlt-modal-close" onClick={() => setIsInfoModalOpen(false)}>
                                 <X size={24} />
@@ -1768,41 +1768,106 @@ const MltLanding = ({ result, setTestResult }) => {
                         )}
                         
                         {infoSuccess ? (
-                            <div style={{ textAlign: 'center', padding: '30px 10px' }}>
-                                <CheckCircle2 size={64} color="#10B981" style={{ margin: '0 auto 20px' }} />
-                                <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#10B981', marginBottom: '15px' }}>¡Registro Exitoso!</h3>
-                                <p style={{ color: '#002d44', opacity: 0.9, marginBottom: '25px', fontSize: '16px', lineHeight: '1.5' }}>
-                                    Hemos reservado tu cupo. Revisa tu correo electrónico con la invitación y <strong>únete a nuestro grupo exclusivo de WhatsApp</strong>. Por allí enviaremos el recordatorio y el enlace de conexión el día del evento.
-                                </p>
+                            <div style={{ padding: '0 0 40px 0', borderRadius: '15px', overflow: 'hidden' }}>
+                                <div style={{ 
+                                    background: '#b89b2d', 
+                                    padding: '20px', 
+                                    textAlign: 'center', 
+                                    marginBottom: '25px' 
+                                }}>
+                                    <h3 className="mlt-form-title" style={{ fontSize: '28px', color: '#ffffff', margin: 0, fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', textShadow: '1px 2px 4px rgba(0, 45, 68, 0.9)' }}>
+                                        ¡Registro Exitoso!
+                                    </h3>
+                                </div>
 
-                                <a 
-                                    href="https://chat.whatsapp.com/BlyxWFUfGYL6b5sYAuyf8E?s=sw&p=a&ilr=0" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="mlt-submit-btn" 
-                                    style={{ 
-                                        background: '#25D366', 
-                                        color: 'white', 
-                                        marginBottom: '20px', 
-                                        textDecoration: 'none', 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        justifyContent: 'center', 
-                                        gap: '10px' 
-                                    }}
-                                >
-                                    <MessageCircle size={20} />
-                                    UNIRME AL GRUPO DE WHATSAPP
-                                </a>
+                                <div style={{ textAlign: 'center', padding: '0 20px', marginBottom: '25px' }}>
+                                    <h4 style={{ fontSize: '20px', color: '#002d44', margin: '0 0 15px 0', fontWeight: '800' }}>
+                                        Solo faltan dos pasos
+                                    </h4>
+                                    <p style={{ color: '#002d44', opacity: 0.9, fontSize: '16px', lineHeight: '1.4', margin: '0 auto', maxWidth: '350px' }}>
+                                        Para asegurar tu asistencia y no perderte nada importante, completa lo siguiente:
+                                    </p>
+                                </div>
 
-                                {!isForcedModal && (
-                                    <button 
+                                <div style={{ marginBottom: '25px', textAlign: 'center' }}>
+                                    <h5 style={{ fontSize: '20px', color: '#b89b2d', margin: '0 0 5px 0', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                        🎯 Paso 1:
+                                    </h5>
+                                    <p style={{ color: '#002d44', fontSize: '18px', margin: '0 0 15px 0', lineHeight: '1.3' }}>
+                                        Únete a la Comunidad exclusiva de WhatsApp
+                                    </p>
+                                    <a 
+                                        href="https://chat.whatsapp.com/BlyxWFUfGYL6b5sYAuyf8E?s=sw&p=a&ilr=0" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
                                         className="mlt-submit-btn" 
-                                        onClick={() => setIsInfoModalOpen(false)}
+                                        style={{ 
+                                            background: '#25D366', 
+                                            color: 'white', 
+                                            textDecoration: 'none', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center', 
+                                            gap: '10px',
+                                            margin: '0 auto',
+                                            width: 'fit-content',
+                                            padding: '12px 24px',
+                                            whiteSpace: 'nowrap'
+                                        }}
                                     >
-                                        Cerrar y Volver
-                                    </button>
-                                )}
+                                        <MessageCircle size={20} />
+                                        UNIRME AL GRUPO DE WHATSAPP
+                                    </a>
+                                </div>
+
+                                <div style={{ textAlign: 'center' }}>
+                                    <h5 style={{ fontSize: '20px', color: '#b89b2d', margin: '0 0 5px 0', fontWeight: '700', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                        🗓️ Paso 2:
+                                    </h5>
+                                    <p style={{ color: '#002d44', fontSize: '18px', margin: '0 0 15px 0' }}>
+                                        Agenda el evento en tu calendario
+                                    </p>
+                                    
+                                    <div style={{ borderTop: '1px solid rgba(0,0,0,0.1)', margin: '15px auto', width: '50%' }}></div>
+
+                                    <p style={{ color: '#002d44', fontSize: '16px', fontWeight: '700', margin: '0 0 5px 0' }}>
+                                        {getFormattedNextSessionDate()}
+                                    </p>
+                                    <p style={{ color: 'rgba(0,45,68,0.6)', fontSize: '13px', margin: '0 0 15px 0' }}>
+                                        (GMT -5:00) Bogotá, Lima, Quito
+                                    </p>
+
+                                    <a 
+                                        href={(() => {
+                                            const startTimeStr = getNextInfoSession();
+                                            const startD = new Date(startTimeStr);
+                                            const endD = new Date(startD.getTime() + 45 * 60000);
+                                            const formatToUTC = (date) => date.toISOString().replace(/-|:|\.\d\d\d/g, '');
+                                            const startUTC = formatToUTC(startD);
+                                            const endUTC = formatToUTC(endD);
+                                            return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Conversatorio+Master+Live+Training&dates=${startUTC}/${endUTC}&details=Enlace+de+conexión+se+enviará+por+WhatsApp+y+correo.&location=Virtual`;
+                                        })()}
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="mlt-submit-btn" 
+                                        style={{ 
+                                            background: '#4285F4', 
+                                            color: 'white', 
+                                            textDecoration: 'none',
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center', 
+                                            gap: '10px',
+                                            margin: '0 auto',
+                                            width: 'fit-content',
+                                            padding: '12px 24px',
+                                            whiteSpace: 'nowrap'
+                                        }}
+                                    >
+                                        <Calendar size={20} />
+                                        CREAR UN RECORDATORIO
+                                    </a>
+                                </div>
                             </div>
                         ) : (
                             <>
