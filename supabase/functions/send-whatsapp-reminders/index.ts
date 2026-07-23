@@ -30,12 +30,23 @@ serve(async (req) => {
     const chatId = "120363427746764541@g.us"; 
     const meetLink = "https://meet.google.com/wem-qaey-evw"; 
     
+    // Bloqueo temporal para el 23 de julio de 2026 (evento reprogramado)
+    if (['2h', '10m', 'now'].includes(reminderType)) {
+      const isToday = new Date().toISOString().startsWith('2026-07-23');
+      if (isToday) {
+        return new Response(
+          JSON.stringify({ success: true, message: "Envío cancelado para hoy (evento reprogramado)" }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+        );
+      }
+    }
+
     // 4. Seleccionamos el mensaje según el tipo
     let textMessage = "";
     
     switch (reminderType) {
       case '24h':
-        textMessage = `¡Hola a todos! 👋 Les recordamos que *mañana a esta misma hora (7:30 PM)* tendremos nuestra Sesión Informativa del Master Live Training. Ve preparando tus preguntas y un lugar tranquilo. ¡Nos vemos pronto!`;
+        textMessage = `¡Hola a todos! 👋 Les recordamos que mañana a esta misma hora (7:30 PM) tendremos nuestra charla sobre "¿Por qué no todas las técnicas de desarrollo personal y liderazgo sirven para todo el mundo?". Ve preparando tus preguntas y un lugar tranquilo. ¡Nos vemos pronto!`;
         break;
       case '6h':
         textMessage = `¡Faltan solo 6 horas! ⏳ Hoy a las 7:30 PM nos conectamos. Prepárate para descubrir ¿Por qué no todas las técnicas de desarrollo personal y liderazgo sirven para todo el mundo?.`;
