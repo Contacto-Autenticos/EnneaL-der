@@ -38,10 +38,10 @@ serve(async (req) => {
         textMessage = `¡Hola a todos! 👋 Les recordamos que *mañana a esta misma hora (7:30 PM)* tendremos nuestra Sesión Informativa del Master Live Training. Ve preparando tus preguntas y un lugar tranquilo. ¡Nos vemos pronto!`;
         break;
       case '6h':
-        textMessage = `¡Faltan solo 6 horas! ⏳ Hoy a las 7:30 PM nos conectamos. Prepárate para descubrir cómo el Master Live Training puede impulsar tu crecimiento personal y profesional.`;
+        textMessage = `¡Faltan solo 6 horas! ⏳ Hoy a las 7:30 PM nos conectamos. Prepárate para descubrir ¿Por qué no todas las técnicas de desarrollo personal y liderazgo sirven para todo el mundo?.`;
         break;
       case '2h':
-        textMessage = `¡Ya casi! 🚀 En 2 horas empezamos nuestra sesión exclusiva. Ve alistando todo, recuerda que nos conectaremos por Google Meet.\n\nAquí tienes el enlace para que lo tengas a la mano:\n${meetLink}`;
+        textMessage = `¡Ya casi! 🚀 En 2 horas empezamos nuestra sesión exclusiva donde hablaremos sobre ¿Por qué no todas las técnicas de desarrollo personal y liderazgo sirven para todo el mundo?. Ve alistando todo, recuerda que nos conectaremos por Google Meet.\n\nAquí tienes el enlace para que lo tengas a la mano:\n${meetLink}`;
         break;
       case '10m':
         textMessage = `¡Atención! 🚨 En 10 minutos abrimos la sala. Ve ingresando para asegurarte de que tu audio y video funcionen bien.\n\nAquí tienes el enlace para unirte:\n${meetLink}`;
