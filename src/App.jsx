@@ -86,6 +86,8 @@ const PartnerGateway = lazy(() => lazyRetry(() => import('./pages/PartnerGateway
 const TemperamentoTestIntro = lazy(() => lazyRetry(() => import('./pages/TemperamentoTestIntro')));
 const TemperamentoTest = lazy(() => lazyRetry(() => import('./pages/TemperamentoTest')));
 const TemperamentoResult = lazy(() => lazyRetry(() => import('./pages/TemperamentoResult')));
+const PresentationsDashboard = lazy(() => lazyRetry(() => import('./pages/PresentationsDashboard')));
+const PresentationEditorPage = lazy(() => lazyRetry(() => import('./pages/PresentationEditorPage')));
 
 function App() {
   const [user, setUser] = useState(null);
@@ -487,6 +489,9 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/agenda" element={<Agenda />} />
         <Route path="/diagnostico-empresarial" element={<BusinessScan />} />
         <Route path="/postulacion-mlt" element={<PostulacionMlt />} />
+        <Route path="/presentaciones" element={<PresentationsDashboard />} />
+        <Route path="/presentaciones/editor/:id" element={<PresentationEditorPage />} />
+
         <Route
           path="/eneagrama-empresas"
           element={

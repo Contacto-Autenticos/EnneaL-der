@@ -1,0 +1,265 @@
+.slide-container {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #FFFFFF;
+  color: #1F2937;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.slide-container h1, .slide-container h2, .slide-container h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Footer Auténticos */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: flex-end;
+  z-index: 10;
+}
+
+.slide-footer-bar-dark {
+  background-color: #002D44;
+  height: 40px;
+  width: 50%;
+  border-top-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+}
+
+.slide-footer-bar-gold {
+  background-color: #DDBE3D;
+  height: 40px;
+  flex: 1;
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 0% 100%);
+  margin-left: -20px;
+}
+
+.slide-footer-logo {
+  color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+/* Zona Segura Cámara (Solo visible en modo editor si se desea) */
+.camera-safe-zone {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 200px;
+  z-index: 20;
+  pointer-events: none;
+}
+.editor-mode .camera-safe-zone {
+  border: 2px dashed #DDBE3D;
+  background-color: rgba(221, 190, 61, 0.1);
+}
+.camera-safe-zone::after {
+  content: "ZONA SEGURA PARA CÁMARA";
+  color: #DDBE3D;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+}
+.editor-mode .camera-safe-zone::after {
+  display: block;
+}
+
+/* --- Cover Slide --- */
+.slide-cover {
+  background-color: #002D44;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  padding: 80px;
+}
+.slide-cover-content {
+  max-width: 60%;
+  z-index: 2;
+}
+.slide-cover-title {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.slide-cover-title span {
+  color: #DDBE3D;
+}
+.slide-cover-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  opacity: 0.9;
+}
+.slide-cover-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  background-size: cover;
+  background-position: center;
+  mask-image: linear-gradient(to right, transparent, black 20%);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
+}
+
+/* --- Split Slide (Text Left, Image Right) --- */
+.slide-split {
+  display: flex;
+  height: 100%;
+}
+.slide-split-text {
+  width: 50%;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide-split-badge {
+  color: #DDBE3D;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.slide-split-title {
+  font-size: 3.5rem;
+  color: #002D44;
+  line-height: 1.1;
+  margin-bottom: 30px;
+}
+.slide-split-desc {
+  font-size: 1.2rem;
+  color: #1F2937;
+  line-height: 1.6;
+}
+.slide-split-image {
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-bottom-left-radius: 80px;
+}
+
+/* --- Timeline Slide --- */
+.slide-timeline {
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.slide-timeline-title {
+  font-size: 3rem;
+  color: #002D44;
+  margin-bottom: 60px;
+}
+.slide-timeline-track {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  position: relative;
+}
+.slide-timeline-line {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #DDBE3D;
+  z-index: 1;
+}
+.slide-timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  width: 120px;
+}
+.slide-timeline-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #002D44;
+  color: #DDBE3D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.slide-timeline-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+/* --- Icon Grid Slide --- */
+.slide-icon-grid {
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.slide-icon-grid-title {
+  font-size: 3rem;
+  color: #002D44;
+  margin-bottom: 60px;
+}
+.slide-icon-grid-content {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 80%;
+}
+.slide-icon-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slide-icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #F5F6F8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+.slide-icon-label {
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #002D44;
+}
+.slide-icon-desc {
+  font-size: 0.9rem;
+  color: #1F2937;
+  margin-top: 10px;
+}

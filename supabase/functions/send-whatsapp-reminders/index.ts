@@ -31,8 +31,9 @@ serve(async (req) => {
     const meetLink = "https://meet.google.com/wem-qaey-evw"; 
     
     // Bloqueo temporal para el 23 de julio de 2026 (evento reprogramado)
-    if (['2h', '10m', 'now'].includes(reminderType)) {
-      const isToday = new Date().toISOString().startsWith('2026-07-23');
+    if (['24h', '6h', '2h', '10m', 'now'].includes(reminderType)) {
+      // Ajustar la zona horaria a GMT-5 (Colombia/Ecuador/Perú) para validar la fecha localmente
+      const isToday = new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString().startsWith('2026-07-23');
       if (isToday) {
         return new Response(
           JSON.stringify({ success: true, message: "Envío cancelado para hoy (evento reprogramado)" }),
