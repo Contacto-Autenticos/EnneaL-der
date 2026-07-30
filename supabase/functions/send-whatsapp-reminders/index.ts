@@ -17,6 +17,12 @@ serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const reminderType = body.type || 'now'; // por defecto enviamos el de "en vivo" si no se especifica
 
+    // BLOQUEO GENERAL SOLICITADO POR EL USUARIO HASTA NUEVA ORDEN
+    return new Response(
+      JSON.stringify({ success: true, message: "Envío de mensajes automáticos pausado por el usuario" }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+    );
+
     // 2. Obtenemos las credenciales de Green API
     const idInstance = Deno.env.get('GREENAPI_ID_INSTANCE');
     const apiToken = Deno.env.get('GREENAPI_TOKEN');
