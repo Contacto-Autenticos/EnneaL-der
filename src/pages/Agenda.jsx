@@ -80,6 +80,12 @@ const Agenda = () => {
 
   const isDisabledDate = (date) => {
     if (!date) return false;
+
+    // Bloquear hoy y fechas pasadas (no permite agendar el mismo día)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (date <= today) return true;
+
     // Fines de semana (0 = Domingo, 6 = Sábado)
     if (date.getDay() === 0 || date.getDay() === 6) return true;
     
