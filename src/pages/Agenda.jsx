@@ -78,9 +78,29 @@ const Agenda = () => {
     }
   ];
 
+  const isDisabledDate = (date) => {
+    if (!date) return false;
+    // Fines de semana (0 = Domingo, 6 = Sábado)
+    if (date.getDay() === 0 || date.getDay() === 6) return true;
+    
+    // Festivos específicos Colombia 2026
+    const dYear = date.getFullYear();
+    const dMonth = date.getMonth();
+    const dDay = date.getDate();
+
+    if (dYear === 2026) {
+      if (dMonth === 9 && dDay === 12) return true; // 12 de Octubre
+      if (dMonth === 10 && dDay === 2) return true; // 2 de Noviembre
+      if (dMonth === 10 && dDay === 16) return true; // 16 de Noviembre
+      if (dMonth === 11 && dDay === 8) return true; // 8 de Diciembre
+      if (dMonth === 11 && dDay === 25) return true; // 25 de Diciembre
+    }
+    return false;
+  };
+
   const generateSlots = (duration) => {
     const slots = [];
-    if (!selectedDate) return slots;
+    if (!selectedDate || isDisabledDate(selectedDate)) return slots;
 
     const dateOffsets = [-1, 0, 1];
     
@@ -238,25 +258,6 @@ const Agenda = () => {
     const totalDays = daysInMonth(year, month);
     const startDay = firstDayOfMonth(year, month);
     const days = [];
-
-    const isDisabledDate = (date) => {
-      // Fines de semana (0 = Domingo, 6 = Sábado)
-      if (date.getDay() === 0 || date.getDay() === 6) return true;
-      
-      // Festivos específicos Colombia 2026
-      const dYear = date.getFullYear();
-      const dMonth = date.getMonth();
-      const dDay = date.getDate();
-
-      if (dYear === 2026) {
-        if (dMonth === 9 && dDay === 12) return true; // 12 de Octubre
-        if (dMonth === 10 && dDay === 2) return true; // 2 de Noviembre
-        if (dMonth === 10 && dDay === 16) return true; // 16 de Noviembre
-        if (dMonth === 11 && dDay === 8) return true; // 8 de Diciembre
-        if (dMonth === 11 && dDay === 25) return true; // 25 de Diciembre
-      }
-      return false;
-    };
 
     for (let i = 0; i < startDay; i++) {
       days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
