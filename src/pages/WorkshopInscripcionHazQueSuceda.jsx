@@ -37,21 +37,22 @@ const WorkshopInscripcionHazQueSuceda = () => {
     const [discountCode, setDiscountCode] = useState('');
     const [discountApplied, setDiscountApplied] = useState(false);
     const [discountError, setDiscountError] = useState('');
+    const [showDiscountInput, setShowDiscountInput] = useState(false);
 
     const workshopConfig = {
         title: "Haz Que Suceda",
         subtitle: "Un día para reflexionar, para sentir y para tomar acción.",
-        price: 750000,
-        date: "1 de agosto",
-        location: "Casa Obeso, Cali Colombia",
-        time: "9:00 AM - 5:00 PM",
+        price: 450000,
+        date: "12 de septiembre",
+        location: "Uniandinos Bogotá",
+        time: "8:30 AM - 12:30 PM",
         name: "Haz que suceda"
     };
 
-    const finalPrice = discountApplied ? workshopConfig.price * 0.5 : workshopConfig.price;
+    const finalPrice = discountApplied ? 0 : workshopConfig.price;
 
     const applyDiscount = () => {
-        if (discountCode.toUpperCase() === 'TECREO') {
+        if (discountCode.toUpperCase() === 'NIILO2026') {
             setDiscountApplied(true);
             setDiscountError('');
         } else {
@@ -147,7 +148,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
         updateMeta('og:description', "Un día para reflexionar, para sentir y para tomar accion.");
         updateMeta('og:image', "https://enesencia.autenticos.co/Haz%20que%20suceda/Puerta-cuadrada.jpg");
 
-        const targetDate = new Date('2026-08-01T09:00:00').getTime();
+        const targetDate = new Date('2026-09-12T08:30:00').getTime();
         const interval = setInterval(() => {
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -248,6 +249,18 @@ const WorkshopInscripcionHazQueSuceda = () => {
             localStorage.setItem('workshop_email', formData.email.trim().toLowerCase());
             localStorage.setItem('workshop_name', formData.full_name);
             localStorage.setItem('workshop_reg_id', registrationId);
+
+            if (finalPrice === 0) {
+                const { error: updateError } = await supabase
+                    .from('workshop_registrations')
+                    .update({ payment_status: 'APPROVED', amount: 0 })
+                    .eq('id', registrationId);
+                
+                if (updateError) throw updateError;
+                
+                window.location.href = `${window.location.origin}/inscripcion-status?status=approved&collection_id=free_${registrationId}`;
+                return;
+            }
 
             const reference = `workshop-hqs-${registrationId}-${Date.now()}`;
             
@@ -576,26 +589,26 @@ const WorkshopInscripcionHazQueSuceda = () => {
                             <Calendar className="hqs-info-icon" size={32} />
                             <div>
                                 <span className="hqs-info-label">FECHA</span>
-                                <span className="hqs-info-val">SÁBADO<br/><strong className="hqs-info-big">1</strong> de agosto</span>
+                                <span className="hqs-info-val">SÁBADO<br/><strong className="hqs-info-big">12</strong> de septiembre</span>
                             </div>
                         </div>
                         <div className="hqs-info-item">
                             <Clock className="hqs-info-icon" size={32} />
                             <div>
                                 <span className="hqs-info-label">HORARIO</span>
-                                <span className="hqs-info-val"><strong className="hqs-info-medium">9:00 AM</strong><br/><span className="hqs-dash">-</span><br/><strong className="hqs-info-medium">5:00 PM</strong></span>
+                                <span className="hqs-info-val"><strong className="hqs-info-medium">8:30 AM</strong><br/><span className="hqs-dash">-</span><br/><strong className="hqs-info-medium">12:30 PM</strong></span>
                             </div>
                         </div>
                         <div className="hqs-info-item">
                             <MapPin className="hqs-info-icon" size={32} />
                             <div>
                                 <span className="hqs-info-label">LUGAR</span>
-                                <span className="hqs-info-val"><strong className="hqs-info-medium">Casa Obeso</strong><br/>Cali, Colombia</span>
+                                <span className="hqs-info-val"><strong className="hqs-info-medium">Uniandinos</strong><br/>Bogotá, Colombia</span>
                                 <div style={{ marginTop: '12px', display: 'flex', gap: '15px', justifyContent: 'center' }}>
-                                    <a href="https://www.google.com/maps/search/Casa+Obeso+Mejia,+Cali" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Ver en Mapa">
+                                    <a href="https://www.google.com/maps/search/Uniandinos+Bogota" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Ver en Mapa">
                                         <Map size={22} />
                                     </a>
-                                    <a href="https://waze.com/ul?q=Casa%20Obeso%20Mejia%20Cali" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Navegar">
+                                    <a href="https://waze.com/ul?q=Uniandinos%20Bogota" target="_blank" rel="noopener noreferrer" className="hqs-map-icon-link" title="Navegar">
                                         <Navigation size={22} />
                                     </a>
                                 </div>
@@ -613,12 +626,12 @@ const WorkshopInscripcionHazQueSuceda = () => {
                             <div className="hqs-pricing-ribbon">CUPOS LIMITADOS</div>
                             <h3 className="hqs-pricing-title">INVERSIÓN</h3>
                             <div className="hqs-pricing-amount">
-                                $750.000 <span className="hqs-pricing-currency">COP</span>
+                                $450.000 <span className="hqs-pricing-currency">COP</span>
                             </div>
                             <div className="hqs-pricing-iva">por persona (IVA incluido)</div>
                             <ul className="hqs-pricing-benefits">
-                                <li><CheckCircle size={20} className="hqs-text-gold" /> Acceso completo de 9:00 AM a 5:00 PM</li>
-                                <li><Utensils size={20} className="hqs-text-gold" /> Almuerzo y refrigerios incluidos</li>
+                                <li><CheckCircle size={20} className="hqs-text-gold" /> Acceso completo de 8:30 AM a 12:30 PM</li>
+                                <li><Utensils size={20} className="hqs-text-gold" /> Refrigerio incluido</li>
                                 <li><Heart size={20} className="hqs-text-gold" /> Música en vivo y dinámicas experienciales</li>
                                 <li><Rocket size={20} className="hqs-text-gold" /> Un día, una decisión, una nueva realidad</li>
                             </ul>
@@ -664,7 +677,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                         <div className="hqs-faq-container">
                             {[
                                 { q: '¿A quién va dirigido este taller?', a: 'A cualquier persona que quiera tomar acción y transformar su realidad.' },
-                                { q: '¿Qué incluye el valor de la inscripción?', a: 'Acceso completo al taller de 9:00 AM a 5:00 PM, música en vivo, almuerzo y refrigerios.' },
+                                { q: '¿Qué incluye el valor de la inscripción?', a: 'Acceso completo al taller de 8:30 AM a 12:30 PM, música en vivo y refrigerio.' },
                                 { q: '¿Cuáles son los métodos de pago?', a: 'Aceptamos todos los medios de pago a través de Mercado Pago (PSE, Tarjetas de Crédito, Efecty, etc.)' },
                                 { q: '¿Puedo ceder mi entrada si finalmente no puedo asistir?', a: 'Sí, puedes transferir tu entrada notificándonos con al menos 48 horas de anticipación.' }
                             ].map((faq, idx) => (
@@ -784,39 +797,50 @@ const WorkshopInscripcionHazQueSuceda = () => {
                         </div>
 
                         <div className="workshop-form-group">
-                            <label>Código de Descuento (Opcional)</label>
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                                <input 
-                                    type="text" 
-                                    value={discountCode} 
-                                    onChange={(e) => {
-                                        setDiscountCode(e.target.value);
-                                        setDiscountError('');
-                                    }} 
-                                    placeholder="Ingresa tu código"
-                                    style={{ flex: 1, textTransform: 'uppercase' }}
-                                    disabled={discountApplied}
-                                />
-                                <button 
-                                    type="button" 
-                                    onClick={applyDiscount}
-                                    style={{
-                                        padding: '10px 15px',
-                                        backgroundColor: discountApplied ? '#10b981' : '#333',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '8px',
-                                        cursor: discountApplied ? 'default' : 'pointer',
-                                        fontWeight: 'bold',
-                                        minWidth: '100px'
-                                    }}
-                                    disabled={discountApplied || !discountCode}
+                            {!showDiscountInput ? (
+                                <p 
+                                    style={{ color: '#ddbe3d', cursor: 'pointer', textAlign: 'center', textDecoration: 'underline', margin: '15px 0' }}
+                                    onClick={() => setShowDiscountInput(true)}
                                 >
-                                    {discountApplied ? 'APLICADO' : 'APLICAR'}
-                                </button>
-                            </div>
-                            {discountError && <span style={{ color: '#ff4d4d', fontSize: '0.8rem', marginTop: '5px', display: 'block' }}>{discountError}</span>}
-                            {discountApplied && <span style={{ color: '#10b981', fontSize: '0.8rem', marginTop: '5px', display: 'block' }}>¡Descuento del 50% aplicado exitosamente! Valor final: ${finalPrice.toLocaleString('es-CO')} COP</span>}
+                                    ¿Tienes un código de descuento?
+                                </p>
+                            ) : (
+                                <>
+                                    <label>Código de Descuento (Opcional)</label>
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <input 
+                                            type="text" 
+                                            value={discountCode} 
+                                            onChange={(e) => {
+                                                setDiscountCode(e.target.value);
+                                                setDiscountError('');
+                                            }} 
+                                            placeholder="Ingresa tu código"
+                                            style={{ flex: 1, textTransform: 'uppercase' }}
+                                            disabled={discountApplied}
+                                        />
+                                        <button 
+                                            type="button" 
+                                            onClick={applyDiscount}
+                                            style={{
+                                                padding: '10px 15px',
+                                                backgroundColor: discountApplied ? '#10b981' : '#333',
+                                                color: 'white',
+                                                border: 'none',
+                                                borderRadius: '8px',
+                                                cursor: discountApplied ? 'default' : 'pointer',
+                                                fontWeight: 'bold',
+                                                minWidth: '100px'
+                                            }}
+                                            disabled={discountApplied || !discountCode}
+                                        >
+                                            {discountApplied ? 'APLICADO' : 'APLICAR'}
+                                        </button>
+                                    </div>
+                                    {discountError && <span style={{ color: '#ff4d4d', fontSize: '0.8rem', marginTop: '5px', display: 'block' }}>{discountError}</span>}
+                                    {discountApplied && <span style={{ color: '#10b981', fontSize: '0.8rem', marginTop: '5px', display: 'block' }}>¡Descuento del 100% aplicado exitosamente! Valor final: $0 COP</span>}
+                                </>
+                            )}
                         </div>
 
                         <button 
