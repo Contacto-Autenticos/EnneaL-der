@@ -258,7 +258,8 @@ const WorkshopInscripcionHazQueSuceda = () => {
                 
                 if (updateError) throw updateError;
                 
-                window.location.href = `${window.location.origin}/inscripcion-status?status=approved&collection_id=free_${registrationId}`;
+                setIsModalOpen(false);
+                navigate(`/inscripcion-status?status=approved&collection_id=free_${registrationId}`);
                 return;
             }
 
