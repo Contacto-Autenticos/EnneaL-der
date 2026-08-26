@@ -18,11 +18,24 @@ import {
   Globe,
   Phone,
   HelpCircle,
-  Users
+  Users,
+  Star,
+  MessageCircleQuestion,
+  Compass,
+  GitMerge,
+  MessageSquare
 } from 'lucide-react';
 import { gsap } from 'gsap';
 import { supabase } from '../supabaseClient';
 import './Agenda.css';
+
+const ChatIcon = ({ size, className, strokeWidth }) => (
+  <div className={className} style={{ display: 'flex', position: 'relative', width: size * 1.2, height: size, transform: 'scale(1.25)' }}>
+    <User size={size * 0.6} strokeWidth={strokeWidth} style={{ position: 'absolute', bottom: 0, left: 0 }} />
+    <MessageSquare size={size * 0.4} strokeWidth={strokeWidth} style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)' }} />
+    <User size={size * 0.6} strokeWidth={strokeWidth} style={{ position: 'absolute', bottom: 0, right: 0, transform: 'scaleX(-1)' }} />
+  </div>
+);
 
 const Agenda = () => {
   const [view, setView] = useState('services'); // 'services' or 'calendar'
@@ -50,30 +63,35 @@ const Agenda = () => {
   const services = [
     {
       id: '15min',
-      title: 'Sesión 15 minutos',
-      description: 'Ideal para una consulta puntual, una pregunta específica o un primer contacto breve.',
-      image: '/Reloj-1.png',
+      title: '15 minutos',
+      subtitle: 'Consulta breve',
+      description: 'Para una pregunta puntual o un primer contacto.',
+      icon: MessageCircleQuestion,
       duration: 15
     },
     {
       id: '30min',
-      title: 'Sesión 30 minutos',
-      description: 'Ideal para revisar una situación concreta, recibir orientación clara y definir próximos pasos.',
-      image: '/Reloj-2.png',
+      title: '30 minutos',
+      subtitle: 'Orientación',
+      description: 'Para revisar una situación concreta y definir próximos pasos.',
+      icon: Compass,
       duration: 30
     },
     {
       id: '45min',
-      title: 'Sesión 45 minutos',
-      description: 'Ideal para profundizar en un reto, explorar alternativas y tomar decisiones estratégicas.',
-      image: '/Reloj-3.png',
-      duration: 45
+      title: '45 minutos',
+      subtitle: 'Profundización',
+      description: 'Para explorar alternativas y tomar decisiones con mayor claridad.',
+      icon: Search,
+      duration: 45,
+      isPopular: true
     },
     {
       id: '60min',
-      title: 'Sesión 60 minutos',
-      description: 'Ideal para una conversación de mentoría, trabajo a fondo y construcción de acciones concretas.',
-      image: '/Reloj-4.png',
+      title: '60 minutos',
+      subtitle: 'Mentoría',
+      description: 'Para una conversación profunda, trabajo de fondo y acuerdos concretos.',
+      icon: ChatIcon,
       duration: 60
     }
   ];
@@ -352,33 +370,43 @@ const Agenda = () => {
           <div className="services-view">
             <div className="services-view-header">
               <h1 className="services-title">Elija el espacio que desea reservar</h1>
+              <p className="services-subtitle" style={{ color: '#666', marginTop: '5px', fontSize: '1.1rem' }}>Selecciona la duración segun el tiempo que requieres.</p>
             </div>
 
             <div className="services-grid">
-              {services.map(service => (
-                <div key={service.id} className="service-card">
-                  <div className="service-img-container">
-                    <img src={service.image} alt={service.title} className="service-img" />
-                    <div className="service-avatar-badge">
-                      <span className="avatar-name">Felipe Beltrán Hernández</span>
+              {services.map(service => {
+                const IconComponent = service.icon;
+                return (
+                  <div key={service.id} className={`service-card ${service.isPopular ? 'popular-card' : ''}`}>
+                    {service.isPopular && (
+                      <div className="popular-badge">
+                        <Star size={14} style={{ marginRight: '4px' }} fill="currentColor" /> MÁS ELEGIDA
+                      </div>
+                    )}
+                    <div className="service-icon-container">
+                      <IconComponent size={70} strokeWidth={1.5} className="service-icon-svg" />
+                      <div className="icon-accent"></div>
+                    </div>
+                    <div className="service-content">
+                      <h3 className="service-time-title">{service.title}</h3>
+                      <h4 className="service-subtitle-text">{service.subtitle}</h4>
+                      <p className="service-description">{service.description}</p>
+                      
+                      <div className="service-online-badge">
+                        <Video size={16} />
+                        <span>En línea</span>
+                      </div>
+                      
+                      <button 
+                        className="btn-reserve-now"
+                        onClick={() => handleServiceSelect(service)}
+                      >
+                        Elegir {service.duration} min
+                      </button>
                     </div>
                   </div>
-                  <div className="service-content">
-                    <h3 className="service-type-title">{service.title}</h3>
-                    <div className="service-online-badge">
-                      <Video size={14} />
-                      <span>En línea</span>
-                    </div>
-                    <p className="service-description">{service.description}</p>
-                    <button 
-                      className="btn-reserve-now"
-                      onClick={() => handleServiceSelect(service)}
-                    >
-                      Reservar ahora
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ) : (
