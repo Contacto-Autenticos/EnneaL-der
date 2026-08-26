@@ -550,6 +550,13 @@
   margin-bottom: 20px;
 }
 
+.service-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .service-icon-svg {
   color: white;
   position: relative;
@@ -563,9 +570,8 @@
   background-color: var(--color-primary);
   border-radius: 50%;
   opacity: 0.9;
-  top: 45px;
-  left: 50%;
-  transform: translateX(10px);
+  top: -2px;
+  right: -5px;
   z-index: 1;
 }
 

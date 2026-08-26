@@ -155,12 +155,17 @@ const Agenda = () => {
             
             let isPast = currentSlot < new Date();
             let isOverlapping = false;
-            const slotEnd = new Date(currentSlot.getTime() + duration * 60000);
+            
+            // Regla de agendamiento: 15 minutos de buffer pre-sesión y post-sesión
+            const BUFFER_MINUTES = 15;
+            const requiredStart = new Date(currentSlot.getTime() - BUFFER_MINUTES * 60000);
+            const requiredEnd = new Date(currentSlot.getTime() + (duration + BUFFER_MINUTES) * 60000);
             
             for (const busy of busySlots) {
               const busyStart = new Date(busy.start);
               const busyEnd = new Date(busy.end);
-              if (currentSlot < busyEnd && slotEnd > busyStart) {
+              // Verifica si el bloque de tiempo extendido choca con algún evento ocupado
+              if (requiredStart < busyEnd && requiredEnd > busyStart) {
                 isOverlapping = true;
                 break;
               }
@@ -384,8 +389,10 @@ const Agenda = () => {
                       </div>
                     )}
                     <div className="service-icon-container">
-                      <IconComponent size={70} strokeWidth={1.5} className="service-icon-svg" />
-                      <div className="icon-accent"></div>
+                      <div className="service-icon-wrapper">
+                        <IconComponent size={70} strokeWidth={1.5} className="service-icon-svg" />
+                        <div className="icon-accent"></div>
+                      </div>
                     </div>
                     <div className="service-content">
                       <h3 className="service-time-title">{service.title}</h3>
@@ -418,8 +425,18 @@ const Agenda = () => {
             <div className="calendar-layout">
               {/* Left Sidebar: Meeting Details */}
               <div className="meeting-details-sidebar">
-                <div className="flex flex-col gap-4 mb-6 items-start">
-                  <img src={selectedService?.image} alt={selectedService?.title} className="rounded-lg object-cover border border-gray-200" />
+                <div className="flex flex-col gap-4 mb-6 items-start w-full">
+                  {selectedService?.icon && (() => {
+                    const Icon = selectedService.icon;
+                    return (
+                      <div className="service-icon-container" style={{ width: '100%', height: '120px', borderRadius: '12px', padding: 0 }}>
+                        <div className="service-icon-wrapper" style={{ transform: 'scale(0.8)' }}>
+                          <Icon size={70} strokeWidth={1.5} className="service-icon-svg" />
+                          <div className="icon-accent"></div>
+                        </div>
+                      </div>
+                    );
+                  })()}
                   <h2 className="text-xl font-bold text-secondary">{selectedService?.title}</h2>
                 </div>
 
