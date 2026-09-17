@@ -214,7 +214,7 @@ function App() {
         console.log('Advanced test responses saved to Supabase');
 
         const details = advancedEnneagramInfo[type];
-        const resultLink = `${window.location.origin}/advanced-analysis-result/${type}`;
+        const resultLink = `${window.location.origin}/eneagrama-advanced-analysis-result/${type}`;
 
         // Clean up growth and stress paths for better sentence flow
         const cleanGrowth = details.paths.growth.includes(':')

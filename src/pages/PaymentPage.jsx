@@ -215,7 +215,13 @@ const PaymentPage = () => {
 
     useEffect(() => {
         const finalAmount = getFinalAmount(amountInCents, bumpSelected);
-        fetchSignature(finalAmount);
+        if (finalAmount > 0) {
+            fetchSignature(finalAmount);
+        } else {
+            setSignatureData(null);
+            setLoading(false);
+            setError(null);
+        }
     }, [amountInCents, bumpSelected]);
 
     const isInternational = userCountry !== 'CO' && localCurrency !== 'COP' && exchangeRate !== 1;
@@ -399,9 +405,33 @@ const PaymentPage = () => {
                 {loading && <p style={{ marginTop: '20px' }}>Cargando pasarela de pago...</p>}
                 {error && <p className="payment-error">{error}</p>}
 
-                <div id="wompi-container" className="wompi-container">
-                    {/* Wompi Button will render here */}
-                </div>
+                {getFinalAmount(amountInCents, bumpSelected) === 0 ? (
+                    <button 
+                        onClick={() => {
+                            localStorage.removeItem('pendingBumpPurchase');
+                            navigate('/eneagrama-payment-success');
+                        }}
+                        style={{
+                            width: '100%',
+                            borderRadius: '6px',
+                            backgroundColor: '#0f2234',
+                            border: '4px solid #ddbe3d',
+                            color: 'white',
+                            fontSize: '1.35rem',
+                            minHeight: '60px',
+                            boxShadow: '0 6px 15px rgba(0, 0, 0, 0.5)',
+                            cursor: 'pointer',
+                            marginTop: '20px',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        Continuar
+                    </button>
+                ) : (
+                    <div id="wompi-container" className="wompi-container">
+                        {/* Wompi Button will render here */}
+                    </div>
+                )}
 
                 {/* Security bar added back as requested */}
                 <div className="security-bar">

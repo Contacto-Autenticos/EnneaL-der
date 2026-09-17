@@ -566,6 +566,35 @@ const Admin = () => {
         }
     };
 
+    const handleToggleCoupon = async (id, currentStatus) => {
+        try {
+            const { error } = await supabase
+                .from('coupons')
+                .update({ is_active: !currentStatus })
+                .eq('id', id);
+            if (error) throw error;
+            fetchCoupons();
+        } catch (error) {
+            console.error('Error toggling coupon status:', error);
+            alert('Error al actualizar el estado del cupón.');
+        }
+    };
+
+    const handleDeleteCoupon = async (id) => {
+        if (!window.confirm('¿Estás seguro de que deseas eliminar este cupón?')) return;
+        try {
+            const { error } = await supabase
+                .from('coupons')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+            fetchCoupons();
+        } catch (error) {
+            console.error('Error deleting coupon:', error);
+            alert('Error al eliminar el cupón.');
+        }
+    };
+
     const fetchWorkshopRegistrations = async () => {
         setLoadingWorkshop(true);
         try {
