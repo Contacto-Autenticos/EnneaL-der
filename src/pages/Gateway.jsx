@@ -27,30 +27,46 @@ const Gateway = () => {
                             className="gateway-btn"
                             onClick={() => navigate("/diagnostico-empresarial")}
                         >
-                            DIAGNÓSTICO EMPR.
+                            DIAG. EMPRESARIAL.
                         </button>
                         
                         <button 
                             className="gateway-btn"
-                            onClick={() => navigate("/eneagrama")}
+                            onClick={() => window.location.href = "https://finanzas.autenticos.co/"}
                         >
-                            Eneagrama
+                            DIAG. FINANCIERO.
                         </button>
                     </div>
                     
                     <div className="gateway-row">
                         <button 
                             className="gateway-btn"
+                            onClick={() => window.location.href = "https://enesencia.autenticos.co/eneagrama"}
+                        >
+                            ENEAGRAMA PERSONAS
+                        </button>
+
+                        <button 
+                            className="gateway-btn"
+                            onClick={() => window.location.href = "https://enesencia.autenticos.co/eneagrama-empresas"}
+                        >
+                            ENEAGRAMA EMPRESAS
+                        </button>
+                    </div>
+
+                    <div className="gateway-row">
+                        <button 
+                            className="gateway-btn"
                             onClick={() => navigate("/dominios-landing")}
                         >
-                            6 Dominios
+                            6 DOMINIOS
                         </button>
 
                         <button 
                             className="gateway-btn"
                             onClick={() => navigate("/liderazgo-test-intro")}
                         >
-                            Liderazgo
+                            LIDERAZGO
                         </button>
                     </div>
                 </div>
