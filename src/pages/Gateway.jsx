@@ -27,14 +27,14 @@ const Gateway = () => {
                             className="gateway-btn"
                             onClick={() => navigate("/diagnostico-empresarial")}
                         >
-                            DIAG. EMPRESARIAL.
+                            DIAG. EMPRESARIAL
                         </button>
                         
                         <button 
                             className="gateway-btn"
                             onClick={() => window.location.href = "https://finanzas.autenticos.co/"}
                         >
-                            DIAG. FINANCIERO.
+                            DIAG. FINANCIERO
                         </button>
                     </div>
                     
