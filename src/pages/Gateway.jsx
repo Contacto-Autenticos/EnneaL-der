@@ -69,6 +69,15 @@ const Gateway = () => {
                             LIDERAZGO
                         </button>
                     </div>
+
+                    <div className="gateway-row">
+                        <button 
+                            className="gateway-btn"
+                            onClick={() => navigate("/test-temperamento-intro")}
+                        >
+                            TEMPERAMENTO
+                        </button>
+                    </div>
                 </div>
             </div>
 
