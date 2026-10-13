@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit, DollarSign } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit, DollarSign, Award, Target } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -68,6 +68,13 @@ const Admin = () => {
     const [loadingFascinantes, setLoadingFascinantes] = useState(false);
     const [fascinantesDateFrom, setFascinantesDateFrom] = useState('');
     const [fascinantesDateTo, setFascinantesDateTo] = useState('');
+
+    // Extraordinarios / Liderazgo State
+    const [liderazgoResults, setLiderazgoResults] = useState([]);
+    const [loadingLiderazgo, setLoadingLiderazgo] = useState(false);
+    const [liderazgoDateFrom, setLiderazgoDateFrom] = useState('');
+    const [liderazgoDateTo, setLiderazgoDateTo] = useState('');
+    const [liderazgoFilterType, setLiderazgoFilterType] = useState('all');
 
     // Business Diagnostics State
     const [businessResults, setBusinessResults] = useState([]);
@@ -164,6 +171,9 @@ const Admin = () => {
             }
             if (activeSection === 'fascinantes-anonimos' || activeSection === 'fascinantes-registrados') {
                 fetchFascinantesResults();
+            }
+            if (activeSection === 'extraordinarios-liderazgo') {
+                fetchLiderazgoResults();
             }
             if (activeSection === 'diagnostico-empresarial') {
                 fetchBusinessResults();
@@ -276,6 +286,31 @@ const Admin = () => {
             console.error('Error fetching fascinantes results:', error);
         } finally {
             setLoadingFascinantes(false);
+        }
+    };
+
+    const fetchLiderazgoResults = async () => {
+        setLoadingLiderazgo(true);
+        try {
+            let query = supabase
+                .from('liderazgo_results')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (liderazgoDateFrom) {
+                query = query.gte('created_at', `${liderazgoDateFrom}T00:00:00`);
+            }
+            if (liderazgoDateTo) {
+                query = query.lte('created_at', `${liderazgoDateTo}T23:59:59`);
+            }
+
+            const { data, error } = await query;
+            if (error) throw error;
+            setLiderazgoResults(data || []);
+        } catch (error) {
+            console.error('Error fetching liderazgo results:', error);
+        } finally {
+            setLoadingLiderazgo(false);
         }
     };
 
@@ -1096,6 +1131,58 @@ const Admin = () => {
         URL.revokeObjectURL(url);
     };
 
+    const handleDownloadLiderazgoExcel = (data, filename) => {
+        const e = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+        
+        const headers = [
+            e('#'),
+            e('Nombre'),
+            e('F. Nacimiento'),
+            e('Email'),
+            e('Teléfono'),
+            e('Fecha Realización'),
+            e('Nivel Obtenido'),
+            e('Puntos Totales'),
+            e('Personal'),
+            e('Estratégico'),
+            e('Relacional'),
+            e('Multiplicador'),
+            e('Trascendente')
+        ];
+
+        const rows = data.map((r, index) => {
+            const dateStr = new Date(r.created_at).toLocaleDateString('es-CO', { 
+                day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+            });
+            const isAnon = r.is_anonymous || (!r.full_name && !r.email);
+            return [
+                e(`#${data.length - index}`),
+                e(isAnon ? 'Anónimo' : (r.full_name || 'Anónimo')),
+                e(r.birth_date || '-'),
+                e(r.email || '-'),
+                e(r.phone || '-'),
+                e(dateStr),
+                e(r.level_label || 'Liderazgo sólido'),
+                r.total_score || 0,
+                r.score_personal ?? 0,
+                r.score_estrategico ?? 0,
+                r.score_relacional ?? 0,
+                r.score_multiplicador ?? 0,
+                r.score_trascendente ?? 0
+            ];
+        });
+
+        const allRows = [headers, ...rows];
+        const csvContent = '\uFEFF' + allRows.map(r => r.join(';')).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${filename}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+    };
+
     const handleDownloadAllInitialExcel = async () => {
         try {
             let allData = [];
@@ -1470,8 +1557,11 @@ const Admin = () => {
                         <ChevronDown size={14} style={{ transform: expandedProgram === 'extraordinarios' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', marginLeft: 'auto' }} />
                     </button>
                     {expandedProgram === 'extraordinarios' && (
-                        <div className="admin-nav-program-content placeholder">
-                            <span>Próximamente...</span>
+                        <div className="admin-nav-program-content">
+                            <button className={`admin-nav-item ${activeSection === 'extraordinarios-liderazgo' ? 'active' : ''}`}
+                                onClick={() => { setActiveSection('extraordinarios-liderazgo'); setIsMobileSidebarOpen(false); }}>
+                                <Award size={17} /> Test de Liderazgo
+                            </button>
                         </div>
                     )}
 
@@ -3999,6 +4089,185 @@ const Admin = () => {
                             </div>
                         </div>
                     )
+                }
+
+                {/* ── SECTION: Extraordinarios Resultados Liderazgo ── */}
+                {
+                    activeSection === 'extraordinarios-liderazgo' && (() => {
+                        const filteredLiderazgo = liderazgoResults.filter(r => {
+                            const isAnon = r.is_anonymous || (!r.full_name && !r.email);
+                            if (liderazgoFilterType === 'registered') return !isAnon;
+                            if (liderazgoFilterType === 'anonymous') return isAnon;
+                            return true;
+                        });
+
+                        const registeredCount = liderazgoResults.filter(r => !r.is_anonymous && (r.full_name || r.email)).length;
+                        const anonymousCount = liderazgoResults.filter(r => r.is_anonymous || (!r.full_name && !r.email)).length;
+
+                        return (
+                            <div className="admin-card">
+                                <div className="admin-card-header responses-header-flex">
+                                    <h2><Award size={20} /> Resultados - Test de Liderazgo (Extraordinarios)</h2>
+                                    <div className="header-actions-group">
+                                        <div className="transaction-filters" style={{ marginRight: '15px', border: 'none', padding: 0, background: 'none' }}>
+                                            <div className="filter-group">
+                                                <select
+                                                    value={liderazgoFilterType}
+                                                    onChange={(e) => setLiderazgoFilterType(e.target.value)}
+                                                    style={{
+                                                        height: '38px',
+                                                        borderRadius: '8px',
+                                                        border: '1px solid #cbd5e1',
+                                                        padding: '0 10px',
+                                                        fontSize: '0.85rem',
+                                                        color: '#002d44',
+                                                        background: 'white',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    <option value="all">Todos ({liderazgoResults.length})</option>
+                                                    <option value="registered">Registrados ({registeredCount})</option>
+                                                    <option value="anonymous">Anónimos ({anonymousCount})</option>
+                                                </select>
+                                            </div>
+                                            <div className="filter-group">
+                                                <input type="date" value={liderazgoDateFrom} onChange={(e) => setLiderazgoDateFrom(e.target.value)} />
+                                            </div>
+                                            <div className="filter-group">
+                                                <input type="date" value={liderazgoDateTo} onChange={(e) => setLiderazgoDateTo(e.target.value)} />
+                                            </div>
+                                            <button onClick={fetchLiderazgoResults} className="btn-refresh-boxed" style={{ height: '38px' }} title="Aplicar filtros">
+                                                <Filter size={16} />
+                                            </button>
+                                            <button onClick={() => { setLiderazgoDateFrom(''); setLiderazgoDateTo(''); fetchLiderazgoResults(); }} className="btn-refresh-boxed" style={{ height: '38px' }} title="Limpiar filtros">
+                                                <RefreshCw size={16} className={loadingLiderazgo ? 'spinning' : ''} />
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDownloadLiderazgoExcel(filteredLiderazgo, `Reporte_Liderazgo_${liderazgoFilterType}`)} 
+                                                className="btn-ver-respuestas" 
+                                                style={{ height: '38px', display: 'flex', alignItems: 'center', gap: '8px' }}
+                                            >
+                                                <Download size={16} /> Excel
+                                            </button>
+                                        </div>
+                                        <span className="registros-badge">
+                                            {filteredLiderazgo.length} registros
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="codes-table-wrapper desktop-table-view" style={{ maxHeight: '600px' }}>
+                                    <table className="codes-table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre</th>
+                                                <th>F. Nacimiento</th>
+                                                <th>Email</th>
+                                                <th>Teléfono</th>
+                                                <th>Fecha Realización</th>
+                                                <th>Nivel Obtenido</th>
+                                                <th style={{ textAlign: 'center' }}>Total</th>
+
+                                                <th style={{ textAlign: 'center' }} title="Liderazgo Personal">Pers.</th>
+                                                <th style={{ textAlign: 'center' }} title="Liderazgo Estratégico">Est.</th>
+                                                <th style={{ textAlign: 'center' }} title="Liderazgo Relacional">Rel.</th>
+                                                <th style={{ textAlign: 'center' }} title="Liderazgo Multiplicador">Mult.</th>
+                                                <th style={{ textAlign: 'center' }} title="Liderazgo Trascendente">Trasc.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {loadingLiderazgo ? (
+                                                <tr><td colSpan="13" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
+                                            ) : filteredLiderazgo.length === 0 ? (
+                                                <tr><td colSpan="13" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
+                                            ) : (
+                                                filteredLiderazgo.map((r, index) => {
+                                                    const isAnon = r.is_anonymous || (!r.full_name && !r.email);
+                                                    return (
+                                                        <tr key={r.id}>
+                                                            <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>#{filteredLiderazgo.length - index}</td>
+                                                            <td style={{ fontWeight: '500' }}>
+                                                                {isAnon ? (
+                                                                    <span style={{ color: '#64748b', fontStyle: 'italic', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                                                                        <User size={13} style={{ opacity: 0.6 }} /> Anónimo
+                                                                    </span>
+                                                                ) : (
+                                                                    r.full_name
+                                                                )}
+                                                            </td>
+                                                            <td style={{ fontSize: '0.85rem' }}>{r.birth_date || <span style={{ color: '#94a3b8' }}>-</span>}</td>
+                                                            <td style={{ fontSize: '0.85rem' }}>{r.email || <span style={{ color: '#94a3b8' }}>-</span>}</td>
+                                                            <td style={{ fontSize: '0.85rem' }}>{r.phone || <span style={{ color: '#94a3b8' }}>-</span>}</td>
+                                                            <td style={{ fontSize: '0.85rem' }}>
+                                                                {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                            </td>
+                                                            <td style={{ fontWeight: '600', color: '#b89b2d' }}>{r.level_label || 'Liderazgo sólido'}</td>
+                                                            <td style={{ textAlign: 'center', fontWeight: '700', color: '#002d44' }}>{r.total_score || '-'}</td>
+
+                                                            <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_personal ?? '-'}</td>
+                                                            <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_estrategico ?? '-'}</td>
+                                                            <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_relacional ?? '-'}</td>
+                                                            <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_multiplicador ?? '-'}</td>
+                                                            <td style={{ textAlign: 'center', fontWeight: '500' }}>{r.score_trascendente ?? '-'}</td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div className="mobile-cards-list">
+                                    {loadingLiderazgo ? (
+                                        <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>Cargando resultados...</div>
+                                    ) : filteredLiderazgo.length === 0 ? (
+                                        <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>No hay resultados registrados aún.</div>
+                                    ) : (
+                                        filteredLiderazgo.map((r, index) => {
+                                            const isAnon = r.is_anonymous || (!r.full_name && !r.email);
+                                            return (
+                                                <div className="mobile-card" key={r.id}>
+                                                    <div className="mobile-card-header">
+                                                        <span className="mobile-card-badge">Nivel: {r.level_label || 'Liderazgo sólido'}</span>
+                                                        <span className="status-badge-premium unused mobile-card-status" style={{ fontFamily: 'monospace' }}>#{filteredLiderazgo.length - index}</span>
+                                                    </div>
+                                                    <h4 className="mobile-card-name" style={isAnon ? { color: '#64748b', fontStyle: 'italic' } : {}}>
+                                                        {isAnon ? 'Usuario Anónimo' : (r.full_name || 'Sin nombre')}
+                                                    </h4>
+                                                    
+                                                    <div className="mobile-card-details-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px', margin: '10px 0', textAlign: 'center' }}>
+                                                        <div style={{background: '#f8fafc', padding: '6px 2px', borderRadius: '6px', fontSize: '0.8rem'}}><strong>P:</strong> {r.score_personal ?? '-'}</div>
+                                                        <div style={{background: '#f8fafc', padding: '6px 2px', borderRadius: '6px', fontSize: '0.8rem'}}><strong>E:</strong> {r.score_estrategico ?? '-'}</div>
+                                                        <div style={{background: '#f8fafc', padding: '6px 2px', borderRadius: '6px', fontSize: '0.8rem'}}><strong>R:</strong> {r.score_relacional ?? '-'}</div>
+                                                        <div style={{background: '#f8fafc', padding: '6px 2px', borderRadius: '6px', fontSize: '0.8rem'}}><strong>M:</strong> {r.score_multiplicador ?? '-'}</div>
+                                                        <div style={{background: '#f8fafc', padding: '6px 2px', borderRadius: '6px', fontSize: '0.8rem'}}><strong>T:</strong> {r.score_trascendente ?? '-'}</div>
+                                                    </div>
+                                                    
+                                                    {!isAnon && r.email && (
+                                                        <div className="mobile-card-details-row">
+                                                            <div className="mobile-card-detail-item"><Mail size={14}/> <span>{r.email}</span></div>
+                                                        </div>
+                                                    )}
+                                                    {!isAnon && r.phone && (
+                                                        <div className="mobile-card-details-row">
+                                                            <div className="mobile-card-detail-item"><Phone size={14}/> <span>{r.phone}</span></div>
+                                                        </div>
+                                                    )}
+                                                    <div className="mobile-card-details-row">
+                                                        <div className="mobile-card-detail-item"><Target size={14}/> <span>Puntos Totales: <strong>{r.total_score || '-'}</strong></span></div>
+                                                    </div>
+                                                    <div className="mobile-card-details-row">
+                                                        <div className="mobile-card-detail-item"><Calendar size={14}/> <span>{new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span></div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })()
                 }
 
 
