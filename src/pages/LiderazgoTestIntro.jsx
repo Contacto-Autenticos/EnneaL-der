@@ -11,8 +11,8 @@ const LiderazgoTestIntro = () => {
             <div className="li-intro-content-wrapper">
                 <div className="li-intro-logo-container">
                     <img
-                        src="/Círculo de conexión y diálogo.png"
-                        alt="Círculo de conexión y diálogo"
+                        src="/Faro azul.png"
+                        alt="Faro Azul"
                         className="li-intro-gold-logo animate-zoom-in-slow"
                     />
                 </div>

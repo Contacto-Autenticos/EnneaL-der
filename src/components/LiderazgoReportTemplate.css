@@ -1,0 +1,879 @@
+/* ─────────────────────────────────────────────────────────────
+   LIDERAZGO REPORT PDF TEMPLATE STYLES
+   Designed to match Eneagrama and Plan de Acción executive reports
+   Dimensions: 800px x 1131px (Standard A4 ratio at 96 DPI)
+───────────────────────────────────────────────────────────── */
+
+:root {
+    --pdf-dark: #00121d;
+    --pdf-navy: #002d44;
+    --pdf-gold: #ddbe3d;
+    --pdf-gold-light: #f5e493;
+    --pdf-bg: #ffffff;
+    --pdf-card-bg: #f8fafc;
+    --pdf-border: #e2e8f0;
+    --pdf-text-dark: #0f172a;
+    --pdf-text-muted: #475569;
+}
+
+.liderazgo-pdf-template {
+    width: 800px;
+    background: #f1f5f9;
+    font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--pdf-dark);
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -100;
+}
+
+/* Disable all animations and transitions inside the PDF template for reliable html2canvas capture */
+.liderazgo-pdf-template * {
+    animation: none !important;
+    transition: none !important;
+    box-sizing: border-box;
+}
+
+/* ─── BASE PAGE DEFINITION ─── */
+.liderazgo-pdf-template .pdf-page {
+    width: 800px;
+    height: 1131px;
+    background: #ffffff;
+    padding: 42px 46px 68px 46px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── COMMON HEADERS ─── */
+.liderazgo-pdf-template .pdf-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.liderazgo-pdf-template .l-pdf-header-category {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--pdf-gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.liderazgo-pdf-template .pdf-header h1 {
+    font-size: 24px;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--pdf-navy);
+    letter-spacing: 0.5px;
+}
+
+.liderazgo-pdf-template .pdf-header p {
+    font-size: 13px;
+    color: var(--pdf-text-muted);
+    margin: 5px 0 0 0;
+    font-weight: 500;
+}
+
+.liderazgo-pdf-template .l-pdf-header-line {
+    width: 70px;
+    height: 3px;
+    background: var(--pdf-gold);
+    margin: 12px auto 0 auto;
+    border-radius: 2px;
+}
+
+/* ─── COMMON FOOTERS & PAGE NUMBERS ─── */
+.liderazgo-pdf-template .pdf-footer {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+
+.liderazgo-pdf-template .pdf-footer img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+}
+
+.liderazgo-pdf-template .pdf-page-number {
+    position: absolute;
+    bottom: 22px;
+    right: 44px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--pdf-navy);
+    background-color: var(--pdf-gold);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.liderazgo-pdf-template .pdf-section-title {
+    color: var(--pdf-navy);
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 16px 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1.5px solid var(--pdf-gold);
+    padding-bottom: 6px;
+}
+
+.liderazgo-pdf-template .pdf-section-icon {
+    color: var(--pdf-gold);
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE 0: PORTADA
+═══════════════════════════════════════════════════════════ */
+.liderazgo-pdf-template .pdf-page-cover {
+    background: #00121d;
+    padding: 50px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    color: #ffffff;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 18, 29, 0.88) 0%, rgba(0, 45, 68, 0.85) 50%, rgba(0, 18, 29, 0.95) 100%),
+                url('/Montañas 05.jpg') center/cover no-repeat;
+    z-index: 1;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-top,
+.liderazgo-pdf-template .l-pdf-cover-hero-center,
+.liderazgo-pdf-template .l-pdf-cover-bottom {
+    position: relative;
+    z-index: 2;
+}
+
+.liderazgo-pdf-template .l-pdf-serie-tag {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--pdf-gold);
+    letter-spacing: 4px;
+    margin: 0 0 10px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-gold-divider {
+    width: 75%;
+    height: 1px;
+    background: var(--pdf-gold);
+    margin: 0 auto 16px auto;
+    opacity: 0.6;
+}
+
+.liderazgo-pdf-template .l-pdf-pretitle {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 2px;
+    margin: 0 0 6px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-title {
+    font-size: 42px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin: 0 0 16px 0;
+    line-height: 1.1;
+}
+
+.liderazgo-pdf-template .l-pdf-level-highlight-box {
+    background: rgba(0, 45, 68, 0.7);
+    border: 1px solid rgba(221, 190, 61, 0.4);
+    border-radius: 12px;
+    padding: 12px 24px;
+    max-width: 580px;
+    margin: 0 auto;
+    backdrop-filter: blur(4px);
+}
+
+.liderazgo-pdf-template .l-pdf-level-pre {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--pdf-gold);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-level {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+    letter-spacing: 0.5px;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-desc {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-hero-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-emblem-wrapper {
+    position: relative;
+    width: 360px;
+    height: 310px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-emblem {
+    width: 340px;
+    height: 290px;
+    max-width: 100%;
+    object-fit: contain;
+    z-index: 2;
+    filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.5));
+}
+
+.liderazgo-pdf-template .l-pdf-cover-score-pill {
+    margin-top: 18px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--pdf-gold);
+    padding: 6px 22px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.liderazgo-pdf-template .l-pdf-score-num {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--pdf-gold);
+}
+
+.liderazgo-pdf-template .l-pdf-score-max {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 1px;
+}
+
+.liderazgo-pdf-template .l-pdf-user-meta {
+    margin-bottom: 12px;
+}
+
+.liderazgo-pdf-template .l-pdf-user-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin: 0 0 4px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-date {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    font-weight: 500;
+}
+
+.liderazgo-pdf-template .l-pdf-gold-bar-small {
+    width: 50px;
+    height: 2px;
+    background: var(--pdf-gold);
+    margin: 14px auto 0 auto;
+    opacity: 0.8;
+}
+
+.liderazgo-pdf-template .l-pdf-methodology-note {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    font-weight: 500;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 14px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1px;
+}
+
+.liderazgo-pdf-template .l-pdf-cover-logo {
+    height: 28px;
+    object-fit: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE 1: EVALUACIÓN GENERAL Y LAS 5 DIMENSIONES
+═══════════════════════════════════════════════════════════ */
+.liderazgo-pdf-template .l-pdf-general-score-card {
+    background: var(--pdf-card-bg);
+    border: 1px solid var(--pdf-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.liderazgo-pdf-template .l-pdf-gauge-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.liderazgo-pdf-template .l-pdf-gauge-pts {
+    text-align: center;
+    margin-top: -15px;
+}
+
+.liderazgo-pdf-template .l-pdf-gauge-pts strong {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--pdf-navy);
+    display: block;
+    line-height: 1;
+}
+
+.liderazgo-pdf-template .l-pdf-gauge-pts span {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--pdf-text-muted);
+    letter-spacing: 1px;
+}
+
+.liderazgo-pdf-template .l-pdf-general-desc-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.liderazgo-pdf-template .l-pdf-badge-gold {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--pdf-gold);
+    color: var(--pdf-dark);
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.liderazgo-pdf-template .l-pdf-general-desc-box h3 {
+    font-size: 20px;
+    font-weight: 900;
+    margin: 2px 0;
+    color: var(--pdf-navy);
+}
+
+.liderazgo-pdf-template .l-pdf-level-long-desc {
+    font-size: 12px;
+    color: var(--pdf-text-muted);
+    line-height: 1.45;
+    margin: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-level-range-pill {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #334155;
+    background: #edf2f7;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+/* Radar + Cards Layout */
+.liderazgo-pdf-template .l-pdf-dim-grid-layout {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.liderazgo-pdf-template .l-pdf-radar-wrapper {
+    background: #ffffff;
+    border: 1px solid var(--pdf-border);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.liderazgo-pdf-template .l-pdf-radar-inner {
+    width: 265px;
+    height: 265px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liderazgo-pdf-template .l-pdf-radar-inner .lr-radar-section {
+    padding: 0 !important;
+}
+
+.liderazgo-pdf-template .l-pdf-radar-inner .lr-radar-chart-container {
+    max-width: 265px !important;
+    margin: 0 auto;
+}
+
+.liderazgo-pdf-template .l-pdf-radar-caption {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--pdf-text-muted);
+    margin: 8px 0 0 0;
+    text-align: center;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-cards-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-row-card {
+    background: #ffffff;
+    border: 1px solid var(--pdf-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.liderazgo-pdf-template .l-pdf-dim-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-title-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-title-group h4 {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--pdf-navy);
+    margin: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-score-badge {
+    font-size: 11px;
+    color: var(--pdf-text-muted);
+}
+
+.liderazgo-pdf-template .l-pdf-dim-score-badge strong {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--pdf-navy);
+}
+
+.liderazgo-pdf-template .l-pdf-dim-subtext {
+    font-size: 10px;
+    color: var(--pdf-text-muted);
+    margin: 0 0 6px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.liderazgo-pdf-template .l-pdf-bar-track {
+    width: 100%;
+    height: 6px;
+    background: #edf2f7;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.liderazgo-pdf-template .l-pdf-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+}
+
+.liderazgo-pdf-template .l-pdf-dim-interp {
+    font-weight: 700;
+    color: var(--pdf-navy);
+}
+
+.liderazgo-pdf-template .l-pdf-dim-pct {
+    font-weight: 700;
+    color: var(--pdf-text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE 2: FORTALEZAS, ÁREAS CRÍTICAS Y RECOMENDACIONES
+═══════════════════════════════════════════════════════════ */
+.liderazgo-pdf-template .l-pdf-strengths-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-card {
+    background: #fdfaf2;
+    border: 1px solid rgba(221, 190, 61, 0.4);
+    border-left: 4px solid var(--pdf-gold);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.liderazgo-pdf-template .l-pdf-card-badge-num {
+    background: var(--pdf-gold);
+    color: var(--pdf-dark);
+    font-size: 11px;
+    font-weight: 900;
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-body {
+    flex: 1;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-name-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--pdf-navy);
+}
+
+.liderazgo-pdf-template .l-pdf-strength-name-with-icon h4 {
+    font-size: 13px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-score {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--pdf-navy);
+    background: rgba(221, 190, 61, 0.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-sub {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--pdf-navy);
+    margin: 0 0 3px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-strength-desc {
+    font-size: 10.5px;
+    color: var(--pdf-text-muted);
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Áreas Críticas */
+.liderazgo-pdf-template .l-pdf-risks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-card {
+    background: #fff8f8;
+    border: 1px solid #fecaca;
+    border-left: 4px solid #ef4444;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3px;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-name-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #991b1b;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-name-with-icon h4 {
+    font-size: 12px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-top: 2px;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-sub {
+    font-size: 10px;
+    font-weight: 600;
+    color: #7f1d1d;
+    margin: 0 0 3px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-risk-desc {
+    font-size: 10px;
+    color: var(--pdf-text-muted);
+    line-height: 1.35;
+    margin: 0;
+}
+
+/* Recomendaciones */
+.liderazgo-pdf-template .l-pdf-recs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.liderazgo-pdf-template .l-pdf-rec-row {
+    background: #f8fafc;
+    border: 1px solid var(--pdf-border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.liderazgo-pdf-template .l-pdf-rec-num {
+    width: 22px;
+    height: 22px;
+    background: var(--pdf-navy);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.liderazgo-pdf-template .l-pdf-rec-text p {
+    font-size: 11px;
+    color: var(--pdf-text-dark);
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE 3: PLAN DE ACCIÓN Y HOJA DE RUTA (90 DÍAS)
+═══════════════════════════════════════════════════════════ */
+.liderazgo-pdf-template .l-pdf-plan-intro-box {
+    background: #fdfaf2;
+    border-left: 4px solid var(--pdf-gold);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+}
+
+.liderazgo-pdf-template .l-pdf-plan-intro-box p {
+    font-size: 11px;
+    color: var(--pdf-dark);
+    line-height: 1.45;
+    margin: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-phases-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-card {
+    background: #ffffff;
+    border: 1px solid var(--pdf-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.liderazgo-pdf-template .l-pdf-phase-card.phase-1 {
+    border-left: 4px solid #0088ff;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-card.phase-2 {
+    border-left: 4px solid var(--pdf-gold);
+}
+
+.liderazgo-pdf-template .l-pdf-phase-card.phase-3 {
+    border-left: 4px solid #aa00ff;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: #edf2f7;
+    color: var(--pdf-navy);
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-header h3 {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--pdf-navy);
+    margin: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-focus {
+    font-size: 11px;
+    color: var(--pdf-navy);
+    margin-bottom: 4px;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-focus strong {
+    color: var(--pdf-gold);
+}
+
+.liderazgo-pdf-template .l-pdf-phase-objective {
+    font-size: 10.5px;
+    color: var(--pdf-text-dark);
+    line-height: 1.4;
+    margin: 0 0 6px 0;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-actions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-actions li {
+    font-size: 10px;
+    color: var(--pdf-text-muted);
+    line-height: 1.35;
+    padding-left: 14px;
+    position: relative;
+}
+
+.liderazgo-pdf-template .l-pdf-phase-actions li::before {
+    content: '•';
+    position: absolute;
+    left: 2px;
+    color: var(--pdf-gold);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+/* Quote Box */
+.liderazgo-pdf-template .l-pdf-closing-quote-box {
+    background: linear-gradient(135deg, var(--pdf-navy) 0%, var(--pdf-dark) 100%);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 4px;
+}
+
+.liderazgo-pdf-template .l-pdf-quote-icon {
+    color: var(--pdf-gold);
+    flex-shrink: 0;
+}
+
+.liderazgo-pdf-template .l-pdf-quote-text {
+    font-size: 12px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.5;
+    margin: 0;
+}

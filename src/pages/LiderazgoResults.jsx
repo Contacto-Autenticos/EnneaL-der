@@ -1,5 +1,7 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import { 
     Download, RefreshCw, ChevronRight, 
     Award, AlertTriangle, Lightbulb, ClipboardList,
@@ -21,6 +23,7 @@ const getDimIcon = (id) => {
 import { calculateLiderazgoResults, getRecommendations } from '../utils/liderazgoUtils';
 import LiderazgoSpeedometer from '../components/LiderazgoSpeedometer';
 import LiderazgoRadarChart from '../components/LiderazgoRadarChart';
+import LiderazgoReportTemplate from '../components/LiderazgoReportTemplate';
 import { supabase } from '../supabaseClient';
 import './LiderazgoResults.css';
 
@@ -67,6 +70,10 @@ const LiderazgoResults = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
     const [submitError, setSubmitError] = useState(null);
+
+    // PDF Generation State & Ref
+    const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+    const reportTemplateRef = useRef(null);
 
     // Date Select Options
     const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
@@ -274,6 +281,63 @@ const LiderazgoResults = () => {
             setSubmitError(err.message || 'Ocurrió un error al guardar tus datos.');
         } finally {
             setIsSubmitting(false);
+        }
+    };
+
+    const handleDownloadPdf = async () => {
+        const template = reportTemplateRef.current;
+        if (!template || isDownloadingPdf) return;
+
+        try {
+            setIsDownloadingPdf(true);
+
+            // Mostrar temporalmente el template fuera de vista
+            template.style.left = '0';
+            template.style.opacity = '1';
+
+            // Pausa breve para asegurar que el navegador aplique fuentes y estilos
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            const originalScrollY = window.scrollY;
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = 210;
+            const pdfHeight = 297;
+
+            const pages = template.querySelectorAll('.pdf-page');
+
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                const canvas = await html2canvas(page, {
+                    backgroundColor: '#ffffff',
+                    scale: 2.5,
+                    useCORS: true,
+                    width: 800,
+                    height: 1131,
+                    logging: false
+                });
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+            }
+
+            template.style.left = '-9999px';
+            template.style.opacity = '0';
+            window.scrollTo({ top: originalScrollY, left: 0, behavior: 'instant' });
+
+            const safeName = (fullName || 'Reporte').trim().replace(/\s+/g, '_');
+            pdf.save(`Diagnostico_Liderazgo_${safeName}.pdf`);
+        } catch (error) {
+            console.error('Error generating Liderazgo PDF:', error);
+            alert('Hubo un error al generar el reporte PDF. Por favor intenta de nuevo.');
+        } finally {
+            setIsDownloadingPdf(false);
+            if (reportTemplateRef.current) {
+                reportTemplateRef.current.style.left = '-9999px';
+                reportTemplateRef.current.style.opacity = '0';
+            }
         }
     };
 
@@ -555,10 +619,30 @@ const LiderazgoResults = () => {
                 <button className="lr-btn-secondary" onClick={() => navigate('/liderazgo-test')}>
                     <RefreshCw size={18} /> Repetir
                 </button>
-                <button className="lr-btn-primary" onClick={() => window.print()}>
-                    <Download size={18} /> Reporte PDF
+                <button 
+                    className="lr-btn-primary" 
+                    onClick={handleDownloadPdf}
+                    disabled={isDownloadingPdf}
+                >
+                    {isDownloadingPdf ? (
+                        <>
+                            <Loader2 size={18} className="animate-spin" /> Generando PDF...
+                        </>
+                    ) : (
+                        <>
+                            <Download size={18} /> Descargar Reporte PDF
+                        </>
+                    )}
                 </button>
             </footer>
+
+            {/* Template invisible para la generación del PDF ejecutivo */}
+            <LiderazgoReportTemplate 
+                ref={reportTemplateRef}
+                results={results}
+                recommendations={recommendations}
+                user={{ name: fullName, email: email }}
+            />
         </div>
     );
 };
