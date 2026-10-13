@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import './LiderazgoTestIntro.css';
 
 const LiderazgoTestIntro = () => {
@@ -11,37 +11,31 @@ const LiderazgoTestIntro = () => {
             <div className="li-intro-content-wrapper">
                 <div className="li-intro-logo-container">
                     <img
-                        src="/Icono - Test Liderazgo.png"
-                        alt="Liderazgo Auténtico"
+                        src="/Círculo de conexión y diálogo.png"
+                        alt="Círculo de conexión y diálogo"
                         className="li-intro-gold-logo animate-zoom-in-slow"
                     />
                 </div>
                 
                 <div className="li-intro-header">
-                    <h1 className="li-intro-title">Liderazgo Auténtico</h1>
+                    <h1 className="li-intro-title">Diagnóstico de competencias de Liderazgo</h1>
                 </div>
 
                 <div className="li-intro-body">
-                    <p className="li-intro-subtitle">Una visión profunda, realista y práctica</p>
+                    <p className="li-intro-subtitle">Reconoce cómo estás liderando y dónde puedes crecer.</p>
 
                     <div className="li-intro-text-box">
-                        <p className="li-box-subtitle">Objetivo:</p>
                         <p>
-                            No mide intención, aspiración o imagen personal. Mide <strong>comportamientos, decisiones y patrones reales observables.</strong>
+                            Explora tu desarrollo actual en cinco dimensiones: liderazgo personal, estratégico, relacional, multiplicador, y consciente y trascendente. Este autodiagnóstico te ayudará a identificar fortalezas y aspectos que requieren atención, a partir de cómo percibes tus comportamientos y decisiones habituales.
                         </p>
                         
-                        <div className="li-trampas-section">
-                            <p className="li-trampas-title">
-                                <AlertTriangle size={14} style={{ verticalAlign: 'middle', marginRight: '5px' }} />
-                                Evita estas trampas comunes:
-                            </p>
-                            <ul className="li-trampas-list">
-                                <li>Responder como quisieras ser</li>
-                                <li>Compararte con personas con menor desarrollo</li>
-                                <li>Justificar patrones improductivos</li>
-                                <li>Responder según momentos excepcionales</li>
-                            </ul>
-                        </div>
+                        <p className="li-intro-highlight">
+                            <strong>Responde desde tu experiencia cotidiana.</strong>
+                        </p>
+
+                        <p>
+                            Considera tu comportamiento promedio durante los últimos 90 días. Elige la frecuencia que mejor describa cómo actúas, incluso cuando las cosas se complican. Evita responder desde tus intenciones, compararte con otras personas o basarte en situaciones excepcionales.
+                        </p>
 
                         <p className="li-duration">Duración aproximada: 5 a 7 minutos</p>
                     </div>

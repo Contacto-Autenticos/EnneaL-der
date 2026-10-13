@@ -40,11 +40,11 @@
 }
 
 .li-intro-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
     color: #ddbe3d;
     font-weight: 800;
     margin: 0;
-    line-height: 1.1;
+    line-height: 1.2;
 }
 
 .li-intro-body {
@@ -62,7 +62,7 @@
 
 .li-intro-text-box {
     background-color: rgba(255, 255, 255, 0.7);
-    padding: 2vh 20px;
+    padding: 2.5vh 24px;
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(5px);
@@ -73,13 +73,25 @@
 .li-intro-text-box p {
     font-size: 0.95rem;
     color: #444;
-    line-height: 1.35;
-    margin-bottom: 2vh;
+    line-height: 1.45;
+    margin-bottom: 1.8vh;
 }
 
 .li-intro-text-box strong {
     color: var(--color-secondary);
     font-weight: 700;
+}
+
+.li-intro-highlight,
+.li-intro-highlight strong {
+    color: #ddbe3d !important;
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.4;
+}
+
+.li-intro-highlight {
+    margin: 1.8vh 0 !important;
 }
 
 .li-box-subtitle {
@@ -205,14 +217,14 @@
 }
 
 @media (max-height: 700px) {
-    .li-intro-title { font-size: 2rem; }
+    .li-intro-title { font-size: 1.5rem; }
     .li-intro-subtitle { font-size: 0.95rem; }
     .li-intro-text-box { padding: 15px; margin-bottom: 2vh; }
-    .li-intro-text-box p { font-size: 0.9rem; margin-bottom: 2vh; }
-    .li-intro-gold-logo { max-height: 30vh; }
+    .li-intro-text-box p { font-size: 0.9rem; margin-bottom: 1.5vh; }
+    .li-intro-gold-logo { max-height: 25vh; }
     .li-btn-continue { margin-bottom: 2vh; padding: 12px 40px; }
 }
 
 @media (max-width: 768px) {
-    .li-intro-title { font-size: 2.2rem; }
+    .li-intro-title { font-size: 1.65rem; }
 }
