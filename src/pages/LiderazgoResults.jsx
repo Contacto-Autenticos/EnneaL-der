@@ -347,7 +347,7 @@ const LiderazgoResults = () => {
                 <div className="lr-header-content">
                     <img src="/Logo-Blanco.png" alt="Auténticos" className="lr-header-logo" />
                     <h1>Tu Reporte de Liderazgo</h1>
-                    <p className="lr-subtitle">Análisis de competencias para el Liderazgo Extraordinario</p>
+                    <p className="lr-subtitle">Análisis de competencias para el Liderazgo</p>
                 </div>
             </header>
 
@@ -430,56 +430,50 @@ const LiderazgoResults = () => {
                     </div>
                 </section>
 
-                {/* 6. Plan de Desarrollo */}
+                {/* 6. Plan de Acción */}
                 <section className="lr-section lr-plan-section">
                     <div className="lr-card-header">
                         <ClipboardList className="lr-icon-teal" />
-                        <h3>Plan de Crecimiento Personalizado</h3>
+                        <h3>Plan de Acción</h3>
                     </div>
                     <div className="lr-plan-content">
-                        <p>Basado en tu perfil de <strong>{results.level.label}</strong>, tu enfoque para los próximos 90 días debe ser:</p>
-                        <div className="lr-plan-steps">
-                            <div className="lr-step">
-                                <h4>Fase 1: Estabilización (Día 1-30)</h4>
-                                <p>Enfocarte en la dimensión de <strong>{results.topRisks[0]?.name}</strong> para reducir inconsistencias.</p>
-                            </div>
-                            <div className="lr-step">
-                                <h4>Fase 2: Expansión (Día 31-60)</h4>
-                                <p>Potenciar tu fortaleza en <strong>{results.topStrengths[0]?.name}</strong> para generar mayor impacto en tu entorno.</p>
-                            </div>
-                            <div className="lr-step">
-                                <h4>Fase 3: Trascendencia (Día 61-90)</h4>
-                                <p>Integrar hábitos de liderazgo consciente para consolidar un legado sostenible.</p>
-                            </div>
-                        </div>
+                        <p style={{ fontSize: '1.05rem', lineHeight: '1.6', color: '#334155', margin: 0 }}>
+                            Los resultados aquí obtenidos serán utilizados para el diseño de nuestros entrenamientos. Si desea más información escríbenos a{' '}
+                            <a 
+                                href="mailto:contacto@autenticos.co" 
+                                style={{ color: '#0d9488', fontWeight: 600, textDecoration: 'underline' }}
+                            >
+                                contacto@autenticos.co
+                            </a>
+                        </p>
                     </div>
                 </section>
 
-                {/* 7. Registro de Datos / Conectar con Auténticos */}
+                {/* 7. Registro de Datos / Datos de quien realiza el diagnóstico */}
                 <section className="lr-section lr-lead-capture-section">
                     <div className="lr-lead-header">
                         <div className="lr-lead-badge">
-                            <Sparkles size={14} /> Conecta con Nosotros
+                            <Sparkles size={14} /> Datos del Diagnóstico
                         </div>
-                        <h3 className="lr-lead-title">Registra tus datos para conectar con el equipo de Auténticos</h3>
+                        <h3 className="lr-lead-title">Datos de quien realiza el diagnóstico</h3>
                         <p className="lr-lead-subtitle">
-                            Déjanos tus datos para recibir acompañamiento personalizado, profundizar en tu perfil de liderazgo y explorar cómo potenciar tus resultados.
+                            Ingresa los datos de la persona que realiza el diagnóstico para asociar su perfil, personalizar su informe y recibir acompañamiento.
                         </p>
                     </div>
 
                     {isRegistered ? (
                         <div className="lr-lead-success-card">
                             <CheckCircle2 size={46} className="lr-lead-success-icon" />
-                            <h4>¡Tus datos han sido registrados con éxito!</h4>
+                            <h4>¡Datos registrados con éxito!</h4>
                             <p>
-                                Muchas gracias{fullName ? `, ${fullName}` : ''}. Nuestro equipo revisará tu diagnóstico y te contactará pronto al correo <strong>{email}</strong>{phone ? ` o al número <strong>${phone}</strong>` : ''}.
+                                Muchas gracias{fullName ? `, ${fullName}` : ''}. Los datos de quien realizó el diagnóstico han sido guardados correctamente. Nuestro equipo revisará la información y te contactará pronto al correo <strong>{email}</strong>{phone ? ` o al número <strong>${phone}</strong>` : ''}.
                             </p>
                             <button 
                                 type="button" 
                                 className="lr-lead-btn-edit"
                                 onClick={() => setIsRegistered(false)}
                             >
-                                Modificar mis datos
+                                Modificar datos
                             </button>
                         </div>
                     ) : (
@@ -597,7 +591,7 @@ const LiderazgoResults = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <Send size={18} /> Enviar mis datos
+                                            <Send size={18} /> Guardar datos
                                         </>
                                     )}
                                 </button>
