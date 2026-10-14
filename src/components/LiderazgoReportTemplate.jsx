@@ -147,7 +147,7 @@ const LiderazgoReportTemplate = forwardRef(({ results, recommendations = [], use
                     <div className="l-pdf-dim-cards-col">
                         {results.allDimensions.map((dim) => {
                             const color = DIMENSION_COLORS[dim.id] || '#ddbe3d';
-                            const pct = Math.round((dim.score / 50) * 100);
+                            const pct = Math.round((dim.score / 55) * 100);
                             return (
                                 <div key={dim.id} className="l-pdf-dim-row-card">
                                     <div className="l-pdf-dim-header-row">
@@ -156,7 +156,7 @@ const LiderazgoReportTemplate = forwardRef(({ results, recommendations = [], use
                                             <h4>{dim.name}</h4>
                                         </div>
                                         <div className="l-pdf-dim-score-badge">
-                                            <strong>{dim.score}</strong> / 50 pts
+                                            <strong>{dim.score}</strong> / 55 pts
                                         </div>
                                     </div>
                                     <p className="l-pdf-dim-subtext">{dim.subtext}</p>
@@ -207,7 +207,7 @@ const LiderazgoReportTemplate = forwardRef(({ results, recommendations = [], use
                                         {getDimIcon(str.id)}
                                         <h4>{str.name}</h4>
                                     </div>
-                                    <span className="l-pdf-strength-score">{str.score} / 50 pts</span>
+                                    <span className="l-pdf-strength-score">{str.score} / 55 pts</span>
                                 </div>
                                 <p className="l-pdf-strength-sub">{str.subtext}</p>
                                 <p className="l-pdf-strength-desc">
@@ -231,7 +231,7 @@ const LiderazgoReportTemplate = forwardRef(({ results, recommendations = [], use
                                     <h4>{risk.name}</h4>
                                 </div>
                                 <span className="l-pdf-risk-badge">
-                                    {risk.interpretation?.label || 'Atención prioritaria'} · {risk.score}/50 pts
+                                    {risk.interpretation?.label || 'Atención prioritaria'} · {risk.score}/55 pts
                                 </span>
                             </div>
                             <p className="l-pdf-risk-sub">{risk.subtext}</p>

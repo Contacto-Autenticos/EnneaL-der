@@ -53,14 +53,15 @@ const LiderazgoTest = () => {
                     const nextIdx = currentIndex + 1;
                     if (nextIdx < liderazgoQuestions.length) {
                          // Similar logic to handleAnswer for screens
-                         if (nextIdx % 10 === 0 && nextIdx !== 0 && nextIdx < 50) {
+                         if (nextIdx % 11 === 0 && nextIdx !== 0 && nextIdx < 55) {
+                            const dimIndex = Math.floor(nextIdx / 11);
+                            const dims = Object.values(liderazgoDimensions);
+                            const prevDim = dims[dimIndex - 1]?.name || currentDomain.name;
                             setActiveScreen({
-                                title: `Has completado: ${currentDomain.name}`,
+                                title: `Has completado: ${prevDim}`,
                                 text: "¡Buen trabajo! Sigamos con la siguiente dimensión.",
                                 button: "Continuar"
                             });
-                         } else if (nextIdx === 50) {
-                            setActiveScreen({ title: "Fase de Control", text: "Últimas preguntas...", button: "Comenzar" });
                          } else {
                             setIsChanging(true);
                             setTimeout(() => {
@@ -117,9 +118,9 @@ const LiderazgoTest = () => {
         setTimeout(() => {
             if (currentIndex < liderazgoQuestions.length - 1) {
                 const nextIdx = currentIndex + 1;
-                // Progress screens every 10 questions (Dimension changes)
-                if (nextIdx % 10 === 0 && nextIdx !== 0 && nextIdx < 50) {
-                    const dimIndex = Math.floor(nextIdx / 10);
+                // Progress screens every 11 questions (Dimension changes)
+                if (nextIdx % 11 === 0 && nextIdx !== 0 && nextIdx < 55) {
+                    const dimIndex = Math.floor(nextIdx / 11);
                     const dims = Object.values(liderazgoDimensions);
                     if (dims[dimIndex - 1]) {
                         setActiveScreen({
@@ -129,15 +130,6 @@ const LiderazgoTest = () => {
                         });
                         return;
                     }
-                }
-                // Screen for control questions
-                if (nextIdx === 50) {
-                    setActiveScreen({
-                        title: "Última fase: Preguntas de Control",
-                        text: "Estas preguntas nos ayudarán a validar la consistencia de tu diagnóstico.",
-                        button: "Comenzar"
-                    });
-                    return;
                 }
                 
                 setIsChanging(true);
@@ -300,14 +292,15 @@ const LiderazgoTest = () => {
                                 // Manually trigger next logic if answered
                                 const nextIdx = currentIndex + 1;
                                 if (nextIdx < liderazgoQuestions.length) {
-                                    if (nextIdx % 10 === 0 && nextIdx !== 0 && nextIdx < 50) {
+                                    if (nextIdx % 11 === 0 && nextIdx !== 0 && nextIdx < 55) {
+                                        const dimIndex = Math.floor(nextIdx / 11);
+                                        const dims = Object.values(liderazgoDimensions);
+                                        const prevDim = dims[dimIndex - 1]?.name || currentDomain.name;
                                         setActiveScreen({
-                                            title: `Has completado: ${currentDomain.name}`,
+                                            title: `Has completado: ${prevDim}`,
                                             text: "¡Buen trabajo! Sigamos con la siguiente dimensión.",
                                             button: "Continuar"
                                         });
-                                    } else if (nextIdx === 50) {
-                                        setActiveScreen({ title: "Fase de Control", text: "Últimas preguntas...", button: "Comenzar" });
                                     } else {
                                         setIsChanging(true);
                                         setTimeout(() => {

@@ -16,7 +16,7 @@ export const calculateLiderazgoResults = (answers) => {
         level: null
     };
 
-    // 1. Calculate Dimension Scores (Questions 1-50)
+    // 1. Calculate Dimension Scores (55 questions across the 5 dimensions)
     liderazgoQuestions.forEach(q => {
         const val = parseInt(answers[q.id]) || 0;
         let score = val;
@@ -25,7 +25,7 @@ export const calculateLiderazgoResults = (answers) => {
             score = 6 - val; // 1->5, 2->4, 3->3, 4->2, 5->1
         }
 
-        if (q.domain !== 'control') {
+        if (results.dimensions[q.domain] !== undefined) {
             results.dimensions[q.domain] += score;
         }
         
@@ -43,7 +43,7 @@ export const calculateLiderazgoResults = (answers) => {
         name: liderazgoDimensions[key].name,
         subtext: liderazgoDimensions[key].subtext,
         score,
-        percentage: (score / 50) * 100,
+        percentage: (score / 55) * 100,
         interpretation: interpretacionLiderazgo.dimension.find(
             range => score >= range.min && score <= range.max
         )
