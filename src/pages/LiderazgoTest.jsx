@@ -25,6 +25,8 @@ const LiderazgoTest = () => {
     const currentDomain = liderazgoDimensions[currentQuestion.domain] || { name: 'Control', subtext: 'Pregunta de verificación' };
 
     useEffect(() => {
+        document.title = "Test de Competencias de Liderazgo | Auténticos";
+
         const handleKeyDown = (e) => {
             // If on progress screen, Enter continues
             if (activeScreen && (e.key === 'Enter' || e.key === 'ArrowRight')) {

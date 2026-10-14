@@ -118,6 +118,8 @@ const LiderazgoResults = () => {
                 // ignore
             }
         }
+
+        document.title = "Tu Reporte de Liderazgo | Auténticos";
     }, []);
 
     // Auto-save anonymous result if not already registered or saved in this session

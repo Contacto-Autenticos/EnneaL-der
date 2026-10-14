@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import './LiderazgoTestIntro.css';
 
 const LiderazgoTestIntro = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const prevTitle = document.title;
+        document.title = "Diagnóstico de Competencias de Liderazgo | Auténticos";
+
+        const updateMeta = (name, content) => {
+            let element = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                if (name.startsWith('og:') || name.startsWith('twitter:')) {
+                    element.setAttribute('property', name);
+                } else {
+                    element.setAttribute('name', name);
+                }
+                document.head.appendChild(element);
+            }
+            element.setAttribute('content', content);
+        };
+
+        updateMeta('description', "Reconoce cómo estás liderando y descubre tus áreas de mayor impacto. Evaluación integral en 5 dimensiones clave con reporte inmediato (5 a 7 min).");
+        updateMeta('og:title', "Diagnóstico de Competencias de Liderazgo | Auténticos");
+        updateMeta('og:description', "Reconoce cómo estás liderando y descubre tus áreas de mayor impacto. Evaluación integral en 5 dimensiones clave con reporte inmediato (5 a 7 min).");
+        updateMeta('og:image', "https://enesencia.autenticos.co/og-liderazgo.jpg");
+        updateMeta('twitter:title', "Diagnóstico de Competencias de Liderazgo | Auténticos");
+        updateMeta('twitter:description', "Reconoce cómo estás liderando y descubre tus áreas de mayor impacto. Evaluación integral en 5 dimensiones clave con reporte inmediato (5 a 7 min).");
+        updateMeta('twitter:image', "https://enesencia.autenticos.co/og-liderazgo.jpg");
+
+        return () => {
+            document.title = prevTitle;
+        };
+    }, []);
 
     return (
         <div className="container li-intro-container animate-fade-in">
