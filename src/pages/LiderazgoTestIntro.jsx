@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Building2, X, CheckCircle2, AlertCircle, KeyRound } from 'lucide-react';
 import './LiderazgoTestIntro.css';
 
 const LiderazgoTestIntro = () => {
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [orgCode, setOrgCode] = useState('');
+    const [orgError, setOrgError] = useState('');
+    const [orgSuccess, setOrgSuccess] = useState('');
+    const [currentOrg, setCurrentOrg] = useState('');
 
     useEffect(() => {
         const prevTitle = document.title;
@@ -32,10 +37,52 @@ const LiderazgoTestIntro = () => {
         updateMeta('twitter:description', "Reconoce cómo estás liderando y descubre tus áreas de mayor impacto. Evaluación integral en 5 dimensiones clave con reporte inmediato (5 a 7 min).");
         updateMeta('twitter:image', "https://enesencia.autenticos.co/og-liderazgo.jpg");
 
+        // Cargar organización guardada previamente
+        const savedOrg = localStorage.getItem('liderazgo_organization');
+        if (savedOrg) {
+            setCurrentOrg(savedOrg);
+            setOrgCode(savedOrg);
+        }
+
+        // Abrir modal automáticamente al ingresar a la página
+        const timer = setTimeout(() => {
+            setShowModal(true);
+        }, 400);
+
         return () => {
             document.title = prevTitle;
+            clearTimeout(timer);
         };
     }, []);
+
+    const handleValidateCode = (e) => {
+        if (e) e.preventDefault();
+        setOrgError('');
+        setOrgSuccess('');
+
+        const cleanCode = orgCode.trim().toUpperCase();
+        if (!cleanCode) {
+            setOrgError('Por favor ingresa un código de organización.');
+            return;
+        }
+
+        if (cleanCode === 'RESILIENTES') {
+            setOrgSuccess('¡Código validado exitosamente! Organización vinculada: RESILIENTES');
+            setCurrentOrg('RESILIENTES');
+            localStorage.setItem('liderazgo_organization', 'RESILIENTES');
+            setTimeout(() => {
+                setShowModal(false);
+            }, 700);
+        } else {
+            setOrgError('El código ingresado no es válido. Verifica e intenta de nuevo.');
+        }
+    };
+
+    const handleSkipCode = () => {
+        setOrgError('');
+        setOrgSuccess('');
+        setShowModal(false);
+    };
 
     return (
         <div className="container li-intro-container animate-fade-in">
@@ -51,6 +98,29 @@ const LiderazgoTestIntro = () => {
                 <div className="li-intro-header">
                     <h1 className="li-intro-title">Diagnóstico de competencias de Liderazgo</h1>
                 </div>
+
+                {/* Badge de Organización vinculada o botón para abrir modal */}
+                {currentOrg ? (
+                    <div className="li-org-badge animate-fade-in">
+                        <Building2 size={15} />
+                        <span>Organización: <strong>{currentOrg}</strong></span>
+                        <button 
+                            type="button" 
+                            onClick={() => { setOrgCode(currentOrg); setOrgError(''); setOrgSuccess(''); setShowModal(true); }}
+                            className="li-org-badge-edit"
+                        >
+                            Cambiar
+                        </button>
+                    </div>
+                ) : (
+                    <button 
+                        type="button" 
+                        onClick={() => { setOrgCode(''); setOrgError(''); setOrgSuccess(''); setShowModal(true); }}
+                        className="li-org-link-btn"
+                    >
+                        <Building2 size={14} /> ¿Tienes un código de organización?
+                    </button>
+                )}
 
                 <div className="li-intro-body">
                     <p className="li-intro-subtitle">Reconoce cómo estás liderando y dónde puedes crecer.</p>
@@ -87,6 +157,74 @@ const LiderazgoTestIntro = () => {
                     className="li-intro-footer-logo"
                 />
             </div>
+
+            {/* Modal de Código de Organización */}
+            {showModal && (
+                <div className="li-modal-overlay" onClick={() => setShowModal(false)}>
+                    <div className="li-modal-card" onClick={(e) => e.stopPropagation()}>
+                        <button 
+                            type="button" 
+                            className="li-modal-close" 
+                            onClick={() => setShowModal(false)}
+                            title="Cerrar"
+                        >
+                            <X size={18} />
+                        </button>
+
+                        <div className="li-modal-icon-wrap">
+                            <Building2 size={30} />
+                        </div>
+
+                        <h3 className="li-modal-title">Código de Organización</h3>
+                        <p className="li-modal-desc">
+                            Si perteneces a una organización o equipo, ingresa el código asignado para vincular tus resultados.
+                        </p>
+
+                        <form onSubmit={handleValidateCode}>
+                            <div className="li-modal-input-wrap">
+                                <KeyRound size={18} className="li-modal-input-icon" />
+                                <input
+                                    type="text"
+                                    className="li-modal-input"
+                                    placeholder="Ej. RESILIENTES"
+                                    value={orgCode}
+                                    onChange={(e) => {
+                                        setOrgCode(e.target.value.toUpperCase());
+                                        if (orgError) setOrgError('');
+                                    }}
+                                    autoFocus
+                                />
+                            </div>
+
+                            {orgError && (
+                                <div className="li-modal-error">
+                                    <AlertCircle size={16} />
+                                    <span>{orgError}</span>
+                                </div>
+                            )}
+
+                            {orgSuccess && (
+                                <div className="li-modal-success">
+                                    <CheckCircle2 size={16} />
+                                    <span>{orgSuccess}</span>
+                                </div>
+                            )}
+
+                            <button type="submit" className="li-modal-btn-submit">
+                                Validar Código
+                            </button>
+                        </form>
+
+                        <button 
+                            type="button" 
+                            className="li-modal-skip-btn"
+                            onClick={handleSkipCode}
+                        >
+                            Continuar sin código
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

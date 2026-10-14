@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { executiveKitData } from '../data/executiveKitInfo';
-import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit, DollarSign, Award, Target } from 'lucide-react';
+import { RefreshCw, Plus, Key, ChevronDown, ChevronUp, Download, CheckCircle2, LogOut, Link, Copy, ExternalLink, BarChart2, CreditCard, Calendar, Filter, Menu, User, X, Eye, EyeOff, Lightbulb, HelpCircle, Ticket, Home, Bell, Mail, Phone, MapPin, Tag, Clock, Trash2, Edit, DollarSign, Award, Target, Building2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import ExecutiveKitTemplate from '../components/ExecutiveKitTemplate';
@@ -1140,6 +1140,7 @@ const Admin = () => {
             e('F. Nacimiento'),
             e('Email'),
             e('Teléfono'),
+            e('Organización'),
             e('Fecha Realización'),
             e('Nivel Obtenido'),
             e('Puntos Totales'),
@@ -1161,6 +1162,7 @@ const Admin = () => {
                 e(r.birth_date || '-'),
                 e(r.email || '-'),
                 e(r.phone || '-'),
+                e(r.organization || '-'),
                 e(dateStr),
                 e(r.level_label || 'Liderazgo sólido'),
                 r.total_score || 0,
@@ -4165,6 +4167,7 @@ const Admin = () => {
                                                 <th>F. Nacimiento</th>
                                                 <th>Email</th>
                                                 <th>Teléfono</th>
+                                                <th>Organización</th>
                                                 <th>Fecha Realización</th>
                                                 <th>Nivel Obtenido</th>
                                                 <th style={{ textAlign: 'center' }}>Total</th>
@@ -4178,9 +4181,9 @@ const Admin = () => {
                                         </thead>
                                         <tbody>
                                             {loadingLiderazgo ? (
-                                                <tr><td colSpan="13" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
+                                                <tr><td colSpan="14" style={{ textAlign: 'center', padding: '20px' }}>Cargando resultados...</td></tr>
                                             ) : filteredLiderazgo.length === 0 ? (
-                                                <tr><td colSpan="13" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
+                                                <tr><td colSpan="14" style={{ textAlign: 'center', padding: '20px' }}>No hay resultados registrados aún.</td></tr>
                                             ) : (
                                                 filteredLiderazgo.map((r, index) => {
                                                     const isAnon = r.is_anonymous || (!r.full_name && !r.email);
@@ -4199,6 +4202,27 @@ const Admin = () => {
                                                             <td style={{ fontSize: '0.85rem' }}>{r.birth_date || <span style={{ color: '#94a3b8' }}>-</span>}</td>
                                                             <td style={{ fontSize: '0.85rem' }}>{r.email || <span style={{ color: '#94a3b8' }}>-</span>}</td>
                                                             <td style={{ fontSize: '0.85rem' }}>{r.phone || <span style={{ color: '#94a3b8' }}>-</span>}</td>
+                                                            <td style={{ fontSize: '0.85rem' }}>
+                                                                {r.organization ? (
+                                                                    <span style={{
+                                                                        background: '#e0f2fe',
+                                                                        color: '#0369a1',
+                                                                        border: '1px solid #bae6fd',
+                                                                        padding: '3px 8px',
+                                                                        borderRadius: '6px',
+                                                                        fontWeight: '600',
+                                                                        fontSize: '0.8rem',
+                                                                        display: 'inline-flex',
+                                                                        alignItems: 'center',
+                                                                        gap: '4px'
+                                                                    }}>
+                                                                        <Building2 size={12} />
+                                                                        {r.organization}
+                                                                    </span>
+                                                                ) : (
+                                                                    <span style={{ color: '#94a3b8' }}>-</span>
+                                                                )}
+                                                            </td>
                                                             <td style={{ fontSize: '0.85rem' }}>
                                                                 {new Date(r.created_at).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                             </td>
@@ -4252,6 +4276,14 @@ const Admin = () => {
                                                     {!isAnon && r.phone && (
                                                         <div className="mobile-card-details-row">
                                                             <div className="mobile-card-detail-item"><Phone size={14}/> <span>{r.phone}</span></div>
+                                                        </div>
+                                                    )}
+                                                    {r.organization && (
+                                                        <div className="mobile-card-details-row">
+                                                            <div className="mobile-card-detail-item">
+                                                                <Building2 size={14} style={{ color: '#0369a1' }} />
+                                                                <span style={{ fontWeight: '600', color: '#0369a1' }}>{r.organization}</span>
+                                                            </div>
                                                         </div>
                                                     )}
                                                     <div className="mobile-card-details-row">

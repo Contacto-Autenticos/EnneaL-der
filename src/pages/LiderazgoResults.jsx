@@ -147,6 +147,7 @@ const LiderazgoResults = () => {
                     email: null,
                     phone: null,
                     birth_date: null,
+                    organization: localStorage.getItem('liderazgo_organization') || null,
                     total_score: results?.totalScore || 0,
                     level_label: results?.level?.label || 'General',
                     score_personal: results?.dimensions?.personal || 0,
@@ -210,6 +211,7 @@ const LiderazgoResults = () => {
                 try { parsedAnswers = JSON.parse(rawAnswers); } catch (e) {}
             }
 
+            const savedOrg = localStorage.getItem('liderazgo_organization') || null;
             const existingId = sessionStorage.getItem('liderazgo_saved_id');
             if (existingId) {
                 // Actualizar registro existente pasando de anónimo a registrado
@@ -218,7 +220,8 @@ const LiderazgoResults = () => {
                     full_name: cleanName,
                     email: cleanEmail,
                     phone: cleanPhone,
-                    birth_date: birthDate
+                    birth_date: birthDate,
+                    organization: savedOrg
                 }).eq('id', existingId);
             } else {
                 // Crear nuevo registro si no existía el id en sesión
@@ -228,6 +231,7 @@ const LiderazgoResults = () => {
                     email: cleanEmail,
                     phone: cleanPhone,
                     birth_date: birthDate,
+                    organization: savedOrg,
                     total_score: results?.totalScore || 0,
                     level_label: results?.level?.label || 'General',
                     score_personal: results?.dimensions?.personal || 0,
@@ -249,6 +253,7 @@ const LiderazgoResults = () => {
                 email: cleanEmail,
                 phone: cleanPhone,
                 birth_date: birthDate,
+                organization: savedOrg,
                 source: 'liderazgo_results'
             }]);
 

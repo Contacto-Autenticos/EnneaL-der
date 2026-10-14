@@ -228,3 +228,270 @@
 @media (max-width: 768px) {
     .li-intro-title { font-size: 1.65rem; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   MODAL DE CÓDIGO DE ORGANIZACIÓN
+══════════════════════════════════════════════════════════ */
+.li-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 29, 45, 0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: liFadeIn 0.25s ease-out;
+}
+
+.li-modal-card {
+    background: #ffffff;
+    border-radius: 24px;
+    max-width: 440px;
+    width: 100%;
+    padding: 36px 30px 28px;
+    box-shadow: 0 25px 50px -12px rgba(0, 45, 68, 0.4), 0 0 0 1px rgba(221, 190, 61, 0.25);
+    position: relative;
+    text-align: center;
+    animation: liScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes liFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes liScaleUp {
+    from { opacity: 0; transform: scale(0.92) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.li-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #f1f5f9;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.li-modal-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.li-modal-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(0, 45, 68, 0.08) 0%, rgba(221, 190, 61, 0.15) 100%);
+    color: #002d44;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    border: 1px solid rgba(221, 190, 61, 0.3);
+}
+
+.li-modal-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #002d44;
+    margin: 0 0 8px;
+    line-height: 1.25;
+}
+
+.li-modal-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0 0 22px;
+}
+
+.li-modal-input-wrap {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.li-modal-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px 0 46px;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #002d44;
+    transition: all 0.2s;
+    outline: none;
+    box-sizing: border-box;
+    background: #f8fafc;
+}
+
+.li-modal-input::placeholder {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    color: #94a3b8;
+}
+
+.li-modal-input:focus {
+    border-color: #ddbe3d;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(221, 190, 61, 0.18);
+}
+
+.li-modal-input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+}
+
+.li-modal-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.li-modal-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #059669;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.li-modal-btn-submit {
+    width: 100%;
+    height: 48px;
+    background: #002d44;
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.li-modal-btn-submit:hover {
+    background: #001d2d;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 45, 68, 0.25);
+}
+
+.li-modal-skip-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.88rem;
+    cursor: pointer;
+    margin-top: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s;
+    padding: 4px;
+}
+
+.li-modal-skip-btn:hover {
+    color: #002d44;
+}
+
+/* Badge de Organización en la pantalla de bienvenida */
+.li-org-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #166534;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 1.5vh;
+}
+
+.li-org-badge strong {
+    font-weight: 800;
+    color: #14532d;
+    letter-spacing: 0.5px;
+}
+
+.li-org-badge-edit {
+    background: none;
+    border: none;
+    color: #15803d;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 4px;
+    padding: 0;
+}
+
+.li-org-badge-edit:hover {
+    color: #14532d;
+}
+
+.li-org-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 45, 68, 0.05);
+    border: 1px dashed rgba(0, 45, 68, 0.25);
+    color: #002d44;
+    padding: 7px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1vh;
+    margin-bottom: 1.5vh;
+    transition: all 0.2s;
+}
+
+.li-org-link-btn:hover {
+    background: rgba(0, 45, 68, 0.1);
+    border-color: #002d44;
+    transform: translateY(-1px);
+}
+
