@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Building2, X, CheckCircle2, AlertCircle, KeyRound } from 'lucide-react';
 import './LiderazgoTestIntro.css';
@@ -66,10 +67,12 @@ const LiderazgoTestIntro = () => {
             return;
         }
 
-        if (cleanCode === 'RESILIENTES') {
-            setOrgSuccess('¡Código validado exitosamente! Organización vinculada: RESILIENTES');
-            setCurrentOrg('RESILIENTES');
-            localStorage.setItem('liderazgo_organization', 'RESILIENTES');
+        if (cleanCode === 'RESILIENTES' || cleanCode === 'CCC') {
+            const orgName = cleanCode === 'CCC' ? 'CCC' : 'RESILIENTES';
+            setOrgError('');
+            setOrgSuccess(`¡Código validado exitosamente! Organización vinculada: ${orgName}`);
+            setCurrentOrg(orgName);
+            localStorage.setItem('liderazgo_organization', orgName);
             setTimeout(() => {
                 setShowModal(false);
             }, 700);
@@ -158,8 +161,8 @@ const LiderazgoTestIntro = () => {
                 />
             </div>
 
-            {/* Modal de Código de Organización */}
-            {showModal && (
+            {/* Modal de Código de Organización renderizado en el body para oscurecer toda la pantalla */}
+            {showModal && typeof document !== 'undefined' && createPortal(
                 <div className="li-modal-overlay" onClick={() => setShowModal(false)}>
                     <div className="li-modal-card" onClick={(e) => e.stopPropagation()}>
                         <button 
@@ -186,7 +189,7 @@ const LiderazgoTestIntro = () => {
                                 <input
                                     type="text"
                                     className="li-modal-input"
-                                    placeholder="Ej. RESILIENTES"
+                                    placeholder="CCC"
                                     value={orgCode}
                                     onChange={(e) => {
                                         setOrgCode(e.target.value.toUpperCase());
@@ -223,7 +226,8 @@ const LiderazgoTestIntro = () => {
                             Continuar sin código
                         </button>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
