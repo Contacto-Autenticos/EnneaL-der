@@ -1,4 +1,9 @@
 import { precacheAndRoute } from 'workbox-precaching';
+import { clientsClaim } from 'workbox-core';
+
+// Forzar activación inmediata del nuevo Service Worker sin esperar a que el usuario cierre pestañas
+self.skipWaiting();
+clientsClaim();
 
 precacheAndRoute(self.__WB_MANIFEST);
 
