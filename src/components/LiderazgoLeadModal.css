@@ -1,0 +1,283 @@
+/* ==========================================================================
+   LiderazgoLeadModal.css — Modal Obligatorio de Captura de Datos
+   ========================================================================== */
+
+.llm-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: rgba(0, 18, 30, 0.82);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999; /* Máxima prioridad sobre cualquier elemento */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    animation: llmFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.llm-modal-card {
+    background: #ffffff;
+    border-radius: 24px;
+    max-width: 760px;
+    width: 100%;
+    padding: 42px 45px 36px;
+    box-shadow: 0 25px 65px rgba(0, 32, 51, 0.45), 0 0 0 1px rgba(221, 190, 61, 0.2);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    margin: auto;
+    animation: llmScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+}
+
+/* Barra superior dorada idéntica a la captura del usuario */
+.llm-gold-accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #ddbe3d 0%, #ecd367 50%, #ddbe3d 100%);
+}
+
+@keyframes llmFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes llmScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Badge superior */
+.llm-badge {
+    background: rgba(221, 190, 61, 0.15);
+    color: #9c8115;
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 6px 18px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 16px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    font-family: inherit;
+}
+
+.llm-badge-icon {
+    color: #ddbe3d;
+}
+
+/* Títulos */
+.llm-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #002d44;
+    margin: 0 0 12px 0;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    font-family: inherit;
+}
+
+.llm-subtitle {
+    font-size: 0.96rem;
+    color: #64748b;
+    line-height: 1.55;
+    max-width: 600px;
+    margin: 0 auto 28px;
+    font-family: inherit;
+}
+
+/* Formulario */
+.llm-form {
+    width: 100%;
+}
+
+.llm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 22px;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.llm-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.llm-field label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #002d44;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: inherit;
+}
+
+.llm-field label svg {
+    color: #ddbe3d;
+    flex-shrink: 0;
+}
+
+.llm-input,
+.llm-select {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #cbd5e1;
+    background: #ffffff;
+    color: #002d44;
+    font-size: 0.94rem;
+    font-family: inherit;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.llm-input::placeholder {
+    color: #94a3b8;
+}
+
+.llm-input:focus,
+.llm-select:focus {
+    border-color: #ddbe3d;
+    box-shadow: 0 0 0 3px rgba(221, 190, 61, 0.25);
+    background: #ffffff;
+}
+
+/* Selector triple de fecha de nacimiento */
+.llm-date-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr 1fr;
+    gap: 8px;
+}
+
+.llm-select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23002d44' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding: 13px 26px 13px 12px;
+    font-size: 0.9rem;
+}
+
+/* Botón de guardar datos */
+.llm-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.llm-submit-btn {
+    background: linear-gradient(135deg, #002d44 0%, #004d66 100%);
+    color: #ffffff;
+    padding: 15px 44px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(0, 45, 68, 0.28);
+    transition: all 0.25s ease;
+    min-width: 250px;
+    font-family: inherit;
+}
+
+.llm-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 45, 68, 0.38);
+    background: linear-gradient(135deg, #001f30 0%, #003a4d 100%);
+}
+
+.llm-submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.llm-submit-btn:disabled {
+    opacity: 0.72;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.llm-spinner {
+    animation: llmSpin 1s linear infinite;
+}
+
+@keyframes llmSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Caja de error */
+.llm-error-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    padding: 12px 18px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+/* Responsividad móvil */
+@media (max-width: 768px) {
+    .llm-modal-card {
+        padding: 32px 22px 28px;
+        border-radius: 20px;
+    }
+
+    .llm-title {
+        font-size: 1.5rem;
+    }
+
+    .llm-subtitle {
+        font-size: 0.88rem;
+        margin-bottom: 22px;
+    }
+
+    .llm-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .llm-submit-btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+}

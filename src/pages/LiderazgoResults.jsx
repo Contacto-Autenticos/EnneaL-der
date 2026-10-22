@@ -24,11 +24,13 @@ import { calculateLiderazgoResults, getRecommendations } from '../utils/liderazg
 import LiderazgoSpeedometer from '../components/LiderazgoSpeedometer';
 import LiderazgoRadarChart from '../components/LiderazgoRadarChart';
 import LiderazgoReportTemplate from '../components/LiderazgoReportTemplate';
+import LiderazgoLeadModal, { checkIsLiderazgoRegistered } from '../components/LiderazgoLeadModal';
 import { supabase } from '../supabaseClient';
 import './LiderazgoResults.css';
 
 const LiderazgoResults = () => {
     const navigate = useNavigate();
+    const [showLeadModal, setShowLeadModal] = useState(!checkIsLiderazgoRegistered());
     
     const results = useMemo(() => {
         const saved = localStorage.getItem('liderazgo_results');
@@ -60,44 +62,21 @@ const LiderazgoResults = () => {
     const recommendations = getRecommendations(results);
     const overallValue = Math.round((results.totalScore / 275) * 5);
 
-    // Lead Form State
+    // User Lead State (populated via LiderazgoLeadModal or localStorage)
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [day, setDay] = useState('');
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
-    const [submitError, setSubmitError] = useState(null);
 
     // PDF Generation State & Ref
     const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
     const reportTemplateRef = useRef(null);
 
-    // Date Select Options
-    const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
-    const months = [
-        { value: '01', label: 'Enero' },
-        { value: '02', label: 'Febrero' },
-        { value: '03', label: 'Marzo' },
-        { value: '04', label: 'Abril' },
-        { value: '05', label: 'Mayo' },
-        { value: '06', label: 'Junio' },
-        { value: '07', label: 'Julio' },
-        { value: '08', label: 'Agosto' },
-        { value: '09', label: 'Septiembre' },
-        { value: '10', label: 'Octubre' },
-        { value: '11', label: 'Noviembre' },
-        { value: '12', label: 'Diciembre' }
-    ];
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 90 }, (_, i) => String(currentYear - 14 - i));
-
     // Pre-populate or check registered status
     useEffect(() => {
-        const registered = localStorage.getItem('liderazgo_lead_registered');
-        if (registered) {
+        if (!checkIsLiderazgoRegistered()) {
+            setShowLeadModal(true);
+        } else {
             setIsRegistered(true);
         }
 
@@ -108,12 +87,6 @@ const LiderazgoResults = () => {
                 if (parsed.name || parsed.full_name) setFullName(parsed.name || parsed.full_name);
                 if (parsed.email) setEmail(parsed.email);
                 if (parsed.phone) setPhone(parsed.phone);
-                if (parsed.birth_date) {
-                    const [y, m, d] = parsed.birth_date.split('-');
-                    if (y) setYear(y);
-                    if (m) setMonth(m.padStart(2, '0'));
-                    if (d) setDay(d.padStart(2, '0'));
-                }
             } catch (e) {
                 // ignore
             }
@@ -122,14 +95,52 @@ const LiderazgoResults = () => {
         document.title = "Tu Reporte de Liderazgo | Auténticos";
     }, []);
 
-    // Auto-save anonymous result if not already registered or saved in this session
+    const handleLeadModalSuccess = async (userData) => {
+        setFullName(userData.full_name);
+        setEmail(userData.email);
+        setPhone(userData.phone);
+        setIsRegistered(true);
+        setShowLeadModal(false);
+
+        // Si ya existía un registro previo en sesión, actualizarlo con los datos del usuario
+        try {
+            const existingId = sessionStorage.getItem('liderazgo_saved_id');
+            const savedOrg = localStorage.getItem('liderazgo_organization') || null;
+            if (existingId) {
+                await supabase.from('liderazgo_results').update({
+                    is_anonymous: false,
+                    full_name: userData.full_name,
+                    email: userData.email,
+                    phone: userData.phone,
+                    birth_date: userData.birth_date,
+                    organization: savedOrg
+                }).eq('id', existingId);
+            }
+
+            // Sincronización opcional con Odoo CRM
+            if (results) {
+                await supabase.functions.invoke('odoo-integration', {
+                    body: {
+                        email: userData.email,
+                        name: userData.full_name,
+                        phone: userData.phone,
+                        test_type: 'Test de Liderazgo',
+                        results_summary: `Nivel: ${results.level?.label || 'General'} (${results.totalScore} pts). Fortaleza: ${results.topStrengths?.[0]?.name || 'N/A'}. Área crítica: ${results.topRisks?.[0]?.name || 'N/A'}`
+                    }
+                });
+            }
+        } catch (err) {
+            console.error('Error actualizando resultado tras registro modal:', err);
+        }
+    };
+
+    // Auto-save result (with user data if registered, or anonymous) in this session
     useEffect(() => {
-        const autoSaveAnonymous = async () => {
+        const autoSaveResult = async () => {
             if (!results) return;
 
             const alreadySavedId = sessionStorage.getItem('liderazgo_saved_id');
-            const alreadyRegistered = localStorage.getItem('liderazgo_lead_registered');
-            if (alreadySavedId || alreadyRegistered) return;
+            if (alreadySavedId) return;
 
             if (sessionStorage.getItem('liderazgo_saving_lock')) return;
             sessionStorage.setItem('liderazgo_saving_lock', 'true');
@@ -141,13 +152,26 @@ const LiderazgoResults = () => {
                     try { parsedAnswers = JSON.parse(rawAnswers); } catch (e) {}
                 }
 
+                let savedUser = null;
+                try {
+                    const savedUserStr = localStorage.getItem('liderazgo_user_data') || localStorage.getItem('tempAutodiagUser');
+                    if (savedUserStr) savedUser = JSON.parse(savedUserStr);
+                } catch (e) {}
+
+                const isRegisteredUser = Boolean(savedUser && (savedUser.full_name || savedUser.name) && savedUser.email);
+                const cleanName = savedUser?.full_name || savedUser?.name || null;
+                const cleanEmail = savedUser?.email || null;
+                const cleanPhone = savedUser?.phone || null;
+                const cleanBirthDate = savedUser?.birth_date || null;
+                const savedOrg = localStorage.getItem('liderazgo_organization') || null;
+
                 const { data, error } = await supabase.from('liderazgo_results').insert([{
-                    is_anonymous: true,
-                    full_name: null,
-                    email: null,
-                    phone: null,
-                    birth_date: null,
-                    organization: localStorage.getItem('liderazgo_organization') || null,
+                    is_anonymous: !isRegisteredUser,
+                    full_name: cleanName,
+                    email: cleanEmail,
+                    phone: cleanPhone,
+                    birth_date: cleanBirthDate,
+                    organization: savedOrg,
                     total_score: results?.totalScore || 0,
                     level_label: results?.level?.label || 'General',
                     score_personal: results?.dimensions?.personal || 0,
@@ -160,136 +184,32 @@ const LiderazgoResults = () => {
 
                 if (!error && data && data[0]) {
                     sessionStorage.setItem('liderazgo_saved_id', data[0].id);
+
+                    if (isRegisteredUser) {
+                        try {
+                            await supabase.functions.invoke('odoo-integration', {
+                                body: {
+                                    email: cleanEmail,
+                                    name: cleanName,
+                                    phone: cleanPhone,
+                                    test_type: 'Test de Liderazgo',
+                                    results_summary: `Nivel: ${results.level?.label || 'General'} (${results.totalScore} pts). Fortaleza: ${results.topStrengths?.[0]?.name || 'N/A'}. Área crítica: ${results.topRisks?.[0]?.name || 'N/A'}`
+                                }
+                            });
+                        } catch (odooErr) {
+                            console.log('Odoo sync notice:', odooErr);
+                        }
+                    }
                 }
             } catch (err) {
-                console.error('Error auto-guardando resultado de liderazgo anónimo:', err);
+                console.error('Error guardando resultado de liderazgo:', err);
             } finally {
                 sessionStorage.removeItem('liderazgo_saving_lock');
             }
         };
 
-        autoSaveAnonymous();
+        autoSaveResult();
     }, [results]);
-
-    const handleLeadSubmit = async (e) => {
-        e.preventDefault();
-        if (isSubmitting) return;
-
-        setSubmitError(null);
-
-        if (!fullName.trim()) {
-            setSubmitError('Por favor ingresa tu nombre y apellido.');
-            return;
-        }
-
-        if (!email.trim() || !email.includes('@')) {
-            setSubmitError('Por favor ingresa un correo electrónico válido.');
-            return;
-        }
-
-        if (!phone.trim()) {
-            setSubmitError('Por favor ingresa tu número de teléfono.');
-            return;
-        }
-
-        if (!day || !month || !year) {
-            setSubmitError('Por favor completa tu fecha de nacimiento (día, mes y año).');
-            return;
-        }
-
-        setIsSubmitting(true);
-
-        const birthDate = `${year}-${month}-${day}`;
-        const cleanEmail = email.trim().toLowerCase();
-        const cleanName = fullName.trim();
-        const cleanPhone = phone.trim();
-
-        try {
-            const rawAnswers = localStorage.getItem('liderazgo_results');
-            let parsedAnswers = null;
-            if (rawAnswers) {
-                try { parsedAnswers = JSON.parse(rawAnswers); } catch (e) {}
-            }
-
-            const savedOrg = localStorage.getItem('liderazgo_organization') || null;
-            const existingId = sessionStorage.getItem('liderazgo_saved_id');
-            if (existingId) {
-                // Actualizar registro existente pasando de anónimo a registrado
-                await supabase.from('liderazgo_results').update({
-                    is_anonymous: false,
-                    full_name: cleanName,
-                    email: cleanEmail,
-                    phone: cleanPhone,
-                    birth_date: birthDate,
-                    organization: savedOrg
-                }).eq('id', existingId);
-            } else {
-                // Crear nuevo registro si no existía el id en sesión
-                const { data: newRow } = await supabase.from('liderazgo_results').insert([{
-                    is_anonymous: false,
-                    full_name: cleanName,
-                    email: cleanEmail,
-                    phone: cleanPhone,
-                    birth_date: birthDate,
-                    organization: savedOrg,
-                    total_score: results?.totalScore || 0,
-                    level_label: results?.level?.label || 'General',
-                    score_personal: results?.dimensions?.personal || 0,
-                    score_estrategico: results?.dimensions?.estrategico || 0,
-                    score_relacional: results?.dimensions?.relacional || 0,
-                    score_multiplicador: results?.dimensions?.multiplicador || 0,
-                    score_trascendente: results?.dimensions?.trascendente || 0,
-                    user_answers: parsedAnswers
-                }]).select();
-
-                if (newRow && newRow[0]) {
-                    sessionStorage.setItem('liderazgo_saved_id', newRow[0].id);
-                }
-            }
-
-            // Guardar también en Supabase (user_leads)
-            await supabase.from('user_leads').insert([{
-                full_name: cleanName,
-                email: cleanEmail,
-                phone: cleanPhone,
-                birth_date: birthDate,
-                organization: savedOrg,
-                source: 'liderazgo_results'
-            }]);
-
-            // Sincronización opcional con Odoo CRM
-            try {
-                if (results) {
-                    await supabase.functions.invoke('odoo-integration', {
-                        body: {
-                            email: cleanEmail,
-                            name: cleanName,
-                            phone: cleanPhone,
-                            test_type: 'Test de Liderazgo',
-                            results_summary: `Nivel: ${results.level?.label || 'General'} (${results.totalScore} pts). Fortaleza: ${results.topStrengths?.[0]?.name || 'N/A'}. Área crítica: ${results.topRisks?.[0]?.name || 'N/A'}`
-                        }
-                    });
-                }
-            } catch (odooErr) {
-                console.log('Odoo sync notice:', odooErr);
-            }
-
-            // Guardar en LocalStorage
-            localStorage.setItem('liderazgo_lead_registered', 'true');
-            localStorage.setItem('liderazgo_user_data', JSON.stringify({
-                full_name: cleanName,
-                email: cleanEmail,
-                phone: cleanPhone,
-                birth_date: birthDate
-            }));
-
-            setIsRegistered(true);
-        } catch (err) {
-            setSubmitError(err.message || 'Ocurrió un error al guardar tus datos.');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
 
     const handleDownloadPdf = async () => {
         const template = reportTemplateRef.current;
@@ -456,157 +376,6 @@ const LiderazgoResults = () => {
                     </div>
                 </section>
 
-                {/* 7. Registro de Datos / Datos de quien realiza el diagnóstico */}
-                <section className="lr-section lr-lead-capture-section">
-                    <div className="lr-lead-header">
-                        <div className="lr-lead-badge">
-                            <Sparkles size={14} /> Datos del Diagnóstico
-                        </div>
-                        <h3 className="lr-lead-title">Datos de quien realiza el diagnóstico</h3>
-                        <p className="lr-lead-subtitle">
-                            Ingresa los datos de la persona que realiza el diagnóstico para asociar su perfil, personalizar su informe y recibir acompañamiento.
-                        </p>
-                    </div>
-
-                    {isRegistered ? (
-                        <div className="lr-lead-success-card">
-                            <CheckCircle2 size={46} className="lr-lead-success-icon" />
-                            <h4>¡Datos registrados con éxito!</h4>
-                            <p>
-                                Muchas gracias{fullName ? `, ${fullName}` : ''}. Los datos de quien realizó el diagnóstico han sido guardados correctamente. Nuestro equipo revisará la información y te contactará pronto al correo <strong>{email}</strong>{phone ? ` o al número <strong>${phone}</strong>` : ''}.
-                            </p>
-                            <button 
-                                type="button" 
-                                className="lr-lead-btn-edit"
-                                onClick={() => setIsRegistered(false)}
-                            >
-                                Modificar datos
-                            </button>
-                        </div>
-                    ) : (
-                        <form onSubmit={handleLeadSubmit} className="lr-lead-form">
-                            {submitError && (
-                                <div className="lr-lead-error-box">
-                                    <AlertTriangle size={18} />
-                                    <span>{submitError}</span>
-                                </div>
-                            )}
-
-                            <div className="lr-lead-form-grid">
-                                {/* Nombre y apellido */}
-                                <div className="lr-lead-field">
-                                    <label htmlFor="lead-name">
-                                        <User size={15} /> Nombre y apellido
-                                    </label>
-                                    <input
-                                        id="lead-name"
-                                        type="text"
-                                        placeholder="Ej. Carlos Mendoza"
-                                        value={fullName}
-                                        onChange={(e) => setFullName(e.target.value)}
-                                        required
-                                        className="lr-lead-input"
-                                    />
-                                </div>
-
-                                {/* Correo electrónico */}
-                                <div className="lr-lead-field">
-                                    <label htmlFor="lead-email">
-                                        <Mail size={15} /> Correo electrónico
-                                    </label>
-                                    <input
-                                        id="lead-email"
-                                        type="email"
-                                        placeholder="tu@email.com"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                        className="lr-lead-input"
-                                    />
-                                </div>
-
-                                {/* Número de teléfono */}
-                                <div className="lr-lead-field">
-                                    <label htmlFor="lead-phone">
-                                        <Phone size={15} /> Número de teléfono
-                                    </label>
-                                    <input
-                                        id="lead-phone"
-                                        type="tel"
-                                        placeholder="Ej. +57 300 123 4567"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        required
-                                        className="lr-lead-input"
-                                    />
-                                </div>
-
-                                {/* Fecha de nacimiento */}
-                                <div className="lr-lead-field">
-                                    <label>
-                                        <Calendar size={15} /> Fecha de nacimiento
-                                    </label>
-                                    <div className="lr-lead-date-grid">
-                                        <select
-                                            value={day}
-                                            onChange={(e) => setDay(e.target.value)}
-                                            required
-                                            className="lr-lead-select"
-                                        >
-                                            <option value="" disabled>Día</option>
-                                            {days.map(d => (
-                                                <option key={d} value={d}>{d}</option>
-                                            ))}
-                                        </select>
-
-                                        <select
-                                            value={month}
-                                            onChange={(e) => setMonth(e.target.value)}
-                                            required
-                                            className="lr-lead-select"
-                                        >
-                                            <option value="" disabled>Mes</option>
-                                            {months.map(m => (
-                                                <option key={m.value} value={m.value}>{m.label}</option>
-                                            ))}
-                                        </select>
-
-                                        <select
-                                            value={year}
-                                            onChange={(e) => setYear(e.target.value)}
-                                            required
-                                            className="lr-lead-select"
-                                        >
-                                            <option value="" disabled>Año</option>
-                                            {years.map(y => (
-                                                <option key={y} value={y}>{y}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="lr-lead-btn-wrapper">
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="lr-lead-submit-btn"
-                                >
-                                    {isSubmitting ? (
-                                        <>
-                                            <Loader2 size={18} className="animate-spin" /> Registrando...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Send size={18} /> Guardar datos
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                        </form>
-                    )}
-                </section>
-
                 {/* Closing Quote */}
                 <section className="lr-quote-section">
                     <Quote className="lr-quote-icon" />
@@ -643,6 +412,12 @@ const LiderazgoResults = () => {
                 results={results}
                 recommendations={recommendations}
                 user={{ name: fullName, email: email }}
+            />
+
+            {/* Modal de Registro Obligatorio si el usuario llega directo a resultados sin registrarse */}
+            <LiderazgoLeadModal 
+                isOpen={showLeadModal} 
+                onSuccess={handleLeadModalSuccess} 
             />
         </div>
     );

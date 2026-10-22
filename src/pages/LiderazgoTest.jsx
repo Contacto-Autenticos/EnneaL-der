@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { liderazgoQuestions, liderazgoDimensions } from '../data/liderazgoData';
 import LiderazgoSpeedometer from '../components/LiderazgoSpeedometer';
+import LiderazgoLeadModal, { checkIsLiderazgoRegistered } from '../components/LiderazgoLeadModal';
 import './LiderazgoTest.css';
 
 const LiderazgoTest = () => {
@@ -13,6 +14,7 @@ const LiderazgoTest = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState({});
     const [showResumeModal, setShowResumeModal] = useState(false);
+    const [showLeadModal, setShowLeadModal] = useState(!checkIsLiderazgoRegistered());
     const [activeScreen, setActiveScreen] = useState(null);
     const [isChanging, setIsChanging] = useState(false);
 
@@ -34,8 +36,8 @@ const LiderazgoTest = () => {
                 return;
             }
 
-            // Ignore if modal is open
-            if (showResumeModal || activeScreen) return;
+            // Ignore if registration modal or other screen is open
+            if (showLeadModal || showResumeModal || activeScreen) return;
 
             // 1-5 keys to answer
             if (/^[1-5]$/.test(e.key)) {
@@ -81,9 +83,14 @@ const LiderazgoTest = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentIndex, answers, showResumeModal, activeScreen]);
+    }, [currentIndex, answers, showResumeModal, showLeadModal, activeScreen]);
 
     useEffect(() => {
+        // Asegurar que si el usuario no está registrado, se muestre el modal de registro obligatorio
+        if (!checkIsLiderazgoRegistered()) {
+            setShowLeadModal(true);
+        }
+
         const saved = localStorage.getItem('liderazgo_test_progress');
         if (saved) {
             try {
@@ -111,6 +118,7 @@ const LiderazgoTest = () => {
     }, []);
 
     const handleAnswer = (val) => {
+        if (showLeadModal) return;
         const newAnswers = { ...answers, [currentQuestion.id]: val };
         setAnswers(newAnswers);
         localStorage.setItem('liderazgo_test_progress', JSON.stringify(newAnswers));
@@ -324,6 +332,12 @@ const LiderazgoTest = () => {
                     {/* Forzando recarga de Vite */}
                 </footer>
             </div>
+
+            {/* Modal de Registro Obligatorio */}
+            <LiderazgoLeadModal 
+                isOpen={showLeadModal} 
+                onSuccess={() => setShowLeadModal(false)} 
+            />
         </div>
     );
 };

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Building2, X, CheckCircle2, AlertCircle, KeyRound } from 'lucide-react';
+import LiderazgoLeadModal, { checkIsLiderazgoRegistered } from '../components/LiderazgoLeadModal';
 import './LiderazgoTestIntro.css';
 
 const LiderazgoTestIntro = () => {
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
+    const [showLeadModal, setShowLeadModal] = useState(false);
     const [orgCode, setOrgCode] = useState('');
     const [orgError, setOrgError] = useState('');
     const [orgSuccess, setOrgSuccess] = useState('');
@@ -45,14 +47,13 @@ const LiderazgoTestIntro = () => {
             setOrgCode(savedOrg);
         }
 
-        // Abrir modal automáticamente al ingresar a la página
-        const timer = setTimeout(() => {
-            setShowModal(true);
-        }, 400);
+        // Abrir modal de registro obligatorio si el usuario aún no tiene sus datos registrados
+        if (!checkIsLiderazgoRegistered()) {
+            setShowLeadModal(true);
+        }
 
         return () => {
             document.title = prevTitle;
-            clearTimeout(timer);
         };
     }, []);
 
@@ -146,7 +147,13 @@ const LiderazgoTestIntro = () => {
                 </div>
 
                 <button
-                    onClick={() => navigate('/liderazgo-test')}
+                    onClick={() => {
+                        if (!checkIsLiderazgoRegistered()) {
+                            setShowLeadModal(true);
+                            return;
+                        }
+                        navigate('/liderazgo-test');
+                    }}
                     className="li-btn-continue"
                 >
                     Continuar <ArrowRight size={20} />
@@ -229,6 +236,12 @@ const LiderazgoTestIntro = () => {
                 </div>,
                 document.body
             )}
+
+            {/* Modal de Registro Obligatorio */}
+            <LiderazgoLeadModal 
+                isOpen={showLeadModal} 
+                onSuccess={() => setShowLeadModal(false)} 
+            />
         </div>
     );
 };
