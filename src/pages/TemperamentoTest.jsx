@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 import './LiderazgoTest.css'; // Reusing existing test styles
 
 const temperamentQuestions = [
@@ -115,6 +116,21 @@ const TemperamentoTest = () => {
     const isSavingRef = useRef(false);
     const navigate = useNavigate();
 
+    // Redirigir al inicio del test con modal si el usuario no tiene sus datos registrados
+    useEffect(() => {
+        try {
+            const savedData = localStorage.getItem('temperamento_user_data') 
+                           || localStorage.getItem('autenticos_user_data')
+                           || localStorage.getItem('liderazgo_user_data') 
+                           || localStorage.getItem('tempAutodiagUser');
+            if (!savedData) {
+                navigate('/test-temperamento-intro');
+            }
+        } catch {
+            navigate('/test-temperamento-intro');
+        }
+    }, [navigate]);
+
     const currentQuestion = tiedTypes ? tieBreakerQuestion : temperamentQuestions[currentQuestionIndex];
     const totalQuestions = temperamentQuestions.length;
 
@@ -135,15 +151,68 @@ const TemperamentoTest = () => {
         return topTypes;
     };
 
-        const types = {
-            'A': 'Sanguíneo',
-            'B': 'Flemático',
-            'C': 'Colérico',
-            'D': 'Melancólico'
-        };
+    const types = {
+        'A': 'Sanguíneo',
+        'B': 'Flemático',
+        'C': 'Colérico',
+        'D': 'Melancólico'
+    };
 
     const getFinalResultName = (typeCode) => {
         return types[typeCode];
+    };
+
+    const saveAndFinishTest = async (result, answersMap) => {
+        if (isSavingRef.current) return;
+        isSavingRef.current = true;
+
+        // 1. Guardar en localStorage para disponibilidad inmediata y sincronización local
+        localStorage.setItem('temperamentResult', result);
+        localStorage.setItem('autenticos_temperamento', result);
+
+        // 2. Extraer datos del usuario registrado
+        let parsedUser = null;
+        try {
+            const savedStr = localStorage.getItem('temperamento_user_data') 
+                          || localStorage.getItem('autenticos_user_data') 
+                          || localStorage.getItem('tempAutodiagUser') 
+                          || localStorage.getItem('liderazgo_user_data');
+            if (savedStr) parsedUser = JSON.parse(savedStr);
+        } catch {}
+
+        const userEmail = parsedUser?.email?.trim()?.toLowerCase() || localStorage.getItem('autenticos_user_email');
+
+        // 3. Persistir en Supabase (user_leads y temperamento_results)
+        if (userEmail) {
+            try {
+                await supabase
+                    .from('user_leads')
+                    .update({ 
+                        temperamento: result,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('email', userEmail);
+            } catch (leadErr) {
+                console.warn('Aviso al actualizar temperamento en user_leads:', leadErr);
+            }
+
+            try {
+                await supabase
+                    .from('temperamento_results')
+                    .insert([{
+                        full_name: parsedUser?.full_name || parsedUser?.name || null,
+                        email: userEmail,
+                        phone: parsedUser?.phone || null,
+                        birth_date: parsedUser?.birth_date || null,
+                        temperamento: result,
+                        user_answers: answersMap
+                    }]);
+            } catch (resErr) {
+                console.warn('Aviso al insertar en temperamento_results:', resErr);
+            }
+        }
+
+        navigate('/test-temperamento-resultado');
     };
 
     const handleAnswer = (value) => {
@@ -153,11 +222,8 @@ const TemperamentoTest = () => {
         setTimeout(() => {
             if (tiedTypes) {
                 // If we are answering the tie breaker
-                if (isSavingRef.current) return;
-                isSavingRef.current = true;
                 const result = getFinalResultName(value);
-                localStorage.setItem('temperamentResult', result);
-                navigate('/test-temperamento-resultado');
+                saveAndFinishTest(result, newAnswers);
             } else if (currentQuestionIndex < totalQuestions - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(prev => prev + 1);
@@ -168,11 +234,8 @@ const TemperamentoTest = () => {
                     setTiedTypes(topTypes);
                     setDirection('next');
                 } else {
-                    if (isSavingRef.current) return;
-                    isSavingRef.current = true;
                     const result = getFinalResultName(topTypes[0]);
-                    localStorage.setItem('temperamentResult', result);
-                    navigate('/test-temperamento-resultado');
+                    saveAndFinishTest(result, newAnswers);
                 }
             }
         }, 300);
@@ -191,11 +254,8 @@ const TemperamentoTest = () => {
     const handleNext = () => {
         if (answers[currentQuestion.id]) {
             if (tiedTypes) {
-                if (isSavingRef.current) return;
-                isSavingRef.current = true;
                 const result = getFinalResultName(answers[10]);
-                localStorage.setItem('temperamentResult', result);
-                navigate('/test-temperamento-resultado');
+                saveAndFinishTest(result, answers);
             } else if (currentQuestionIndex < totalQuestions - 1) {
                 setDirection('next');
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -205,11 +265,8 @@ const TemperamentoTest = () => {
                     setTiedTypes(topTypes);
                     setDirection('next');
                 } else {
-                    if (isSavingRef.current) return;
-                    isSavingRef.current = true;
                     const result = getFinalResultName(topTypes[0]);
-                    localStorage.setItem('temperamentResult', result);
-                    navigate('/test-temperamento-resultado');
+                    saveAndFinishTest(result, answers);
                 }
             }
         }

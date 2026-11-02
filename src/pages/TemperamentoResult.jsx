@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, RefreshCw, ArrowLeft } from 'lucide-react';
+import { ChevronRight, RefreshCw, ArrowLeft, ExternalLink } from 'lucide-react';
 import './LiderazgoResults.css';
 
 const TEMPERAMENT_DESCRIPTIONS = {
@@ -42,6 +42,7 @@ const TemperamentoResult = () => {
         const savedResult = localStorage.getItem('temperamentResult');
         if (savedResult && TEMPERAMENT_DESCRIPTIONS[savedResult]) {
             setResult(savedResult);
+            localStorage.setItem('autenticos_temperamento', savedResult);
         }
     }, []);
 
@@ -98,6 +99,26 @@ const TemperamentoResult = () => {
                 </section>
             </main>
             <footer className="lr-actions" style={{ display: 'flex', justifyContent: 'center', gap: '20px', padding: '30px 20px 10px', flexWrap: 'wrap' }}>
+                <a
+                    href="https://academia.autenticos.co/perfil"
+                    className="lr-btn"
+                    style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        background: 'linear-gradient(135deg, #002d44 0%, #004d66 100%)',
+                        color: '#ffffff',
+                        padding: '12px 26px',
+                        borderRadius: '50px',
+                        fontWeight: 700,
+                        textDecoration: 'none',
+                        boxShadow: '0 4px 15px rgba(0, 45, 68, 0.25)',
+                        transition: 'all 0.2s'
+                    }}
+                >
+                    Ver en mi perfil de Academia <ExternalLink size={18} />
+                </a>
+
                 <button
                     onClick={() => {
                         localStorage.removeItem('temperamentResult');

@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import TemperamentoLeadModal, { checkIsTemperamentoRegistered } from '../components/TemperamentoLeadModal';
 import './BasicTestIntro.css';
 
 const TemperamentoTestIntro = () => {
     const navigate = useNavigate();
+    const [showLeadModal, setShowLeadModal] = useState(false);
 
     useEffect(() => {
         document.title = "Test de Temperamento | Auténticos";
@@ -36,6 +38,11 @@ const TemperamentoTestIntro = () => {
         updateMeta('og:description', "Descubre tu temperamento y comprende mejor cómo actúas de manera natural.");
         updateMeta('og:image', "https://enesencia.autenticos.co/logo-azul.png");
 
+        // Si el usuario aún no tiene sus datos registrados, abrir el modal automáticamente
+        if (!checkIsTemperamentoRegistered()) {
+            setShowLeadModal(true);
+        }
+
         return () => {
             document.title = "Enesencia | Auténticos";
             if (prevDescription) updateMeta('description', prevDescription);
@@ -44,6 +51,14 @@ const TemperamentoTestIntro = () => {
             if (prevOgImage) updateMeta('og:image', prevOgImage);
         };
     }, []);
+
+    const handleStart = () => {
+        if (!checkIsTemperamentoRegistered()) {
+            setShowLeadModal(true);
+            return;
+        }
+        navigate('/test-temperamento');
+    };
 
     return (
         <div className="container intro-container animate-fade-in">
@@ -75,7 +90,7 @@ const TemperamentoTestIntro = () => {
 
                 <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '20px' }}>
                     <button
-                        onClick={() => navigate('/test-temperamento')}
+                        onClick={handleStart}
                         className="btn-continue"
                     >
                         Continuar <ArrowRight size={20} />
@@ -90,6 +105,12 @@ const TemperamentoTestIntro = () => {
                     className="intro-footer-logo"
                 />
             </div>
+
+            {/* Modal de Registro Obligatorio de Lead */}
+            <TemperamentoLeadModal
+                isOpen={showLeadModal}
+                onSuccess={() => setShowLeadModal(false)}
+            />
         </div>
     );
 };
