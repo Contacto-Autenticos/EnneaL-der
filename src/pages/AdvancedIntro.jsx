@@ -35,11 +35,39 @@ const AdvancedIntro = ({ onRegister, user: existingUser, targetRoute = '/advance
             setAccessCode(codeFromUrl);
         }
 
-        if (existingUser?.birth_date) {
-            const [y, m, d] = existingUser.birth_date.split('-');
-            setYear(parseInt(y).toString());
-            setMonth(months[parseInt(m) - 1]);
-            setDay(parseInt(d).toString());
+        // Precargar datos del usuario si vienen en URL o en localStorage
+        try {
+            const qEmail = searchParams.get('email');
+            const qName = searchParams.get('name') || searchParams.get('full_name');
+            const qBirthDate = searchParams.get('birth_date') || searchParams.get('birthDate');
+
+            let preName = qName || existingUser?.name || '';
+            let preEmail = qEmail || existingUser?.email || '';
+            let preBirthDate = qBirthDate || existingUser?.birth_date || '';
+
+            if (!preName || !preEmail || !preBirthDate) {
+                const savedStr = localStorage.getItem('tempAutodiagUser') || localStorage.getItem('autenticos_user_data');
+                if (savedStr) {
+                    const parsed = JSON.parse(savedStr);
+                    if (!preName) preName = parsed.full_name || parsed.name || '';
+                    if (!preEmail) preEmail = parsed.email || '';
+                    if (!preBirthDate) preBirthDate = parsed.birth_date || '';
+                }
+            }
+
+            if (preName) setName(preName);
+            if (preEmail) setEmail(preEmail);
+            if (preBirthDate) {
+                const [y, m, d] = preBirthDate.split('-');
+                if (y) setYear(parseInt(y, 10).toString());
+                if (m) {
+                    const monthIdx = parseInt(m, 10) - 1;
+                    if (months[monthIdx]) setMonth(months[monthIdx]);
+                }
+                if (d) setDay(parseInt(d, 10).toString());
+            }
+        } catch (e) {
+            console.warn('Error precargando datos en AdvancedIntro:', e);
         }
     }, [existingUser, searchParams]);
 

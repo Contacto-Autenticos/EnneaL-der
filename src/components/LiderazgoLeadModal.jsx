@@ -12,7 +12,10 @@ import './LiderazgoLeadModal.css';
  */
 export const checkIsLiderazgoRegistered = () => {
     try {
-        const savedData = localStorage.getItem('liderazgo_user_data') || localStorage.getItem('tempAutodiagUser');
+        const savedData = localStorage.getItem('liderazgo_user_data') 
+                       || localStorage.getItem('autenticos_user_data')
+                       || localStorage.getItem('temperamento_user_data')
+                       || localStorage.getItem('tempAutodiagUser');
         if (!savedData) return false;
         const parsed = JSON.parse(savedData);
         const name = parsed.full_name || parsed.name;
@@ -51,21 +54,45 @@ const LiderazgoLeadModal = ({ isOpen, onSuccess }) => {
     const currentYear = new Date().getFullYear();
     const years = Array.from({ length: 90 }, (_, i) => String(currentYear - 14 - i));
 
-    // Si ya había algún dato previo guardado parcialmente, precargarlo
+    // Si ya había algún dato previo guardado parcialmente o viene en URL, precargarlo
     useEffect(() => {
         if (!isOpen) return;
+
+        // 1. Precargar desde URL si viene redirigido desde la Academia
         try {
-            const savedStr = localStorage.getItem('liderazgo_user_data') || localStorage.getItem('tempAutodiagUser');
+            const params = new URLSearchParams(window.location.search);
+            const qEmail = params.get('email');
+            const qName = params.get('name') || params.get('full_name');
+            const qPhone = params.get('phone');
+            const qBirthDate = params.get('birth_date') || params.get('birthDate');
+
+            if (qName) setFullName(qName);
+            if (qEmail) setEmail(qEmail);
+            if (qPhone) setPhone(qPhone);
+            if (qBirthDate) {
+                const [y, m, d] = qBirthDate.split('-');
+                if (y) setYear(y);
+                if (m) setMonth(m.padStart(2, '0'));
+                if (d) setDay(d.padStart(2, '0'));
+            }
+        } catch {}
+
+        // 2. Precargar desde localStorage si no estaba en URL
+        try {
+            const savedStr = localStorage.getItem('liderazgo_user_data') 
+                          || localStorage.getItem('autenticos_user_data')
+                          || localStorage.getItem('temperamento_user_data')
+                          || localStorage.getItem('tempAutodiagUser');
             if (savedStr) {
                 const parsed = JSON.parse(savedStr);
-                if (parsed.full_name || parsed.name) setFullName(parsed.full_name || parsed.name);
-                if (parsed.email) setEmail(parsed.email);
-                if (parsed.phone) setPhone(parsed.phone);
+                if (parsed.full_name || parsed.name) setFullName(prev => prev || parsed.full_name || parsed.name);
+                if (parsed.email) setEmail(prev => prev || parsed.email);
+                if (parsed.phone) setPhone(prev => prev || parsed.phone);
                 if (parsed.birth_date) {
                     const [y, m, d] = parsed.birth_date.split('-');
-                    if (y) setYear(y);
-                    if (m) setMonth(m.padStart(2, '0'));
-                    if (d) setDay(d.padStart(2, '0'));
+                    if (y) setYear(prev => prev || y);
+                    if (m) setMonth(prev => prev || m.padStart(2, '0'));
+                    if (d) setDay(prev => prev || d.padStart(2, '0'));
                 }
             }
         } catch {
@@ -136,6 +163,9 @@ const LiderazgoLeadModal = ({ isOpen, onSuccess }) => {
             localStorage.setItem('liderazgo_lead_registered', 'true');
             localStorage.setItem('liderazgo_user_data', JSON.stringify(userData));
             localStorage.setItem('tempAutodiagUser', JSON.stringify(userData));
+            localStorage.setItem('autenticos_lead_registered', 'true');
+            localStorage.setItem('autenticos_user_data', JSON.stringify(userData));
+            localStorage.setItem('autenticos_user_email', cleanEmail);
 
             // Notificar al componente padre que se completó el registro
             if (onSuccess) {

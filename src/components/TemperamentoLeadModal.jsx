@@ -64,9 +64,16 @@ const TemperamentoLeadModal = ({ isOpen, onSuccess }) => {
             const qEmail = params.get('email');
             const qName = params.get('name') || params.get('full_name');
             const qPhone = params.get('phone');
+            const qBirthDate = params.get('birth_date') || params.get('birthDate');
             if (qEmail) setEmail(qEmail);
             if (qName) setFullName(qName);
             if (qPhone) setPhone(qPhone);
+            if (qBirthDate) {
+                const [y, m, d] = qBirthDate.split('-');
+                if (y) setYear(y);
+                if (m) setMonth(m.padStart(2, '0'));
+                if (d) setDay(d.padStart(2, '0'));
+            }
         } catch {}
 
         // 2. Revisar localStorage
@@ -329,3 +336,4 @@ const TemperamentoLeadModal = ({ isOpen, onSuccess }) => {
 };
 
 export default TemperamentoLeadModal;
+

@@ -19,8 +19,51 @@ const AutodiagRegister = () => {
     const [savedCount, setSavedCount] = useState(0);
     const [totalQuestions, setTotalQuestions] = useState(84);
 
-    // Check for saved progress on mount
+    const days = Array.from({ length: 31 }, (_, i) => i + 1);
+    const months = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
+
+    // Precargar datos del usuario si vienen en URL o en localStorage
     useEffect(() => {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const qEmail = params.get('email');
+            const qName = params.get('name') || params.get('full_name');
+            const qBirthDate = params.get('birth_date') || params.get('birthDate');
+
+            let preName = qName || '';
+            let preEmail = qEmail || '';
+            let preBirthDate = qBirthDate || '';
+
+            if (!preName || !preEmail || !preBirthDate) {
+                const savedStr = localStorage.getItem('tempAutodiagUser') || localStorage.getItem('autenticos_user_data');
+                if (savedStr) {
+                    const parsed = JSON.parse(savedStr);
+                    if (!preName) preName = parsed.full_name || parsed.name || '';
+                    if (!preEmail) preEmail = parsed.email || '';
+                    if (!preBirthDate) preBirthDate = parsed.birth_date || '';
+                }
+            }
+
+            if (preName) setName(preName);
+            if (preEmail) setEmail(preEmail);
+            if (preBirthDate) {
+                const [y, m, d] = preBirthDate.split('-');
+                if (y) setYear(parseInt(y, 10));
+                if (m) {
+                    const monthIdx = parseInt(m, 10) - 1;
+                    if (months[monthIdx]) setMonth(months[monthIdx]);
+                }
+                if (d) setDay(parseInt(d, 10));
+            }
+        } catch (e) {
+            console.warn('Error precargando datos en AutodiagRegister:', e);
+        }
+
         const isPaid = localStorage.getItem('autodiagPaid') === 'true';
         const hasUser = localStorage.getItem('tempAutodiagUser');
         const saved = localStorage.getItem('fascinantesProgress');
@@ -44,14 +87,6 @@ const AutodiagRegister = () => {
         localStorage.removeItem('fascinantesProgress');
         navigate('/dominios-intro');
     };
-
-    const days = Array.from({ length: 31 }, (_, i) => i + 1);
-    const months = [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    ];
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
