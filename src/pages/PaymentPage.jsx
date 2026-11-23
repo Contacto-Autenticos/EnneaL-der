@@ -681,10 +681,12 @@ export default function PaymentPage() {
           <section className="enes-checkout-summary-card">
             <div className="enes-checkout-product-header">
               <img
-                src="/logo-moneda.png"
-                alt="Eneagrama Auténticos"
+                src="/simbolo-eneagrama-dorado.png"
+                alt="Símbolo Eneagrama Auténticos"
                 className="enes-checkout-product-thumb"
-                onError={(e) => { e.currentTarget.src = '/Isotipo-Brujula-MLT.webp'; }}
+                loading="eager"
+                decoding="async"
+                onError={(e) => { e.currentTarget.src = '/Circulo_Eneagrama_Autenticos_02.png'; }}
               />
               <div className="enes-checkout-product-info">
                 <span className="enes-checkout-product-tag">
