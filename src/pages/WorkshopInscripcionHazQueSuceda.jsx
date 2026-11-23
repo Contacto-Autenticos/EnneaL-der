@@ -365,7 +365,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                                 UN TALLER EXPERIENCIAL CON <strong className="hqs-text-gold">MÚSICA EN VIVO</strong> QUE CAMBIARÁ LA FORMA DE <strong className="hqs-text-gold">ALCANZAR</strong> LO QUE TE PROPONES.
                             </p>
 
-                            <button className="hqs-cta-btn" onClick={() => setIsModalOpen(true)}>
+                            <button className="hqs-cta-btn" onClick={() => navigate('/checkout?product=hqs')}>
                                 TU MOMENTO ES AHORA
                             </button>
                         </div>
@@ -636,7 +636,7 @@ const WorkshopInscripcionHazQueSuceda = () => {
                                 <li><Heart size={20} className="hqs-text-gold" /> Música en vivo y dinámicas experienciales</li>
                                 <li><Rocket size={20} className="hqs-text-gold" /> Un día, una decisión, una nueva realidad</li>
                             </ul>
-                            <button className="hqs-cta-btn-alt hqs-pricing-btn" onClick={() => setIsModalOpen(true)}>
+                            <button className="hqs-cta-btn-alt hqs-pricing-btn" onClick={() => navigate('/checkout?product=hqs')}>
                                 HAZ QUE SUCEDA
                             </button>
                         </div>

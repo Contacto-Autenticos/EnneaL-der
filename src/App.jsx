@@ -49,7 +49,6 @@ const PaymentStatus = lazy(() => lazyRetry(() => import('./pages/PaymentStatus')
 const PaymentSuccess = lazy(() => lazyRetry(() => import('./pages/PaymentSuccess')));
 // AdvancedLanding is eagerly loaded (imported at top) to prevent blank screen on navigation
 const AdvancedTransition = lazy(() => lazyRetry(() => import('./pages/AdvancedTransition')));
-const CourseLanding = lazy(() => lazyRetry(() => import('./pages/CourseLanding')));
 const ResultVideoIntro = lazy(() => lazyRetry(() => import('./pages/ResultVideoIntro')));
 const BasicTestIntro = lazy(() => lazyRetry(() => import('./pages/BasicTestIntro')));
 const Gateway = lazy(() => lazyRetry(() => import('./pages/Gateway')));
@@ -70,11 +69,9 @@ const AutodiagRegister = lazy(() => lazyRetry(() => import('./pages/AutodiagRegi
 const AutodiagPayment = lazy(() => lazyRetry(() => import('./pages/AutodiagPayment')));
 const AutodiagPaymentStatus = lazy(() => lazyRetry(() => import('./pages/AutodiagPaymentStatus')));
 const PartnerGatewayDominios = lazy(() => lazyRetry(() => import('./pages/PartnerGatewayDominios')));
-const WorkshopInscripcion = lazy(() => lazyRetry(() => import('./pages/WorkshopInscripcion')));
 const WorkshopInscripcionHazQueSuceda = lazy(() => lazyRetry(() => import('./pages/WorkshopInscripcionHazQueSuceda')));
 const WorkshopPaymentStatus = lazy(() => lazyRetry(() => import('./pages/WorkshopPaymentStatus')));
 const DominiosLanding = lazy(() => lazyRetry(() => import('./pages/DominiosLanding')));
-const MltLanding = lazy(() => lazyRetry(() => import('./pages/MltLanding')));
 const EneagramaLanding = lazy(() => lazyRetry(() => import('./pages/EneagramaLanding')));
 const LiderazgoTest = lazy(() => lazyRetry(() => import('./pages/LiderazgoTest')));
 const LiderazgoResults = lazy(() => lazyRetry(() => import('./pages/LiderazgoResults')));
@@ -88,6 +85,7 @@ const TemperamentoTest = lazy(() => lazyRetry(() => import('./pages/Temperamento
 const TemperamentoResult = lazy(() => lazyRetry(() => import('./pages/TemperamentoResult')));
 const PresentationsDashboard = lazy(() => lazyRetry(() => import('./pages/PresentationsDashboard')));
 const PresentationEditorPage = lazy(() => lazyRetry(() => import('./pages/PresentationEditorPage')));
+const EnesenciaProgramCheckout = lazy(() => lazyRetry(() => import('./pages/EnesenciaProgramCheckout')));
 
 function App() {
   const [user, setUser] = useState(null);
@@ -357,10 +355,8 @@ Deseo Básico: ${details.motivations.desire}
         <Route path="/dominios-payment-status" element={<AutodiagPaymentStatus />} />
 
         <Route path="/dominios-landing" element={<DominiosLanding result={testResult} setTestResult={setTestResult} />} />
-        <Route path="/mlt-Landing" element={<MltLanding result={testResult} setTestResult={setTestResult} />} />
         <Route path="/eneagrama-landing" element={<EneagramaLanding result={testResult} setTestResult={setTestResult} />} />
 
-        <Route path="/inscripcion" element={<WorkshopInscripcion />} />
         <Route path="/inscripcion-haz-que-suceda" element={<WorkshopInscripcionHazQueSuceda />} />
         <Route path="/inscripcion-status" element={<WorkshopPaymentStatus />} />
 
@@ -484,8 +480,9 @@ Deseo Básico: ${details.motivations.desire}
         />
 
         <Route path="/admin" element={<Admin />} />
-        <Route path="/programa" element={<CourseLanding />} />
         <Route path="/programa-genuinos" element={<GenuinosLanding />} />
+        <Route path="/checkout" element={<EnesenciaProgramCheckout />} />
+        <Route path="/pago" element={<EnesenciaProgramCheckout />} />
         <Route path="/agenda" element={<Agenda />} />
         <Route path="/diagnostico-empresarial" element={<BusinessScan />} />
         <Route path="/postulacion-mlt" element={<PostulacionMlt />} />

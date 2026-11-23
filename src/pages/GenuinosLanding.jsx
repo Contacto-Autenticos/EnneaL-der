@@ -224,14 +224,11 @@ const GenuinosLanding = () => {
     }, []);
 
     const handleSelectPlan = (plan) => {
-        setSelectedPlan(plan);
-        setShowPriceModal(true);
+        navigate(`/checkout?product=genuinos&plan=${plan}`);
     };
 
     const handleEnrollDirect = (plan) => {
-        setSelectedPlan(plan);
-        setPrevPurchaseDiscount(0); // Reset discount
-        setShowRegisterForm(true);
+        navigate(`/checkout?product=genuinos&plan=${plan}`);
     };
 
     const checkPreviousPurchases = async (email) => {

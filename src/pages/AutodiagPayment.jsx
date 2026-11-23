@@ -1,320 +1,782 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { initMercadoPago, Payment } from '@mercadopago/sdk-react';
+import {
+  ShieldCheck,
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Tag,
+  Check
+} from 'lucide-react';
 import { supabase } from '../supabaseClient';
-import { sendWebPushNotification } from '../utils/notifications';
-import { ShieldCheck, CheckCircle } from 'lucide-react';
-import './PaymentStyles.css';
+import './EnesenciaCheckout.css';
 
-const PUBLIC_KEY = 'pub_prod_ceDiKCiH2oITOqT5nkOdz7hm5coX7A7t';
-const WOMPI_CURRENCY = 'COP';
-const BASE_PRICE_IN_CENTS = 7500000; // $75.000 COP
+const MP_PUBLIC_KEY = import.meta.env.VITE_MP_PUBLIC_KEY || 'APP_USR-3b961bcb-9278-4e21-bcb4-1d04539cb2da';
 
-const AutodiagPayment = () => {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const [signatureData, setSignatureData] = useState(null);
-    const [error, setError] = useState(null);
-    const [paymentMethod, setPaymentMethod] = useState('wompi');
-    const [loadingMP, setLoadingMP] = useState(false);
-    
-    // Currency Conversion State
-    const [localCurrency, setLocalCurrency] = useState({ code: 'COP', symbol: '$', rate: 1, country: '' });
-    const [isConverting, setIsConverting] = useState(false);
+try {
+  initMercadoPago(MP_PUBLIC_KEY, { locale: 'es-CO' });
+} catch (e) {
+  console.warn('MercadoPago init error:', e);
+}
 
-    useEffect(() => {
-        const fetchLocalCurrency = async () => {
-            try {
-                setIsConverting(true);
-                // 1. Obtener moneda por IP
-                const geoRes = await fetch('https://ipapi.co/json/');
-                const geoData = await geoRes.json();
-                const userCurrency = geoData.currency || 'COP';
-                const userCountry = geoData.country_name || '';
+const StablePaymentBrick = React.memo(({ amount, userEmail, onSubmit, onError }) => {
+  const initialization = useMemo(() => ({
+    amount: Math.round(Number(amount)),
+    payer: {
+      email: userEmail || '',
+    }
+  }), [amount, userEmail]);
 
-                if (userCurrency === 'COP') {
-                    setIsConverting(false);
-                    return;
-                }
-
-                // 2. Obtener tasa de cambio desde COP
-                const rateRes = await fetch(`https://api.exchangerate-api.com/v4/latest/COP`);
-                const rateData = await rateRes.json();
-                const rate = rateData.rates[userCurrency];
-
-                if (rate) {
-                    // Obtener símbolo de moneda
-                    const symbol = new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: userCurrency,
-                    }).format(0).replace(/\d/g, '').replace(/[.,]/g, '').trim();
-
-                    setLocalCurrency({
-                        code: userCurrency,
-                        symbol: symbol || '$',
-                        rate: rate,
-                        country: userCountry
-                    });
-                }
-            } catch (err) {
-                console.error('Error fetching currency:', err);
-            } finally {
-                setIsConverting(false);
-            }
-        };
-
-        fetchLocalCurrency();
-    }, []);
-
-    const fetchSignature = async () => {
-        try {
-            setLoading(true);
-            const reference = `ref-autodiag-${Date.now()}`;
-            const { data, error } = await supabase.functions.invoke('create-wompi-signature', {
-                body: { reference, amount: BASE_PRICE_IN_CENTS, currency: WOMPI_CURRENCY }
-            });
-            if (error) throw error;
-            setSignatureData(data);
-        } catch (err) {
-            console.error('Error fetching signature:', err);
-            setError(`Error al iniciar pago: ${err.message}`);
-        } finally {
-            setLoading(false);
+  const customization = useMemo(() => ({
+    paymentMethods: {
+      creditCard: 'all',
+      debitCard: 'all',
+      ticket: 'all',
+      bankTransfer: 'all'
+    },
+    visual: {
+      hideFormTitle: true,
+      style: {
+        theme: 'default',
+        customVariables: {
+          baseColor: '#DDBE3D',
+          baseColorFirstVariant: '#C9AB33',
+          baseColorSecondVariant: '#B5982A',
+          buttonTextColor: '#002D44',
+          borderRadiusMedium: '14px',
+          borderRadiusLarge: '14px'
         }
-    };
+      }
+    }
+  }), []);
 
-    useEffect(() => {
-        fetchSignature();
-    }, []);
-
-    useEffect(() => {
-        if (signatureData && paymentMethod === 'wompi') {
-            const script = document.createElement('script');
-            script.src = 'https://checkout.wompi.co/widget.js';
-            script.setAttribute('data-render', 'button');
-            script.setAttribute('data-public-key', PUBLIC_KEY);
-            script.setAttribute('data-currency', WOMPI_CURRENCY);
-            script.setAttribute('data-amount-in-cents', BASE_PRICE_IN_CENTS);
-            script.setAttribute('data-reference', signatureData.reference);
-            script.setAttribute('data-signature:integrity', signatureData.signature);
-            script.setAttribute('data-redirect-url', `${window.location.origin}/dominios-payment-status`);
-
-            const container = document.getElementById('wompi-container');
-            if (container) {
-                container.innerHTML = ''; 
-                container.appendChild(script);
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        mutation.addedNodes.forEach((node) => {
-                            if (node.tagName === 'FORM' || node.tagName === 'BUTTON' || node.querySelector?.('button')) {
-                                const btn = node.tagName === 'BUTTON' ? node : node.querySelector('button');
-                                if (btn) {
-                                    btn.style.setProperty('width', '100%', 'important');
-                                    btn.style.setProperty('border-radius', '6px', 'important');
-                                    btn.style.setProperty('background-color', '#00121d', 'important');
-                                    btn.style.setProperty('border', '2px solid #ddbe3d', 'important');
-                                    btn.style.setProperty('color', 'white', 'important');
-                                    btn.style.setProperty('font-weight', '900', 'important');
-                                    btn.style.setProperty('text-transform', 'uppercase', 'important');
-                                    btn.style.setProperty('letter-spacing', '1px', 'important');
-                                    btn.style.setProperty('font-size', '1rem', 'important');
-                                    btn.style.setProperty('min-height', '50px', 'important');
-                                }
-                            }
-                        });
-                    });
-                });
-                observer.observe(container, { childList: true, subtree: true });
-                return () => observer.disconnect();
-            }
-        }
-    }, [signatureData, paymentMethod]);
-
-    const handleMercadoPago = async () => {
-        try {
-            setLoadingMP(true);
-            setError(null);
-            const reference = `ref-mp-autodiag-${Date.now()}`;
-            const userEmail = localStorage.getItem('autodiag_user_email') || 'usuario@ejemplo.com';
-            
-            const { data, error: invokeError } = await supabase.functions.invoke('create-mp-preference', {
-                body: { reference, unit_price: 75000, title: "Autodiagnóstico Dominios Fundamentales", user_email: userEmail }
-            });
-
-            if (invokeError) throw invokeError;
-            if (data?.error) {
-                console.error('Error detallado de Mercado Pago:', data);
-                throw new Error(data.error);
-            }
-
-            if (data?.init_point) {
-                // Notificación de intención de compra
-                sendWebPushNotification('purchase_intent', { 
-                    email: userEmail, 
-                    product: 'Autodiagnóstico Dominios Fundamentales' 
-                });
-                window.location.href = data.init_point;
-            } else {
-                throw new Error("No se recibió el enlace de pago de Mercado Pago.");
-            }
-        } catch (err) {
-            console.error('Error con Mercado Pago:', err);
-            setError(`Error con Mercado Pago: ${err.message}`);
-        } finally {
-            setLoadingMP(false);
-        }
-    };
-
+  if (!amount || isNaN(amount) || amount <= 0) {
     return (
-        <div className="payment-page">
-            <div className="payment-container">
-                <div className="payment-header-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '20px', width: '100%' }}>
-                    <div className="decorative-line" style={{ height: '2px', flex: 1, background: '#ddbe3d', minWidth: '20px', maxWidth: '60px' }}></div>
-                    <h1 className="payment-title autodiag-title-container">
-                        <span className="autodiag-title-1">Autodiagnóstico</span>
-                        <span className="autodiag-title-2">Dominios Fundamentales</span>
-                    </h1>
-                    <div className="decorative-line" style={{ height: '2px', flex: 1, background: '#ddbe3d', minWidth: '20px', maxWidth: '60px' }}></div>
-                </div>
-                
-                <p className="payment-description" style={{ marginBottom: '30px' }}>
-                    <strong style={{ color: '#ddbe3d' }}>Invertir en conocerte es el primer paso.</strong><br />
-                    Accede a tu reporte completo y diseña tu mapa de transformación.
-                </p>
-
-                <div className="payment-summary dark-theme" style={{ position: 'relative', overflow: 'visible', margin: '20px 0' }}>
-                    {/* Estilo para la animación de brillo */}
-                    <style>{`
-                        @keyframes shimmer {
-                            0% { transform: translateX(-150%) rotate(45deg); }
-                            100% { transform: translateX(150%) rotate(45deg); }
-                        }
-                    `}</style>
-
-                    {/* Sticker Descuento */}
-                    <div className="special-benefit-badge">
-                        {/* Capa de Brillo */}
-                        <div className="badge-shimmer-layer"></div>
-
-                        <span className="badge-percent">50%</span>
-                        <span className="badge-text">Beneficio<br/>Especial</span>
-                    </div>
-
-                    <div className="payment-row centered-price-column" style={{ padding: '25px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '160px' }}>
-                        <div className="price-stack" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', width: '100%' }}>
-                            <span style={{ textDecoration: 'line-through', opacity: 0.6, fontSize: '1.1rem', color: '#fff', letterSpacing: '1px' }}>
-                                Antes {localCurrency.code === 'COP' ? '$150.000' : `${localCurrency.symbol}${Math.round(150000 * localCurrency.rate).toLocaleString()}`}
-                            </span>
-                            <div className="payment-current-row" style={{ margin: '2px 0' }}>
-                                <span className="payment-amount">
-                                    {localCurrency.code === 'COP' ? '$75.000' : `${localCurrency.symbol}${Math.round(75000 * localCurrency.rate).toLocaleString()}`} 
-                                    <span className="currency-label">{localCurrency.code}</span>
-                                </span>
-                            </div>
-                            {localCurrency.code !== 'COP' && (
-                                <p style={{ margin: '-5px 0 10px 0', fontSize: '0.9rem', color: '#ddbe3d', fontWeight: '600' }}>
-                                    Valor aproximado · Cobro final en $75.000 COP
-                                </p>
-                            )}
-                            <p style={{ margin: '5px 0 0 0', fontSize: '1.0rem', opacity: 0.9, color: '#fff', fontWeight: '500' }}>Análisis Avanzado · Pago único</p>
-                            <p style={{ margin: 0, fontSize: '1.4rem', color: '#ddbe3d', fontWeight: '900', textTransform: 'none', letterSpacing: '0.5px' }}>Precio de lanzamiento</p>
-
-                             {/* Lista de beneficios integrada */}
-                             <div className="features-grid">
-                                 {[
-                                     'Análisis profundo de 6 Dimensiones',
-                                     'Identificación de áreas críticas',
-                                     'Mapa de ecosistema personalizado',
-                                     'Hoja de Ruta de 8 Pasos',
-                                     'Acceso inmediato e ilimitado',
-                                     'Reporte descargable en PDF'
-                                 ].map((item, i) => (
-                                     <div key={i} style={{ 
-                                         display: 'flex', 
-                                         alignItems: 'center', 
-                                         gap: '8px',
-                                         fontSize: '0.8rem',
-                                         color: 'rgba(255,255,255,0.9)',
-                                         fontWeight: '500'
-                                     }}>
-                                         <CheckCircle size={14} color="#ddbe3d" /> {item}
-                                     </div>
-                                 ))}
-                             </div>
-                         </div>
-                     </div>
-                </div>
-
-                <div className="method-selector" style={{ display: 'flex', gap: '10px', margin: '20px 0', width: '100%' }}>
-                    <button className={`method-btn ${paymentMethod === 'wompi' ? 'active' : ''}`} onClick={() => setPaymentMethod('wompi')}
-                        style={{ flex: 1, padding: '15px 10px', borderRadius: '8px', border: paymentMethod === 'wompi' ? '2px solid #ddbe3d' : '1px solid #e2e8f0', background: paymentMethod === 'wompi' ? '#00121d' : '#f8fafc', color: paymentMethod === 'wompi' ? '#ddbe3d' : '#64748b', cursor: 'pointer', transition: 'all 0.3s', fontWeight: 'bold', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
-                        <span style={{ fontSize: '0.7rem', opacity: 0.8, textTransform: 'uppercase' }}>Opción 1</span>
-                        Bancolombia / Tarjeta
-                    </button>
-                    <button className={`method-btn ${paymentMethod === 'mercadopago' ? 'active' : ''}`} onClick={() => setPaymentMethod('mercadopago')}
-                        style={{ flex: 1, padding: '15px 10px', borderRadius: '8px', border: paymentMethod === 'mercadopago' ? '2px solid #009ee3' : '1px solid #e2e8f0', background: paymentMethod === 'mercadopago' ? '#00121d' : '#f8fafc', color: paymentMethod === 'mercadopago' ? '#009ee3' : '#64748b', cursor: 'pointer', transition: 'all 0.3s', fontWeight: 'bold', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
-                        <span style={{ fontSize: '0.7rem', opacity: 0.8, textTransform: 'uppercase' }}>Opción 2</span>
-                        Mercado Pago
-                    </button>
-                </div>
-
-                {error && (
-                    <div className="payment-error-alert" style={{ 
-                        background: '#fee2e2', 
-                        color: '#b91c1c', 
-                        padding: '12px', 
-                        borderRadius: '6px', 
-                        marginBottom: '20px', 
-                        fontSize: '0.9rem',
-                        border: '1px solid #fecaca',
-                        textAlign: 'center',
-                        width: '100%'
-                    }}>
-                        {error}
-                    </div>
-                )}
-
-                {paymentMethod === 'wompi' ? (
-                    <div className="wompi-section fade-in" style={{ width: '100%' }}>
-                        <div id="wompi-container" className="wompi-container" style={{ minHeight: '50px', width: '100%' }}>
-                            {loading && <p>Preparando pago seguro...</p>}
-                        </div>
-                        <div className="payment-logos" style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', width: '100%' }}>
-                            <img src="https://img.icons8.com/color/48/visa.png" alt="Visa" style={{ height: '24px', width: 'auto' }} />
-                            <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard" style={{ height: '24px', width: 'auto' }} />
-                        </div>
-                    </div>
-                ) : (
-                    <div className="mp-section fade-in" style={{ width: '100%' }}>
-                        <button className="btn-mercadopago" onClick={handleMercadoPago} disabled={loadingMP}
-                            style={{ width: '100%', minHeight: '50px', background: '#009ee3', border: 'none', borderRadius: '6px', color: 'white', fontWeight: '900', textTransform: 'uppercase', cursor: loadingMP ? 'not-allowed' : 'pointer', opacity: loadingMP ? 0.7 : 1 }}>
-                            {loadingMP ? 'Cargando...' : 'Pagar con Mercado Pago'}
-                        </button>
-                        <div className="payment-logos" style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', width: '100%' }}>
-                            <img src="https://img.icons8.com/color/48/visa.png" alt="Visa" style={{ height: '24px', width: 'auto' }} />
-                            <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard" style={{ height: '24px', width: 'auto' }} />
-                            <img src="https://img.icons8.com/color/48/amex.png" alt="Amex" style={{ height: '24px', width: 'auto' }} />
-                        </div>
-                    </div>
-                )}
-
-                <div className="security-bar" style={{ marginTop: '25px', flexDirection: 'column', gap: '5px', textAlign: 'center' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <ShieldCheck size={18} style={{ marginRight: '8px' }} />
-                        Pago seguro procesado por Wompi / Mercado Pago
-                    </div>
-                    {localCurrency.code !== 'COP' && (
-                        <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
-                            * La transacción final se realizará en Pesos Colombianos (COP) por el valor de $75.000.
-                        </span>
-                    )}
-                </div>
-
-                <button onClick={() => navigate('/hub')} className="btn-cancel" style={{ marginTop: '15px', opacity: 0.6 }}>
-                    Volver
-                </button>
-            </div>
-        </div>
+      <div style={{ padding: '30px', textAlign: 'center', color: '#64748B' }}>
+        <Loader2 size={28} className="animate-spin" style={{ margin: '0 auto 10px auto' }} />
+        <span>Preparando pasarela de pago seguro...</span>
+      </div>
     );
+  }
+
+  return (
+    <Payment
+      initialization={initialization}
+      customization={customization}
+      onSubmit={onSubmit}
+      onError={onError}
+    />
+  );
+});
+
+const CheckoutFloatingField = ({
+  id,
+  name,
+  label,
+  type = 'text',
+  value,
+  onChange,
+  required = true,
+  autoComplete,
+  inputMode,
+  enterKeyHint,
+  onKeyDown,
+  inputRef
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const hasValue = Boolean(value && String(value).length > 0);
+  const isFloated = isFocused || hasValue;
+
+  return (
+    <div className={`enes-checkout-field-wrapper ${isFocused ? 'is-focused' : ''}`}>
+      <label
+        htmlFor={id || name}
+        className={`enes-checkout-field-label ${isFloated ? 'is-floated' : ''}`}
+      >
+        {label}
+      </label>
+      <input
+        ref={inputRef}
+        id={id || name}
+        name={name}
+        type={type}
+        required={required}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        enterKeyHint={enterKeyHint}
+        onKeyDown={onKeyDown}
+        className="enes-checkout-field-input"
+      />
+    </div>
+  );
 };
 
-export default AutodiagPayment;
+export default function AutodiagPayment() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const BASE_PRICE_COP = 75000;
+  const REGULAR_PRICE_COP = 150000;
+
+  // Precargar usuario registrado en /dominios (tempAutodiagUser)
+  const storedAutodiagUser = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('tempAutodiagUser');
+      if (raw && raw !== 'undefined') return JSON.parse(raw);
+    } catch {}
+    return null;
+  }, []);
+
+  const [formData, setFormData] = useState({
+    full_name: searchParams.get('name') || storedAutodiagUser?.name || '',
+    email: searchParams.get('email') || storedAutodiagUser?.email || localStorage.getItem('autodiag_user_email') || ''
+  });
+
+  const emailInputRef = useRef(null);
+
+  // Cupón
+  const initialCouponParam = searchParams.get('coupon') || searchParams.get('cupon') || '';
+  const [showCouponInput, setShowCouponInput] = useState(Boolean(initialCouponParam));
+  const [couponInput, setCouponInput] = useState(initialCouponParam);
+  const [validatingCoupon, setValidatingCoupon] = useState(false);
+  const [couponFeedback, setCouponFeedback] = useState(null);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+
+  const [isSubmittingBrick, setIsSubmittingBrick] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [paymentResult, setPaymentResult] = useState(null);
+
+  const discountPct = appliedCoupon ? Number(appliedCoupon.discountPercentage || 0) : 0;
+  const finalAmountCOP = Math.floor(BASE_PRICE_COP * (1 - discountPct / 100));
+  const isFree = finalAmountCOP <= 0;
+
+  const formatCOP = (val) => new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(val);
+
+  const validateCouponOnServer = useCallback(async (rawCode) => {
+    const cleanCode = String(rawCode || '').trim().toUpperCase();
+    if (!cleanCode) {
+      setAppliedCoupon(null);
+      setCouponFeedback({ type: 'error', text: 'Escribe un código de descuento para aplicarlo.' });
+      return;
+    }
+
+    setValidatingCoupon(true);
+    setCouponFeedback(null);
+    setErrorMessage(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('enesencia-process-payment', {
+        body: {
+          action: 'validate_coupon',
+          flow: 'dominios',
+          couponCode: cleanCode
+        }
+      });
+
+      if (error || !data?.ok || !data.valid) {
+        setAppliedCoupon(null);
+        setCouponFeedback({
+          type: 'error',
+          text: data?.error || 'Código no válido o expirado.'
+        });
+        return;
+      }
+
+      setAppliedCoupon({
+        code: data.code,
+        discountPercentage: Number(data.discountPercentage),
+        label: data.label
+      });
+      setCouponFeedback({ type: 'success', text: data.label });
+    } catch {
+      setAppliedCoupon(null);
+      setCouponFeedback({ type: 'error', text: 'Error al validar el código en el servidor.' });
+    } finally {
+      setValidatingCoupon(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (initialCouponParam && !appliedCoupon) {
+      validateCouponOnServer(initialCouponParam);
+    }
+  }, [initialCouponParam, appliedCoupon, validateCouponOnServer]);
+
+  const handleClearCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput('');
+    setCouponFeedback(null);
+  };
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const triggerSuccessConfetti = () => {
+    try {
+      import('canvas-confetti').then((module) => {
+        const confetti = module.default || module;
+        confetti({ particleCount: 110, spread: 75, origin: { y: 0.6 } });
+      });
+    } catch {}
+  };
+
+  const finalizeDominiosAccess = useCallback((paidAmount) => {
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanName = formData.full_name.trim() || storedAutodiagUser?.name || 'Participante';
+
+    // 1. Asegurar tempAutodiagUser y autodiagPaid en localStorage (requeridos por /dominios-intro)
+    const userPayload = {
+      name: cleanName,
+      email: cleanEmail,
+      birth_date: storedAutodiagUser?.birth_date || '1990-01-01'
+    };
+    localStorage.setItem('tempAutodiagUser', JSON.stringify(userPayload));
+    localStorage.setItem('autodiagPaid', 'true');
+
+    // 2. Meta Pixel Purchase
+    if (window.fbq && paidAmount > 0) {
+      window.fbq('track', 'Purchase', {
+        currency: 'COP',
+        value: paidAmount,
+        content_name: 'Autodiagnóstico de Dominios'
+      });
+    }
+
+    // 3. Redirigir a /dominios-intro
+    setTimeout(() => {
+      navigate('/dominios-intro');
+    }, 1800);
+  }, [formData, storedAutodiagUser, navigate]);
+
+  const handleFreeRedeem = async () => {
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanName = formData.full_name.trim();
+
+    if (!cleanName || !cleanEmail || !cleanEmail.includes('@')) {
+      setErrorMessage('Por favor completa tu Nombre y Correo Electrónico en el Paso 1.');
+      window.scrollTo({ top: 100, behavior: 'smooth' });
+      return;
+    }
+
+    setIsSubmittingBrick(true);
+    setErrorMessage(null);
+    try {
+      const { data, error } = await supabase.functions.invoke('enesencia-process-payment', {
+        body: {
+          action: 'redeem_free',
+          flow: 'dominios',
+          couponCode: appliedCoupon?.code || couponInput,
+          customerEmail: cleanEmail,
+          customerName: cleanName
+        }
+      });
+
+      if (error || !data?.ok) {
+        throw new Error(data?.error || error?.message || 'No fue posible aplicar el cupón.');
+      }
+
+      setIsSubmittingBrick(false);
+      triggerSuccessConfetti();
+      setPaymentResult({
+        status: 'approved',
+        id: data.id,
+        title: '¡Acceso Habilitado con Éxito!',
+        message: 'Tu acceso al Autodiagnóstico de 6 Dominios Fundamentales está listo.',
+        amountPaid: 0
+      });
+      finalizeDominiosAccess(0);
+    } catch (err) {
+      setIsSubmittingBrick(false);
+      setErrorMessage(err.message);
+    }
+  };
+
+  const handleBrickSubmit = useCallback(async ({ formData: brickFormData }) => {
+    setIsSubmittingBrick(true);
+    setErrorMessage(null);
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const cleanEmail = (formData.email || brickFormData?.payer?.email || '').trim().toLowerCase();
+        const cleanName = formData.full_name.trim() || storedAutodiagUser?.name || 'Participante Auténticos';
+
+        if (!cleanEmail || !cleanEmail.includes('@')) {
+          const msg = 'Por favor ingresa tu Correo Electrónico en el Paso 1 antes de pagar.';
+          setErrorMessage(msg);
+          setIsSubmittingBrick(false);
+          window.scrollTo({ top: 100, behavior: 'smooth' });
+          reject(new Error(msg));
+          return;
+        }
+
+        const { data, error } = await supabase.functions.invoke('enesencia-process-payment', {
+          body: {
+            action: 'pay',
+            flow: 'dominios',
+            couponCode: appliedCoupon?.code || '',
+            customerEmail: cleanEmail,
+            customerName: cleanName,
+            birthDate: storedAutodiagUser?.birth_date || null,
+            formData: brickFormData
+          }
+        });
+
+        if (error) {
+          let serverMsg = error.message;
+          try {
+            if (error.context && typeof error.context.json === 'function') {
+              const errBody = await error.context.json();
+              if (errBody?.error) serverMsg = errBody.error;
+            }
+          } catch {}
+          throw new Error(serverMsg || 'Error en el servidor al procesar el pago.');
+        }
+
+        if (!data || data.error) {
+          throw new Error(data?.error || 'No se pudo confirmar la transacción.');
+        }
+
+        setIsSubmittingBrick(false);
+
+        if (data.status === 'approved') {
+          triggerSuccessConfetti();
+          const paidAmount = Number(data.transaction_amount || finalAmountCOP);
+
+          setPaymentResult({
+            status: 'approved',
+            id: data.id,
+            title: '¡Pago Aprobado con Éxito!',
+            message: 'Tu acceso al Autodiagnóstico de 6 Dominios Fundamentales ha sido confirmado.',
+            amountPaid: paidAmount
+          });
+
+          finalizeDominiosAccess(paidAmount);
+          resolve();
+        } else if (data.status === 'pending' || data.status === 'in_process') {
+          const redirectUrl = data.transaction_details?.external_resource_url;
+          setPaymentResult({
+            status: 'pending',
+            id: data.id,
+            title: 'Pago Pendiente de Confirmación',
+            message: redirectUrl
+              ? 'Por favor completa el pago a través de tu entidad bancaria (PSE / Efecty / Banco).'
+              : 'Estamos procesando tu pago. Te notificaremos en cuanto el banco lo confirme.',
+            redirectUrl,
+            amountPaid: Number(data.transaction_amount || finalAmountCOP)
+          });
+          resolve();
+        } else {
+          const detailMsg = data.status_detail ? ` (${data.status_detail})` : '';
+          throw new Error(`El pago fue rechazado por el banco o pasarela${detailMsg}. Por favor intenta con otra tarjeta o medio.`);
+        }
+      } catch (err) {
+        console.error('Error al procesar pago Dominios:', err);
+        setErrorMessage(err.message || 'Ocurrió un error inesperado al procesar el pago.');
+        setIsSubmittingBrick(false);
+        reject(err);
+      }
+    });
+  }, [formData, storedAutodiagUser, appliedCoupon, finalAmountCOP, finalizeDominiosAccess]);
+
+  const handleBrickError = useCallback((error) => {
+    console.error('Error en el SDK de Mercado Pago:', error);
+  }, []);
+
+  const featuresList = [
+    'Análisis profundo de los 6 Dominios Fundamentales',
+    'Identificación de áreas críticas y fortalezas actuales',
+    'Mapa de ecosistema personalizado según la metodología MLT',
+    'Hoja de Ruta de 8 Pasos y reporte descargable en PDF'
+  ];
+
+  return (
+    <div className="enes-checkout-wrapper">
+      {/* Header Banner Azul con Logo Blanco de Auténticos */}
+      <header className="enes-checkout-header">
+        <div className="enes-checkout-header-inner">
+          <button
+            type="button"
+            onClick={() => navigate('/dominios')}
+            className="enes-checkout-back-link"
+            title="Volver"
+            aria-label="Volver"
+          >
+            <ArrowLeft size={18} />
+          </button>
+
+          <div className="enes-checkout-header-brand">
+            <img src="/Logo-Blanco.png" alt="Auténticos" className="enes-checkout-header-logo" />
+          </div>
+
+          <div className="enes-checkout-header-spacer" aria-hidden="true" />
+        </div>
+      </header>
+
+      <main className="enes-checkout-main">
+        <div className="enes-checkout-grid">
+
+          {/* Columna Izquierda: Paso 1 (Datos) y Paso 2 (Pasarela de Pago) */}
+          <section className="enes-checkout-form-card">
+            {paymentResult ? (
+              <div style={{ textAlign: 'center', padding: '24px 8px' }}>
+                <div style={{
+                  width: '74px',
+                  height: '74px',
+                  borderRadius: '50%',
+                  background: paymentResult.status === 'approved' ? 'rgba(34, 197, 94, 0.12)' : 'rgba(234, 179, 8, 0.15)',
+                  color: paymentResult.status === 'approved' ? '#16A34A' : '#CA8A04',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 18px auto'
+                }}>
+                  <CheckCircle2 size={42} />
+                </div>
+
+                <h2 style={{ fontSize: '1.45rem', fontWeight: 900, color: '#002D44', marginBottom: '8px' }}>
+                  {paymentResult.title}
+                </h2>
+
+                <p style={{ fontSize: '0.95rem', color: '#64748B', maxWidth: '400px', margin: '0 auto 20px auto', lineHeight: 1.5 }}>
+                  {paymentResult.message}
+                </p>
+
+                {paymentResult.redirectUrl && (
+                  <a
+                    href={paymentResult.redirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="enes-checkout-cta-btn"
+                    style={{ textDecoration: 'none', marginBottom: '20px' }}
+                  >
+                    <span>Completar Pago en mi Banco (PSE / Efecty)</span>
+                    <ArrowRight size={18} />
+                  </a>
+                )}
+
+                <div style={{
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '14px',
+                  padding: '16px',
+                  textAlign: 'left',
+                  fontSize: '0.9rem',
+                  marginBottom: '18px'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ color: '#64748B' }}>Producto:</span>
+                    <strong style={{ color: '#002D44' }}>Autodiagnóstico 6 Dominios Fundamentales</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ color: '#64748B' }}>Correo:</span>
+                    <strong style={{ color: '#002D44' }}>{formData.email}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#64748B' }}>Total:</span>
+                    <strong style={{ color: '#16A34A' }}>${formatCOP(paymentResult.amountPaid)} COP</strong>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
+                {errorMessage && (
+                  <div style={{
+                    background: '#FEF2F2',
+                    border: '1px solid #FCA5A5',
+                    borderRadius: '12px',
+                    padding: '12px 16px',
+                    color: '#991B1B',
+                    fontSize: '0.88rem',
+                    marginBottom: '16px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '10px'
+                  }}>
+                    <AlertCircle size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
+                    <div>
+                      <strong>No se pudo procesar:</strong>
+                      <div style={{ marginTop: '2px' }}>{errorMessage}</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* PASO 1: DATOS */}
+                <div className="enes-checkout-step1-section">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                    <span className="enes-checkout-step-num">1</span>
+                    <h3 className="enes-checkout-form-title" style={{ margin: 0 }}>Tus Datos</h3>
+                  </div>
+                  <p className="enes-checkout-form-subtitle">
+                    Confirma tu nombre y correo para personalizar tu reporte de 6 Dominios.
+                  </p>
+
+                  <div className="enes-checkout-fields-stack">
+                    <CheckoutFloatingField
+                      id="dom-chk-name"
+                      name="full_name"
+                      label="Nombre Completo *"
+                      required
+                      value={formData.full_name}
+                      onChange={handleChange}
+                      autoComplete="name"
+                      enterKeyHint="next"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          emailInputRef.current?.focus();
+                        }
+                      }}
+                    />
+
+                    <CheckoutFloatingField
+                      id="dom-chk-email"
+                      name="email"
+                      label="Correo Electrónico *"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      inputMode="email"
+                      enterKeyHint="done"
+                      inputRef={emailInputRef}
+                    />
+                  </div>
+                </div>
+
+                {/* PASO 2: PAGO */}
+                <div className="enes-checkout-step2-section" style={{
+                  marginTop: '28px',
+                  paddingTop: '24px',
+                  borderTop: '1px solid #E2E8F0'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                    <span className="enes-checkout-step-num">2</span>
+                    <h3 className="enes-checkout-form-title" style={{ margin: 0 }}>Pago</h3>
+                  </div>
+                  <p className="enes-checkout-form-subtitle">
+                    Selecciona tu medio preferido.
+                  </p>
+
+                  {isFree ? (
+                    <button
+                      type="button"
+                      onClick={handleFreeRedeem}
+                      disabled={isSubmittingBrick}
+                      className="enes-checkout-cta-btn is-free"
+                    >
+                      {isSubmittingBrick ? (
+                        <>
+                          <Loader2 size={18} className="animate-spin" />
+                          <span>Habilitando acceso...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Comenzar Autodiagnóstico con Cupón 100%</span>
+                          <ArrowRight size={18} />
+                        </>
+                      )}
+                    </button>
+                  ) : (
+                    <div className="enes-checkout-brick-container">
+                      {isSubmittingBrick && (
+                        <div className="enes-checkout-brick-overlay">
+                          <Loader2 size={38} className="animate-spin" color="#002D44" />
+                          <span style={{ fontWeight: 800, color: '#002D44', fontSize: '1rem' }}>
+                            Procesando pago de forma segura...
+                          </span>
+                          <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
+                            Por favor no cierres ni recargues esta ventana.
+                          </span>
+                        </div>
+                      )}
+
+                      <StablePaymentBrick
+                        amount={finalAmountCOP}
+                        userEmail={formData.email}
+                        onSubmit={handleBrickSubmit}
+                        onError={handleBrickError}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Sellos de Confianza */}
+                <div className="enes-checkout-trust-badges">
+                  <div className="enes-checkout-trust-title">
+                    <ShieldCheck size={16} />
+                    <span>PAGO 100% PROTEGIDO Y ENCRIPTADO</span>
+                  </div>
+                  <div className="enes-checkout-trust-logos">
+                    <img src="/visa.png" alt="Visa" />
+                    <img src="/mastercard.png" alt="Mastercard" />
+                    <img src="/mercadopago.png" alt="Mercado Pago" />
+                  </div>
+                </div>
+              </>
+            )}
+          </section>
+
+          {/* Columna Derecha: Resumen de Pedido */}
+          <section className="enes-checkout-summary-card">
+            <div className="enes-checkout-product-header">
+              <img
+                src="/Radar-2.png"
+                alt="6 Dominios Fundamentales"
+                className="enes-checkout-product-thumb"
+                onError={(e) => { e.currentTarget.src = '/Isotipo-Brujula-MLT.webp'; }}
+              />
+              <div className="enes-checkout-product-info">
+                <span className="enes-checkout-product-tag">Autodiagnóstico Oficial</span>
+                <h2 className="enes-checkout-product-name">6 Dominios Fundamentales</h2>
+              </div>
+            </div>
+
+            <ul className="enes-checkout-benefits-list">
+              {featuresList.map((feat, idx) => (
+                <li key={idx} className="enes-checkout-benefit-item">
+                  <span className="enes-checkout-benefit-icon">
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                  <span>{feat}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="enes-checkout-pricing-breakdown">
+              <div className="enes-checkout-price-row">
+                <span>Precio regular</span>
+                <span style={{ textDecoration: 'line-through' }}>${formatCOP(REGULAR_PRICE_COP)} COP</span>
+              </div>
+
+              <div className="enes-checkout-price-row" style={{ color: '#059669' }}>
+                <span>Beneficio Especial (-50%)</span>
+                <span>-${formatCOP(REGULAR_PRICE_COP - BASE_PRICE_COP)} COP</span>
+              </div>
+
+              {appliedCoupon && (
+                <div className="enes-checkout-price-row" style={{ color: '#059669' }}>
+                  <span>Descuento {appliedCoupon.code} (-{appliedCoupon.discountPercentage}%)</span>
+                  <span>-${formatCOP(BASE_PRICE_COP - finalAmountCOP)} COP</span>
+                </div>
+              )}
+
+              <div className="enes-checkout-price-row is-total">
+                <span className="enes-checkout-total-title">Total a pagar hoy:</span>
+                <div className="enes-checkout-total-value">
+                  <div className="enes-checkout-total-cop-main">
+                    ${formatCOP(finalAmountCOP)} <span>COP</span>
+                  </div>
+                  <div className="enes-checkout-total-sub">
+                    Pago único • Acceso inmediato
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Caja de Cupón */}
+            <div className="enes-checkout-coupon-box">
+              {!appliedCoupon ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setShowCouponInput(!showCouponInput)}
+                    className="enes-checkout-coupon-trigger"
+                  >
+                    <Tag size={14} color="#856B18" />
+                    <span>{showCouponInput ? 'Ocultar código de descuento' : '¿Tienes un código de descuento?'}</span>
+                  </button>
+
+                  {showCouponInput && (
+                    <div className="enes-checkout-coupon-form">
+                      <input
+                        type="text"
+                        value={couponInput}
+                        disabled={validatingCoupon}
+                        onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            validateCouponOnServer(couponInput);
+                          }
+                        }}
+                        placeholder="Ingresa tu código"
+                        className="enes-checkout-coupon-input"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => validateCouponOnServer(couponInput)}
+                        disabled={validatingCoupon || !couponInput.trim()}
+                        className="enes-checkout-coupon-btn"
+                      >
+                        {validatingCoupon ? <Loader2 size={14} className="animate-spin" /> : 'Aplicar'}
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="enes-checkout-coupon-applied">
+                  <span>✓ {appliedCoupon.label}</span>
+                  <button
+                    type="button"
+                    onClick={handleClearCoupon}
+                    className="enes-checkout-coupon-remove"
+                  >
+                    Quitar
+                  </button>
+                </div>
+              )}
+
+              {couponFeedback && (
+                <div style={{
+                  marginTop: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  color: couponFeedback.type === 'success' ? '#059669' : '#DC2626',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px'
+                }}>
+                  {couponFeedback.type === 'success' ? <CheckCircle2 size={13} /> : <AlertCircle size={13} />}
+                  <span>{couponFeedback.text}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Recuadro de Comercio Verificado por Mercado Pago */}
+            <div className="enes-checkout-verified-merchant">
+              <div className="enes-checkout-verified-icon">
+                <ShieldCheck size={20} />
+              </div>
+              <div className="enes-checkout-verified-content">
+                <span className="enes-checkout-verified-title">Comercio verificado por Mercado Pago</span>
+                <p className="enes-checkout-verified-company">
+                  Recaudado por <strong>Auténticos (DO IT COLOMBIA S.A.S.)</strong>
+                </p>
+                <span className="enes-checkout-verified-meta">
+                  NIT: 901.160.468-7 • Transacción 100% protegida
+                </span>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+      <footer className="enes-checkout-footer">
+        <p>© 2026 Auténticos • Todos los derechos reservados. Pagos procesados a través de Mercado Pago Colombia.</p>
+      </footer>
+    </div>
+  );
+}
