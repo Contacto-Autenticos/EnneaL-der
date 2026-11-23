@@ -422,31 +422,34 @@
 
 /* Recuadro de Comercio Verificado por Mercado Pago */
 .enes-checkout-verified-merchant {
+  position: relative;
+  overflow: hidden;
   margin-top: 14px;
-  padding: 14px 16px;
+  padding: 14px 18px;
   background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%);
   border: 1px solid #BBF7D0;
   border-radius: 14px;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
 }
 
-.enes-checkout-verified-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: #10B981;
+.enes-checkout-verified-bg-shield {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #FFFFFF;
+  filter: drop-shadow(0 0 1px rgba(16, 185, 129, 0.28));
+  pointer-events: none;
+  z-index: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
 }
 
 .enes-checkout-verified-content {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 2px;

@@ -987,8 +987,8 @@ export default function EnesenciaProgramCheckout() {
 
             {/* Recuadro de Comercio Verificado por Mercado Pago */}
             <div className="enes-checkout-verified-merchant">
-              <div className="enes-checkout-verified-icon">
-                <ShieldCheck size={20} />
+              <div className="enes-checkout-verified-bg-shield" aria-hidden="true">
+                <ShieldCheck size={60} strokeWidth={1.6} />
               </div>
               <div className="enes-checkout-verified-content">
                 <span className="enes-checkout-verified-title">Comercio verificado por Mercado Pago</span>
